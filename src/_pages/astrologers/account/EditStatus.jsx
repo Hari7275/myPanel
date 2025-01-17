@@ -4,7 +4,6 @@ import { X } from "lucide-react";
 import "../gallery/astrologerSettings.css";
 import { useUpdateBankDetailStatusMutation } from "../../../_store/api";
 
-// Reusable RadioButton component
 const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   <span className="radio-item">
     <input
