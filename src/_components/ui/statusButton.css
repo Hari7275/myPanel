@@ -1,0 +1,36 @@
+.statusIcon-active {
+  width: 90px;
+
+  color: #000;
+  border: 1px solid #cacaca;
+
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  font-size: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 2px;
+
+  font-weight: bold;
+}
+
+.statusIcon-inactive {
+  width: 90px;
+  color: #000;
+  border: 1px solid #cacaca;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  font-size: 12px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 5px 2px;
+  font-weight: bold;
+}

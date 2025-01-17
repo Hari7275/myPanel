@@ -1,0 +1,78 @@
+.modal-wrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  background-color: rgb(129 127 127 / 51%);
+}
+
+.modal-container {
+  z-index: 9999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px 30px;
+  background-color: #fff;
+  height: 85vh;
+  width: 94%;
+  overflow-y: scroll;
+  border-radius: 10px;
+}
+
+/* css for delete model component */
+
+.delete-modal-container {
+  z-index: 9999;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px 30px;
+  background-color: #fff;
+
+  border-radius: 10px;
+}
+
+.deleteModal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 400px;
+}
+
+.delete-icon {
+  margin: 30px 20px;
+}
+
+.deleteHeaderText {
+  color: #595959;
+  font-size: 25px;
+  margin-bottom: 14px;
+}
+
+.lowerPartdeletePopup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.deleteText {
+  color: #545454;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: normal;
+}
+
+.deleteButton {
+  display: flex;
+
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 1.25em auto 0;
+}

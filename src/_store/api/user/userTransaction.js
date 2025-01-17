@@ -1,0 +1,41 @@
+import apiSlice from "../api";
+
+export const userTransactionsApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    // ********************** get user transaction list *********************************
+    getUserTransactionsList: builder.query({
+      query: (userId) => ({
+        url: `user/profile/user-transactions/${userId}?page=1&limit=200`,
+        method: "GET",
+      }),
+      providesTags: ["transactions"],
+    }),
+
+    // ********************** Add user wallet Balance *********************************
+    createUserRecharge: builder.mutation({
+      query: ({ body }) => ({
+        url: `user/profile/user-wallet-transactions`,
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["transactions"],
+    }),
+
+    // ********************** get user transaction list *********************************
+
+    getUserSubscriptionList: builder.query({
+      query: (userId) => ({
+        url: `api/v1/user/payment/user-subscription/${userId}`,
+        // url: `user/profile/subscription/${userId}`,
+        method: "GET",
+      }),
+      providesTags: ["Subcsription"],
+    }),
+  }),
+});
+
+export const {
+  useGetUserTransactionsListQuery,
+  useCreateUserRechargeMutation,
+  useGetUserSubscriptionListQuery,
+} = userTransactionsApiSlice;

@@ -1,0 +1,116 @@
+import React, { useState, useEffect } from "react";
+import { Pencil } from "lucide-react";
+import { useGetUserListQuery } from "../../../_store/api";
+import { useSelector } from "react-redux";
+import EditUserDatingProfileStatus from "./EditUserDatingProfileStatus";
+
+const UserDatingStatus = () => {
+  const userId = useSelector((state) => state.user.userData);
+  const { data: fetchData } = useGetUserListQuery(userId);
+
+  const [userData, setUserData] = useState(null);
+  const [showEditStatus, setShowEditStatus] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+
+  useEffect(() => {
+    if (fetchData) {
+      setUserData(fetchData.data);
+    }
+  }, [fetchData]);
+
+  if (!userData) {
+    return <div></div>;
+  }
+
+  console.log(" dating status ", userData);
+
+  const toggleEditStatus = (row) => {
+    setSelectedRow(row);
+    setShowEditStatus(!showEditStatus);
+  };
+
+  const UserVerificationStatus = (value) => {
+    switch (Number(value)) {
+      case 1:
+        return "Registered";
+      case 2:
+        return "Active";
+      case 3:
+        return "Inactive";
+      case 4:
+        return "Blocked";
+      case 5:
+        return "Suspended";
+      case 6:
+        return "Terminated";
+      case 7:
+        return "Deleted";
+      case 8:
+        return "Paused";
+      case 9:
+        return "Created";
+      case 10:
+        return "Rejected";
+
+      default:
+        return "N/A";
+    }
+  };
+
+  return (
+    <div>
+      <div className="profile-sub-container  sub-container">
+        <h2
+          className="main-heading "
+          style={{
+            marginBottom: "0px",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "1.2",
+            fontSize: "26px",
+          }}
+        >
+          User Dating Status:
+        </h2>
+
+        {/* <Settings /> */}
+
+        <footer
+          className="userProfile-footer profile-mainContain "
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div>
+            <div className="card-footer-content">
+              <div className="info-pair">
+                <p className="info-item">
+                  <strong>Dating Status: </strong>
+                  <span>
+                    {UserVerificationStatus(userData.user_dating_status)}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="actions-cell">
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus()}
+              />
+            </span>
+          </div>
+        </footer>
+      </div>
+
+      {showEditStatus && (
+        <EditUserDatingProfileStatus
+          isOpen={showEditStatus}
+          onClose={toggleEditStatus}
+          selectedRow={selectedRow}
+        />
+      )}
+    </div>
+  );
+};
+
+export default UserDatingStatus;

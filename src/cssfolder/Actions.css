@@ -1,0 +1,51 @@
+.icon {
+  display: flex;
+  gap: 12px;
+}
+
+.actions_header {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.secondIcon {
+  cursor: pointer;
+  background: #1c2434;
+  color: white;
+  padding: 7px;
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+}
+
+.iconSmall {
+  width: 20px;
+  height: 20px;
+}
+
+.deleteIcon {
+  cursor: pointer;
+  background: red;
+  color: white;
+  padding: 7px;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}
+.editIcon {
+  cursor: pointer;
+  background: #18b164;
+  color: white;
+  padding: 7px;
+  border-radius: 50%;
+  height: 35px;
+  width: 35px;
+}
+
+.prompticon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+}

@@ -1,0 +1,25 @@
+/* ColorPickers.module.css */
+
+.gradient-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px;
+}
+
+.color-pickers {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 600px;
+}
+
+.colorPicker {
+  margin: 10px;
+}
+
+.gradient-display {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}

@@ -1,0 +1,50 @@
+{
+  "code": 200,
+  "message": "success",
+  "data": [
+    {
+      "id": 3,
+      "user_id": "e6601716-53ff-4461-9bb6-e6bf7541178c",
+      "coach_id": 3,
+      "followed_at": "2024-05-27T06:48:40.000Z",
+      "fullName": "Ghanshyam Sharma",
+      "firstName": "Ghanshyam",
+      "lastName": "Sharma",
+      "age": "32",
+      "img": "ghansyam.jpeg"
+    },
+    {
+      "id": 3,
+      "user_id": "e6601716-53ff-4461-9bb6-e6bf7541178c",
+      "coach_id": 3,
+      "followed_at": "2024-05-27T06:48:40.000Z",
+      "fullName": "Ghanshyam Sharma",
+      "firstName": "Ghanshyam",
+      "lastName": "Sharma",
+      "age": "32",
+      "img": "ghansyam.jpeg"
+    },
+    {
+      "id": 3,
+      "user_id": "e6601716-53ff-4461-9bb6-e6bf7541178c",
+      "coach_id": 3,
+      "followed_at": "2024-05-27T06:48:40.000Z",
+      "fullName": "Ghanshyam Sharma",
+      "firstName": "Ghanshyam",
+      "lastName": "Sharma",
+      "age": "32",
+      "img": "ghansyam.jpeg"
+    },
+    {
+      "id": 3,
+      "user_id": "e6601716-53ff-4461-9bb6-e6bf7541178c",
+      "coach_id": 3,
+      "followed_at": "2024-05-27T06:48:40.000Z",
+      "fullName": "Ghanshyam Sharma",
+      "firstName": "Ghanshyam",
+      "lastName": "Sharma",
+      "age": "32",
+      "img": "ghansyam.jpeg"
+    }
+  ]
+}

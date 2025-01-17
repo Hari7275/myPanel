@@ -1,0 +1,35 @@
+
+
+{
+    "status": true,
+    "message": "success",
+    "data": [
+        {
+            "id": "3e9c232b-012a-4f28-8bbb-b65f1c734836",
+            "type": "TRIP",
+            "location_id": "bef84050-5feb-4a78-b067-0b6f85123005",
+            "location_name": "Kota, Rajasthan, India",
+            "location_photo": null,
+            "createdAt": "2024-04-29T10:31:28.000Z",
+            "updatedAt": "2024-04-29T10:31:28.000Z"
+        },
+        {
+            "id": "6e4c75ef-ca55-4e32-bc7a-fd02acf98120",
+            "type": "TRIP",
+            "location_id": "c673dd27-5343-4f71-bf86-905e28f70366",
+            "location_name": "Mumbai, Maharashtra, India",
+            "location_photo": null,
+            "createdAt": "2024-04-29T10:30:27.000Z",
+            "updatedAt": "2024-04-29T10:30:27.000Z"
+        },
+        {
+            "id": "f4573110-5bdd-4102-97ec-bdedda66fd5a",
+            "type": "TRIP",
+            "location_id": "5c2b41a2-f261-4610-9a5e-93f8d388d28c",
+            "location_name": "Jaipur, Rajasthan, India",
+            "location_photo": null,
+            "createdAt": "2024-04-29T10:29:36.000Z",
+            "updatedAt": "2024-04-29T10:29:36.000Z"
+        }
+    ]
+}

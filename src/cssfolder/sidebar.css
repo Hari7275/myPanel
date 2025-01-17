@@ -1,0 +1,207 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap");
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.sidebarContainer {
+  font-family: "Roboto", sans-serif; 
+  color: white;
+  display: flex;
+  overflow: hidden;
+
+}
+
+.sidebar {
+  width: 80px;
+  height: 100%;
+  background-color: #1c2434;
+   color: #DEE4EE;  /* this css is applicable before siderbar open */ 
+  padding: 16px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+ 
+
+.menu-btn {
+  /* position:fixed ; */
+ right: 0;
+ top: 10px; 
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.menu-btn:hover {
+  background-color: #272727;
+}
+
+.sidebar-items {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px 2px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.item:hover {
+  background-color: #272727;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 6px;
+}
+
+.item span {
+  font-size: 11px;
+}
+
+#menu {
+  width: 260px;
+  height: 100%;
+  overflow: auto;
+  background-color: #1c2434;
+  color: #DEE4EE; /* this css is applicable after sidebar opens */
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(-100%);
+  z-index: 10;
+  scrollbar-width: none;
+  transition: transform 0.5s ease-in-out !important;   
+}
+ 
+
+#menu.visible {
+  transform: translateX(0);
+  z-index: 999999;
+}
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  padding-left: 6px;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+
+.menu-group {
+  padding: 16px 0;
+  border-block: 1px solid #3f3f3f;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* a :hover {
+  color: rgb(183, 212, 250);
+} */
+
+.menu-item {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.menu-item:hover {
+  background-color: #272727;
+}
+
+.menu-item span {
+  margin-left: 24px;
+}
+
+nav {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 16px;
+}
+
+main {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+main h1 {
+  font-size: 42px;
+}
+
+.menu-item-sub {
+  padding: 10px 0px 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.dropdown-item {
+  font-size: 14px;
+  padding: 1px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+ 
+
+.menu-item-child {
+  font-size: 14px;
+  display: block;
+  align-items: center;
+  /* padding: 10px 12px; */
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.child {
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.child:hover {
+  background-color: #272727;
+}
+
+.child span {
+  margin-left: 24px;
+}
+
+.menu-item-child-sub {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-item.active,
+.dropdown-item.active,
+.item.active {
+  background-color: #d3d3d3;  
+  color: #000;  
+  border-radius: 4px;  
+}
+
+
+ 

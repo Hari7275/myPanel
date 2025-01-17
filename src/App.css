@@ -1,0 +1,112 @@
+.navbar-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  z-index: 99999;
+  cursor: pointer;
+}
+
+/*  this is for header background  */
+
+.navbar-header {
+  background: #ffffff;
+  color: #000000;
+}
+
+.navbar-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.css-11b3ww9-MuiPaper-root-MuiAppBar-root {
+  /* position: relative !important; */
+}
+
+.MuiPaper-root {
+  position: relative !important;
+}
+
+/* main container css for profile it is applicable for all component  */
+
+.main-card-container {
+  display: flex;
+  justify-content: start;
+}
+
+.leftPart {
+  margin-right: 15px;
+  width: 30%;
+}
+
+.rightPart {
+  margin-left: 15px;
+  width: 63%;
+}
+/* this css for profile.jsx  component */
+
+.profileheader {
+  display: block;
+  margin: 8px;
+  font-size: 20px;
+  color: #595c62;
+  font-weight: 500;
+  margin-top: 0px;
+  cursor: pointer;
+}
+
+.profileMainComponent {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.profile-section {
+  padding: 20px;
+  padding-bottom: 50px;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/*   ********************* css for  react multi select ****************************** */
+/* 
+.css-13cymwt-control {
+  height: 57px;
+} */
+
+.no-data {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 40px;
+}
+
+/* temporary css for delete button */
+
+.spinner-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* css for at the time of loading page  */
+
+.loadPage {
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+}
+
+/* style={{
+          display: "flex",
+          height: "100vh",
+          justifyContent: "center",
+          alignItems: "center",
+          fontSize: "40px",
+        }} */

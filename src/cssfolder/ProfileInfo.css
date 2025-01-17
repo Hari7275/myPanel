@@ -1,0 +1,62 @@
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
+
+.userProfile-card {
+  padding: 0px 20px  ;
+}
+
+.userProfile-card-header {
+  font-size: 20px;
+}
+
+.card-header h3 {
+  font-weight: normal;
+}
+
+.userProfile-card-content {
+  padding: 20px 0px;
+}
+
+.userProfile-grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.userProfile-grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.userProfile-input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.select-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.checkbox-group label {
+  margin-right: 10px;
+  gap: 12px;
+}
+
+.userProfile-checkbox {
+  margin-right: 10px;
+}

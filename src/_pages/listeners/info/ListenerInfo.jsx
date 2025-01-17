@@ -1,0 +1,132 @@
+import React, { useState, useEffect } from "react";
+import { Pencil } from "lucide-react";
+import UpdateInfo from "./UpdateInfo";
+import { useGetConsultantsDetailsQuery } from "../../../_store/api";
+import { format } from "date-fns";
+import {
+  getGenderLabel,
+  getConsultantTypes,
+} from "../../../_constants/consultantConstant";
+import { useSelector } from "react-redux";
+
+const ListenerInfo = () => {
+  const [selectedData, setSelectedData] = useState(null);
+  const [showUpdateInfo, setShowUpdateInfo] = useState(false);
+  const [formData, setFormData] = useState(null);
+  // const [category, setCategory] = useState([]);
+  const consultantId = useSelector((state) => state.consultant.consultantData);
+
+  const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
+
+  useEffect(() => {
+    if (fetchdata && fetchdata.data) {
+      setFormData(fetchdata.data);
+    }
+  }, [fetchdata]);
+
+  if (!formData) {
+    return <div>loading...</div>;
+  }
+
+  const toggleUpdateInfo = (data) => {
+    setShowUpdateInfo(!showUpdateInfo);
+    setSelectedData(data);
+  };
+
+  return (
+    <div className="main-container sub-container">
+      <div className="RewardsTxn-container">
+        <div>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              backgroundColor: "#f0f0f0",
+              marginBottom: "20px",
+            }}
+          >
+            <h3 className="main-heading " style={{ marginBottom: "0px" }}>
+              Update Info
+            </h3>
+            <button
+              className="secondIcon"
+              onClick={() => toggleUpdateInfo(formData)}
+            >
+              <Pencil />
+            </button>
+          </div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>First Name : </strong> {formData?.first_name}
+            </p>
+            <p className="info-item">
+              <strong>Last Name : </strong> {formData?.last_name}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
+            </p>
+            <p className="info-item">
+              <strong>Email : </strong> {formData?.email}
+            </p>
+          </div>
+
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Consultant Type : </strong>
+              {getConsultantTypes(formData?.consultant_type)}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Languages : </strong>{" "}
+              {formData?.languages?.join(",") || ""}
+            </p>
+
+            <p className="info-item">
+              <strong>Date of Birth : </strong>{" "}
+              {format(new Date(formData?.date_of_birth), "dd MMMM yyyy")}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Address : </strong> {formData?.address}
+            </p>
+
+            <p className="info-item">
+              <strong>Country : </strong> {formData?.country}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Description : </strong> {formData?.description || "N/A"}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+        </div>
+      </div>
+
+      {showUpdateInfo && (
+        <UpdateInfo
+          isOpen={showUpdateInfo}
+          onClose={toggleUpdateInfo}
+          selectedData={selectedData}
+        />
+      )}
+    </div>
+  );
+};
+
+export default ListenerInfo;

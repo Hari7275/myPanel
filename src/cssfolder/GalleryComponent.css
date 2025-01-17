@@ -1,0 +1,142 @@
+.common-height {
+  height: 500px;
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  margin-bottom: 16px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.gallery-grid img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px 10px 0px 0px;
+  border: 1px solid #ddd;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.hover-buttons {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  gap: 10px;
+  width: -webkit-fill-available;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hover-button {
+  padding: 10px;
+  cursor: pointer;
+  z-index: 99999999;
+  background-color: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.726);
+  opacity: 1;
+  border-radius: 4px;
+}
+
+.hover-button:hover {
+  background: rgba(228, 12, 23, 0.87);
+}
+
+.image-container:hover .hover-buttons {
+  display: flex;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: transparent;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+}
+
+.topnav a {
+  border-radius: 4px;
+  margin: 10px;
+  text-align: center;
+  padding: 3px 6px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  background: #fafafd;
+}
+
+a.topnav a:hover {
+  color: #20ca4b;
+  background-color: transparent;
+}
+.topnav-approved {
+  color: #008002;
+}
+
+a.topnav-pending {
+  color: rgba(172, 182, 26, 0.801);
+}
+
+a.topnav-rejected {
+  color: red;
+}
+
+.galleryIcons {
+  /* position: absolute;
+  bottom: 0px; */
+  display: flex;
+  background: white;
+  justify-content: space-evenly;
+  width: 100%;
+  padding: 4px;
+  margin-top: -6px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 4px 26px 0 rgba(0, 0, 0, 0.14);
+  border-radius: 0px 0px 6px 6px;
+}
+
+.galleryIcons span svg {
+  transition: background-color 0.3s, transform 0.3s;
+  width: 25px;
+  height: 25px;
+}
+
+.galleryIcons span svg:hover {
+  cursor: pointer;
+  color: white;
+  background-color: grey;
+  border-radius: 50%;
+  padding: 5px;
+  transform: scale(1.4);
+}
+
+.addImageContainer {
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  height: 340px;
+}

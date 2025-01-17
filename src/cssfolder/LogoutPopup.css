@@ -1,0 +1,40 @@
+.main {
+  width: 200px;
+  position: absolute;
+  right: 0px;
+  top: 60px;
+  z-index: 9999;
+}
+
+.logout-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout-content {
+  background-color: rgba(0, 0, 0, 0.65);
+  box-shadow: 0 0 1px 1px rgba(187, 185, 185, 0.25);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+
+  display: flex;
+  /* align-items: center; */
+
+  width: 180px;
+  padding: 8px;
+  color: #fff;
+}
+.logout-content:hover {
+  color: #009efb;
+  cursor: pointer;
+  background: #000;
+}
+
+.logout-firstSpan {
+  margin-right: 8px;
+}
+
+.logout-secondSpan {
+}

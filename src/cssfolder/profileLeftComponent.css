@@ -1,0 +1,232 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 40px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 0 4px 26px 0 rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+}
+
+.userName {
+  font-size: 26px;
+}
+
+.card-upper-part {
+  padding: 7px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.card-user-name {
+  font-size: 32px;
+  font-family: Inter, "-apple-system", "BlinkMacSystemFont", "Segoe UI",
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  font-weight: 500;
+  line-height: 1.2;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+}
+
+.line {
+  width: 100%;
+  height: 1px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
+
+.card-footer {
+  padding: 20px 15px;
+  color: #446;
+}
+
+.card-footer-content {
+  display: flex;
+  flex-direction: column;
+  margin: 6px 0px;
+}
+
+.card-footer-content-first {
+  margin: 0px;
+  font-weight: 400;
+  font-size: 0.875rem;
+  line-height: 1.57;
+}
+
+.card-footer-content-second {
+  margin: 0px;
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 1.57;
+}
+
+/* css for circular image */
+.card-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.edit-profile-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* css for button */
+.secondButton {
+  color: #000;
+  border: 1px solid #928b8b;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  font-size: 17px;
+  border-radius: 12px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+}
+
+.secondButton:hover {
+  background-color: black;
+  color: white;
+}
+
+.button-img {
+  width: 20px;
+}
+
+.activeStatus {
+  color: #46a400;
+  background-color: #56ca0033;
+  width: 90px;
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  line-height: 1;
+  font-size: 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 2px;
+  text-transform: capitalize;
+  letter-spacing: 0.5px;
+}
+
+.inactiveStatus {
+  color: #ff0000 !important;
+  background-color: #ff000033;
+  font-size: 14px !important;
+  text-transform: capitalize;
+  font-weight: normal !important;
+  letter-spacing: 0.3px;
+  padding: 7px 2px;
+  box-shadow: none !important;
+}
+
+/* css for social links */
+.fa {
+  padding: 10px;
+  font-size: 5px; 
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
+
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-facebook {
+  background: #3B5998;
+  color: white;
+}
+
+.fa-twitter {
+  background: #55ACEE;
+  color: white;
+}
+
+.fa-google {
+  background: #dd4b39;
+  color: white;
+}
+
+.fa-linkedin {
+  background: #0077B5;
+  color: white;
+}
+
+.fa-youtube {
+  background: #bb0000;
+  color: white;
+}
+
+.fa-instagram {
+  background: #fd1d1d;
+  color: white;
+}
+
+.fa-pinterest {
+  background: #cb2027;
+  color: white;
+}
+
+.fa-snapchat-ghost {
+  background: #fffc00;
+  color: white;
+  text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .card-upper-part {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userName {
+    font-size: 20px;
+  }
+
+  .card-img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .edit-profile-icon {
+    top: 4px;
+    right: 4px;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .edit-profile-icon {
+    top: 2px;
+    right: 2px;
+  }
+}

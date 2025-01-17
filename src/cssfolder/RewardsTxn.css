@@ -1,0 +1,69 @@
+.dividerm {
+  width: 100%;
+  height: 1px;
+  margin: 20px 0px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
+
+.RewardsTxn-container {
+  padding: 20px;
+}
+
+.main-heading {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+ 
+
+.button-icon {
+  display: flex;
+  align-items: center;
+  padding: 7px 12px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #54667a;
+  text-align: center;
+  white-space: nowrap;
+  background-color: #f2f4f8;
+  border: 1px solid #e9ecef;
+}
+
+.inner-section {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border: 1px solid #e4e6e8;
+  width: 100%;
+  border-radius: 8px;
+}
+
+.left {
+  margin-right: 20px;
+}
+
+.right {
+  margin-left: 20px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 10px;
+
+  border: 1px solid #ccc;
+  border: none; 
+  height: 40px;
+}
+
+.section {
+  display: flex;
+  margin-top: 8px;
+  border-radius: 40px;
+}
+
+.sub-heading {
+  color: #667187;
+  font-weight: 600;
+}

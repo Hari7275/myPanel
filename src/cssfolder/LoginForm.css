@@ -1,0 +1,227 @@
+.myContainer *:before,
+.myContainer *:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.myContainer{
+  background-color: #080710 ;
+  height: 100vh;
+ 
+}
+
+.myForm {
+  height: 520px;
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.154) ;
+  position: absolute;
+  /* transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%; */
+  /* transform: translate(-50%, -50%); */
+  /* top: 100%; */
+  margin-top: 80px;
+  left: 5%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 50px 35px;
+}
+
+.myForm * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  outline: none;
+  border: none;
+}
+
+.myForm h3 {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 42px;
+  text-align: center;
+}
+
+.myLabel {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.myForm input {
+  display: block;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-family: "Poppins", sans-serif;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+::placeholder {
+  color: #ffffff;
+}
+
+.forgotPassowrd {
+  display: flex;
+  justify-content: end;
+  margin-top: 10px;
+  color: #0069c2;
+  cursor: pointer;
+}
+
+.button {
+  margin-top: 25px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+button:hover {
+  /* background: #c7adad; */
+}
+
+/* css for forgot password */
+
+.Forgotpassword {
+  /* height: 520px; */
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.154);
+  position: absolute;
+  /* transform: translate(-50%, -50%); */
+  /* top: 100%; */
+  margin-top: 80px;
+  left: 35%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 30px 35px;
+}
+
+.Forgotpassword * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.7px;
+  outline: none;
+  border: none;
+}
+
+.emailInput {
+  display: block;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-family: "Poppins", sans-serif;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.submit {
+  margin-top: 35px;
+  margin-bottom: 30px;
+
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.submit:hover {
+  background: #c7adad;
+}
+
+.userEmail {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* css for reset Password */
+.resetPassword {
+  /* height: 520px; */
+  width: 400px;
+  background-color: rgba(255, 255, 255, 0.154);
+  position: absolute;
+  /* transform: translate(-50%, -50%); */
+  /* top: 100%; */
+  margin-top: 80px;
+  left: 66%;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1); /**/
+  box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+  padding: 30px 35px;
+}
+
+.resetPassword * {
+  font-family: "Poppins", sans-serif;
+  color: #ffffff;
+  letter-spacing: 0.7px;
+  outline: none;
+  border: none;
+}
+
+.resetPassword label {
+  display: block;
+  margin-top: 30px;
+  margin-bottom: 10px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.confirmPassword,
+.newPassword {
+  display: block;
+  height: 50px;
+  width: 100%;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+  font-family: "Poppins", sans-serif;
+  background-color: rgba(255, 255, 255, 0.07);
+  border-radius: 3px;
+  padding: 0 10px;
+  margin-top: 8px;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.resetButton {
+  margin-top: 35px;
+  margin-bottom: 30px;
+  width: 100%;
+  background-color: #ffffff;
+  color: #080710;
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.submit:hover {
+  /* background: #c7adad; */
+}

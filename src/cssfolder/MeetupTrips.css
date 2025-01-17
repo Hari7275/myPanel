@@ -1,0 +1,87 @@
+.dividerm {
+  width: 100%;
+  height: 1px;
+  margin: 20px 0px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
+
+.meetupData-card {
+  padding: 20px;
+}
+
+.meetupData-subheading {
+  font-size: 20px;
+  margin-bottom: 12px;
+}
+
+.userProfile-input-field {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-top: 5px;
+}
+
+.fifthButton {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0c0c0c;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  box-shadow: 2px 2px 2px 1px rgba(14, 14, 14, 0.5);
+}
+
+.fifthButton:hover {
+  transform: scale(1.1);
+  color: #fff;
+}
+
+
+.addButton{
+   padding:"6px";
+   font-size: 16px;
+   background-color:"#18B164";
+   position:"absolute";
+   right:"20px";
+   color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+   box-shadow: 2px 2px 2px 1px rgba(24, 177, 100, 0.5);
+}
+
+.addButton:hover{
+   transform: scale(1.1);
+  color: #fff;
+
+}
+
+.meetup-date {
+  margin: 20px 0px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+.meetup-label {
+  color: #667187;
+  font-weight: 600;
+}
+
+.meetup-date-subdiv1 {
+  margin-bottom: 20px;
+}
+
+.meetup-date-subdiv2 {
+  margin: 4px 0px;
+}
+
+.whosup-date {
+  margin: 20px 0px;
+
+  grid-gap: 20px;
+}

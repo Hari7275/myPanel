@@ -1,0 +1,44 @@
+import apiSlice from "../api";
+
+export const consultantsOrderApiSlice = apiSlice.injectEndpoints({
+  endpoints: (builder) => ({
+    getConsultantsOrder: builder.query({
+      query: (consultantId) => ({
+        url: `/api/v1/consultant/management/order/admin/all-orders?page=1&size=20000&consultant_id=${consultantId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
+    // createLanguage: builder.mutation({
+    //   query: ({ body }) => ({
+    //     url: `/meta/languages/add`,
+    //     method: "POST",
+    //     body,
+    //   }),
+    //   invalidatesTags: ["languages"],
+    // }),
+
+    // updateLanguage: builder.mutation({
+    //   query: ({ id, body }) => ({
+    //     url: `meta/languages/update_language/${id}`,
+    //     method: "POST",
+    //     body,
+    //   }),
+    //   invalidatesTags: ["languages"],
+    // }),
+
+    // deleteLanguage: builder.mutation({
+    //   query: ({ id }) => ({
+    //     url: `meta/languages/delete/${id}`,
+    //     method: "POST",
+    //   }),
+    //   invalidatesTags: ["languages"],
+    // }),
+  }),
+});
+
+export const { useGetConsultantsOrderQuery } = consultantsOrderApiSlice;
