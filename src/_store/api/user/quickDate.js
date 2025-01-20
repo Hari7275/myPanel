@@ -6,6 +6,9 @@ export const quickDateApiSlice = apiSlice.injectEndpoints({
       query: (userId) => ({
         url: `user/profile/admin/qd-list?limit=10&page=1&user_id=${userId}`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["qdevents"],
     }),
@@ -13,7 +16,7 @@ export const quickDateApiSlice = apiSlice.injectEndpoints({
     // *************************************************** quickDate participants ***********************************************************
 
     getQDParticipantsList: builder.query({
-      query: ( id) => ({
+      query: (id) => ({
         url: `/user/profile/meetup_participant/get_participants_by_event/${id}?limit=50&page=1`,
         method: "GET",
       }),

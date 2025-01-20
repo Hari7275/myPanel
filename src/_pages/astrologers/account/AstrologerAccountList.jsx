@@ -13,14 +13,15 @@ const AstrologerAccountList = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
-
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
 
   const { data: fetchData } = useGetConsultantsBankDetailsQuery(consultantId);
 
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData.data);
+      setData(fetchData?.data);
     }
   }, [fetchData]);
 

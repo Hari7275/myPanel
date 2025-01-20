@@ -20,6 +20,7 @@ import imageSlice from "./slices/imageSlice";
 import userSlice from "./slices/userSlice";
 import consultantSlice from "./slices/consultantSlice";
 import activeTabSlice from "./slices/activeSlice";
+import authSlice from "./slices/authSlice";
 
 // Combine reducers
 const rootReducer = combineReducers({
@@ -29,13 +30,14 @@ const rootReducer = combineReducers({
   user: userSlice,
   consultant: consultantSlice,
   activeTab: activeTabSlice,
+  auth: authSlice,
 });
 
 // Persist configuration
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ["user", "consultant", "activeTab"],
+  whitelist: ["user", "consultant", "activeTab", "auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

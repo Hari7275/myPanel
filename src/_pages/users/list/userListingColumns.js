@@ -29,8 +29,8 @@ export const COLUMNS = (toggleModal) => [
         <div className="card-img">
           <img
             src={
-              row.original.profile_image
-                ? row.original.profile_image
+              row?.original?.profile_image
+                ? row?.original?.profile_image
                 : "praveen.png"
             }
             alt="Avatar"
@@ -43,7 +43,9 @@ export const COLUMNS = (toggleModal) => [
           />
         </div>
 
-        <span className="column_container_name">{row.original.first_name}</span>
+        <span className="column_container_name">
+          {row?.original?.first_name}
+        </span>
       </div>
     ),
   },

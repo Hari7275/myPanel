@@ -107,5 +107,4 @@ const AstrologerSettings = ({
   );
 };
 
-
 export default AstrologerSettings;

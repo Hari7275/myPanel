@@ -1,16 +1,33 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { useUpdateConsultantProfilePicMutation } from "../../../_store/api";
+import {
+  useUpdateConsultantProfilePicMutation,
+  useUpdateConsultantRejectProfilePicMutation,
+} from "../../../_store/api";
 
 const ProfilePhoto = ({ isOpen, onClose, selectedImage }) => {
   const [setProfilePic, { isLoading }] =
     useUpdateConsultantProfilePicMutation();
+  const [rejectProfilePic, { isLoading: isReject }] =
+    useUpdateConsultantRejectProfilePicMutation();
 
   const handleSubmit = async () => {
     try {
       await setProfilePic({
         id: selectedImage.id,
-        body: { photo_type: 1 },
+        body: { photo_type: 1, status: 2 },
+      });
+      onClose();
+    } catch (error) {
+      console.log("Failed to set profile picture", error);
+    }
+  };
+
+  const handleCancel = async () => {
+    try {
+      await rejectProfilePic({
+        id: selectedImage?.id,
+        body: { request_type: "set_profile_pic" },
       });
       onClose();
     } catch (error) {
@@ -40,14 +57,35 @@ const ProfilePhoto = ({ isOpen, onClose, selectedImage }) => {
       </div>
 
       <div style={{ marginTop: "30px", textAlign: "center" }}>
-        <button
-          className="fifthButton"
-          style={{ backgroundColor: "green" }}
-          onClick={handleSubmit}
-          disabled={isLoading}
-        >
-          {isLoading ? "Setting..." : "Set as Profile Pic"}
-        </button>
+        {selectedImage?.profile_pic_request == 1 ? (
+          <>
+            <button
+              className="fifthButton"
+              style={{ backgroundColor: "red", marginRight: "30px" }}
+              onClick={handleCancel}
+              disabled={isLoading}
+            >
+              {isReject ? "canceling..." : "Cancel"}
+            </button>
+            <button
+              className="fifthButton"
+              style={{ backgroundColor: "green" }}
+              onClick={handleSubmit}
+              disabled={isLoading}
+            >
+              {isLoading ? "Setting..." : "Set as Profile Pic"}
+            </button>
+          </>
+        ) : (
+          <button
+            className="fifthButton"
+            style={{ backgroundColor: "green" }}
+            onClick={handleSubmit}
+            disabled={isLoading}
+          >
+            {isLoading ? "Setting..." : "Set as Profile Pic"}
+          </button>
+        )}
       </div>
     </ReactModal>
   );

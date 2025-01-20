@@ -74,6 +74,24 @@
   z-index: 10;
 }
 
+.topnav-profilepic {
+  overflow: hidden;
+  background-color: transparent;
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+}
+
+.topnav-enhance {
+  overflow: hidden;
+  background-color: transparent;
+  position: absolute;
+  top: 8px;
+  left: 50px;
+  z-index: 10;
+}
+
 .topnav a {
   border-radius: 4px;
   margin: 10px;

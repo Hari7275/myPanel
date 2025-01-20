@@ -4,7 +4,7 @@ import { Trash, UserRound, Download, Settings, CirclePlus } from "lucide-react";
 import { saveAs } from "file-saver";
 import { useSelector } from "react-redux";
 
-import AstrologerSettings from "./AstrologerSettings"
+import AstrologerSettings from "./AstrologerSettings";
 import ImageCropper from "./ImageCropper";
 
 import {
@@ -40,6 +40,8 @@ const AstrologerGallery = () => {
       setImageUrls(fetchData?.data?.other);
     }
   }, [fetchData]);
+
+  console.log("imageUrls", imageUrls);
 
   useEffect(() => {
     if (imageUrls) {
@@ -190,6 +192,7 @@ const AstrologerGallery = () => {
                           <Trash />
                         </button>
                       </div> */}
+
                       <div className="topnav">
                         {imageStatuses[index] && (
                           <a
@@ -201,6 +204,40 @@ const AstrologerGallery = () => {
                           </a>
                         )}
                       </div>
+
+                      {image?.profile_pic_request == 1 ? (
+                        <div className="topnav-profilepic">
+                          <img
+                            src="/live-green-gif-marker.gif"
+                            alt=""
+                            style={{
+                              height: "25px",
+                              width: "25px",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+
+                      {/* {image?.profile_pic_request == 1 ? (
+                        <div className="topnav-enhance">
+                          <img
+                            src="/live-green-gif-marker.gif"
+                            alt=""
+                            style={{
+                              height: "25px",
+                              width: "25px",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )} */}
 
                       <div className="galleryIcons">
                         <span>

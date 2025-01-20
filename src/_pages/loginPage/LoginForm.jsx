@@ -1,14 +1,27 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./loginFrom.css";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../../_store/slices/authSlice";
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    // Redirect to user page if already logged in
+    if (isAuthenticated) {
+      navigate("/user", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
+
   const handleLogin = () => {
     if (phoneNumber === "1234567890" && password === "12345") {
+      dispatch(login());
       navigate("/user");
     } else {
       alert("Invalid phone number or password");
@@ -27,7 +40,7 @@ const LoginForm = () => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [ password]);
+  }, [password]);
 
   return (
     <div className="login-body">

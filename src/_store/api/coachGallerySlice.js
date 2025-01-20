@@ -79,6 +79,18 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["gallery"],
     }),
+    // *************************************** set profile pic reject ****************************************
+    updateConsultantRejectProfilePic: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/admin/reject-image-request/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["gallery"],
+    }),
 
     // delete consultant photo
     deleteGallery: builder.mutation({
@@ -101,5 +113,7 @@ export const {
   useCreateConsultantCoverPhotoMutation,
   useUpdateConsultantGalleryStatusMutation,
   useUpdateConsultantProfilePicMutation,
+  useUpdateConsultantRejectProfilePicMutation,
+  // useUpdateConsultantProfilePicUserRequestMutation,
   useDeleteGalleryMutation,
 } = galleryApiSlice;

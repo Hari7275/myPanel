@@ -3,6 +3,8 @@ import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./_layouts/Navbar";
 import Sidebar from "./_layouts/Sidebar";
+import { login } from "./_store/slices/authSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 import "./App.css";
 // import LoginForm from "./commonComponents/LoginForm";
@@ -61,6 +63,8 @@ import NotificationBell from "./_layouts/NotificationBell";
 import ConsultantNotice from "./_pages/meta-data/consultantNotice/ConsultantNotice";
 import DashboardBannerList from "./_pages/meta-data/dashboardBanner/DashboardBannerList";
 import CouponListing from "./_pages/payments/coupons/CouponListing";
+
+import { Navigate } from "react-router-dom";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -154,12 +158,31 @@ const Layout = () => (
   </div>
 );
 
+const PrivateRoute = ({ element, isAuthenticated, ...rest }) => {
+  return isAuthenticated ? element : <Navigate to="/" />;
+};
+
 function App() {
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   return (
     <Routes>
-      <Route path="/" element={<LoginForm />} />
+      {/* <Route path="/" element={<LoginForm />} /> */}
+
+      <Route path="/" element={<LoginForm dispatch={dispatch} />} />
       <Route path="logout" element={<LogoutPopup />} />
-      <Route path="*" element={<Layout />} />
+      {/* <Route path="*" element={<Layout />} /> */}
+
+      <Route
+        path="*"
+        element={
+          <PrivateRoute
+            element={<Layout />}
+            isAuthenticated={isAuthenticated}
+          />
+        }
+      />
     </Routes>
   );
 }
