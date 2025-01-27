@@ -46,7 +46,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pm2-start": "pm2 start npm --name flute-admin-panel -- start",
+    "pm2-stop": "pm2 stop flute-admin-panel",
+    "pm2-restart": "pm2 restart flute-admin-panel",
+    "pm2-delete": "pm2 delete flute-admin-panel",
+    "pm2-save": "pm2 save"
   },
   "eslintConfig": {
     "extends": [
