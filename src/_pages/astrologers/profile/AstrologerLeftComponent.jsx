@@ -44,7 +44,9 @@ const calculateAge = (dob) => {
 };
 
 const AstrologerLeftComponent = () => {
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
 
   const [showModal, setShowModal] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
@@ -58,7 +60,12 @@ const AstrologerLeftComponent = () => {
 
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData.data || {});
+      setData(fetchData?.data || {});
+      // Update the phone code in localStorage
+      const newPhoneCode = fetchData?.data?.phone_code;
+      if (newPhoneCode) {
+        localStorage.setItem("phone_code", newPhoneCode);
+      }
     }
   }, [fetchData]);
 

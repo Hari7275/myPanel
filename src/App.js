@@ -65,6 +65,7 @@ import DashboardBannerList from "./_pages/meta-data/dashboardBanner/DashboardBan
 import CouponListing from "./_pages/payments/coupons/CouponListing";
 
 import { Navigate } from "react-router-dom";
+import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -83,6 +84,8 @@ const Layout = () => (
       >
         <Routes>
           <Route path="dashboard" element={<DashboardMainPage />} />
+          <Route path="dashboard/fluteEarning" element={<FluteEarning />} />
+
           <Route path="/user" element={<UserListingTable />} />
           <Route path="coaches" element={<CoachListingTable />} />
           <Route path="listeners" element={<ListenersListingTable />} />

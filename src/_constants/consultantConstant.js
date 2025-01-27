@@ -136,11 +136,12 @@ export const getFetaureLabel = (value) => {
     case 6:
       return "Live Chat";
     case 7:
-      return "Live Video Call";
+      return "Live Chat";
+
     case 8:
       return "Live Audio Call";
     case 9:
-      return "Live Chat";
+      return "Live Video Call";
     default:
       return "Unknown";
   }

@@ -22,7 +22,7 @@ export const ACCOUNTCOLUMNS = [
     Cell: ({ row }) => (
       <div className="card-img">
         <img
-          src={row.original.pancard_photo || "snake.jpg"}
+          src={row?.original?.pancard_photo || "snake.jpg"}
           alt="passbook photo"
           width="40"
           height="40"
@@ -32,11 +32,26 @@ export const ACCOUNTCOLUMNS = [
     ),
   },
   {
-    Header :"Status",
-    accessor:"status",
-    Cell:({value}) =>{
-        const captalizeStatus = value.charAt(0).toUpperCase()+value.slice(1);
-        return<span>{captalizeStatus}</span>
-    }
-  }
+    Header: "Status",
+    accessor: "status",
+    Cell: ({ value }) => {
+      const captalizeStatus = value.charAt(0).toUpperCase() + value.slice(1);
+      return <span>{captalizeStatus}</span>;
+    },
+  },
+];
+
+// *******************************************PAYPALCOLUMNS ******************
+export const PAYPALCOLUMNS = [
+  { Header: "Id", accessor: "id" },
+  { Header: "PayPal ID ", accessor: "paypal_id" },
+
+  {
+    Header: "Status",
+    accessor: "status",
+    Cell: ({ value }) => {
+      const captalizeStatus = value.charAt(0).toUpperCase() + value.slice(1);
+      return <span>{captalizeStatus}</span>;
+    },
+  },
 ];

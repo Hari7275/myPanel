@@ -2,15 +2,19 @@ import React, { useState, useEffect, useMemo } from "react";
 import { ArrowRight, Pencil } from "lucide-react";
 import AstrologerBankDetails from "./AstrologerBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
-import { ACCOUNTCOLUMNS } from "./accountColumn";
+import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
 import EditStatus from "./EditStatus";
 import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable";
-import { useGetConsultantsBankDetailsQuery } from "../../../_store/api";
+import {
+  useGetConsultantsBankDetailsQuery,
+  useGetConsultantsPayPalDetailsQuery,
+} from "../../../_store/api";
 import { useSelector } from "react-redux";
 
 const AstrologerAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);
   const [data, setData] = useState([]);
+  const [paypalData, setPaypalData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const consultantId = useSelector(
@@ -18,12 +22,22 @@ const AstrologerAccountList = () => {
   );
 
   const { data: fetchData } = useGetConsultantsBankDetailsQuery(consultantId);
+  const { data: payPalData } =
+    useGetConsultantsPayPalDetailsQuery(consultantId);
 
   useEffect(() => {
     if (fetchData) {
       setData(fetchData?.data);
     }
   }, [fetchData]);
+
+  useEffect(() => {
+    if (payPalData) {
+      setPaypalData(payPalData?.data);
+    }
+  }, [payPalData]);
+
+  const phoneCode = useMemo(() => localStorage.getItem("phone_code"), [data]);
 
   const toggleBankDetails = (row) => {
     setSelectedRow(row);
@@ -49,10 +63,30 @@ const AstrologerAccountList = () => {
           >
             <ArrowRight
               className="iconSmall"
-              onClick={() => toggleBankDetails(row.original)}
+              onClick={() => toggleBankDetails(row?.original)}
             />
           </span>
 
+          <span className="editIcon">
+            <Pencil
+              className="iconSmall"
+              onClick={() => toggleEditStatus(row?.original)}
+            />
+          </span>
+        </div>
+      ),
+    },
+  ]);
+
+  // ******************************************payPalColumns *************************************
+
+  const payPalColumns = useMemo(() => [
+    ...PAYPALCOLUMNS,
+    {
+      Header: () => <div className="actions-header">Actions</div>,
+      id: "actions",
+      Cell: ({ row }) => (
+        <div className="actions-cell">
           <span className="editIcon">
             <Pencil
               className="iconSmall"
@@ -67,12 +101,22 @@ const AstrologerAccountList = () => {
   return (
     <>
       <div>
-        <CommonTable
-          columns={columns}
-          data={data}
-          includeActions={false}
-          tableTitle=" Astrologer Bank List"
-        />
+        {phoneCode == +91 ? (
+          <CommonTable
+            columns={columns}
+            data={data}
+            includeActions={false}
+            tableTitle=" Astrologer Bank List"
+          />
+        ) : (
+          <CommonTable
+            columns={payPalColumns}
+            data={paypalData}
+            includeActions={false}
+            tableTitle=" Astrologer PayPal List"
+          />
+        )}
+
         <div className="ProfileData-container sub-container">
           <AstrologerPriceListingTable />
         </div>
@@ -90,6 +134,7 @@ const AstrologerAccountList = () => {
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
             currentStatus={selectedRow}
+            phoneCode={phoneCode}
           />
         )}
       </div>

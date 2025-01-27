@@ -1,28 +1,40 @@
 import React, { useMemo, useState, useEffect } from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, NotebookPen } from "lucide-react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { PRICECHARTCOLUMN } from "./priceChartColumn";
 import { useGetConsultantsPriceQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
+import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 
 const ListenersPriceListingTable = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
-
-  const consultantId = useSelector((state) => state.consultant.consultantData);
-  const { data: fetchData } = useGetConsultantsPriceQuery(consultantId);
+  const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
+  const {
+    data: fetchData,
+    isLoading,
+    isError,
+  } = useGetConsultantsPriceQuery(consultantId);
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data || []);
-    }
+    } else setData([]);
   }, [fetchData]);
 
   const toggleUpdateStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+  };
+
+  const toggleUpdateConsultantPrice = (row) => {
+    setSelectedRow(row);
+    setShowConsultantPrice(!showConsultantEditPrice);
   };
 
   const columns = useMemo(() => [
@@ -35,15 +47,24 @@ const ListenersPriceListingTable = () => {
           {row.original.status === 1 && (
             <span
               className="editIcon"
-              onClick={() => toggleUpdateStatus(row.original)}
+              onClick={() => toggleUpdateStatus(row?.original)}
             >
-              <Pencil className="iconSmall" />
+              <NotebookPen className="iconSmall" />
             </span>
           )}
+          <span
+            className="editIcon"
+            onClick={() => toggleUpdateConsultantPrice(row?.original)}
+          >
+            <Pencil className="iconSmall" />
+          </span>
         </div>
       ),
     },
   ]);
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading data.</div>;
 
   return (
     <div>
@@ -51,12 +72,21 @@ const ListenersPriceListingTable = () => {
         columns={columns}
         data={data}
         includeCheckbox={false}
-        tableTitle=" Price Chart"
+        tableTitle="Price Chart"
       />
+
       {showEditStatus && (
         <EditPriceStatus
           isOpen={showEditStatus}
           onClose={toggleUpdateStatus}
+          selectedRow={selectedRow}
+        />
+      )}
+
+      {showConsultantEditPrice && (
+        <EditconsultantPrice
+          isOpen={showConsultantEditPrice}
+          onClose={toggleUpdateConsultantPrice}
           selectedRow={selectedRow}
         />
       )}

@@ -161,21 +161,20 @@ const CoachListingTable = () => {
   }
   return (
     <div>
-      {data?.length > 0 ? (
-        <DyCommonTable
-          columns={columns}
-          data={data}
-          tableTitle="Coaches List"
-          customFilterComponent={customFilterComponent}
-          dynamicPagination={dynamicPagination}
-          totalPage={totalPage}
-          currentPage={page}
-          pageSize={pageSize}
-          setPage={setPage}
-          setPageSize={setPageSize}
-        />
-      ) : (
-        <span className="no-data">No Coach Avaliable</span>
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        tableTitle="Coaches List"
+        customFilterComponent={customFilterComponent}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
+      {data?.length == 0 && (
+        <span className="no-data-new">No Coach Avaliable</span>
       )}
       {showEditStatus && (
         <EditStatus

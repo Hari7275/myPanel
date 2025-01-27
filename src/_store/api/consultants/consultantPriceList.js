@@ -24,6 +24,20 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["consultants"],
     }),
 
+    // **************************************** update consultant price  ****************************************
+
+    updateConsultantPriceChart: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/consultant-price/admin/update-price/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["consultants"],
+    }),
+
     getConsultantsWallet: builder.query({
       query: (consultantId) => ({
         url: `https://dev-api.fluteconnect.com/api/v1/consultant/payment/admin/${consultantId}?page=1&limit=100`,
@@ -40,5 +54,6 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetConsultantsPriceQuery,
   useUpdateConsultantPriceStatusMutation,
+  useUpdateConsultantPriceChartMutation,
   useGetConsultantsWalletQuery,
 } = consultantsPriceApiSlice;

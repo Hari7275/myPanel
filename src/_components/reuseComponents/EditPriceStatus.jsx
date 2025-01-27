@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useUpdateConsultantPriceStatusMutation } from "../../_store/api";
+import toast from "react-hot-toast";
 
 const EditPriceStatus = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
@@ -28,8 +29,16 @@ const EditPriceStatus = ({ isOpen, onClose, selectedRow }) => {
     }
 
     try {
-      const payload = { status: Number(formData), id: selectedRow.id };
-      await updatePriceStatus(payload).unwrap();
+      const payload = { status: Number(formData), id: selectedRow?.id };
+      const response = await updatePriceStatus(payload).unwrap();
+
+      if (response.status == true) {
+        toast.success(response.message);
+      }
+      if (response.status == false) {
+        toast.error(response.message);
+      }
+
       onClose();
       setFormData(""); // Reset form data on successful save
     } catch (error) {

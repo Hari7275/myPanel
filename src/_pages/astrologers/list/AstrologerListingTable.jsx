@@ -13,7 +13,6 @@ const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
-
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -154,23 +153,25 @@ const AstrologerListingTable = () => {
   }
   return (
     <div>
-      {data.length > 0 ? (
-        <DyCommonTable
-          columns={columns}
-          data={data}
-          tableTitle="Astrologer"
-          includeActions={false}
-          customFilterComponent={customFilterComponent}
-          dynamicPagination={dynamicPagination}
-          totalPage={totalPage}
-          currentPage={page}
-          pageSize={pageSize}
-          setPage={setPage}
-          setPageSize={setPageSize}
-        />
-      ) : (
-        <span className="no-data">No Astrologer Avaliable</span>
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        tableTitle="Astrologer"
+        includeActions={false}
+        customFilterComponent={customFilterComponent}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
+      {data?.length === 0 && (
+        <div>
+          <span className="no-data-new">No Astrologer Avaliable</span>
+        </div>
       )}
+
       {showEditStatus && (
         <EditStatus
           isOpen={showEditStatus}

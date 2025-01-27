@@ -56,12 +56,16 @@ const CoachLeftComponent = () => {
   useEffect(() => {
     if (fetchData) {
       setData(fetchData.data || {});
+      const newPhoneCode = fetchData?.data?.phone_code;
+      if (newPhoneCode) {
+        localStorage.setItem("phone_code", newPhoneCode);
+      }
     }
   }, [fetchData]);
 
   const urls = data?.profile_pic?.url;
 
-  const socialMediaLinks = data.social_media || {};
+  const socialMediaLinks = data?.social_media || {};
   const age = data.date_of_birth ? calculateAge(data.date_of_birth) : "N/A";
 
   return (

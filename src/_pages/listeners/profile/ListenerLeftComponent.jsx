@@ -48,9 +48,8 @@ const ListenerLeftComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
-  const [listenerType , setListenerType] = useState("listenerstatus")
+  const [listenerType, setListenerType] = useState("listenerstatus");
   const consultantId = useSelector((state) => state.consultant.consultantData);
-  
 
   const {
     data: fetchData,
@@ -61,6 +60,11 @@ const ListenerLeftComponent = () => {
   useEffect(() => {
     if (fetchData) {
       setData(fetchData.data || {});
+      // Update the phone code in localStorage
+      const newPhoneCode = fetchData?.data?.phone_code;
+      if (newPhoneCode) {
+        localStorage.setItem("phone_code", newPhoneCode);
+      }
     }
   }, [fetchData]);
 

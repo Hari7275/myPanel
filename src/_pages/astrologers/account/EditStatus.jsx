@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { X } from "lucide-react";
 import "../gallery/astrologerSettings.css";
-import { useUpdateBankDetailStatusMutation } from "../../../_store/api";
+import {
+  useUpdateBankDetailStatusMutation,
+  useUpdatePayPalDetailStatusMutation,
+} from "../../../_store/api";
 
 const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   <span className="radio-item">
@@ -18,14 +21,19 @@ const RadioButton = ({ id, name, value, checked, onChange, label }) => (
   </span>
 );
 
-const EditStatus = ({ isOpen, onClose, currentStatus }) => {
+const EditStatus = ({ isOpen, onClose, currentStatus, phoneCode }) => {
   const [selectedStatus, setSelectedStatus] = useState(currentStatus?.status);
   const [selectedRejectReason, setSelectedRejectReason] = useState(
     currentStatus?.reject_reason
   );
 
-  const [updateStatus, { isLoading: isUpdating, error }] =
+  const [updateBankStatus, { isLoading: isBankUpdating, error: bankError }] =
     useUpdateBankDetailStatusMutation();
+
+  const [
+    updatePaypalStatus,
+    { isLoading: isPayPalUpdating, error: paypalError },
+  ] = useUpdatePayPalDetailStatusMutation();
 
   useEffect(() => {
     setSelectedStatus(currentStatus?.status);
@@ -40,10 +48,18 @@ const EditStatus = ({ isOpen, onClose, currentStatus }) => {
         }),
       };
 
-      await updateStatus({
-        id: currentStatus.id,
-        body: requestBody,
-      }).unwrap();
+      // Dynamically choose the API based on phoneCode
+      if (phoneCode === "+91") {
+        await updateBankStatus({
+          id: currentStatus?.id,
+          body: requestBody,
+        }).unwrap();
+      } else {
+        await updatePaypalStatus({
+          id: currentStatus?.id,
+          body: requestBody,
+        }).unwrap();
+      }
 
       onClose();
     } catch (err) {
@@ -58,9 +74,11 @@ const EditStatus = ({ isOpen, onClose, currentStatus }) => {
 
   const handleChange = (e) => {
     const { value } = e.target;
-
     setSelectedRejectReason(value);
   };
+
+  const isUpdating = isBankUpdating || isPayPalUpdating;
+  const error = bankError || paypalError;
 
   return (
     <ReactModal
@@ -114,7 +132,7 @@ const EditStatus = ({ isOpen, onClose, currentStatus }) => {
                 type="text"
                 id="description"
                 name="description"
-                placeholder="Mentioned the account reject reason here"
+                placeholder="Mention the account reject reason here"
                 value={selectedRejectReason}
                 onChange={handleChange}
               />

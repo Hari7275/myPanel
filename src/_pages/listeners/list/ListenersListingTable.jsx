@@ -162,23 +162,24 @@ const ListenersListingTable = () => {
 
   return (
     <>
-      {data?.length > 0 ? (
-        <DyCommonTable
-          columns={columns}
-          data={data}
-          tableTitle="Listeners"
-          includeActions={false}
-          customFilterComponent={customFilterComponent}
-          dynamicPagination={dynamicPagination}
-          totalPage={totalPage}
-          currentPage={page}
-          pageSize={pageSize}
-          setPage={setPage}
-          setPageSize={setPageSize}
-        />
-      ) : (
-        <span className="no-data">No Listener Avaliable</span>
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        tableTitle="Listeners"
+        includeActions={false}
+        customFilterComponent={customFilterComponent}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
+
+      {data?.length == 0 && (
+        <span className="no-data-new">No Listener Avaliable</span>
       )}
+
       {showEditStatus && (
         <EditStatus
           isOpen={showEditStatus}

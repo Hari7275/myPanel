@@ -10,17 +10,8 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      providesTags: ["consultants"],
+      providesTags: ["consultants", "gallery"],
     }),
-
-    // createLanguage: builder.mutation({
-    //   query: ({ body }) => ({
-    //     url: `/meta/languages/add`,
-    //     method: "POST",
-    //     body,
-    //   }),
-    //   invalidatesTags: ["languages"],
-    // }),
 
     updateConsultantsDetails: builder.mutation({
       query: ({ id, body }) => ({

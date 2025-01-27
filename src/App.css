@@ -85,6 +85,15 @@
   font-size: 40px;
 }
 
+.no-data-new {
+  height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 40px;
+}
+
 /* temporary css for delete button */
 
 .spinner-container {

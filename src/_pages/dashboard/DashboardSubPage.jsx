@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import {
-  useGetConsultantIncomeQuery,
+  // useGetConsultantIncomeQuery,
   useGetFluteIncomeQuery,
-  useGetFluteIncomeByConsultantsQuery,
-  useGetFluteIncomeByUsersQuery,
-  useGetFluteRefundToUserQuery,
-  useGetConsultantPayoutAmountQuery,
-  useGetFluteRefferalAmountQuery,
+  // useGetFluteIncomeByConsultantsQuery,
+  // useGetFluteIncomeByUsersQuery,
+  // useGetFluteRefundToUserQuery,
+  // useGetConsultantPayoutAmountQuery,
+  // useGetFluteRefferalAmountQuery,
 } from "../../_store/api";
 
 import BasicArea from "./BasicArea";
+import { useNavigate } from "react-router-dom";
 
-const CategoryCard = ({ link, label, price, bgcolor }) => (
+export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
     <div
       className="card dashboard-card"
@@ -24,65 +25,68 @@ const CategoryCard = ({ link, label, price, bgcolor }) => (
 );
 
 const DashboardSubPage = () => {
-  const [consultantEarning, setConsultantEarning] = useState([]);
   const [fluteEarning, setFluteEarning] = useState([]);
-  const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
-  const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
-  const [fluteRefToUser, setFluteRefToUser] = useState([]);
-  const [consltPayoutIncome, setConsltPayoutIncome] = useState([]);
-  const [fluteRefAmt, setFluteRefAmt] = useState([]);
+  // const [consultantEarning, setConsultantEarning] = useState([]);
+  // const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
+  // const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
+  // const [fluteRefToUser, setFluteRefToUser] = useState([]);
+  // const [consltPayoutIncome, setConsltPayoutIncome] = useState([]);
+  // const [fluteRefAmt, setFluteRefAmt] = useState([]);
 
-  const { data: fetchData, isLoading } = useGetConsultantIncomeQuery();
-  const { data: fluteIncome } = useGetFluteIncomeQuery();
-  const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery();
-  const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery();
-  const { data: fluteRefToUsers } = useGetFluteRefundToUserQuery();
-  const { data: ConsltPayoutInc } = useGetConsultantPayoutAmountQuery();
-  const { data: FluteReferralAmt } = useGetFluteRefferalAmountQuery();
+  // const { data: fetchData, isLoading } = useGetConsultantIncomeQuery();
+  const { data: fluteIncome, isLoading } = useGetFluteIncomeQuery();
+  // const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery();
+  // const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery();
+  // const { data: fluteRefToUsers } = useGetFluteRefundToUserQuery();
+  // const { data: ConsltPayoutInc } = useGetConsultantPayoutAmountQuery();
+  // const { data: FluteReferralAmt } = useGetFluteRefferalAmountQuery();
 
+  const navigate = useNavigate();
   useEffect(() => {
+    // if (fetchData && fetchData?.data) {
+    //   setConsultantEarning(fetchData?.data);
+    // }
+
     if (fluteIncome && fluteIncome?.data) {
       setFluteEarning(fluteIncome?.data);
     }
-
-    if (fetchData && fetchData?.data) {
-      setConsultantEarning(fetchData?.data);
-    }
-
-    if (fluteIncomeByConslt && fluteIncomeByConslt?.data) {
-      setFluteIncByConslt(fluteIncomeByConslt?.data);
-    }
-    if (fluteIncomeByUsers && fluteIncomeByUsers?.data) {
-      setFluteIncByUsers(fluteIncomeByUsers?.data);
-    }
-    if (fluteRefToUsers && fluteRefToUsers?.data) {
-      setFluteRefToUser(fluteRefToUsers?.data);
-    }
-    if (ConsltPayoutInc && ConsltPayoutInc?.data) {
-      setConsltPayoutIncome(ConsltPayoutInc?.data);
-    }
-    if (FluteReferralAmt && FluteReferralAmt?.data) {
-      setFluteRefAmt(FluteReferralAmt?.data);
-    }
+    // if (fluteIncomeByConslt && fluteIncomeByConslt?.data) {
+    //   setFluteIncByConslt(fluteIncomeByConslt?.data);
+    // }
+    // if (fluteIncomeByUsers && fluteIncomeByUsers?.data) {
+    //   setFluteIncByUsers(fluteIncomeByUsers?.data);
+    // }
+    // if (fluteRefToUsers && fluteRefToUsers?.data) {
+    //   setFluteRefToUser(fluteRefToUsers?.data);
+    // }
+    // if (ConsltPayoutInc && ConsltPayoutInc?.data) {
+    //   setConsltPayoutIncome(ConsltPayoutInc?.data);
+    // }
+    // if (FluteReferralAmt && FluteReferralAmt?.data) {
+    //   setFluteRefAmt(FluteReferralAmt?.data);
+    // }
   }, [
-    fetchData,
+    // fetchData,
     fluteIncome,
-    fluteIncomeByConslt,
-    fluteIncomeByUsers,
-    fluteRefToUsers,
-    ConsltPayoutInc,
-    FluteReferralAmt,
+    // fluteIncomeByConslt,
+    // fluteIncomeByUsers,
+    // fluteRefToUsers,
+    // ConsltPayoutInc,
+    // FluteReferralAmt,
   ]);
 
   if (isLoading) {
     return <span className="loadPage">Data Loading...</span>;
   }
 
+  const handleClick = () => {
+    navigate("fluteEarning");
+  };
+
   return (
     <>
       <div>
         <div className="dashboard-main-card">
-          {/* <h2 className="dashboard-heading">main card</h2> */}
           <div className="dashboard-grid">
             {fluteEarning.map((item) => (
               <CategoryCard
@@ -93,9 +97,22 @@ const DashboardSubPage = () => {
               />
             ))}
           </div>
+          <span
+            style={{
+              display: "flex",
+              justifyContent: "end",
+              marginRight: "30px",
+              fontSize: "25px",
+              cursor: "pointer",
+              fontWeight:"600"
+            }}
+            onClick={handleClick}
+          >
+            View All
+          </span>
         </div>
 
-        <div className=" dashboard-main-card ">
+        {/* <div className=" dashboard-main-card ">
           <h2 className="dashboard-heading">Flute Income by Consultants </h2>
           <div className="dashboard-grid">
             {fluteIncByConslt.map((item) => (
@@ -179,7 +196,7 @@ const DashboardSubPage = () => {
               />
             ))}
           </div>
-        </div>
+        </div> */}
 
         <BasicArea />
       </div>

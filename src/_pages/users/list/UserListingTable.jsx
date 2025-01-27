@@ -147,6 +147,12 @@ const UserListingTable = () => {
         setPageSize={setPageSize}
       />
 
+      {data?.length === 0 && (
+        <div>
+          <span className="no-data-new">No User Avaliable</span>
+        </div>
+      )}
+
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={toggleModal}
