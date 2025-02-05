@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "fastify-website",
+      "script": "npm",
+      "args": ["run", "start"],
+      "autorestart": true,
+      "watch": false,
+      "time": true,
+      "max_size": "10M",
+      "retain": "5",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}
