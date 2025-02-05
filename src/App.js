@@ -67,6 +67,10 @@ import CouponListing from "./_pages/payments/coupons/CouponListing";
 import { Navigate } from "react-router-dom";
 import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
 
+// ProfileReview
+
+import ProfileReview from "./_pages/profile-review/ProfileReview";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -155,6 +159,10 @@ const Layout = () => (
           {/* *************************************************QdList */}
 
           <Route path="notification" element={<NotificationBell />} />
+
+          {/* *************************************************ProfileReview */}
+
+          <Route path="profile-review" element={<ProfileReview />} />
         </Routes>
       </section>
     </div>

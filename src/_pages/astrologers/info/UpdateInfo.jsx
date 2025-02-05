@@ -172,7 +172,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           backgroundColor: "#f0f0f0",
         }}
       >
-        Update Info
+        Update Info 
       </label>
 
       <form className="simple-form" noValidate autoComplete="off">

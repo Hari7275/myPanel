@@ -404,6 +404,13 @@ const Sidebar = () => {
                 <span>Meta Data</span>
               </div>
             </Link>
+
+            <Link to="/profile-review">
+              <div className="item">
+                <CategoryOutlinedIcon />
+                <span>Review</span>
+              </div>
+            </Link>
           </div>
         </aside>
       )}
