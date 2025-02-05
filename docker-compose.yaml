@@ -8,7 +8,7 @@ services:
     tty: true
     stdin_open: true
     ports:
-      - "3000:3000" # Modify port if necessary
+      - "3001:3000" # Modify port if necessary
     # env_file:
     #   - .env
     networks:
