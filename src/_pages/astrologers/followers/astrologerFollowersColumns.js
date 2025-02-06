@@ -1,6 +1,3 @@
-
-
-import { ArrowRight } from "lucide-react";
 export const FOLLOWERSCOLUMN = [
   {
     Header: "User Id",
@@ -10,23 +7,23 @@ export const FOLLOWERSCOLUMN = [
   {
     Header: "Name",
     accessor: "fullName",
-    Cell :({value})=>value ||"N/A"
+    Cell: ({ value }) => value || "N/A",
   },
 
   {
     Header: "Age",
     accessor: "age",
-    Cell :({value})=> value || "N/A"
+    Cell: ({ value }) => value || "N/A",
   },
   {
     Header: "Gender",
     accessor: "gender",
-    Cell:({value})=>value || "N/A"
+    Cell: ({ value }) => value || "N/A",
   },
   {
     Header: "Country",
     accessor: "country",
-    Cell:({value})=>value ||"N/A"
+    Cell: ({ value }) => value || "N/A",
   },
   {
     Header: "Image",

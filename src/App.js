@@ -70,6 +70,7 @@ import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
 // ProfileReview
 
 import ProfileReview from "./_pages/profile-review/ProfileReview";
+import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/ConsultantReviewList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -162,7 +163,11 @@ const Layout = () => (
 
           {/* *************************************************ProfileReview */}
 
-          <Route path="profile-review" element={<ProfileReview />} />
+          <Route
+            path="profile-review/:consultantId"
+            element={<ProfileReview />}
+          />
+          <Route path="profile-review" element={<ConsultantReviewList />} />
         </Routes>
       </section>
     </div>

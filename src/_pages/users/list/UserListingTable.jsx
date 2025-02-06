@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ArrowRight, Pencil } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
@@ -21,7 +21,7 @@ const UserListingTable = () => {
   const [userId, setUserId] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
-  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   const dispatch = useDispatch();
 
@@ -41,8 +41,6 @@ const UserListingTable = () => {
     }
   }, [fetchData]);
   const totalPage = fetchData?.data?.pagination?.totalPages || 1;
-
-  console.log("totalPage", totalPage);
 
   const toggleEditStatus = (row) => {
     setSelectedRow(row);

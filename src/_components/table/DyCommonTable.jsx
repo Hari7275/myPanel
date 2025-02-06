@@ -102,37 +102,48 @@ const DyCommonTable = ({
         <div className="tableDiv">
           <table className="tableContainer" {...getTableProps()}>
             <thead style={{ position: "relative", zIndex: "9" }}>
-              {headerGroups.map((headerGroup) => (
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                  {headerGroup.headers.map((column) => (
-                    <th
-                      {...column.getHeaderProps(column.getSortByToggleProps())}
-                    >
-                      {column.render("Header")}
-                      <span>
-                        {column.isSorted
-                          ? column.isSortedDesc
-                            ? "⬇️"
-                            : "⬆️"
-                          : ""}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              ))}
+              {headerGroups.map((headerGroup, index) => {
+                const { key, ...headerGroupProps } =
+                  headerGroup.getHeaderGroupProps();
+                return (
+                  <tr key={key || index} {...headerGroupProps}>
+                    {headerGroup.headers.map((column) => {
+                      const { key: columnKey, ...columnProps } =
+                        column.getHeaderProps(column.getSortByToggleProps());
+                      return (
+                        <th key={columnKey} {...columnProps}>
+                          {column.render("Header")}
+                          <span>
+                            {column.isSorted
+                              ? column.isSortedDesc
+                                ? "⬇️"
+                                : "⬆️"
+                              : ""}
+                          </span>
+                        </th>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </thead>
             <tbody {...getTableBodyProps()}>
               {page.map((row) => {
                 prepareRow(row);
+                const { key, ...rowProps } = row.getRowProps(
+                  getRowProps ? getRowProps(row) : undefined
+                );
                 return (
-                  <tr
-                    {...row.getRowProps(
-                      getRowProps ? getRowProps(row) : undefined
-                    )}
-                  >
-                    {row.cells.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-                    ))}
+                  <tr key={key || row.id} {...rowProps}>
+                    {row.cells.map((cell) => {
+                      const { key: cellKey, ...cellProps } =
+                        cell.getCellProps();
+                      return (
+                        <td key={cellKey} {...cellProps}>
+                          {cell.render("Cell")}
+                        </td>
+                      );
+                    })}
                   </tr>
                 );
               })}

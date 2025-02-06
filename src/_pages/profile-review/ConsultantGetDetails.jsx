@@ -1,80 +1,12 @@
-import React, { useState, useEffect } from "react";
-// import { Pencil } from "lucide-react";
-// import UpdateInfo from "./UpdateInfo";
-// import {
-//   useGetConsultantsDetailsQuery,
-//   useGetCoachCategoryListQuery,
-//   useGetCoachSkillsListQuery,
-// } from "../../../_store/api";
-// import { format } from "date-fns";
-// import {
-//   getGenderLabel,
-//   getConsultantTypes,
-// } from "../../../_constants/consultantConstant";
-// import { useSelector } from "react-redux";
-// import { capitalizeFirstLetter } from "../overview/AstrologerOverview";
+import React from "react";
+import { useGetProfileReviewDetailsQuery } from "../../_store/api";
 
-const ConsultantGetDetails = () => {
-  //   const [selectedData, setSelectedData] = useState(null);
-  //   const [showUpdateInfo, setShowUpdateInfo] = useState(false);
-  //   const [formData, setFormData] = useState(null);
+const ConsultantGetDetails = ({ consultantId }) => {
+  const { data: fetchData } = useGetProfileReviewDetailsQuery({
+    id: consultantId,
+  });
 
-  //   const [category, setCategory] = useState([]);
-  //   const [skills, setSkills] = useState([]);
-
-  //   const consultantId = useSelector(
-  //     (state) => state?.consultant?.consultantData
-  //   );
-
-  //   const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
-  //   const { data: constantData } = useGetCoachCategoryListQuery();
-  //   const { data: constantSkills } = useGetCoachSkillsListQuery();
-
-  //   useEffect(() => {
-  //     if (constantData) {
-  //       setCategory(constantData?.data || []);
-  //     }
-  //   }, [constantData]);
-
-  //   useEffect(() => {
-  //     if (constantSkills) {
-  //       setSkills(constantSkills?.data);
-  //     }
-  //   }, [constantSkills]);
-
-  //   useEffect(() => {
-  //     if (fetchdata) {
-  //       setFormData(fetchdata?.data || {});
-  //     }
-  //   }, [fetchdata]);
-
-  //   if (!formData) {
-  //     return <div>loading...</div>;
-  //   }
-
-  //   const toggleUpdateInfo = (data) => {
-  //     setShowUpdateInfo(!showUpdateInfo);
-  //     setSelectedData(data);
-  //   };
-
-  // Helper function to get category names from IDs
-  //   const getCategoryNames = (categoryIds) => {
-  //     if (!Array.isArray(categoryIds)) return "";
-  //     return categoryIds
-  //       .map((id) => category.find((cat) => cat.id === id)?.category_name)
-  //       .filter((name) => name)
-  //       .join(", ");
-  //   };
-
-  // Helper function to get skills names from IDs
-
-  //   const getSkillsNames = (skillsIds) => {
-  //     if (!Array.isArray(skillsIds)) return "";
-  //     return skillsIds
-  //       .map((id) => skills.find((skill) => skill.id === id)?.skill_name)
-  //       .filter((name) => name)
-  //       .join(", ");
-  //   };
+  const consultantData = fetchData?.data?.consultant_submitted_data || {};
 
   return (
     <div className="main-container sub-container">
@@ -89,74 +21,35 @@ const ConsultantGetDetails = () => {
               marginBottom: "20px",
             }}
           >
-            <h3 className="main-heading " style={{ marginBottom: "0px" }}>
-              Update Info
+            <h3 className="main-heading" style={{ marginBottom: "0px" }}>
+              Consultant Details: {consultantId}
             </h3>
           </div>
 
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>First Name : </strong> admin
-            </p>
-            <p className="info-item">
-              <strong>Last Name : </strong> consultant
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Gender : </strong> other
-            </p>
-            <p className="info-item">
-              <strong>Email : </strong> flute.admin@gmail.com
-            </p>
-          </div>
-
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Skills : </strong>{" "}
-              {/* {getSkillsNames(formData?.skills || [])} */}
-            </p>
-            <p className="info-item">
-              <strong>Consultant Type : </strong>
-              {/* {getConsultantTypes(formData?.consultant_type)} */}
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Address : </strong> jaipur
-            </p>
-
-            <p className="info-item">
-              <strong>Country : </strong> india
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Date of Birth : </strong>{" "}
-              {/* {format(new Date(formData?.date_of_birth), "dd MMMM yyyy")} */}
-            </p>
-            <p className="info-item">
-              <strong>Languages : </strong>{" "}
-              {/* {(formData?.languages || [])
-                .map((language) => capitalizeFirstLetter(language))
-                .join(",")} */}
-            </p>
-          </div>
-          <div className="dividerm"></div>
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Services : service</strong>
-            </p>
-          </div>
-          <div className="dividerm"></div>
+          {Object.entries(consultantData).map(([key, value]) => {
+            if (value !== null && value !== undefined && value !== "") {
+              return (
+                <div key={key} className="info-pair">
+                  <p className="info-item">
+                    <strong>{key.replace(/_/g, " ")}: </strong>
+                    {Array.isArray(value)
+                      ? value.join(", ") // Handle arrays
+                      : typeof value === "object"
+                      ? Object.entries(value)
+                          .filter(([, v]) => v) // Filter out null/undefined values
+                          .map(([subKey, subValue]) => (
+                            <span key={subKey}>
+                              <strong>{subKey.replace(/_/g, " ")}: </strong>
+                              {subValue}{" "}
+                            </span>
+                          ))
+                      : value}
+                  </p>
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
     </div>

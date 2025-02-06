@@ -60,3 +60,7 @@ export * from "../api/dashboard/consultantIncome";
 // data for dashboard
 
 export * from "../api/consultantNotice/consultantNotice";
+
+// data for consultant update request review
+
+export * from "../api/consultantReviewList/ReviewList";
