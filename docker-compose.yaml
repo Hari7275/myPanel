@@ -1,0 +1,25 @@
+version: "3"
+
+
+services:
+  flute-website:
+    build: . # Path to your backend code
+    container_name: admin-panel
+    tty: true
+    stdin_open: true
+    ports:
+      - "3001:3000" # Modify port if necessary
+    # env_file:
+    #   - .env
+    networks:
+      - app-network
+
+
+volumes:
+  mysql_data:
+    driver: local
+
+
+networks:
+  app-network:
+    external: true
