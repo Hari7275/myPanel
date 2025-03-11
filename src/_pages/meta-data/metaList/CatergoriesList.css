@@ -6,8 +6,8 @@
 }
 
 .category-card {
-  max-width: 70%;
-  min-height: 14vh;
+  max-width: 60%;
+  min-height: 12vh;
   justify-content: center;
   align-items: center;
   font-size: 18px;

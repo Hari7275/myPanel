@@ -2,8 +2,8 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin: 40px;
-  padding: 20px;
+  margin: 25px;
+  padding: 15px;
   border: 1px solid #ddd;
   background-color: rgba(255, 255, 255, 0.65);
   box-shadow: 0 4px 26px 0 rgba(0, 0, 0, 0.14);
@@ -146,7 +146,7 @@
 /* css for social links */
 .fa {
   padding: 10px;
-  font-size: 5px; 
+  font-size: 5px;
   text-decoration: none;
   margin: 5px 2px;
   border-radius: 50%;
@@ -157,12 +157,12 @@
 }
 
 .fa-facebook {
-  background: #3B5998;
+  background: #3b5998;
   color: white;
 }
 
 .fa-twitter {
-  background: #55ACEE;
+  background: #55acee;
   color: white;
 }
 
@@ -172,7 +172,7 @@
 }
 
 .fa-linkedin {
-  background: #0077B5;
+  background: #0077b5;
   color: white;
 }
 

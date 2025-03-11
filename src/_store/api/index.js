@@ -54,6 +54,7 @@ export * from "../api/meta-data/consultantStatus";
 export * from "../api/meta-data/menuOrder";
 export * from "../api/meta-data/countryList";
 export * from "../api/meta-data/coachRate";
+export * from "../api/meta-data/profileProgress";
 
 // data for dashboard
 

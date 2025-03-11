@@ -26,31 +26,6 @@ const ConsultantGetDetails = ({ consultantId }) => {
             </h3>
           </div>
 
-          {/* {Object.entries(consultantData).map(([key, value]) => {
-            if (value !== null && value !== undefined && value !== "") {
-              return (
-                <div key={key} className="info-pair">
-                  <p className="info-item">
-                    <strong>{key.replace(/_/g, " ")}: </strong>
-                    {Array.isArray(value)
-                      ? value.join(", ") // Handle arrays
-                      : typeof value === "object"
-                      ? Object.entries(value)
-                          .filter(([, v]) => v) // Filter out null/undefined values
-                          .map(([subKey, subValue]) => (
-                            <span key={subKey}>
-                              <strong>{subKey.replace(/_/g, " ")}: </strong>
-                              {subValue}{" "}
-                            </span>
-                          ))
-                      : value}
-                  </p>
-                </div>
-              );
-            }
-            return null;
-          })} */}
-
           <div className="info-pair">
             <p className="info-item">
               <strong>description : </strong>
