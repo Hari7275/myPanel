@@ -1,23 +1,38 @@
 import React, { useState, useEffect } from "react";
-
 import { UpdateInputField } from "../../../src/_components/ui/inputForm";
-import { useGetProfileReviewDetailsQuery } from "../../_store/api";
+import {
+  useGetProfileReviewDetailsQuery,
+  useUpdateProfileReviewDetailsMutation,
+} from "../../_store/api";
+import toast from "react-hot-toast";
 
 const AdminUpdateDetails = ({ consultantId }) => {
-  const { data: fetchData } = useGetProfileReviewDetailsQuery({
+  const {
+    data: fetchData,
+    error,
+    isLoading,
+  } = useGetProfileReviewDetailsQuery({
     id: consultantId,
   });
 
-  const consultantData = fetchData?.data?.consultant_submitted_data || {};
+  const [updateProfileReviewDetails] = useUpdateProfileReviewDetailsMutation();
 
-  // Initialize state with consultant data
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    description: "",
+    services: "",
+    status: "approved",
+    admin_comment: "",
+  });
 
   useEffect(() => {
-    if (consultantData) {
-      setFormData(consultantData);
+    if (
+      fetchData &&
+      fetchData.data &&
+      fetchData.data.consultant_submitted_data
+    ) {
+      setFormData(fetchData.data.consultant_submitted_data);
     }
-  }, [consultantData]);
+  }, [fetchData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +41,41 @@ const AdminUpdateDetails = ({ consultantId }) => {
       [name]: value || "",
     }));
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        admin_enhanced_data: {
+          description: formData.description,
+          services: formData.services,
+        },
+        status: formData.status || "approved",
+        admin_comment: formData.admin_comment,
+      };
+
+      const response = await updateProfileReviewDetails({
+        id: consultantId,
+        body: payload,
+      }).unwrap();
+
+      if (response?.status === false) {
+        toast.error(
+          response?.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      toast.success(response?.message || "Information updated successfully!");
+    } catch (error) {
+      toast.error(
+        error?.message || "Error updating profile. Please try again."
+      );
+    }
+  };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading data</div>;
 
   return (
     <div className="main-container sub-container">
@@ -41,71 +91,90 @@ const AdminUpdateDetails = ({ consultantId }) => {
           Update Info
         </label>
 
-        <form className="simple-form" noValidate autoComplete="off">
+        <form
+          className="simple-form"
+          noValidate
+          autoComplete="off"
+          onSubmit={handleSubmit}
+        >
           <div style={{ display: "flex", flexWrap: "wrap" }}>
-            {Object.entries(formData)
-              .filter(([_, value]) => value !== null)
-              .map(([key, value], index, array) => {
-                return index % 2 === 0 ? (
-                  <div key={key} style={{ display: "flex", width: "100%" }}>
-                    {key === "description" ? (
-                      <textarea
-                        id={key}
-                        name={key}
-                        value={value}
-                        onChange={handleChange}
-                        style={{
-                          flex: 1,
-                          marginRight: "10px",
-                          height: "80px",
-                          width: "50%",
+            <label
+              htmlFor="description"
+              style={{ width: "100%", marginTop: "20px" }}
+            >
+              Description:
+            </label>
+            <div style={{ width: "100%", marginTop: "4px" }}>
+              <textarea
+                style={{
+                  width: "100%",
+                  height: "150px",
+                  padding: "10px",
+                  border: "1px solid #ccc",
+                  borderRadius: "4px",
+                  fontSize: "14px",
+                  fontFamily: "'Arial', sans-serif",
+                  resize: "vertical",
+                }}
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                placeholder="this is description field"
+              />
+            </div>
+          </div>
 
-                          border: "2px solidrgb(186, 186, 186)",
-                          borderRadius: "5px", // Rounded corners
-                          padding: "10px", // Inner spacing
-                          fontSize: "16px", // Font size
-                          fontFamily: "Arial, sans-serif", // Font family
-                          backgroundColor: "#F8F9FA", // Light background color
-                        }}
-                        placeholder="Enter description"
-                      />
-                    ) : (
-                      <UpdateInputField
-                        label={key.replace(/_/g, " ")}
-                        type="text"
-                        id={key}
-                        name={key}
-                        value={value}
-                        onChange={handleChange}
-                        style={{ flex: 1, marginRight: "10px" }}
-                      />
-                    )}
-
-                    {array[index + 1] &&
-                      array[index + 1][0] !== "description" && (
-                        <UpdateInputField
-                          label={array[index + 1][0].replace(/_/g, " ")}
-                          type="text"
-                          id={array[index + 1][0]}
-                          name={array[index + 1][0]}
-                          value={array[index + 1][1]}
-                          onChange={handleChange}
-                          style={{ flex: 1 }}
-                        />
-                      )}
-                  </div>
-                ) : null;
-              })}
-
-            {/* <UpdateInputField
-              label={"Admin Comment"}
-              type="text"
-              id={key}
-              name={key}
-              value={value}
+          <label
+            htmlFor="services"
+            style={{ width: "100%", marginTop: "20px" }}
+          >
+            Service:
+          </label>
+          <div style={{ width: "100%", marginTop: "4px" }}>
+            <textarea
+              style={{
+                width: "100%",
+                height: "150px",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                fontSize: "14px",
+                fontFamily: "'Arial', sans-serif",
+                resize: "vertical",
+              }}
+              id="services"
+              name="services"
+              value={formData.services}
               onChange={handleChange}
-              style={{ flex: 1, marginRight: "10px" }}
-            /> */}
+              placeholder="this is services field"
+            />
+          </div>
+
+          <div style={{ display: "flex" }}>
+            <UpdateInputField
+              label="Admin Comment"
+              type="text"
+              id="admin_comment"
+              name="admin_comment"
+              value={formData?.admin_comment || ""}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="input-container">
+            <label htmlFor="status">Status</label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="userProfile-input-field"
+              style={{ height: "55px" }}
+            >
+              <option value="approved">Approved</option>
+              <option value="rejected">Rejected</option>
+            </select>
           </div>
 
           <div
@@ -115,13 +184,13 @@ const AdminUpdateDetails = ({ consultantId }) => {
               display: "flex",
             }}
           >
-            <button
+            {/* <button
               type="button"
               className="fifthButton"
               style={{ marginRight: "10px" }}
             >
               Cancel
-            </button>
+            </button> */}
             <button
               type="submit"
               className="fifthButton"

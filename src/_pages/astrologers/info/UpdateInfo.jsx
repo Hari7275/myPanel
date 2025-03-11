@@ -20,6 +20,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
     address: selectedData?.address,
     services: selectedData?.services,
+    description: selectedData?.description,
     experience: selectedData?.experience,
   });
 
@@ -305,7 +306,13 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           />
         </div>
 
-        <div style={{ width: "100%", marginTop: "20px" }}>
+        <label
+          htmlFor="description"
+          style={{ width: "100%", marginTop: "20px" }}
+        >
+          Services:
+        </label>
+        <div style={{ width: "100%", marginTop: "4px" }}>
           <textarea
             style={{
               width: "100%",
@@ -324,6 +331,34 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             value={formData?.services}
             onChange={handleChange}
             placeholder="this is service field"
+          />
+        </div>
+
+        <label
+          htmlFor="description"
+          style={{ width: "100%", marginTop: "20px" }}
+        >
+          Description:
+        </label>
+        <div style={{ width: "100%", marginTop: "4px" }}>
+          <textarea
+            style={{
+              width: "100%",
+              height: "150px",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              fontFamily: "'Arial', sans-serif",
+              resize: "vertical",
+            }}
+            label="description"
+            type="text"
+            id="description"
+            name="description"
+            value={formData?.description}
+            onChange={handleChange}
+            placeholder="this is description field"
           />
         </div>
         <div

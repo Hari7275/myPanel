@@ -24,13 +24,14 @@ export const consultantReviewListApiSlice = apiSlice.injectEndpoints({
       providesTags: ["review"],
     }),
 
-    updateProfileReviewDetails: builder.query({
-      query: ({ id }) => ({
+    updateProfileReviewDetails: builder.mutation({
+      query: ({ id, body }) => ({
         url: `/api/v1/consultant/profile/profile-detail-update/${id}`,
         method: "PATCH",
         headers: {
           Authorization: "Bearer admin_token",
         },
+        body,
       }),
       invalidatesTags: ["review"],
     }),
@@ -40,5 +41,5 @@ export const consultantReviewListApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetConsultantReviewQuery,
   useGetProfileReviewDetailsQuery,
-  useUpdateProfileReviewDetailsQuery,
+  useUpdateProfileReviewDetailsMutation,
 } = consultantReviewListApiSlice;

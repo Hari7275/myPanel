@@ -7,7 +7,7 @@ const ConsultantGetDetails = ({ consultantId }) => {
   });
 
   const consultantData = fetchData?.data?.consultant_submitted_data || {};
-
+  console.log("consultantData", consultantData);
   return (
     <div className="main-container sub-container">
       <div className="RewardsTxn-container">
@@ -26,7 +26,7 @@ const ConsultantGetDetails = ({ consultantId }) => {
             </h3>
           </div>
 
-          {Object.entries(consultantData).map(([key, value]) => {
+          {/* {Object.entries(consultantData).map(([key, value]) => {
             if (value !== null && value !== undefined && value !== "") {
               return (
                 <div key={key} className="info-pair">
@@ -49,7 +49,20 @@ const ConsultantGetDetails = ({ consultantId }) => {
               );
             }
             return null;
-          })}
+          })} */}
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>description : </strong>
+              {consultantData?.description}
+            </p>
+          </div>
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Service : </strong>
+              {consultantData?.services}
+            </p>
+          </div>
         </div>
       </div>
     </div>

@@ -161,6 +161,12 @@ const CoachInfo = () => {
               <strong>Services : </strong> {formData?.services || "N/A"}
             </p>
           </div>
+          <div className="dividerm"></div>
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Description : </strong> {formData?.description || "N/A"}
+            </p>
+          </div>
         </div>
       </div>
 
