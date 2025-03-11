@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
-import Select, { components } from "react-select";
+import Select from "react-select";
 
 import {
   useDeleteAssigneConsultantNoticeMutation,
@@ -75,7 +75,7 @@ const UnAssignNotice = ({ isOpen, onClose, selectedRow }) => {
     };
 
     try {
-      const response = await deleteData(payload).unwrap();
+      await deleteData(payload).unwrap();
       toast.success("Data submitted successfully!");
       onClose();
     } catch (error) {

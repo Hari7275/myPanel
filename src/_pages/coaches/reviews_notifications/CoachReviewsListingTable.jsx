@@ -4,19 +4,21 @@ import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 import AddCoachReviews from "./AddCoachReviews";
 import UpdateCoachReview from "./UpdateCoachReview";
 import DeleteComponent from "../../payments/DeleteComponent";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, ArrowRight } from "lucide-react";
 import CoachNotificationsListingTable from "./CoachNotificationsListingTable";
 import {
   useGetReviewsListQuery,
   useDeleteReviewMutation,
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import Description from "../../astrologers/reviews_notifications/Description";
 
 const CoachReviews = () => {
   const [addReview, setAddReview] = useState(false);
   const [updateReview, setUpdateReview] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [description, setDescription] = useState(false);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
@@ -54,6 +56,11 @@ const CoachReviews = () => {
         console.error("Failed to delete the service:", error);
       });
     }
+  };
+
+  const toggleDescription = (row) => {
+    setDescription(!description);
+    setSelectedRow(row);
   };
 
   // Button component to add a review
@@ -112,6 +119,12 @@ const CoachReviews = () => {
                 onClick={() => toggleDeleteComponent(row.original)}
               />
             </span>
+            <span className="secondIcon">
+              <ArrowRight
+                className=""
+                onClick={() => toggleDescription(row?.original)}
+              />
+            </span>
           </div>
         ),
       },
@@ -156,6 +169,14 @@ const CoachReviews = () => {
           isOpen={showDeleteComponent}
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
+        />
+      )}
+
+      {description && selectedRow && (
+        <Description
+          isOpen={description}
+          onClose={toggleDescription}
+          Descriptions={selectedRow?.review_text || ""}
         />
       )}
     </div>

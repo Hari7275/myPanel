@@ -6,6 +6,7 @@ export const UpdateInputField = ({
   value,
   onChange,
   placeholder,
+  disabled,
 }) => {
   return (
     <div className="input-container">
@@ -18,6 +19,7 @@ export const UpdateInputField = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        disabled={disabled}
       />
     </div>
   );
@@ -28,7 +30,7 @@ export const TextSetting = ({ text, value }) => {
     <div className="card-footer-content">
       <div className="info-pair">
         <p className="info-item">
-          <strong style={{textTransform:"capitalize"}}> {text} : </strong>
+          <strong style={{ textTransform: "capitalize" }}> {text} : </strong>
           <span>{value}</span>
         </p>
       </div>

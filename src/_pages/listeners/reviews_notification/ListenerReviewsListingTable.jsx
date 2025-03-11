@@ -5,19 +5,22 @@ import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 import AddListenerReview from "./AddListenerReview";
 import UpdateListenerReview from "./UpdateListenerReview";
 import DeleteComponent from "../../payments/DeleteComponent";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, ArrowRight } from "lucide-react";
 import {
   useGetReviewsListQuery,
   useDeleteReviewMutation,
 } from "../../../_store/api";
 import LIstenerNotificationListingTable from "./LIstenerNotificationListingTable";
 import { useSelector } from "react-redux";
+import Description from "../../astrologers/reviews_notifications/Description";
 
 const ListenerReviewsListingTable = () => {
   const [addReview, setAddReview] = useState(false);
   const [updateReview, setUpdateReview] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [description, setDescription] = useState(false);
+
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
@@ -92,6 +95,11 @@ const ListenerReviewsListingTable = () => {
     );
   };
 
+  const toggleDescription = (row) => {
+    setDescription(!description);
+    setSelectedRow(row);
+  };
+
   // Memoized columns definition for the table
   const columns = useMemo(
     () => [
@@ -111,6 +119,12 @@ const ListenerReviewsListingTable = () => {
               <Trash
                 className="iconSmall"
                 onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+            <span className="secondIcon">
+              <ArrowRight
+                className=""
+                onClick={() => toggleDescription(row?.original)}
               />
             </span>
           </div>
@@ -158,6 +172,14 @@ const ListenerReviewsListingTable = () => {
           isOpen={showDeleteComponent}
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
+        />
+      )}
+
+      {description && selectedRow && (
+        <Description
+          isOpen={description}
+          onClose={toggleDescription}
+          Descriptions={selectedRow?.review_text || ""}
         />
       )}
     </div>

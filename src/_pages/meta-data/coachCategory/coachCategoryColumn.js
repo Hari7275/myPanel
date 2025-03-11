@@ -70,7 +70,7 @@ export const COACHCATEGORYCOLUMN = (toggleModal) => {
         <div className="card-img">
           <img
             src={row.original.image || "snake.jpg"}
-            alt="Card Image"
+            alt="Card"
             width="40"
             height="40"
             onClick={() => toggleModal(row.original.image || "snake.jpg")}

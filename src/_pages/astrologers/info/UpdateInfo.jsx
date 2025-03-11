@@ -8,6 +8,7 @@ import {
   useGetLanguagesListQuery,
 } from "../../../_store/api";
 import { format, subYears } from "date-fns";
+import toast from "react-hot-toast";
 
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
@@ -19,6 +20,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
     address: selectedData?.address,
     services: selectedData?.services,
+    experience: selectedData?.experience,
   });
 
   const [selectedSkills, setSelectedSkills] = useState([]);
@@ -79,6 +81,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "gender" ? Number(value) : value,
+      [name]: name === "experience" ? Number(value) : value,
     }));
 
     setErrors((prevErrors) => ({
@@ -148,6 +151,16 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         }));
         return;
       }
+      if (response.data.status === false) {
+        toast.error(
+          response.data.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      toast.success(
+        response.data.message || " information updated successfully."
+      );
 
       onClose();
     } catch (error) {
@@ -172,7 +185,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           backgroundColor: "#f0f0f0",
         }}
       >
-        Update Info 
+        Update Info
       </label>
 
       <form className="simple-form" noValidate autoComplete="off">
@@ -239,6 +252,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             value={formData.date_of_birth}
             onChange={handleChange}
             max={minValidDOB}
+            disabled={true}
           />
           <UpdateInputField
             label="Address"
@@ -249,6 +263,20 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             onChange={handleChange}
           />
         </div>
+        {error && <p style={{ color: "red", paddingLeft: "10px" }}>{error}</p>}
+
+        {/* update experience */}
+        <div style={{ display: "flex" }}>
+          <UpdateInputField
+            label="Experience"
+            type="number"
+            id="experience"
+            name="experience"
+            value={formData?.experience || ""}
+            onChange={handleChange}
+          />
+        </div>
+
         {error && <p style={{ color: "red", paddingLeft: "10px" }}>{error}</p>}
 
         <div>

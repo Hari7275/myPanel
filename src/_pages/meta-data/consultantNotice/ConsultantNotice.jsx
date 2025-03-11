@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { NOTICECOLUMN } from "./noticeColumn";
-import { Trash, ArrowRight, Pencil, Eye, Truck } from "lucide-react";
+import { Trash, Pencil, Eye, Truck } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import AddNotice from "./AddNotice";
 import UpdateNotice from "./UpdateNotice";
@@ -116,7 +116,6 @@ const ConsultantNotice = () => {
               />
             </span>
             <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-             
               <Truck
                 className="iconSmall"
                 onClick={() => toggleAssignNotice(row)}

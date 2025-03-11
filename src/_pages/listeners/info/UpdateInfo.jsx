@@ -8,6 +8,7 @@ import {
 import { useSelector } from "react-redux";
 import { format, subYears } from "date-fns";
 import Select from "react-select";
+import toast from "react-hot-toast";
 
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
@@ -15,18 +16,19 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     last_name: selectedData?.last_name,
     gender: Number(selectedData?.gender),
     email: selectedData?.email,
-
     languages: selectedData?.languages,
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
-
     address: selectedData?.address,
     description: selectedData?.description,
     // country: selectedData.country,
+    experience: selectedData?.experience,
   });
   const [error, setError] = useState("");
   const [selectedLanguages, setSelectedLanguage] = useState([]);
 
-  const consultantId = useSelector((state) => state?.consultant?.consultantData);
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
 
   const [updateInfo, { isLoading: isUpdating }] =
     useUpdateConsultantsDetailsMutation(consultantId);
@@ -44,8 +46,6 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     selectedData?.languages?.includes(option?.value)
   );
 
-  console.log("selectedLanguages", selectedLanguages);
-
   useEffect(() => {
     setSelectedLanguage(preselectedLanguage);
   }, [languagesData, preselectedLanguage]);
@@ -55,6 +55,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "gender" ? Number(value) : value,
+      [name]: name === "experience" ? Number(value) : value,
     }));
   };
 
@@ -94,10 +95,21 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
 
     try {
-      await updateInfo({
+      const response = await updateInfo({
         id: selectedData.id,
         body: dataToSend,
       });
+
+      if (response.data.status === false) {
+        toast.error(
+          response.data.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      toast.success(
+        response.data.message || " information updated successfully."
+      );
       onClose();
     } catch (error) {
       console.log("API error", error);
@@ -184,6 +196,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
               value={formData.date_of_birth}
               onChange={handleChange}
               max={minValidDOB}
+              disabled={true}
             />
 
             <UpdateInputField
@@ -192,6 +205,18 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
               id="address"
               name="address"
               value={formData.address}
+              onChange={handleChange}
+            />
+          </div>
+
+          {/* update experience */}
+          <div style={{ display: "flex" }}>
+            <UpdateInputField
+              label="Experience"
+              type="number"
+              id="experience"
+              name="experience"
+              value={formData?.experience || ""}
               onChange={handleChange}
             />
           </div>

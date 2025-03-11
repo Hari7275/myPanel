@@ -9,8 +9,7 @@ const UpdatePromptQuestion = ({ isOpen, onClose, selectedRow }) => {
     parent_key: "0",
   });
 
-  const [updateData, { isLoading: isUpdating, error }] =
-    useUpdatePromptMutation();
+  const [updateData, { isLoading: isUpdating }] = useUpdatePromptMutation();
 
   useEffect(() => {
     if (selectedRow) {
@@ -44,7 +43,7 @@ const UpdatePromptQuestion = ({ isOpen, onClose, selectedRow }) => {
         id: formData.id,
         body: formDataToSend,
       });
- 
+
       onClose();
     } catch (error) {
       console.error("API Error", error);

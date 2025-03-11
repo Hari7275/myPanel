@@ -10,8 +10,7 @@ const UpdateFeature = ({ isOpen, onClose, selectedRow }) => {
     image: selectedRow?.image,
   });
 
-  const [updateData, { isLoading: isUpdating, error }] =
-    useUpdatePromptMutation();
+  const [updateData, { isLoading: isUpdating }] = useUpdatePromptMutation();
 
   useEffect(() => {
     if (selectedRow) {

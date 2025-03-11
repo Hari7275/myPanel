@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
-import Select, { components } from "react-select";
+import Select from "react-select";
 
 import {
   useGetConsultantListQuery,
@@ -83,7 +83,7 @@ const AssigneNotice = ({ isOpen, onClose, selectedRow }) => {
     };
 
     try {
-      const response = await createData(payload).unwrap();
+      await createData(payload).unwrap();
       toast.success("Data submitted successfully!");
       onClose();
     } catch (error) {

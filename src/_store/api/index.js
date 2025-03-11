@@ -53,6 +53,7 @@ export * from "../api/meta-data/reportReasons";
 export * from "../api/meta-data/consultantStatus";
 export * from "../api/meta-data/menuOrder";
 export * from "../api/meta-data/countryList";
+export * from "../api/meta-data/coachRate";
 
 // data for dashboard
 

@@ -8,6 +8,7 @@ import {
   useGetCoachSkillsListQuery,
   useGetLanguagesListQuery,
 } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 import { format, subYears } from "date-fns";
 
@@ -24,6 +25,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
     address: selectedData?.address,
     services: selectedData?.services,
+    experience: selectedData?.experience,
   });
 
   const [selectedCategories, setSelectedCategories] = useState([]);
@@ -101,6 +103,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "gender" ? Number(value) : value,
+      [name]: name === "experience" ? Number(value) : value,
     }));
   };
 
@@ -166,10 +169,21 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
 
     try {
-      await updateInfo({
+      const response = await updateInfo({
         id: selectedData.id,
         body: dataToSend,
       });
+
+      if (response.data.status === false) {
+        toast.error(
+          response.data.message || "Something went wrong. Please try again."
+        );
+        return;
+      }
+
+      toast.success(
+        response.data.message || " information updated successfully."
+      );
       onClose();
     } catch (error) {
       console.log("API error", error);
@@ -255,6 +269,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             value={formData.date_of_birth}
             onChange={handleChange}
             max={minValidDOB}
+            disabled={true}
           />
 
           <UpdateInputField
@@ -268,6 +283,18 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         </div>
 
         {error && <p style={{ color: "red", paddingLeft: "10px" }}>{error}</p>}
+
+        {/* update experience */}
+        <div style={{ display: "flex" }}>
+          <UpdateInputField
+            label="Experience"
+            type="number"
+            id="experience"
+            name="experience"
+            value={formData?.experience || ""}
+            onChange={handleChange}
+          />
+        </div>
 
         <div>
           <label htmlFor="categories">Category</label>

@@ -8,6 +8,7 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
     user_id: "",
     rating: "",
     review_text: "",
+    order_type: "order",
   });
 
   const [createReview, isloading] = useCreateReviewMutation();
@@ -44,6 +45,7 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
       user_id: formData.user_id,
       rating: formData.rating,
       review_text: formData.review_text,
+      order_type: formData.order_type,
     };
 
     try {
@@ -129,6 +131,21 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
             placeholder="review_text"
             className="userProfile-input-field"
           />
+        </div>
+
+        <div className="input-container">
+          <label htmlFor="currency">Order Type</label>
+          <select
+            id="order_type"
+            name="order_type"
+            value={formData.order_type}
+            onChange={handleChange}
+            className="userProfile-input-field"
+            style={{ height: "55px" }}
+          >
+            <option value="order">Order</option>
+            <option value="session">Session</option>
+          </select>
         </div>
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>

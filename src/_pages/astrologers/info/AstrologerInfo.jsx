@@ -22,7 +22,9 @@ const AstrologerInfo = () => {
   const [category, setCategory] = useState([]);
   const [skills, setSkills] = useState([]);
 
-  const consultantId = useSelector((state) => state?.consultant?.consultantData);
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
 
   const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
   const { data: constantData } = useGetCoachCategoryListQuery();
@@ -157,10 +159,15 @@ const AstrologerInfo = () => {
           <div className="dividerm"></div>
           <div className="info-pair">
             <p className="info-item">
-              <strong>Services : </strong> {formData?.services || "N/A"}
+              <strong>Experience : </strong> {formData?.experience || "0"}
             </p>
           </div>
           <div className="dividerm"></div>
+          <div className="info-pair"> 
+            <p className="info-item">
+              <strong>Services : </strong> {formData?.services || "N/A"}
+            </p>
+          </div>
         </div>
       </div>
 

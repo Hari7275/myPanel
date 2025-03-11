@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import ReactModal from "react-modal";
 import { UpdateInputField } from "../../../_components/ui/inputForm";
 import { useCreateCoachCategoryMutation } from "../../../_store/api";

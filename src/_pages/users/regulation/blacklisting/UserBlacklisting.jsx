@@ -12,20 +12,19 @@ import { useSelector } from "react-redux";
 const UserBlacklisting = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [result, setResult] = useState([]); 
+  const [result, setResult] = useState([]);
   const userId = useSelector((state) => state.user.userData);
 
   const {
     data: fetchData,
     isError,
     isLoading,
-    isFetching,
   } = useGetBlacklistedUserListQuery(userId);
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
-      setResult(fetchData.data.records );  
-    }  
+      setResult(fetchData.data.records);
+    }
   }, [fetchData]);
 
   const [deleteFeature] = useDeleteBlacklistedUserMutation();

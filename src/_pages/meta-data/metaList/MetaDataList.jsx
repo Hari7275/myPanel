@@ -42,6 +42,7 @@ const MetaDataList = () => {
         <CategoryCard link="/menu-orders" label="Menu Orders" />
         <CategoryCard link="/countries-list" label="Countries List" />
         <CategoryCard link="/consultant-notice" label="Consultant Notice" />
+        <CategoryCard link="/coach-rate" label="Consultant Rate" />
       </div>
     </>
   );

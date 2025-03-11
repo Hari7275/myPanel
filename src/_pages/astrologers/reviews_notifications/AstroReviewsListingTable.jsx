@@ -4,18 +4,20 @@ import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 import AddAstrologerReview from "./AddAstrologerReview";
 import UpdateAstrologerReview from "./UpdateAstrologerReview";
 import DeleteComponent from "../../payments/DeleteComponent";
-import { Pencil, Trash } from "lucide-react";
+import { Pencil, Trash, ArrowRight } from "lucide-react";
 import {
   useGetReviewsListQuery,
   useDeleteReviewMutation,
 } from "../../../_store/api";
 import AstroNotificationsListingTable from "./AstroNotificationsListingTable";
 import { useSelector } from "react-redux";
+import Description from "./Description";
 
 const AstroReviewsListingTable = () => {
   const [addReview, setAddReview] = useState(false);
   const [updateReview, setUpdateReview] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
+  const [description, setDescription] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
@@ -30,7 +32,6 @@ const AstroReviewsListingTable = () => {
     }
   }, [fetchData]);
 
- 
   // Toggle function for adding a review
   const toggleAddReviews = (coachId) => {
     setSelectedRow(consultantId);
@@ -92,6 +93,11 @@ const AstroReviewsListingTable = () => {
     );
   };
 
+  const toggleDescription = (row) => {
+    setDescription(!description);
+    setSelectedRow(row);
+  };
+
   // Memoized columns definition for the table
   const columns = useMemo(
     () => [
@@ -103,14 +109,20 @@ const AstroReviewsListingTable = () => {
           <div className="actions-cell">
             <span
               className="editIcon"
-              onClick={() => toggleUpdateReviews(row.original)}
+              onClick={() => toggleUpdateReviews(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
             <span className="deleteIcon">
               <Trash
                 className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
+                onClick={() => toggleDeleteComponent(row?.original)}
+              />
+            </span>
+            <span className="secondIcon">
+              <ArrowRight
+                className=""
+                onClick={() => toggleDescription(row?.original)}
               />
             </span>
           </div>
@@ -157,6 +169,14 @@ const AstroReviewsListingTable = () => {
           isOpen={showDeleteComponent}
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
+        />
+      )}
+
+      {description && selectedRow && (
+        <Description
+          isOpen={description}
+          onClose={toggleDescription}
+          Descriptions={selectedRow?.review_text || ""}
         />
       )}
     </div>

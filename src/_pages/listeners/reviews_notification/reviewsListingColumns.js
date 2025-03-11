@@ -1,10 +1,3 @@
-import { format } from "date-fns";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
-
-// coach reviews columns
-
 export const REVIEWSCOLUMN = [
   {
     Header: "Sr.No",
@@ -13,19 +6,16 @@ export const REVIEWSCOLUMN = [
   {
     Header: "User Id",
     accessor: "user_id",
-    Cell: ({ value }) => (
-      <span style={{ color: "#8c57ff" }}>
-        <Link to={`/users_Profile/${value}`}> {value} </Link>
-      </span>
-    ),
+    Cell: ({ value }) => <span style={{ color: "#8c57ff" }}>{value}</span>,
   },
 
   {
     Header: "Rating",
     accessor: "rating",
   },
+
   {
-    Header: "Review Text",
-    accessor: "review_text",
+    Header: "Order Type",
+    accessor: "order_type",
   },
 ];

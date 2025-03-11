@@ -13,8 +13,9 @@ export const REVIEWSCOLUMN = [
     Header: "Rating",
     accessor: "rating",
   },
+
   {
-    Header: "Review Text",
-    accessor: "review_text",
+    Header: "Order Type",
+    accessor: "order_type",
   },
 ];

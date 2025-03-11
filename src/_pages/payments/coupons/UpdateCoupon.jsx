@@ -16,7 +16,7 @@ const UpdateCoupon = ({ isOpen, onClose, selectedRow, refetchData }) => {
     is_active: "",
   });
 
-  const [updateProducts, { isLoading: isUpdating, error }] =
+  const [updateProducts, { isLoading: isUpdating }] =
     useUpdateCouponsMutation();
 
   useEffect(() => {

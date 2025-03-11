@@ -40,6 +40,7 @@ import ReportReason from "./_pages/meta-data/reportReasons/ReportReason";
 import ConsultantServiceRate from "./_pages/meta-data/consultantRate/ConsultantServiceRate";
 import MenuOrders from "./_pages/meta-data/menuOrder/MenuOrders";
 import CountriesList from "./_pages/meta-data/countryList/CountriesList";
+import CoachRate from "./_pages/meta-data/coachRate/CoachRate";
 
 // QD TRIPS
 import QdList from "./_pages/masterComponents/QDTrips/QdList";
@@ -136,6 +137,7 @@ const Layout = () => (
           <Route path="/menu-orders" element={<MenuOrders />} />
           <Route path="countries-list" element={<CountriesList />} />
           <Route path="/consultant-notice" element={<ConsultantNotice />} />
+          <Route path="/coach-rate" element={<CoachRate />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="feature-list" element={<FeaturesList />} />

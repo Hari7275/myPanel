@@ -149,13 +149,18 @@ const CoachInfo = () => {
             </p>
           </div>
           <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Experience : </strong> {formData?.experience || "0"}
+            </p>
+          </div>
           <div className="dividerm"></div>
           <div className="info-pair">
             <p className="info-item">
               <strong>Services : </strong> {formData?.services || "N/A"}
             </p>
           </div>
-          <div className="dividerm"></div>
         </div>
       </div>
 

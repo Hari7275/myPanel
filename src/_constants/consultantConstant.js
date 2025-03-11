@@ -54,11 +54,17 @@ export const getCategoryTypes = (value) => {
     case 6:
       return "Live";
     case 7:
-      return "Live Video";
+      return "Live Chat";
     case 8:
       return "Live Audio";
     case 9:
-      return "Live Chat";
+      return "Live Video";
+    case 10:
+      return "Session Chat";
+    case 11:
+      return "Session Audio Call";
+    case 12:
+      return "Session Video Call";
     default:
       return "unknown";
   }

@@ -8,6 +8,7 @@ const AddCoachReviews = ({ isOpen, onClose, coachId }) => {
     user_id: "",
     rating: "",
     review_text: "",
+    order_type: "order",
   });
 
   const [createReview, isloading] = useCreateReviewMutation();
@@ -30,7 +31,7 @@ const AddCoachReviews = ({ isOpen, onClose, coachId }) => {
   };
 
   const handleSubmit = async () => {
-    const { rating, order_id, user_id, review_text } = formData;
+    const { rating, order_id, user_id, review_text, order_type } = formData;
 
     // Final check for rating before submission
     if (rating < 1 || rating > 5) {
@@ -44,6 +45,7 @@ const AddCoachReviews = ({ isOpen, onClose, coachId }) => {
       user_id,
       rating,
       review_text,
+      order_type,
     };
 
     try {
@@ -129,6 +131,20 @@ const AddCoachReviews = ({ isOpen, onClose, coachId }) => {
             placeholder="review_text"
             className="userProfile-input-field"
           />
+        </div>
+        <div className="input-container">
+          <label htmlFor="currency">Order Type</label>
+          <select
+            id="order_type"
+            name="order_type"
+            value={formData.order_type}
+            onChange={handleChange}
+            className="userProfile-input-field"
+            style={{ height: "55px" }}
+          >
+            <option value="order">Order</option>
+            <option value="session">Session</option>
+          </select>
         </div>
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>

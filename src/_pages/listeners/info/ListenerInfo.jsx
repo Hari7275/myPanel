@@ -83,6 +83,9 @@ const ListenerInfo = () => {
               <strong>Consultant Type : </strong>
               {getConsultantTypes(formData?.consultant_type)}
             </p>
+            <p className="info-item">
+              <strong>Experience : </strong> {formData?.experience || "0"}
+            </p>
           </div>
           <div className="dividerm"></div>
 
