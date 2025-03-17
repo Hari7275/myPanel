@@ -21,7 +21,11 @@ const NotificationBell = () => {
     useUpdateNotificationReadCountMutation();
 
   useEffect(() => {
-    if (notificationData) {
+    if (
+      notificationData &&
+      notificationData?.data &&
+      notificationData?.data?.records
+    ) {
       const formatednotification = notificationData?.data?.records?.map(
         (item) => {
           try {

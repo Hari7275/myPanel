@@ -9,6 +9,7 @@ import ListenerOrder from "../orders/ListenerOrder";
 import Wallet from "../wallet/Wallet";
 import ListenerReviewsListingTable from "../reviews_notification/ListenerReviewsListingTable";
 import ListenerSetting from "../listenerSettings/ListenerSetting";
+import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   return (
@@ -26,6 +27,9 @@ const ListenerRightComponent = ({ activeComponent }) => {
           {activeComponent === "ListenerOrder" && <ListenerOrder />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "ListenerSetting" && <ListenerSetting />}
+          {activeComponent === "Profile-Progress" && (
+            <ConlstProfileProgressList />
+          )}
         </div>
       </div>
     </>

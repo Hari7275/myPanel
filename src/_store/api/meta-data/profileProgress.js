@@ -27,7 +27,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
 
     updateProfileProgress: builder.mutation({
       query: ({ id, body }) => ({
-        url: `meta/consultant_rate/admin/update/${id}`,
+        url: `api/v1/consultant/auth/onboard-level/admin/update/${id}`,
         method: "PUT",
         headers: {
           Authorization: "Bearer admin_token",
@@ -47,6 +47,31 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
     //   }),
     //   invalidatesTags: ["consultant"],
     // }),
+
+    //  ****************************** profile progress all api for related to consultant ******************************
+
+    getConsultantProfileProgressList: builder.query({
+      query: (id) => ({
+        url: `api/v1/consultant/auth/consultant-level-progress/admin/get-all-list/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultant"],
+    }),
+
+    updateConsultantProfileProgress: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `api/v1/consultant/auth/consultant-level-progress/admin/update/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultant"],
+    }),
   }),
 });
 
@@ -54,5 +79,7 @@ export const {
   useGetProfileProgressListQuery,
   useCreateProfileProgressMutation,
   useUpdateProfileProgressMutation,
-//   useDeleteCoachRateMutation,
+  //   useDeleteCoachRateMutation,
+  useGetConsultantProfileProgressListQuery,
+  useUpdateConsultantProfileProgressMutation
 } = profileProgressApiSlice;

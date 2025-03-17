@@ -14,8 +14,8 @@ const EditStatus = ({ isOpen, onClose, selectedRow }) => {
     useUpdateStatusMutation();
 
   useEffect(() => {
-    if (fetchData && fetchData.data) {
-      setData(fetchData.data);
+    if (fetchData && fetchData?.data) {
+      setData(fetchData?.data?.filter((item) => item?.is_active == 1));
     } else {
       console.error(
         "API response is null or has an unexpected structure:",

@@ -10,6 +10,7 @@ import Wallet from "../wallet/Wallet";
 import AstroReviewsListingTable from "../reviews_notifications/AstroReviewsListingTable";
 import AstrologerGifts from "../Gifts/AstrologerGifts";
 import AstrologerSetting from "../astrologerSettings/AstrologerSetting";
+import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -29,6 +30,9 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           )}
           {activeComponent === "AstrologerGifts" && <AstrologerGifts />}
           {activeComponent === "AstrologerSetting" && <AstrologerSetting />}
+          {activeComponent === "Profile-Progress" && (
+            <ConlstProfileProgressList />
+          )}
         </div>
       </div>
     </>

@@ -69,6 +69,15 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           <span>review & notifications</span>
         </div>
 
+        <div
+          className={`profile-link ${
+            activeComponent === "Profile-Progress" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Profile-Progress")}
+        >
+          <span>Profile Progress</span>
+        </div>
+
         {/* <div
           className={`profile-link ${
             activeComponent === "ListenerSetting" ? "active" : ""

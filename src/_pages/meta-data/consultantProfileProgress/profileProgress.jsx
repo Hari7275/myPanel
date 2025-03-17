@@ -20,7 +20,7 @@ const ProfileProgress = () => {
   // fetching api
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
     }
   }, [fetchData]);

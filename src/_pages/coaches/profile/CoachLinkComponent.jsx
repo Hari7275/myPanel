@@ -97,6 +97,15 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
         >
           <span>Live Stream</span>
         </div>
+
+        <div
+          className={`profile-link ${
+            activeComponent === "Profile-Progress" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Profile-Progress")}
+        >
+          <span>Profile Progress</span>
+        </div>
       </header>
     </>
   );

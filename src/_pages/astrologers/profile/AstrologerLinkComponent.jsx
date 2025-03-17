@@ -76,8 +76,16 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
         >
           <span>Gifts</span>
         </div>
-        {/* 
+
         <div
+          className={`profile-link ${
+            activeComponent === "Profile-Progress" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Profile-Progress")}
+        >
+          <span>Profile Progress</span>
+        </div>
+        {/* <div
           className={`profile-link ${
             activeComponent === "AstrologerSetting" ? "active" : ""
           }`}

@@ -5,6 +5,7 @@ import {
   useUpdateProfileReviewDetailsMutation,
 } from "../../_store/api";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const AdminUpdateDetails = ({ consultantId }) => {
   const {
@@ -16,6 +17,7 @@ const AdminUpdateDetails = ({ consultantId }) => {
   });
 
   const [updateProfileReviewDetails] = useUpdateProfileReviewDetailsMutation();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     description: "",
@@ -67,6 +69,9 @@ const AdminUpdateDetails = ({ consultantId }) => {
       }
 
       toast.success(response?.message || "Information updated successfully!");
+      setTimeout(() => {
+        navigate("/profile-review");
+      }, 500);
     } catch (error) {
       toast.error(
         error?.message || "Error updating profile. Please try again."
@@ -167,11 +172,12 @@ const AdminUpdateDetails = ({ consultantId }) => {
             <select
               id="status"
               name="status"
-              value={formData.status}
+              value={formData?.status}
               onChange={handleChange}
               className="userProfile-input-field"
               style={{ height: "55px" }}
             >
+              <option>Select Status</option>
               <option value="approved">Approved</option>
               <option value="rejected">Rejected</option>
             </select>

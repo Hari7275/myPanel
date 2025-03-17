@@ -11,6 +11,7 @@ import CoachOrder from "../orders/CoachOrders";
 import CoachGifts from "../Gifts/CoachGifts";
 import CoachSetting from "../coachSettings/CoachSetting";
 import LiveStream from "../liveStream/LiveStream";
+import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 
 const CoachRightComponent = ({ activeComponent }) => {
   return (
@@ -28,6 +29,9 @@ const CoachRightComponent = ({ activeComponent }) => {
           {activeComponent === "CoachGifts" && <CoachGifts />}
           {activeComponent === "CoachSetting" && <CoachSetting />}
           {activeComponent === "LiveStream" && <LiveStream />}
+          {activeComponent === "Profile-Progress" && (
+            <ConlstProfileProgressList />
+          )}
         </div>
       </div>
     </>
