@@ -3,8 +3,8 @@ import apiSlice from "../api";
 export const coachRateApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCoachRateList: builder.query({
-      query: () => ({
-        url: `meta/consultant_rate/admin/all?page=1&limit=10`,
+      query: ({ page, size }) => ({
+        url: `meta/consultant_rate/admin/all?page=${page}&limit=${size}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

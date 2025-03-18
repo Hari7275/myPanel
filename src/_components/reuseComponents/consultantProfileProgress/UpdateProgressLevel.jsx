@@ -9,7 +9,7 @@ const UpdateProgressLevel = ({ isOpen, onClose, selectedRow }) => {
     status: selectedRow?.status || "",
   });
 
-  console.log("selectedRow", selectedRow);
+ 
 
   const [updateService, { isLoadng: isUpdating, error }] =
     useUpdateConsultantProfileProgressMutation();

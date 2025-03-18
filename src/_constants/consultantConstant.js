@@ -140,16 +140,21 @@ export const getFetaureLabel = (value) => {
     case 5:
       return "Private Call";
     case 6:
-      return "Live Chat";
+      return "Live";
     case 7:
       return "Live Chat";
-
     case 8:
-      return "Live Audio Call";
+      return "Live Audio";
     case 9:
-      return "Live Video Call";
+      return "Live Video";
+    case 10:
+      return "Session Chat";
+    case 11:
+      return "Session Audio Call";
+    case 12:
+      return "Session Video Call";
     default:
-      return "Unknown";
+      return "unknown";
   }
 };
 

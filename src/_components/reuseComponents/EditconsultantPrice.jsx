@@ -14,8 +14,6 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
     id: null,
   });
 
-  console.log("selectedRow", selectedRow.id);
-
   // Prefill formData with selectedRow values when modal opens
   useEffect(() => {
     if (selectedRow) {
@@ -45,8 +43,6 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
       commission: formData?.commission,
       consultant_id: formData?.consultant_id,
     };
-
-    console.log("Payload being sent:", payload);
 
     try {
       const response = await UpdatePricePlan({

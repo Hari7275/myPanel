@@ -25,7 +25,7 @@ export const PRICECHARTCOLUMN = [
   {
     Header: "Category",
     accessor: "category",
-    Cell:PriceCategoryCell,
+    // Cell:PriceCategoryCell,
   },
   {
     Header: "Current Price",

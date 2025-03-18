@@ -6,12 +6,18 @@ import { useGetConsultantsPriceQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
+import { useSearchParams } from "react-router-dom";
 
 const AstrologerPriceListingTable = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
+  const [searchParams] = useSearchParams();
+
+  const url = window.location.href;
+
+  console.log("window.location.href", url.split("?"));
 
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData

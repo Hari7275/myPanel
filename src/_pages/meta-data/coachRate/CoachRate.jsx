@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHRATECOLUMN } from "./coachRateColumn";
 import { Pencil, Trash } from "lucide-react";
 import AddCoachRate from "./AddCoachRate";
@@ -16,10 +17,16 @@ const CoachRate = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // calling api for listing data and deleting data
 
-  const { data: fetchData } = useGetCoachRateListQuery();
+  const { data: fetchData } = useGetCoachRateListQuery({
+    page,
+    size: pageSize,
+  });
   const [deleteService] = useDeleteCoachRateMutation();
 
   // fetching api
@@ -29,6 +36,8 @@ const CoachRate = () => {
       setData(fetchData?.data?.records);
     }
   }, [fetchData]);
+
+  const totalPage = fetchData?.data?.pagination?.totalPages;
 
   //  add service
   const toggleAddService = () => {
@@ -105,12 +114,24 @@ const CoachRate = () => {
 
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={data}
         includeActions={false}
         tableTitle=" Consultant Service Rate"
         AddPackageButton={AddPackageButton}
+      /> */}
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        tableTitle="Astrologer"
+        includeActions={false}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
       />
       {addService && (
         <AddCoachRate isOpen={addService} onClose={toggleAddService} />

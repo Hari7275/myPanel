@@ -106,6 +106,14 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
         >
           <span>Profile Progress</span>
         </div>
+        <div
+          className={`profile-link ${
+            activeComponent === "session-slot" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("session-slot")}
+        >
+          <span>Session Appointment</span>
+        </div>
       </header>
     </>
   );

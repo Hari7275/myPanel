@@ -48,6 +48,20 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+    // *********************************** Appointment session slot  **********************************
+
+    getSessionSlot: builder.query({
+      query: ({ consultantId, page, size }) => ({
+        // url: `api/v1/consultant/profile/appointment/admin/${consultantId}?page=1&size=3`,
+        url: `api/v1/consultant/profile/appointment/admin/${consultantId}?page=${page}&size=${size}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -56,4 +70,5 @@ export const {
   useUpdateConsultantPriceStatusMutation,
   useUpdateConsultantPriceChartMutation,
   useGetConsultantsWalletQuery,
+  useGetSessionSlotQuery,
 } = consultantsPriceApiSlice;

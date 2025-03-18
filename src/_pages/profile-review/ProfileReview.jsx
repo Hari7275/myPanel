@@ -31,7 +31,7 @@ const ProfileReview = () => {
         <div
           style={{
             width: "65%",
-            height: "600px",
+            height: "88%",
             overflowY: "auto",
             boxSizing: "border-box",
           }}

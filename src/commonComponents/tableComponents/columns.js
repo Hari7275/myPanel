@@ -430,34 +430,6 @@ export const COLUMNORDER = [
   },
 ];
 
-// coach price chart
-export const PRICECHARTCOLUMN = [
-  {
-    Header: "Feature",
-    accessor: "feature",
-  },
-  {
-    Header: "Category",
-    accessor: "category",
-  },
-  {
-    Header: "Current Price",
-    accessor: "current_price",
-  },
-  {
-    Header: "Discount Price",
-    accessor: "discount_price",
-  },
-  {
-    Header: "Commission",
-    accessor: "commission",
-  },
-  {
-    Header: "Status",
-    accessor: "status",
-  },
-];
-
 export const WALLETCHARTCOLUMN = [
   {
     Header: "Listeners Id",
@@ -621,4 +593,3 @@ export const NOTIFICATIONCOLUMN = [
     ),
   },
 ];
- 

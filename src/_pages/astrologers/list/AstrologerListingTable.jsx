@@ -8,6 +8,7 @@ import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
+import { useSearchParams } from "react-router-dom";
 
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -20,6 +21,7 @@ const AstrologerListingTable = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
@@ -29,6 +31,10 @@ const AstrologerListingTable = () => {
     phone,
     consultant_type: 1,
   });
+
+  const setQueryParams = (id) => {
+    setSearchParams({ userId: id });
+  };
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -63,7 +69,7 @@ const AstrologerListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to="/astrologer_Profile">
+            <Link to={`/astrologer_Profile?${row?.original?.id}`}>
               <span
                 title="view details"
                 className="secondIcon"
@@ -73,9 +79,28 @@ const AstrologerListingTable = () => {
                   width: "35px",
                 }}
               >
+                {/* <ArrowRight
+                  className="iconSmall"
+                  onClick={
+                    (() => handleActionClick(row.original);
+                     setQueryParams())
+                  }
+                /> */}
+
+                {/* <ArrowRight
+                  className="iconSmall"
+                  onClick={() => {
+                    handleActionClick(row.original);
+                    setQueryParams();
+                  }}
+                /> */}
+
                 <ArrowRight
                   className="iconSmall"
-                  onClick={() => handleActionClick(row.original)}
+                  onClick={() => {
+                    handleActionClick(row.original);
+                    setQueryParams(row.original.id);
+                  }}
                 />
               </span>
             </Link>
