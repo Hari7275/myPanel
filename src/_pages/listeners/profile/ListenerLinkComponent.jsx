@@ -78,14 +78,14 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           <span>Profile Progress</span>
         </div>
 
-        <div
+        {/* <div
           className={`profile-link ${
             activeComponent === "session-slot" ? "active" : ""
           }`}
           onClick={() => onComponentChange("session-slot")}
         >
           <span>Session Appointment</span>
-        </div>
+        </div> */}
         
 
         {/* <div

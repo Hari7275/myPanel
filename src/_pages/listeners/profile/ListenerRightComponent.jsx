@@ -10,7 +10,7 @@ import Wallet from "../wallet/Wallet";
 import ListenerReviewsListingTable from "../reviews_notification/ListenerReviewsListingTable";
 import ListenerSetting from "../listenerSettings/ListenerSetting";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
-import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
+// import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   return (
@@ -31,7 +31,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
           {activeComponent === "Profile-Progress" && (
             <ConlstProfileProgressList />
           )}
-          {activeComponent === "session-slot" && <SessionSlot />}
+          {/* {activeComponent === "session-slot" && <SessionSlot />} */}
         </div>
       </div>
     </>

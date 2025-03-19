@@ -139,8 +139,10 @@
   text-transform: capitalize;
   font-weight: normal !important;
   letter-spacing: 0.3px;
-  padding: 7px 2px;
+  padding: 8px 12px;
   box-shadow: none !important;
+  border: none;
+  border-radius: 20px;
 }
 
 /* css for social links */
@@ -229,4 +231,47 @@
     top: 2px;
     right: 2px;
   }
+}
+
+.status-btn {
+  border: none;
+  font-family: "Montserrat", sans-serif;
+  font-size: 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 7px 2px;
+  text-transform: capitalize;
+  letter-spacing: 0.8px;
+  padding: 8px 12px;
+  box-shadow: none !important;
+  border: none;
+  border-radius: 20px;
+}
+
+.available {
+  background-color: green;
+  color: white;
+}
+
+.offline {
+  background-color: gray;
+  color: white;
+}
+
+.busy {
+  background-color: rgb(255, 0, 0);
+  color: white;
+}
+
+.live {
+  background-color: rgb(219, 186, 22);
+  color: white;
+}
+
+.unknown {
+  background-color: black;
+  color: white;
 }

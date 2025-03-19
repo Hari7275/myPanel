@@ -4,7 +4,7 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getConsultantsPrice: builder.query({
       query: (consultantId) => ({
-        url: `api/v1/consultant/profile/consultant-price/admin/price-list/${consultantId}`,
+        url: `api/v1/consultant/profile/consultant-price-list/admin/price-list/${consultantId}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -15,7 +15,7 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
 
     updateConsultantPriceStatus: builder.mutation({
       query: ({ status, id }) => ({
-        url: `/api/v1/consultant/profile/consultant-price/admin/update-status/${status}/${id}`,
+        url: `/api/v1/consultant/profile/consultant-price-list/admin/update-status/${status}/${id}`,
         method: "PUT",
         headers: {
           Authorization: "Bearer admin_token",
@@ -28,7 +28,7 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
 
     updateConsultantPriceChart: builder.mutation({
       query: ({ id, body }) => ({
-        url: `/api/v1/consultant/profile/consultant-price/admin/update-price/${id}`,
+        url: `/api/v1/consultant/profile/consultant-price-list/admin/update-price/${id}`,
         method: "PUT",
         body,
         headers: {

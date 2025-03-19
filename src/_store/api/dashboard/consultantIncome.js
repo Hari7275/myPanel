@@ -4,7 +4,7 @@ export const consultantsIncome = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getFluteIncome: builder.query({
       query: () => ({
-        url: `user/profile/admin/dashboard-Details`,
+        url: `user/profile/admin/dashboard-details`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -70,7 +70,7 @@ export const consultantsIncome = apiSlice.injectEndpoints({
 
     getFluteRefferalAmount: builder.query({
       query: () => ({
-        url: `user/profile/admin/flute-dicount-details`,
+        url: `user/profile/admin/flute-discount-details`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

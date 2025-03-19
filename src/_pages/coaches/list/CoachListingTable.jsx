@@ -84,12 +84,21 @@ const CoachListingTable = () => {
                 />
               </span>
             </Link>
-            <span className="editIcon">
+            {/* <span className="editIcon">
               <Pencil
                 className="iconSmall"
                 onClick={() => toggleEditStatus(row?.original?.id)}
               />
-            </span>
+            </span> */}
+
+            {[3, 4, 5].includes(row?.original?.status) && (
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleEditStatus(row.original.id)}
+                />
+              </span>
+            )}
           </div>
         ),
       },

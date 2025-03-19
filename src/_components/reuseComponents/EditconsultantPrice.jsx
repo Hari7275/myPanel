@@ -4,6 +4,7 @@ import ReactModal from "react-modal";
 import { UpdateInputField } from "../../_components/ui/inputForm";
 
 import { useUpdateConsultantPriceChartMutation } from "../../_store/api";
+import toast from "react-hot-toast";
 
 const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
@@ -19,8 +20,8 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
     if (selectedRow) {
       setFormData({
         current_price: Number(selectedRow.current_price) || "",
-        discount_price: selectedRow.discount_price || "",
-        commission: selectedRow.commission || "",
+        discount_price: Number(selectedRow.discount_price) || "",
+        commission: Number(selectedRow.commission) || "",
         consultant_id: selectedRow.consultant_id || "",
         id: selectedRow?.id,
       });
@@ -39,9 +40,9 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
     const payload = {
       // id: formData?.id,
       current_price: Number(formData?.current_price),
-      discount_price: formData?.discount_price,
-      commission: formData?.commission,
-      consultant_id: formData?.consultant_id,
+      discount_price: Number(formData?.discount_price),
+      commission: Number(formData?.commission),
+      consultant_id: Number(formData?.consultant_id),
     };
 
     try {
@@ -49,6 +50,18 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
         id: formData?.id,
         body: payload,
       });
+
+      if (response?.data?.status == false) {
+        toast.error(response?.data?.message);
+        console.log("response?.data?.message", response?.data?.message);
+        return;
+      }
+
+      if (response?.data?.status === true) {
+        toast.success(response?.data?.message);
+        onClose();
+      }
+
       console.log("Response from API:", response);
       onClose();
     } catch (error) {

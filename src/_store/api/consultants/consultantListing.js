@@ -39,6 +39,20 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+    // ******************************** service status *******************************************
+
+    getConsultantsServiceStatus: builder.query({
+      query: ({ id }) => ({
+        // url: `api/v1/consultant/profile/service-status/admin/${id}`,
+        url: `api/v1/consultant/profile/service-status/admin/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -46,4 +60,5 @@ export const {
   useGetConsultantsListQuery,
   useUpdateStatusMutation,
   useGetConsultantsSettingsQuery,
+  useGetConsultantsServiceStatusQuery,
 } = consultantsApiSlice;

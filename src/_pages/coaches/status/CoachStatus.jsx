@@ -1,19 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useGetConsultantsServiceStatusQuery } from "../../../_store/api";
+import { useSelector } from "react-redux";
+import { getFetaureLabel } from "../../../_constants/consultantConstant";
 
-const CoachStatus = ({ listenerType }) => {
-  const [status, setStatus] = useState({
-    id: "Id",
-    anonymous_call: "unavailable",
-    audio_call: "available",
-    chat: "unavailable",
-    private_call: "available",
-    video_call: "available",
+const availableStatus = {
+  0: "Offline",
+  1: "Available",
+  2: "Busy",
+  3: "Live",
+};
+
+const CoachStatus = () => {
+  const [data, setData] = useState();
+  const consultantId = useSelector((state) => state.consultant.consultantData);
+
+  const { data: fetchData, isLoading } = useGetConsultantsServiceStatusQuery({
+    id: consultantId,
   });
 
-  const getButtonClassName = (statusValue) =>
-    statusValue === "available"
-      ? "statusIcon_active activeStatus"
-      : "statusIcon-inactive inactiveStatus";
+  useEffect(() => {
+    if (fetchData) {
+      setData(fetchData?.data);
+    }
+  }, [fetchData]);
+  console.log("data......", data);
+  // console.log("consultantId", consultantId);
+
+  // Check if type 6 has status 1
+  const isLiveMode = data?.some(
+    (item) => item?.type === 6 && item.status === 1
+  );
+
+  const getButtonClassName = (statusValue) => {
+    const finalStatus = isLiveMode ? 3 : statusValue;
+    switch (finalStatus) {
+      case 3:
+        return "status-btn live"; // yellow (Live mode)
+      case 0:
+        return "status-btn offline"; // Gray
+      case 2:
+        return "status-btn busy"; // Orange
+      case 1:
+        return "status-btn available"; // Red
+      default:
+        return "status-btn unknown";
+    }
+  };
 
   return (
     <div className="card">
@@ -21,84 +53,25 @@ const CoachStatus = ({ listenerType }) => {
       <div className="dividerm"></div>
 
       <footer className="card-foote">
-        {!listenerType && (
-          <>
-            <div className="info-pair">
-              <p className="info-item">
-                <strong>Anonymous Call :</strong>
-              </p>
-              <p className="info-item">
-                <button className={getButtonClassName(status.anonymous_call)}>
-                  {status.anonymous_call}
-                </button>
-              </p>
-            </div>
-            <div className="dividerm"></div>
-          </>
-        )}
-
-       
-            <div className="card-footer-content">
-              <div className="info-pair">
-                <p className="info-item">
-                  <strong>Chat :</strong>
-                </p>
-                <p className="info-item">
-                  <button className={getButtonClassName(status.chat)}>
-                    {status.chat}
-                  </button>
-                </p>
-              </div>
-            </div>
-            <div className="dividerm"></div>
-          
-
-        <div className="card-footer-content">
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Audio Call :</strong>
-            </p>
-            <p className="info-item">
-              <button className={getButtonClassName(status.audio_call)}>
-                {status.audio_call}
-              </button>
-            </p>
-          </div>
-        </div>
-        <div className="dividerm"></div>
-
-       
-            <div className="card-footer-content">
-              <div className="info-pair">
-                <p className="info-item">
-                  <strong>Video Call :</strong>
-                </p>
-                <p className="info-item">
-                  <button className={getButtonClassName(status.video_call)}>
-                    {status.video_call}
-                  </button>
-                </p>
-              </div>
-            </div>
-            <div className="dividerm"></div>
-          
-
-        {!listenerType && (
+        {data?.map((status) => (
           <>
             <div className="card-footer-content">
               <div className="info-pair">
                 <p className="info-item">
-                  <strong>Private Call :</strong>
+                  <strong>{getFetaureLabel(status?.type)}</strong>
                 </p>
                 <p className="info-item">
-                  <button className={getButtonClassName(status.private_call)}>
-                    {status.private_call}
+                  <button className={getButtonClassName(status.status)}>
+                    {isLiveMode
+                      ? "Live"
+                      : availableStatus[status.status] || "Unknown"}
                   </button>
                 </p>
               </div>
             </div>
+            <div className="dividerm"></div>
           </>
-        )}
+        ))}
       </footer>
     </div>
   );
