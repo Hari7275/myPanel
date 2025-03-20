@@ -74,6 +74,12 @@ import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
 import ProfileReview from "./_pages/profile-review/ProfileReview";
 import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/ConsultantReviewList";
 
+// SupportSection
+import SupportSection from "./_pages/masterComponents/support/SupportSection";
+import SupportQuestion from "./_pages/masterComponents/support/supportQuestion/SupportQuestion";
+import ExecutiveList from "./_pages/masterComponents/support/executiveSection/ExecutiveList";
+import UserSupportRequest from "./_pages/masterComponents/support/userSupportRequest/UserSupportRequest";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -172,6 +178,13 @@ const Layout = () => (
             element={<ProfileReview />}
           />
           <Route path="profile-review" element={<ConsultantReviewList />} />
+
+          {/* *************************************************SupportSection */}
+
+          <Route path="user-support" element={<SupportSection />} />
+          <Route path="support-question" element={<SupportQuestion />} />
+          <Route path="Support-executive" element={<ExecutiveList />} />
+          <Route path="user-support-request" element={<UserSupportRequest />} />
         </Routes>
       </section>
     </div>

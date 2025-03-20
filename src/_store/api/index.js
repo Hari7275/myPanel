@@ -66,3 +66,8 @@ export * from "../api/consultantNotice/consultantNotice";
 // data for consultant update request review
 
 export * from "../api/consultantReviewList/ReviewList";
+
+// data for  support question api
+
+export * from "../api/supportSection/supportQuestion";
+export * from "../api/supportSection/supportExecutive";

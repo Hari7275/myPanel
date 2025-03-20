@@ -19,9 +19,9 @@ const UserSubscription = () => {
   } = useGetUserSubscriptionListQuery(userId);
 
   useEffect(() => {
-    if (fetchData && fetchData.data) { 
+    if (fetchData && fetchData.data) {
       setData([fetchData.data]);
-    } else { 
+    } else {
       setData([]);
     }
   }, [fetchData]);
@@ -79,7 +79,7 @@ const UserSubscription = () => {
             <Description
               isOpen={description}
               onClose={toggleDescription}
-              Descriptions={selectedRow.description || ""}
+              Descriptions={selectedRow?.description || ""}
             />
           )}
         </>
