@@ -7,6 +7,7 @@ import UpdateSupportRequest from "./UpdateSupportRequest";
 
 import Description from "../../../users/subscription/Description";
 import { useGetUserSupportRequestQuery } from "../../../../_store/api";
+import { debounce } from "lodash";
 
 const UserSupportRequest = () => {
   const [updateData, setUpdateData] = useState(false);
@@ -14,9 +15,14 @@ const UserSupportRequest = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const [description, setDescription] = useState(false);
+  const [status, setStatus] = useState("");
+  const [userId, setUserId] = useState("");
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetUserSupportRequestQuery();
+  const { data: fetchData } = useGetUserSupportRequestQuery({
+    status,
+    userId,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -43,12 +49,14 @@ const UserSupportRequest = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {row.original?.status == 1 && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
 
           <span
             title="view description"
@@ -65,6 +73,46 @@ const UserSupportRequest = () => {
     },
   ]);
 
+  // Apply debounce to search handlers
+  const debouncedSearchStatus = debounce((value) => setStatus(value), 500);
+  const debouncedSearchConsultantId = debounce(
+    (value) => setUserId(value),
+    500
+  );
+
+  const handleStatusSearch = (e) => {
+    debouncedSearchStatus(e?.target?.value);
+  };
+
+  const handleConsultantIdSearch = (e) => {
+    debouncedSearchConsultantId(e?.target?.value);
+  };
+
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by User Id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
+
+      <input
+        className="inputBox"
+        placeholder="Search by Status"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleStatusSearch}
+      />
+    </div>
+  );
   return (
     <>
       <CommonTable
@@ -72,6 +120,7 @@ const UserSupportRequest = () => {
         data={data}
         includeActions={false}
         tableTitle="User Support Request"
+        customFilterComponent={customFilterComponent}
       />
 
       {updateData && (

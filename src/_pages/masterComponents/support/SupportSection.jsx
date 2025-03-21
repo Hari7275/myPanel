@@ -28,11 +28,13 @@ const SupportSection = () => {
 
         <div className="category-card-container-grid">
           <CategoryCard link="/support-question" label="Support Question" />
-          <CategoryCard link="/Support-executive" label="Support Executive" />
+
           <CategoryCard
             link="/user-support-request"
             label="User Support Request"
           />
+          {/* <CategoryCard link="/Support-executive" label="Support Executive" /> */}
+          <CategoryCard label="Support Executive" />
         </div>
       </div>
     </>

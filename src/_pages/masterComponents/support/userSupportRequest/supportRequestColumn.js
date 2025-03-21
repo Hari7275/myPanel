@@ -5,19 +5,21 @@ export const SUPPORTREQUESTCOLUMN = [
     Header: "Id",
     accessor: "id",
   },
-  {
-    Header: "Support Issue Id",
-    accessor: "support_issue_id",
-  },
-  {
-    Header: "Order Id",
-    accessor: "order_id",
-  },
 
   {
     Header: "User Id",
     accessor: "user_id",
   },
+
+  {
+    Header: "Order Id",
+    accessor: "order_id",
+  },
+  {
+    Header: "Support Issue Id",
+    accessor: "support_issue_id",
+  },
+
   {
     Header: "Query Message",
     accessor: "query_message",
@@ -41,8 +43,8 @@ export const SUPPORTREQUESTCOLUMN = [
     accessor: "status",
     Cell: ({ value }) => {
       if (value === 1) return "Open";
-      if (value === 2) return "Close";
-      if (value === 3) return "Delete";
+      if (value === 2) return "Closed";
+      if (value === 3) return "Deleted";
       return "Unknown";
     },
   },

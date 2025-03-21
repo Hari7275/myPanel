@@ -300,17 +300,17 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-group">
-            <div
-              className={`menu-item ${
-                activeItem === "user-support" ? "active" : ""
-              }`}
-              onClick={() => handleItemClick("user-support")}
-            >
-              <Link to="/user-support">
+            <Link to="/user-support">
+              <div
+                className={`menu-item ${
+                  activeItem === "user-support" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("user-support")}
+              >
                 <PhotoCameraFrontOutlinedIcon />
                 <span>Support</span>
-              </Link>
-            </div>
+              </div>
+            </Link>
 
             <div
               className={`menu-item ${

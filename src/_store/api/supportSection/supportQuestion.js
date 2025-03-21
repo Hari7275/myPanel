@@ -48,8 +48,8 @@ export const supportQuestionApiSlice = apiSlice.injectEndpoints({
     //  ************************* user support
 
     getUserSupportRequest: builder.query({
-      query: () => ({
-        url: `/api/v1/user/support/service/ticket/admin/?page=1&size=100`,
+      query: ({ status, userId }) => ({
+        url: `/api/v1/user/support/service/ticket/admin/?page=1&size=100&status=${status}&user_id=${userId}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -78,5 +78,5 @@ export const {
   useUpdateSupportQuestionMutation,
   useDeleteSupportQuestionMutation,
   useGetUserSupportRequestQuery,
-  useUpdateUserSupportRequestMutation
+  useUpdateUserSupportRequestMutation,
 } = supportQuestionApiSlice;
