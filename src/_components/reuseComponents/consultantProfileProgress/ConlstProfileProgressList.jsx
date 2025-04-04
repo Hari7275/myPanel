@@ -52,7 +52,6 @@ const ConlstProfileProgressList = () => {
     },
   ]);
 
- 
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading data.</div>;
 

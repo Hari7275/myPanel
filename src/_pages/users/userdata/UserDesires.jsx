@@ -18,7 +18,7 @@ const UserDesires = ({ usersData, userId }) => {
         new Set(usersData?.data?.desires.map((desire) => desire.id))
       );
     }
-  }, [fetchData, usersData]);
+  }, [fetchData]);
 
   const handleChange = (desireId) => {
     setSelectedDesires((prevSelected) =>
@@ -28,26 +28,30 @@ const UserDesires = ({ usersData, userId }) => {
     );
   };
 
-  const handleSubmit = async () => {
-    if (isUpdating) return; // Prevent multiple submits if the request is still in progress
+  const handleSubmit = async (event) => {
+    // if (isUpdating) return;
+    event.preventDefault();
 
     try {
       const formattedInterests = [...selectedDesires];
 
+      const intrestType = "profile_desires";
+
       const payload = {
         user_id: userId,
         interests: JSON.stringify(formattedInterests),
-        profile_interest_type: "profile_desires",
+        profile_interest_type: intrestType.replace(" "),
       };
 
+      console.log("profile_desires", payload);
       const response = await updateInterests(payload).unwrap();
-      console.log("API Response:", response);
+      // console.log("API Response:", response);
 
-      if (response.status) {
-        toast.success("Desires updated successfully!");
-      } else {
-        toast.error("Failed to update desires.");
-      }
+      // if (response.status) {
+      //   toast.success("Desires updated successfully!");
+      // } else {
+      //   toast.error("Failed to update desires.");
+      // }
     } catch (error) {
       console.error("Error updating desires:", error);
       toast.error("Failed to update desires.");
@@ -84,6 +88,7 @@ const UserDesires = ({ usersData, userId }) => {
         })}
       </div>
       <button
+        type="button"
         onClick={handleSubmit}
         className="fifthButton"
         disabled={isUpdating}

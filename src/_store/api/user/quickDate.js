@@ -15,10 +15,14 @@ export const quickDateApiSlice = apiSlice.injectEndpoints({
 
     // *************************************************** quickDate participants ***********************************************************
 
+    // user/qd/participants/get_participants_by_event/625?page=1&limit=10
     getQDParticipantsList: builder.query({
       query: (id) => ({
-        url: `/user/profile/meetup_participant/get_participants_by_event/${id}?limit=50&page=1`,
+        url: `/user/qd/participants/get_participants_by_event/${id}?limit=150&page=1`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["participants"],
     }),

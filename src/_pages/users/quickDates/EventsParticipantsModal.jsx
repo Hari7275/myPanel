@@ -17,14 +17,14 @@ const EventsParticipantsModal = ({ isOpen, onClose, selectedRow }) => {
 
   useEffect(() => {
     if (fetchData?.data?.records) {
-      const participantsData = fetchData.data.records.flatMap((record) =>
-        record.users_quickdate_events_participants.map((participant) => ({
+      const participantsData = fetchData?.data?.records?.flatMap((record) =>
+        record?.users_quickdate_events_participants?.map((participant) => ({
           ...participant,
           qd_type: record.qd_type,
-          fullName: `${participant.first_name} ${participant.last_name}`,
+          fullName: `${participant?.first_name} ${participant?.last_name}`,
         }))
       );
-      console.log("participant data", participantsData);
+
       setData(participantsData);
     }
   }, [fetchData]);
@@ -32,7 +32,7 @@ const EventsParticipantsModal = ({ isOpen, onClose, selectedRow }) => {
   const description = (
     <p className="info-item">
       <strong style={{ fontSize: "20px" }}>Description: </strong>
-      <span style={{ fontSize: "14px" }}>{selectedRow.description}</span>
+      <span style={{ fontSize: "14px" }}>{selectedRow?.description}</span>
     </p>
   );
 

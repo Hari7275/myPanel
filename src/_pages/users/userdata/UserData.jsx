@@ -33,9 +33,8 @@ const UserData = () => {
 
   useEffect(() => {
     const lifestyle = usersData?.data?.lifestyles || [];
-    const basic = usersData?.data?.basics || [];
 
-    const userInterests = [...lifestyle, ...basic];
+    const userInterests = [...lifestyle];
 
     setSelectedInterests(userInterests);
 
@@ -86,6 +85,9 @@ const UserData = () => {
       interests: JSON.stringify(selectedInterests),
     };
 
+    console.log("interestsData", selectedInterests);
+    console.log("interestsData..........", interestsData);
+
     // Call the mutation
     updateInterests(interestsData).then((response) => {
       handleButtonClick();
@@ -104,6 +106,8 @@ const UserData = () => {
       profile_interest_type: "profile_passion",
       interests: JSON.stringify(selectedPassions), // Send selected passion IDs
     };
+
+    console.log("passionsData", passionsData);
 
     updateInterests(passionsData).then((response) => {
       handleButtonClick();

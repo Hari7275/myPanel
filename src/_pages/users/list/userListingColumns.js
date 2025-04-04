@@ -62,9 +62,9 @@ export const COLUMNS = (toggleModal) => [
   },
 
   {
-    Header: "Last Active",
-    accessor: "last_active",
-    Cell: ({ value }) => format(new Date(value), "P"),
+    Header: "User Type",
+    accessor: "user_type",
+    Cell: ({ value }) => (value == 0 ? "External" : "Internal"),
   },
 
   {

@@ -3,6 +3,7 @@ import { Pencil } from "lucide-react";
 import { useGetUserListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditUserDatingProfileStatus from "./EditUserDatingProfileStatus";
+import EditUserType from "./EditUserType";
 
 const UserDatingStatus = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -10,11 +11,12 @@ const UserDatingStatus = () => {
 
   const [userData, setUserData] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
+  const [showEditUserType, setShowEditUserType] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
   useEffect(() => {
     if (fetchData) {
-      setUserData(fetchData.data);
+      setUserData(fetchData?.data);
     }
   }, [fetchData]);
 
@@ -23,6 +25,11 @@ const UserDatingStatus = () => {
   }
 
   console.log(" dating status ", userData);
+
+  const toggleEditUserType = (row) => {
+    setSelectedRow(row);
+    setShowEditUserType(!showEditUserType);
+  };
 
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
@@ -70,6 +77,49 @@ const UserDatingStatus = () => {
             fontSize: "26px",
           }}
         >
+          User Type Status:
+        </h2>
+
+        {/* <Settings /> */}
+
+        <footer
+          className="userProfile-footer profile-mainContain "
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div>
+            <div className="card-footer-content">
+              <div className="info-pair">
+                <p className="info-item">
+                  <strong>User Type: </strong>
+                  <span>
+                    {userData?.user_type == 0 ? "External" : "Internal"}
+                  </span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="actions-cell">
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditUserType()}
+              />
+            </span>
+          </div>
+        </footer>
+      </div>
+
+      <div className="profile-sub-container  sub-container">
+        <h2
+          className="main-heading "
+          style={{
+            marginBottom: "0px",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "1.2",
+            fontSize: "26px",
+          }}
+        >
           User Dating Status:
         </h2>
 
@@ -101,6 +151,14 @@ const UserDatingStatus = () => {
           </div>
         </footer>
       </div>
+
+      {showEditUserType && (
+        <EditUserType
+          isOpen={showEditUserType}
+          onClose={toggleEditUserType}
+          selectedRow={selectedRow}
+        />
+      )}
 
       {showEditStatus && (
         <EditUserDatingProfileStatus

@@ -91,7 +91,7 @@ const UserLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("UserDatingStatus")}
         >
-          <span>Dating status</span>
+          <span>USer type & Dating status</span>
         </div>
       </header>
     </>

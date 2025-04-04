@@ -8,8 +8,7 @@ const UpdateProgressLevel = ({ isOpen, onClose, selectedRow }) => {
     description: selectedRow?.description || "",
     status: selectedRow?.status || "",
   });
-
- 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const [updateService, { isLoadng: isUpdating, error }] =
     useUpdateConsultantProfileProgressMutation();
@@ -23,6 +22,15 @@ const UpdateProgressLevel = ({ isOpen, onClose, selectedRow }) => {
     }
   }, [selectedRow]);
 
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -30,17 +38,26 @@ const UpdateProgressLevel = ({ isOpen, onClose, selectedRow }) => {
       ...prevData,
       [name]: value,
     }));
+
+    // Clear error message when user starts typing
+    if (name === "description") {
+      setErrorMessage("");
+    }
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
+    // Validation: Check if description is empty
+    if (!formData.description) {
+      setErrorMessage("Description is required.");
+      return;
+    }
     try {
       const response = await updateService({
         id: selectedRow?.id,
         body: formData,
       });
 
-      console.log("response", response);
       if (response?.data?.status == true) {
         toast.success(response?.data?.message);
         onClose();
@@ -87,6 +104,7 @@ const UpdateProgressLevel = ({ isOpen, onClose, selectedRow }) => {
             onChange={handleChange}
             className="info-input"
           />
+          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
         </div>
         <div className="input-container">
           <label htmlFor="feature_name">Status </label>

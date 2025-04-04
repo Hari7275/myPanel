@@ -31,6 +31,18 @@ export const userListingSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+    //****************** */ update user type
+    updateUserType: builder.mutation({
+      query: ({ user_id, body }) => ({
+        url: `user/profile/admin/update-user-type/${user_id}`,
+        method: "PATCH",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -38,4 +50,5 @@ export const {
   useGetUsersListQuery,
   useUpdateUserStatusMutation,
   useUpdateUserDatingStatusMutation,
+  useUpdateUserTypeMutation,
 } = userListingSlice;
