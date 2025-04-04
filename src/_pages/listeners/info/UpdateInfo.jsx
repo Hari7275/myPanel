@@ -48,7 +48,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
 
   useEffect(() => {
     setSelectedLanguage(preselectedLanguage);
-  }, [languagesData, preselectedLanguage]);
+  }, [languagesData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -63,12 +63,17 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const minValidDOB = format(subYears(new Date(), 18), "yyyy-MM-dd");
 
   const handleMultiSelectChange = (name, selectedOptions) => {
+    if (selectedOptions.length > 3) {
+      toast.error("You can only select up to 3 languages.");
+      return;
+    }
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: selectedOptions.map((option) => option?.value),
     }));
 
-    if (name === "languages") {
+    if (name == "languages") {
       setSelectedLanguage(selectedOptions);
     }
   };
@@ -83,7 +88,11 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
 
     // Create a copy of formData to modify
-    const dataToSend = { ...formData };
+    const dataToSend = {
+      ...formData,
+      gender: Number(formData.gender), // Ensure gender is a number
+    };
+
     // If language haven't changed, delete the skills key
     if (
       selectedLanguages?.length === preselectedLanguage?.length &&

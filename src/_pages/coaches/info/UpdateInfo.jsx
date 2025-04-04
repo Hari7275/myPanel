@@ -109,6 +109,12 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   };
 
   const handleMultiSelectChange = (name, selectedOptions) => {
+
+    if (selectedOptions.length > 3) {
+      toast.error("You can only select up to 3 languages.");
+      return;
+    }
+    
     setFormData((prevData) => ({
       ...prevData,
       [name]: selectedOptions.map((option) => option.value),
@@ -137,7 +143,10 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
 
     // Create a copy of formData to modify
-    const dataToSend = { ...formData };
+    const dataToSend = {
+      ...formData,
+      gender: Number(formData.gender), // Ensure gender is a number
+    };
 
     // If categories haven't changed, delete the categories key
     if (
