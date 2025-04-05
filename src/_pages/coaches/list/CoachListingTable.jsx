@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -21,6 +22,7 @@ const CoachListingTable = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const navigate = useNavigate();
 
   const {
     data: fetchData,
@@ -58,6 +60,10 @@ const CoachListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    // Use setTimeout or batch it after dispatch
+    setTimeout(() => {
+      navigate(`/coach-profile?${data?.id}`);
+    }, 0);
   };
 
   const columns = useMemo(
@@ -68,22 +74,22 @@ const CoachListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to="/coach-profile">
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
-              >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => handleActionClick(row?.original)}
-                />
-              </span>
-            </Link>
+            {/* <Link to="/coach-profile"> */}
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+            >
+              <ArrowRight
+                className="iconSmall"
+                onClick={() => handleActionClick(row?.original)}
+              />
+            </span>
+            {/* </Link> */}
             {/* <span className="editIcon">
               <Pencil
                 className="iconSmall"

@@ -82,6 +82,9 @@ const AstrologerLeftComponent = () => {
     setShowModal(false);
   };
 
+  if (isLoading) {
+    <span>loaading.....</span>;
+  }
   return (
     <div className="card-container">
       <div className="card">

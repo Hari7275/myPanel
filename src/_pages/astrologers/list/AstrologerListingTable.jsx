@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
@@ -36,6 +36,8 @@ const AstrologerListingTable = () => {
     setSearchParams({ userId: id });
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records.filter(
@@ -58,6 +60,11 @@ const AstrologerListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+
+    setTimeout(() => {
+      navigate(`/astrologer_Profile?${data?.id}`);
+    }, 0);
+
     // localStorage.setItem("currentUserId", data?.id);
   };
 
@@ -69,41 +76,25 @@ const AstrologerListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to={`/astrologer_Profile?${row?.original?.id}`}>
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
+            {/* <Link to={`/astrologer_Profile?${row?.original?.id}`}> */}
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+            >
+              <ArrowRight
+                className="iconSmall"
+                onClick={() => {
+                  handleActionClick(row.original);
+                  setQueryParams(row.original.id);
                 }}
-              >
-                {/* <ArrowRight
-                  className="iconSmall"
-                  onClick={
-                    (() => handleActionClick(row.original);
-                     setQueryParams())
-                  }
-                /> */}
-
-                {/* <ArrowRight
-                  className="iconSmall"
-                  onClick={() => {
-                    handleActionClick(row.original);
-                    setQueryParams();
-                  }}
-                /> */}
-
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => {
-                    handleActionClick(row.original);
-                    setQueryParams(row.original.id);
-                  }}
-                />
-              </span>
-            </Link>
+              />
+            </span>
+            {/* </Link> */}
 
             {[3, 4, 5].includes(row?.original?.status) && (
               <span className="editIcon">
