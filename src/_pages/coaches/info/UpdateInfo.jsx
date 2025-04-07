@@ -12,10 +12,6 @@ import toast from "react-hot-toast";
 
 import { format, subYears } from "date-fns";
 
-//  {
-//    format(new Date(formData.date_of_birth), "dd MMMM yyyy");
-//  }
-
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
     first_name: selectedData?.first_name,
@@ -43,10 +39,12 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
 
   // Define category options from API data
   const categoryOptions =
-    categoryData?.data?.map((category) => ({
-      value: category.id,
-      label: category.category_name,
-    })) || [];
+    categoryData?.data
+      ?.map((category) => ({
+        value: category.id,
+        label: category.category_name,
+      }))
+      .filter((category) => category.value !== 1 && category.value !== 3) || [];
 
   // Define skill options from API data
   const skillOptions =

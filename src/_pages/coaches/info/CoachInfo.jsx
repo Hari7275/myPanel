@@ -24,7 +24,7 @@ const CoachInfo = () => {
   const { data: constantSkills } = useGetCoachSkillsListQuery();
 
   useEffect(() => {
-    console.log("constantData", constantData);
+    // console.log("constantData", constantData);
     if (constantData && constantData?.data) {
       setCategory(constantData?.data);
     } else {
