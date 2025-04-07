@@ -109,12 +109,11 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   };
 
   const handleMultiSelectChange = (name, selectedOptions) => {
-
     if (selectedOptions.length > 3) {
       toast.error("You can only select up to 3 languages.");
       return;
     }
-    
+
     setFormData((prevData) => ({
       ...prevData,
       [name]: selectedOptions?.map((option) => option.value),

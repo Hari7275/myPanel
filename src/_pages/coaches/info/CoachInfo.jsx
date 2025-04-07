@@ -24,10 +24,12 @@ const CoachInfo = () => {
   const { data: constantSkills } = useGetCoachSkillsListQuery();
 
   useEffect(() => {
+    console.log("constantData", constantData);
     if (constantData && constantData?.data) {
       setCategory(constantData?.data);
+    } else {
+      setCategory([]);
     }
-    setCategory([]);
   }, [constantData]);
 
   // fectching data for coach skills
@@ -35,8 +37,9 @@ const CoachInfo = () => {
   useEffect(() => {
     if (constantSkills && constantSkills?.data) {
       setSkills(constantSkills?.data);
+    } else {
+      setSkills([]);
     }
-    setSkills([]);
   }, [constantSkills]);
 
   useEffect(() => {
@@ -57,6 +60,9 @@ const CoachInfo = () => {
   // Helper function to get category names from IDs
 
   const getCategoryNames = (categoryIds) => {
+    console.log("formData?.categories", categoryIds);
+    console.log("category", category);
+
     return categoryIds
       ?.map((id) => category.find((cat) => cat?.id === id)?.category_name)
       .filter((name) => name)
@@ -71,6 +77,7 @@ const CoachInfo = () => {
       .filter((name) => name)
       .join(", ");
   };
+
   return (
     <div className="main-container sub-container">
       <div className="RewardsTxn-container">
