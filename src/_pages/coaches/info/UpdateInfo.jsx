@@ -56,8 +56,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     })) || [];
 
   // Preselect categories that are in both formData and API options
-  const preselectedCategories = categoryOptions.filter((option) =>
-    selectedData.categories.includes(option.value)
+  const preselectedCategories = categoryOptions?.filter((option) =>
+    selectedData.categories?.includes(option.value)
   );
 
   useEffect(() => {
@@ -65,8 +65,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   }, []);
 
   // Preselect skills that are in both formData and API options
-  const preselectedSkills = skillOptions.filter((option) =>
-    selectedData.skills.includes(option.value)
+  const preselectedSkills = skillOptions?.filter((option) =>
+    selectedData?.skills?.includes(option.value)
   );
 
   useEffect(() => {
@@ -77,8 +77,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     if (selectedData) {
       setFormData((prevData) => ({
         ...prevData,
-        categories: selectedData.categories.map((cat) => cat.id),
-        skills: selectedData.skills.map((skill) => skill.id),
+        categories: selectedData.categories?.map((cat) => cat.id),
+        skills: selectedData.skills?.map((skill) => skill.id),
       }));
     }
   }, [selectedData]);
@@ -117,7 +117,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     
     setFormData((prevData) => ({
       ...prevData,
-      [name]: selectedOptions.map((option) => option.value),
+      [name]: selectedOptions?.map((option) => option.value),
     }));
     if (name === "categories") {
       setSelectedCategories(selectedOptions);

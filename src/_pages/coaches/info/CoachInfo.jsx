@@ -24,22 +24,24 @@ const CoachInfo = () => {
   const { data: constantSkills } = useGetCoachSkillsListQuery();
 
   useEffect(() => {
-    if (constantData) {
-      setCategory(constantData.data);
+    if (constantData && constantData?.data) {
+      setCategory(constantData?.data);
     }
+    setCategory([]);
   }, [constantData]);
 
   // fectching data for coach skills
 
   useEffect(() => {
-    if (constantSkills) {
+    if (constantSkills && constantSkills?.data) {
       setSkills(constantSkills?.data);
     }
+    setSkills([]);
   }, [constantSkills]);
 
   useEffect(() => {
     if (fetchdata) {
-      setFormData(fetchdata.data);
+      setFormData(fetchdata?.data);
     }
   }, [fetchdata]);
 
@@ -56,7 +58,7 @@ const CoachInfo = () => {
 
   const getCategoryNames = (categoryIds) => {
     return categoryIds
-      .map((id) => category.find((cat) => cat.id === id)?.category_name)
+      ?.map((id) => category.find((cat) => cat?.id === id)?.category_name)
       .filter((name) => name)
       .join(", ");
   };
@@ -65,7 +67,7 @@ const CoachInfo = () => {
 
   const getSkillsNames = (skillsIds) => {
     return skillsIds
-      .map((id) => skills.find((skill) => skill.id === id)?.skill_name)
+      ?.map((id) => skills?.find((skill) => skill?.id === id)?.skill_name)
       .filter((name) => name)
       .join(", ");
   };
@@ -118,7 +120,7 @@ const CoachInfo = () => {
           <div className="info-pair">
             <p className="info-item">
               <strong>Category : </strong>{" "}
-              {getCategoryNames(formData.categories)}
+              {getCategoryNames(formData?.categories)}
             </p>
             <p className="info-item">
               <strong> Skills : </strong>
