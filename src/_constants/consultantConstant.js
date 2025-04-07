@@ -22,6 +22,10 @@ export const getMaritalStatus = (value) => {
     case 3:
       return "Divorced";
     case 4:
+      return "Separated";
+    case 5:
+      return "Widowed";
+    default:
       return "Status is not defined";
   }
 };
