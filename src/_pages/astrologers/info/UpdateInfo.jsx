@@ -92,14 +92,19 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   };
 
   const handleMultiSelectChange = (name, selectedOptions) => {
-    if (selectedOptions.length > 3) {
+    // Check if the selected options exceed the limit
+    if (name === "languages" && selectedOptions.length > 3) {
       toast.error("You can only select up to 3 languages.");
-      return;
+      return; // Exit early if the limit is exceeded
     }
+
+    // Update the formData state with the selected options
     setFormData((prevData) => ({
       ...prevData,
       [name]: selectedOptions.map((option) => option?.value),
     }));
+
+    // Update the selected state for skills or languages
     if (name === "skills") {
       setSelectedSkills(selectedOptions);
     }

@@ -107,9 +107,9 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   };
 
   const handleMultiSelectChange = (name, selectedOptions) => {
-    if (selectedOptions.length > 3) {
+    if (name === "languages" && selectedOptions.length > 3) {
       toast.error("You can only select up to 3 languages.");
-      return;
+      return; // Exit early if the limit is exceeded
     }
 
     setFormData((prevData) => ({

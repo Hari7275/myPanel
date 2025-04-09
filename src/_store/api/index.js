@@ -55,6 +55,7 @@ export * from "../api/meta-data/menuOrder";
 export * from "../api/meta-data/countryList";
 export * from "../api/meta-data/coachRate";
 export * from "../api/meta-data/profileProgress";
+export * from "../api/meta-data/dashboardOrder";
 
 // data for dashboard
 

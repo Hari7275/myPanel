@@ -30,6 +30,7 @@ import UserPassionOption from "./_pages/masterComponents/userInterests/userPassi
 import PromptQuestionTable from "./_pages/masterComponents/userInterests/userPromptQuestion/PromptQuestionTable";
 import UserDesiresListing from "./_pages/masterComponents/userInterests/userDesires/UserDesiresListing";
 
+// meta section
 import MetaData from "./_pages/meta-data/metaList/MetaData";
 import CoachCategory from "./_pages/meta-data/coachCategory/CoachCategory";
 import LanguageTable from "./_pages/meta-data/languages/LanguageTable";
@@ -42,6 +43,7 @@ import MenuOrders from "./_pages/meta-data/menuOrder/MenuOrders";
 import CountriesList from "./_pages/meta-data/countryList/CountriesList";
 import CoachRate from "./_pages/meta-data/coachRate/CoachRate";
 import ProfileProgress from "./_pages/meta-data/consultantProfileProgress/profileProgress";
+import DashboardOrderList from "./_pages/meta-data/dashboardOrder/DashboardOrderList";
 
 // QD TRIPS
 import QdList from "./_pages/masterComponents/QDTrips/QdList";
@@ -146,6 +148,7 @@ const Layout = () => (
           <Route path="/consultant-notice" element={<ConsultantNotice />} />
           <Route path="/coach-rate" element={<CoachRate />} />
           <Route path="/profile-progress" element={<ProfileProgress />} />
+          <Route path="/dashboard-order" element={<DashboardOrderList />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="feature-list" element={<FeaturesList />} />
