@@ -20,7 +20,6 @@ const UserProfilePhoto = () => {
 
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageStatuses, setImageStatuses] = useState({});
-  const [consultantId, setConsultantId] = useState([]);
 
   useEffect(() => {
     if (fetchData) {
@@ -31,7 +30,7 @@ const UserProfilePhoto = () => {
         status: photo?.status,
       }));
       setImageUrls(urls);
-      console.log("first,,,,", fetchData?.data);
+       
 
       setImageStatuses(
         urls?.reduce((acc, photo) => {
@@ -42,7 +41,7 @@ const UserProfilePhoto = () => {
     }
   }, [fetchData]);
 
-  console.log("first", imageUrls);
+   
 
   const toggleSettingModal = (url) => {
     setSelectedImage(url);

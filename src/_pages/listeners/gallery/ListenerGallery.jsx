@@ -209,6 +209,7 @@ const ListenerGallery = () => {
                         <span>
                           <Download onClick={() => downloadImage(image.url)} />
                         </span>
+                         
                         <span onClick={() => toggleProfilePic(image)}>
                           <CirclePlus />
                         </span>

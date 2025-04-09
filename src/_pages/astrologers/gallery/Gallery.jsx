@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import AstrologerProfilePhotos from "./AstrologerProfilePhoto";
 
 import AstrologerGallery from "./AstrologerGallery";
+import ProfilePhoto from "./consultantPropfilePhoto/ProfilePhoto";
 
 const Gallery = () => {
   const [activeComponent, setActiveComponent] = useState("AstrologerGallery");
@@ -37,6 +38,14 @@ const Gallery = () => {
             >
               <span>Other Photo</span>
             </div>
+            <div
+              className={`profile-link ${
+                activeComponent === "profilePhoto" ? "subactive" : ""
+              }`}
+              onClick={() => handleComponentChange("profilePhoto")}
+            >
+              <span>profile Photo</span>
+            </div>
           </header>
 
           <div>
@@ -45,6 +54,7 @@ const Gallery = () => {
             )}
 
             {activeComponent === "AstrologerGallery" && <AstrologerGallery />}
+            {activeComponent === "profilePhoto" && <ProfilePhoto />}
           </div>
         </div>
       </>

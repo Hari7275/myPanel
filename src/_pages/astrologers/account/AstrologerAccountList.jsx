@@ -26,14 +26,18 @@ const AstrologerAccountList = () => {
     useGetConsultantsPayPalDetailsQuery(consultantId);
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
+    } else {
+      setData([]);
     }
   }, [fetchData]);
 
   useEffect(() => {
-    if (payPalData) {
+    if (payPalData && payPalData?.data) {
       setPaypalData(payPalData?.data);
+    } else {
+      setPaypalData([]);
     }
   }, [payPalData]);
 

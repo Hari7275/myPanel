@@ -18,8 +18,6 @@ const CoachSettings = ({
     setSelectedStatus(currentStatus);
   }, [currentStatus]);
 
- 
-
   const handleSave = async (e) => {
     e.preventDefault();
 
@@ -29,7 +27,7 @@ const CoachSettings = ({
 
     try {
       await updateConsultantGalleryStatus({ id: imageUrl.id, body: payload });
-      onStatusChange(imageUrl, selectedStatus);
+      // onStatusChange(imageUrl, selectedStatus);
       onClose();
     } catch (error) {
       console.error("Failed to update status:", error);

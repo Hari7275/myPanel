@@ -4,8 +4,11 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getBlacklistedUserList: builder.query({
       query: (userId) => ({
-        url: `user/profile/users-blacklist/blocked/${userId}?page=1&limit=100`,
+        url: `user/profile/admin/users-blacklist/blocked/${userId}?page=1&limit=100`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["blacklisted"],
     }),
@@ -14,6 +17,9 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
+        headers: {
+          Authorization: "Bearer internal_token",
+        },
       }),
       invalidatesTags: ["blacklisted"],
     }),
@@ -22,8 +28,11 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
 
     getAvoidedUserList: builder.query({
       query: (userId) => ({
-        url: `user/profile/get-avoided-users/${userId}`,
+        url: `user/profile/admin/get-avoided-users/${userId}`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["avoided"],
     }),
@@ -32,6 +41,9 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `user/profile/delete-user-avoid-list/${id}`,
         method: "DELETE",
+        headers: {
+          Authorization: "Bearer internal_token",
+        },
       }),
       invalidatesTags: ["avoided"],
     }),
@@ -40,8 +52,11 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
 
     getReportedUserList: builder.query({
       query: (userId) => ({
-        url: `user/profile/users-blacklist/reported/${userId}?page=1&limit=10`,
+        url: `user/profile/admin/users-blacklist/reported/${userId}?page=1&limit=10`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["reported"],
     }),
@@ -50,6 +65,9 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
+        headers: {
+          Authorization: "Bearer internal_token",
+        },
       }),
       invalidatesTags: ["reported"],
     }),
@@ -58,8 +76,11 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
 
     getHiddenUserList: builder.query({
       query: (userId) => ({
-        url: `user/profile/users-blacklist/hidden/${userId}?page=1&limit=10`,
+        url: `user/profile/admin/users-blacklist/hidden/${userId}?page=1&limit=10`,
         method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
       }),
       providesTags: ["hidden"],
     }),
@@ -68,6 +89,9 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
+        headers: {
+          Authorization: "Bearer internal_token",
+        },
       }),
       invalidatesTags: ["hidden"],
     }),

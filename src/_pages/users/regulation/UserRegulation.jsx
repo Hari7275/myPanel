@@ -1,17 +1,15 @@
-import React ,{useState} from 'react'
- import AvoidedUser from "./avoideduser/AvoidedUser";
- import UserBlacklisting from "./blacklisting/UserBlacklisting";
-import ReportedUser from "./reporteduser/ReportedUser"
-import HiddenUserListing from './hiddenuser/HiddenUserListing';
-
+import React, { useState } from "react";
+import AvoidedUser from "./avoideduser/AvoidedUser";
+import UserBlacklisting from "./blacklisting/UserBlacklisting";
+import ReportedUser from "./reporteduser/ReportedUser";
+import HiddenUserListing from "./hiddenuser/HiddenUserListing";
 
 const UserRegulation = () => {
-    const [activeComponent , setActiveComponent] = useState("UserBlacklisting")
+  const [activeComponent, setActiveComponent] = useState("UserBlacklisting");
 
-    const handleComponentChange =(component) =>{
-        setActiveComponent(component)
-    }
-
+  const handleComponentChange = (component) => {
+    setActiveComponent(component);
+  };
 
   return (
     <>
@@ -34,17 +32,17 @@ const UserRegulation = () => {
             }`}
             onClick={() => handleComponentChange("UserBlacklisting")}
           >
-            <span>Blacklisted User</span>
+            <span>Blacklisted & reported User</span>
           </div>
 
-          <div
+          {/* <div
             className={`profile-link ${
               activeComponent === "ReportedUser" ? "subactive" : ""
             }`}
             onClick={() => handleComponentChange("ReportedUser")}
           >
             <span>Reported User</span>
-          </div>
+          </div> */}
 
           <div
             className={`profile-link ${
@@ -65,6 +63,6 @@ const UserRegulation = () => {
       </div>
     </>
   );
-}
+};
 
-export default UserRegulation
+export default UserRegulation;

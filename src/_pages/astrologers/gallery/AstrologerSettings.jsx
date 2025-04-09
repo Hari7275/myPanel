@@ -28,7 +28,7 @@ const AstrologerSettings = ({
 
     try {
       await updateConsultantGalleryStatus({ id: imageUrl.id, body: payload });
-      onStatusChange(imageUrl, selectedStatus);
+      // onStatusChange(imageUrl, selectedStatus);
       onClose();
     } catch (error) {
       console.error("Failed to update status:", error);
