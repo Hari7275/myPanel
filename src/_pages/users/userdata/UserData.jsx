@@ -33,8 +33,9 @@ const UserData = () => {
 
   useEffect(() => {
     const lifestyle = usersData?.data?.lifestyles || [];
+    const basic = usersData?.data?.basics || [];
 
-    const userInterests = [...lifestyle];
+    const userInterests = [...lifestyle, ...basic];
 
     setSelectedInterests(userInterests);
 

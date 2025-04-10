@@ -12,6 +12,17 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["dashboard"],
     }),
+    createDashboardOrderList: builder.mutation({
+      query: ({ body }) => ({
+        url: `/meta/dashboard_order/admin/add`,
+        method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["dashboard"],
+    }),
 
     // getConsultantList: builder.query({
     //   query: () => ({
@@ -59,17 +70,17 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
     //   invalidatesTags: ["notice"],
     // }),
 
-    // updateNotice: builder.mutation({
-    //   query: ({ body }) => ({
-    //     url: `/api/v1/consultant/profile/admin/update-notices`,
-    //     method: "PUT",
-    //     body,
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   invalidatesTags: ["notice"],
-    // }),
+    updateDashboardOrderList: builder.mutation({
+      query: ({ body, id }) => ({
+        url: `/meta/dashboard_order/admin/update/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["dashboard"],
+    }),
 
     // updateNoticestatus: builder.mutation({
     //   query: ({ id, body }) => ({
@@ -83,16 +94,17 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
     //   invalidatesTags: ["notice"],
     // }),
 
-    // deleteNotice: builder.mutation({
-    //   query: ({ id }) => ({
-    //     url: `/api/v1/consultant/profile/admin/notices/${id}`,
-    //     method: "DELETE",
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   invalidatesTags: ["notice"],
-    // }),
+    deleteDashboardOrder: builder.mutation({
+      query: ({ id }) => ({
+        // url: `/api/v1/consultant/profile/admin/notices/${id}`,
+        url: `/meta/dashboard_order/admin/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["dashboard"],
+    }),
 
     // deleteAssigneConsultantNotice: builder.mutation({
     //   query: (body) => ({
@@ -110,6 +122,9 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetDashboardOrderListQuery,
+  useCreateDashboardOrderListMutation,
+  useDeleteDashboardOrderMutation,
+  useUpdateDashboardOrderListMutation,
 
   //   useGetConsultantAssignedNoticeListQuery,
   //   useGetConsultantListQuery,

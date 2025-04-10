@@ -4,7 +4,7 @@ import { Trash, UserRound, Download, Settings, CirclePlus } from "lucide-react";
 import { saveAs } from "file-saver";
 import { useSelector } from "react-redux";
 
-import ListenerSettings from "./ListenerSettings"
+import ListenerSettings from "./ListenerSettings";
 import ImageCropper from "./ImageCropper";
 import { useGetGalleryListQuery } from "../../../_store/api";
 import {
@@ -209,7 +209,7 @@ const ListenerGallery = () => {
                         <span>
                           <Download onClick={() => downloadImage(image.url)} />
                         </span>
-                         
+
                         <span onClick={() => toggleProfilePic(image)}>
                           <CirclePlus />
                         </span>

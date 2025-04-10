@@ -74,7 +74,7 @@ const UpdateProfileProgress = ({ isOpen, onClose, selectedRow }) => {
             backgroundColor: "#f0f0f0",
           }}
         >
-          Edit Update level
+          Edit Update level 
         </h2>
 
         <div className="input-container">

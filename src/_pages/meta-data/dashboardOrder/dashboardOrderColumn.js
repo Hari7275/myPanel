@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Switch } from "@mui/material";
-import { useUpdateNoticestatusMutation } from "../../../_store/api";
+import { useUpdateDashboardOrderListMutation } from "../../../_store/api";
 
 const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.status);
-  const [updateStatus, { isLoading }] = useUpdateNoticestatusMutation();
+  const [updateStatus, { isLoading }] = useUpdateDashboardOrderListMutation();
 
   const handleToggle = async () => {
-    const newStatus = status == "ACTIVE" ? "INACTIVE" : "ACTIVE";
+    const newStatus = status == 1 ? 2 : 1;
     setStatus(newStatus);
 
     try {
@@ -22,7 +22,7 @@ const StatusSwitch = ({ row }) => {
   };
   return (
     <Switch
-      checked={status === "ACTIVE"}
+      checked={status === 1}
       onChange={handleToggle}
       disabled={isLoading}
     />

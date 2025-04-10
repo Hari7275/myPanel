@@ -63,33 +63,37 @@ const CoachProfilePhoto = () => {
       <div className="ProfileData-card">
         <h3 className="ProfileData-subheading">Profile Photos</h3>
         <div className="gallery-maincontainer">
-          <div className="gallery-grid">
-            <div className="image-container">
-              <img
-                src={imageUrls.url}
-                alt={`Product Image `}
-                onLoad={() => handleImageLoad(imageUrls.url)}
-              />
+          {imageUrls && imageUrls.url ? (
+            <div className="gallery-grid">
+              <div className="image-container">
+                <img
+                  src={imageUrls.url}
+                  alt={`Product Image `}
+                  onLoad={() => handleImageLoad(imageUrls.url)}
+                />
 
-              {loadedImages[imageUrls.url] && (
-                <>
-                  <div className="topnav">
-                    {imageStatuses && (
-                      <a className={`topnav-${imageStatuses.toLowerCase()}`}>
-                        {imageStatuses}
-                      </a>
-                    )}
-                  </div>
+                {loadedImages[imageUrls.url] && (
+                  <>
+                    <div className="topnav">
+                      {imageStatuses && (
+                        <a className={`topnav-${imageStatuses.toLowerCase()}`}>
+                          {imageStatuses}
+                        </a>
+                      )}
+                    </div>
 
-                  <div className="galleryIcons">
-                    <span onClick={() => toggleSettingModal(imageUrls)}>
-                      <Settings />
-                    </span>
-                  </div>
-                </>
-              )}
+                    <div className="galleryIcons">
+                      <span onClick={() => toggleSettingModal(imageUrls)}>
+                        <Settings />
+                      </span>
+                    </div>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
+          ) : (
+            <p>No profile image available</p>
+          )}
         </div>
 
         {openSetting && selectedImage && (

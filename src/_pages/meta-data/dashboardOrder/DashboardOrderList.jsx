@@ -2,32 +2,32 @@ import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { DASHBORDORDERCOLUMN } from "./dashboardOrderColumn";
 // import { Trash, Pencil, Eye, Truck } from "lucide-react";
-// import DeleteComponent from "../../payments/DeleteComponent";
-// import AddNotice from "./AddNotice";
-// import UpdateNotice from "./UpdateNotice";
+import { Trash, Truck, Pencil } from "lucide-react";
+import DeleteComponent from "../../payments/DeleteComponent";
+import AddDashboardOrder from "./AddDashboardOrder";
+import UpdateDashboardOrder from "./UpdateDashboardOrder";
 // import NoticeDescription from "./NoticeDescription";
-// import AssigneNotice from "./AssigneNotice";
+import AddPreferredId from "./AddPreferredId";
 // import UnAssignNotice from "./UnAssignNotice";
-import {
-//   useGetDashboardOrderListQuery,
-  //   useDeleteNoticeMutation,
-} from "../../../_store/api";
 
-import { useGetDashboardOrderListQuery } from "../../../_store/api";
+import {
+  useGetDashboardOrderListQuery,
+  useDeleteDashboardOrderMutation,
+} from "../../../_store/api";
 
 const DashboardOrderList = () => {
   //   const [showDescription, setShowDescription] = useState(false);
-  //   const [showAssigneNotice, setShowAssigneNotice] = useState(false);
+  const [showAssigneNotice, setShowAssigneNotice] = useState(false);
   //   const [showUnAssignNotice, setShowUnAssignNotice] = useState(false);
-  //   const [addData, setAddData] = useState(false);
-  //   const [updateData, setUpdteData] = useState(false);
-  //   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
-  //   const [selectedRow, setSelectedRow] = useState(null);
+  const [addData, setAddData] = useState(false);
+  const [updateData, setUpdteData] = useState(false);
+  const [showDeleteComponent, setShowDeleteComponent] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetDashboardOrderListQuery();
-  //   const [deleteData] = useDeleteNoticeMutation();
+  const [deleteData] = useDeleteDashboardOrderMutation();
 
   // store data
   useEffect(() => {
@@ -45,10 +45,10 @@ const DashboardOrderList = () => {
   //   };
   // function for description
 
-  //   const toggleAssignNotice = (row) => {
-  //     setShowAssigneNotice(!showAssigneNotice);
-  //     setSelectedRow(row.original);
-  //   };
+  const toggleAssignNotice = (row) => {
+    setShowAssigneNotice(!showAssigneNotice);
+    setSelectedRow(row.original);
+  };
 
   //   const toggleUnAssignNoticeNotice = (row) => {
   //     setShowUnAssignNotice(!showUnAssignNotice);
@@ -57,30 +57,30 @@ const DashboardOrderList = () => {
 
   //  toggle function for adding new data
 
-  //   const toggleAddData = () => {
-  //     setAddData(!addData);
-  //   };
+  const toggleAddData = () => {
+    setAddData(!addData);
+  };
 
   //  toggle function for updating data
 
-  //   const toggleUpdateData = (row) => {
-  //     setSelectedRow(row);
-  //     setUpdteData(!updateData);
-  //   };
+  const toggleUpdateData = (row) => {
+    setSelectedRow(row);
+    setUpdteData(!updateData);
+  };
 
   //  function for delete component
-  //   const toggleDeleteComponent = (row) => {
-  //     setSelectedRow(row);
-  //     setShowDeleteComponent(!showDeleteComponent);
-  //   };
+  const toggleDeleteComponent = (row) => {
+    setSelectedRow(row);
+    setShowDeleteComponent(!showDeleteComponent);
+  };
 
-  //   const handleDelete = () => {
-  //     if (selectedRow && selectedRow.id) {
-  //       deleteData({ id: selectedRow.id }).then(() => {
-  //         setShowDeleteComponent(false);
-  //       });
-  //     }
-  //   };
+  const handleDelete = () => {
+    if (selectedRow && selectedRow.id) {
+      deleteData({ id: selectedRow.id }).then(() => {
+        setShowDeleteComponent(false);
+      });
+    }
+  };
 
   const AddButton = () => {
     return (
@@ -92,7 +92,7 @@ const DashboardOrderList = () => {
           backgroundColor: "#18B164",
           padding: "6px",
         }}
-        // onClick={toggleAddData}
+        onClick={toggleAddData}
       >
         Add List
       </button>
@@ -102,50 +102,56 @@ const DashboardOrderList = () => {
   const columns = useMemo(
     () => [
       ...DASHBORDORDERCOLUMN,
-      //   {
-      //     Header: () => <div className="actions-header">Actions</div>,
-      //     id: "actions",
-      //     Cell: ({ row }) => (
-      //       <div className="actions-cell">
-      //         <span
-      //           title="view details"
-      //           className="secondIcon"
-      //           style={{ height: "35px", width: "35px" }}
-      //         >
-      //           <Eye
-      //             className="iconSmall"
-      //             onClick={() => toggleDescription(row)}
-      //           />
-      //         </span>
-      //         <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-      //           <Truck
-      //             className="iconSmall"
-      //             onClick={() => toggleAssignNotice(row)}
-      //           />
-      //         </span>
-      //         <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-      //           <img
-      //             src="./truck/truck_red.png"
-      //             className="iconSmall"
-      //             onClick={() => toggleUnAssignNoticeNotice(row)}
-      //           />
-      //         </span>
-      //         <span className="editIcon">
-      //           <Pencil
-      //             className="iconSmall"
-      //             onClick={() => toggleUpdateData(row.original)}
-      //           />
-      //         </span>
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) => (
+          <div className="actions-cell">
+            {/* <span
+              title="view details"
+              className="secondIcon"
+              style={{ height: "35px", width: "35px" }}
+            >
+              <Eye
+                className="iconSmall"
+                onClick={() => toggleDescription(row)}
+              />
+            </span> */}
+            {/* <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
+              <Truck
+                className="iconSmall"
+                onClick={() => toggleAssignNotice(row)}
+              />
+            </span> */}
+            {/* <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
+              <img
+                src="./truck/truck_red.png"
+                className="iconSmall"
+                onClick={() => toggleUnAssignNoticeNotice(row)}
+              />
+            </span> */}
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
+              <Truck
+                className="iconSmall"
+                onClick={() => toggleAssignNotice(row)}
+              />
+            </span>
 
-      //         <span className="deleteIcon">
-      //           <Trash
-      //             className="iconSmall"
-      //             onClick={() => toggleDeleteComponent(row.original)}
-      //           />
-      //         </span>
-      //       </div>
-      //     ),
-      //   },
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          </div>
+        ),
+      },
     ],
     []
   );
@@ -160,6 +166,18 @@ const DashboardOrderList = () => {
         AddPackageButton={AddButton}
       />
 
+      {addData && (
+        <AddDashboardOrder isOpen={addData} onClose={toggleAddData} />
+      )}
+
+      {showAssigneNotice && (
+        <AddPreferredId
+          isOpen={showAssigneNotice}
+          onClose={toggleAssignNotice}
+          selectedRow={selectedRow}
+        />
+      )}
+
       {/* {showDescription && (
         <NoticeDescription
           isOpen={showDescription}
@@ -167,14 +185,7 @@ const DashboardOrderList = () => {
           Description={selectedRow?.description}
         />
       )}
-
-      {showAssigneNotice && (
-        <AssigneNotice
-          isOpen={showAssigneNotice}
-          onClose={toggleAssignNotice}
-          selectedRow={selectedRow}
-        />
-      )}
+ 
 
       {showUnAssignNotice && (
         <UnAssignNotice
@@ -184,10 +195,11 @@ const DashboardOrderList = () => {
         />
       )}
 
-      {addData && <AddNotice isOpen={addData} onClose={toggleAddData} />}
+   
+      */}
 
       {updateData && (
-        <UpdateNotice
+        <UpdateDashboardOrder
           isOpen={updateData}
           onClose={toggleUpdateData}
           selectedRow={selectedRow}
@@ -200,7 +212,7 @@ const DashboardOrderList = () => {
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
         />
-      )} */}
+      )}
     </>
   );
 };
