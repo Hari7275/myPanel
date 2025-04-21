@@ -26,13 +26,30 @@ const AdminUpdateDetails = ({ consultantId }) => {
     admin_comment: "",
   });
 
+  // useEffect(() => {
+  //   if (
+  //     fetchData &&
+  //     fetchData.data &&
+  //     fetchData.data.consultant_submitted_data
+  //   ) {
+  //     setFormData(fetchData.data.consultant_submitted_data);
+  //   }
+  // }, [fetchData]);
+
   useEffect(() => {
     if (
       fetchData &&
       fetchData.data &&
       fetchData.data.consultant_submitted_data
     ) {
-      setFormData(fetchData.data.consultant_submitted_data);
+      const fetched = fetchData.data.consultant_submitted_data;
+      setFormData((prev) => ({
+        ...prev,
+        description: fetched.description || "",
+        services: fetched.services || "",
+        admin_comment: fetched.admin_comment || "",
+        status: fetched.status || "approved",
+      }));
     }
   }, [fetchData]);
 
@@ -46,20 +63,30 @@ const AdminUpdateDetails = ({ consultantId }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const payload = {
-        admin_enhanced_data: {
-          description: formData.description,
-          services: formData.services,
-        },
+      let payload = {
         status: formData.status || "approved",
         admin_comment: formData.admin_comment,
       };
+
+      if (formData?.status == "approved") {
+        payload.admin_enhanced_data = {
+          description: formData.description,
+          services: formData.services,
+        };
+      }
+
+      console.log("payload", payload);
+
+      // return;
 
       const response = await updateProfileReviewDetails({
         id: consultantId,
         body: payload,
       }).unwrap();
+
+      console.log("response", response);
 
       if (response?.status === false) {
         toast.error(
