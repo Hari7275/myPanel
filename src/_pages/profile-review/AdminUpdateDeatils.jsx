@@ -70,23 +70,23 @@ const AdminUpdateDetails = ({ consultantId }) => {
         admin_comment: formData.admin_comment,
       };
 
-      if (formData?.status == "approved") {
-        payload.admin_enhanced_data = {
-          description: formData.description,
-          services: formData.services,
-        };
+      if (formData.status === "approved") {
+        const adminEnhancedData = {};
+        if (formData.description) {
+          adminEnhancedData.description = formData.description;
+        }
+        if (formData.services) {
+          adminEnhancedData.services = formData.services;
+        }
+        payload.admin_enhanced_data = adminEnhancedData;
       }
 
       console.log("payload", payload);
-
-      // return;
 
       const response = await updateProfileReviewDetails({
         id: consultantId,
         body: payload,
       }).unwrap();
-
-      console.log("response", response);
 
       if (response?.status === false) {
         toast.error(
