@@ -8,7 +8,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
 
     createUserGallery: builder.mutation({
@@ -17,7 +17,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
 
     updateUserGalleryStatus: builder.mutation({
@@ -26,7 +26,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
 
     // update profile photo of user
@@ -40,7 +40,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
 
     // update status for verification request photo  of user
@@ -54,7 +54,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
 
     deleteUserGallery: builder.mutation({
@@ -62,7 +62,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         url: `/user/profile/delete-profile-image/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["gallery"],
+      invalidatesTags: ["user"],
     }),
   }),
 });
