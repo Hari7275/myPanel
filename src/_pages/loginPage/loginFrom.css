@@ -1,7 +1,8 @@
 /* Container styling */
 
 .login-body {
-  background-image: url("https://media.istockphoto.com/id/1140015530/photo/young-girl-using-mobile-in-bed-in-the-morning.jpg?s=2048x2048&w=is&k=20&c=g3xiMOjwoeMFDPlqd9xU2BijjBg25uvimhcgSs6o4yo=");
+  /* background-image: url("https://media.istockphoto.com/id/1140015530/photo/young-girl-using-mobile-in-bed-in-the-morning.jpg?s=2048x2048&w=is&k=20&c=g3xiMOjwoeMFDPlqd9xU2BijjBg25uvimhcgSs6o4yo="); */
+  background-image: url("../../../public/adminPannelBg.jpg");
   background-size: cover;
   background-position: center;
   width: 100%;
@@ -17,7 +18,7 @@
   background-color: #f7f7f7;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-top: 100px;
+  margin-top: 180px;
 }
 
 .login-header {

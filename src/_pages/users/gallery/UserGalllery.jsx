@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../../cssfolder/GalleryComponent.css";
-import { Trash, Settings, UserRound, CirclePlus } from "lucide-react";
+import { Trash, Settings, UserRound, CirclePlus, Download } from "lucide-react";
 import ImageCropper from "./ImageCropper";
 import DeleteComponent from "../../payments/DeleteComponent";
 import {
@@ -11,6 +11,7 @@ import {
 import UserSettings from "./UserSettings";
 import ProfilePhoto from "./ProfilePhoto";
 import { useSelector } from "react-redux";
+import { saveAs } from "file-saver";
 
 const UserGallery = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -31,11 +32,11 @@ const UserGallery = () => {
 
   useEffect(() => {
     if (fetchData) {
-      const urls = fetchData.data.other_photos.map((photo) => ({
-        url: photo.url,
-        photo_type: photo.photo_type,
-        id: photo.id,
-        status: photo.status,
+      const urls = fetchData?.data?.other_photos?.map((photo) => ({
+        url: photo?.url,
+        photo_type: photo?.photo_type,
+        id: photo?.id,
+        status: photo?.status,
       }));
       setImageUrls(urls);
 
@@ -155,6 +156,13 @@ const UserGallery = () => {
     setProfilePic(!profilePic);
   };
 
+  // function for download image
+
+  const downloadImage = (url) => {
+    console.log("url", url);
+    saveAs(url, "image.jpg");
+  };
+
   return (
     <>
       <div className="ProfileData-container ">
@@ -193,7 +201,11 @@ const UserGallery = () => {
                   </div>
                   <div className="galleryIcons">
                     <span onClick={() => toggleImageCropper(photo)}>
-                      <UserRound />
+                      {/* <UserRound /> */}
+                      <img src="/cropAdmin.png" className="galleryIcon" />
+                    </span>
+                    <span onClick={() => downloadImage(photo.url)}>
+                      <Download />
                     </span>
                     <span onClick={() => toggleSettingModal(photo)}>
                       <Settings />

@@ -163,7 +163,7 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
                     onClick={handleUpdate}
                     disabled={!isCropped || isLoading}
                   >
-                    {isLoading ? "Updating" : "Upadte"}
+                    {isLoading ? "Updating" : "Update"}
                   </Button>
                   <Button
                     variant="contained"

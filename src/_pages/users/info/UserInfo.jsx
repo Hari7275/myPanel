@@ -98,6 +98,9 @@ const UserInfo = () => {
             <p className="info-item">
               <strong>Country : </strong> {formData.country}
             </p>
+            <p className="info-item">
+              <strong>Job : </strong> {formData.job || "N/A"}
+            </p>
           </div>
           <div className="dividerm"></div>
         </div>

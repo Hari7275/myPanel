@@ -240,16 +240,14 @@ const AstrologerGallery = () => {
                       )} */}
 
                       <div className="galleryIcons">
-                        <span>
-                          <UserRound
-                            onClick={() => toggleImageCropper(image)}
-                          />
+                        <span onClick={() => toggleImageCropper(image)}>
+                          <img src="/cropAdmin.png" className="galleryIcon" />
                         </span>
                         <span>
                           <Download onClick={() => downloadImage(image.url)} />
                         </span>
                         <span onClick={() => toggleProfilePic(image)}>
-                          <CirclePlus />
+                          <UserRound />
                         </span>
                         <span onClick={() => toggleSettingModal(image)}>
                           <Settings />

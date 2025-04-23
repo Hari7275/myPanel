@@ -158,3 +158,20 @@ a.topnav-rejected {
   margin-bottom: 20px;
   height: 340px;
 }
+
+.galleryIcon {
+  transition: background-color 0.3s, transform 0.3s;
+  width: 25px !important;
+  height: 25px !important;
+  background: none !important;
+  border: none !important;
+}
+
+.galleryIcon:hover {
+  cursor: pointer;
+  color: white !important;
+  background-color: grey !important;
+  border-radius: 50%;
+  padding: 5px;
+  transform: scale(1.4);
+}
