@@ -163,6 +163,18 @@ const UserGallery = () => {
     saveAs(url, "image.jpg");
   };
 
+  // const downloadImage = async (url) => {
+  //   try {
+  //     const response = await fetch(url, {
+  //       mode: "cors",
+  //     });
+  //     const blob = await response.blob();
+  //     saveAs(blob, "image.jpg");
+  //   } catch (error) {
+  //     console.error("Download failed:", error);
+  //   }
+  // };
+
   return (
     <>
       <div className="ProfileData-container ">
@@ -204,7 +216,7 @@ const UserGallery = () => {
                       {/* <UserRound /> */}
                       <img src="/cropAdmin.png" className="galleryIcon" />
                     </span>
-                    <span onClick={() => downloadImage(photo.url)}>
+                    <span onClick={() => downloadImage(photo.url)} download>
                       <Download />
                     </span>
                     <span onClick={() => toggleSettingModal(photo)}>

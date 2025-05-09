@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
-import { useUpdateUserInfoMutation } from "../../../_store/api";
-
+import {
+  useUpdateUserInfoMutation,
+  useGetLanguagesListQuery,
+} from "../../../_store/api";
+import Select from "react-select";
 const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -15,8 +18,11 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
     languages: "",
   });
 
-  const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
+  const [selectedLanguages, setSelectedLanguage] = useState([]);
+  const [languageOptions, setLanguageOptions] = useState([]);
 
+  const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
+  const { data: languagesData } = useGetLanguagesListQuery();
   useEffect(() => {
     if (selectedData) {
       setFormData({
@@ -35,6 +41,39 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
     }
   }, [selectedData]);
 
+  // Define Language options from API data
+  useEffect(() => {
+    if (selectedData && languagesData?.data?.length) {
+      const options = languagesData.data.map((lang) => ({
+        value: lang.language,
+        label: lang.language,
+      }));
+
+      setLanguageOptions(options);
+
+      const preselected = options.filter((option) =>
+        selectedData.languages?.some(
+          (lang) => lang.toLowerCase() === option.value.toLowerCase()
+        )
+      );
+
+      setSelectedLanguage(preselected);
+    }
+  }, [selectedData, languagesData]);
+
+  console.log("selectedLanguages", selectedLanguages);
+
+  const handleMultiSelectChange = (name, selectedOptions) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: selectedOptions?.map((option) => option.value),
+    }));
+
+    if (name === "languages") {
+      setSelectedLanguage(selectedOptions);
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -48,6 +87,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
     try {
       const updatedData = {
         ...formData,
+        languages: JSON.stringify(formData.languages || []),
       };
 
       await updateInfo({
@@ -78,7 +118,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             backgroundColor: "#f0f0f0",
           }}
         >
-          Edit User Info
+          Update User Info
         </h2>
 
         <form className="simple-form" noValidate autoComplete="off">
@@ -197,22 +237,21 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             </div>
           </div>
 
-          <div style={{ display: "flex" }}>
-            <div className="input-container">
+         
               <label htmlFor="languages">Languages</label>
-              <input
-                type="text"
+              <Select
                 id="languages"
                 name="languages"
-                value={formData.languages}
-                onChange={handleChange}
-                className="info-input"
-                placeholder="Enter languages separated by commas"
+                isMulti
+                options={languageOptions}
+                value={selectedLanguages}
+                onChange={(options) =>
+                  handleMultiSelectChange("languages", options)
+                }
               />
-            </div>
-          </div>
+            
 
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", textAlign: "right" }}>
             <button
               type="button"
               className="fifthButton"

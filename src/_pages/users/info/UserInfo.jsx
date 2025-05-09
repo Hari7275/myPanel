@@ -85,10 +85,6 @@ const UserInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Languages : </strong> {formData.languages.join(",") || []}
-            </p>
-
-            <p className="info-item">
               <strong>Gender : </strong> {formData.gender}
             </p>
           </div>
@@ -103,6 +99,12 @@ const UserInfo = () => {
             </p>
           </div>
           <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Languages : </strong> {formData.languages.join(",") || []}
+            </p>
+          </div>
         </div>
       </div>
 
