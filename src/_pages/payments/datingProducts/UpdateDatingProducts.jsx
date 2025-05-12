@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useUpdateDatingMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const UpdateDatingProducts = ({
   isOpen,
@@ -11,15 +12,19 @@ const UpdateDatingProducts = ({
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    currency: "",
     price: "",
-    type: "",
-    feature_id: "",
-    productKey: "",
+    currency: "INR",
+    device_type: null,
+    product_id: "",
+    // status: "active",
+    count: "",
+    group_id: "",
   });
 
   const [updateProducts, { isLoading: isUpdating, error }] =
     useUpdateDatingMutation();
+
+  console.log("selectedRow", selectedRow);
 
   useEffect(() => {
     if (selectedRow) {
@@ -28,9 +33,10 @@ const UpdateDatingProducts = ({
         description: selectedRow.description || "",
         currency: selectedRow.currency || "",
         price: selectedRow.price || "",
-        type: selectedRow.type || "",
-        feature_id: selectedRow.feature_id || "",
-        productKey: selectedRow.productKey || "",
+        device_type: selectedRow.device_type || "",
+        product_id: selectedRow.product_id || "",
+        count: selectedRow.count || "",
+        group_id: selectedRow.group_id || "",
       });
     }
   }, [selectedRow]);
@@ -46,10 +52,17 @@ const UpdateDatingProducts = ({
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      await updateProducts({
-        id: selectedRow.id,
+      const response = await updateProducts({
+        id: selectedRow?.id,
         body: formData,
       });
+      if (response.data.status == true) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
       if (refetchData) {
         refetchData();
       }
@@ -121,12 +134,12 @@ const UpdateDatingProducts = ({
           </div>
 
           <div className="input-container">
-            <label htmlFor="type">Duration</label>
+            <label htmlFor="product_id">Product Id</label>
             <input
               type="text"
-              id="type"
-              name="type"
-              value={formData.type}
+              id="product_id"
+              name="product_id"
+              value={formData.product_id}
               onChange={handleChange}
               className="info_input"
             />
@@ -135,26 +148,26 @@ const UpdateDatingProducts = ({
 
         <div style={{ display: "flex" }}>
           <div className="input-container">
-            <label htmlFor="feature_id">Feature ID</label>
+            <label htmlFor="count">Count</label>
             <input
               type="number"
-              id="feature_id"
-              name="feature_id"
-              value={formData.feature_id}
+              id="count"
+              name="count"
+              value={formData.count}
               onChange={handleChange}
-              readOnly
-              disabled
+              // readOnly
+              // disabled
               className="info_input"
             />
           </div>
 
           <div className="input-container">
-            <label htmlFor="productKey">Product Key</label>
+            <label htmlFor="group_id">Group Id</label>
             <input
-              type="text"
-              id="productKey"
-              name="productKey"
-              value={formData.productKey}
+              type="number"
+              id="group_id"
+              name="group_id"
+              value={formData.group_id}
               onChange={handleChange}
               className="info_input"
             />

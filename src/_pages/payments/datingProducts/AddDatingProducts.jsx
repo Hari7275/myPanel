@@ -5,6 +5,7 @@ import {
 } from "../../../_store/api";
 import ReactModal from "react-modal";
 import { UpdateInputField } from "../../../_components/ui/inputForm";
+import toast from "react-hot-toast";
 
 const AddDatingProducts = ({ isOpen, onClose }) => {
   const [data, setData] = useState([]);
@@ -13,11 +14,11 @@ const AddDatingProducts = ({ isOpen, onClose }) => {
     description: "",
     currency: "INR",
     price: "",
-    type: "",
-    feature_id: "",
-    productKey: "",
-    productKey: "",
+    device_type: null,
+    product_id: "",
     status: "active",
+    count: "",
+    group_id: "",
   });
   const { data: fetchData } = useGetDatingListQuery();
   const [createProducts, { isLoading }] = useCreateDatingMutation();
@@ -39,14 +40,24 @@ const AddDatingProducts = ({ isOpen, onClose }) => {
       description: formData?.description,
       currency: formData?.currency,
       price: formData?.price,
-      type: formData.type,
-      feature_id: Number(formData?.feature_id),
-      productKey: formData?.productKey,
+      device_type: Number(formData.device_type),
+      product_id: String(formData?.product_id),
+
       status: formData?.status,
+      count: formData.count,
+      group_id: formData.group_id,
     };
     try {
-      await createProducts({ body: newProduct });
-      onClose();
+      const response = await createProducts({ body: newProduct });
+      console.log("response", response);
+
+      if (response.data.status == true) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
     } catch (error) {
       console.log("failed to add products ", error);
     }
@@ -104,23 +115,45 @@ const AddDatingProducts = ({ isOpen, onClose }) => {
           />
 
           <UpdateInputField
-            label="Product Key"
+            label="product_id"
             type="text"
-            name="productKey"
-            id="productKey"
-            value={formData.productKey}
+            name="product_id"
+            id="product_id"
+            value={formData.product_id}
             onChange={handleChange}
-            placeholder="Product Key"
+            placeholder="product_id"
+          />
+        </div>
+
+        <div style={{ display: "flex" }}>
+          <UpdateInputField
+            label="Count"
+            type="number"
+            name="count"
+            id="count"
+            value={formData.count}
+            onChange={handleChange}
+            placeholder="count"
+          />
+
+          <UpdateInputField
+            label="group_id"
+            type="text"
+            name="group_id"
+            id="group_id"
+            value={formData.group_id}
+            onChange={handleChange}
+            placeholder="group_id"
           />
         </div>
 
         <div style={{ display: "flex" }}>
           <div className="input-container" style={{ marginRight: "20px" }}>
-            <label htmlFor="feature_id">Feature Name</label>
+            <label htmlFor="currency">currency</label>
             <select
-              id="feature_id"
-              name="feature_id"
-              value={formData?.feature_id}
+              id="currency"
+              name="currency"
+              value={formData.currency}
               onChange={handleChange}
               className="info-input"
               style={{
@@ -129,22 +162,18 @@ const AddDatingProducts = ({ isOpen, onClose }) => {
                 borderRadius: "6px",
               }}
             >
-              <option value="">Select Feature Name</option>
-              {data
-                ?.filter((item) => item?.feature) // Filter out items where item?.feature is null or undefined
-                .map((item, index) => (
-                  <option key={index} value={item?.feature?.id}>
-                    {`${item?.feature?.feature_key}  `}
-                  </option>
-                ))}
+              <option value="">Select currency</option>
+              <option value="INR">INR</option>
+              <option value="USD">USD</option>
             </select>
           </div>
+
           <div className="input-container" style={{ marginRight: "20px" }}>
-            <label htmlFor="type">Product Duration</label>
+            <label htmlFor="device_type">Device Type</label>
             <select
-              id="type"
-              name="type"
-              value={formData.type}
+              id="device_type"
+              name="device_type"
+              value={formData.device_type}
               onChange={handleChange}
               className="info-input"
               style={{
@@ -153,11 +182,9 @@ const AddDatingProducts = ({ isOpen, onClose }) => {
                 borderRadius: "6px",
               }}
             >
-              <option value="">Select Product Duration</option>
-              <option value="yearly">Yearly</option>
-              <option value="monthly">Monthly</option>
-              <option value="weekly">Weekly</option>
-              <option value="oneday">OneDay</option>
+              <option value="">Select device type</option>
+              <option value={1}>Andriod</option>
+              <option value={2}>IOS</option>
             </select>
           </div>
         </div>

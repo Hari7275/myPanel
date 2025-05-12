@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { DATINGPRODUCTSCOLUMN } from "./datingProductsColumn";
-import { Pencil, Trash ,Info } from "lucide-react";
+import { Pencil, Trash, Info } from "lucide-react";
 import DatingDescription from "./DatingDescription";
 import DeleteComponent from "../DeleteComponent";
 import AddDatingProducts from "./AddDatingProducts";
@@ -12,24 +13,27 @@ import {
   useDeleteDatingMutation,
 } from "../../../_store/api";
 
-const DatingProducts = ( ) => {
+const DatingProducts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showAddProducts, setShowAddProducts] = useState(false);
   const [showUpdateProducts, setShowUpdateProducts] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching Dating products  data using RTK Query.
   const {
     data: fetchData,
     isLoading,
     error,
-  } = useGetDatingListQuery(); 
+  } = useGetDatingListQuery({
+    page: page,
+    size: pageSize,
+  });
 
-
-  const result = useMemo(() => fetchData?.data || [], [fetchData]);
-
-  
+  const result = useMemo(() => fetchData?.data?.rows || [], [fetchData]);
 
   // Deleting Dating products  data using RTK Query.
   const [deleteProduct] = useDeleteDatingMutation();
@@ -121,14 +125,30 @@ const DatingProducts = ( ) => {
     []
   );
 
+  const totalPage = fetchData?.meta?.total_page || 1;
+
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={result}
         includeActions={false}
         tableTitle=" Dating Products"
         AddPackageButton={AddPackageButton}
+      /> */}
+
+      <DyCommonTable
+        columns={columns}
+        data={result}
+        includeActions={false}
+        tableTitle=" Dating Products"
+        AddPackageButton={AddPackageButton}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
       />
 
       {showDescriptionModal && (

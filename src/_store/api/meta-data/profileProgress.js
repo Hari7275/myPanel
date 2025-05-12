@@ -10,7 +10,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      providesTags: ["consultant"],
+      providesTags: ["consultants"],
     }),
 
     createProfileProgress: builder.mutation({
@@ -22,7 +22,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["consultant"],
+      invalidatesTags: ["consultants"],
     }),
 
     updateProfileProgress: builder.mutation({
@@ -34,7 +34,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["consultant"],
+      invalidatesTags: ["consultants"],
     }),
 
     // deleteCoachRate: builder.mutation({
@@ -58,7 +58,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      providesTags: ["consultant"],
+      providesTags: ["consultants"],
     }),
 
     updateConsultantProfileProgress: builder.mutation({
@@ -70,7 +70,7 @@ export const profileProgressApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["consultant"],
+      invalidatesTags: ["consultants"],
     }),
   }),
 });
@@ -81,5 +81,5 @@ export const {
   useUpdateProfileProgressMutation,
   //   useDeleteCoachRateMutation,
   useGetConsultantProfileProgressListQuery,
-  useUpdateConsultantProfileProgressMutation
+  useUpdateConsultantProfileProgressMutation,
 } = profileProgressApiSlice;

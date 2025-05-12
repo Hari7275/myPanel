@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
 import { useUpdateDatingMutation } from "../../../_store/api";
 
-
-
 const StatusSwitch = ({ row }) => {
-  const [status, setStatus] = useState(row.original.status);
+  const [status, setStatus] = useState();
+
   const [updateStatus, { isLoading }] = useUpdateDatingMutation();
 
   const handleToggle = async () => {
-    const newStatus = status === "active" ? "inactive" : "active";
+    const newStatus = status == "active" ? "inactive" : "active";
     setStatus(newStatus);
 
     try {
@@ -23,9 +22,13 @@ const StatusSwitch = ({ row }) => {
     }
   };
 
+  useEffect(() => {
+    setStatus(row.original.status);
+  }, [row.original.status]);
+
   return (
     <Switch
-      checked={status === "active"}
+      checked={status == "active"}
       onChange={handleToggle}
       disabled={isLoading}
     />
@@ -43,23 +46,43 @@ export const DATINGPRODUCTSCOLUMN = [
     accessor: "id",
   },
   {
-    Header: "Product Key",
-    accessor: "productKey",
+    Header: "Group Id",
+    accessor: "group_id",
+  },
+  {
+    Header: "Device Type",
+    accessor: "device_type",
+    Cell: ({ value }) => (value == 1 ? "IOS" : "Android"),
   },
   {
     Header: "Product Name",
     accessor: "name",
   },
+  // {
+  //   Header: "Product Price",
+  //   accessor: "price",
+  // },
+  // {
+  //   Header: "Product currency",
+  //   accessor: "currency",
+  // },
+
   {
-    Header: "Product Price",
-    accessor: "price",
+    Header: "Price",
+    accessor: "price", // You can keep this or remove if not needed
+    Cell: ({ row }) => {
+      const price = row.original.price ?? "N/A";
+      const currency = row.original.currency ?? "";
+      return `${price} ${currency}`.trim();
+    },
+  },
+
+  {
+    Header: "Product Count",
+    accessor: "count",
   },
   {
-    Header: "Product Type",
-    accessor: "type",
-  },
-  {
-    Header: "status",
+    Header: "Status",
     accessor: "status",
     Cell: ({ row }) => <StatusSwitch row={row} />,
   },
