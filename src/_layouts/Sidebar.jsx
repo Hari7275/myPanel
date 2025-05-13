@@ -164,6 +164,16 @@ const Sidebar = () => {
                     <div className="dropdown-item"> Dating Products</div>
                   </div>
                 </Link>
+                <Link to="qd-products">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "qd-Products" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("qd-Products")}
+                  >
+                    <div className="dropdown-item"> Qd Products</div>
+                  </div>
+                </Link>
                 <Link to="/feature-list">
                   <div
                     className={`menu-item ${

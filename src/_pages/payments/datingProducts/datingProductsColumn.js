@@ -52,7 +52,7 @@ export const DATINGPRODUCTSCOLUMN = [
   {
     Header: "Device Type",
     accessor: "device_type",
-    Cell: ({ value }) => (value == 1 ? "IOS" : "Android"),
+    Cell: ({ value }) => (value == 1 ? "Android" : "IOS"),
   },
   {
     Header: "Product Name",

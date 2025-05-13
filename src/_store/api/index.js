@@ -33,6 +33,7 @@ export * from "../api/consultants/consultantLiveStream";
 // data for payment services
 
 export * from "../api/payments/datingProducts";
+export * from "../api/payments/qdProducts";
 export * from "../api/payments/features";
 export * from "../api/payments/paymentTransactions";
 export * from "../api/payments/rechargePlans";

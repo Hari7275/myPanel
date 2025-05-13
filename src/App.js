@@ -54,6 +54,7 @@ import DashboardMainPage from "./_pages/dashboard/DashboardMainPage";
 // payment services
 
 import DatingProducts from "./_pages/payments/datingProducts/DatingProducts";
+import QdProducts from "./_pages/payments/qdProducts/QdProducts";
 import FeaturesList from "./_pages/payments/features/FeaturesList";
 import PaymentTransactionsList from "./_pages/payments/paymentTransactions/PaymentTransactionsList";
 import RechargePlansList from "./_pages/payments/rechargePlans/RechargePlansList";
@@ -151,6 +152,7 @@ const Layout = () => (
           <Route path="/dashboard-order" element={<DashboardOrderList />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
+          <Route path="qd-products" element={<QdProducts />} />
           <Route path="feature-list" element={<FeaturesList />} />
           <Route
             path="payment-transactions"
