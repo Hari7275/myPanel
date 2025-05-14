@@ -1,14 +1,11 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { DASHBORDORDERCOLUMN } from "./dashboardOrderColumn";
-// import { Trash, Pencil, Eye, Truck } from "lucide-react";
-import { Trash, Truck, Pencil, ArrowRight } from "lucide-react";
+import { Trash, Truck, Pencil } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import AddDashboardOrder from "./AddDashboardOrder";
 import UpdateDashboardOrder from "./UpdateDashboardOrder";
-// import NoticeDescription from "./NoticeDescription";
 import AddPreferredId from "./AddPreferredId";
-// import UnAssignNotice from "./UnAssignNotice";
 import DragAndDropOrder from "../dashboardBanner/DragAndDropOrder";
 import toast from "react-hot-toast";
 
@@ -19,9 +16,8 @@ import {
 } from "../../../_store/api";
 
 const DashboardOrderList = () => {
-  //   const [showDescription, setShowDescription] = useState(false);
   const [showAssigneNotice, setShowAssigneNotice] = useState(false);
-  //   const [showUnAssignNotice, setShowUnAssignNotice] = useState(false);
+
   const [addData, setAddData] = useState(false);
   const [updateData, setUpdteData] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -42,23 +38,10 @@ const DashboardOrderList = () => {
     }
   }, [fetchData]);
 
-  // function for description
-
-  //   const toggleDescription = (row) => {
-  //     setSelectedRow(row.original);
-  //     setShowDescription(!showDescription);
-  //   };
-  // function for description
-
   const toggleAssignNotice = (row) => {
     setShowAssigneNotice(!showAssigneNotice);
     setSelectedRow(row.original);
   };
-
-  //   const toggleUnAssignNoticeNotice = (row) => {
-  //     setShowUnAssignNotice(!showUnAssignNotice);
-  //     setSelectedRow(row.original);
-  //   };
 
   //  toggle function for adding new data
 
@@ -143,24 +126,9 @@ const DashboardOrderList = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {/* <span
-              title="view details"
-              className="secondIcon"
-              style={{ height: "35px", width: "35px" }}
-            >
-              <Eye
-                className="iconSmall"
-                onClick={() => toggleDescription(row)}
-              />
-            </span> */}
-            {/* <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <Truck
-                className="iconSmall"
-                onClick={() => toggleAssignNotice(row)}
-              />
-            </span> */}
             <span className="editIcon" style={{ backgroundColor: "#000" }}>
-              <ArrowRight
+              <img
+                src="/drag-drop-w.png"
                 className="iconSmall"
                 onClick={() => toggleSetOrderData(row.original)}
               />
@@ -212,26 +180,6 @@ const DashboardOrderList = () => {
           selectedRow={selectedRow}
         />
       )}
-
-      {/* {showDescription && (
-        <NoticeDescription
-          isOpen={showDescription}
-          onClose={toggleDescription}
-          Description={selectedRow?.description}
-        />
-      )}
- 
-
-      {showUnAssignNotice && (
-        <UnAssignNotice
-          isOpen={showUnAssignNotice}
-          onClose={toggleUnAssignNoticeNotice}
-          selectedRow={selectedRow}
-        />
-      )}
-
-   
-      */}
 
       {updateOrder && (
         <DragAndDropOrder
