@@ -7,6 +7,7 @@ import AddDashboardBanner from "./AddDashboardBanner";
 import UpdateDashboardBanner from "./UpdateDashboardBanner";
 import SetDisplayBannerOrder from "./SetDisplayBannerOrder";
 // import NoticeDescription from "./NoticeDescription";
+import DragAndDropOrder from "./DragAndDropOrder";
 
 import {
   useGetDashboardBannerListQuery,
@@ -21,6 +22,7 @@ const DashboardBannerList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
+  const [dnd, setDnd] = useState(false);
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetDashboardBannerListQuery();
@@ -31,6 +33,8 @@ const DashboardBannerList = () => {
     // console.log("fetchData gifts", fetchData?.data.rows);
     if (fetchData) {
       setData(fetchData?.data);
+    } else {
+      setData([]);
     }
   }, [fetchData]);
 
@@ -40,6 +44,9 @@ const DashboardBannerList = () => {
 
   const toggleAddData = () => {
     setAddData(!addData);
+  };
+  const toggleOpenDnd = () => {
+    setDnd(!dnd);
   };
 
   //  toggle function for updating data
@@ -65,18 +72,32 @@ const DashboardBannerList = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add Banner
-      </button>
+      <>
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Banner
+        </button>
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "220px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleOpenDnd}
+        >
+          Testing drag and drop
+        </button>
+      </>
     );
   };
 
@@ -137,6 +158,8 @@ const DashboardBannerList = () => {
       {addData && (
         <AddDashboardBanner isOpen={addData} onClose={toggleAddData} />
       )}
+
+      {dnd && <DragAndDropOrder isOpen={dnd} onClose={toggleOpenDnd} />}
 
       {updateData && (
         <UpdateDashboardBanner
