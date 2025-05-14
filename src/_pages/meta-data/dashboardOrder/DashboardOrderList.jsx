@@ -2,17 +2,20 @@ import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { DASHBORDORDERCOLUMN } from "./dashboardOrderColumn";
 // import { Trash, Pencil, Eye, Truck } from "lucide-react";
-import { Trash, Truck, Pencil } from "lucide-react";
+import { Trash, Truck, Pencil, ArrowRight } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import AddDashboardOrder from "./AddDashboardOrder";
 import UpdateDashboardOrder from "./UpdateDashboardOrder";
 // import NoticeDescription from "./NoticeDescription";
 import AddPreferredId from "./AddPreferredId";
 // import UnAssignNotice from "./UnAssignNotice";
+import DragAndDropOrder from "../dashboardBanner/DragAndDropOrder";
+import toast from "react-hot-toast";
 
 import {
   useGetDashboardOrderListQuery,
   useDeleteDashboardOrderMutation,
+  useUpdateDashboardOrderListMutation,
 } from "../../../_store/api";
 
 const DashboardOrderList = () => {
@@ -24,10 +27,12 @@ const DashboardOrderList = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const [updateOrder, setUpdateOrder] = useState(false);
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetDashboardOrderListQuery();
   const [deleteData] = useDeleteDashboardOrderMutation();
+  const [createData, { isLoading }] = useUpdateDashboardOrderListMutation();
 
   // store data
   useEffect(() => {
@@ -82,6 +87,37 @@ const DashboardOrderList = () => {
     }
   };
 
+  const toggleSetOrderData = (row) => {
+    setSelectedRow(row);
+    setUpdateOrder(!updateOrder);
+  };
+
+  const handleOrderUpdate = async (newOrder) => {
+    console.log("newOrder", newOrder);
+    try {
+      const payload = {
+        preferred_ids: newOrder, // Assuming newOrder is already an array of IDs
+      };
+
+      const result = await createData({
+        body: payload,
+        id: selectedRow.id, // Using the selectedRow we stored in toggleSetOrderData
+      }).unwrap();
+
+      if (result.data.status) {
+        toast.success(result.message);
+      } else {
+        toast.error(result.message);
+      }
+
+      // You might want to add a toast notification here
+      setUpdateOrder(false);
+    } catch (error) {
+      console.error("Error updating order:", error);
+      // Handle error (show toast, etc.)
+    }
+  };
+
   const AddButton = () => {
     return (
       <button
@@ -123,13 +159,12 @@ const DashboardOrderList = () => {
                 onClick={() => toggleAssignNotice(row)}
               />
             </span> */}
-            {/* <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <img
-                src="./truck/truck_red.png"
+            <span className="editIcon" style={{ backgroundColor: "#000" }}>
+              <ArrowRight
                 className="iconSmall"
-                onClick={() => toggleUnAssignNoticeNotice(row)}
+                onClick={() => toggleSetOrderData(row.original)}
               />
-            </span> */}
+            </span>
             <span className="editIcon">
               <Pencil
                 className="iconSmall"
@@ -197,6 +232,15 @@ const DashboardOrderList = () => {
 
    
       */}
+
+      {updateOrder && (
+        <DragAndDropOrder
+          isOpen={updateOrder}
+          onClose={toggleSetOrderData}
+          selectedRow={selectedRow?.preferred_ids || []}
+          onSubmit={handleOrderUpdate}
+        />
+      )}
 
       {updateData && (
         <UpdateDashboardOrder

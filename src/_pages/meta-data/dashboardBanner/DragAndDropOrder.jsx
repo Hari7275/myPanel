@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
@@ -18,7 +18,13 @@ const getItemStyle = (isDragging, draggableStyle) => ({
   ...draggableStyle,
 });
 
-const DragAndDropOrder = ({ isOpen, onClose, isDragModal = true }) => {
+const DragAndDropOrder = ({
+  isOpen,
+  onClose,
+  isDragModal = true,
+  selectedRow,
+  onSubmit, // Add this prop
+}) => {
   const [dragItems, setDragItems] = useState([
     "item1",
     "item2",
@@ -37,6 +43,15 @@ const DragAndDropOrder = ({ isOpen, onClose, isDragModal = true }) => {
     "item15",
   ]);
 
+  // Update dragItems when selectedRow changes
+  useEffect(() => {
+    if (selectedRow && selectedRow.length > 0) {
+      setDragItems(selectedRow);
+    }
+  }, [selectedRow]);
+
+  console.log("selectedRow", selectedRow);
+
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
@@ -44,6 +59,9 @@ const DragAndDropOrder = ({ isOpen, onClose, isDragModal = true }) => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setDragItems(items);
+
+    // Call the onSubmit prop with the new order
+    onSubmit(items);
   };
 
   return (
@@ -105,7 +123,11 @@ const DragAndDropOrder = ({ isOpen, onClose, isDragModal = true }) => {
                 }}
               >
                 {dragItems.map((item, index) => (
-                  <Draggable key={item} draggableId={item} index={index}>
+                  <Draggable
+                    key={item}
+                    draggableId={item.toString()}
+                    index={index}
+                  >
                     {(provided, snapshot) => (
                       <li
                         ref={provided.innerRef}
