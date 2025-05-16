@@ -136,7 +136,7 @@ const NotificationBell = () => {
     const isSeen = row.original.is_seen;
     return {
       style: {
-        backgroundColor: isSeen ? "#EFFBFF" : "#FFFFFF",
+        backgroundColor: isSeen ? "#FFFFFF" : "#EFFBFF",
       },
     };
   };

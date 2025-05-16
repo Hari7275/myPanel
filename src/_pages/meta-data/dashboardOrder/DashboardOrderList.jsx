@@ -28,7 +28,7 @@ const DashboardOrderList = () => {
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetDashboardOrderListQuery();
   const [deleteData] = useDeleteDashboardOrderMutation();
-  const [createData, { isLoading }] = useUpdateDashboardOrderListMutation();
+  const [createData] = useUpdateDashboardOrderListMutation();
 
   // store data
   useEffect(() => {
@@ -129,6 +129,7 @@ const DashboardOrderList = () => {
             <span className="editIcon" style={{ backgroundColor: "#000" }}>
               <img
                 src="/drag-drop-w.png"
+                alt="D&D icon"
                 className="iconSmall"
                 onClick={() => toggleSetOrderData(row.original)}
               />
