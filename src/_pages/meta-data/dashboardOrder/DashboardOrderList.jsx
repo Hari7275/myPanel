@@ -100,7 +100,7 @@ const DashboardOrderList = () => {
       // You might want to add a toast notification here
       setUpdateOrder(false);
     } catch (error) {
-      console.error("Error updating order:", error);
+      console.error("Error updating ", error);
       // Handle error (show toast, etc.)
     }
   };
