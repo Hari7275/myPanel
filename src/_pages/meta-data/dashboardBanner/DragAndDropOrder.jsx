@@ -61,7 +61,7 @@ const DragAndDropOrder = ({
     setDragItems(items);
 
     // Call the onSubmit prop with the new order
-    onSubmit(items);
+    // onSubmit(items);
   };
 
   return (
@@ -157,6 +157,16 @@ const DragAndDropOrder = ({
             )}
           </Droppable>
         </DragDropContext>
+      </div>
+      <div style={{ marginTop: "30px", textAlign: "center" }}>
+        <button
+          className="fifthButton"
+          style={{ backgroundColor: "green" }}
+          onClick={() => onSubmit(dragItems)}
+          // disabled={isLoading}
+        >
+          {"Submit"}
+        </button>
       </div>
     </ReactModal>
   );
