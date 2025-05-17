@@ -44,11 +44,7 @@ const DashboardOrderList = () => {
 
   // function for description
 
-  //   const toggleDescription = (row) => {
-  //     setSelectedRow(row.original);
-  //     setShowDescription(!showDescription);
-  //   };
-  // function for description
+ 
 
   const toggleAssignNotice = (row) => {
     setShowAssigneNotice(!showAssigneNotice);
