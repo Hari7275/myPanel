@@ -14,6 +14,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setCurrentUser } = userSlice.actions;
+export const { setCurrentUser, setUserSubscription } = userSlice.actions;
 
 export default userSlice.reducer;

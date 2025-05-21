@@ -3,6 +3,7 @@ import "../../../cssfolder/profileLeftComponent.css";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">

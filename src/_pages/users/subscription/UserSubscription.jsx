@@ -1,8 +1,9 @@
-import React, { useMemo, useState, useEffect, useCallback } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { ArrowRight } from "lucide-react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { useSelector } from "react-redux";
 import { useGetUserSubscriptionListQuery } from "../../../_store/api/user/userTransaction";
+import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { SUBSCRIPTIONCOLUMN } from "./subscriptionColumn";
 import Description from "./Description";
 
@@ -10,17 +11,37 @@ const UserSubscription = () => {
   const [data, setData] = useState([]);
   const [description, setDescription] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [subscriptionId, setSubscriptionId] = useState(null);
+
+  // ✅ userId is already the correct ID
   const userId = useSelector((state) => state.user.userData);
 
+  // Fetch full user details
+  const { data: userData, isLoading } = useGetUserListQuery(userId);
+
+  // Extract subscription ID once user data is fetched
+
+  useEffect(() => {
+    if (userData?.data?.subscription) {
+      setSubscriptionId(userData?.data?.subscription?.id);
+    } else {
+      setSubscriptionId(null);
+    }
+  }, [userData]);
+
+  // Fetch subscription details using the subscription ID
   const {
     data: fetchData,
     error,
-    isLoading,
-  } = useGetUserSubscriptionListQuery(userId);
+    isLoading: isSubscriptionLoading,
+  } = useGetUserSubscriptionListQuery(subscriptionId, {
+    skip: !subscriptionId,
+  });
 
+  // Update data for the table
   useEffect(() => {
-    if (fetchData && fetchData.data) {
-      setData([fetchData.data]);
+    if (fetchData?.data) {
+      setData([fetchData?.data]); // Assuming the API returns a single object
     } else {
       setData([]);
     }

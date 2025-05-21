@@ -44,8 +44,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     })) || [];
 
   // Preselect skills that are in both formData and API options
-  const preselectedSkills = skillOptions.filter((option) =>
-    selectedData.skills.includes(option.value)
+  const preselectedSkills = skillOptions?.filter((option) =>
+    selectedData?.skills?.includes(option?.value)
   );
   useEffect(() => {
     setSelectedSkills(preselectedSkills);
@@ -71,7 +71,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     if (selectedData) {
       setFormData((prevData) => ({
         ...prevData,
-        skills: selectedData?.skills.map((skill) => skill.id),
+        skills: selectedData?.skills?.map((skill) => skill?.id),
       }));
     }
   }, [selectedData]);
@@ -101,7 +101,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     // Update the formData state with the selected options
     setFormData((prevData) => ({
       ...prevData,
-      [name]: selectedOptions.map((option) => option?.value),
+      [name]: selectedOptions?.map((option) => option?.value),
     }));
 
     // Update the selected state for skills or languages
