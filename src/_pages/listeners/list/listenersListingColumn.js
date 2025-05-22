@@ -98,9 +98,21 @@ export const LISTENERSCOLUMNS = [
     accessor: "profile_status",
     Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
   },
+
   {
     Header: "Status",
     accessor: "status",
     Cell: StatusCell,
+  },
+  {
+    Header: "Last Modified",
+    accessor: "updated_at",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
   },
 ];

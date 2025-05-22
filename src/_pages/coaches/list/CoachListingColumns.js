@@ -105,4 +105,15 @@ export const COACHES_COLUMNS = [
     accessor: "status",
     Cell: StatusCell,
   },
+  {
+    Header: "Last Modified",
+    accessor: "updated_at",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
 ];

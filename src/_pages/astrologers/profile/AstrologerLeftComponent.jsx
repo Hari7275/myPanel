@@ -9,6 +9,7 @@ import {
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -51,6 +52,7 @@ const AstrologerLeftComponent = () => {
   const [showModal, setShowModal] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
+  const { openImageModal, ImageModal } = UseImageModal();
 
   const {
     data: fetchData,
@@ -90,7 +92,12 @@ const AstrologerLeftComponent = () => {
       <div className="card">
         <div className="card-upper-part">
           <div className="card-img">
-            <img src={urls || "girl-avtar.png"} alt="astrologer Profile" />
+            <img
+              src={urls || "girl-avtar.png"}
+              alt="astrologer Profile"
+              onClick={() => openImageModal(urls)}
+              style={{ cursor: "pointer" }}
+            />
 
             <div className="edit-profile-img">
               <button className="edit-profile-icon" onClick={openModal}>
@@ -179,6 +186,7 @@ const AstrologerLeftComponent = () => {
       </div>
 
       <AstrologerStatus />
+      <ImageModal />
 
       {showModal && (
         <Modal

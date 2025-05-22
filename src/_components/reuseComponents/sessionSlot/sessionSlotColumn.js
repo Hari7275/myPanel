@@ -32,6 +32,22 @@ export const SESSIONSLOTCOLUMN = [
     Header: "Date",
     accessor: "date",
   },
+
+  {
+    Header: "Start Time",
+    accessor: "start_time",
+    Cell: ({ value }) => {
+      const [hours, minutes] = value.split(":");
+      const date = new Date();
+      date.setHours(+hours);
+      date.setMinutes(+minutes);
+      return date.toLocaleTimeString("en-US", {
+        hour: "numeric",
+        minute: "2-digit",
+        hour12: true,
+      });
+    },
+  },
   {
     Header: "Status",
     accessor: "status",

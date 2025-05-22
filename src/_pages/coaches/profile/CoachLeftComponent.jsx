@@ -8,6 +8,7 @@ import {
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -46,6 +47,7 @@ const CoachLeftComponent = () => {
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
   const [data, setData] = useState({});
+  const { openImageModal, ImageModal } = UseImageModal();
 
   const {
     data: fetchData,
@@ -73,7 +75,12 @@ const CoachLeftComponent = () => {
       <div className="card">
         <div className="card-upper-part">
           <div className="card-img">
-            <img src={urls} alt="coach Profile" />
+            <img
+              src={urls}
+              alt="coach Profile"
+              onClick={() => openImageModal(urls)}
+              style={{ cursor: "pointer" }}
+            />
           </div>
 
           <div className="card-user-name">
@@ -159,6 +166,7 @@ const CoachLeftComponent = () => {
       {/* *********************************************   below is the second card for coach status **********************************************/}
 
       <CoachStatus />
+      <ImageModal />
     </div>
   );
 };

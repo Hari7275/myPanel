@@ -8,6 +8,7 @@ import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
+import { useNavigate } from "react-router-dom";
 
 const ListenersListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -33,6 +34,7 @@ const ListenersListingTable = () => {
     phone,
     consultant_type: 3,
   });
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -49,8 +51,6 @@ const ListenersListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
-  console.log("totalPage", totalPage);
-
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
@@ -58,7 +58,15 @@ const ListenersListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    // Use setTimeout or batch it after dispatch
+    setTimeout(() => {
+      navigate(`/listener_Profile?${data?.id}`);
+    }, 0);
   };
+
+  // const handleActionClick = (data) => {
+  //   dispatch(setCurrentConsultant(data?.id));
+  // };
 
   const columns = useMemo(
     () => [
@@ -68,22 +76,22 @@ const ListenersListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to="/listener_Profile">
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
-              >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => handleActionClick(row.original)}
-                />
-              </span>
-            </Link>
+            {/* <Link to="/listener_Profile"> */}
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+            >
+              <ArrowRight
+                className="iconSmall"
+                onClick={() => handleActionClick(row.original)}
+              />
+            </span>
+            {/* </Link> */}
             {/* <span className="editIcon">
               <Pencil
                 className="iconSmall"
