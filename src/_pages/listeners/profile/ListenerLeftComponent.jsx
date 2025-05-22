@@ -10,6 +10,7 @@ import {
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -50,6 +51,7 @@ const ListenerLeftComponent = () => {
   const [data, setData] = useState({});
   const [listenerType, setListenerType] = useState("listenerstatus");
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { openImageModal, ImageModal } = UseImageModal();
 
   const {
     data: fetchData,
@@ -88,7 +90,12 @@ const ListenerLeftComponent = () => {
       <div className="card">
         <div className="card-upper-part">
           <div className="card-img ">
-            <img src={urls || "snake.jpg"} alt="Listener Profile" />
+            <img
+              src={urls || "girl-avtar.png"}
+              alt="Listener Profile"
+              onClick={() => openImageModal(urls || "girl-avtar.png")}
+              style={{ cursor: "pointer" }}
+            />
 
             <div className="edit-profile-img">
               <button className="edit-profile-icon" onClick={openModal}>
@@ -182,6 +189,7 @@ const ListenerLeftComponent = () => {
       </div>
 
       <CoachStatus listenerType={listenerType} />
+      <ImageModal />
 
       {showModal && (
         <Modal

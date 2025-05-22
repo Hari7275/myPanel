@@ -7,7 +7,7 @@ const FeatureCostCell = ({ row }) => {
 
   return (
     <span>
-      {priceData.map((item, index) => (
+      {priceData?.map((item, index) => (
         <span key={index}>
           {getFetaureLabel(item?.feature)} ({item?.totalCost})
           {index !== priceData.length - 1 && <br />}

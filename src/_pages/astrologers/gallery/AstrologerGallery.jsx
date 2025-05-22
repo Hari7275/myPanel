@@ -16,6 +16,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import ProfilePhoto from "./ProfilePhoto";
 
 import { useGetGalleryListQuery } from "../../../_store/api";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const AstrologerGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -26,6 +27,7 @@ const AstrologerGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [profilePic, setProfilePic] = useState(false);
+  const { openImageModal, ImageModal } = UseImageModal();
 
   const fileInputRef = useRef(null);
 
@@ -183,6 +185,10 @@ const AstrologerGallery = () => {
                     src={image.url}
                     alt={`Product Image ${index + 1}`}
                     onLoad={() => handleImageLoad(image.url)}
+                    onClick={() =>
+                      openImageModal(image.url || "girl-avtar.png")
+                    }
+                    style={{ cursor: "pointer" }}
                   />
 
                   {loadedImages[image.url] && (
@@ -304,6 +310,7 @@ const AstrologerGallery = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
+        <ImageModal />
       </div>
     </>
   );

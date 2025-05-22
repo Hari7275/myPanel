@@ -14,6 +14,7 @@ import {
 import { ConsultantGalleryStatus } from "../../../_constants/consultantConstant";
 import DeleteComponent from "../../payments/DeleteComponent";
 import ProfilePhoto from "./ProfilePhoto";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const ListenerGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -24,6 +25,7 @@ const ListenerGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [profilePic, setProfilePic] = useState(false);
+  const { openImageModal, ImageModal } = UseImageModal();
 
   const fileInputRef = useRef(null);
 
@@ -179,6 +181,10 @@ const ListenerGallery = () => {
                     src={image.url}
                     alt={`Product Image ${index + 1}`}
                     onLoad={() => handleImageLoad(image.url)}
+                    onClick={() =>
+                      openImageModal(image.url || "girl-avtar.png")
+                    }
+                    style={{ cursor: "pointer" }}
                   />
 
                   {loadedImages[image.url] && (
@@ -266,6 +272,7 @@ const ListenerGallery = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
+        <ImageModal />
       </div>
     </>
   );

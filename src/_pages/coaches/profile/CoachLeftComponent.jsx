@@ -76,7 +76,7 @@ const CoachLeftComponent = () => {
         <div className="card-upper-part">
           <div className="card-img">
             <img
-              src={urls}
+              src={urls || "girl-avtar.png"}
               alt="coach Profile"
               onClick={() => openImageModal(urls)}
               style={{ cursor: "pointer" }}
