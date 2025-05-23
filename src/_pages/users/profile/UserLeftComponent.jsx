@@ -4,6 +4,7 @@ import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -21,6 +22,7 @@ const UserLeftComponent = () => {
 
   const { data: fetchData } = useGetUserListQuery(userId);
   const [userData, setUserData] = useState(null);
+  const { openImageModal, ImageModal } = UseImageModal();
 
   useEffect(() => {
     if (fetchData) {
@@ -38,7 +40,15 @@ const UserLeftComponent = () => {
         <div className="card-upper-part">
           <div className="card-img ">
             {userData.profile_images.length > 0 && (
-              <img src={userData.profile_images[0].url} alt="Profile" />
+              <img
+                src={userData.profile_images[0].url}
+                alt="Profile"
+                onClick={() =>
+                  openImageModal(
+                    userData.profile_images[0].url || "girl-avtar.png"
+                  )
+                }
+              />
             )}
           </div>
 
@@ -121,6 +131,7 @@ const UserLeftComponent = () => {
           </a>
         </div>
       </div>
+      <ImageModal />
     </div>
   );
 };

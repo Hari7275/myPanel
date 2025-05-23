@@ -12,6 +12,7 @@ import UserSettings from "./UserSettings";
 import ProfilePhoto from "./ProfilePhoto";
 import { useSelector } from "react-redux";
 import { saveAs } from "file-saver";
+import MyGallery from "../../../_constants/MyGallery";
 
 const UserGallery = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -29,6 +30,9 @@ const UserGallery = () => {
   const [consultantId, setConsultantId] = useState([]);
   const [profilePic, setProfilePic] = useState(false);
   const fileInputRef = useRef(null);
+  // state to open image as popup
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showGallery, setShowGallery] = useState(false);
 
   useEffect(() => {
     if (fetchData) {
@@ -163,20 +167,27 @@ const UserGallery = () => {
     saveAs(url, "image.jpg");
   };
 
-  // const downloadImage = async (url) => {
-  //   try {
-  //     const response = await fetch(url, {
-  //       mode: "cors",
-  //     });
-  //     const blob = await response.blob();
-  //     saveAs(blob, "image.jpg");
-  //   } catch (error) {
-  //     console.error("Download failed:", error);
-  //   }
-  // };
+  const popupImage = (image, index) => {
+    setCurrentImageIndex(index);
+    setShowGallery(true);
+  };
 
   return (
     <>
+      {showGallery && (
+        <div className="gallery-modal" onClick={() => setShowGallery(false)}>
+          <div className="gallery-modal-content">
+            {/* <span
+                  className="close-button"
+                  onClick={() => setShowGallery(false)}
+                >
+                  &times;
+                </span> */}
+            <MyGallery images={imageUrls} initialIndex={currentImageIndex} />
+          </div>
+        </div>
+      )}
+
       <div className="ProfileData-container ">
         <div>
           <h3 className="ProfileData-subheading">Gallery group </h3>
@@ -198,7 +209,12 @@ const UserGallery = () => {
               </div>
               {imageUrls.map((photo, index) => (
                 <div key={index} className="image-container">
-                  <img src={photo.url} alt={`Image ${index + 1}`} />
+                  <img
+                    src={photo.url}
+                    alt={`Image ${index + 1}`}
+                    onClick={() => popupImage(photo, index)}
+                    style={{ cursor: "pointer" }}
+                  />
 
                   <div className="topnav">
                     {imageStatuses[photo.url] && (

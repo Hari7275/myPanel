@@ -22,7 +22,7 @@ const UseImageModal = () => {
       isOpen={isModalOpen}
       onRequestClose={closeModal}
       contentLabel="Image Modal"
-      className="modal"
+      className="imageModal "
       overlayClassName="overlay"
       ariaHideApp={false}
     >

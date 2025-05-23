@@ -50,7 +50,7 @@ const NameCell = ({ row }) => {
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Image Modal"
-        className="modal"
+        className="  imageModal"
         overlayClassName="overlay"
       >
         <img

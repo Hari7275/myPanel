@@ -14,7 +14,7 @@ import {
 import { ConsultantGalleryStatus } from "../../../_constants/consultantConstant";
 import DeleteComponent from "../../payments/DeleteComponent";
 import ProfilePhoto from "./ProfilePhoto";
-import UseImageModal from "../../../_constants/UseImageModal";
+
 import MyGallery from "../../../_constants/MyGallery";
 
 const ListenerGallery = () => {
@@ -26,7 +26,6 @@ const ListenerGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [profilePic, setProfilePic] = useState(false);
-  const { openImageModal, ImageModal } = UseImageModal();
 
   // state to open image as popup
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -165,12 +164,6 @@ const ListenerGallery = () => {
       {showGallery && (
         <div className="gallery-modal" onClick={() => setShowGallery(false)}>
           <div className="gallery-modal-content">
-            {/* <span
-              className="close-button"
-              onClick={() => setShowGallery(false)}
-            >
-              &times;
-            </span> */}
             <MyGallery images={imageUrls} initialIndex={currentImageIndex} />
           </div>
         </div>
@@ -206,19 +199,11 @@ const ListenerGallery = () => {
                     alt={`Product Image ${index + 1}`}
                     onLoad={() => handleImageLoad(image.url)}
                     onClick={() => popupImage(image, index)}
-                    // onClick={() =>
-                    //   openImageModal(image.url || "girl-avtar.png")
-                    // }
                     style={{ cursor: "pointer" }}
                   />
 
                   {loadedImages[image.url] && (
                     <>
-                      {/* <div className="hover-buttons">
-                        <button className="hover-button">
-                          <Trash />
-                        </button>
-                      </div> */}
                       <div className="topnav">
                         {imageStatuses[index] && (
                           <a
@@ -297,7 +282,6 @@ const ListenerGallery = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <ImageModal />
       </div>
     </>
   );

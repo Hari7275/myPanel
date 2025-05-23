@@ -41,31 +41,31 @@ const WalletDetails = () => {
             <div className="userProfile-footer-content">
               <InfoItem
                 label=" Last Month Earning"
-                value={data?.walletDetails?.last_month_earning}
+                value={data?.walletDetails?.last_month_earning || 0}
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Last Week Earning"
-                value={data?.walletDetails?.last_week_earning}
+                value={data?.walletDetails?.last_week_earning || 0}
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Today Earning"
-                value={data?.walletDetails?.today_earning}
+                value={data?.walletDetails?.today_earning || 0}
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Total Debit"
-                value={data?.walletDetails?.total_debit}
+                value={data?.walletDetails?.total_debit || 0}
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Life Time Earning"
-                value={data?.walletDetails?.lifetime_earning}
+                value={data?.walletDetails?.lifetime_earning || 0}
               />
               <div className="line"></div>
 
@@ -77,7 +77,7 @@ const WalletDetails = () => {
 
               <InfoItem
                 label="Payable Amount"
-                value={data?.walletDetails?.payable_amount}
+                value={data?.walletDetails?.payable_amount || 0}
               />
               <div className="line"></div>
             </div>

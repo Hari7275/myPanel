@@ -134,7 +134,10 @@ const CoachReviews = () => {
 
   return (
     <div>
-      <div className="ProfileData-container sub-container">
+      <div
+        className="ProfileData-container sub-container"
+        style={{ position: "relative" }}
+      >
         <AddPackageButton />
         {data.length > 0 ? (
           <CommonTable

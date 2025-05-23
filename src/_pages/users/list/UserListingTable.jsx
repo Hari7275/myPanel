@@ -155,7 +155,7 @@ const UserListingTable = () => {
         isOpen={modalIsOpen}
         onRequestClose={toggleModal}
         contentLabel="Image Modal"
-        className="modal"
+        className="imageModal"
         overlayClassName="overlay"
       >
         {selectedImage && (
