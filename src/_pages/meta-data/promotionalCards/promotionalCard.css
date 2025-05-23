@@ -94,3 +94,50 @@
 .ReactModal__Content:focus-visible {
   outline: none;
 }
+
+.gallery-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px; /* handles zoomed-in images */
+  box-sizing: border-box;
+}
+
+.gallery-modal-content {
+  position: relative;
+  top: 5%;
+  width: 100%;
+  max-width: 90%;
+  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-gallery-slide img {
+  max-height: 60vh; /* Keeps image from overflowing */
+  max-width: 100%;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.image-gallery-content .image-gallery-slide .image-gallery-image {
+  max-height: calc(100vh - 140px);
+}
+
+/* .close-button {
+  position: fixed;
+  top: 9%;
+  right: 28%;
+  color: red;
+  font-size: 35px;
+  cursor: pointer;
+} */

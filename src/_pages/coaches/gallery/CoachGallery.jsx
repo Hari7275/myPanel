@@ -14,8 +14,8 @@ import {
 import { ConsultantGalleryStatus } from "../../../_constants/consultantConstant";
 import DeleteComponent from "../../payments/DeleteComponent";
 import ProfilePhoto from "./ProfilePhoto";
-import UseImageModal from "../../../_constants/UseImageModal";
 
+import MyGallery from "../../../_constants/MyGallery";
 
 const CoachGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -26,8 +26,10 @@ const CoachGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [profilePic, setProfilePic] = useState(false);
-  const { openImageModal, ImageModal } = UseImageModal();
 
+  // state to open image as popup
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showGallery, setShowGallery] = useState(false);
 
   const fileInputRef = useRef(null);
 
@@ -151,8 +153,28 @@ const CoachGallery = () => {
     setSelectedImage(photo);
     setProfilePic(!profilePic);
   };
+
+  const popupImage = (image, index) => {
+    // console.log("image", image);
+    setCurrentImageIndex(index);
+    setShowGallery(true);
+  };
   return (
     <>
+      {showGallery && (
+        <div className="gallery-modal" onClick={() => setShowGallery(false)}>
+          <div className="gallery-modal-content">
+            {/* <span
+              className="close-button"
+              onClick={() => setShowGallery(false)}
+            >
+              &times;
+            </span> */}
+            <MyGallery images={imageUrls} initialIndex={currentImageIndex} />
+          </div>
+        </div>
+      )}
+
       <div className="ProfileData-card">
         <h3 className="ProfileData-subheading">Other Photos</h3>
         <div className="gallery-maincontainer">
@@ -183,9 +205,7 @@ const CoachGallery = () => {
                     src={image.url}
                     alt={`Product Image ${index + 1}`}
                     onLoad={() => handleImageLoad(image.url)}
-                    onClick={() =>
-                      openImageModal(image.url || "girl-avtar.png")
-                    }
+                    onClick={() => popupImage(image, index)}
                     style={{ cursor: "pointer" }}
                   />
 
@@ -273,7 +293,6 @@ const CoachGallery = () => {
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <ImageModal />
       </div>
     </>
   );
