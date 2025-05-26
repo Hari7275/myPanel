@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useGetConsultantsServiceStatusQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
+import ServiceStatusModal from "./ServiceStatusModal";
 
 const availableStatus = {
   0: "Offline",
@@ -11,22 +14,29 @@ const availableStatus = {
 };
 
 const CoachStatus = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
+  const [alignment, setAlignment] = useState({});
+  const [selectedService, setSelectedService] = useState(null);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
-  const { data: fetchData, isLoading } = useGetConsultantsServiceStatusQuery({
+  const { data: fetchData } = useGetConsultantsServiceStatusQuery({
     id: consultantId,
   });
 
   useEffect(() => {
-    if (fetchData) {
-      setData(fetchData?.data);
+    if (fetchData?.data) {
+      const fetchedData = fetchData.data;
+      setData(fetchedData);
+
+      const initialAlignment = {};
+
+      fetchedData.forEach((item) => {
+        initialAlignment[item.id] = item.display_status === 1 ? 1 : 0;
+      });
+      setAlignment(initialAlignment);
     }
   }, [fetchData]);
-  console.log("data......", data);
-  // console.log("consultantId", consultantId);
 
-  // Check if type 6 has status 1
   const isLiveMode = data?.some(
     (item) => item?.type === 6 && item.status === 1
   );
@@ -35,26 +45,38 @@ const CoachStatus = () => {
     const finalStatus = isLiveMode ? 3 : statusValue;
     switch (finalStatus) {
       case 3:
-        return "status-btn live"; // yellow (Live mode)
+        return "status-btn live";
       case 0:
-        return "status-btn offline"; // Gray
+        return "status-btn offline";
       case 2:
-        return "status-btn busy"; // Orange
+        return "status-btn busy";
       case 1:
-        return "status-btn available"; // Red
+        return "status-btn available";
       default:
         return "status-btn unknown";
     }
   };
 
+  const handleChange = (id, newValue, service) => {
+    console.log("first", newValue);
+    if (newValue === null) return;
+
+    // Always open modal regardless of value
+    setSelectedService({ ...service, newDisplayStatus: newValue });
+  };
+
+  const handleModalClose = () => {
+    setSelectedService(null);
+  };
+
   return (
     <div className="card">
-      <label className="sub-heading">STATUS(AVAILABILITY) :</label>
+      <label className="sub-heading">STATUS (AVAILABILITY) :</label>
       <div className="dividerm"></div>
 
       <footer className="card-foote">
         {data?.map((status) => (
-          <>
+          <React.Fragment key={status.id}>
             <div className="card-footer-content">
               <div className="info-pair">
                 <p className="info-item">
@@ -67,12 +89,55 @@ const CoachStatus = () => {
                       : availableStatus[status.status] || "Unknown"}
                   </button>
                 </p>
+
+                <ToggleButtonGroup
+                  color="primary"
+                  value={alignment[status.id]}
+                  onChange={(e, newVal) =>
+                    handleChange(status.id, newVal, status)
+                  }
+                  exclusive
+                  aria-label="Display Status"
+                >
+                  <ToggleButton
+                    value={1}
+                    sx={{
+                      borderRadius: "10px",
+                      "&.Mui-selected": {
+                        backgroundColor: "#696cff",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    Show
+                  </ToggleButton>
+                  <ToggleButton
+                    value={0}
+                    sx={{
+                      borderRadius: "10px",
+                      "&.Mui-selected": {
+                        backgroundColor: "#696cff",
+                        color: "white",
+                      },
+                    }}
+                  >
+                    Hide
+                  </ToggleButton>
+                </ToggleButtonGroup>
               </div>
             </div>
             <div className="dividerm"></div>
-          </>
+          </React.Fragment>
         ))}
       </footer>
+
+      {selectedService && (
+        <ServiceStatusModal
+          isOpen={!!selectedService}
+          onClose={handleModalClose}
+          service={selectedService}
+        />
+      )}
     </div>
   );
 };

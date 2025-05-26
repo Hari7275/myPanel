@@ -53,6 +53,20 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+    // update consultant status
+
+    updateDisplayStatus: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/service-status/admin/update-display-status/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -61,4 +75,5 @@ export const {
   useUpdateStatusMutation,
   useGetConsultantsSettingsQuery,
   useGetConsultantsServiceStatusQuery,
+  useUpdateDisplayStatusMutation,
 } = consultantsApiSlice;

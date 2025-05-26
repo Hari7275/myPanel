@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Pencil } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import AstrologerStatus from "../status/AstrologerStatus";
+import CoachStatus from "../../coaches/status/CoachStatus";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import {
@@ -185,7 +186,8 @@ const AstrologerLeftComponent = () => {
         </div>
       </div>
 
-      <AstrologerStatus />
+      {/* <AstrologerStatus /> */}
+      <CoachStatus />
       <ImageModal />
 
       {showModal && (
