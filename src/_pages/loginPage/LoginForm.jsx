@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import "./loginFrom.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../_store/slices/authSlice";
+import toast from "react-hot-toast";
+
+import { MOCK_USERS } from "./users";
 
 const LoginForm = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
@@ -19,15 +22,52 @@ const LoginForm = () => {
     }
   }, [isAuthenticated, navigate]);
 
+  // const handleLogin = () => {
+  //   if (phoneNumber === "1234567890" && password === "12345") {
+  //     dispatch(login());
+  //     navigate("/user");
+  //   } else {
+  //     alert("Invalid phone number or password");
+  //   }
+  // };
+
   const handleLogin = () => {
-    if (phoneNumber === "1234567890" && password === "12345") {
-      dispatch(login());
-      navigate("/user");
+    const user = MOCK_USERS.find(
+      (u) => u.phoneNumber == phoneNumber && u.password == password
+    );
+
+    // console.log("user", user);
+    if (user) {
+      console.log("--- LOGIN DEBUG ---");
+      console.log("Found user:", user);
+      console.log("Dispatching login with:", {
+        user: {
+          id: user.id,
+          name: user.name,
+          phoneNumber: user.phoneNumber,
+        },
+        role: user.role,
+        permissions: user.permissions,
+        prod: user.phoneNumber == "1234567899", 
+      });
+
+      dispatch(
+        login({
+          user: {
+            id: user.id,
+            name: user.name,
+            phoneNumber: user.phoneNumber,
+          },
+          role: user.role,
+          permissions: user.permissions,
+          prod: user.phoneNumber == "1234567899",
+        })
+      );
+      navigate("/dashboard");
     } else {
-      alert("Invalid phone number or password");
+      toast.error("Invalid phone number or password");
     }
   };
-
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
       handleLogin();

@@ -8,6 +8,7 @@ import { useGetUsersListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import Modal from "react-modal";
+import { Atom } from "react-loading-indicators";
 
 Modal.setAppElement("#root");
 
@@ -126,7 +127,13 @@ const UserListingTable = () => {
   );
 
   if (isLoading) {
-    return <span className="loadPage">Data Loading...</span>;
+    // return <span className="loadPage">Data Loading...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+    // return <Atom color="#32cd32" size="medium" text="" textColor="" />;
   }
 
   return (

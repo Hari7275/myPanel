@@ -32,10 +32,10 @@ const MetaDataList = () => {
           link="/dashboard-banner-metadata"
           label="Dashboard Banner"
         />
-        <CategoryCard
+        {/* <CategoryCard
           link="/magazine-categories-metadata"
           label=" Flute Magzine Categories"
-        />
+        /> */}
         <CategoryCard link="/coach-skills-metadata" label=" Coach skills" />
         <CategoryCard link="/report-reason" label=" Report Reasons" />
         <CategoryCard link="/consultant-service-rate" label="Service Rate" />

@@ -179,24 +179,26 @@ const CoachGallery = () => {
         <h3 className="ProfileData-subheading">Other Photos</h3>
         <div className="gallery-maincontainer">
           <div className="gallery-grid">
-            <div className="addImageContainer common-height">
-              <div
-                style={{
-                  background: "#fff",
-                  borderRadius: "50%",
-                  textAlign: "center",
-                  width: "50px",
-                  height: "50px",
-                }}
-              >
-                <span
-                  style={{ fontSize: "35px", cursor: "pointer" }}
-                  onClick={handleUploadImage}
+            {imageUrls.length < 9 && (
+              <div className="addImageContainer common-height">
+                <div
+                  style={{
+                    background: "#fff",
+                    borderRadius: "50%",
+                    textAlign: "center",
+                    width: "50px",
+                    height: "50px",
+                  }}
                 >
-                  +
-                </span>
+                  <span
+                    style={{ fontSize: "35px", cursor: "pointer" }}
+                    onClick={handleUploadImage}
+                  >
+                    +
+                  </span>
+                </div>
               </div>
-            </div>
+            )}
 
             {imageUrls &&
               imageUrls.map((image, index) => (

@@ -5,6 +5,8 @@ import Navbar from "./_layouts/Navbar";
 import Sidebar from "./_layouts/Sidebar";
 import { login } from "./_store/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import PrivateRoute from "./_pages/loginPage/PrivateRoute";
+import { ROUTE_PERMISSIONS } from "./_pages/loginPage/permissions";
 
 import "./App.css";
 // import LoginForm from "./commonComponents/LoginForm";
@@ -83,6 +85,16 @@ import SupportQuestion from "./_pages/masterComponents/support/supportQuestion/S
 import ExecutiveList from "./_pages/masterComponents/support/executiveSection/ExecutiveList";
 import UserSupportRequest from "./_pages/masterComponents/support/userSupportRequest/UserSupportRequest";
 
+// SuperAdmin control
+import UnauthorizedPage from "./_pages/loginPage/UnauthorizedPage";
+
+import SuperAdmin from "./_pages/admin/superAdmin/SuperAdmin";
+import AdminRole from "./_pages/admin/adminRoles/AdminRole";
+import AdminPermission from "./_pages/admin/AdminPermission/AdminPermission";
+import PermissionGroup from "./_pages/admin/permissionGroup/PermissionGroup";
+import AdminUser from "./_pages/admin/admin_users/AdminUser";
+import AssignPermissionToRole from "./_pages/admin/adminRoles/AssignPermissionToRole";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -99,11 +111,39 @@ const Layout = () => (
         }}
       >
         <Routes>
-          <Route path="dashboard" element={<DashboardMainPage />} />
+          {/* <Route path="dashboard" element={<DashboardMainPage />} /> */}
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute
+                element={<DashboardMainPage />}
+                requiredPermissions={["view_dashboard"]} // Just the essential permission
+              />
+            }
+          />
           <Route path="dashboard/fluteEarning" element={<FluteEarning />} />
 
-          <Route path="/user" element={<UserListingTable />} />
-          <Route path="coaches" element={<CoachListingTable />} />
+          {/* <Route path="/user" element={<UserListingTable />} /> */}
+
+          <Route
+            path="/user"
+            element={
+              <PrivateRoute
+                element={<UserListingTable />}
+                requiredPermissions={["view_coaches"]}
+              />
+            }
+          />
+          {/* <Route path="coaches" element={<CoachListingTable />} /> */}
+          <Route
+            path="/coaches"
+            element={
+              <PrivateRoute
+                element={<CoachListingTable />}
+                requiredPermissions={ROUTE_PERMISSIONS.coaches}
+              />
+            }
+          />
           <Route path="listeners" element={<ListenersListingTable />} />
           <Route path="astrologer" element={<AstrologerListingTable />} />
 
@@ -190,19 +230,33 @@ const Layout = () => (
           <Route path="support-question" element={<SupportQuestion />} />
           <Route path="Support-executive" element={<ExecutiveList />} />
           <Route path="user-support-request" element={<UserSupportRequest />} />
+
+          {/* ****************************************SuperAdmin*************************** */}
+          <Route path="super-admin" element={<SuperAdmin />} />
+          <Route path="admin-roles" element={<AdminRole />} />
+          <Route path="admin-permission/:id" element={<AdminPermission />} />
+          <Route path="admin-permission" element={<PermissionGroup />} />
+          <Route path="admin-user" element={<AdminUser />} />
+
+          <Route
+            path="role-permission/:id"
+            element={<AssignPermissionToRole />}
+          />
         </Routes>
       </section>
     </div>
   </div>
 );
 
-const PrivateRoute = ({ element, isAuthenticated, ...rest }) => {
-  return isAuthenticated ? element : <Navigate to="/" />;
-};
+// const PrivateRoute = ({ element, isAuthenticated, ...rest }) => {
+//   return isAuthenticated ? element : <Navigate to="/" />;
+// };
 
 function App() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+  console.log("ROUTE_PERMISSIONS.dashboard", ROUTE_PERMISSIONS.dashboard);
 
   return (
     <Routes>
@@ -211,17 +265,27 @@ function App() {
       <Route path="/" element={<LoginForm dispatch={dispatch} />} />
       <Route path="logout" element={<LogoutPopup />} />
       {/* <Route path="*" element={<Layout />} /> */}
+      <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
       <Route
         path="*"
         element={
           <PrivateRoute
             element={<Layout />}
-            isAuthenticated={isAuthenticated}
+            // isAuthenticated={isAuthenticated}
+            // requiredPermissions={["access_admin_panel"]}
           />
         }
       />
     </Routes>
+
+    // <Routes>
+    //   <Route path="/" element={<LoginForm dispatch={dispatch} />} />
+    //   <Route path="/logout" element={<LogoutPopup />} />
+
+    //   {/* Fallback route: render Layout for all other paths */}
+    //   <Route path="*" element={<Layout />} />
+    // </Routes>
   );
 }
 

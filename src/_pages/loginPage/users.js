@@ -1,0 +1,42 @@
+export const MOCK_USERS = [
+  {
+    id: 1,
+    phoneNumber: "1234567890",
+    password: "12345",
+    name: "Admin User",
+    role: "admin",
+    permissions: ["*"],
+  },
+  {
+    id: 1,
+    phoneNumber: "1234567899",
+    password: "12345",
+    name: "Admin User",
+    role: "admin",
+    permissions: ["*"],
+  },
+  {
+    id: 2,
+    phoneNumber: "9876543210",
+    password: "12345",
+    name: "Content Editor",
+    role: "editor",
+    permissions: [
+      "view_dashboard",
+      "view_users",
+      "edit_users",
+      "view_coaches",
+      "edit_coaches",
+      "view_content",
+      "edit_content",
+    ],
+  },
+  {
+    id: 3,
+    phoneNumber: "5555555555",
+    password: "12345",
+    name: "View Only User",
+    role: "viewer",
+    permissions: ["view_content"],
+  },
+];

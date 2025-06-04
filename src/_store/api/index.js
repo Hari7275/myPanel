@@ -73,3 +73,11 @@ export * from "../api/consultantReviewList/ReviewList";
 
 export * from "../api/supportSection/supportQuestion";
 export * from "../api/supportSection/supportExecutive";
+
+// data for admin permission
+
+export * from "../api/adminPermission/adminPermission";
+export * from "../api/adminPermission/adminRole";
+export * from "../api/adminPermission/adminPermissionGroup";
+export * from "../api/adminPermission/superAdmin";
+export * from "../api/adminPermission/adminUser";

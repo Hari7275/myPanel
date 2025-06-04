@@ -10,6 +10,10 @@ export const userListingSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
+
+      // extraOptions: {
+      //   timeoutMs: 4000, // ✅ Correct placement
+      // },
       providesTags: ["user"],
     }),
 

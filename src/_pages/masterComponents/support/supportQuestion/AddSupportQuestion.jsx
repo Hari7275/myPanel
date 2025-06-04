@@ -32,7 +32,7 @@ const AddSupportQuestion = ({ isOpen, onClose }) => {
         onClose();
       }
 
-      console.log("response..", response);
+      
 
       if (response?.data?.status == false) {
         toast.error(response?.data?.message);

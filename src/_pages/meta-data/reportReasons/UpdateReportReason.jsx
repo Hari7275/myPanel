@@ -63,7 +63,7 @@ const UpdateReportReason = ({ isOpen, onClose, selectedRow }) => {
             textAlign: "center",
           }}
         >
-          Update Reviews
+          Update report reason
         </h2>
 
         <UpdateInputField

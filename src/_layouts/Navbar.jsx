@@ -62,14 +62,14 @@ const Navbar = () => {
             >
               <Link to="notification">
                 {" "}
-                <img src="bell.png" />
+                <img src="/bell.png" />
               </Link>
             </div>
 
             {count}
 
             <div className="navbar-img" onClick={handleAvatarClick}>
-              <img src="girl-avtar.png" />
+              <img src="/girl-avtar.png" />
             </div>
           </Stack>
         </Toolbar>

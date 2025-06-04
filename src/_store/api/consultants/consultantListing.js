@@ -10,6 +10,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
+
       providesTags: ["consultants"],
     }),
 

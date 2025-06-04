@@ -8,6 +8,10 @@ export const PROGRESSCOLUMN = [
     Header: "Display Text",
     accessor: "display_text",
   },
+  {
+    Header: "Level",
+    accessor: "level_name",
+  },
 
   {
     Header: "Description",

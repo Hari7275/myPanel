@@ -10,6 +10,8 @@ import ManageHistoryOutlinedIcon from "@mui/icons-material/ManageHistoryOutlined
 import PhotoCameraFrontOutlinedIcon from "@mui/icons-material/PhotoCameraFrontOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+
 import "aos/dist/aos.css";
 
 import { Link } from "react-router-dom";
@@ -18,6 +20,7 @@ const Sidebar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState("");
   const [isPayment, setIsPayment] = useState("");
+  const [isAdmin, setIsAdmin] = useState("");
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
 
@@ -30,6 +33,10 @@ const Sidebar = () => {
   };
   const paymentDropdown = () => {
     setIsPayment(!isPayment);
+  };
+
+  const adminDropdown = () => {
+    setIsAdmin(!isAdmin);
   };
 
   // code for highlighted text
@@ -49,6 +56,59 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-grou">
+            <div className="menu-item-child">
+              <div className="child" onClick={adminDropdown}>
+                <SupervisorAccountIcon />
+                <span>Admin Section</span>
+
+                <span>{isAdmin ? "⬇️" : "⬅️"}</span>
+              </div>
+
+              {isAdmin && (
+                <div className="menu-item-sub">
+                  <Link to="super-admin">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "Super-admin" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("Super-admin")}
+                    >
+                      <div className="dropdown-item"> Super Admin</div>
+                    </div>
+                  </Link>
+                  <Link to="admin-roles">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "Roles" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("Roles")}
+                    >
+                      <div className="dropdown-item"> Roles</div>
+                    </div>
+                  </Link>
+                  <Link to="/admin-permission">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "Permission" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("Permission")}
+                    >
+                      <div className="dropdown-item">Permission </div>
+                    </div>
+                  </Link>
+                  <Link to="/admin-user">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "admin-user" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("admin-user")}
+                    >
+                      <div className="dropdown-item">Admin User </div>
+                    </div>
+                  </Link>
+                </div>
+              )}
+            </div>
             <div>
               <Link to="/dashboard">
                 <div
@@ -85,7 +145,11 @@ const Sidebar = () => {
                   }`}
                   onClick={() => handleItemClick("Coaches")}
                 >
-                  <HeadphonesOutlinedIcon />
+                  <img
+                    src="/adminPannel_icons/Coach.png"
+                    width="24"
+                    height="24"
+                  />
                   <span>Coaches </span>
                 </div>
               </Link>
@@ -109,7 +173,12 @@ const Sidebar = () => {
                   }`}
                   onClick={() => handleItemClick("Astrologer")}
                 >
-                  <HeadphonesOutlinedIcon />
+                  {/* <HeadphonesOutlinedIcon /> */}
+                  <img
+                    src="/adminPannel_icons/astrologers.png"
+                    width="24"
+                    height="24"
+                  />
                   <span>Astrologer</span>
                 </div>
               </Link>
@@ -146,7 +215,11 @@ const Sidebar = () => {
 
           <div className="menu-item-child">
             <div className="child" onClick={paymentDropdown}>
-              <ManageHistoryOutlinedIcon />
+              <img
+                src="/adminPannel_icons/payment.png"
+                width="24"
+                height="24"
+              />
               <span>Payment Services</span>
 
               <span>{isPayment ? "⬇️" : "⬅️"}</span>
@@ -317,7 +390,11 @@ const Sidebar = () => {
                 }`}
                 onClick={() => handleItemClick("user-support")}
               >
-                <PhotoCameraFrontOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/support.png"
+                  width="24"
+                  height="24"
+                />
                 <span>Support</span>
               </div>
             </Link>
@@ -329,7 +406,11 @@ const Sidebar = () => {
               onClick={() => handleItemClick("package Update")}
             >
               <Link to="/subs-package">
-                <PhotoCameraFrontOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/update.png"
+                  width="24"
+                  height="24"
+                />
                 <span>package Update</span>
               </Link>
             </div>
@@ -341,7 +422,11 @@ const Sidebar = () => {
               onClick={() => handleItemClick("QD Trips")}
             >
               <Link to="/qd-trips">
-                <PhotoCameraFrontOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/QD trips.png"
+                  width="24"
+                  height="24"
+                />
                 <span>QD Trips</span>
               </Link>
             </div>
@@ -353,7 +438,11 @@ const Sidebar = () => {
               onClick={() => handleItemClick("qd-location")}
             >
               <Link to="/qd-location">
-                <PhotoCameraFrontOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/QD_location.png"
+                  width="24"
+                  height="24"
+                />
                 <span>QD Loaction</span>
               </Link>
             </div>
@@ -365,7 +454,11 @@ const Sidebar = () => {
               onClick={() => handleItemClick("feedback")}
             >
               <Link to="/feedback-list">
-                <PhotoCameraFrontOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/feedback.png"
+                  width="24"
+                  height="24"
+                />
                 <span>Feedback</span>
               </Link>
             </div>
@@ -377,7 +470,7 @@ const Sidebar = () => {
           </div>
         </div>
       ) : (
-        <aside className="sidebar">
+        <aside className="sidebar ">
           <div className="menu-btn" onClick={toggleMenu}>
             <MenuOutlinedIcon />
           </div>
@@ -401,14 +494,22 @@ const Sidebar = () => {
 
             <Link to="astrologer">
               <div className="item">
-                <GroupOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/astrologers.png"
+                  width="24"
+                  height="24"
+                />
                 <span>Astrologer</span>
               </div>
             </Link>
 
             <Link to="/coaches">
               <div className="item">
-                <ContactPhoneOutlinedIcon />
+                <img
+                  src="/adminPannel_icons/Coach.png"
+                  width="24"
+                  height="24"
+                />
                 <span>Coaches</span>
               </div>
             </Link>
