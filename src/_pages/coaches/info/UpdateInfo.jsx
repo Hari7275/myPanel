@@ -9,7 +9,6 @@ import {
   useGetLanguagesListQuery,
 } from "../../../_store/api";
 import toast from "react-hot-toast";
-
 import { format, subYears } from "date-fns";
 
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
@@ -23,19 +22,21 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     services: selectedData?.services,
     description: selectedData?.description,
     experience: selectedData?.experience,
+    categories: selectedData?.categories?.map((cat) => cat.id) || [],
+    skills: selectedData?.skills?.map((skill) => skill.id) || [],
+    languages: selectedData?.languages || [],
   });
 
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSkills, setSelectedSkills] = useState([]);
   const [selectedLanguages, setSelectedLanguage] = useState([]);
+  const [error, setError] = useState("");
 
   const [updateInfo, { isLoading: isUpdating }] =
     useUpdateConsultantsDetailsMutation();
   const { data: categoryData } = useGetCoachCategoryListQuery();
   const { data: skillsData } = useGetCoachSkillsListQuery();
   const { data: languagesData } = useGetLanguagesListQuery();
-
-  const [error, setError] = useState("");
 
   // Define category options from API data
   const categoryOptions =
@@ -46,11 +47,27 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       }))
       .filter((category) => category.value !== 1 && category.value !== 3) || [];
 
-  // Define skill options from API data
-  const skillOptions =
+  // Define all skill options from API data with category_id
+  const allSkillOptions =
     skillsData?.data?.map((skill) => ({
       value: skill.id,
       label: skill.skill_name,
+      category_id: skill.category_id,
+    })) || [];
+
+  // Filter skills based on selected categories
+  const filteredSkillOptions =
+    selectedCategories.length > 0
+      ? allSkillOptions.filter((skill) =>
+          selectedCategories.some((cat) => cat.value === skill.category_id)
+        )
+      : allSkillOptions;
+
+  // Define Language options from API data
+  const LanguagesOptions =
+    languagesData?.data?.map((lang) => ({
+      value: lang?.language,
+      label: lang?.language,
     })) || [];
 
   // Preselect categories that are in both formData and API options
@@ -58,17 +75,20 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     selectedData.categories?.includes(option.value)
   );
 
-  useEffect(() => {
-    setSelectedCategories(preselectedCategories);
-  }, []);
-
   // Preselect skills that are in both formData and API options
-  const preselectedSkills = skillOptions?.filter((option) =>
+  const preselectedSkills = allSkillOptions?.filter((option) =>
     selectedData?.skills?.includes(option.value)
   );
 
+  // Preselect Language that are in both formData and API options
+  const preselectedLanguage = LanguagesOptions?.filter((option) =>
+    selectedData?.languages?.includes(option?.value)
+  );
+
   useEffect(() => {
+    setSelectedCategories(preselectedCategories);
     setSelectedSkills(preselectedSkills);
+    setSelectedLanguage(preselectedLanguage);
   }, []);
 
   useEffect(() => {
@@ -80,22 +100,6 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       }));
     }
   }, [selectedData]);
-
-  // Define Language options from API data
-  const LanguagesOptions =
-    languagesData?.data?.map((lang) => ({
-      value: lang?.language,
-      label: lang?.language,
-    })) || [];
-
-  // Preselect Language that are in both formData and API options
-  const preselectedLanguage = LanguagesOptions?.filter((option) =>
-    selectedData?.languages?.includes(option?.value)
-  );
-
-  useEffect(() => {
-    setSelectedLanguage(preselectedLanguage);
-  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -109,21 +113,44 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const handleMultiSelectChange = (name, selectedOptions) => {
     if (name === "languages" && selectedOptions.length > 3) {
       toast.error("You can only select up to 3 languages.");
-      return; // Exit early if the limit is exceeded
+      return;
     }
 
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: selectedOptions?.map((option) => option.value),
-    }));
     if (name === "categories") {
+      // Find out which category was removed (if any)
+      const removedCategory = selectedCategories.find(
+        (cat) => !selectedOptions.some((opt) => opt.value === cat.value)
+      );
+
       setSelectedCategories(selectedOptions);
+
+      if (removedCategory) {
+        // Only remove skills that belong to the removed category
+        const updatedSkills = selectedSkills.filter((skill) => {
+          const skillCategory = allSkillOptions.find(
+            (s) => s.value === skill.value
+          )?.category_id;
+          return skillCategory !== removedCategory.value;
+        });
+
+        setSelectedSkills(updatedSkills);
+        setFormData((prev) => ({
+          ...prev,
+          skills: updatedSkills.map((skill) => skill.value),
+        }));
+      }
     } else if (name === "skills") {
       setSelectedSkills(selectedOptions);
-    }
-
-    if (name === "languages") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: selectedOptions?.map((option) => option.value),
+      }));
+    } else if (name === "languages") {
       setSelectedLanguage(selectedOptions);
+      setFormData((prev) => ({
+        ...prev,
+        [name]: selectedOptions?.map((option) => option.value),
+      }));
     }
   };
 
@@ -133,19 +160,24 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const handleSave = async (e) => {
     e.preventDefault();
 
-    // Check if the selected date of birth is at least 18 years ago
     if (new Date(formData.date_of_birth) > new Date(minValidDOB)) {
       setError("User must be at least 18 years old.");
       return;
     }
 
-    // Create a copy of formData to modify
+    // Ensure categories are numbers
+    const categoriesToSend = selectedCategories.map((cat) => cat.value);
+    const skillsToSend = selectedSkills.map((skill) => skill.value);
+    const languagesToSend = selectedLanguages.map((lang) => lang.value);
+
     const dataToSend = {
       ...formData,
-      gender: Number(formData.gender), // Ensure gender is a number
+      gender: Number(formData.gender),
+      categories: categoriesToSend,
+      skills: skillsToSend,
+      languages: languagesToSend,
     };
 
-    // If categories haven't changed, delete the categories key
     if (
       selectedCategories.length === preselectedCategories.length &&
       selectedCategories.every(
@@ -155,7 +187,6 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       delete dataToSend.categories;
     }
 
-    // If skills haven't changed, delete the skills key
     if (
       selectedSkills.length === preselectedSkills.length &&
       selectedSkills.every(
@@ -165,7 +196,6 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       delete dataToSend.skills;
     }
 
-    // If skills haven't changed, delete the skills key
     if (
       selectedLanguages?.length === preselectedLanguage?.length &&
       selectedLanguages.every(
@@ -291,7 +321,6 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
 
         {error && <p style={{ color: "red", paddingLeft: "10px" }}>{error}</p>}
 
-        {/* update experience */}
         <div style={{ display: "flex" }}>
           <UpdateInputField
             label="Experience"
@@ -303,7 +332,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           />
         </div>
 
-        <div>
+        <div style={{ marginBottom: "15px" }}>
           <label htmlFor="categories">Category</label>
           <Select
             id="categories"
@@ -317,19 +346,25 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           />
         </div>
 
-        <div>
+        <div style={{ marginBottom: "15px" }}>
           <label htmlFor="skills">Skills</label>
           <Select
             id="skills"
             name="skills"
             isMulti
-            options={skillOptions}
+            options={filteredSkillOptions}
             value={selectedSkills}
             onChange={(options) => handleMultiSelectChange("skills", options)}
+            isDisabled={selectedCategories.length === 0}
           />
+          {selectedCategories.length === 0 && (
+            <p style={{ color: "#666", fontSize: "0.8rem", marginTop: "5px" }}>
+              Please select categories first to choose skills
+            </p>
+          )}
         </div>
 
-        <div>
+        <div style={{ marginBottom: "15px" }}>
           <label htmlFor="skills">Languages</label>
           <Select
             id="languages"
@@ -349,7 +384,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         >
           Services:
         </label>
-        <div style={{ width: "100%", marginTop: "4px" }}>
+        <div style={{ width: "100%", marginTop: "4px", marginBottom: "15px" }}>
           <textarea
             style={{
               width: "100%",
@@ -375,9 +410,9 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           htmlFor="description"
           style={{ width: "100%", marginTop: "20px" }}
         >
-          description:
+          Description:
         </label>
-        <div style={{ width: "100%", marginTop: "4px" }}>
+        <div style={{ width: "100%", marginTop: "4px", marginBottom: "15px" }}>
           <textarea
             style={{
               width: "100%",
