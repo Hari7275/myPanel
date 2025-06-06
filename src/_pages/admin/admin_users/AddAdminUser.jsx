@@ -28,7 +28,7 @@ const AddAdminUser = ({ isOpen, onClose }) => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+    // setFormData((prevData) => ({ ...prevData, [name]: value }));
     setFormData((prevData) => ({
       ...prevData,
       [name]: name === "role_id" ? Number(value) : value,

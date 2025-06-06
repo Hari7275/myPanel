@@ -1,16 +1,17 @@
 import apiSlice from "../api";
 
-const ADMIN_TOKEN =
-  "Bearer eyJhbGciOiJkaXIiLCJlbmMiOiJBMTI4Q0JDLUhTMjU2In0..4QFA-Y6h5fo7B0WEfdLCow.uvu5mPryHj97TQ4rK9H7rNzjoY8cmUjrMEUVieeTVMxHfYuWCHkm0aXy6qlqd7vj4UGT1FIJfF9aChz4hEEro9wYFPMtHJUh7H5dWYszwxKAU5E1P9JZx0uHL1TxBwy3i4V6RjN1C30S0nNxD-7-sO2QuCtUOUEQ9HCBV5asZvn8bgjW_DD1QN9kgPEQ2-0s1zzaA04P-XlcyMZpGRhp49DRCKgnwa_WyO2B2jHvBxc.f2M2_rMXE-zGh_rqxyGnMA";
+import { getAdminToken } from "../tokenHelper";
+
+console.log("getAdminToken......", getAdminToken());
 
 export const adminUserSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminUserList: builder.query({
-      query: () => ({
+      query: (_arg, api) => ({
         url: `/api/v1/admin-service/admin/admin-user?page=1&size=10`,
         method: "GET",
         headers: {
-          Authorization: ADMIN_TOKEN,
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["admin"],
@@ -22,7 +23,7 @@ export const adminUserSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
         headers: {
-          Authorization: ADMIN_TOKEN,
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["admin"],
@@ -34,7 +35,7 @@ export const adminUserSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: ADMIN_TOKEN,
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["admin"],
@@ -45,8 +46,21 @@ export const adminUserSlice = apiSlice.injectEndpoints({
         url: `/api/v1/admin-service/admin/admin-user/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: ADMIN_TOKEN,
+          Authorization: getAdminToken(),
         },
+      }),
+      invalidatesTags: ["admin"],
+    }),
+
+    // ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^admin login by email ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    createAdminLogin: builder.mutation({
+      query: ({ body }) => ({
+        url: `https://dev-api.fluteconnect.com/api/v1/admin-service/admin/admin-user/login`,
+        method: "PUT",
+        body,
+        // headers: {
+        //   Authorization: ADMIN_TOKEN,
+        // },
       }),
       invalidatesTags: ["admin"],
     }),
@@ -58,4 +72,5 @@ export const {
   useCreateAdminUserMutation,
   useUpdateAdminUserMutation,
   useDeleteAdminUserMutation,
+  useCreateAdminLoginMutation,
 } = adminUserSlice;

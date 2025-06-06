@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import { useGetConsultantReviewQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import { Atom } from "react-loading-indicators";
 
 const ConsultantReviewList = () => {
   const [data, setData] = useState([]);
@@ -68,7 +69,11 @@ const ConsultantReviewList = () => {
   );
 
   if (isLoading) {
-    return <span>Loading ... </span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
   return (
     <div>

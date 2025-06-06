@@ -9,6 +9,7 @@ import {
   useGetConsultantPayoutAmountQuery,
   useGetFluteRefferalAmountQuery,
 } from "../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const FluteEarning = () => {
   const [consultantEarning, setConsultantEarning] = useState([]);
@@ -60,7 +61,11 @@ const FluteEarning = () => {
   ]);
 
   if (isLoading) {
-    return <span className="loadPage">Data Loading...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
   return (
     <div className="profile-section">

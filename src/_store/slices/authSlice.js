@@ -4,8 +4,9 @@ const initialState = {
   isAuthenticated: false,
   user: null,
   role: null,
-  permissions: [],
+  permissions: {},
   prod: false,
+  token: null,
 };
 
 const authSlice = createSlice({
@@ -21,13 +22,15 @@ const authSlice = createSlice({
       state.role = action.payload.role;
       state.permissions = action.payload.permissions;
       state.prod = action.payload.prod || false; // <-- NEW
+      state.token = action.payload.token; // <-- NEW
       console.log("New state:", JSON.parse(JSON.stringify(state)));
     },
     logout: (state) => {
       state.isAuthenticated = false;
       state.user = null;
       state.role = null;
-      state.permissions = [];
+      state.permissions = {};
+      state.token = null;
     },
   },
 });

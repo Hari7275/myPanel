@@ -30,8 +30,10 @@ const ConsultantNotice = () => {
   // store data
   useEffect(() => {
     // console.log("fetchData gifts", fetchData?.data.rows);
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
+    } else {
+      setData([]);
     }
   }, [fetchData]);
 

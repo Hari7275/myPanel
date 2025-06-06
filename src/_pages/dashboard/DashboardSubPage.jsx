@@ -11,6 +11,7 @@ import {
 
 import BasicArea from "./BasicArea";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
@@ -76,7 +77,11 @@ const DashboardSubPage = () => {
   ]);
 
   if (isLoading) {
-    return <span className="loadPage">Data Loading...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const handleClick = () => {
@@ -104,7 +109,7 @@ const DashboardSubPage = () => {
               marginRight: "30px",
               fontSize: "25px",
               cursor: "pointer",
-              fontWeight:"600"
+              fontWeight: "600",
             }}
             onClick={handleClick}
           >

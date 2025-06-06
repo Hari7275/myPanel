@@ -10,6 +10,7 @@ import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -168,7 +169,11 @@ const CoachListingTable = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (error) {

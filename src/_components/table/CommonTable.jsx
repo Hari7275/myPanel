@@ -92,11 +92,11 @@ const CommonTable = ({
         <div className="tableDiv">
           <table className="tableContainer" {...getTableProps()}>
             <thead style={{ position: "relative", zIndex: "9" }}>
-              {headerGroups.map((headerGroup) => {
+              {headerGroups?.map((headerGroup) => {
                 const { key, ...rest } = headerGroup.getHeaderGroupProps();
                 return (
                   <tr key={key} {...rest}>
-                    {headerGroup.headers.map((column) => {
+                    {headerGroup?.headers?.map((column) => {
                       const { key, ...rest } = column.getHeaderProps(
                         column.getSortByToggleProps()
                       );
@@ -136,16 +136,16 @@ const CommonTable = ({
               })}
             </tbody> */}
             <tbody {...getTableBodyProps()}>
-              {page.map((row) => {
+              {page?.map((row) => {
                 prepareRow(row);
                 return (
                   <tr
-                    {...row.getRowProps(
+                    {...row?.getRowProps(
                       getRowProps ? getRowProps(row) : undefined
                     )}
                   >
                     {row?.cells?.map((cell) => (
-                      <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                      <td {...cell?.getCellProps()}>{cell?.render("Cell")}</td>
                     ))}
                   </tr>
                 );

@@ -16,6 +16,9 @@ const customBaseQuery = async (args, api, extraOptions) => {
   const state = api.getState();
 
   const prod = state.auth?.prod;
+  const token = state.auth.token;
+
+  console.log("token......", token);
 
   const baseUrl = prod
     ? "https://api.fluteconnect.com/"

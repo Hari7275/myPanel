@@ -10,6 +10,8 @@ import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
+
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
@@ -168,7 +170,11 @@ const AstrologerListingTable = () => {
   );
 
   if (isLoading) {
-    return <span>Loading ... </span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
   return (
     <div>

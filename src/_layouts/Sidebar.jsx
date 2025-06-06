@@ -4,13 +4,13 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
-import ContactPhoneOutlinedIcon from "@mui/icons-material/ContactPhoneOutlined";
 import HeadphonesOutlinedIcon from "@mui/icons-material/HeadphonesOutlined";
 import ManageHistoryOutlinedIcon from "@mui/icons-material/ManageHistoryOutlined";
-import PhotoCameraFrontOutlinedIcon from "@mui/icons-material/PhotoCameraFrontOutlined";
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+// import { hasPermission } from "../_store/api/tokenHelper";
+import { useSelector } from "react-redux";
 
 import "aos/dist/aos.css";
 
@@ -45,6 +45,10 @@ const Sidebar = () => {
     setActiveItem(item);
   };
 
+  const permissions = useSelector((state) => state.auth?.permissions || {});
+
+  console.log("permissions/////", permissions);
+
   return (
     <div className="sideContainer">
       {isMenuOpen ? (
@@ -66,16 +70,6 @@ const Sidebar = () => {
 
               {isAdmin && (
                 <div className="menu-item-sub">
-                  <Link to="super-admin">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "Super-admin" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("Super-admin")}
-                    >
-                      <div className="dropdown-item"> Super Admin</div>
-                    </div>
-                  </Link>
                   <Link to="admin-roles">
                     <div
                       className={`menu-item ${
@@ -110,6 +104,7 @@ const Sidebar = () => {
               )}
             </div>
             <div>
+              {/* {permissions?.["Dashboard"] && ( */}
               <Link to="/dashboard">
                 <div
                   className={`menu-item ${
@@ -121,6 +116,7 @@ const Sidebar = () => {
                   <span>Dashboard</span>
                 </div>
               </Link>
+              {/* )}  */}
 
               <Link to="/user">
                 <div
@@ -476,6 +472,7 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebar-items">
+            {/* {permissions?.["Dashboard"] && ( */}
             <Link to="/dashboard">
               <div className="item">
                 <span className="icon">
@@ -484,13 +481,15 @@ const Sidebar = () => {
                 <span>Dashboard</span>
               </div>
             </Link>
-
+            {/* )} */}
+            {/* {permissions?.["User"] && ( */}
             <Link to="/user">
               <div className="item">
                 <GroupOutlinedIcon />
                 <span>Users</span>
               </div>
             </Link>
+            {/* )} */}
 
             <Link to="astrologer">
               <div className="item">
@@ -514,12 +513,14 @@ const Sidebar = () => {
               </div>
             </Link>
 
+            {/* {permissions?.["Listeners"] && ( */}
             <Link to="/listeners">
               <div className="item">
                 <HeadphonesOutlinedIcon />
                 <span>Listeners</span>
               </div>
             </Link>
+            {/* )} */}
 
             <Link to="/meta-data">
               <div className="item">
@@ -528,12 +529,16 @@ const Sidebar = () => {
               </div>
             </Link>
 
+            {/* {permissions?.[("Dashboard", "Listeners")]?.includes(
+              "Review Profilkem"
+            ) && ( */}
             <Link to="/profile-review">
               <div className="item">
                 <CategoryOutlinedIcon />
                 <span>Review</span>
               </div>
             </Link>
+            {/* )} */}
           </div>
         </aside>
       )}

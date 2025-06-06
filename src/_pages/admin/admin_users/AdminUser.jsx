@@ -10,8 +10,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 
 import {
   useGetAdminUserListQuery,
-  useDeleteAdminRoleMutation,
- 
+  useDeleteAdminUserMutation,
 } from "../../../_store/api";
 
 const AdminUser = () => {
@@ -23,7 +22,7 @@ const AdminUser = () => {
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetAdminUserListQuery();
-  const [deleteData] = useDeleteAdminRoleMutation();
+  const [deleteData] = useDeleteAdminUserMutation();
 
   useEffect(() => {
     if (fetchData) {

@@ -88,7 +88,6 @@ import UserSupportRequest from "./_pages/masterComponents/support/userSupportReq
 // SuperAdmin control
 import UnauthorizedPage from "./_pages/loginPage/UnauthorizedPage";
 
-import SuperAdmin from "./_pages/admin/superAdmin/SuperAdmin";
 import AdminRole from "./_pages/admin/adminRoles/AdminRole";
 import AdminPermission from "./_pages/admin/AdminPermission/AdminPermission";
 import PermissionGroup from "./_pages/admin/permissionGroup/PermissionGroup";
@@ -232,7 +231,7 @@ const Layout = () => (
           <Route path="user-support-request" element={<UserSupportRequest />} />
 
           {/* ****************************************SuperAdmin*************************** */}
-          <Route path="super-admin" element={<SuperAdmin />} />
+
           <Route path="admin-roles" element={<AdminRole />} />
           <Route path="admin-permission/:id" element={<AdminPermission />} />
           <Route path="admin-permission" element={<PermissionGroup />} />
