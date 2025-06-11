@@ -18,6 +18,7 @@ import ProfilePhoto from "./ProfilePhoto";
 import { useGetGalleryListQuery } from "../../../_store/api";
 import UseImageModal from "../../../_constants/UseImageModal";
 import MyGallery from "../../../_constants/MyGallery";
+import toast from "react-hot-toast";
 
 const AstrologerGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -99,6 +100,13 @@ const AstrologerGallery = () => {
           id: consultantId,
           body: formData,
         }).unwrap();
+
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+          return;
+        }
 
         // Directly update the imageUrls state
         setImageUrls((prevUrls) => [
@@ -184,26 +192,26 @@ const AstrologerGallery = () => {
         <h3 className="ProfileData-subheading">Other Photos</h3>
         <div className="gallery-maincontainer">
           <div className="gallery-grid">
-            {imageUrls.length < 9 && (
-              <div className="addImageContainer common-height">
-                <div
-                  style={{
-                    background: "#fff",
-                    borderRadius: "50%",
-                    textAlign: "center",
-                    width: "50px",
-                    height: "50px",
-                  }}
+            {/* {imageUrls.length < 9 && ( */}
+            <div className="addImageContainer common-height">
+              <div
+                style={{
+                  background: "#fff",
+                  borderRadius: "50%",
+                  textAlign: "center",
+                  width: "50px",
+                  height: "50px",
+                }}
+              >
+                <span
+                  style={{ fontSize: "35px", cursor: "pointer" }}
+                  onClick={handleUploadImage}
                 >
-                  <span
-                    style={{ fontSize: "35px", cursor: "pointer" }}
-                    onClick={handleUploadImage}
-                  >
-                    +
-                  </span>
-                </div>
+                  +
+                </span>
               </div>
-            )}
+            </div>
+            {/* )} */}
 
             {imageUrls &&
               imageUrls.map((image, index) => (

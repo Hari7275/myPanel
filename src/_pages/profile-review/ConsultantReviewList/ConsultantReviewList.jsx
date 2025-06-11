@@ -9,6 +9,7 @@ import { useGetConsultantReviewQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { Atom } from "react-loading-indicators";
+import { debounce } from "lodash";
 
 const ConsultantReviewList = () => {
   const [data, setData] = useState([]);
@@ -17,10 +18,12 @@ const ConsultantReviewList = () => {
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
+  const [consultantId, setConsultantId] = useState("");
 
   const { data: fetchData, isLoading } = useGetConsultantReviewQuery({
     page,
     size: pageSize,
+    consultant_id: consultantId,
   });
 
   useEffect(() => {
@@ -68,6 +71,30 @@ const ConsultantReviewList = () => {
     [handleActionClick]
   );
 
+  const debouncedSearchConsultantId = debounce(
+    (value) => setConsultantId(value),
+    500
+  );
+
+  const handleConsultantIdSearch = (e) => {
+    debouncedSearchConsultantId(e?.target?.value);
+  };
+
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by consultant Id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
+    </div>
+  );
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -83,6 +110,7 @@ const ConsultantReviewList = () => {
         tableTitle="Consultant Review List"
         includeActions={false}
         dynamicPagination={dynamicPagination}
+        customFilterComponent={customFilterComponent}
         totalPage={totalPage}
         currentPage={page}
         pageSize={pageSize}

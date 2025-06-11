@@ -5,6 +5,7 @@ import {
   useGetLanguagesListQuery,
 } from "../../../_store/api";
 import Select from "react-select";
+
 const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
     first_name: "",
@@ -15,7 +16,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
     permanent_address: "",
     current_address: "",
     country: "",
-    languages: "",
+    languages: [],
   });
 
   const [selectedLanguages, setSelectedLanguage] = useState([]);
@@ -23,8 +24,15 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
 
   const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
   const { data: languagesData } = useGetLanguagesListQuery();
+
   useEffect(() => {
     if (selectedData) {
+      // Parse languages if it's a string, otherwise use as-is
+      const languages =
+        typeof selectedData.languages === "string"
+          ? JSON.parse(selectedData.languages)
+          : selectedData.languages || [];
+
       setFormData({
         first_name: selectedData.first_name || "",
         last_name: selectedData.last_name || "",
@@ -34,9 +42,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
         permanent_address: selectedData.permanent_address || "",
         current_address: selectedData.current_address || "",
         country: selectedData.country || "",
-        languages: selectedData.languages
-          ? JSON.stringify(selectedData.languages)
-          : "",
+        languages: languages,
       });
     }
   }, [selectedData]);
@@ -51,22 +57,24 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
 
       setLanguageOptions(options);
 
+      // Get current languages from formData (already parsed)
+      const currentLanguages = formData.languages || [];
       const preselected = options.filter((option) =>
-        selectedData.languages?.some(
+        currentLanguages.some(
           (lang) => lang.toLowerCase() === option.value.toLowerCase()
         )
       );
 
       setSelectedLanguage(preselected);
     }
-  }, [selectedData, languagesData]);
-
-  console.log("selectedLanguages", selectedLanguages);
+  }, [selectedData, languagesData, formData.languages]);
 
   const handleMultiSelectChange = (name, selectedOptions) => {
+    const newLanguages = selectedOptions?.map((option) => option.value) || [];
+
     setFormData((prevData) => ({
       ...prevData,
-      [name]: selectedOptions?.map((option) => option.value),
+      [name]: newLanguages,
     }));
 
     if (name === "languages") {
@@ -85,14 +93,12 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      const updatedData = {
-        ...formData,
-        languages: JSON.stringify(formData.languages || []),
-      };
-
       await updateInfo({
         id: selectedData.id,
-        body: updatedData,
+        body: {
+          ...formData,
+          languages: JSON.stringify(formData.languages || []),
+        },
       });
       onClose();
     } catch (error) {
@@ -237,19 +243,17 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             </div>
           </div>
 
-         
-              <label htmlFor="languages">Languages</label>
-              <Select
-                id="languages"
-                name="languages"
-                isMulti
-                options={languageOptions}
-                value={selectedLanguages}
-                onChange={(options) =>
-                  handleMultiSelectChange("languages", options)
-                }
-              />
-            
+          <label htmlFor="languages">Languages</label>
+          <Select
+            id="languages"
+            name="languages"
+            isMulti
+            options={languageOptions}
+            value={selectedLanguages}
+            onChange={(options) =>
+              handleMultiSelectChange("languages", options)
+            }
+          />
 
           <div style={{ marginTop: "20px", textAlign: "right" }}>
             <button
