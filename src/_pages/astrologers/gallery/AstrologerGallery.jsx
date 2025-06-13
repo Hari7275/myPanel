@@ -178,12 +178,6 @@ const AstrologerGallery = () => {
       {showGallery && (
         <div className="gallery-modal" onClick={() => setShowGallery(false)}>
           <div className="gallery-modal-content">
-            {/* <span
-              className="close-button"
-              onClick={() => setShowGallery(false)}
-            >
-              &times;
-            </span> */}
             <MyGallery images={imageUrls} initialIndex={currentImageIndex} />
           </div>
         </div>
