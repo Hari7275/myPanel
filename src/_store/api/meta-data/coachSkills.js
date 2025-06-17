@@ -37,6 +37,18 @@ export const coachSkillsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["consultant"],
     }),
 
+    updateCoachSkillsOrder: builder.mutation({
+      query: (body) => ({
+        url: `/meta/coach_skill/admin/update-display-order`,
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultant"],
+    }),
+
     deleteCoachSkills: builder.mutation({
       query: ({ id }) => ({
         url: `/meta/coach_skill/admin/delete/${id}`,
@@ -55,4 +67,5 @@ export const {
   useCreateCoachSkillsMutation,
   useUpdateCoachSkillsMutation,
   useDeleteCoachSkillsMutation,
+  useUpdateCoachSkillsOrderMutation,
 } = coachSkillsApiSlice;

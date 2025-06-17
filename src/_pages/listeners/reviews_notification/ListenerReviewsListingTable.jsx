@@ -153,7 +153,7 @@ const ListenerReviewsListingTable = () => {
         )}
       </div>
 
-      <LIstenerNotificationListingTable />
+      {/* <LIstenerNotificationListingTable /> */}
 
       {addReview && (
         <AddListenerReview

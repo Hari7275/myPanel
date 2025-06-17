@@ -1,35 +1,15 @@
+import { ImageCell } from "../../listeners/account/accountColumn";
+
 export const ACCOUNTCOLUMNS = [
   { Header: "Id", accessor: "id" },
   { Header: "Holder Name", accessor: "account_holder_name" },
   {
     Header: "Passbook Photo",
-    accessor: "passbook_photo",
-    Cell: ({ row }) => (
-      <div className="card-img">
-        <img
-          src={row.original.passbook_photo || "snake.jpg"}
-          alt="passbook photo"
-          width="40"
-          height="40"
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-    ),
+    Cell: ({ row }) => <ImageCell imageSrc={row.original.passbook_photo} />,
   },
   {
     Header: "Pan Card ",
-    accessor: "pancard_photo",
-    Cell: ({ row }) => (
-      <div className="card-img">
-        <img
-          src={row.original.pancard_photo || "snake.jpg"}
-          alt="passbook photo"
-          width="40"
-          height="40"
-          style={{ cursor: "pointer" }}
-        />
-      </div>
-    ),
+    Cell: ({ row }) => <ImageCell imageSrc={row.original.pancard_photo} />,
   },
   {
     Header: "Status",

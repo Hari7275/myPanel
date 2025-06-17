@@ -150,9 +150,9 @@ const CoachReviews = () => {
           <p>No reviews available. Please add a review.</p>
         )}
       </div>
-      <div>
+      {/* <div>
         <CoachNotificationsListingTable />
-      </div>
+      </div> */}
       {addReview && (
         <AddCoachReviews
           isOpen={addReview}
