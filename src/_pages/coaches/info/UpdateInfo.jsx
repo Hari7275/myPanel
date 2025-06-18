@@ -89,7 +89,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     setSelectedCategories(preselectedCategories);
     setSelectedSkills(preselectedSkills);
     setSelectedLanguage(preselectedLanguage);
-  }, []);
+  }, [languagesData, skillsData, categoryData]);
 
   useEffect(() => {
     if (selectedData) {
@@ -199,10 +199,10 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     if (
       selectedLanguages?.length === preselectedLanguage?.length &&
       selectedLanguages.every(
-        (lang, idx) => lang?.label === preselectedLanguage[idx]?.label
+        (lang, idx) => lang?.value === preselectedLanguage[idx]?.value
       )
     ) {
-      delete dataToSend?.lang;
+      delete dataToSend.languages; // ✅ correct key
     }
 
     try {
