@@ -55,8 +55,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
     // *******************************************************this api is for notification****************************************
 
     getNotification: builder.query({
-      query: () => ({
-        url: `notification/1?page=1&size=10000&user_type=admin`,
+      query: ({ page, size, sender_id }) => ({
+        url: `notification/1?page=${page}&size=${size}&user_type=admin${
+          sender_id !== undefined && sender_id !== null
+            ? `&sender_id=${sender_id}`
+            : ""
+        }`,
         method: "GET",
       }),
       providesTags: ["user"],

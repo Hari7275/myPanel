@@ -12,6 +12,7 @@ import AstrologerGifts from "../Gifts/AstrologerGifts";
 import AstrologerSetting from "../astrologerSettings/AstrologerSetting";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
+import LiveStream from "../../coaches/liveStream/LiveStream";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -31,6 +32,7 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           )}
           {activeComponent === "AstrologerGifts" && <AstrologerGifts />}
           {activeComponent === "AstrologerSetting" && <AstrologerSetting />}
+          {activeComponent === "live-stream" && <LiveStream />}
           {activeComponent === "Profile-Progress" && (
             <ConlstProfileProgressList />
           )}

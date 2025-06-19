@@ -88,6 +88,8 @@ export const getStatusLabel = (value) => {
       return "Blocked";
     case 6:
       return "Rejected";
+    case 7:
+      return "Deleted";
     default:
       return "Unknown";
   }

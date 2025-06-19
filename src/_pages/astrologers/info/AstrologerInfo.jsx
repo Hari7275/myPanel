@@ -92,12 +92,12 @@ const AstrologerInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
-            <button
-              className="secondIcon"
+            <span
+              className="secondIcon editIcon"
               onClick={() => toggleUpdateInfo(formData)}
             >
-              <Pencil />
-            </button>
+              <Pencil className="iconSmall" />
+            </span>
           </div>
 
           <div className="info-pair">

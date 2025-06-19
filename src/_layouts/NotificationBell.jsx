@@ -3,20 +3,32 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../_store/slices/consultantSlice";
 import { setActiveTab } from "../_store/slices/activeSlice";
-import CommonTable from "../_components/table/CommonTable";
+
+import DyCommonTable from "../_components/table/DyCommonTable";
+import { debounce } from "lodash";
+
 import { Eye } from "lucide-react";
 import {
   useGetNotificationQuery,
   useUpdateNotificationReadCountMutation,
 } from "../_store/api/user/userDetails";
+import { Atom } from "react-loading-indicators";
 
 const NotificationBell = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [sender_id, setSender_id] = useState();
 
   const [notificationdatas, setNotificationData] = useState([]);
 
-  const { data: notificationData } = useGetNotificationQuery();
+  const { data: notificationData, isLoading } = useGetNotificationQuery({
+    page,
+    size: pageSize,
+    sender_id,
+  });
   const [updateNotificationReadCount] =
     useUpdateNotificationReadCountMutation();
 
@@ -33,6 +45,7 @@ const NotificationBell = () => {
             return {
               ...parsedData,
               sender_id: item?.id,
+              id: item?.sender_id,
               is_seen: item?.is_seen,
             }; // Attach sender_id to the parsed data
           } catch (error) {
@@ -47,8 +60,6 @@ const NotificationBell = () => {
     }
   }, [notificationData]);
 
-  console.log("notificationdatas", notificationdatas);
-
   const keyToBaseUrl = {
     coach: "/coach-profile",
     astrologer: "/astrologer_Profile",
@@ -59,7 +70,7 @@ const NotificationBell = () => {
   };
 
   const handleNotificationClick = async (notification, sender_id) => {
-    console.log("sender_id", notification.sender_id);
+    // console.log("sender_id", notification.sender_id);
 
     const baseUrl = keyToBaseUrl[notification?.key];
     if (!baseUrl) {
@@ -74,8 +85,6 @@ const NotificationBell = () => {
         id: notification?.sender_id,
         body: response,
       });
-
-      console.log("response", response);
 
       // Navigate to the appropriate route after marking as seen
       let route = baseUrl;
@@ -100,7 +109,11 @@ const NotificationBell = () => {
 
   const columns = [
     {
-      Header: "Id",
+      Header: " Id",
+      accessor: "sender_id",
+    },
+    {
+      Header: "Consultant Id",
       accessor: "id",
     },
     {
@@ -141,18 +154,63 @@ const NotificationBell = () => {
     };
   };
 
+  const debouncedSearchConsultantId = debounce(
+    (value) => setSender_id(value),
+    500
+  );
+
+  const handleConsultantIdSearch = (e) => {
+    debouncedSearchConsultantId(e?.target?.value);
+  };
+
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by consultant Id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
+    </div>
+  );
+
+  // for pagination
+
+  const totalPage = notificationData?.data?.metadata?.total_page;
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
+
   return (
     <div>
-      {notificationdatas?.length > 0 ? (
-        <CommonTable
-          columns={columns}
-          data={notificationdatas}
-          includeCheckbox={false}
-          tableTitle="Notifications"
-          getRowProps={getRowProps} // Pass row props
-        />
-      ) : (
-        <span className="no-data">No Notifications Available</span>
+      <DyCommonTable
+        columns={columns}
+        data={notificationdatas}
+        includeCheckbox={false}
+        tableTitle="Notifications"
+        getRowProps={getRowProps}
+        dynamicPagination={dynamicPagination}
+        customFilterComponent={customFilterComponent}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+      />
+
+      {notificationdatas?.length === 0 && (
+        <div>
+          <span className="no-data-new">No data Avaliable</span>
+        </div>
       )}
     </div>
   );

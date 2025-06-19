@@ -103,6 +103,7 @@ const CoachStatus = () => {
                     value={1}
                     sx={{
                       borderRadius: "10px",
+                      padding: "4px 12px",
                       "&.Mui-selected": {
                         backgroundColor: "#696cff",
                         color: "white",
@@ -115,6 +116,7 @@ const CoachStatus = () => {
                     value={0}
                     sx={{
                       borderRadius: "10px",
+                      padding: "4px 12px",
                       "&.Mui-selected": {
                         backgroundColor: "#696cff",
                         color: "white",

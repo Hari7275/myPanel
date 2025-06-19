@@ -47,9 +47,12 @@ const UserInfo = () => {
               User Info
             </h3>
 
-            <button className="secondIcon">
-              <Pencil onClick={() => toggleUpdateInfo(formData)} />
-            </button>
+            <span className=" editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateInfo(formData)}
+              />
+            </span>
           </div>
 
           <div className="info-pair">

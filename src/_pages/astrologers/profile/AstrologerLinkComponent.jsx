@@ -79,6 +79,14 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
 
         <div
           className={`profile-link ${
+            activeComponent === "live-stream" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("live-stream")}
+        >
+          <span>Live stream</span>
+        </div>
+        <div
+          className={`profile-link ${
             activeComponent === "Profile-Progress" ? "active" : ""
           }`}
           onClick={() => onComponentChange("Profile-Progress")}

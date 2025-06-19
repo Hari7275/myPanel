@@ -39,17 +39,17 @@ const UserLeftComponent = () => {
       <div className="card">
         <div className="card-upper-part">
           <div className="card-img ">
-            {userData.profile_images.length > 0 && (
-              <img
-                src={userData.profile_images[0].url}
-                alt="Profile"
-                onClick={() =>
-                  openImageModal(
-                    userData.profile_images[0].url || "girl-avtar.png"
-                  )
-                }
-              />
-            )}
+            {/* {userData.profile_images.length > 0 && ( */}
+            <img
+              src={userData?.profile_images[0]?.url || "girl-avtar.png"}
+              alt="Profile"
+              onClick={() =>
+                openImageModal(
+                  userData?.profile_images[0]?.url || "girl-avtar.png"
+                )
+              }
+            />
+            {/* )} */}
           </div>
 
           <div className="card-user-name">
