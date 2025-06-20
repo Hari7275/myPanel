@@ -5,7 +5,12 @@ import {
 } from "../../../_store/api";
 import { toast } from "react-hot-toast";
 
-const UserDesires = ({ usersData, userId }) => {
+const UserDesires = ({
+  usersData,
+  userId,
+  userDatingStatus,
+  handleDatingStatus,
+}) => {
   const [selectedDesires, setSelectedDesires] = useState(new Set());
 
   const { data: fetchData, isLoading, isError } = useGetUserDesireListQuery();
@@ -32,6 +37,11 @@ const UserDesires = ({ usersData, userId }) => {
     // if (isUpdating) return;
     event.preventDefault();
 
+    if (userDatingStatus == "1") {
+      handleDatingStatus();
+      return;
+    }
+
     try {
       const formattedInterests = [...selectedDesires];
 
@@ -43,7 +53,6 @@ const UserDesires = ({ usersData, userId }) => {
         profile_interest_type: intrestType.replace(" "),
       };
 
-      console.log("profile_desires", payload);
       const response = await updateInterests(payload).unwrap();
       // console.log("API Response:", response);
 

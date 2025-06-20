@@ -30,6 +30,7 @@ const UserData = () => {
 
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [selectedPassions, setSelectedPassions] = useState([]);
+  const [userDatingStatus, setUserDatingStatus] = useState("");
 
   useEffect(() => {
     const lifestyle = usersData?.data?.lifestyles || [];
@@ -41,6 +42,10 @@ const UserData = () => {
 
     const userPassions = usersData?.data?.interests || [];
     setSelectedPassions(userPassions.map((p) => p.id));
+
+    // set dating status
+    const datingStatus = usersData?.data?.user_dating_status;
+    setUserDatingStatus(datingStatus);
   }, [usersData]);
 
   const [updateInterests] = useUpdateUserInterstsTypeMutation();
@@ -49,6 +54,10 @@ const UserData = () => {
 
   const handleButtonClick = () => {
     toast.success("Data has been updated successfully");
+  };
+
+  const handleDatingStatus = () => {
+    toast.error("user Dating profile is not created");
   };
 
   // Check if any of the data is loading
@@ -76,31 +85,45 @@ const UserData = () => {
 
   const userPromptData = usersData?.data?.prompt_question || [];
 
-  const handleInterestUpdate = (event) => {
+  const handleInterestUpdate = async (event) => {
     event.preventDefault(); // Prevent the default form submission
+
+    if (userDatingStatus == "1") {
+      handleDatingStatus();
+      return;
+    }
+
+    // Filter out null values from selectedInterests
+    const filteredInterests = selectedInterests.filter(
+      (interest) => interest !== null
+    );
 
     // Construct the data in the required format
     const interestsData = {
       user_id: userId,
       profile_interest_type: "profile_feature",
-      interests: JSON.stringify(selectedInterests),
+      interests: JSON.stringify(filteredInterests),
     };
 
-    console.log("interestsData", selectedInterests);
-    console.log("interestsData..........", interestsData);
+    try {
+      const result = await updateInterests(interestsData);
 
-    // Call the mutation
-    updateInterests(interestsData).then((response) => {
-      handleButtonClick();
-      if (response.error) {
-        console.error("Failed to update interests:", response.error);
+      if (result?.data?.status) {
+        toast.success(result?.data?.message || handleButtonClick());
       } else {
-        console.log("Interests updated successfully:", response.data);
+        toast.error(result?.data?.message);
       }
-    });
+    } catch (error) {
+      console.error("Failed to update interests:", error);
+      toast.error("Failed to update interests");
+    }
   };
 
-  const handlePassionsUpdate = (event) => {
+  const handlePassionsUpdate = async (event) => {
+    if (userDatingStatus == "1") {
+      handleDatingStatus();
+      return;
+    }
     event.preventDefault();
     const passionsData = {
       user_id: userId,
@@ -108,16 +131,17 @@ const UserData = () => {
       interests: JSON.stringify(selectedPassions), // Send selected passion IDs
     };
 
-    console.log("passionsData", passionsData);
-
-    updateInterests(passionsData).then((response) => {
-      handleButtonClick();
-      if (response.error) {
-        console.error("Failed to update passions:", response.error);
+    try {
+      const result = await updateInterests(passionsData);
+      if (result?.data?.status) {
+        toast.success(result?.data?.message || handleButtonClick());
       } else {
-        console.log("Passions updated successfully:", response.data);
+        toast.error(result?.data?.message);
       }
-    });
+    } catch (error) {
+      console.error("Failed to update passion:", error);
+      toast.error("Failed to update passion");
+    }
   };
 
   return (
@@ -143,7 +167,8 @@ const UserData = () => {
                     />
                   );
                 })}
-                <button type="submit" className="fifthButton">
+
+                <button type="submit" className="fifthButton ">
                   Update Profile Options
                 </button>
               </div>
@@ -184,6 +209,8 @@ const UserData = () => {
               data={promptQuestionItems}
               userPromptData={userPromptData}
               userId={userId}
+              userDatingStatus={userDatingStatus}
+              handleDatingStatus={handleDatingStatus}
             />
           </div>
         </form>
@@ -196,7 +223,12 @@ const UserData = () => {
         <h3 className="ProfileData-subheading">User Desire </h3>
         <form>
           <div className="row-inside">
-            <UserDesires usersData={usersData} userId={userId} />
+            <UserDesires
+              usersData={usersData}
+              userId={userId}
+              userDatingStatus={userDatingStatus}
+              handleDatingStatus={handleDatingStatus}
+            />
           </div>
         </form>
       </div>

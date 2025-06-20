@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { useUpdateUserInterstsTypeMutation } from "../../../_store/api";
 
-const PromptQuestionComponent = ({ data, userPromptData, userId }) => {
+const PromptQuestionComponent = ({
+  data,
+  userPromptData,
+  userId,
+  userDatingStatus,
+  handleDatingStatus,
+}) => {
   const [updateInfo, { isLoading: isUpdating }] =
     useUpdateUserInterstsTypeMutation();
 
@@ -35,6 +41,11 @@ const PromptQuestionComponent = ({ data, userPromptData, userId }) => {
 
   const handleSave = async (e) => {
     e.preventDefault(); // Prevent default form submission
+
+    if (userDatingStatus == "1") {
+      handleDatingStatus();
+      return;
+    }
     try {
       // Create the data object with the correct format
       const dataToSend = {
@@ -59,7 +70,7 @@ const PromptQuestionComponent = ({ data, userPromptData, userId }) => {
 
             <select
               className="prompt-options"
-              defaultValue={prompt.question_id}  
+              defaultValue={prompt.question_id}
               onChange={(e) => handleQuestionChange(index, e.target.value)}
             >
               {questions.map((question, qIndex) => (
@@ -74,8 +85,8 @@ const PromptQuestionComponent = ({ data, userPromptData, userId }) => {
                 className="textarea"
                 placeholder="Text area"
                 rows="5"
-                value={prompt.answer}   
-                onChange={(e) => handleAnswerChange(index, e.target.value)} 
+                value={prompt.answer}
+                onChange={(e) => handleAnswerChange(index, e.target.value)}
               />
             </div>
           </div>
