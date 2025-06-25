@@ -58,12 +58,15 @@ const AstrologerPriceListingTable = () => {
               <NotebookPen className="iconSmall" />
             </span>
           )}
-          <span
-            className="editIcon"
-            onClick={() => toggleUpdateConsultantPrice(row?.original)}
-          >
-            <Pencil className="iconSmall" />
-          </span>
+
+          {row.original.status == 2 && (
+            <span
+              className="editIcon"
+              onClick={() => toggleUpdateConsultantPrice(row?.original)}
+            >
+              <Pencil className="iconSmall" />
+            </span>
+          )}
         </div>
       ),
     },
