@@ -12,31 +12,36 @@ const PriceCategoryCell = ({ value }) => {
   return <span>{getConsultantPriceCategory(value)}</span>;
 };
 const FeatureLabelCell = ({ value }) => {
-  return <span>{getFetaureLabel(value)}</span>;
+  return (
+    <span style={{ display: "block", width: "100px" }}>
+      {getFetaureLabel(value)}
+    </span>
+  );
 };
 
 export const PRICECHARTCOLUMN = [
   { Header: "Id", accessor: "id" },
+
   {
     Header: "Feature",
     accessor: "feature",
     Cell: FeatureLabelCell,
   },
   {
-    Header: "Category",
+    Header: "Catg.",
     accessor: "category",
-    // Cell: PriceCategoryCell,
+    // Cell:PriceCategoryCell,
   },
   {
-    Header: "Current Price",
+    Header: "CP",
     accessor: "current_price",
   },
   {
-    Header: "Discount Price",
+    Header: "DP",
     accessor: "discount_price",
   },
   {
-    Header: "Commission",
+    Header: "Comm.",
     accessor: "commission",
   },
   {

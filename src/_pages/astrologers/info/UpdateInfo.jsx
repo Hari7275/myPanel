@@ -37,11 +37,17 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const { data: languagesData } = useGetLanguagesListQuery();
 
   // Define skill options from API data
+
+  console.log("skillsData", skillsData);
   const skillOptions =
-    skillsData?.data?.map((skill) => ({
-      value: skill.id,
-      label: skill.skill_name,
-    })) || [];
+    skillsData?.data
+      ?.filter((item) => item.category_id == 1)
+      .map((skill) => ({
+        value: skill.id,
+        label: skill.skill_name,
+      })) || [];
+
+  console.log("skillOptions", skillOptions);
 
   // Preselect skills that are in both formData and API options
   const preselectedSkills = skillOptions?.filter((option) =>

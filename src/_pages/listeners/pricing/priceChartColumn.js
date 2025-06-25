@@ -23,20 +23,20 @@ export const PRICECHARTCOLUMN = [
     Cell: FeatureCell,
   },
   {
-    Header: "Category",
+    Header: "Catg.",
     accessor: "category",
-    // Cell: CategoriesCell,
+    // Cell:PriceCategoryCell,
   },
   {
-    Header: "Current Price",
+    Header: "CP",
     accessor: "current_price",
   },
   {
-    Header: "Discount Price",
+    Header: "DP",
     accessor: "discount_price",
   },
   {
-    Header: "Commission",
+    Header: "Comm.",
     accessor: "commission",
   },
   {
