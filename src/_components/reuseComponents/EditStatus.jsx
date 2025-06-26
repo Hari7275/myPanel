@@ -4,13 +4,11 @@ import {
   useGetConsultantStatusQuery,
   useUpdateStatusMutation,
 } from "../../_store/api";
+import toast from "react-hot-toast";
 
 const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
   const [formData, setFormData] = useState("");
   const [data, setData] = useState([]);
-
-  console.log("selectedRow", selectedRow);
-  console.log("profileStatus", profileStatus);
 
   const { data: fetchData, error: fetchError } = useGetConsultantStatusQuery();
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
@@ -34,8 +32,6 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
       );
     }
   }, [fetchData]);
-
-  console.log("data", data);
 
   useEffect(() => {
     if (data.length > 0 && selectedRow) {
@@ -63,8 +59,13 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
     };
 
     try {
+      console.log("name..........");
+
       await updateStatus({ id: selectedRow, body: payload });
+      // console.log("..........name",onClose());
+
       onClose();
+      console.log("name");
     } catch (error) {
       console.error("Failed to update status:", error);
       if (error.data) {

@@ -32,12 +32,11 @@ const AddCommission = ({ isOpen, onClose }) => {
             display: "flex",
           }}
         >
-
+          <div>
             <div>
-                <div>
-                    <div></div>
-                </div>
+              <div></div>
             </div>
+          </div>
           <button
             type="button"
             className="fifthButton"

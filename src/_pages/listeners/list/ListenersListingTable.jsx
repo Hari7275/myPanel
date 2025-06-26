@@ -54,9 +54,9 @@ const ListenersListingTable = () => {
     : 1;
 
   const toggleEditStatus = (row) => {
+    setShowEditStatus(!showEditStatus);
     SetProfileStatus(row.status);
     setSelectedRow(row);
-    setShowEditStatus(!showEditStatus);
   };
 
   const handleActionClick = (data) => {

@@ -57,13 +57,12 @@ const AstrologerListingTable = () => {
     : 1;
 
   const toggleEditStatus = (row) => {
-    console.log("selectedRow....", row);
-
+    setShowEditStatus(!showEditStatus);
     SetProfileStatus(row.status);
     setSelectedRow(row);
-    setShowEditStatus(!showEditStatus);
   };
 
+  
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
 
