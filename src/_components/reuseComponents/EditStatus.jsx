@@ -5,9 +5,12 @@ import {
   useUpdateStatusMutation,
 } from "../../_store/api";
 
-const EditStatus = ({ isOpen, onClose, selectedRow }) => {
+const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
   const [formData, setFormData] = useState("");
   const [data, setData] = useState([]);
+
+  console.log("selectedRow", selectedRow);
+  console.log("profileStatus", profileStatus);
 
   const { data: fetchData, error: fetchError } = useGetConsultantStatusQuery();
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
@@ -15,7 +18,15 @@ const EditStatus = ({ isOpen, onClose, selectedRow }) => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
-      setData(fetchData?.data?.filter((item) => item?.is_active == 1));
+      let filteredData = fetchData?.data?.filter(
+        (item) => item?.is_active == 1
+      );
+
+      if (profileStatus === 2) {
+        filteredData = filteredData.filter((item) => item.status_value === 6);
+      }
+
+      setData(filteredData);
     } else {
       console.error(
         "API response is null or has an unexpected structure:",
@@ -23,6 +34,8 @@ const EditStatus = ({ isOpen, onClose, selectedRow }) => {
       );
     }
   }, [fetchData]);
+
+  console.log("data", data);
 
   useEffect(() => {
     if (data.length > 0 && selectedRow) {

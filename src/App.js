@@ -26,6 +26,7 @@ import AstrologerProfile from "./_pages/astrologers/profile/AstrologerProfile";
 import ListenersProfile from "./_pages/listeners/profile/ListenersProfile";
 import FeedbackList from "./_pages/masterComponents/feedback/FeedbackList";
 import QDLoaction from "./_pages/masterComponents/QDLocations/QDLoaction";
+import CommissionList from "./_pages/astrologers/astrologerCommission/CommissionList";
 
 import UserProfileOptions from "./_pages/masterComponents/userInterests/userProfileOption/UserProfileOptions";
 import UserPassionOption from "./_pages/masterComponents/userInterests/userPassionOption/UserPassionOption";
@@ -188,6 +189,7 @@ const Layout = () => (
           <Route path="/consultant-notice" element={<ConsultantNotice />} />
           <Route path="/coach-rate" element={<CoachRate />} />
           <Route path="/profile-progress" element={<ProfileProgress />} />
+          <Route path="/consultant-commission" element={<CommissionList />} />
           <Route path="/dashboard-order" element={<DashboardOrderList />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />

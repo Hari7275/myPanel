@@ -29,6 +29,7 @@ export * from "../api/consultants/consultantOrder";
 export * from "../api/consultants/consultantReviews";
 export * from "../api/consultants/consultantPriceList";
 export * from "../api/consultants/consultantLiveStream";
+export * from "../api/consultants/consultantCommission";
 
 // data for payment services
 

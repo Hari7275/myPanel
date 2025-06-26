@@ -24,6 +24,7 @@ const CoachListingTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
+  let [profileStatus, SetProfileStatus] = useState(null);
 
   const {
     data: fetchData,
@@ -55,6 +56,7 @@ const CoachListingTable = () => {
     : 1;
 
   const toggleEditStatus = (row) => {
+    SetProfileStatus(row.status);
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
   };
@@ -98,11 +100,11 @@ const CoachListingTable = () => {
               />
             </span> */}
 
-            {[3, 4, 5].includes(row?.original?.status) && (
+            {[3, 4, 5, 2].includes(row?.original?.status) && (
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original.id)}
+                  onClick={() => toggleEditStatus(row.original)}
                 />
               </span>
             )}
@@ -200,7 +202,8 @@ const CoachListingTable = () => {
         <EditStatus
           isOpen={showEditStatus}
           onClose={toggleEditStatus}
-          selectedRow={selectedRow}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatus}
         />
       )}
     </div>
