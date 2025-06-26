@@ -61,7 +61,7 @@ const AstrologerOverview = () => {
 
   return (
     <div>
-      <div className="userProfile-containr sub-container">
+      <div className="userProfile-container profile-right-sub-container">
         <div className="userProfile-card">
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">

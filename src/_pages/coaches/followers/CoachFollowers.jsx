@@ -1,4 +1,4 @@
-import React, { useMemo ,useState , useEffect } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { FOLLOWERSCOLUMN } from "./coachFollowersColumns";
 import { useGetConsultantsFollowerQuery } from "../../../_store/api";
@@ -18,7 +18,7 @@ const CoachFollowers = () => {
 
   const columns = useMemo(() => FOLLOWERSCOLUMN, []);
   return (
-    <div className="ProfileData-container sub-container">
+    <div className="ProfileData-container profile-right-sub-container">
       {data.length > 0 ? (
         <CommonTable
           columns={columns}

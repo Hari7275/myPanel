@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import UserLeftComponent from "./UserLeftComponent";
 import UserRightComponent from "./UserRightComponent";
 import UserLinkComponent from "./UserLinkComponent";
+import UserDetailsComponent from "./UserDetailsComponent";
 
 const UsersProfile = () => {
   const navigate = useNavigate();
@@ -21,30 +21,27 @@ const UsersProfile = () => {
   return (
     <>
       <div className="profile-section">
-        <div className="profileMainComponent">
-          <div className="profileheader">User Profile</div>
-
+        <div className="crossIconContainer">
           <div
-            className="profileheader secondIcon"
+            className="crossIcon"
             onClick={handleProfileClose}
           >
             <X />
           </div>
-
-          <div className="divider"></div>
         </div>
-        <div className="sub-container" style={{ paddingBottom: "10px" }}>
+        <div className="profile-top-container">
+          <div className="">
+            <UserDetailsComponent />
+          </div>
+        </div>
+
+        <div className="main-link-container">
           <UserLinkComponent
             onComponentChange={handleComponentChange}
             activeComponent={activeComponent}
           />
-        </div>
 
-        <div className="main-card-container">
-          <div className="leftPart">
-            <UserLeftComponent />
-          </div>
-          <div className="rightPart">
+          <div className="profile-rightPart">
             <UserRightComponent activeComponent={activeComponent} />
           </div>
         </div>

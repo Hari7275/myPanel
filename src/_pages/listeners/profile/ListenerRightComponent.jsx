@@ -11,8 +11,10 @@ import ListenerReviewsListingTable from "../reviews_notification/ListenerReviews
 import ListenerSetting from "../listenerSettings/ListenerSetting";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 // import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
-
+import CoachStatus from "../../coaches/status/CoachStatus";
 const ListenerRightComponent = ({ activeComponent }) => {
+  const [listenerType, setListenerType] = useState("listenerstatus");
+
   return (
     <>
       <div className="profile-sub-container">
@@ -32,6 +34,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ConlstProfileProgressList />
           )}
           {/* {activeComponent === "session-slot" && <SessionSlot />} */}
+          {activeComponent === "CoachStatus" && <CoachStatus listenerType={listenerType} />}
         </div>
       </div>
     </>

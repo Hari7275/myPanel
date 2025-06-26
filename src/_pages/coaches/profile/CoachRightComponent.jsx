@@ -13,6 +13,7 @@ import CoachSetting from "../coachSettings/CoachSetting";
 import LiveStream from "../liveStream/LiveStream";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
+import CoachStatus from "../status/CoachStatus";
 const CoachRightComponent = ({ activeComponent }) => {
   return (
     <>
@@ -33,6 +34,7 @@ const CoachRightComponent = ({ activeComponent }) => {
             <ConlstProfileProgressList />
           )}
           {activeComponent === "session-slot" && <SessionSlot />}
+          {activeComponent === "CoachStatus" && <CoachStatus />}
         </div>
       </div>
     </>

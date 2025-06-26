@@ -122,7 +122,7 @@ const AstrologerAccountList = () => {
           />
         )}
 
-        <div className="ProfileData-container sub-container">
+        <div className="ProfileData-container profile-right-sub-container">
           <AstrologerPriceListingTable />
         </div>
 

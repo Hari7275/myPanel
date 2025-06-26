@@ -40,31 +40,27 @@ const CoachProfile = () => {
   return (
     <>
       <div className="profile-section">
-        <div className="profileMainComponent">
-          <div className="profileheader">Coach Profile</div>
-
+        <div className="crossIconContainer">
           <div
-            className="profileheader secondIcon"
+            className="crossIcon"
             onClick={handleProfileClose}
           >
             <X />
           </div>
-
-          <div className="divider"></div>
         </div>
 
-        <div className="sub-container" style={{ paddingBottom: "10px" }}>
+        <div className="profile-top-container">
+          <div className="">
+            <CoachLeftComponent />
+          </div>
+        </div>
+
+        <div className="main-link-container">
           <CoachLinkComponent
             onComponentChange={handleComponentChange}
             activeComponent={activeComponent}
           />
-        </div>
-
-        <div className="main-card-container">
-          <div className="leftPart">
-            <CoachLeftComponent />
-          </div>
-          <div className="rightPart">
+          <div className="profile-rightPart">
             <CoachRightComponent activeComponent={activeComponent} />
           </div>
         </div>

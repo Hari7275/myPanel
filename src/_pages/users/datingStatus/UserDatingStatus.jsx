@@ -66,7 +66,7 @@ const UserDatingStatus = () => {
 
   return (
     <div>
-      <div className="profile-sub-container  sub-container">
+      <div className="profile-sub-container  profile-right-sub-container">
         <h2
           className="main-heading "
           style={{
@@ -109,7 +109,7 @@ const UserDatingStatus = () => {
         </footer>
       </div>
 
-      <div className="profile-sub-container  sub-container">
+      <div className="profile-sub-container  profile-right-sub-container">
         <h2
           className="main-heading "
           style={{

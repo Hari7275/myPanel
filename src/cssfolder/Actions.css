@@ -8,6 +8,7 @@
   justify-content: center;
   cursor: pointer;
 }
+
 .secondIcon {
   cursor: pointer;
   background: #1c2434;
@@ -32,6 +33,7 @@
   height: 35px;
   width: 35px;
 }
+
 .editIcon {
   cursor: pointer;
   background: #18b164;

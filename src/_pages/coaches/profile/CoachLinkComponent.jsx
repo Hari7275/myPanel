@@ -3,85 +3,84 @@ import React from "react";
 const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
   return (
     <>
-      <header className="profile-mainContainer">
+      <header className="vertical-nav">
         <div
-          className={`profile-link ${
-            activeComponent === "Overview" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "Overview" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("Overview")}
         >
           <span>overview</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "UpdateInfo" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoachStatus" ? "active" : ""
+            }`}
+          onClick={() => onComponentChange("CoachStatus")}
+        >
+          <span>Coach Status</span>
+        </div>
+
+        <div
+          className={`nav-link ${activeComponent === "UpdateInfo" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("UpdateInfo")}
         >
           <span>Update Info</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "Gallery" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "Gallery" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("Gallery")}
         >
           <span>Gallery</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "CoacheAccount" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoacheAccount" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("CoacheAccount")}
         >
           <span>Accounts</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "Wallet" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("Wallet")}
         >
           <span>Wallet</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "CoachOrder" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoachOrder" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("CoachOrder")}
         >
           <span>orders</span>
         </div>
 
         <div
-          className={`profile-link ${
-            activeComponent === "CoachFollowers" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoachFollowers" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("CoachFollowers")}
         >
           <span>Followers</span>
         </div>
 
         <div
-          className={`profile-link ${
-            activeComponent === "CoachReviews" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoachReviews" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("CoachReviews")}
         >
           <span>review & notifications</span>
         </div>
 
         <div
-          className={`profile-link ${
-            activeComponent === "CoachGifts" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "CoachGifts" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("CoachGifts")}
         >
           <span>Gifts</span>
         </div>
 
         {/* <div
-          className={`profile-link ${
+          className={`nav-link ${
             activeComponent === "CoachSetting" ? "active" : ""
           }`}
           onClick={() => onComponentChange("CoachSetting")}
@@ -90,26 +89,23 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
         </div> */}
 
         <div
-          className={`profile-link ${
-            activeComponent === "LiveStream" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "LiveStream" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("LiveStream")}
         >
           <span>Live Stream</span>
         </div>
 
         <div
-          className={`profile-link ${
-            activeComponent === "Profile-Progress" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "Profile-Progress" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("Profile-Progress")}
         >
           <span>Profile Progress</span>
         </div>
         <div
-          className={`profile-link ${
-            activeComponent === "session-slot" ? "active" : ""
-          }`}
+          className={`nav-link ${activeComponent === "session-slot" ? "active" : ""
+            }`}
           onClick={() => onComponentChange("session-slot")}
         >
           <span>Session Appointment</span>

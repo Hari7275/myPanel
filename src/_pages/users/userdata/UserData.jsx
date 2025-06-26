@@ -145,7 +145,7 @@ const UserData = () => {
   };
 
   return (
-    <div className="ProfileData-container sub-container">
+    <div className="ProfileData-container profile-right-sub-container">
       <div className="ProfileData-card">
         <h3 className="ProfileData-subheading">Profile Options</h3>
         <form onSubmit={handleInterestUpdate}>

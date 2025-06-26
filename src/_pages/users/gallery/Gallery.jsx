@@ -14,15 +14,14 @@ const Gallery = () => {
   return (
     <>
       <>
-        <div className="profile-sub-container ProfileData-container sub-container">
+        <div className="profile-sub-container ProfileData-container profile-right-sub-container">
           <header
             className="profile-mainContainer "
             style={{ margin: "-20px 0px 20px -35px" }}
           >
             <div
-              className={`profile-link ${
-                activeComponent === "UserGallery" ? "subactive" : ""
-              }`}
+              className={`profile-link ${activeComponent === "UserGallery" ? "subactive" : ""
+                }`}
               onClick={() => handleComponentChange("UserGallery")}
             >
               {/* use this component */}
@@ -31,18 +30,16 @@ const Gallery = () => {
             </div>
 
             <div
-              className={`profile-link ${
-                activeComponent === "UserRequestPhoto" ? "subactive" : ""
-              }`}
+              className={`profile-link ${activeComponent === "UserRequestPhoto" ? "subactive" : ""
+                }`}
               onClick={() => handleComponentChange("UserRequestPhoto")}
             >
               <span>Verification Photo</span>
             </div>
 
             <div
-              className={`profile-link ${
-                activeComponent === "ProfilePhoto" ? "subactive" : ""
-              }`}
+              className={`profile-link ${activeComponent === "ProfilePhoto" ? "subactive" : ""
+                }`}
               onClick={() => handleComponentChange("ProfilePhoto")}
             >
               <span>profile Photo</span>

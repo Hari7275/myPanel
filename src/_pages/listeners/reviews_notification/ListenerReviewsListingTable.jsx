@@ -68,21 +68,21 @@ const ListenerReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-            position: "absolute",
-            top: "125px",
-            right: "40px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          }
+          position: "absolute",
+          top: "125px",
+          right: "40px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        }
         : {
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          };
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        };
 
     return (
       <button
@@ -137,7 +137,7 @@ const ListenerReviewsListingTable = () => {
   return (
     <div>
       <div
-        className="ProfileData-container sub-container"
+        className="ProfileData-container profile-right-sub-container"
         style={{ position: "relative" }}
       >
         <AddPackageButton />

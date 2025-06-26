@@ -4,7 +4,7 @@ import Settings from "../../../_components/reuseComponents/Settings";
 const CoachSetting = () => {
   return (
     <div>
-      <div className="profile-sub-container  sub-container">
+      <div className="profile-sub-container  profile-right-sub-container">
         <h2
           className="main-heading "
           style={{

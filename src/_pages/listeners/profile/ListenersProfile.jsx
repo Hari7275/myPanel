@@ -9,7 +9,7 @@ const ListenersProfile = () => {
   const navigate = useNavigate();
   const handleProfileClose = () => {
     navigate("/listeners");
-    
+
     // navigate(-1);
   };
 
@@ -22,31 +22,27 @@ const ListenersProfile = () => {
   return (
     <>
       <div className="profile-section">
-        <div className="profileMainComponent">
-          <div className="profileheader">Listeners Profile</div>
-
+        <div className="crossIconContainer">
           <div
-            className="profileheader secondIcon"
+            className="crossIcon"
             onClick={handleProfileClose}
           >
             <X />
           </div>
-
-          <div className="divider"></div>
         </div>
 
-        <div className="sub-container" style={{ paddingBottom: "10px" }}>
+        <div className="profile-top-container">
+          <div className="">
+            <ListenerLeftComponent />
+          </div>
+        </div>
+
+        <div className="main-link-container">
           <ListenerLinkComponent
             onComponentChange={handleComponentChange}
             activeComponent={activeComponent}
           />
-        </div>
-
-        <div className="main-card-container">
-          <div className="leftPart">
-            <ListenerLeftComponent />
-          </div>
-          <div className="rightPart">
+          <div className="profile-rightPart">
             <ListenerRightComponent activeComponent={activeComponent} />
           </div>
         </div>

@@ -105,9 +105,8 @@ const ListenerLeftComponent = () => {
           </div>
 
           <div className="card-user-name">
-            <div className="userName">{`${data.first_name || ""} ${
-              data.last_name || ""
-            }`}</div>
+            <div className="userName">{`${data.first_name || ""} ${data.last_name || ""
+              }`}</div>
 
             <div className="secondButton">
               <img
@@ -188,7 +187,7 @@ const ListenerLeftComponent = () => {
         </div>
       </div>
 
-      <CoachStatus listenerType={listenerType} />
+      {/* <CoachStatus listenerType={listenerType} /> */}
       <ImageModal />
 
       {showModal && (

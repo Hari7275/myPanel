@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from "react";
-import CommonTable from "../../../_components/table/CommonTable"; 
+import CommonTable from "../../../_components/table/CommonTable";
 import { ORDERCHARTCOLUMN } from "./astrologerColumn";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
@@ -9,7 +9,7 @@ const AstrologerOrder = () => {
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
 
-  const { data: fetchData ,isLoading } = useGetConsultantsOrderQuery(consultantId);
+  const { data: fetchData, isLoading } = useGetConsultantsOrderQuery(consultantId);
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
@@ -25,14 +25,14 @@ const AstrologerOrder = () => {
 
   const columns = useMemo(() => ORDERCHARTCOLUMN, []);
 
-    if (isLoading) {
-      return <span>Lodaing ...</span>;
-    }
+  if (isLoading) {
+    return <span>Lodaing ...</span>;
+  }
 
   return (
     <>
       {fetchData ? (
-        <div className="ProfileData-container sub-container">
+        <div className="ProfileData-container profile-right-sub-container">
           <CommonTable
             columns={columns}
             data={data}

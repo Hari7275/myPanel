@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
-  <div className="card-footer-content">
+  <div className="">
     <div className="info-pair">
       <p className="info-item">
         <strong>{label}: </strong>
@@ -45,7 +45,7 @@ const calculateAge = (dob) => {
   return age;
 };
 
-const AstrologerLeftComponent = () => {
+const AstrologerDetailsComponent = () => {
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
   );
@@ -89,43 +89,46 @@ const AstrologerLeftComponent = () => {
     <span>loaading.....</span>;
   }
   return (
-    <div className="card-container">
-      <div className="card">
-        <div className="card-upper-part">
-          <div className="card-img">
-            <img
-              src={urls || "girl-avtar.png"}
-              alt="astrologer Profile"
-              onClick={() => openImageModal(urls)}
-              style={{ cursor: "pointer" }}
-            />
+    // MAIN ROW/ CONTAINER ROW
+    <div className="user-details-container">
+      {/*FIRST COLUMN AS ASTROLOGER DETAILS ROW */}
+      <div className="user-details-row">
+        {/* FIRST COLUMN OF ASTROLOGER DETAILS (IMAGE SECTION) */}
+        <div className="profile-img-section">
+          <img
+            className="profile-img"
+            src={urls || "girl-avtar.png"}
+            alt="astrologer Profile"
+            onClick={() => openImageModal(urls)}
+          />
 
-            <div className="edit-profile-img">
-              <button className="edit-profile-icon" onClick={openModal}>
-                <Pencil style={{ background: "none" }} />
-              </button>
-            </div>
+          <div className="edit-profile-img">
+            <button className="edit-profile-icon" onClick={openModal}>
+              <Pencil style={{ background: "none" }} />
+            </button>
           </div>
 
-          <div className="card-user-name">
-            <div className="userName">{`${data.first_name || ""} ${
-              data.last_name || ""
-            }`}</div>
-
-            <div className="secondButton">
-              <img
-                className="button-img"
-                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-                alt="Active"
-              />
-              <span>Active</span>
-            </div>
+        </div>
+        {/* SECOND COLUMN: User Info (column layout) */}
+        <div className="user-info-section">
+          <div className="userName">
+            {`${data.first_name || ""} ${data.last_name || ""}`}
+          </div>
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Astrologer ID: </strong> {data.id}
+            </p>
+          </div>
+          <div className="active-status">
+            <img
+              className="button-img"
+              src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+              alt="Active"
+            />
+            <span>Active</span>
           </div>
         </div>
-
-        <div className="line"></div>
-
-        <footer className="card-footer">
+        {/* <footer className="card-footer">
           <div className="info-pair">
             <p className="info-item">
               <strong>Astrologer ID: </strong> {data.id}
@@ -151,43 +154,42 @@ const AstrologerLeftComponent = () => {
           <div className="line"></div>
           <InfoItem label="Referred by" value={data.referred_by || "N/A"} />
           <div className="line"></div>
-        </footer>
-
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {socialMediaLinks.facebook && (
-            <a href={socialMediaLinks.facebook} className="fa fa-facebook">
-              <Facebook />
-            </a>
-          )}
-
-          {socialMediaLinks.instagram && (
-            <a href={socialMediaLinks.instagram} className="fa fa-instagram">
-              <Instagram />
-            </a>
-          )}
-
-          {socialMediaLinks.linkedin && (
-            <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
-              <Linkedin />
-            </a>
-          )}
-
-          {socialMediaLinks.x && (
-            <a href={socialMediaLinks.x} className="fa fa-twitter">
-              <Twitter />
-            </a>
-          )}
-
-          {socialMediaLinks.youtube && (
-            <a href={socialMediaLinks.youtube} className="fa fa-youtube">
-              <Youtube />
-            </a>
-          )}
-        </div>
+          </footer> */}
       </div>
+      {/* SECOND COLUMN ASTROLOGER DETAILS ROW */}
+      <div className="social-icons-section">
+        {socialMediaLinks.facebook && (
+          <a href={socialMediaLinks.facebook} className="fa fa-facebook">
+            <Facebook />
+          </a>
+        )}
 
+        {socialMediaLinks.instagram && (
+          <a href={socialMediaLinks.instagram} className="fa fa-instagram">
+            <Instagram />
+          </a>
+        )}
+
+        {socialMediaLinks.linkedin && (
+          <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
+            <Linkedin />
+          </a>
+        )}
+
+        {socialMediaLinks.x && (
+          <a href={socialMediaLinks.x} className="fa fa-twitter">
+            <Twitter />
+          </a>
+        )}
+
+        {socialMediaLinks.youtube && (
+          <a href={socialMediaLinks.youtube} className="fa fa-youtube">
+            <Youtube />
+          </a>
+        )}
+      </div>
       {/* <AstrologerStatus /> */}
-      <CoachStatus />
+      {/* <CoachStatus /> */}
       <ImageModal />
 
       {showModal && (
@@ -201,4 +203,4 @@ const AstrologerLeftComponent = () => {
   );
 };
 
-export default AstrologerLeftComponent;
+export default AstrologerDetailsComponent;

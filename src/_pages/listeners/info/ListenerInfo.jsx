@@ -34,7 +34,7 @@ const ListenerInfo = () => {
   };
 
   return (
-    <div className="main-container sub-container">
+    <div className="main-container profile-right-sub-container">
       <div className="RewardsTxn-container">
         <div>
           <div

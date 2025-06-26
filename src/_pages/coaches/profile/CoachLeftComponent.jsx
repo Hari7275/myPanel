@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 
 const InfoItem = ({ label, value }) => (
-  <div className="card-footer-content">
+  <div className="">
     <div className="info-pair">
       <p className="info-item">
         <strong>{label} : </strong>
@@ -71,38 +71,37 @@ const CoachLeftComponent = () => {
   const age = data.date_of_birth ? calculateAge(data.date_of_birth) : "N/A";
 
   return (
-    <div className="card-container">
-      <div className="card">
-        <div className="card-upper-part">
-          <div className="card-img">
-            <img
-              src={urls || "girl-avtar.png"}
-              alt="coach Profile"
-              onClick={() => openImageModal(urls)}
-              style={{ cursor: "pointer" }}
-            />
+    //MAIN ROW CONTAINER ROW
+    <div className="user-details-container">
+      {/* FIRST COLUMN AS COACH DETAILS ROW */}
+      <div className="user-details-row">
+        {/* FIRST COLUMN OF COACH DETAILS (IMAGE SECTION) */}
+        <div className="profile-img-section">
+          <img
+            className="profile-img"
+            src={urls || "girl-avtar.png"}
+            alt="coach Profile"
+            onClick={() => openImageModal(urls)}
+            style={{ cursor: "pointer" }}
+          />
+        </div>
+        {/* SECOND COLUMN: User Info (column layout) */}
+        <div className="user-info-section">
+          <div className="userName">
+            {`${data.first_name || ""} ${data.last_name || ""}`}
           </div>
+          <InfoItem label="Coach ID " value={data.id} />
 
-          <div className="card-user-name">
-            <div className="userName">{`${data.first_name || ""} ${
-              data.last_name || ""
-            }`}</div>
-
-            <div className="secondButton">
-              <img
-                className="button-img"
-                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-                alt=""
-              />
-              <span>Active</span>
-            </div>
+          <div className="active-status">
+            <img
+              className="button-img"
+              src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+              alt=""
+            />
+            <span>Active</span>
           </div>
         </div>
-
-        <div className="line"></div>
-
-        <footer className="card-footer">
-          <InfoItem label="Coach ID " value={data.id} />
+        {/* <footer className="card-footer">
           <div className="line"></div>
 
           <InfoItem label="Email" value={data.email || "N/A"} />
@@ -128,44 +127,44 @@ const CoachLeftComponent = () => {
 
           <InfoItem label="Referred by" value={data.referred_by || "N/A"} />
           <div className="line"></div>
-        </footer>
-
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
-          {socialMediaLinks.facebook && (
-            <a href={socialMediaLinks.facebook} className="fa fa-facebook">
-              <Facebook />
-            </a>
-          )}
-
-          {socialMediaLinks.instagram && (
-            <a href={socialMediaLinks.instagram} className="fa fa-instagram">
-              <Instagram />
-            </a>
-          )}
-
-          {socialMediaLinks.linkedin && (
-            <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
-              <Linkedin />
-            </a>
-          )}
-
-          {socialMediaLinks.x && (
-            <a href={socialMediaLinks.x} className="fa fa-twitter">
-              <Twitter />
-            </a>
-          )}
-
-          {socialMediaLinks.youtube && (
-            <a href={socialMediaLinks.youtube} className="fa fa-youtube">
-              <Youtube />
-            </a>
-          )}
-        </div>
+        </footer> */}
       </div>
 
+      {/* SECOND COLUMN OF COACH DETAILS ROW */}
+      <div className="social-icons-section">
+        {socialMediaLinks.facebook && (
+          <a href={socialMediaLinks.facebook} className="fa fa-facebook">
+            <Facebook />
+          </a>
+        )}
+
+        {socialMediaLinks.instagram && (
+          <a href={socialMediaLinks.instagram} className="fa fa-instagram">
+            <Instagram />
+          </a>
+        )}
+
+        {socialMediaLinks.linkedin && (
+          <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
+            <Linkedin />
+          </a>
+        )}
+
+        {socialMediaLinks.x && (
+          <a href={socialMediaLinks.x} className="fa fa-twitter">
+            <Twitter />
+          </a>
+        )}
+
+        {socialMediaLinks.youtube && (
+          <a href={socialMediaLinks.youtube} className="fa fa-youtube">
+            <Youtube />
+          </a>
+        )}
+      </div>
       {/* *********************************************   below is the second card for coach status **********************************************/}
 
-      <CoachStatus />
+      {/* <CoachStatus /> */}
       <ImageModal />
     </div>
   );

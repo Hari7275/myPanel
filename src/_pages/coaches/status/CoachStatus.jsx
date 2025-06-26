@@ -70,11 +70,11 @@ const CoachStatus = () => {
   };
 
   return (
-    <div className="card">
+    <div className="status-availability">
       <label className="sub-heading">STATUS (AVAILABILITY) :</label>
       <div className="dividerm"></div>
 
-      <footer className="card-foote">
+      <footer className="card-footer">
         {data?.map((status) => (
           <React.Fragment key={status.id}>
             <div className="card-footer-content">

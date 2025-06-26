@@ -13,23 +13,21 @@ const UserRegulation = () => {
 
   return (
     <>
-      <div className="profile-sub-container ProfileData-container sub-container">
+      <div className="profile-sub-container ProfileData-container profile-right-sub-container">
         <header
           className="profile-mainContainer "
           style={{ margin: "-20px 0px 20px -35px" }}
         >
           <div
-            className={`profile-link ${
-              activeComponent === "AvoidedUser" ? "subactive" : ""
-            }`}
+            className={`profile-link ${activeComponent === "AvoidedUser" ? "subactive" : ""
+              }`}
             onClick={() => handleComponentChange("AvoidedUser")}
           >
             <span>Avoided User</span>
           </div>
           <div
-            className={`profile-link ${
-              activeComponent === "UserBlacklisting" ? "subactive" : ""
-            }`}
+            className={`profile-link ${activeComponent === "UserBlacklisting" ? "subactive" : ""
+              }`}
             onClick={() => handleComponentChange("UserBlacklisting")}
           >
             <span>Blacklisted & reported User</span>
@@ -45,9 +43,8 @@ const UserRegulation = () => {
           </div> */}
 
           <div
-            className={`profile-link ${
-              activeComponent === "HiddenUserListing" ? "subactive" : ""
-            }`}
+            className={`profile-link ${activeComponent === "HiddenUserListing" ? "subactive" : ""
+              }`}
             onClick={() => handleComponentChange("HiddenUserListing")}
           >
             <span>Hidden User</span>

@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 
 const ListenerFollowers = () => {
   const [data, setData] = useState([]);
- const consultantId = useSelector((state) => state.consultant.consultantData);
+  const consultantId = useSelector((state) => state.consultant.consultantData);
   const { data: fetchData } = useGetConsultantsFollowerQuery(consultantId);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const ListenerFollowers = () => {
   const columns = useMemo(() => FOLLOWERSCOLUMN, []);
 
   return (
-    <div className="ProfileData-container sub-container">
+    <div className="ProfileData-container profile-right-sub-container">
       {data.length > 0 ? (
         <CommonTable
           columns={columns}

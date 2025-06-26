@@ -56,7 +56,7 @@ const ConlstProfileProgressList = () => {
   if (isError) return <div>Error loading data.</div>;
 
   return (
-    <div className="ProfileData-container sub-container">
+    <div className="ProfileData-container profile-right-sub-container">
       <CommonTable
         columns={columns}
         data={data}

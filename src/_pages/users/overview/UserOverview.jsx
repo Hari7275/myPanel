@@ -37,7 +37,7 @@ const UserOverview = () => {
 
   return (
     <>
-      <div className="userProfile-container sub-container">
+      <div className="userProfile-container profile-right-sub-container">
         <div className="userProfile-card">
           <footer className="userProfile-footer">
             <InfoItem label="Eduction" value={userData?.education || "N/A"} />

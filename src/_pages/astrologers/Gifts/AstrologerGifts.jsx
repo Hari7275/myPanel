@@ -77,7 +77,7 @@ const AstrologerGifts = () => {
   );
 
   return (
-    <div className="ProfileData-container sub-container">
+    <div className="ProfileData-container profile-right-sub-container">
       <CommonTable
         columns={columns}
         data={data}

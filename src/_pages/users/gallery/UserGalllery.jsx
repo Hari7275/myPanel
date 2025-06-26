@@ -188,7 +188,7 @@ const UserGallery = () => {
         </div>
       )}
 
-      <div className="ProfileData-container ">
+      <div className="ProfileData-container">
         <div>
           <h3 className="ProfileData-subheading">Gallery group </h3>
           <div className="gallery-maincontainer">

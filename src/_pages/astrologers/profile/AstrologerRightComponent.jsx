@@ -13,6 +13,7 @@ import AstrologerSetting from "../astrologerSettings/AstrologerSetting";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
 import LiveStream from "../../coaches/liveStream/LiveStream";
+import CoachStatus from "../../coaches/status/CoachStatus";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -38,6 +39,7 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           )}
 
           {activeComponent === "session-slot" && <SessionSlot />}
+          {activeComponent === "CoachStatus" && <CoachStatus />}
         </div>
       </div>
     </>

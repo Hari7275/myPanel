@@ -61,11 +61,11 @@ const CoachOverview = () => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   };
 
- 
+
 
   return (
     <div>
-      <div className="userProfile-containr sub-container">
+      <div className="userProfile-containr profile-right-sub-container">
         <div className="userProfile-card">
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">

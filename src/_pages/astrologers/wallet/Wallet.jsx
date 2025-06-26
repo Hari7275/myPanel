@@ -11,24 +11,22 @@ const Wallet = () => {
 
   return (
     <>
-      <div className="profile-sub-container ProfileData-container sub-container">
+      <div className="profile-sub-container ProfileData-container profile-right-sub-container">
         <header
           className="profile-mainContainer "
           style={{ margin: "-20px 0px 20px -35px" }}
         >
           <div
-            className={`profile-link ${
-              activeComponent === "WalletDetails" ? "subactive" : ""
-            }`}
+            className={`profile-link ${activeComponent === "WalletDetails" ? "subactive" : ""
+              }`}
             onClick={() => handleComponentChange("WalletDetails")}
           >
             <span>Wallet Details</span>
           </div>
 
           <div
-            className={`profile-link ${
-              activeComponent === "AstrologerWallet" ? "subactive" : ""
-            }`}
+            className={`profile-link ${activeComponent === "AstrologerWallet" ? "subactive" : ""
+              }`}
             onClick={() => handleComponentChange("AstrologerWallet")}
           >
             <span>Wallet Transactions</span>

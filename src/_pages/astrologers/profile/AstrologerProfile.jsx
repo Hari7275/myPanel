@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AstrologerLeftComponent from "./AstrologerLeftComponent";
+import AstrologerDetailsComponent from './AstrologerDetailsComponent'
 import AstrologerRightComponent from "./AstrologerRightComponent";
 import AstrologerLinkComponent from "./AstrologerLinkComponent";
 import { X } from "lucide-react";
@@ -40,31 +40,27 @@ const AstrologerProfile = () => {
   return (
     <>
       <div className="profile-section">
-        <div className="profileMainComponent">
-          <div className="profileheader">Astrologer Profile</div>
-
+        <div className="crossIconContainer">
           <div
-            className="profileheader secondIcon"
+            className="crossIcon"
             onClick={handleProfileClose}
           >
             <X />
           </div>
-
-          <div className="divider"></div>
         </div>
 
-        <div className="sub-container" style={{ paddingBottom: "10px" }}>
+        <div className="profile-top-container">
+          <div className="">
+            <AstrologerDetailsComponent />
+          </div>
+        </div>
+
+        <div className="main-link-container">
           <AstrologerLinkComponent
             onComponentChange={handleComponentChange}
             activeComponent={activeComponent}
           />
-        </div>
-
-        <div className="main-card-container">
-          <div className="leftPart">
-            <AstrologerLeftComponent />
-          </div>
-          <div className="rightPart">
+          <div className="profile-rightPart">
             <AstrologerRightComponent activeComponent={activeComponent} />
           </div>
         </div>
