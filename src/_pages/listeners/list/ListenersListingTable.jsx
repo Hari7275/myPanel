@@ -106,7 +106,7 @@ const ListenersListingTable = () => {
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original.id)}
+                  onClick={() => toggleEditStatus(row.original)}
                 />
               </span>
             )}
@@ -208,7 +208,7 @@ const ListenersListingTable = () => {
         <EditStatus
           isOpen={showEditStatus}
           onClose={toggleEditStatus}
-          selectedRow={selectedRow}
+          selectedRow={selectedRow?.id}
           profileStatus={profileStatus}
         />
       )}
