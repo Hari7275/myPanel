@@ -4,8 +4,8 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCommissionList: builder.query({
       query: (consultantId) => ({
-        url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,
-        // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=10`,
+        // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,
+        url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=10`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -15,8 +15,8 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
     }),
 
     createCommission: builder.mutation({
-      query: ({ body }) => ({
-        url: `coach-rating/admin/add`,
+      query: ({ body, consultantId }) => ({
+        url: `api/v1/consultant/profile/consultant-price-list/admin/update-commission/${consultantId}`,
         method: "POST",
         headers: {
           Authorization: "Bearer admin_token",

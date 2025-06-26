@@ -124,7 +124,13 @@ const CommissionList = () => {
         />
       )}
 
-      {addData && <AddCommission isOpen={addData} onClose={toggleAddData} />}
+      {addData && (
+        <AddCommission
+          isOpen={addData}
+          onClose={toggleAddData}
+          consultantId={consultantId}
+        />
+      )}
     </div>
   );
 };

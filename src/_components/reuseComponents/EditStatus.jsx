@@ -22,6 +22,8 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
 
       if (profileStatus === 2) {
         filteredData = filteredData.filter((item) => item.status_value === 6);
+      } else {
+        filteredData = filteredData.filter((item) => item.status_value !== 6);
       }
 
       setData(filteredData);

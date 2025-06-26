@@ -11,6 +11,7 @@ import ListenerReviewsListingTable from "../reviews_notification/ListenerReviews
 import ListenerSetting from "../listenerSettings/ListenerSetting";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 // import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
+import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   return (
@@ -31,6 +32,8 @@ const ListenerRightComponent = ({ activeComponent }) => {
           {activeComponent === "Profile-Progress" && (
             <ConlstProfileProgressList />
           )}
+          {activeComponent === "consultant-commission" && <CommissionList />}
+
           {/* {activeComponent === "session-slot" && <SessionSlot />} */}
         </div>
       </div>
