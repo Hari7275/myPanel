@@ -86,75 +86,81 @@ const ListenerLeftComponent = () => {
   };
 
   return (
-    <div className="card-container">
-      <div className="card">
-        <div className="card-upper-part">
-          <div className="card-img ">
-            <img
-              src={urls || "girl-avtar.png"}
-              alt="Listener Profile"
-              onClick={() => openImageModal(urls || "girl-avtar.png")}
-              style={{ cursor: "pointer" }}
-            />
-
-            <div className="edit-profile-img">
-              <button className="edit-profile-icon" onClick={openModal}>
-                <Pencil style={{ background: "none" }} />
-              </button>
-            </div>
-          </div>
-
-          <div className="card-user-name">
-            <div className="userName">{`${data.first_name || ""} ${data.last_name || ""
-              }`}</div>
-
-            <div className="secondButton">
+    //MAIN ROW OF LISTNER CONTAINER
+    <div className="user-details-container">
+      {/* FIRST COLUMN OF MAIN CONTAINER AS ROW */}
+        <div className="user-details-row">
+          {/* FIRST COLUMN OF LISTNER DETAILS(IMAGE SECTION) */}
+          <div className="profile-img-section">
+            <div className="">
               <img
-                className="button-img"
-                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-                alt="Active"
+              className="profile-img"
+                src={urls || "girl-avtar.png"}
+                alt="Listener Profile"
+                onClick={() => openImageModal(urls || "girl-avtar.png")}
+                style={{ cursor: "pointer" }}
               />
-              <span>Active</span>
+              <div className="edit-profile-img">
+                <button className="edit-profile-icon" onClick={openModal}>
+                  <Pencil style={{ background: "none", height: "14px", width: "14px" }} />
+                </button>
+              </div>
             </div>
           </div>
+          {/* SECOND COLUMN LISTNER INFO SECTION */}
+            <div className="user-info-section">
+              <div className="userName">
+                {`${data.first_name || ""} ${data.last_name || ""}`}
+              </div>
+              <div className="info-pair">
+                <p className="info-item">
+                  <strong>Listener ID : </strong> {data.id}
+                </p>
+              </div>
+              <div className="active-status">
+                <img
+                  className="button-img"
+                  src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+                  alt="Active"
+                />
+                <span>Active</span>
+              </div>
+            </div>
+          {/* <footer className="card-footer">
+            <div className="info-pair">
+              <p className="info-item">
+                <strong>Listener ID : </strong> {data.id}
+              </p>
+            </div>
+            <div className="line"></div>
+
+            <InfoItem label="Email " value={data?.email} />
+            <div className="line"></div>
+
+            <InfoItem label="Mobile No. " value={data?.phoneNumber} />
+            <div className="line"></div>
+
+            <InfoItem label="Gender " value={getGenderLabel(data?.gender)} />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Marital Status"
+              value={getMaritalStatus(data?.marital_status)}
+            />
+            <div className="line"></div>
+
+            <InfoItem label="Age " value={age} />
+            <div className="line"></div>
+
+            <InfoItem label="Referral code " value={data.referral_code} />
+            <div className="line"></div>
+
+            <InfoItem label="Referred by " value={data.referred_by} />
+            <div className="line"></div>
+          </footer> */}
         </div>
-
-        <div className="line"></div>
-
-        <footer className="card-footer">
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Listener ID : </strong> {data.id}
-            </p>
-          </div>
-          <div className="line"></div>
-
-          <InfoItem label="Email " value={data?.email} />
-          <div className="line"></div>
-
-          <InfoItem label="Mobile No. " value={data?.phoneNumber} />
-          <div className="line"></div>
-
-          <InfoItem label="Gender " value={getGenderLabel(data?.gender)} />
-          <div className="line"></div>
-
-          <InfoItem
-            label="Marital Status"
-            value={getMaritalStatus(data?.marital_status)}
-          />
-          <div className="line"></div>
-
-          <InfoItem label="Age " value={age} />
-          <div className="line"></div>
-
-          <InfoItem label="Referral code " value={data.referral_code} />
-          <div className="line"></div>
-
-          <InfoItem label="Referred by " value={data.referred_by} />
-          <div className="line"></div>
-        </footer>
-
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+      {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
+        <div className="social-icons-section">
           {socialMediaLinks.facebook && (
             <a href={socialMediaLinks.facebook} className="fa fa-facebook">
               <Facebook />
@@ -185,7 +191,6 @@ const ListenerLeftComponent = () => {
             </a>
           )}
         </div>
-      </div>
 
       {/* <CoachStatus listenerType={listenerType} /> */}
       <ImageModal />
