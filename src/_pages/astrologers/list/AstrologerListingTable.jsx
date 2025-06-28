@@ -11,6 +11,7 @@ import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useLocation } from "react-router-dom";
 
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -24,6 +25,7 @@ const AstrologerListingTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
 
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
@@ -55,6 +57,13 @@ const AstrologerListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
+    useEffect(()=> {
+      if(location.state){
+        setPage(location.state.previousPage);
+        setPageSize(location.state.previousPageSize);
+      }
+    },[location.state]);
+
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
@@ -64,7 +73,12 @@ const AstrologerListingTable = () => {
     dispatch(setCurrentConsultant(data?.id));
 
     setTimeout(() => {
-      navigate(`/astrologer_Profile?${data?.id}`);
+      navigate(`/astrologer_Profile?${data?.id}`,{
+        state:{
+          currentPage: page,
+          pageSize: pageSize
+        }
+      });
     }, 0);
 
     // localStorage.setItem("currentUserId", data?.id);

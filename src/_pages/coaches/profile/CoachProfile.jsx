@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 import CoachLinkComponent from "./CoachLinkComponent";
 import { useSelector, useDispatch } from "react-redux";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
+import { useLocation } from "react-router-dom";
 
 const CoachProfile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const location = useLocation();
+console.log("location...................",location.state)
   // Redux state for active tab
   const profileActiveTab = useSelector((state) => state?.activeTab?.activeTab);
 
@@ -27,7 +29,12 @@ const CoachProfile = () => {
   }, [profileActiveTab]);
 
   const handleProfileClose = () => {
-    navigate("/coaches");
+    navigate("/coaches",{
+      state: {
+        previousPage: location.state?.currentPage || 1,
+        previousPageSize: location.state?.pageSize || 10
+      }
+    });
     // navigate(-1);
   };
 

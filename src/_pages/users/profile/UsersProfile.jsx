@@ -1,19 +1,25 @@
 import React, { useState } from "react";
 import { X } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import UserRightComponent from "./UserRightComponent";
 import UserLinkComponent from "./UserLinkComponent";
 import UserDetailsComponent from "./UserDetailsComponent";
 
 const UsersProfile = () => {
   const navigate = useNavigate();
-
+  const location = useLocation();
+  
   const handleProfileClose = () => {
-    navigate(-1);
+    // navigate(-1);
+    navigate("/user",{
+      state: {
+        previousPage: location.state?.currentPage || 1,
+        previousPageSize: location.state?.pageSize || 10
+      }
+    })
   };
 
   const [activeComponent, setActiveComponent] = useState("UserOverview");
-
   const handleComponentChange = (component) => {
     setActiveComponent(component);
   };

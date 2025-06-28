@@ -6,12 +6,13 @@ import { useGetNotificationUnreadCountQuery } from "../_store/api";
 import { AppBar, IconButton, Toolbar, Typography, Stack } from "@mui/material";
 
 import { Link } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 const Navbar = () => {
   const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const [count, setCount] = useState(2);
   const { data: fetchData } = useGetNotificationUnreadCountQuery();
+  const currentTitle = useSelector((state) => state.pageTitle?.title || "Flute Admin Panel");
 
   useEffect(() => {
     if (fetchData) {
@@ -49,7 +50,8 @@ const Navbar = () => {
             sx={{ flexGrow: 1 }}
             style={{ fontSize: "30px" }}
           >
-            Flute Admin Panel
+            {/* Flute Admin Panel */}
+            {currentTitle}
           </Typography>
           <Stack direction={"row"} spacing={2}>
             <div

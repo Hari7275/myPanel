@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { LISTENERSCOLUMNS } from "./listenersListingColumn";
 import { ArrowRight, Pencil } from "lucide-react";
@@ -10,6 +10,7 @@ import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useLocation } from "react-router-dom";
 
 const ListenersListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -20,8 +21,11 @@ const ListenersListingTable = () => {
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
+  const pageRef = useRef(page);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const location = useLocation();
+    console.log("page in arrow.......",pageRef.current);
 
   const {
     data: fetchData,
@@ -36,7 +40,9 @@ const ListenersListingTable = () => {
     consultant_type: 3,
   });
   const navigate = useNavigate();
-
+useEffect(()=>{
+  pageRef.current = page;
+},[page]);
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records?.filter(
@@ -52,6 +58,13 @@ const ListenersListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
+    useEffect(()=>{
+      if(location.state){
+        setPage(location.state.previousPage);
+        setPageSize(location.state.previousPageSize);
+      }
+    },[location.state])
+
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
@@ -60,8 +73,15 @@ const ListenersListingTable = () => {
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
     // Use setTimeout or batch it after dispatch
+    console.log("page in arrow.......",pageRef.current);
+
     setTimeout(() => {
-      navigate(`/listener_Profile?${data?.id}`);
+      navigate(`/listener_Profile?${data?.id}`,{
+        state: {
+          currentPage: pageRef.current,
+          pageSize: pageSize
+        }
+      });
     }, 0);
   };
 

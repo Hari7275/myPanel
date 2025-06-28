@@ -10,7 +10,8 @@ import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 // import { hasPermission } from "../_store/api/tokenHelper";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setPageTitle } from "../_store/slices/pageTitleSlice";
 
 import "aos/dist/aos.css";
 
@@ -23,6 +24,7 @@ const Sidebar = () => {
   const [isAdmin, setIsAdmin] = useState("");
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);

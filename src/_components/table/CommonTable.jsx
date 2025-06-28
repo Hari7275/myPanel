@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   useTable,
   useSortBy,
@@ -11,6 +11,8 @@ import GlobalFilter from "./GlobalFilter";
 import Pagination from "./Pagination";
 import "../../cssfolder/Actions.css";
 import "./table.css";
+import { useDispatch } from "react-redux";
+import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 
 const CommonTable = ({
   columns,
@@ -22,6 +24,12 @@ const CommonTable = ({
   AddPackageButton,
   getRowProps,
 }) => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    if(tableTitle){
+      dispatch(setPageTitle(tableTitle || "Flude Admin Panel"))
+    }
+  },[tableTitle]);
   const {
     getTableProps,
     getTableBodyProps,
@@ -80,7 +88,8 @@ const CommonTable = ({
   return (
     <>
       <div className="tableHeaderDiv">
-        <div className="tableHeadingDiv">{tableTitle}</div>
+        {/* it removes because to not display in UI table but PROPES pass ho rha hai */}
+        {/* <div className="tableHeadingDiv">{tableTitle}</div> */}
         <div className="filterDiv">
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 

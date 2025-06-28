@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Loader, Pencil } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import EditStatus from "./EditStatus";
 import { useGetUsersListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
@@ -25,6 +25,7 @@ const UserListingTable = () => {
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   const dispatch = useDispatch();
+  const location = useLocation();
 
   // Dynamic query with name and phoneNumber
   const { data: fetchData, isLoading } = useGetUsersListQuery({
@@ -42,6 +43,13 @@ const UserListingTable = () => {
     }
   }, [fetchData]);
   const totalPage = fetchData?.data?.pagination?.totalPages || 1;
+
+  useEffect(()=> {
+    if(location.state){
+      setPage(location.state.previousPage);
+      setPageSize(location.state.previousPageSize);
+    }
+  },[location.state]);
 
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
@@ -65,7 +73,12 @@ const UserListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to="/users_Profile">
+            <Link to="/users_Profile"
+            state = {{
+              currentPage: page,
+              pageSize: pageSize
+            }}
+            >
               <span
                 title="view details"
                 className="secondIcon"

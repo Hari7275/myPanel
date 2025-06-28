@@ -1,11 +1,16 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../cssfolder/subscriptionPackage.css";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
 import Select from "react-select";
+import { useDispatch } from "react-redux";
+import { setPageTitle } from "../_store/slices/pageTitleSlice";
 
 const GoodVibes = ({ selectedOption, handleChange, options }) => {
-  
+  const dispatch  = useDispatch();
+  useEffect(()=>{
+    dispatch(setPageTitle("Package Update"));
+  },[])
   return (
     <div className="sub-second-section">
       <div>

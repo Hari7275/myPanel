@@ -37,8 +37,8 @@ const NameCell = ({ row }) => {
         <img
           src={row?.original.profile_pic || "girl-avtar.png"}
           alt="Avatar"
-          width="40"
-          height="40"
+          width="20"
+          height="20"
           onClick={handleImageClick}
         />
       </div>

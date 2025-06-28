@@ -4,11 +4,18 @@ import ListenerRightComponent from "./ListenerRightComponent";
 import ListenerLinkComponent from "./ListenerLinkComponent";
 import { X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const ListenersProfile = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const handleProfileClose = () => {
-    navigate("/listeners");
+    navigate("/listeners",{
+      state: {
+        previousPage: location.state?.currentPage || 1,
+        previousPageSize: location.state?.pageSize || 10
+      }
+    });
 
     // navigate(-1);
   };

@@ -21,6 +21,7 @@ import userSlice from "./slices/userSlice";
 import consultantSlice from "./slices/consultantSlice";
 import activeTabSlice from "./slices/activeSlice";
 import authSlice from "./slices/authSlice";
+import pageTitleReducer from "./slices/pageTitleSlice";
 
 // Combine reducers
 const rootReducer = combineReducers({
@@ -31,6 +32,7 @@ const rootReducer = combineReducers({
   consultant: consultantSlice,
   activeTab: activeTabSlice,
   auth: authSlice,
+  pageTitle: pageTitleReducer,
 });
 
 // Persist configuration

@@ -4,13 +4,13 @@ import { listenersSlice } from "./slice/ListenersSlice";
 import { apiSlice } from "./slice/apiSlice";
 import imageSlice from "./slice/imageSlice";
 import modalSlice from "./slice/modalSlice";
+import pageTitleReducer from '../_store/slices/pageTitleSlice';
 // import { setupListeners } from "@reduxjs/toolkit/query";
 
 export const store = configureStore({
   reducer: {
     image: imageSlice,
     modal: modalSlice,
-
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

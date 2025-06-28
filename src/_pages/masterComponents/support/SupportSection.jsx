@@ -1,6 +1,7 @@
-import React from "react";
-
+import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setPageTitle } from "../../../_store/slices/pageTitleSlice";
 
 const CategoryCard = ({ link, label }) => (
   <div className="card-container">
@@ -17,13 +18,16 @@ const CategoryCard = ({ link, label }) => (
 );
 
 const SupportSection = () => {
+  const dispatch = useDispatch();
+  useEffect(()=>{
+    dispatch(setPageTitle("Support Section"));
+  },[])
   return (
     <>
       <div className="profile-section">
         <div className="profileMainComponent">
-          <div className="profileheader">Support Section</div>
-
-          <div className="divider"></div>
+          {/* <div className="profileheader">Support Section</div> */}
+          {/* <div className="divider"></div> */}
         </div>
 
         <div className="category-card-container-grid">

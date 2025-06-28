@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
 import { ArrowRight, Pencil } from "lucide-react";
@@ -11,6 +11,7 @@ import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useLocation } from "react-router-dom";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -21,9 +22,11 @@ const CoachListingTable = () => {
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
+  const pageRef = useRef(page);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     data: fetchData,
@@ -37,6 +40,10 @@ const CoachListingTable = () => {
     phone,
     consultant_type: 2,
   });
+console.log("coach page........",page);
+useEffect(()=>{
+  pageRef.current = page;
+},[page]);
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -47,25 +54,37 @@ const CoachListingTable = () => {
     } else {
       setData([]);
     }
-
     dispatch(resetActiveTab());
   }, [fetchData, resetActiveTab]);
   const totalPage = fetchData?.data?.total_records
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
+    useEffect(()=> {
+        if(location.state){
+          setPage(location.state.previousPage);
+          setPageSize(location.state.previousPageSize);
+        }
+    },[location.state]);
+
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
   };
 
-  const handleActionClick = (data) => {
+  const handleActionClick = useCallback((data) => {
     dispatch(setCurrentConsultant(data?.id));
     // Use setTimeout or batch it after dispatch
+    console.log("page in arrow.......",pageRef.current);
     setTimeout(() => {
-      navigate(`/coach-profile?${data?.id}`);
+      navigate(`/coach-profile?${data?.id}`,{
+        state: {
+          currentPage: pageRef.current,
+          pageSize: pageSize
+        }
+      });
     }, 0);
-  };
+  },[pageRef,pageSize,dispatch,navigate]);
 
   const columns = useMemo(
     () => [
@@ -110,7 +129,7 @@ const CoachListingTable = () => {
         ),
       },
     ],
-    []
+    [handleActionClick]
   );
 
   // Apply debounce to search handlers
