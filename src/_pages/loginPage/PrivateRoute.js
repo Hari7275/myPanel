@@ -77,7 +77,8 @@ const PrivateRoute = ({ element, requiredPermissions }) => {
     if (
       permissions?.includes("*") ||
       authState?.user?.id === 1 ||
-      authState?.user?.id === 7
+      authState?.user?.id === 4 ||
+      authState?.user?.id === 3
     ) {
       console.log("Wildcard permission found - allowing access");
       return true;

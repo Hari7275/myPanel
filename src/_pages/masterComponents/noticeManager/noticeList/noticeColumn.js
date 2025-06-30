@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Switch } from "@mui/material";
-import { useUpdateNoticestatusMutation } from "../../../_store/api";
+import { useUpdateNoticestatusMutation } from "../../../../_store/api";
 
 const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.status);

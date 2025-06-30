@@ -68,7 +68,8 @@ import ConsultantPayoutHistory from "./_pages/payments/payoutRequest/ConsultantP
 // NotificationBell
 
 import NotificationBell from "./_layouts/NotificationBell";
-import ConsultantNotice from "./_pages/meta-data/consultantNotice/ConsultantNotice";
+import ConsultantNotice from "./_pages/masterComponents/noticeManager/noticeList/ConsultantNotice";
+import ConsultantNoticeList from "./_pages/masterComponents/noticeManager/consultantNotice/ConsultantNoticeList";
 import DashboardBannerList from "./_pages/meta-data/dashboardBanner/DashboardBannerList";
 import CouponListing from "./_pages/payments/coupons/CouponListing";
 
@@ -187,6 +188,7 @@ const Layout = () => (
           <Route path="/menu-orders" element={<MenuOrders />} />
           <Route path="countries-list" element={<CountriesList />} />
           <Route path="/consultant-notice" element={<ConsultantNotice />} />
+          <Route path="/assign-notice" element={<ConsultantNoticeList />} />
           <Route path="/coach-rate" element={<CoachRate />} />
           <Route path="/profile-progress" element={<ProfileProgress />} />
           <Route path="/consultant-commission" element={<CommissionList />} />

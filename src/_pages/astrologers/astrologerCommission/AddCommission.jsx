@@ -9,6 +9,7 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
   const [commissions, setCommissions] = useState({});
   console.log("consultantId", consultantId);
   const [data, setData] = useState([]);
+  const [selectRadio, setSelectRadio] = useState("single");
 
   const {
     data: fetchData,
@@ -37,11 +38,41 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
     } else setData([]);
   }, [fetchData]);
 
+  const handleRadioInputChange = (e) => {
+    setSelectRadio(e.target.value);
+  };
+
+  console.log("data", data[0]);
+
+  // if(selectRadio=="single")
+  // const handleInputChange = (id, value) => {
+  //   setCommissions((prev) => ({
+  //     ...prev,
+  //     [id]: value,
+  //   }));
+  // };
+
+  // const handleInputChange = (id, value) => {
+  //   const updatedCommissions = {};
+  //   data.forEach((item) => {
+  //     updatedCommissions[item.id] = value;
+  //   });
+  //   setCommissions(updatedCommissions);
+  // };
+
   const handleInputChange = (id, value) => {
-    setCommissions((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
+    if (selectRadio === "single") {
+      const updatedCommissions = {};
+      data.forEach((item) => {
+        updatedCommissions[item.id] = value;
+      });
+      setCommissions(updatedCommissions);
+    } else {
+      setCommissions((prev) => ({
+        ...prev,
+        [id]: value,
+      }));
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -87,6 +118,44 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
       <h2 className="sub-heading" style={{ marginBottom: 20 }}>
         Update Commission
       </h2>
+
+      <div style={{ display: "flex", gap: "40px", marginBottom: "20px" }}>
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+          }}
+        >
+          <input
+            type="radio"
+            name="option"
+            value="single"
+            checked={selectRadio === "single"}
+            onChange={handleRadioInputChange}
+          />
+          Single
+        </label>
+
+        <label
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            cursor: "pointer",
+          }}
+        >
+          <input
+            type="radio"
+            name="option"
+            value="multiple"
+            checked={selectRadio === "multiple"}
+            onChange={handleRadioInputChange}
+          />
+          Multiple
+        </label>
+      </div>
 
       <form onSubmit={handleSubmit} className="simple-form" noValidate>
         <div

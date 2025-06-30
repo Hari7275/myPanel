@@ -5,7 +5,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
     getCommissionList: builder.query({
       query: (consultantId) => ({
         // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,
-        url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=10`,
+        url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=100`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

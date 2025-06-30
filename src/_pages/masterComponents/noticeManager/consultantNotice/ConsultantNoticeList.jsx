@@ -1,31 +1,27 @@
 import React, { useMemo, useState, useEffect } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
-import { NOTICECOLUMN } from "./noticeColumn";
-import { Trash, Pencil, Eye, Truck } from "lucide-react";
-import DeleteComponent from "../../payments/DeleteComponent";
-import AddNotice from "./AddNotice";
-import UpdateNotice from "./UpdateNotice";
-import NoticeDescription from "./NoticeDescription";
-import AssigneNotice from "./AssigneNotice";
-import UnAssignNotice from "./UnAssignNotice";
-import {
-  useGetNoticeListQuery,
-  useDeleteNoticeMutation,
-} from "../../../_store/api";
+import CommonTable from "../../../../_components/table/CommonTable";
+import { NOTICECOLUMN } from "../noticeList/noticeColumn";
+import { Pencil, Eye } from "lucide-react";
 
-const ConsultantNotice = () => {
+import NoticeDescription from "../noticeList/NoticeDescription";
+
+import AssignConsultantNotice from "./AssignConsultantNotice";
+import UpdateParticularNotice from "./UpdateParticularNotice";
+import UnAssignConsultantNotice from "./UnAssignConsultantNotice";
+
+import { useGetNoticeListQuery } from "../../../../_store/api";
+
+const ConsultantNoticeList = () => {
   const [showDescription, setShowDescription] = useState(false);
   const [showAssigneNotice, setShowAssigneNotice] = useState(false);
   const [showUnAssignNotice, setShowUnAssignNotice] = useState(false);
-  const [addData, setAddData] = useState(false);
+
   const [updateData, setUpdteData] = useState(false);
-  const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetNoticeListQuery();
-  const [deleteData] = useDeleteNoticeMutation();
 
   // store data
   useEffect(() => {
@@ -58,7 +54,7 @@ const ConsultantNotice = () => {
   //  toggle function for adding new data
 
   const toggleAddData = () => {
-    setAddData(!addData);
+    setShowAssigneNotice(!showAssigneNotice);
   };
 
   //  toggle function for updating data
@@ -68,34 +64,35 @@ const ConsultantNotice = () => {
     setUpdteData(!updateData);
   };
 
-  //  function for delete component
-  const toggleDeleteComponent = (row) => {
-    setSelectedRow(row);
-    setShowDeleteComponent(!showDeleteComponent);
-  };
-
-  const handleDelete = () => {
-    if (selectedRow && selectedRow.id) {
-      deleteData({ id: selectedRow.id }).then(() => {
-        setShowDeleteComponent(false);
-      });
-    }
-  };
-
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add Notice
-      </button>
+      <>
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={() => toggleUnAssignNoticeNotice(data)}
+        >
+          Unassign
+        </button>
+
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "125px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Assign Notice
+        </button>
+      </>
     );
   };
 
@@ -117,30 +114,11 @@ const ConsultantNotice = () => {
                 onClick={() => toggleDescription(row)}
               />
             </span>
-            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <Truck
-                className="iconSmall"
-                onClick={() => toggleAssignNotice(row)}
-              />
-            </span>
-            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <img
-                src="./truck/truck_red.png"
-                className="iconSmall"
-                onClick={() => toggleUnAssignNoticeNotice(row)}
-              />
-            </span>
+
             <span className="editIcon">
               <Pencil
                 className="iconSmall"
                 onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
               />
             </span>
           </div>
@@ -156,7 +134,7 @@ const ConsultantNotice = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle=" Consultant Notice List"
+        tableTitle="Notice Logs"
         AddPackageButton={AddButton}
       />
 
@@ -168,41 +146,34 @@ const ConsultantNotice = () => {
         />
       )}
 
+      {/* assign notic */}
       {showAssigneNotice && (
-        <AssigneNotice
+        <AssignConsultantNotice
           isOpen={showAssigneNotice}
           onClose={toggleAssignNotice}
           selectedRow={selectedRow}
         />
       )}
-
+      {/* unAssign notic */}
       {showUnAssignNotice && (
-        <UnAssignNotice
+        <UnAssignConsultantNotice
           isOpen={showUnAssignNotice}
           onClose={toggleUnAssignNoticeNotice}
           selectedRow={selectedRow}
         />
       )}
 
-      {addData && <AddNotice isOpen={addData} onClose={toggleAddData} />}
+      {/* update particular description */}
 
       {updateData && (
-        <UpdateNotice
+        <UpdateParticularNotice
           isOpen={updateData}
           onClose={toggleUpdateData}
           selectedRow={selectedRow}
-        />
-      )}
-
-      {showDeleteComponent && (
-        <DeleteComponent
-          isOpen={showDeleteComponent}
-          onClose={toggleDeleteComponent}
-          onDelete={handleDelete}
         />
       )}
     </>
   );
 };
 
-export default ConsultantNotice;
+export default ConsultantNoticeList;

@@ -62,7 +62,7 @@ const CommissionList = () => {
         }}
         onClick={toggleAddData}
       >
-        Add Commission
+        Update Commission
       </button>
     );
   };
@@ -105,7 +105,7 @@ const CommissionList = () => {
         columns={columns}
         data={data}
         includeCheckbox={false}
-        tableTitle="Commission"
+        tableTitle="Commission "
         AddPackageButton={AddButton}
       />
       {showEditStatus && (

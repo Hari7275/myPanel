@@ -14,8 +14,8 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
     }),
 
     getConsultantList: builder.query({
-      query: () => ({
-        url: `/api/v1/consultant/profile/all-list`,
+      query: ({ type }) => ({
+        url: `/api/v1/consultant/profile/all-list?type=${0}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -117,5 +117,5 @@ export const {
   useUpdateNoticeMutation,
   useUpdateNoticestatusMutation,
   useDeleteNoticeMutation,
-  useDeleteAssigneConsultantNoticeMutation
+  useDeleteAssigneConsultantNoticeMutation,
 } = noticeApiSlice;

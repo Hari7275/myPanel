@@ -1,61 +1,28 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { useUpdateNoticeMutation } from "../../../_store/api";
-import { UpdateInputField } from "../../../_components/ui/inputForm";
+import { useCreateNoticeMutation } from "../../../../_store/api";
+import { UpdateInputField } from "../../../../_components/ui/inputForm";
 
 // Import ReactQuill and its CSS
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // You can choose 'quill.bubble.css' for a different theme
 
-const InputField = ({
-  label,
-  type,
-  name,
-  value,
-  onChange,
-  placeholder,
-  readOnly,
-}) => (
-  <div className="input-container">
-    <label htmlFor={label}>{label}</label>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="info-input"
-      readOnly={readOnly}
-    />
-  </div>
-);
-
-const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
+const AddNotice = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
-    id: selectedRow.id || "",
-    name: selectedRow.name || "",
-    title: selectedRow.title || "",
-    description: selectedRow.description || "",
-    image_url: selectedRow?.image_url,
+    title: "",
+    name: "",
+    description: "", // This will now hold the HTML content from Quill
+    image: null,
   });
-  console.log("selectedRow", selectedRow);
 
-  const [updateData, { isLoading: isUpdating, error }] =
-    useUpdateNoticeMutation();
+  const [createData, { isLoading }] = useCreateNoticeMutation();
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "image" && files.length > 0) {
-      setFormData((prevData) => ({
-        ...prevData,
-        image: files[0],
-        image_url: URL.createObjectURL(files[0]),
-      }));
+  const handleChange = (event) => {
+    const { name, value, type, files } = event.target;
+    if (type === "file") {
+      setFormData((prevData) => ({ ...prevData, [name]: files[0] }));
     } else {
-      setFormData((prevData) => ({
-        ...prevData,
-        [name]: value,
-      }));
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
   };
 
@@ -64,27 +31,18 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     setFormData((prevData) => ({ ...prevData, description: html }));
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const formDataToSend = new FormData();
-    formDataToSend.append("id", formData.id);
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("title", formData.title);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("currency", formData.currency);
-
-    // Pass the actual image file
-    if (formData.image) {
-      formDataToSend.append("image", formData.image);
-    }
+  const handleSubmit = async () => {
+    const newData = new FormData();
+    newData.append("title", formData?.title);
+    newData.append("name", formData?.name);
+    newData.append("description", formData?.description); // The HTML content
+    newData.append("image", formData?.image || "snake.jpg");
 
     try {
-      await updateData({
-        body: formDataToSend,
-      });
+      await createData({ body: newData });
       onClose();
     } catch (error) {
-      console.error("API Error", error);
+      console.error("Failed to add new notice:", error); // Use console.error for errors
     }
   };
 
@@ -125,54 +83,54 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     "image",
     "video",
   ];
+
   return (
     <ReactModal
       className="modal"
       overlayClassName="overlay"
       isOpen={isOpen}
       onRequestClose={onClose}
-      aria-labelledby="update-gift-title"
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "600px", padding: "20px" }}>
+        {" "}
+        {/* Increased width for editor */}
         <h2
           className="sub-heading"
-          id="update-gift-title"
           style={{
             marginBottom: "20px",
             display: "block",
             backgroundColor: "#f0f0f0",
             textAlign: "center",
+            padding: "10px 0",
           }}
         >
-          Update Gift
+          Add Notice
         </h2>
-
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <UpdateInputField
-            label="Notice Name"
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            placeholder="Notice Name"
-          />
-
           <UpdateInputField
             label="Notice Title"
             type="text"
             name="title"
             value={formData.title}
             onChange={handleChange}
-            placeholder="Notice Title"
+            placeholder=" Notice Title"
+          />
+          <UpdateInputField
+            label="Notice Name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder=" Notice Name"
           />
         </div>
-
-        <div
-          className="input-container"
-          style={{ width: "unset", marginTop: "20px" }}
-        >
-          <label>Gift Description</label>
-
+        {/* --- React-Quill Editor for Description --- */}
+        <div className="userProfile-grid-item" style={{ marginTop: "20px" }}>
+          <label
+            style={{ fontSize: "20px", marginBottom: "10px", display: "block" }}
+          >
+            Notice Description
+          </label>
           <ReactQuill
             theme="snow"
             value={formData.description}
@@ -183,8 +141,10 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
             placeholder=" Enter Notice Description here..."
           />
         </div>
-
-        <div className="userProfile-grid-item">
+        {/* --- End React-Quill Editor --- */}
+        <div className="userProfile-grid-item" style={{ marginTop: "20px" }}>
+          {" "}
+          {/* Adjusted margin-top for image field */}
           <label style={{ fontSize: "20px", marginTop: "20px" }}>Image</label>
           <input
             type="file"
@@ -193,7 +153,6 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
             className="userProfile-input-field"
           />
         </div>
-
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
@@ -202,19 +161,19 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
           >
             Back
           </button>
+
           <button
             className="fifthButton"
             style={{ backgroundColor: "green" }}
-            onClick={handleSave}
-            disabled={isUpdating}
+            onClick={handleSubmit}
+            disabled={isLoading}
           >
-            {isUpdating ? "Saving..." : "Save"}
+            {isLoading ? "Submitting..." : "Submit"}
           </button>
         </div>
-        {error && <p className="error-message">Error: {error?.message}</p>}
       </div>
     </ReactModal>
   );
 };
 
-export default UpdateNotice;
+export default AddNotice;
