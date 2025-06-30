@@ -95,12 +95,13 @@
 .simple-form {
   display: flex;
   flex-direction: column;
+  gap: 10px;
 }
 
 .input-container {
   position: relative;
   margin: 8px;
-  width: 270px;
+  width: 300px;
 }
 
 .input-container label {
@@ -115,7 +116,7 @@
 
 .input-container input {
   width: 100%;
-  padding: 16.5px 14px;
+  padding: 8px 14px;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.23);
   border-radius: 4px;

@@ -12,7 +12,7 @@
   bottom: auto;
   transform: translate(-50%, -50%);
   background: white;
-  padding: 20px;
+  padding: 25px;
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   max-width: 90%;
@@ -28,9 +28,9 @@
   bottom: auto;
   transform: translate(-50%, -50%);
   background: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 4px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   max-width: 90%;
   max-height: 82%;
   overflow: scroll;
@@ -46,6 +46,7 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.75);
+
 }
 
 /* this modal and overlay is set for drag and drop behaviour  */
@@ -108,7 +109,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px; /* handles zoomed-in images */
+  padding: 20px;
+  /* handles zoomed-in images */
   box-sizing: border-box;
 }
 
@@ -125,7 +127,8 @@
 }
 
 .image-gallery-slide img {
-  max-height: 60vh; /* Keeps image from overflowing */
+  max-height: 60vh;
+  /* Keeps image from overflowing */
   max-width: 100%;
   object-fit: contain;
   margin: 0 auto;

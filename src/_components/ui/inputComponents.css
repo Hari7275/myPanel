@@ -1,0 +1,64 @@
+/* inputComponents.css */
+
+.input-field {
+  position: relative;
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.input-field label {
+  display: block;
+  margin-bottom: 0.2rem;
+  font-size: 0.75rem;
+  color: #000000;
+  /* Medium gray color */
+  font-weight: 200;
+  transition: all 0.3s ease;
+}
+
+.input-field input {
+  width: 100%;
+  padding: 6px 12px;
+  font-size: 1rem;
+  border: 1px solid #747a81;
+  /* Light gray border */
+  border-radius: 0.375rem;
+  /* 6px */
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-field input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+
+}
+
+
+.input-field input:disabled {
+  background-color: #f7fafc;
+  /* Very light gray */
+  cursor: not-allowed;
+}
+
+/* Optional: For floating label effect (agar tumhe woh modern floating label chahiye) */
+/*
+.input-field.floating-label label {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  background: white;
+  padding: 0 0.25rem;
+  color: #718096;
+  transition: all 0.2s ease;
+}
+
+.input-field.floating-label input:focus + label,
+.input-field.floating-label input:not(:placeholder-shown) + label {
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 0.75rem;
+  color: #4299e1;
+}
+*/

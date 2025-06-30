@@ -15,7 +15,6 @@ export const UpdateInputField = ({
         type={type}
         id={id}
         name={name}
-        className="info-input"
         value={value}
         placeholder={placeholder}
         onChange={onChange}

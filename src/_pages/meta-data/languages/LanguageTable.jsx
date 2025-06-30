@@ -9,6 +9,7 @@ import {
   useGetLanguagesListQuery,
   useDeleteLanguageMutation,
 } from "../../../_store/api";
+import AddLanguage_New from "./AddLanguage_New";
 
 const LanguageTable = () => {
   const [addLanguage, setAddLanguage] = useState(false);
@@ -110,8 +111,11 @@ const LanguageTable = () => {
       />
 
       {addLanguage && (
-        <AddLanguage isOpen={addLanguage} onClose={toggleAddLanguage} />
+        <AddLanguage_New isOpen={addLanguage} onClose={toggleAddLanguage} />
       )}
+      {/* {addLanguage && (
+        <AddLanguage isOpen={addLanguage} onClose={toggleAddLanguage} />
+      )} */}
       {updateLanguage && (
         <EditLanguage
           isOpen={updateLanguage}
