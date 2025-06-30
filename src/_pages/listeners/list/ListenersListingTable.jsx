@@ -40,9 +40,12 @@ const ListenersListingTable = () => {
     consultant_type: 3,
   });
   const navigate = useNavigate();
+
+  //HANDLING THE CURRENT PAGE STATE
 useEffect(()=>{
   pageRef.current = page;
 },[page]);
+
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records?.filter(
