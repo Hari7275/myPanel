@@ -110,6 +110,15 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
         >
           <span>Session Appointment</span>
         </div>
+
+        <div
+          className={`profile-link ${
+            activeComponent === "consultant-commission" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("consultant-commission")}
+        >
+          <span>commission</span>
+        </div>
       </header>
     </>
   );

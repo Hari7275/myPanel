@@ -1,29 +1,11 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { useUpdateNoticeMutation } from "../../../_store/api";
+import { useUpdateNoticeMutation } from "../../../../_store/api";
+import { UpdateInputField } from "../../../../_components/ui/inputForm";
 
-const InputField = ({
-  label,
-  type,
-  name,
-  value,
-  onChange,
-  placeholder,
-  readOnly,
-}) => (
-  <div className="input-container">
-    <label htmlFor={label}>{label}</label>
-    <input
-      type={type}
-      name={name}
-      value={value}
-      onChange={onChange}
-      placeholder={placeholder}
-      className="info-input"
-      readOnly={readOnly}
-    />
-  </div>
-);
+// Import ReactQuill and its CSS
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css"; // You can choose 'quill.bubble.css' for a different theme
 
 const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
@@ -54,6 +36,11 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     }
   };
 
+  // Handler for Quill's onChange event
+  const handleDescriptionChange = (html) => {
+    setFormData((prevData) => ({ ...prevData, description: html }));
+  };
+
   const handleSave = async (e) => {
     e.preventDefault();
     const formDataToSend = new FormData();
@@ -78,6 +65,43 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     }
   };
 
+  // Quill modules and formats configuration
+  const quillModules = {
+    toolbar: [
+      [{ header: [1, 2, 3, false] }],
+      ["bold", "italic", "underline", "strike"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      [{ script: "sub" }, { script: "super" }],
+      [{ indent: "-1" }, { indent: "+1" }],
+      [{ direction: "rtl" }],
+      [{ color: [] }, { background: [] }],
+      [{ font: [] }],
+      [{ align: [] }],
+      ["link", "image", "video"], // Added video for more rich content options
+      ["clean"], // Remove formatting button
+    ],
+  };
+
+  const quillFormats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "script",
+    "indent",
+    "direction",
+    "color",
+    "background",
+    "font",
+    "align",
+    "link",
+    "image",
+    "video",
+  ];
   return (
     <ReactModal
       className="modal"
@@ -100,42 +124,40 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
           Update Gift
         </h2>
 
-        <InputField
-          label="Notice Name"
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="Notice Name"
-        />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <UpdateInputField
+            label="Notice Name"
+            type="text"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            placeholder="Notice Name"
+          />
 
-        <InputField
-          label="Notice Title"
-          type="text"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder="Notice Title"
-        />
+          <UpdateInputField
+            label="Notice Title"
+            type="text"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Notice Title"
+          />
+        </div>
 
         <div
           className="input-container"
           style={{ width: "unset", marginTop: "20px" }}
         >
           <label>Gift Description</label>
-          <textarea
+
+          <ReactQuill
+            theme="snow"
             value={formData.description}
-            name="description"
-            onChange={handleChange}
-            rows="5"
-            // cols="40"
-            placeholder="Gift Description"
-            style={{
-              paddingTop: "15px",
-              paddingLeft: "10px",
-              fontSize: "16px",
-              width: "100%",
-            }}
+            onChange={handleDescriptionChange} // Use the specific handler for Quill
+            modules={quillModules}
+            formats={quillFormats}
+            style={{ height: "200px", marginBottom: "50px" }} // Adjust height as needed, add marginBottom for toolbar
+            placeholder=" Enter Notice Description here..."
           />
         </div>
 

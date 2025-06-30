@@ -22,6 +22,7 @@ const Sidebar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState("");
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
+  const [isNotice, setIsNotice] = useState();
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ const Sidebar = () => {
 
   const adminDropdown = () => {
     setIsAdmin(!isAdmin);
+  };
+  const noticeDropdown = () => {
+    setIsNotice(!isNotice);
   };
 
   // code for highlighted text
@@ -380,6 +384,41 @@ const Sidebar = () => {
             )}
           </div>
 
+          {/* notice manager */}
+
+          <div className="menu-item-child">
+            <div className="child" onClick={noticeDropdown}>
+              <ManageHistoryOutlinedIcon />
+              <span>Notice Manager</span>
+
+              <span>{isNotice ? "⬇️" : "⬅️"}</span>
+            </div>
+
+            {isNotice && (
+              <div className="menu-item-sub">
+                <Link to="consultant-notice">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "consultant-notice" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("consultant-notice")}
+                  >
+                    <div className="dropdown-item">Notice List</div>
+                  </div>
+                </Link>
+                <Link to="/assign-notice">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "assign-notice" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("assign-notice")}
+                  >
+                    <div className="dropdown-item">Manage Notice</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
           <div className="menu-group">
             <Link to="/user-support">
               <div

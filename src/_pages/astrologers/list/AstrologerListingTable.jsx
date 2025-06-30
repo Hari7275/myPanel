@@ -26,6 +26,7 @@ const AstrologerListingTable = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
+  let [profileStatus, SetProfileStatus] = useState(null);
 
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
@@ -57,24 +58,26 @@ const AstrologerListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
-    useEffect(()=> {
-      if(location.state){
-        setPage(location.state.previousPage);
-        setPageSize(location.state.previousPageSize);
-      }
-    },[location.state]);
+  useEffect(() => {
+    if (location.state) {
+      setPage(location.state.previousPage);
+      setPageSize(location.state.previousPageSize);
+    }
+  }, [location.state]);
 
   const toggleEditStatus = (row) => {
-    setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+    SetProfileStatus(row.status);
+    setSelectedRow(row);
   };
+
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
 
     setTimeout(() => {
-      navigate(`/astrologer_Profile?${data?.id}`,{
-        state:{
+      navigate(`/astrologer_Profile?${data?.id}`, {
+        state: {
           currentPage: page,
           pageSize: pageSize
         }
@@ -112,11 +115,11 @@ const AstrologerListingTable = () => {
             </span>
             {/* </Link> */}
 
-            {[3, 4, 5].includes(row?.original?.status) && (
+            {[3, 4, 5, 2].includes(row?.original?.status) && (
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original.id)}
+                  onClick={() => toggleEditStatus(row.original)}
                 />
               </span>
             )}
@@ -215,7 +218,8 @@ const AstrologerListingTable = () => {
         <EditStatus
           isOpen={showEditStatus}
           onClose={toggleEditStatus}
-          selectedRow={selectedRow}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatus}
         />
       )}
     </div>

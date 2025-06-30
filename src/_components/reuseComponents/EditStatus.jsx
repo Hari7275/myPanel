@@ -4,8 +4,9 @@ import {
   useGetConsultantStatusQuery,
   useUpdateStatusMutation,
 } from "../../_store/api";
+import toast from "react-hot-toast";
 
-const EditStatus = ({ isOpen, onClose, selectedRow }) => {
+const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
   const [formData, setFormData] = useState("");
   const [data, setData] = useState([]);
 
@@ -15,7 +16,17 @@ const EditStatus = ({ isOpen, onClose, selectedRow }) => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
-      setData(fetchData?.data?.filter((item) => item?.is_active == 1));
+      let filteredData = fetchData?.data?.filter(
+        (item) => item?.is_active == 1
+      );
+
+      if (profileStatus === 2) {
+        filteredData = filteredData.filter((item) => item.status_value === 6);
+      } else {
+        filteredData = filteredData.filter((item) => item.status_value !== 6);
+      }
+
+      setData(filteredData);
     } else {
       console.error(
         "API response is null or has an unexpected structure:",
@@ -50,8 +61,13 @@ const EditStatus = ({ isOpen, onClose, selectedRow }) => {
     };
 
     try {
+      console.log("name..........");
+
       await updateStatus({ id: selectedRow, body: payload });
+      // console.log("..........name",onClose());
+
       onClose();
+      console.log("name");
     } catch (error) {
       console.error("Failed to update status:", error);
       if (error.data) {

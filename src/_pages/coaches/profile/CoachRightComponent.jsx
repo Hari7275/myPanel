@@ -14,6 +14,7 @@ import LiveStream from "../liveStream/LiveStream";
 import ConlstProfileProgressList from "../../../_components/reuseComponents/consultantProfileProgress/ConlstProfileProgressList";
 import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
 import CoachStatus from "../status/CoachStatus";
+import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
 const CoachRightComponent = ({ activeComponent }) => {
   return (
     <>
@@ -35,6 +36,7 @@ const CoachRightComponent = ({ activeComponent }) => {
           )}
           {activeComponent === "session-slot" && <SessionSlot />}
           {activeComponent === "CoachStatus" && <CoachStatus />}
+          {activeComponent === "consultant-commission" && <CommissionList />}
         </div>
       </div>
     </>

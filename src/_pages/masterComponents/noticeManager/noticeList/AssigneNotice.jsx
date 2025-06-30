@@ -3,9 +3,10 @@ import ReactModal from "react-modal";
 import Select from "react-select";
 
 import {
-  useDeleteAssigneConsultantNoticeMutation,
+  useGetConsultantListQuery,
+  useCreateAssigneConsultantNoticeMutation,
   useGetConsultantAssignedNoticeListQuery,
-} from "../../../_store/api";
+} from "../../../../_store/api";
 
 import { toast } from "react-hot-toast";
 
@@ -30,52 +31,59 @@ const CustomOption = (props) => {
   );
 };
 
-const UnAssignNotice = ({ isOpen, onClose, selectedRow }) => {
+const AssigneNotice = ({ isOpen, onClose, selectedRow }) => {
   const [options, setOptions] = useState([]);
   const [selectedConsultants, setSelectedConsultants] = useState([]);
 
+  const { data: fetchData } = useGetConsultantListQuery();
   const { data: assignedNotice } = useGetConsultantAssignedNoticeListQuery({
     notice_id: selectedRow?.id,
   });
-  const [deleteData, { isLoading }] =
-    useDeleteAssigneConsultantNoticeMutation();
+  const [createData, { isLoading }] =
+    useCreateAssigneConsultantNoticeMutation();
 
   useEffect(() => {
-    if (assignedNotice?.data) {
-      // Extract assign_id, consultant_id, and first_name for the dropdown
-      const assignedConsultantIds = assignedNotice?.data?.map((item) => ({
-        value: item?.id, // assign_id
-        label: `${item?.ConsultantProfile?.first_name} (ID: ${item?.ConsultantProfile?.id})`,
-        assign_id: item?.id,
-      }));
+    if (fetchData?.data && assignedNotice?.data) {
+      // Extract consultant ids from the assigned notice
+      const assignedConsultantIds = assignedNotice.data.map(
+        (item) => item.consultant_id
+      );
 
-      setOptions(assignedConsultantIds);
+      // Map data into a format suitable for react-select, excluding assigned consultants
+      const formattedOptions = fetchData.data
+        .filter((item) => !assignedConsultantIds.includes(item.id)) // Exclude assigned consultants
+        .map((item) => ({
+          value: item.id,
+          label: `${item.id} - ${item.full_name || item.first_name || "N/A"}`,
+        }));
+
+      setOptions(formattedOptions);
     } else {
       setOptions([]);
     }
-  }, [assignedNotice]);
+  }, [fetchData, assignedNotice]);
 
   const handleMultiSelectChange = (selectedOptions) => {
     setSelectedConsultants(selectedOptions || []);
   };
 
   const handleSubmit = async () => {
-    // Extract assign_id values from selected consultants
-    const assignIds = selectedConsultants.map(
-      (consultant) => consultant?.assign_id
+    const consultantIds = selectedConsultants.map(
+      (consultant) => consultant.value
     );
 
-    if (!Array.isArray(assignIds) || assignIds.length === 0) {
+    if (!Array.isArray(consultantIds) || consultantIds.length === 0) {
       alert("Please select at least one consultant.");
       return;
     }
 
     const payload = {
-      id: assignIds, // Pass the array of assign_id values
+      notice_id: selectedRow.id,
+      consultant_ids: consultantIds,
     };
 
     try {
-      await deleteData(payload).unwrap();
+      await createData(payload).unwrap();
       toast.success("Data submitted successfully!");
       onClose();
     } catch (error) {
@@ -94,10 +102,10 @@ const UnAssignNotice = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
     >
       <div style={{ minWidth: "500px", minHeight: "500px" }}>
-        <label htmlFor="categories">Unassign Consultant Notice</label>
+        <label htmlFor="categories">Assign Consultant Notice</label>
         <Select
           isMulti
-          options={options}
+          options={options} // Show only available consultants who are not assigned
           onChange={handleMultiSelectChange}
           placeholder="Select consultants"
           components={{ Option: CustomOption, MultiValue: () => null }}
@@ -122,4 +130,4 @@ const UnAssignNotice = ({ isOpen, onClose, selectedRow }) => {
   );
 };
 
-export default UnAssignNotice;
+export default AssigneNotice;

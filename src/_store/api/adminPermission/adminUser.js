@@ -8,7 +8,7 @@ export const adminUserSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getAdminUserList: builder.query({
       query: (_arg, api) => ({
-        url: `/api/v1/admin-service/admin/admin-user?page=1&size=10`,
+        url: `/api/v1/admin-service/admin/admin-user?page=1&size=100`,
         method: "GET",
         headers: {
           Authorization: getAdminToken(),

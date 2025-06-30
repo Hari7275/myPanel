@@ -27,6 +27,7 @@ const CoachListingTable = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
+  let [profileStatus, SetProfileStatus] = useState(null);
 
   const {
     data: fetchData,
@@ -40,10 +41,10 @@ const CoachListingTable = () => {
     phone,
     consultant_type: 2,
   });
-console.log("coach page........",page);
-useEffect(()=>{
-  pageRef.current = page;
-},[page]);
+  console.log("coach page........", page);
+  useEffect(() => {
+    pageRef.current = page;
+  }, [page]);
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -60,31 +61,32 @@ useEffect(()=>{
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
-    useEffect(()=> {
-        if(location.state){
-          setPage(location.state.previousPage);
-          setPageSize(location.state.previousPageSize);
-        }
-    },[location.state]);
+  useEffect(() => {
+    if (location.state) {
+      setPage(location.state.previousPage);
+      setPageSize(location.state.previousPageSize);
+    }
+  }, [location.state]);
 
   const toggleEditStatus = (row) => {
-    setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+    SetProfileStatus(row.status);
+    setSelectedRow(row);
   };
 
   const handleActionClick = useCallback((data) => {
     dispatch(setCurrentConsultant(data?.id));
     // Use setTimeout or batch it after dispatch
-    console.log("page in arrow.......",pageRef.current);
+    console.log("page in arrow.......", pageRef.current);
     setTimeout(() => {
-      navigate(`/coach-profile?${data?.id}`,{
+      navigate(`/coach-profile?${data?.id}`, {
         state: {
           currentPage: pageRef.current,
           pageSize: pageSize
         }
       });
     }, 0);
-  },[pageRef,pageSize,dispatch,navigate]);
+  }, [pageRef, pageSize, dispatch, navigate]);
 
   const columns = useMemo(
     () => [
@@ -117,11 +119,11 @@ useEffect(()=>{
               />
             </span> */}
 
-            {[3, 4, 5].includes(row?.original?.status) && (
+            {[3, 4, 5, 2].includes(row?.original?.status) && (
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original.id)}
+                  onClick={() => toggleEditStatus(row.original)}
                 />
               </span>
             )}
@@ -219,7 +221,8 @@ useEffect(()=>{
         <EditStatus
           isOpen={showEditStatus}
           onClose={toggleEditStatus}
-          selectedRow={selectedRow}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatus}
         />
       )}
     </div>
