@@ -21,12 +21,16 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
     useCreateCommissionMutation();
 
   useEffect(() => {
+    console.log("fetchData?.data", fetchData?.data);
     if (fetchData && fetchData?.data) {
       setData(
         fetchData?.data
           .filter(
             (cat) =>
-              cat.category == "A" && cat.currency == "INR" && cat.status == 2
+              cat.category == "A" &&
+              cat.currency == "INR" &&
+              cat.status == 2 &&
+              ![7, 10].includes(cat.feature) //this filter is updated by ankush sir
           )
           .map((item) => ({
             id: item.feature,
@@ -90,6 +94,7 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
         consultantId,
         body: {
           commissions: commissionPayload,
+          consultant_category: "A",
         },
       }).unwrap();
 
@@ -174,7 +179,8 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
           <div>New Commission (%)</div>
         </div>
 
-        {data.map((item) => (
+        {/* {data.map((item) => ( */}
+        {(selectRadio === "single" ? data.slice(0, 1) : data).map((item) => (
           <div
             key={item.id}
             style={{
@@ -185,14 +191,21 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
               alignItems: "center",
             }}
           >
-            <div>{getFetaureLabel(item.id)}</div>
+            {selectRadio === "single" ? (
+              "Flute Commission"
+            ) : (
+              <div>{getFetaureLabel(item.id)}</div>
+            )}
+
             <div>{item.defaultCommission}%</div>
             <div>
               <input
                 type="number"
                 min="0"
                 placeholder="Enter new value"
-                value={commissions[item.id] || ""}
+                // value={commissions[item.id] || ""}
+                value={commissions[item.id] ?? item.defaultCommission}
+                // value={item.defaultCommission}
                 onChange={(e) => handleInputChange(item.id, e.target.value)}
                 style={{
                   width: "100%",

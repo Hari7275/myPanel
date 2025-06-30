@@ -31,8 +31,13 @@ const CommissionList = () => {
     isError,
   } = useGetCommissionListQuery(consultantId);
   useEffect(() => {
+    console.log("fetchData?.data", fetchData?.data);
     if (fetchData && fetchData?.data) {
-      setData(fetchData?.data || []);
+      setData(
+        fetchData?.data.filter(
+          (item) => ![7, 10].includes(item.service_type)
+        ) || []
+      );
     } else setData([]);
   }, [fetchData]);
 
