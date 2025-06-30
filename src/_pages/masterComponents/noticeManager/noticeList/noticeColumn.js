@@ -57,3 +57,31 @@ export const NOTICECOLUMN = [
     Cell: ({ row }) => <StatusSwitch row={row} />,
   },
 ];
+
+//
+
+export const ASSIGNCONSULTANTNOTICECOLUMN = [
+  {
+    Header: "Id",
+    accessor: "id",
+  },
+  {
+    Header: "Name",
+    accessor: "ConsultantProfile.first_name",
+  },
+  {
+    Header: "Subject",
+    accessor: "ConsultantNotice.title",
+  },
+  {
+    Header: "Date Modified",
+    accessor: "delivered_at",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+];

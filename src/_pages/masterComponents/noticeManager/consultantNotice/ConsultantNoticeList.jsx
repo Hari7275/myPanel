@@ -1,6 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../../_components/table/CommonTable";
-import { NOTICECOLUMN } from "../noticeList/noticeColumn";
+import { ASSIGNCONSULTANTNOTICECOLUMN } from "../noticeList/noticeColumn";
 import { Pencil, Eye } from "lucide-react";
 
 import NoticeDescription from "../noticeList/NoticeDescription";
@@ -9,7 +9,7 @@ import AssignConsultantNotice from "./AssignConsultantNotice";
 import UpdateParticularNotice from "./UpdateParticularNotice";
 import UnAssignConsultantNotice from "./UnAssignConsultantNotice";
 
-import { useGetNoticeListQuery } from "../../../../_store/api";
+import { useGetConsultantAssignedNoticeListQuery } from "../../../../_store/api";
 
 const ConsultantNoticeList = () => {
   const [showDescription, setShowDescription] = useState(false);
@@ -20,10 +20,12 @@ const ConsultantNoticeList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
 
-  // handeling api  fetching data and deleting data
-  const { data: fetchData } = useGetNoticeListQuery();
+  // handeling api  fetching data
+  const { data: fetchData } = useGetConsultantAssignedNoticeListQuery();
 
   // store data
+
+  console.log("fetchData", fetchData);
   useEffect(() => {
     // console.log("fetchData gifts", fetchData?.data.rows);
     if (fetchData && fetchData?.data) {
@@ -98,7 +100,7 @@ const ConsultantNoticeList = () => {
 
   const columns = useMemo(
     () => [
-      ...NOTICECOLUMN,
+      ...ASSIGNCONSULTANTNOTICECOLUMN,
       {
         Header: () => <div className="actions-header">Actions</div>,
         id: "actions",
