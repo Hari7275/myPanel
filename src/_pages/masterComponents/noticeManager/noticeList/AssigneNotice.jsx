@@ -42,6 +42,7 @@ const AssigneNotice = ({ isOpen, onClose, selectedRow }) => {
   const [createData, { isLoading }] =
     useCreateAssigneConsultantNoticeMutation();
 
+  console.log("fetchData,,,,,", fetchData);
   useEffect(() => {
     if (fetchData?.data && assignedNotice?.data) {
       // Extract consultant ids from the assigned notice
