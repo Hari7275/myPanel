@@ -13,7 +13,7 @@
 }
 
 .tableDiv {
-  max-height: calc(-271px + 100vh);
+  max-height: calc(-200px + 100vh);
   border-radius: 4px;
   width: 100%;
   overflow-x: auto; 
