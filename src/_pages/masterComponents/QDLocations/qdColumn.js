@@ -49,7 +49,7 @@ export const QDLOACTIONCOLUMN = () => [
   },
 
   {
-    Header: "Loaction Name",
+    Header: "Location Name",
     accessor: "location_name",
   },
   {

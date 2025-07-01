@@ -170,6 +170,7 @@ const CoachSkills = () => {
         includeActions={false}
         tableTitle="Coach Skills"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {updateOrder && (

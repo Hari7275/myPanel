@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   useTable,
   useSortBy,
@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 
 const CommonTable = ({
+  showTableHeading = true,
   columns,
   data,
   tableTitle,
@@ -25,11 +26,11 @@ const CommonTable = ({
   getRowProps,
 }) => {
   const dispatch = useDispatch();
-  useEffect(()=>{
-    if(tableTitle){
-      dispatch(setPageTitle(tableTitle || "Flude Admin Panel"))
+  useEffect(() => {
+    if (tableTitle) {
+      dispatch(setPageTitle(tableTitle || "Flude Admin Panel"));
     }
-  },[tableTitle]);
+  }, [tableTitle]);
   const {
     getTableProps,
     getTableBodyProps,
@@ -90,6 +91,10 @@ const CommonTable = ({
       <div className="tableHeaderDiv">
         {/* it removes because to not display in UI table but PROPES pass ho rha hai */}
         {/* <div className="tableHeadingDiv">{tableTitle}</div> */}
+
+        {showTableHeading && (
+          <div className="tableHeadingDiv">{tableTitle}</div>
+        )}
         <div className="filterDiv">
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 

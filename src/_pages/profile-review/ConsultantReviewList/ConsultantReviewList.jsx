@@ -116,6 +116,7 @@ const ConsultantReviewList = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
       {data?.length === 0 && (
         <div>

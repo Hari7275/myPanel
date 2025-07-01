@@ -71,7 +71,6 @@ const AstrologerListingTable = () => {
     setSelectedRow(row);
   };
 
-
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
 
@@ -79,8 +78,8 @@ const AstrologerListingTable = () => {
       navigate(`/astrologer_Profile?${data?.id}`, {
         state: {
           currentPage: page,
-          pageSize: pageSize
-        }
+          pageSize: pageSize,
+        },
       });
     }, 0);
 
@@ -207,6 +206,7 @@ const AstrologerListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
       {data?.length === 0 && (
         <div>

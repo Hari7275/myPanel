@@ -102,8 +102,9 @@ const QDLoaction = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="QD Trips Loaction"
+        tableTitle="QD Trips Location"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {addLocation && (

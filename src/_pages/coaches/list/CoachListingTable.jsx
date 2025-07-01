@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
 import { ArrowRight, Pencil } from "lucide-react";
@@ -74,19 +80,22 @@ const CoachListingTable = () => {
     setSelectedRow(row);
   };
 
-  const handleActionClick = useCallback((data) => {
-    dispatch(setCurrentConsultant(data?.id));
-    // Use setTimeout or batch it after dispatch
-    console.log("page in arrow.......", pageRef.current);
-    setTimeout(() => {
-      navigate(`/coach-profile?${data?.id}`, {
-        state: {
-          currentPage: pageRef.current,
-          pageSize: pageSize
-        }
-      });
-    }, 0);
-  }, [pageRef, pageSize, dispatch, navigate]);
+  const handleActionClick = useCallback(
+    (data) => {
+      dispatch(setCurrentConsultant(data?.id));
+      // Use setTimeout or batch it after dispatch
+      console.log("page in arrow.......", pageRef.current);
+      setTimeout(() => {
+        navigate(`/coach-profile?${data?.id}`, {
+          state: {
+            currentPage: pageRef.current,
+            pageSize: pageSize,
+          },
+        });
+      }, 0);
+    },
+    [pageRef, pageSize, dispatch, navigate]
+  );
 
   const columns = useMemo(
     () => [
@@ -213,6 +222,7 @@ const CoachListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
       {data?.length == 0 && (
         <span className="no-data-new">No Coach Avaliable</span>

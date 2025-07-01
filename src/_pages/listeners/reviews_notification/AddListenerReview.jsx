@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useCreateReviewMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const AddListenerReview = ({ isOpen, onClose, coachId }) => {
   const [formData, setFormData] = useState({
@@ -49,8 +50,15 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
     };
 
     try {
-      await createReview({ body: newReview });
-      onClose();
+      const response = await createReview({ body: newReview });
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
     } catch (error) {
       console.log("Failed to add new review", error);
     }
@@ -144,7 +152,6 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
             style={{ height: "55px" }}
           >
             <option value="order">Order</option>
-            <option value="session">Session</option>
           </select>
         </div>
 

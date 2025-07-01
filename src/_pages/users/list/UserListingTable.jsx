@@ -44,12 +44,12 @@ const UserListingTable = () => {
   }, [fetchData]);
   const totalPage = fetchData?.data?.pagination?.totalPages || 1;
 
-  useEffect(()=> {
-    if(location.state){
+  useEffect(() => {
+    if (location.state) {
       setPage(location.state.previousPage);
       setPageSize(location.state.previousPageSize);
     }
-  },[location.state]);
+  }, [location.state]);
 
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
@@ -73,11 +73,12 @@ const UserListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <Link to="/users_Profile"
-            state = {{
-              currentPage: page,
-              pageSize: pageSize
-            }}
+            <Link
+              to="/users_Profile"
+              state={{
+                currentPage: page,
+                pageSize: pageSize,
+              }}
             >
               <span
                 title="view details"
@@ -163,6 +164,7 @@ const UserListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
 
       {data?.length === 0 && (

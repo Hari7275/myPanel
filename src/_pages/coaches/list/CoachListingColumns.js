@@ -90,7 +90,7 @@ export const COACHES_COLUMNS = [
   },
 
   {
-    Header: "Loaction",
+    Header: "Location",
     accessor: "country",
   },
   {

@@ -5,14 +5,59 @@ import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
 import { AppBar, IconButton, Toolbar, Typography, Stack } from "@mui/material";
 
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 const Navbar = () => {
   const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const [count, setCount] = useState(2);
   const { data: fetchData } = useGetNotificationUnreadCountQuery();
-  const currentTitle = useSelector((state) => state.pageTitle?.title || "Flute Admin Panel");
+  const currentTitle = useSelector(
+    (state) => state.pageTitle?.title || "Flute Admin Panel"
+  );
+
+  const location = useLocation();
+
+  const pathTitleMap = {
+    "/user": "User List",
+    "/users_Profile": "User Details",
+    "/coaches": "Coach List",
+    "/astrologer": "Astrologer List",
+    "/listeners": "Listener List",
+    "/dashboard": "Dashboard",
+    "/meta-data": "Meta-Data",
+    "/profile-review": "Consultant Review List",
+    "/astrologer_Profile": "Astrologer Details",
+    "/listener_Profile": "Listener Details",
+    "/coach-profile": "Coach Details",
+    "/notifications": "Notifications",
+    "/qd-trips": "Quick Date Trips List",
+    "/qd-location": "QD Trips Location List",
+
+    // meta data section
+    "/coach-category_metadata": "Consultant Categories",
+    "/language-metadata": "Meta Language",
+    "/promotional-card-metadata": "Promotional Card",
+    "/dashboard-banner-metadata": "Dashboard Bannner list",
+    "/coach-skills-metadata": "Coach Skills",
+    "/report-reason": "Report Reason",
+    "/consultant-service-rate": "Consultant Service Rate",
+    "/menu-orders": "Menu item List",
+    "/countries-list": "Country List",
+    "/consultant-notice": "Consultant Notice List",
+    "/coach-rate": "Consultant Rate List",
+    "/profile-progress": "Consultant Profile Progress",
+    "/dashboard-order": "Dashboard Order List",
+    // Add more mappings as needed
+  };
+
+  const getTitleFromPath = (path) => {
+    const pathParts = path.split("/");
+    const basePath = `/${pathParts[1]}`;
+    return pathTitleMap[basePath] || "Flute Admin Panel";
+  };
+
+  const pageTitle = getTitleFromPath(location.pathname);
 
   useEffect(() => {
     if (fetchData) {
@@ -50,8 +95,9 @@ const Navbar = () => {
             sx={{ flexGrow: 1 }}
             style={{ fontSize: "30px" }}
           >
-            {/* Flute Admin Panel */}
-            {currentTitle}
+            {pageTitle}
+            {/* Flute Admin Panel  */}
+            {/* {currentTitle} */}
           </Typography>
           <Stack direction={"row"} spacing={2}>
             <div

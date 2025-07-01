@@ -448,7 +448,7 @@ const Sidebar = () => {
                   width="24"
                   height="24"
                 />
-                <span>package Update</span>
+                <span>Package Update</span>
               </Link>
             </div>
 
@@ -480,7 +480,7 @@ const Sidebar = () => {
                   width="24"
                   height="24"
                 />
-                <span>QD Loaction</span>
+                <span>QD Location</span>
               </Link>
             </div>
 

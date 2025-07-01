@@ -156,6 +156,7 @@ const MenuOrders = () => {
         includeActions={false}
         tableTitle="Menu item List "
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       <Modal

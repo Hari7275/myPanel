@@ -67,7 +67,7 @@ const ListenersListingTable = () => {
       setPage(location.state.previousPage);
       setPageSize(location.state.previousPageSize);
     }
-  }, [location.state])
+  }, [location.state]);
 
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
@@ -84,8 +84,8 @@ const ListenersListingTable = () => {
       navigate(`/listener_Profile?${data?.id}`, {
         state: {
           currentPage: pageRef.current,
-          pageSize: pageSize
-        }
+          pageSize: pageSize,
+        },
       });
     }, 0);
   };
@@ -221,6 +221,7 @@ const ListenersListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
 
       {data?.length == 0 && (

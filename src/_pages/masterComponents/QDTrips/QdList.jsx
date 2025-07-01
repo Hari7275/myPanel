@@ -34,6 +34,7 @@ const QdList = () => {
         data={data}
         includeActions={false}
         tableTitle="Quick Date Trips"
+        showTableHeading={false}
       />
     </>
   );

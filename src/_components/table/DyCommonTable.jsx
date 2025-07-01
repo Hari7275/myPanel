@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import Pagination from "./Pagination";
 import {
   useTable,
@@ -11,10 +11,11 @@ import TableCheckbox from "./TableCheckbox";
 import GlobalFilter from "./GlobalFilter";
 import "../../cssfolder/Actions.css";
 import "./table.css";
-import  {useDispatch} from 'react-redux';
+import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 
 const DyCommonTable = ({
+  showTableHeading=true,
   columns,
   data,
   tableTitle,
@@ -32,11 +33,11 @@ const DyCommonTable = ({
 }) => {
   const dispatch = useDispatch();
 
-  useEffect(()=>{
-    if(tableTitle) {
+  useEffect(() => {
+    if (tableTitle) {
       dispatch(setPageTitle(tableTitle || "Flute Admin Panel"));
     }
-  },[tableTitle]);
+  }, [tableTitle]);
 
   const {
     getTableProps,
@@ -102,7 +103,11 @@ const DyCommonTable = ({
     <>
       <div className="tableHeaderDiv">
         {/* it removes because to not display in UI table but PROPES pass ho rha hai */}
-        {/* <div className="tableHeadingDiv">{tableTitle}</div> */}
+
+        {showTableHeading && (
+          <div className="tableHeadingDiv">{tableTitle}</div>
+        )}
+
         <div className="filterDiv">
           <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
           {customFilterComponent && customFilterComponent()}
