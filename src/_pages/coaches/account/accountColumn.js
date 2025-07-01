@@ -1,4 +1,4 @@
-import { ImageCell } from "../../listeners/account/accountColumn";
+import { ImageCell } from "../../listeners/bankAccount/accountColumn";
 
 export const ACCOUNTCOLUMNS = [
   { Header: "Id", accessor: "id" },

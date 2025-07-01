@@ -73,8 +73,18 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("ListenerAccount")}
         >
-          <span>Accounts</span>
+          <span>Bank Details</span>
         </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "Price-chart" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Price-chart")}
+        >
+          <span>Price Chart</span>
+        </div>
+
         <div
           className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}
           onClick={() => onComponentChange("Wallet")}

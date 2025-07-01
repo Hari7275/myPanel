@@ -15,6 +15,7 @@ import ConlstProfileProgressList from "../../../_components/reuseComponents/cons
 import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
 import CoachStatus from "../status/CoachStatus";
 import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
+import CoachPriceListingTable from "../pricing/CoachPriceListingTable";
 const CoachRightComponent = ({ activeComponent }) => {
   return (
     <>
@@ -24,6 +25,7 @@ const CoachRightComponent = ({ activeComponent }) => {
           {activeComponent === "UpdateInfo" && <UpdateInfo />}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "CoacheAccount" && <CoachAccountList />}
+          {activeComponent === "Price-chart" && <CoachPriceListingTable />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "CoachOrder" && <CoachOrder />}
           {activeComponent === "CoachFollowers" && <CoachFollowers />}

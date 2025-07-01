@@ -4,7 +4,7 @@ import ListenerBankDetails from "./ListenerBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
 import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
 import EditStatus from "./EditStatus";
-import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
+
 import {
   useGetConsultantsBankDetailsQuery,
   useGetConsultantsPayPalDetailsQuery,
@@ -117,9 +117,6 @@ const ListenerAccountList = () => {
               tableTitle=" Astrologer PayPal List"
             />
           )}
-        </div>
-        <div className="ProfileData-container profile-right-sub-container">
-          <ListenersPriceListingTable />
         </div>
 
         {showBankDetails && (

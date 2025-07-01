@@ -103,14 +103,16 @@ const AstrologerDetailsComponent = () => {
           />
           <div className="edit-profile-img">
             <button className="edit-profile-icon" onClick={openModal}>
-              <Pencil style={{ background: "none", height: "14px", width: "14px" }} />
+              <Pencil
+                style={{ background: "none", height: "14px", width: "14px" }}
+              />
             </button>
           </div>
         </div>
         {/* SECOND COLUMN: User Info (column layout) */}
         <div className="user-info-section">
           <div className="userName">
-            {`${data.first_name || ""} ${data.last_name || ""}`}
+            {`${data.first_name || ""} ${data.last_name || ""}`}({age})
           </div>
           <div className="info-pair">
             <p className="info-item">

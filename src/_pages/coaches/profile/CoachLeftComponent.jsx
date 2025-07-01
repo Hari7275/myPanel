@@ -88,7 +88,7 @@ const CoachLeftComponent = () => {
         {/* SECOND COLUMN: User Info (column layout) */}
         <div className="user-info-section">
           <div className="userName">
-            {`${data.first_name || ""} ${data.last_name || ""}`}
+            {`${data.first_name || ""} ${data.last_name || ""}`}({age})
           </div>
           <InfoItem label="Coach ID " value={data.id} />
 

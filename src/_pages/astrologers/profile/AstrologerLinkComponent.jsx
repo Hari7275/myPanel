@@ -95,7 +95,16 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("account")}
         >
-          <span>Accounts</span>
+          <span>Bank Details</span>
+        </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "Price-chart" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Price-chart")}
+        >
+          <span>Price Chart</span>
         </div>
         <div
           className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}

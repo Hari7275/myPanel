@@ -4,7 +4,7 @@ import CoachBankDetails from "./CoachBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
 import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
 import EditStatus from "./EditStatus";
-import CoachPriceListingTable from "../pricing/CoachPriceListingTable";
+
 import {
   useGetConsultantsBankDetailsQuery,
   useGetConsultantsPayPalDetailsQuery,
@@ -119,9 +119,6 @@ const CoachAccountList = () => {
               tableTitle=" Coach PayPal List"
             />
           )}
-        </div>
-        <div className="ProfileData-container profile-right-sub-container">
-          <CoachPriceListingTable />
         </div>
 
         {showBankDetails && (

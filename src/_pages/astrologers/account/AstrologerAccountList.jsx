@@ -4,7 +4,7 @@ import AstrologerBankDetails from "./AstrologerBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
 import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
 import EditStatus from "./EditStatus";
-import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable";
+
 import {
   useGetConsultantsBankDetailsQuery,
   useGetConsultantsPayPalDetailsQuery,
@@ -121,10 +121,6 @@ const AstrologerAccountList = () => {
             tableTitle=" Astrologer PayPal List"
           />
         )}
-
-        <div className="ProfileData-container profile-right-sub-container">
-          <AstrologerPriceListingTable />
-        </div>
 
         {showBankDetails && (
           <AstrologerBankDetails
