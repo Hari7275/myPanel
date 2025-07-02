@@ -9,7 +9,7 @@ import { useGetLiveStreamConnectedUserListQuery } from "../../../../_store/api";
 const LiveStreamUserListing = ({ isOpen, onClose, selectedId }) => {
   console.log("selectedId", selectedId);
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+
   const { data: fetchData } = useGetLiveStreamConnectedUserListQuery(
     {
       id: selectedId,
@@ -21,7 +21,7 @@ const LiveStreamUserListing = ({ isOpen, onClose, selectedId }) => {
     if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
     } else {
-      data([]);
+      setData([]);
     }
   }, [fetchData]);
 
