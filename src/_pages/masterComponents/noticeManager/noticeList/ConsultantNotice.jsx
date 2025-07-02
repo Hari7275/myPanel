@@ -6,8 +6,7 @@ import DeleteComponent from "../../../payments/DeleteComponent";
 import AddNotice from "./AddNotice";
 import UpdateNotice from "./UpdateNotice";
 import NoticeDescription from "./NoticeDescription";
-import AssigneNotice from "./AssigneNotice";
-import UnAssignNotice from "./UnAssignNotice";
+
 import {
   useGetNoticeListQuery,
   useDeleteNoticeMutation,
@@ -15,8 +14,7 @@ import {
 
 const ConsultantNotice = () => {
   const [showDescription, setShowDescription] = useState(false);
-  const [showAssigneNotice, setShowAssigneNotice] = useState(false);
-  const [showUnAssignNotice, setShowUnAssignNotice] = useState(false);
+
   const [addData, setAddData] = useState(false);
   const [updateData, setUpdteData] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -44,16 +42,6 @@ const ConsultantNotice = () => {
     setShowDescription(!showDescription);
   };
   // function for description
-
-  const toggleAssignNotice = (row) => {
-    setShowAssigneNotice(!showAssigneNotice);
-    setSelectedRow(row.original);
-  };
-
-  const toggleUnAssignNoticeNotice = (row) => {
-    setShowUnAssignNotice(!showUnAssignNotice);
-    setSelectedRow(row.original);
-  };
 
   //  toggle function for adding new data
 
@@ -117,19 +105,7 @@ const ConsultantNotice = () => {
                 onClick={() => toggleDescription(row)}
               />
             </span>
-            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <Truck
-                className="iconSmall"
-                onClick={() => toggleAssignNotice(row)}
-              />
-            </span>
-            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <img
-                src="./truck/truck_red.png"
-                className="iconSmall"
-                onClick={() => toggleUnAssignNoticeNotice(row)}
-              />
-            </span>
+
             <span className="editIcon">
               <Pencil
                 className="iconSmall"
@@ -158,6 +134,7 @@ const ConsultantNotice = () => {
         includeActions={false}
         tableTitle=" Consultant Notice List"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {showDescription && (
@@ -165,22 +142,6 @@ const ConsultantNotice = () => {
           isOpen={showDescription}
           onClose={toggleDescription}
           Description={selectedRow?.description}
-        />
-      )}
-
-      {showAssigneNotice && (
-        <AssigneNotice
-          isOpen={showAssigneNotice}
-          onClose={toggleAssignNotice}
-          selectedRow={selectedRow}
-        />
-      )}
-
-      {showUnAssignNotice && (
-        <UnAssignNotice
-          isOpen={showUnAssignNotice}
-          onClose={toggleUnAssignNoticeNotice}
-          selectedRow={selectedRow}
         />
       )}
 

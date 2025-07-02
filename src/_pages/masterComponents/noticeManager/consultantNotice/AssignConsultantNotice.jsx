@@ -178,7 +178,7 @@ const AssignConsultantNotice = ({ isOpen, onClose }) => {
         return;
       }
     } catch (error) {
-      toast.error(error?.data?.message || "Submission failed");
+      console.log(error?.data?.message);
     }
   };
 

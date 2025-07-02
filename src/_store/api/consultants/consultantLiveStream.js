@@ -13,6 +13,19 @@ export const consultantsLiveStreamApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
+    // to get the user list which is connected on livestream
+
+    getLiveStreamConnectedUserList: builder.query({
+      query: ({ id }) => ({
+        url: `/api/v1/live-stream/viewer/admin/?page=1&size=10&id=${id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
     // update status during consultant live stream
 
     updateLiveStreamStatus: builder.mutation({
@@ -29,5 +42,8 @@ export const consultantsLiveStreamApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetLiveStreamListQuery, useUpdateLiveStreamStatusMutation } =
-  consultantsLiveStreamApiSlice;
+export const {
+  useGetLiveStreamListQuery,
+  useGetLiveStreamConnectedUserListQuery,
+  useUpdateLiveStreamStatusMutation,
+} = consultantsLiveStreamApiSlice;

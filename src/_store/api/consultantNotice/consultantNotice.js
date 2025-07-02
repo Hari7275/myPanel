@@ -24,6 +24,18 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       providesTags: ["notice"],
     }),
 
+    // ye api notice list jis consultant ko assign hai uski list get karne ke liye hai
+    getConsultantListAssignedNotice: builder.query({
+      query: ({ noticeId }) => ({
+        url: `/api/v1/consultant/profile/admin/notices/assign-list/${noticeId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["notice"],
+    }),
+
     getConsultantList: builder.query({
       query: ({ type }) => ({
         url: `/api/v1/consultant/profile/all-list?type=${type}`,
@@ -111,6 +123,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetNoticeListQuery,
   useGetConsultantAssignedNoticeListQuery,
+  useGetConsultantListAssignedNoticeQuery,
   useGetConsultantListQuery,
   useCreateNoticeMutation,
   useCreateAssigneConsultantNoticeMutation,

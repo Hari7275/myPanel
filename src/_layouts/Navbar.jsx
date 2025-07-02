@@ -33,6 +33,7 @@ const Navbar = () => {
     "/notifications": "Notifications",
     "/qd-trips": "Quick Date Trips List",
     "/qd-location": "QD Trips Location List",
+    "/assign-notice": "Notice Logs",
 
     // meta data section
     "/coach-category_metadata": "Consultant Categories",

@@ -4,16 +4,24 @@ import ReactModal from "react-modal";
 import { DETAILSCOLUMN } from "./DetailsColumn";
 import { useSelector } from "react-redux";
 
-import { useGetLiveStreamListQuery } from "../../../../_store/api";
+import { useGetLiveStreamConnectedUserListQuery } from "../../../../_store/api";
 
-const LiveStreamUserListing = ({ isOpen, onClose }) => {
+const LiveStreamUserListing = ({ isOpen, onClose, selectedId }) => {
+  console.log("selectedId", selectedId);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
-  const { data: fetchData } = useGetLiveStreamListQuery(consultantId);
+  const { data: fetchData } = useGetLiveStreamConnectedUserListQuery(
+    {
+      id: selectedId,
+    },
+    { skip: !selectedId }
+  );
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
+    } else {
+      data([]);
     }
   }, [fetchData]);
 
