@@ -74,7 +74,7 @@ const LiveStream = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Live Stream"
+        tableTitle="Live Streams"
       />
 
       {openStremListing && (
