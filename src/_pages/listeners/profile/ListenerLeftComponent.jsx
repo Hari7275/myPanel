@@ -11,6 +11,8 @@ import {
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -52,6 +54,8 @@ const ListenerLeftComponent = () => {
   const [listenerType, setListenerType] = useState("listenerstatus");
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const { openImageModal, ImageModal } = UseImageModal();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const {
     data: fetchData,
@@ -85,9 +89,29 @@ const ListenerLeftComponent = () => {
     setShowModal(false);
   };
 
+  const handleProfileClose = () => {
+    navigate("/listeners", {
+      state: {
+        previousPage: location.state?.currentPage || 1,
+        previousPageSize: location.state?.pageSize || 10,
+      },
+    });
+    // navigate(-1);
+  };
+
   return (
     //MAIN ROW OF LISTNER CONTAINER
-    <div className="user-details-container">
+    <div className="user-details-container" style={{ position: "relative" }}>
+      <div className="backButton" onClick={handleProfileClose}>
+        <img
+          src="/backbutton.png"
+          style={{
+            width: "16px",
+            objectFit: "cover",
+          }}
+        />
+        Go Back
+      </div>
       {/* FIRST COLUMN OF MAIN CONTAINER AS ROW */}
       <div className="user-details-row">
         {/* FIRST COLUMN OF LISTNER DETAILS(IMAGE SECTION) */}
@@ -120,14 +144,20 @@ const ListenerLeftComponent = () => {
             </p>
           </div>
 
-          <div className="active-status">
-            <img
-              className="button-img"
-              src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-              alt="Active"
-            />
-            <span>Active</span>
-          </div>
+          {data?.profile_status == 1 ? (
+            <div className="active-status">
+              <img
+                className="button-img"
+                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+                alt=""
+              />
+              <span>Active</span>
+            </div>
+          ) : (
+            <div className="inActive-status">
+              ❌<span>Inactive</span>
+            </div>
+          )}
         </div>
         {/* <footer className="card-footer">
             <div className="info-pair">

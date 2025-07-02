@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
     <div className="info-pair">
@@ -51,6 +54,10 @@ const ListenerOverview = () => {
         <div className="userProfile-card">
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">
+              <InfoItem
+                label="Listener Phone Number"
+                value={`${data?.phone_code} ${data?.phoneNumber}`}
+              />
               <InfoItem
                 label="Listener Language"
                 value={(data?.languages || [])

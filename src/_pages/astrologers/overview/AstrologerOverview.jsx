@@ -66,6 +66,10 @@ const AstrologerOverview = () => {
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">
               <InfoItem
+                label="Astrologer Phone Number"
+                value={`${data?.phone_code} ${data?.phoneNumber}`}
+              />
+              <InfoItem
                 label="Astrologer Language"
                 value={(data?.languages || [])
                   .map((language) => capitalizeFirstLetter(language))
