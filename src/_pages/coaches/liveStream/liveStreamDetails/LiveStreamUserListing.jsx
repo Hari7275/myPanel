@@ -38,7 +38,7 @@ const LiveStreamUserListing = ({ isOpen, onClose, selectedId }) => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Live Stream User List "
+        tableTitle="Live Stream User Lists "
       />
     </ReactModal>
   );
