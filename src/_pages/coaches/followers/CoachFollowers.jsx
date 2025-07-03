@@ -4,7 +4,6 @@ import { FOLLOWERSCOLUMN } from "./coachFollowersColumns";
 import { useGetConsultantsFollowerQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
-
 const CoachFollowers = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
@@ -24,10 +23,11 @@ const CoachFollowers = () => {
           columns={columns}
           data={data}
           includeActions={false}
-          tableTitle="Coach Followers"
+          tableTitle="Follower List"
+          includeCheckbox={false}
         />
       ) : (
-        <p>No followers available.</p>
+        <p>No Data Available</p>
       )}
     </div>
   );

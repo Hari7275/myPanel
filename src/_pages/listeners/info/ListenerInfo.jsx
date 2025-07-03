@@ -8,6 +8,7 @@ import {
   getConsultantTypes,
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const ListenerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -16,7 +17,8 @@ const ListenerInfo = () => {
   // const [category, setCategory] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
-  const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
+  const { data: fetchdata, isLoading } =
+    useGetConsultantsDetailsQuery(consultantId);
 
   useEffect(() => {
     if (fetchdata && fetchdata.data) {
@@ -24,8 +26,12 @@ const ListenerInfo = () => {
     }
   }, [fetchdata]);
 
-  if (!formData) {
-    return <div>loading...</div>;
+  if (isLoading || !formData) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const toggleUpdateInfo = (data) => {

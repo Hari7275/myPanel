@@ -6,6 +6,7 @@ import { useGetConsultantsPriceQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
+import { Atom } from "react-loading-indicators";
 
 const ListenersPriceListingTable = () => {
   const [data, setData] = useState([]);
@@ -66,7 +67,13 @@ const ListenersPriceListingTable = () => {
     },
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (isError) return <div>Error loading data.</div>;
 
   return (

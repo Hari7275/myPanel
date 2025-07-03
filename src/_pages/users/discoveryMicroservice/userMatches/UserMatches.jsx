@@ -3,6 +3,7 @@ import CommonTable from "../../../../_components/table/CommonTable";
 import { USERMATCHCOLUMN } from "./userMatchesColumn";
 import { useGetUsermatchListQuery } from "../../../../_store/api";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const UserMatches = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -21,7 +22,11 @@ const UserMatches = () => {
 
   // Handle loading state
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   // Handle error state

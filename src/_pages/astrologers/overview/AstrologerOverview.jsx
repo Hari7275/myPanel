@@ -66,30 +66,30 @@ const AstrologerOverview = () => {
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">
               <InfoItem
-                label="Astrologer Phone Number"
+                label="Mobile Number"
                 value={`${data?.phone_code} ${data?.phoneNumber}`}
               />
               <InfoItem
-                label="Astrologer Language"
+                label="Language"
                 value={(data?.languages || [])
                   .map((language) => capitalizeFirstLetter(language))
                   .join(",")}
               />
               <div className="line"></div>
 
-              <InfoItem label="Astrologer Services" value={data?.services} />
+              <InfoItem label="Services" value={data?.services} />
               <div className="line"></div>
 
               <InfoItem
-                label="Astrologer Skill"
+                label="Skill"
                 value={getSkillsNames(data?.skills || [])}
               />
               <div className="line"></div>
 
-              <InfoItem label="Astrologer Country" value={data?.country} />
+              <InfoItem label="Country" value={data?.country} />
               <div className="line"></div>
 
-              <InfoItem label="Astrologer Address" value={data?.address} />
+              <InfoItem label="Address" value={data?.address} />
               <div className="line"></div>
 
               <InfoItem

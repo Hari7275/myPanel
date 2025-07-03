@@ -10,6 +10,7 @@ import {
 import DeleteComponent from "../DeleteComponent";
 import EditRechargePlans from "./EditRechargePlans";
 import AddRechargePlans from "./AddRechargePlans";
+import { Atom } from "react-loading-indicators";
 
 const RechargePlansList = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -105,8 +106,15 @@ const RechargePlansList = () => {
 
   // at the time of loading page (data)
 
+  
+
+
   if (isLoading) {
-    return <span className="loadPage">Data Loading...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   return (

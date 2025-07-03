@@ -8,6 +8,7 @@ import {
   useDeleteAvoidedUserMutation,
 } from "../../../../_store/api/user/blacklistedUser";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const AvoidedUser = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -65,9 +66,12 @@ const AvoidedUser = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
-
   return (
     <>
       {result.length > 0 ? (

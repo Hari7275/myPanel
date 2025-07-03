@@ -13,6 +13,7 @@ import {
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../overview/AstrologerOverview";
+import { Atom } from "react-loading-indicators";
 
 const AstrologerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -48,8 +49,17 @@ const AstrologerInfo = () => {
     }
   }, [fetchdata]);
 
+  // if (!formData) {
+  //   return <div>loading...</div>;
+  // }
+
+
   if (!formData) {
-    return <div>loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const toggleUpdateInfo = (data) => {

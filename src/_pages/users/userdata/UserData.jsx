@@ -15,6 +15,7 @@ import {
   useUpdateUserInterstsTypeMutation,
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const UserData = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -61,13 +62,18 @@ const UserData = () => {
   };
 
   // Check if any of the data is loading
+
   if (
     isProfileFeaturesLoading ||
     isProfilePassionsLoading ||
     isPromptQuestionsLoading ||
     isUsersDataLoading
   ) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   // Default to empty arrays if data is undefined or null

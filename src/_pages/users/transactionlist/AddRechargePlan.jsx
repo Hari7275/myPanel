@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import ReactModal from "react-modal";
 
 import { useCreateUserRechargeMutation } from "../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const AddRechargePlan = ({ isOpen, onClose, userId }) => {
   const [formData, setFormData] = useState({
@@ -37,15 +38,8 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
 
   if (isLoading) {
     return (
-      <span
-        style={{
-          display: "flex",
-          height: "100vh",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Data Loading...
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
       </span>
     );
   }

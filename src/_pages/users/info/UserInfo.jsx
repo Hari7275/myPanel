@@ -5,11 +5,11 @@ import "../../../cssfolder/ProfileInfo.css";
 import UpdateUserInfo from "./UpdateUserInfo";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { useSelector } from "react-redux";
-
+import { Atom } from "react-loading-indicators";
 const UserInfo = () => {
   const userId = useSelector((state) => state.user.userData);
 
-  const { data: fetchData } = useGetUserListQuery(userId);
+  const { data: fetchData, isLoading } = useGetUserListQuery(userId);
 
   const [formData, setFormData] = useState(null);
   const [showUpdateUserInfo, setShowUpdateUserInfo] = useState(false);
@@ -21,8 +21,12 @@ const UserInfo = () => {
     }
   }, [fetchData]);
 
-  if (!formData) {
-    return <div>loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const toggleUpdateInfo = (data) => {

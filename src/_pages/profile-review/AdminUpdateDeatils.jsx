@@ -6,6 +6,7 @@ import {
 } from "../../_store/api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const AdminUpdateDetails = ({ consultantId }) => {
   const {
@@ -106,7 +107,13 @@ const AdminUpdateDetails = ({ consultantId }) => {
     }
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (error) return <div>Error loading data</div>;
 
   return (

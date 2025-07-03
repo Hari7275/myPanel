@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { QDTRIPSCOLUMN } from "./qdColumn";
 import { useGetQDTripsEventsListQuery } from "../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const QdList = () => {
   const { data: fetchData, isLoading } = useGetQDTripsEventsListQuery({
@@ -24,7 +25,11 @@ const QdList = () => {
 
   // at the time of loading page (data)
   if (isLoading) {
-    return <span className="loadPage">Data Loading...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   return (

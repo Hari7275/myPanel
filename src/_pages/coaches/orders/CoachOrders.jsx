@@ -3,6 +3,7 @@ import CommonTable from "../../../_components/table/CommonTable";
 import { ORDERCHARTCOLUMN } from "./coachOrderColumns";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const CoachOrder = () => {
   const [data, setData] = useState([]);
@@ -29,7 +30,11 @@ const CoachOrder = () => {
   const columns = useMemo(() => ORDERCHARTCOLUMN, []);
 
   if (isLoading || isFetching) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (error) {

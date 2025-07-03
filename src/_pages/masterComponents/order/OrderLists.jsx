@@ -2,6 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNORDER } from "./orderColumn";
 import { useGetOrderListQuery } from "../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const OrderLists = () => {
   const [data, setData] = useState([]);
@@ -28,7 +29,13 @@ const OrderLists = () => {
 
   const totalPage = fetchData?.meta?.total_page || 1;
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (error) return <p>Error fetching data: {error?.data?.message}</p>;
 
   return (

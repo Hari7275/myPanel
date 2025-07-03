@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { TextSetting } from "../ui/inputForm";
 import { useGetConsultantsSettingsQuery } from "../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const Settings = () => {
   const [data, setData] = useState([]);
@@ -18,7 +19,11 @@ const Settings = () => {
   }, [fetchData]);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   return (

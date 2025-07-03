@@ -68,31 +68,31 @@ const CoachOverview = () => {
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">
               <InfoItem
-                label="Coach Phone Number"
+                label="Mobile Number"
                 value={`${data?.phone_code} ${data?.phoneNumber}`}
               />
               <div className="line"></div>
               <InfoItem
-                label="Coach Language"
+                label="Language"
                 value={(data?.languages || [])
                   .map((language) => capitalizeFirstLetter(language))
                   .join(",")}
               />
               <div className="line"></div>
 
-              <InfoItem label="Coach Services" value={data?.services} />
+              <InfoItem label="Services" value={data?.services} />
               <div className="line"></div>
 
               <InfoItem
-                label="Coach Skill"
+                label="Skill"
                 value={getSkillsNames(data?.skills || [])}
               />
               <div className="line"></div>
 
-              <InfoItem label="Coach Country" value={data?.country} />
+              <InfoItem label="Country" value={data?.country} />
               <div className="line"></div>
 
-              <InfoItem label="Coach Address" value={data?.address} />
+              <InfoItem label="Address" value={data?.address} />
               <div className="line"></div>
 
               <InfoItem

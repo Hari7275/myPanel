@@ -3,6 +3,7 @@ import CommonTable from "../../../../_components/table/CommonTable";
 import { COMPLIMENTSCOLUMN } from "./userComplimentsColumn";
 import { useSelector } from "react-redux";
 import { useGetUserComplimentListQuery } from "../../../../_store/api/user/discovery";
+import { Atom } from "react-loading-indicators";
 
 const UserCompliments = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -25,7 +26,11 @@ const UserCompliments = () => {
   const columns = COMPLIMENTSCOLUMN;
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (isError) {

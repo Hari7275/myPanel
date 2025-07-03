@@ -1,17 +1,17 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { FOLLOWERSCOLUMN } from "./listenersFollowersColumn";
-import { useGetConsultantsFollowerQuery } from "../../../_store/api";
+import { useGetListenerFavouriteListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
 const ListenerFollowers = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
-  const { data: fetchData } = useGetConsultantsFollowerQuery(consultantId);
+  const { data: fetchData } = useGetListenerFavouriteListQuery(consultantId);
 
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData?.data?.follower || []);
+      setData(fetchData?.data || []);
     }
   }, [fetchData]);
 
@@ -24,10 +24,11 @@ const ListenerFollowers = () => {
           columns={columns}
           data={data}
           includeActions={false}
-          tableTitle="Listener Followers"
+          tableTitle="Favorite List"
+          includeCheckbox={false}
         />
       ) : (
-        <p>No followers available.</p>
+        <p>No Data Available.</p>
       )}
     </div>
   );

@@ -90,7 +90,7 @@ const ListenerReviewsListingTable = () => {
         style={buttonStyle}
         onClick={() => toggleAddReviews(coachId)}
       >
-        Add Reviews
+        Add Review
       </button>
     );
   };
@@ -146,7 +146,8 @@ const ListenerReviewsListingTable = () => {
             columns={columns}
             data={data}
             includeActions={false}
-            tableTitle="Reviews Chart"
+            tableTitle="Review List"
+            includeCheckbox={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

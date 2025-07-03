@@ -55,7 +55,7 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("ListenerFollowers")}
         >
-          <span>Followers</span>
+          <span>Favourite</span>
         </div>
 
         <div

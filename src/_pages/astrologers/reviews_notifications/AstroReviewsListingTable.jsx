@@ -66,21 +66,21 @@ const AstroReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          position: "absolute",
-          top: "125px",
-          right: "40px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          zIndex: "9999",
-        }
+            position: "absolute",
+            top: "125px",
+            right: "40px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            zIndex: "9999",
+          }
         : {
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          zIndex: "9999",
-        };
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            zIndex: "9999",
+          };
 
     return (
       <button
@@ -88,7 +88,7 @@ const AstroReviewsListingTable = () => {
         style={buttonStyle}
         onClick={() => toggleAddReviews(coachId)}
       >
-        Add Reviews
+        Add Review
       </button>
     );
   };
@@ -144,7 +144,8 @@ const AstroReviewsListingTable = () => {
             columns={columns}
             data={data}
             includeActions={false}
-            tableTitle="Reviews Chart"
+            tableTitle="Review List"
+            includeCheckbox={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

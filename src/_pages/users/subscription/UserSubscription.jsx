@@ -6,6 +6,7 @@ import { useGetUserSubscriptionListQuery } from "../../../_store/api/user/userTr
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { SUBSCRIPTIONCOLUMN } from "./subscriptionColumn";
 import Description from "./Description";
+import { Atom } from "react-loading-indicators";
 
 const UserSubscription = () => {
   const [data, setData] = useState([]);
@@ -78,7 +79,11 @@ const UserSubscription = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (error) {

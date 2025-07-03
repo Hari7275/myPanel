@@ -214,7 +214,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             type="text"
             id="first_name"
             name="first_name"
-            value={formData.first_name}
+            value={formData?.first_name}
             onChange={handleChange}
           />
           <UpdateInputField

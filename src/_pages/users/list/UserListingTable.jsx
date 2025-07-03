@@ -141,7 +141,7 @@ const UserListingTable = () => {
   );
 
   if (isLoading) {
-    // return <span className="loadPage">Data Loading...</span>;
+    
     return (
       <span className="loadPage">
         <Atom color="#1c2434" size="medium" text="" textColor="" />
