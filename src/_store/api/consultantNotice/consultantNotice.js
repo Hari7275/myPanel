@@ -117,6 +117,19 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["notice"],
     }),
+
+    // update particular notice (description)
+    updateParticularConsultantDescription: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/admin/notices/update/${id}`,
+        method: "PATCH",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["notice"],
+    }),
   }),
 });
 
@@ -131,4 +144,5 @@ export const {
   useUpdateNoticestatusMutation,
   useDeleteNoticeMutation,
   useDeleteAssigneConsultantNoticeMutation,
+  useUpdateParticularConsultantDescriptionMutation,
 } = noticeApiSlice;

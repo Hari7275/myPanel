@@ -91,7 +91,7 @@
   border: none;
   cursor: pointer;
 } */
- .edit-profile-icon {
+.edit-profile-icon {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -173,6 +173,8 @@
   padding: 20px 0;
   min-width: 250px;
   border-right: 1px solid #eaeaea;
+  max-height: calc(100vh - 220px);
+  overflow-y: scroll;
 }
 
 .nav-link {
@@ -203,7 +205,7 @@
 }
 
 .nav-link.active::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;

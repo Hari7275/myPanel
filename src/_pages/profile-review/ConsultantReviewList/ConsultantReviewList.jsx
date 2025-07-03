@@ -77,6 +77,7 @@ const ConsultantReviewList = () => {
   );
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 

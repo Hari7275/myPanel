@@ -248,6 +248,8 @@
     border-right: none;
     border-bottom: 1px solid #eaeaea;
     padding: 10px 0;
+    max-height: calc(100vh - 220px);
+    overflow-y: scroll;
   }
 
   .nav-link {

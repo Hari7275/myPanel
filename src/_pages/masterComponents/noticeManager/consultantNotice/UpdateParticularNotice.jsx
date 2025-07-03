@@ -5,16 +5,42 @@ import { toast } from "react-hot-toast";
 // Import ReactQuill and its CSS
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css"; // You can choose 'quill.bubble.css' for a different theme
+import { useUpdateParticularConsultantDescriptionMutation } from "../../../../_store/api/consultantNotice/consultantNotice";
 
 const UpdateParticularNotice = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
     description: selectedRow.description || "",
+    id: selectedRow?.id,
   });
+  const [updateDescription, { isLoading }] =
+    useUpdateParticularConsultantDescriptionMutation({});
+
+  console.log("selectedRow", selectedRow);
   const handleDescriptionChange = (html) => {
     setFormData((prevData) => ({ ...prevData, description: html }));
   };
   const handleSubmit = async () => {
     // Extract assign_id values from selected consultants
+
+    try {
+      const payload = formData.description;
+      const response = await updateDescription({
+        id: formData.id,
+        body: {
+          description: payload,
+        },
+      });
+      console.log("response", response);
+      if (response?.data?.status) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response?.data?.message);
+        return;
+      }
+    } catch (error) {
+      console.log(error.message || "something went wrong");
+    }
   };
 
   // Quill modules and formats configuration

@@ -152,14 +152,17 @@ const CoachListingTable = () => {
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
   const handleNameSearch = (e) => {
+    setPage(1);
     debouncedSearchName(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
   const handleConsultantPhoneSearch = (e) => {
+    setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
   const customFilterComponent = () => (
