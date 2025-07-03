@@ -38,10 +38,10 @@ const MetaDataList = () => {
         /> */}
         <CategoryCard link="/coach-skills-metadata" label=" Coach skills" />
         <CategoryCard link="/report-reason" label=" Report Reasons" />
-        <CategoryCard link="/consultant-service-rate" label="Service Rate" />
+        {/* <CategoryCard link="/consultant-service-rate" label="Service Rate" /> */}
         <CategoryCard link="/menu-orders" label="Menu Orders" />
         <CategoryCard link="/countries-list" label="Countries List" />
-        <CategoryCard link="/consultant-notice" label="Consultant Notice" />
+        {/* <CategoryCard link="/consultant-notice" label="Consultant Notice" /> */}
         <CategoryCard link="/coach-rate" label="Consultant Rate" />
         <CategoryCard
           link="/profile-progress"

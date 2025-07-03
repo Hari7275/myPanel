@@ -89,7 +89,7 @@ const SkillsDragAndDropOrder = ({
             marginBottom: "20px",
           }}
         >
-          <h2 style={{ margin: 0 }}>Drag and Drop to Reorder Skills</h2>
+          <h2 style={{ margin: 0 }}>Reset Skill Order</h2>
         </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd}>

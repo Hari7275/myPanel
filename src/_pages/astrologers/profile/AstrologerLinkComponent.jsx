@@ -70,7 +70,7 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("live-stream")}
         >
-          <span>Live stream</span>
+          <span>Live Stream</span>
         </div>
         <div
           className={`nav-link ${

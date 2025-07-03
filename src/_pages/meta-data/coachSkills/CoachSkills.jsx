@@ -94,7 +94,7 @@ const CoachSkills = () => {
           // onClick={toggleMenuOrder}
           onClick={() => toggleSetOrderData(data)}
         >
-          Set order Skills
+          Set Order Skills
         </button>
       </>
     );

@@ -37,7 +37,7 @@ export const DASHBOARDBANNERCOLUMN = [
   },
 
   {
-    Header: "display order",
+    Header: "Display Order",
     accessor: "display_order",
   },
   // {
