@@ -4,7 +4,7 @@ export const adminPermissionSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPermissionList: builder.query({
       query: ({ group_id }) => ({
-        url: `/api/v1/admin-service/admin/permissions/get-all/${group_id}?page=1&size=10`,
+        url: `/api/v1/admin-service/admin/permissions/get-all/${group_id}?page=1&size=100`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

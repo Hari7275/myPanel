@@ -28,8 +28,7 @@ const AddAdminPermission = ({ isOpen, onClose, group_id }) => {
         onClose(); // Close the modal only on success
       } else {
         toast.error(
-          response?.data?.message ||
-            "Something went wrong. Please try again."
+          response?.data?.message || "Something went wrong. Please try again."
         );
       }
     } catch (error) {
@@ -57,13 +56,13 @@ const AddAdminPermission = ({ isOpen, onClose, group_id }) => {
             textAlign: "center",
           }}
         >
-          Create Group
+          Create Permission
         </h2>
 
         <form className="simple-form" noValidate autoComplete="off">
           <div style={{ display: "flex" }}>
             <UpdateInputField
-              label="Group Name"
+              label="Permisssion Name"
               type="text"
               id="name"
               name="name"

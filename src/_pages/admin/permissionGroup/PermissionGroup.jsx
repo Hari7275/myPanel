@@ -77,7 +77,7 @@ const PermissionGroup = () => {
         }}
         onClick={toggleAddData}
       >
-        Add new Permission
+        Add Permission Group
       </button>
     );
   };
@@ -127,6 +127,7 @@ const PermissionGroup = () => {
         includeActions={false}
         tableTitle="Permission Group"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && (
         <AddPermissionGroup isOpen={addData} onClose={toggleAddData} />

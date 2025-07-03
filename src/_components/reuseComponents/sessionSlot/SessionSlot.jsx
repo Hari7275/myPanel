@@ -52,7 +52,7 @@ const SessionSlot = () => {
       <DyCommonTable
         columns={columns}
         data={data}
-        tableTitle="Session Appointment"
+        tableTitle="Appointment Session"
         includeActions={false}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

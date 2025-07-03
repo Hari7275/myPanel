@@ -25,7 +25,7 @@ const ListenerOrder = () => {
   const columns = useMemo(() => ORDERCHARTCOLUMN, []);
 
   if (isLoading) {
-    return <span>Lodaing ...</span>;
+    return <span>Loading ...</span>;
   }
   return (
     <>
@@ -35,7 +35,7 @@ const ListenerOrder = () => {
             columns={columns}
             data={data}
             includeActions={false}
-            tableTitle=" Orders Chart"
+            tableTitle="Orders History"
             includeCheckbox={false}
           />
         </div>

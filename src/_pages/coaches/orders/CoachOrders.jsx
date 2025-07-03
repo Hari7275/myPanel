@@ -43,7 +43,7 @@ const CoachOrder = () => {
           columns={columns}
           data={data}
           includeActions={false}
-          tableTitle="Orders Chart"
+          tableTitle="Order History"
         />
       ) : (
         <div>No orders available.</div>

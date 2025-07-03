@@ -93,7 +93,7 @@ const Sidebar = () => {
                       }`}
                       onClick={() => handleItemClick("Permission")}
                     >
-                      <div className="dropdown-item">Permission </div>
+                      <div className="dropdown-item">Permission Group </div>
                     </div>
                   </Link>
                   <Link to="/admin-user">

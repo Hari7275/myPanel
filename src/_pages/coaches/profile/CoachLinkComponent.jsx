@@ -27,7 +27,7 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("Profile-Progress")}
         >
-          <span>Profile Progress</span>
+          <span>Onboarding Progress</span>
         </div>
         <div
           className={`nav-link ${
@@ -60,7 +60,7 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("session-slot")}
         >
-          <span>Session Appointment</span>
+          <span>Appointment Session</span>
         </div>
         <div
           className={`nav-link ${
@@ -127,7 +127,7 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("CoachStatus")}
         >
-          <span>Coach Status</span>
+          <span>Service Status</span>
         </div>
       </header>
     </>

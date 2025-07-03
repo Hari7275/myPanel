@@ -26,7 +26,7 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("Profile-Progress")}
         >
-          <span>Profile Progress</span>
+          <span>Onboarding Progress</span>
         </div>
 
         <div
@@ -61,7 +61,7 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("session-slot")}
         >
-          <span>Session Appointment</span>
+          <span>Appointment Session</span>
         </div>
 
         <div
@@ -128,7 +128,7 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("CoachStatus")}
         >
-          <span>Astrologer Status</span>
+          <span>Service Status</span>
         </div>
         {/* <div
           className={`nav-link ${

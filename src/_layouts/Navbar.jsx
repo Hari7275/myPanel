@@ -49,13 +49,32 @@ const Navbar = () => {
     "/coach-rate": "Consultant Rate List",
     "/profile-progress": "Consultant Profile Progress",
     "/dashboard-order": "Dashboard Order List",
-    // Add more mappings as needed
+    // Admin User
+    "/admin-permission": "Permission Group",
+    "/admin-permission/:id": "Permission List",
+    "/admin-user": "Admin Users",
+    "/admin-roles": "Admin Roles",
   };
 
+  // const getTitleFromPath = (path) => {
+  //   const pathParts = path.split("/");
+  //   const basePath = `/${pathParts[1]}`;
+  //   return pathTitleMap[basePath] || "Flute Admin Panel";
+  // };
+
   const getTitleFromPath = (path) => {
-    const pathParts = path.split("/");
-    const basePath = `/${pathParts[1]}`;
-    return pathTitleMap[basePath] || "Flute Admin Panel";
+    for (const pattern in pathTitleMap) {
+      // Convert pattern to regex: '/admin-permission/:id' -> /^\/admin-permission\/[^/]+$/
+      const regexPattern = new RegExp(
+        "^" + pattern.replace(/:[^/]+/g, "[^/]+") + "$"
+      );
+      if (regexPattern.test(path)) {
+        return pathTitleMap[pattern];
+      }
+    }
+
+    // fallback to default
+    return "Flute Admin Panel";
   };
 
   const pageTitle = getTitleFromPath(location.pathname);

@@ -226,6 +226,7 @@ const CoachListingTable = () => {
         setPage={setPage}
         setPageSize={setPageSize}
         showTableHeading={false}
+        includeCheckbox={false}
       />
       {data?.length == 0 && (
         <span className="no-data-new">No Coach Avaliable</span>

@@ -104,6 +104,7 @@ const AdminUser = () => {
         includeActions={false}
         tableTitle="Admin Users"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && <AddAdminUser isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

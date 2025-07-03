@@ -225,6 +225,7 @@ const ListenersListingTable = () => {
         setPage={setPage}
         setPageSize={setPageSize}
         showTableHeading={false}
+        includeCheckbox={false}
       />
 
       {data?.length == 0 && (

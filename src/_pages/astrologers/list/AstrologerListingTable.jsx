@@ -210,6 +210,7 @@ const AstrologerListingTable = () => {
         setPage={setPage}
         setPageSize={setPageSize}
         showTableHeading={false}
+        includeCheckbox={false}
       />
       {data?.length === 0 && (
         <div>

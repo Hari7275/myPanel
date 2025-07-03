@@ -71,7 +71,7 @@ const AdminPermission = () => {
         }}
         onClick={toggleAddData}
       >
-        create group to permission
+        Create Permission
       </button>
     );
   };
@@ -107,8 +107,9 @@ const AdminPermission = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Allow Permission to Group"
+        tableTitle="Permission List"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && (
         <AddAdminPermission

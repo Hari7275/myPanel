@@ -66,7 +66,7 @@ const NameCell = ({ row }) => {
 
 export const COACHES_COLUMNS = [
   {
-    Header: "User Id",
+    Header: "Id",
     accessor: "id",
   },
   {
@@ -75,7 +75,7 @@ export const COACHES_COLUMNS = [
   },
   {
     Header: "Email",
-    accessor: "email",
+    accessor: "email_address",
   },
   {
     Header: "Gender",

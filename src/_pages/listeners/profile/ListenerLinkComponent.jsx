@@ -28,7 +28,7 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("Profile-Progress")}
         >
-          <span>Profile Progress</span>
+          <span>Onboarding Progress</span>
         </div>
 
         <div
@@ -107,7 +107,7 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           }`}
           onClick={() => onComponentChange("CoachStatus")}
         >
-          <span>Listener Status</span>
+          <span>Service Status</span>
         </div>
 
         {/* <div
