@@ -126,6 +126,7 @@ const RechargePlansList = () => {
         includeActions={false}
         tableTitle="Recharge Plans"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
       {showDeleteComponent && (

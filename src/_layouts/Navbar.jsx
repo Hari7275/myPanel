@@ -61,7 +61,14 @@ const Navbar = () => {
     "/gift": "Gifts List",
 
     // master component payment section
+    "/dating-products": "Dating Products",
     "/payment-transactions": "Payment Transaction",
+    "/feature-list": "Features List",
+    "/recharge-plans": "Recharge Plans",
+    "/subscriptions-plans": "Subscription Plan",
+    "/payout-request": "Payout Request",
+    "/payout-History": "Payout History",
+    "/coupon": "Coupon List",
   };
 
   //

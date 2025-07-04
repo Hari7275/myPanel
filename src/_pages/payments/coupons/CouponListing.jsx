@@ -122,6 +122,7 @@ const CouponListing = () => {
         includeActions={false}
         tableTitle="Coupon List"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
       {showDescriptionModal && (

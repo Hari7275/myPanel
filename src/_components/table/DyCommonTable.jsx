@@ -15,7 +15,7 @@ import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 
 const DyCommonTable = ({
-  showTableHeading=true,
+  showTableHeading = true,
   columns,
   data,
   tableTitle,
@@ -66,19 +66,20 @@ const DyCommonTable = ({
     useRowSelect,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
-        ...(includeCheckbox
-          ? [
-              {
-                id: "selection",
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                  <TableCheckbox {...getToggleAllRowsSelectedProps()} />
-                ),
-                Cell: ({ row }) => (
-                  <TableCheckbox {...row.getToggleRowSelectedProps()} />
-                ),
-              },
-            ]
-          : []),
+        // **************************************** this hiding code for check box hiding ******************************************
+        // ...(includeCheckbox
+        //   ? [
+        //       {
+        //         id: "selection",
+        //         Header: ({ getToggleAllRowsSelectedProps }) => (
+        //           <TableCheckbox {...getToggleAllRowsSelectedProps()} />
+        //         ),
+        //         Cell: ({ row }) => (
+        //           <TableCheckbox {...row.getToggleRowSelectedProps()} />
+        //         ),
+        //       },
+        //     ]
+        //   : []),
         ...columns,
         ...(includeActions
           ? [

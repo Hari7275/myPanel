@@ -6,13 +6,13 @@ import {
 } from "../../../_store/api";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Atom } from "react-loading-indicators";
 
 const AssignPermissionToRole = () => {
   const { id } = useParams(); // Assuming route has role_id as a param
-  const { data: fetchData } = useGetAdminAssignPermissionListQuery();
-  const { data: selectedPermission } = useGetAdminselectedPermissionListQuery(
-    parseInt(id)
-  );
+  const { data: fetchData, isLoading } = useGetAdminAssignPermissionListQuery();
+  const { data: selectedPermission, isLoading: isGetting } =
+    useGetAdminselectedPermissionListQuery(parseInt(id));
   const [updateData, { isLoading: isUpdating }] =
     useCreateAdminRolePermissionMutation();
 
@@ -79,6 +79,14 @@ const AssignPermissionToRole = () => {
       toast.error(err?.data?.message || "An unexpected error occurred.");
     }
   };
+
+  if (isLoading && isGetting) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <div

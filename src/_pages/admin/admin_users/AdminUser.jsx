@@ -7,6 +7,7 @@ import AddAdminUser from "./AddAdminUser";
 import UpdateAdminUser from "./UpdateAdminUser";
 
 import DeleteComponent from "../../payments/DeleteComponent";
+import { Atom } from "react-loading-indicators";
 
 import {
   useGetAdminUserListQuery,
@@ -21,7 +22,7 @@ const AdminUser = () => {
   const [data, setData] = useState([]);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminUserListQuery();
+  const { data: fetchData, isLoading } = useGetAdminUserListQuery();
   const [deleteData] = useDeleteAdminUserMutation();
 
   useEffect(() => {
@@ -95,6 +96,14 @@ const AdminUser = () => {
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>

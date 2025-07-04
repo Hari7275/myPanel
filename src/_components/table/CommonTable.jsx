@@ -58,19 +58,19 @@ const CommonTable = ({
     useRowSelect,
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
-        ...(includeCheckbox
-          ? [
-              {
-                id: "selection",
-                Header: ({ getToggleAllRowsSelectedProps }) => (
-                  <TableCheckbox {...getToggleAllRowsSelectedProps()} />
-                ),
-                Cell: ({ row }) => (
-                  <TableCheckbox {...row.getToggleRowSelectedProps()} />
-                ),
-              },
-            ]
-          : []),
+        // ...(includeCheckbox
+        //   ? [
+        //       {
+        //         id: "selection",
+        //         Header: ({ getToggleAllRowsSelectedProps }) => (
+        //           <TableCheckbox {...getToggleAllRowsSelectedProps()} />
+        //         ),
+        //         Cell: ({ row }) => (
+        //           <TableCheckbox {...row.getToggleRowSelectedProps()} />
+        //         ),
+        //       },
+        //     ]
+        //   : []),
         ...columns,
         ...(includeActions
           ? [

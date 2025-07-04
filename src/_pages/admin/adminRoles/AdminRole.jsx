@@ -8,6 +8,7 @@ import AddAdminRole from "./AddAdminRole";
 
 import DeleteComponent from "../../payments/DeleteComponent";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 import {
   useGetAdminRoleListQuery,
@@ -22,7 +23,7 @@ const AdminRole = () => {
   const [data, setData] = useState([]);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminRoleListQuery();
+  const { data: fetchData, isLoading } = useGetAdminRoleListQuery();
   const [deleteData] = useDeleteAdminRoleMutation();
 
   const navigate = useNavigate();
@@ -117,6 +118,14 @@ const AdminRole = () => {
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>

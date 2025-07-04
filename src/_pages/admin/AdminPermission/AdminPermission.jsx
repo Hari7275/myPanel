@@ -9,6 +9,7 @@ import AddAdminPermission from "./AddAdminPermission";
 import UpdateAdminPermission from "./UpdateAdminPermission";
 import DeleteComponent from "../../payments/DeleteComponent";
 import { useParams } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 import {
   useGetPermissionListQuery,
@@ -25,7 +26,9 @@ const AdminPermission = () => {
   const { id } = useParams();
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetPermissionListQuery({ group_id: id });
+  const { data: fetchData, isLoading } = useGetPermissionListQuery({
+    group_id: id,
+  });
   const [deleteData] = useDeletePermissionMutation();
 
   useEffect(() => {
@@ -100,6 +103,14 @@ const AdminPermission = () => {
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>

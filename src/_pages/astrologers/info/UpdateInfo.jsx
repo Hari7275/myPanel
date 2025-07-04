@@ -236,6 +236,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              disabled={true}
             />
 
             <p style={{ color: "red", paddingLeft: "10px" }}>{errors.email}</p>

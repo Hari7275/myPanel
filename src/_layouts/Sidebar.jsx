@@ -57,7 +57,7 @@ const Sidebar = () => {
 
   const permissions = useSelector((state) => state.auth?.permissions || {});
 
-  console.log("permissions/////", permissions);
+  console.log("permissions in sidebar", permissions);
 
   return (
     <div className="sideContainer">
@@ -171,23 +171,24 @@ const Sidebar = () => {
                   <span>Listeners</span>
                 </div>
               </Link>
-
-              <Link to="/astrologer">
-                <div
-                  className={`menu-item ${
-                    activeItem === "Astrologer" ? "active" : ""
-                  }`}
-                  onClick={() => handleItemClick("Astrologer")}
-                >
-                  {/* <HeadphonesOutlinedIcon /> */}
-                  <img
-                    src="/adminPannel_icons/astrologers.png"
-                    width="24"
-                    height="24"
-                  />
-                  <span>Astrologer</span>
-                </div>
-              </Link>
+              {/* {permissions?.["dashboard"] && ( */}
+                <Link to="/astrologer">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "Astrologer" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("Astrologer")}
+                  >
+                    {/* <HeadphonesOutlinedIcon /> */}
+                    <img
+                      src="/adminPannel_icons/astrologers.png"
+                      width="24"
+                      height="24"
+                    />
+                    <span>Astrologer</span>
+                  </div>
+                </Link>
+              {/* )} */}
             </div>
           </div>
 

@@ -174,6 +174,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
               name="email"
               value={formData.email}
               onChange={handleChange}
+              disabled={true}
             />
             <div className="input-container">
               <label htmlFor="gender">Gender</label>

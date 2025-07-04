@@ -55,14 +55,14 @@ const CoachPriceListingTable = () => {
             </span>
           )}
 
-          {row.original.status == 2 && (
+          {/* {row.original.status == 2 && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
-          )}
+          )} */}
         </div>
       ),
     },

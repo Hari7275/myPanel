@@ -60,7 +60,7 @@ const LoginForm = () => {
             role: user.role,
             token: user.auth_token,
             permissions: permissionsByGroup,
-            prod: prod, // You can set prod logic if needed
+            prod: prod, // for  radio button at the time of login
           })
         );
 

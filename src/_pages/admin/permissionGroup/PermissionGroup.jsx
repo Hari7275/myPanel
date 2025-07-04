@@ -13,6 +13,7 @@ import {
   useDeleteAdminPermissionGroupMutation,
 } from "../../../_store/api";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const PermissionGroup = () => {
   const [addData, setAddData] = useState(false);
@@ -22,7 +23,7 @@ const PermissionGroup = () => {
   const [data, setData] = useState([]);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminPermissionGroupListQuery();
+  const { data: fetchData, isLoading } = useGetAdminPermissionGroupListQuery();
   const [deleteData] = useDeleteAdminPermissionGroupMutation();
 
   const navigate = useNavigate();
@@ -118,6 +119,14 @@ const PermissionGroup = () => {
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>
