@@ -59,6 +59,9 @@ const Navbar = () => {
     // master component
     "/order": "Order List",
     "/gift": "Gifts List",
+
+    // master component payment section
+    "/payment-transactions": "Payment Transaction",
   };
 
   //

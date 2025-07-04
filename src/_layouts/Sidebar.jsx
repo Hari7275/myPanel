@@ -490,7 +490,7 @@ const Sidebar = () => {
               </div>
             </Link>
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "package Update" ? "active" : ""
               }`}
@@ -504,9 +504,9 @@ const Sidebar = () => {
                 />
                 <span>Package Update</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "QD Trips" ? "active" : ""
               }`}
@@ -520,9 +520,9 @@ const Sidebar = () => {
                 />
                 <span>QD Trips</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "qd-location" ? "active" : ""
               }`}
@@ -536,7 +536,7 @@ const Sidebar = () => {
                 />
                 <span>QD Location</span>
               </Link>
-            </div>
+            </div> */}
 
             {/* <div
               className={`menu-item ${

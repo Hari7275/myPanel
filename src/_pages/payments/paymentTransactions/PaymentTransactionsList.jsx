@@ -44,7 +44,7 @@ const PaymentTransactionsList = () => {
           padding: "6px",
         }}
       >
-        add plan
+        Add plan
       </button>
     );
   };
@@ -90,6 +90,8 @@ const PaymentTransactionsList = () => {
         includeActions={false}
         tableTitle="Payment Transaction"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
 
       {showDeleteComponent && (
