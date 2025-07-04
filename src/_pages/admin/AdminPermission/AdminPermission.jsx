@@ -110,6 +110,7 @@ const AdminPermission = () => {
         tableTitle="Permission List"
         AddPackageButton={AddButton}
         showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && (
         <AddAdminPermission

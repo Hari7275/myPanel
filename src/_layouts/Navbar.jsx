@@ -52,10 +52,16 @@ const Navbar = () => {
     // Admin User
     "/admin-permission": "Permission Group",
     "/admin-permission/:id": "Permission List",
+    "/role-permission/:id": "Assign Permissions",
     "/admin-user": "Admin Users",
     "/admin-roles": "Admin Roles",
+
+    // master component
+    "/order": "Order List",
+    "/gift": "Gifts List",
   };
 
+  //
   // const getTitleFromPath = (path) => {
   //   const pathParts = path.split("/");
   //   const basePath = `/${pathParts[1]}`;

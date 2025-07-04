@@ -51,6 +51,8 @@ const OrderLists = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        includeCheckbox={false}
+        showTableHeading={false}
       />
     </div>
   );

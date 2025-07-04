@@ -127,6 +127,7 @@ const AdminRole = () => {
         tableTitle="Admin Roles"
         AddPackageButton={AddButton}
         showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && <AddAdminRole isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

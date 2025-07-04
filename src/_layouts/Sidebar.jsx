@@ -23,6 +23,7 @@ const Sidebar = () => {
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
   const [isNotice, setIsNotice] = useState();
+  const [isQuickDate, setIsQuickDate] = useState();
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ const Sidebar = () => {
   };
   const noticeDropdown = () => {
     setIsNotice(!isNotice);
+  };
+  const quickDateDropdown = () => {
+    setIsQuickDate(!isQuickDate);
   };
 
   // code for highlighted text
@@ -196,7 +200,7 @@ const Sidebar = () => {
                 onClick={() => handleItemClick("Order")}
               >
                 <CardGiftcardOutlinedIcon />
-                <span>Order</span>
+                <span>Orders</span>
               </div>
             </Link>
 
@@ -222,7 +226,7 @@ const Sidebar = () => {
                 width="24"
                 height="24"
               />
-              <span>Payment Services</span>
+              <span>Payments</span>
 
               <span>{isPayment ? "⬇️" : "⬅️"}</span>
             </div>
@@ -332,7 +336,7 @@ const Sidebar = () => {
           <div className="menu-item-child">
             <div className="child" onClick={toggleDropdown}>
               <ManageHistoryOutlinedIcon />
-              <span>Profile Options</span>
+              <span>Dating Meta Data</span>
 
               <span>{isDropdownOpen ? "⬇️" : "⬅️"}</span>
             </div>
@@ -419,6 +423,56 @@ const Sidebar = () => {
               </div>
             )}
           </div>
+
+          {/* Quick Date */}
+
+          <div className="menu-item-child">
+            <div className="child" onClick={quickDateDropdown}>
+              <img
+                src="/adminPannel_icons/QD trips.png"
+                width="24"
+                height="24"
+              />
+              <span>Quick Date</span>
+
+              <span>{isQuickDate ? "⬇️" : "⬅️"}</span>
+            </div>
+
+            {isQuickDate && (
+              <div className="menu-item-sub">
+                <Link to="qd-trips">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "qd-trips" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("qd-trips")}
+                  >
+                    <img
+                      src="/adminPannel_icons/QD trips.png"
+                      width="24"
+                      height="24"
+                    />
+                    <div className="dropdown-item">QD Trips</div>
+                  </div>
+                </Link>
+                <Link to="/qd-location">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "qd-location" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("qd-location")}
+                  >
+                    <img
+                      src="/adminPannel_icons/QD_location.png"
+                      width="24"
+                      height="24"
+                    />
+                    <div className="dropdown-item">QD Location</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
           <div className="menu-group">
             <Link to="/user-support">
               <div
@@ -484,7 +538,7 @@ const Sidebar = () => {
               </Link>
             </div>
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "feedback" ? "active" : ""
               }`}
@@ -498,12 +552,12 @@ const Sidebar = () => {
                 />
                 <span>Feedback</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div className="menu-item">
+            {/* <div className="menu-item">
               <HistoryOutlinedIcon />
               <span>Next Entry</span>
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (

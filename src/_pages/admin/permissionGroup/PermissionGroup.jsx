@@ -29,7 +29,7 @@ const PermissionGroup = () => {
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data && fetchData?.data?.records) {
       setData(fetchData?.data?.records);
     } else setData([]);
   }, [fetchData]);
@@ -128,6 +128,7 @@ const PermissionGroup = () => {
         tableTitle="Permission Group"
         AddPackageButton={AddButton}
         showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && (
         <AddPermissionGroup isOpen={addData} onClose={toggleAddData} />

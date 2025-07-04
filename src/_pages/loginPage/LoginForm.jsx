@@ -34,6 +34,8 @@ const LoginForm = () => {
     try {
       const response = await createLogin({ body: formData }).unwrap();
 
+      console.log("login response....", response);
+
       if (response?.status) {
         const user = response?.data;
 

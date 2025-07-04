@@ -105,6 +105,7 @@ const QDLoaction = () => {
         tableTitle="QD Trips Location"
         AddPackageButton={AddButton}
         showTableHeading={false}
+        includeCheckbox={false}
       />
 
       {addLocation && (

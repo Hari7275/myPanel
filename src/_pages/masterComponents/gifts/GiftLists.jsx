@@ -141,6 +141,8 @@ const GiftLists = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        includeCheckbox={false}
+        showTableHeading={false}
       />
 
       {showDescription && (
