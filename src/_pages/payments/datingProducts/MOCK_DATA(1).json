@@ -150,32 +150,8 @@
               "url": "madhur.png"
             }
         ]
-      },
-      {
-        "id": 10,
-        "phoneNumber": "9785520218",
-        "first_name": "Ghanshyam",
-        "last_name": "Sharma",
-        "email": "duhar81+8@gmail.com",
-        "bio": "Hello",
-        "user_type": "listener",
-        "date_of_birth": "1992-07-01T00:00:00.000Z",
-        "address": "jaipur, Rajasthan, India",
-        "country": "india",
-        "gender": "MALE",
-        "languages": "Hindi",
-        "status": "inactive",
-        "is_online": null,
-        "category": "relationship",
-        "created_at": "2024-05-16T10:00:40.000Z",
-        "updated_at": "2024-05-22T07:17:13.000Z",
-        "deletedAt": null,
-        "CoachPhotos": [
-            {
-              "url": "praveen.png"
-            }
-        ]
       }
+      
     ],
     "totalItems": 7
   }

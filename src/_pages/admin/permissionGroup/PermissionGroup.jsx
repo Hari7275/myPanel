@@ -7,6 +7,7 @@ import AddPermissionGroup from "./AddPermissionGroup";
 
 import UpdatePermissionGroup from "./UpdatePermissionGroup";
 import DeleteComponent from "../../payments/DeleteComponent";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetAdminPermissionGroupListQuery,
@@ -21,6 +22,7 @@ const PermissionGroup = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData, isLoading } = useGetAdminPermissionGroupListQuery();
@@ -68,18 +70,20 @@ const PermissionGroup = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add Permission Group
-      </button>
+      permissions?.["admin"]?.includes("create_admin_permission_group") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Permission Group
+        </button>
+      )
     );
   };
 
@@ -87,34 +91,46 @@ const PermissionGroup = () => {
     ...adminPermissionListColumn,
     {
       Header: () => <div className="actions-header">Actions</div>,
+
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            title="view details"
-            className="secondIcon"
-            style={{
-              display: "inline-block",
-              height: "35px",
-              width: "35px",
-            }}
-            onClick={() => handleActionClick(row.original)}
-            // onClick={() => handleViewDetails(row.original.id)}
-          >
-            <ArrowRight className="iconSmall" />
-          </span>
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("view_admin_permission_group") && (
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+              onClick={() => handleActionClick(row.original)}
+            >
+              <ArrowRight className="iconSmall" />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes(
+            "delete_admin_permission_group"
+          ) && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes(
+            "update_admin_permission_group"
+          ) && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },

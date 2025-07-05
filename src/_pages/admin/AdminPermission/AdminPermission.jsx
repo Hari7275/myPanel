@@ -15,6 +15,7 @@ import {
   useGetPermissionListQuery,
   useDeletePermissionMutation,
 } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AdminPermission = () => {
   const [addData, setAddData] = useState(false);
@@ -22,6 +23,7 @@ const AdminPermission = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   const { id } = useParams();
 
@@ -64,18 +66,20 @@ const AdminPermission = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Create Permission
-      </button>
+      permissions?.["admin"]?.includes("create_admin_permission") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Create Permission
+        </button>
+      )
     );
   };
 
@@ -86,19 +90,24 @@ const AdminPermission = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon" aria-label=" button for update ">
-            <Pencil
-              aria-label="cancel button"
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("delete_admin_permission") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes("update_admin_permission") && (
+            <span className="editIcon" aria-label=" button for update ">
+              <Pencil
+                aria-label="cancel button"
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../cssfolder/sidebar.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
@@ -12,6 +12,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 // import { hasPermission } from "../_store/api/tokenHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageTitle } from "../_store/slices/pageTitleSlice";
+import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
 
 import "aos/dist/aos.css";
 
@@ -27,6 +28,7 @@ const Sidebar = () => {
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
+  const permissions = usePermissions();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -55,9 +57,11 @@ const Sidebar = () => {
     setActiveItem(item);
   };
 
-  const permissions = useSelector((state) => state.auth?.permissions || {});
+  // const permissions = useSelector((state) => state.auth?.permissions || {});
 
-  console.log("permissions in sidebar", permissions);
+  // console.log("permissions in sidebar", permissions);
+
+  console.log("permissions by hooks", permissions);
 
   return (
     <div className="sideContainer">
@@ -70,49 +74,64 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-grou">
-            <div className="menu-item-child">
-              <div className="child" onClick={adminDropdown}>
-                <SupervisorAccountIcon />
-                <span>Admin Section</span>
+            {/* allow permission */}
+            {permissions?.["admin"] && (
+              <div className="menu-item-child">
+                <div className="child" onClick={adminDropdown}>
+                  <SupervisorAccountIcon />
+                  <span>Admin Section</span>
 
-                <span>{isAdmin ? "⬇️" : "⬅️"}</span>
-              </div>
-
-              {isAdmin && (
-                <div className="menu-item-sub">
-                  <Link to="admin-roles">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "Roles" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("Roles")}
-                    >
-                      <div className="dropdown-item"> Roles</div>
-                    </div>
-                  </Link>
-                  <Link to="/admin-permission">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "Permission" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("Permission")}
-                    >
-                      <div className="dropdown-item">Permission Group </div>
-                    </div>
-                  </Link>
-                  <Link to="/admin-user">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "admin-user" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("admin-user")}
-                    >
-                      <div className="dropdown-item">Admin User </div>
-                    </div>
-                  </Link>
+                  <span>{isAdmin ? "⬇️" : "⬅️"}</span>
                 </div>
-              )}
-            </div>
+
+                {isAdmin && (
+                  <div className="menu-item-sub">
+                    {permissions?.["admin"]?.includes("view_admin_role") && ( //permission for role
+                      <Link to="admin-roles">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "Roles" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("Roles")}
+                        >
+                          <div className="dropdown-item"> Roles</div>
+                        </div>
+                      </Link>
+                    )}
+                    {permissions?.["admin"]?.includes(
+                      "view_admin_permission_group_section"
+                    ) && (
+                      <Link to="/admin-permission">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "Permission" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("Permission")}
+                        >
+                          <div className="dropdown-item">Permission Group </div>
+                        </div>
+                      </Link>
+                    )}
+
+                    {permissions?.["admin"]?.includes(
+                      "view_admin_users_section"
+                    ) && (
+                      <Link to="/admin-user">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "admin-user" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("admin-user")}
+                        >
+                          <div className="dropdown-item">Admin User </div>
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             <div>
               {/* {permissions?.["Dashboard"] && ( */}
               <Link to="/dashboard">
@@ -172,22 +191,22 @@ const Sidebar = () => {
                 </div>
               </Link>
               {/* {permissions?.["dashboard"] && ( */}
-                <Link to="/astrologer">
-                  <div
-                    className={`menu-item ${
-                      activeItem === "Astrologer" ? "active" : ""
-                    }`}
-                    onClick={() => handleItemClick("Astrologer")}
-                  >
-                    {/* <HeadphonesOutlinedIcon /> */}
-                    <img
-                      src="/adminPannel_icons/astrologers.png"
-                      width="24"
-                      height="24"
-                    />
-                    <span>Astrologer</span>
-                  </div>
-                </Link>
+              <Link to="/astrologer">
+                <div
+                  className={`menu-item ${
+                    activeItem === "Astrologer" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("Astrologer")}
+                >
+                  {/* <HeadphonesOutlinedIcon /> */}
+                  <img
+                    src="/adminPannel_icons/astrologers.png"
+                    width="24"
+                    height="24"
+                  />
+                  <span>Astrologer</span>
+                </div>
+              </Link>
               {/* )} */}
             </div>
           </div>

@@ -7,6 +7,7 @@ import {
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AssignPermissionToRole = () => {
   const { id } = useParams(); // Assuming route has role_id as a param
@@ -18,6 +19,7 @@ const AssignPermissionToRole = () => {
 
   const [data, setData] = useState([]);
   const [selectedPermissions, setSelectedPermissions] = useState({});
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData) {
@@ -129,10 +131,13 @@ const AssignPermissionToRole = () => {
               </div>
             ))}
           </div>
+
           <div className="divider"></div>
-          <button type="submit" className="fifthButton" disabled={isUpdating}>
-            {isUpdating ? "Updating..." : "Update Permissions"}
-          </button>
+          {permissions?.["admin"]?.includes("assign_role_permissions") && (
+            <button type="submit" className="fifthButton" disabled={isUpdating}>
+              {isUpdating ? "Updating..." : "Update Permissions"}
+            </button>
+          )}
         </div>
       </form>
     </div>
