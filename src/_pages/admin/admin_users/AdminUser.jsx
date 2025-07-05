@@ -8,7 +8,7 @@ import UpdateAdminUser from "./UpdateAdminUser";
 
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Atom } from "react-loading-indicators";
-import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetAdminUserListQuery,
