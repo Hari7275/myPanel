@@ -226,6 +226,22 @@ const ListenerGallery = () => {
                           </a>
                         )}
                       </div>
+                      {image?.profile_pic_request == 1 ? (
+                        <div className="topnav-profilepic">
+                          <img
+                            src="/live-green-gif-marker.gif"
+                            alt=""
+                            style={{
+                              height: "25px",
+                              width: "25px",
+                              border: "none",
+                              cursor: "pointer",
+                            }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
 
                       <div className="galleryIcons">
                         <span onClick={() => toggleImageCropper(image)}>
