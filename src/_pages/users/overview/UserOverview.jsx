@@ -24,7 +24,7 @@ const UserOverview = () => {
 
   useEffect(() => {
     if (fetchData) {
-      setUserData(fetchData.data);
+      setUserData(fetchData?.data);
     }
   }, [fetchData]);
 
