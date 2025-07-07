@@ -28,9 +28,7 @@ const UserOverview = () => {
     }
   }, [fetchData]);
 
-  
-
-  if (isLoading) {
+  if (isLoading && !userData) {
     return (
       <span className="loadPage">
         <Atom color="#1c2434" size="medium" text="" textColor="" />
@@ -39,6 +37,9 @@ const UserOverview = () => {
   }
 
   const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "N/A";
+    }
     return format(new Date(date), "PPpp");
   };
 
@@ -103,7 +104,7 @@ const UserOverview = () => {
 
             <InfoItem
               label="Last Active "
-              value={formatDate(userData.updatedAt || "N/A")}
+              value={formatDate(userData?.updatedAt)}
             />
             <div className="line"></div>
           </footer>
