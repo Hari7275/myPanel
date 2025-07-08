@@ -21,7 +21,7 @@ const UserInfo = () => {
     }
   }, [fetchData]);
 
-  if (isLoading) {
+  if (isLoading || !formData) {
     return (
       <span className="loadPage">
         <Atom color="#1c2434" size="medium" text="" textColor="" />
