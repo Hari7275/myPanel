@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -52,12 +53,16 @@ const AstrologerDetailsComponent = () => {
     (state) => state?.consultant?.consultantData
   );
 
+  const profileStatus = useSelector((state) => state.consultant.profileStatus);
+
   const [showModal, setShowModal] = useState(false);
+  const [showUpdateStatus, setShowUpdateStatus] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
   const { openImageModal, ImageModal } = UseImageModal();
   const navigate = useNavigate();
   const location = useLocation();
+  const [selectedData, setSelectedData] = useState(null);
 
   console.log("location", location);
 
@@ -89,6 +94,12 @@ const AstrologerDetailsComponent = () => {
 
   const closeModal = () => {
     setShowModal(false);
+  };
+
+  // this is for profile status
+  const handleShowUpdateStatus = () => {
+    setShowUpdateStatus(!showUpdateStatus);
+    setSelectedData(data.profile_status);
   };
 
   const handleProfileClose = () => {
@@ -127,13 +138,13 @@ const AstrologerDetailsComponent = () => {
             alt="astrologer Profile"
             onClick={() => openImageModal(urls)}
           />
-          <div className="edit-profile-img">
+          {/* <div className="edit-profile-img">     //  **************ye code background removal ka popup open karne ke liye hai 
             <button className="edit-profile-icon" onClick={openModal}>
               <Pencil
                 style={{ background: "none", height: "14px", width: "14px" }}
               />
             </button>
-          </div>
+          </div> */}
         </div>
         {/* SECOND COLUMN: User Info (column layout) */}
         <div className="user-info-section">
@@ -145,20 +156,42 @@ const AstrologerDetailsComponent = () => {
               <strong>Astrologer ID: </strong> {data.id}
             </p>
           </div>
-          {data?.profile_status == 1 ? (
-            <div className="active-status">
-              <img
-                className="button-img"
-                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-                alt=""
-              />
-              <span>Active</span>
-            </div>
-          ) : (
-            <div className="inActive-status">
-              ❌<span>Inactive</span>
-            </div>
-          )}
+
+          {/* for profile status */}
+          <div className="profile-img-section" style={{ width: "fit-content" }}>
+            {data?.profile_status == 1 ? (
+              <div className="active-status">
+                <img
+                  className="button-img"
+                  src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+                  alt=""
+                />
+                <span>Active</span>
+
+                {/* <div className="edit-profile-img"> */}
+
+                {/* </div> */}
+              </div>
+            ) : (
+              <div className="inActive-status">
+                ❌<span>Inactive</span>
+              </div>
+            )}
+            {profileStatus == 3 && (
+              <button
+                className="edit-profile-active-status"
+                onClick={handleShowUpdateStatus}
+              >
+                <Pencil
+                  style={{
+                    background: "none",
+                    height: "14px",
+                    width: "14px",
+                  }}
+                />
+              </button>
+            )}
+          </div>
         </div>
         {/* <footer className="card-footer">
           <div className="info-pair">
@@ -229,6 +262,15 @@ const AstrologerDetailsComponent = () => {
           closeUserProfile_Modal={closeModal}
           modalType="editProfileImage"
           imageToEdit={imageToEdit}
+        />
+      )}
+
+      {showUpdateStatus && (
+        <UpdateConsultantProfileStatus
+          isOpen={showUpdateStatus}
+          onClose={handleShowUpdateStatus}
+          selectedData={selectedData}
+          consultantId={consultantId}
         />
       )}
     </div>

@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -73,6 +76,7 @@ const AstrologerListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    dispatch(setCurrentProfileStatus(data?.status));
 
     setTimeout(() => {
       navigate(`/astrologer_Profile?${data?.id}`, {

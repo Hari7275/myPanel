@@ -13,6 +13,7 @@ import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -52,10 +53,14 @@ const ListenerLeftComponent = () => {
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
   const [listenerType, setListenerType] = useState("listenerstatus");
-  const consultantId = useSelector((state) => state.consultant.consultantData);
   const { openImageModal, ImageModal } = UseImageModal();
+  const [showUpdateStatus, setShowUpdateStatus] = useState(false);
+  const [selectedData, setSelectedData] = useState(null);
+
   const navigate = useNavigate();
   const location = useLocation();
+  const consultantId = useSelector((state) => state.consultant.consultantData);
+  const profileStatus = useSelector((state) => state.consultant.profileStatus);
 
   const {
     data: fetchData,
@@ -99,6 +104,12 @@ const ListenerLeftComponent = () => {
     // navigate(-1);
   };
 
+  // this is for profile status
+  const handleShowUpdateStatus = () => {
+    setShowUpdateStatus(!showUpdateStatus);
+    setSelectedData(data.profile_status);
+  };
+
   return (
     //MAIN ROW OF LISTNER CONTAINER
     <div className="user-details-container" style={{ position: "relative" }}>
@@ -124,13 +135,13 @@ const ListenerLeftComponent = () => {
               onClick={() => openImageModal(urls || "girl-avtar.png")}
               style={{ cursor: "pointer" }}
             />
-            <div className="edit-profile-img">
+            {/* <div className="edit-profile-img">
               <button className="edit-profile-icon" onClick={openModal}>
                 <Pencil
                   style={{ background: "none", height: "14px", width: "14px" }}
                 />
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
         {/* SECOND COLUMN LISTNER INFO SECTION */}
@@ -144,20 +155,41 @@ const ListenerLeftComponent = () => {
             </p>
           </div>
 
-          {data?.profile_status == 1 ? (
-            <div className="active-status">
-              <img
-                className="button-img"
-                src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
-                alt=""
-              />
-              <span>Active</span>
-            </div>
-          ) : (
-            <div className="inActive-status">
-              ❌<span>Inactive</span>
-            </div>
-          )}
+          {/* for profile status */}
+          <div className="profile-img-section" style={{ width: "fit-content" }}>
+            {data?.profile_status == 1 ? (
+              <div className="active-status">
+                <img
+                  className="button-img"
+                  src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+                  alt=""
+                />
+                <span>Active</span>
+
+                {/* <div className="edit-profile-img"> */}
+
+                {/* </div> */}
+              </div>
+            ) : (
+              <div className="inActive-status">
+                ❌<span>Inactive</span>
+              </div>
+            )}
+            {profileStatus == 3 && (
+              <button
+                className="edit-profile-active-status"
+                onClick={handleShowUpdateStatus}
+              >
+                <Pencil
+                  style={{
+                    background: "none",
+                    height: "14px",
+                    width: "14px",
+                  }}
+                />
+              </button>
+            )}
+          </div>
         </div>
         {/* <footer className="card-footer">
             <div className="info-pair">
@@ -233,6 +265,15 @@ const ListenerLeftComponent = () => {
           closeUserProfile_Modal={closeModal}
           modalType="editProfileImage"
           imageToEdit={imageToEdit}
+        />
+      )}
+
+      {showUpdateStatus && (
+        <UpdateConsultantProfileStatus
+          isOpen={showUpdateStatus}
+          onClose={handleShowUpdateStatus}
+          selectedData={selectedData}
+          consultantId={consultantId}
         />
       )}
     </div>

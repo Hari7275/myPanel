@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import Modal from "react-modal";
 import { Atom } from "react-loading-indicators";
+import { debounce } from "lodash";
 
 Modal.setAppElement("#root");
 
@@ -19,6 +20,7 @@ const UserListingTable = () => {
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [name, setName] = useState("");
+  const [phone_number, setPhone_number] = useState("");
   const [userId, setUserId] = useState("");
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
@@ -33,6 +35,7 @@ const UserListingTable = () => {
     limit: pageSize,
     name,
     user_id: userId,
+    phone_number,
   });
 
   useEffect(() => {
@@ -106,13 +109,24 @@ const UserListingTable = () => {
     [handleViewDetails, toggleEditStatus, toggleModal]
   );
 
+  // Apply debounce to search handlers
+  const debouncedSearchName = debounce((value) => setName(value), 500);
+  const debouncedSearchUserId = debounce((value) => setUserId(value), 500);
+  const debouncedSearchPhone = debounce((value) => setPhone_number(value), 500);
+
   // Search handlers with debounce
   const handleNameSearch = (e) => {
-    setName(e?.target?.value);
+    setPage(1);
+    debouncedSearchName(e?.target?.value);
   };
 
   const handleUserIdSearch = (e) => {
-    setUserId(e?.target?.value);
+    setPage(1);
+    debouncedSearchUserId(e?.target?.value);
+  };
+  const handleUserPhoneNumberSearch = (e) => {
+    setPage(1);
+    debouncedSearchPhone(e?.target?.value);
   };
 
   const customFilterComponent = () => (
@@ -137,11 +151,20 @@ const UserListingTable = () => {
         }}
         onChange={handleNameSearch}
       />
+      <input
+        className="inputBox"
+        placeholder="Search by Phone Number"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleUserPhoneNumberSearch}
+      />
     </div>
   );
 
   if (isLoading) {
-    
     return (
       <span className="loadPage">
         <Atom color="#1c2434" size="medium" text="" textColor="" />

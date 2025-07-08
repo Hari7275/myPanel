@@ -93,11 +93,11 @@ export const ASTROLOGER_COLUMNS = [
     Header: "Location",
     accessor: "country",
   },
-  {
-    Header: "Status",
-    accessor: "profile_status",
-    Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "profile_status",
+  //   Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+  // },
   {
     Header: "Status",
     accessor: "status",

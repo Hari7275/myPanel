@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
@@ -77,6 +80,7 @@ const ListenersListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    dispatch(setCurrentProfileStatus(data?.status));
     // Use setTimeout or batch it after dispatch
     console.log("page in arrow.......", pageRef.current);
 

@@ -93,13 +93,12 @@ export const COACHES_COLUMNS = [
     Header: "Location",
     accessor: "country",
   },
-  {
-    Header: "Profile Status",
-    accessor: "profile_status",
-    Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
-    // Cell: StatusCell,
-    // Cell: ({ row }) => <Status row={row} />,
-  },
+  // {
+  //   Header: "Profile Status",
+  //   accessor: "profile_status",
+  //   Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+
+  // },
   {
     Header: "Status",
     accessor: "status",

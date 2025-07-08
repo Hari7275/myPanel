@@ -12,7 +12,10 @@ import { ArrowRight, Pencil } from "lucide-react";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -47,7 +50,7 @@ const CoachListingTable = () => {
     phone,
     consultant_type: 2,
   });
-  console.log("coach page........", page);
+
   useEffect(() => {
     pageRef.current = page;
   }, [page]);
@@ -83,8 +86,8 @@ const CoachListingTable = () => {
   const handleActionClick = useCallback(
     (data) => {
       dispatch(setCurrentConsultant(data?.id));
-      // Use setTimeout or batch it after dispatch
-      console.log("page in arrow.......", pageRef.current);
+      dispatch(setCurrentProfileStatus(data?.status));
+
       setTimeout(() => {
         navigate(`/coach-profile?${data?.id}`, {
           state: {
