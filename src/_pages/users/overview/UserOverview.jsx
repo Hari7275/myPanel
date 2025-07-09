@@ -3,6 +3,7 @@ import "../../../cssfolder/UserProfile.css";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -18,20 +19,27 @@ const InfoItem = ({ label, value }) => (
 const UserOverview = () => {
   const userId = useSelector((state) => state.user.userData);
 
-  const { data: fetchData } = useGetUserListQuery(userId);
+  const { data: fetchData, isLoading } = useGetUserListQuery(userId);
   const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     if (fetchData) {
-      setUserData(fetchData.data);
+      setUserData(fetchData?.data);
     }
   }, [fetchData]);
 
-  if (!userData) {
-    return <div>loading...</div>;
+  if (isLoading && !userData) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "N/A";
+    }
     return format(new Date(date), "PPpp");
   };
 
@@ -96,7 +104,7 @@ const UserOverview = () => {
 
             <InfoItem
               label="Last Active "
-              value={formatDate(userData.updatedAt || "N/A")}
+              value={formatDate(userData?.updatedAt)}
             />
             <div className="line"></div>
           </footer>

@@ -22,11 +22,11 @@ export const COACHCATEGORYCOLUMN = (toggleModal) => {
       accessor: "id",
     },
     {
-      Header: "Category Name",
+      Header: "Catg. Name",
       accessor: "category_name",
     },
     {
-      Header: "Category Background Color",
+      Header: "Catg. BG Color",
       accessor: "category_bg_color",
       Cell: ({ row }) => {
         const gradientColors = row?.original?.category_bg_color
@@ -45,7 +45,7 @@ export const COACHCATEGORYCOLUMN = (toggleModal) => {
       },
     },
     {
-      Header: "Category Card Background Color",
+      Header: "Catg. Card BG Color",
       accessor: "category_card_bg_color",
       Cell: ({ row }) => {
         const gradientColors = row.original.category_card_bg_color

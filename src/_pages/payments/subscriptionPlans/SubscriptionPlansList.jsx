@@ -122,6 +122,7 @@ const SubscriptionPlanList = () => {
         includeActions={false}
         tableTitle="Subscription Plan"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
       {showDescriptionModal && (

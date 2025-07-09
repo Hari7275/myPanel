@@ -7,8 +7,13 @@ import {
   getGenderLabel,
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
+import { Pencil } from "lucide-react";
+
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -48,6 +53,14 @@ const CoachLeftComponent = () => {
 
   const [data, setData] = useState({});
   const { openImageModal, ImageModal } = UseImageModal();
+  const [selectedData, setSelectedData] = useState(null);
+  const [showUpdateStatus, setShowUpdateStatus] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  console.log("location", location);
+  const profileStatus = useSelector((state) => state.consultant.profileStatus);
 
   const {
     data: fetchData,
@@ -70,9 +83,35 @@ const CoachLeftComponent = () => {
   const socialMediaLinks = data?.social_media || {};
   const age = data.date_of_birth ? calculateAge(data.date_of_birth) : "N/A";
 
+  const handleProfileClose = () => {
+    navigate("/coaches", {
+      state: {
+        previousPage: location.state?.currentPage || 1,
+        previousPageSize: location.state?.pageSize || 10,
+      },
+    });
+    // navigate(-1);
+  };
+
+  // this is for profile status
+  const handleShowUpdateStatus = () => {
+    setShowUpdateStatus(!showUpdateStatus);
+    setSelectedData(data.profile_status);
+  };
+
   return (
     //MAIN ROW CONTAINER ROW
-    <div className="user-details-container">
+    <div className="user-details-container" style={{ position: "relative" }}>
+      <div className="backButton" onClick={handleProfileClose}>
+        <img
+          src="/backbutton.png"
+          style={{
+            width: "16px",
+            objectFit: "cover",
+          }}
+        />
+        Go Back
+      </div>
       {/* FIRST COLUMN AS COACH DETAILS ROW */}
       <div className="user-details-row">
         {/* FIRST COLUMN OF COACH DETAILS (IMAGE SECTION) */}
@@ -88,18 +127,53 @@ const CoachLeftComponent = () => {
         {/* SECOND COLUMN: User Info (column layout) */}
         <div className="user-info-section">
           <div className="userName">
-            {`${data.first_name || ""} ${data.last_name || ""}`}
+            {`${data.first_name || ""} ${data.last_name || ""}`}({age})
           </div>
           <InfoItem label="Coach ID " value={data.id} />
 
-          <div className="active-status">
+          <div className="profile-img-section" style={{ width: "fit-content" }}>
+            {data?.profile_status == 1 ? (
+              <div className="active-status">
+                <img
+                  className="button-img"
+                  src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
+                  alt=""
+                />
+                <span>Active</span>
+
+                {/* <div className="edit-profile-img"> */}
+
+                {/* </div> */}
+              </div>
+            ) : (
+              <div className="inActive-status">
+                ❌<span>Inactive</span>
+              </div>
+            )}
+            {profileStatus == 3 && (
+              <button
+                className="edit-profile-active-status"
+                onClick={handleShowUpdateStatus}
+              >
+                <Pencil
+                  style={{
+                    background: "none",
+                    height: "14px",
+                    width: "14px",
+                  }}
+                />
+              </button>
+            )}
+          </div>
+
+          {/* <div className="active-status">
             <img
               className="button-img"
               src="https://cdn2.iconfinder.com/data/icons/greenline/512/check-512.png"
               alt=""
             />
             <span>Active</span>
-          </div>
+          </div> */}
         </div>
         {/* <footer className="card-footer">
           <div className="line"></div>
@@ -166,6 +240,15 @@ const CoachLeftComponent = () => {
 
       {/* <CoachStatus /> */}
       <ImageModal />
+
+      {showUpdateStatus && (
+        <UpdateConsultantProfileStatus
+          isOpen={showUpdateStatus}
+          onClose={handleShowUpdateStatus}
+          selectedData={selectedData}
+          consultantId={consultantId}
+        />
+      )}
     </div>
   );
 };

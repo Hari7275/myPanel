@@ -4,6 +4,7 @@ import { Trash } from "lucide-react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { EVENTPARTICIPANTSCOLUMN } from "./eventParticipantsColumn";
 import { useGetQDParticipantsListQuery } from "../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const EventsParticipantsModal = ({ isOpen, onClose, selectedRow }) => {
   const {
@@ -55,7 +56,11 @@ const EventsParticipantsModal = ({ isOpen, onClose, selectedRow }) => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (isError) {

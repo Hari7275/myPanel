@@ -15,6 +15,7 @@ import SessionSlot from "../../../_components/reuseComponents/sessionSlot/Sessio
 import LiveStream from "../../coaches/liveStream/LiveStream";
 import CoachStatus from "../../coaches/status/CoachStatus";
 import CommissionList from "../astrologerCommission/CommissionList";
+import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -25,6 +26,7 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           {activeComponent === "AstrologerInfo" && <AstrologerInfo />}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "account" && <AstrologerAccountList />}
+          {activeComponent === "Price-chart" && <AstrologerPriceListingTable />}
           {activeComponent === "AstrologerFollowers" && <AstrologerFollowers />}
 
           {activeComponent === "AstrologerOrder" && <AstrologerOrder />}

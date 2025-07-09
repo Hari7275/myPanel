@@ -4,6 +4,7 @@ import { USERTRANSACTIONCOLUMN } from "./userTransactionsColumn";
 import { useGetUserTransactionsListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import AddRechargePlan from "./AddRechargePlan";
+import { Atom } from "react-loading-indicators";
 
 const UserTransactionList = () => {
   const [addData, setAddData] = useState(false);
@@ -46,7 +47,13 @@ const UserTransactionList = () => {
     );
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (error) return <div>Error fetching data</div>;
 
   return (

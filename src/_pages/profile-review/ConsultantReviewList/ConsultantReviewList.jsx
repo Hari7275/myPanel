@@ -77,6 +77,7 @@ const ConsultantReviewList = () => {
   );
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
@@ -116,6 +117,7 @@ const ConsultantReviewList = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
       {data?.length === 0 && (
         <div>

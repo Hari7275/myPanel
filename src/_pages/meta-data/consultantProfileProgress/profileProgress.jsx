@@ -92,6 +92,7 @@ const ProfileProgress = () => {
         includeActions={false}
         tableTitle=" Consultant Profile Progress"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
       {addService && (
         <AddProfileProgress isOpen={addService} onClose={toggleAddService} />

@@ -51,6 +51,7 @@ const CountriesList = () => {
         data={data}
         includeActions={false}
         tableTitle="Country List"
+        showTableHeading={false}
       />
 
       {updateCountry && (

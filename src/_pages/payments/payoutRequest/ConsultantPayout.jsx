@@ -57,6 +57,7 @@ const ConsultantPayout = () => {
         includeActions={false}
         tableTitle="Payout Request"
         // AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
       {showPlanUpdate && (

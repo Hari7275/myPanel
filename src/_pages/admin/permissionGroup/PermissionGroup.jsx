@@ -7,12 +7,14 @@ import AddPermissionGroup from "./AddPermissionGroup";
 
 import UpdatePermissionGroup from "./UpdatePermissionGroup";
 import DeleteComponent from "../../payments/DeleteComponent";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetAdminPermissionGroupListQuery,
   useDeleteAdminPermissionGroupMutation,
 } from "../../../_store/api";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const PermissionGroup = () => {
   const [addData, setAddData] = useState(false);
@@ -20,16 +22,17 @@ const PermissionGroup = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminPermissionGroupListQuery();
+  const { data: fetchData, isLoading } = useGetAdminPermissionGroupListQuery();
   const [deleteData] = useDeleteAdminPermissionGroupMutation();
 
   const navigate = useNavigate();
   // const dispatch = useDispatch();
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data && fetchData?.data?.records) {
       setData(fetchData?.data?.records);
     } else setData([]);
   }, [fetchData]);
@@ -67,18 +70,20 @@ const PermissionGroup = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add new Permission
-      </button>
+      permissions?.["admin"]?.includes("create_admin_permission_group") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Permission Group
+        </button>
+      )
     );
   };
 
@@ -86,38 +91,58 @@ const PermissionGroup = () => {
     ...adminPermissionListColumn,
     {
       Header: () => <div className="actions-header">Actions</div>,
+
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            title="view details"
-            className="secondIcon"
-            style={{
-              display: "inline-block",
-              height: "35px",
-              width: "35px",
-            }}
-            onClick={() => handleActionClick(row.original)}
-            // onClick={() => handleViewDetails(row.original.id)}
-          >
-            <ArrowRight className="iconSmall" />
-          </span>
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("view_admin_permission_group") && (
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+              onClick={() => handleActionClick(row.original)}
+            >
+              <ArrowRight className="iconSmall" />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes(
+            "delete_admin_permission_group"
+          ) && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes(
+            "update_admin_permission_group"
+          ) && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>
@@ -127,6 +152,8 @@ const PermissionGroup = () => {
         includeActions={false}
         tableTitle="Permission Group"
         AddPackageButton={AddButton}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && (
         <AddPermissionGroup isOpen={addData} onClose={toggleAddData} />

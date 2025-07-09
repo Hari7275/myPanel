@@ -9,11 +9,13 @@ import AddAdminPermission from "./AddAdminPermission";
 import UpdateAdminPermission from "./UpdateAdminPermission";
 import DeleteComponent from "../../payments/DeleteComponent";
 import { useParams } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 import {
   useGetPermissionListQuery,
   useDeletePermissionMutation,
 } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AdminPermission = () => {
   const [addData, setAddData] = useState(false);
@@ -21,11 +23,14 @@ const AdminPermission = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   const { id } = useParams();
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetPermissionListQuery({ group_id: id });
+  const { data: fetchData, isLoading } = useGetPermissionListQuery({
+    group_id: id,
+  });
   const [deleteData] = useDeletePermissionMutation();
 
   useEffect(() => {
@@ -61,18 +66,20 @@ const AdminPermission = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        create group to permission
-      </button>
+      permissions?.["admin"]?.includes("create_admin_permission") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Create Permission
+        </button>
+      )
     );
   };
 
@@ -83,23 +90,36 @@ const AdminPermission = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon" aria-label=" button for update ">
-            <Pencil
-              aria-label="cancel button"
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("delete_admin_permission") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes("update_admin_permission") && (
+            <span className="editIcon" aria-label=" button for update ">
+              <Pencil
+                aria-label="cancel button"
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>
@@ -107,8 +127,10 @@ const AdminPermission = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Allow Permission to Group"
+        tableTitle="Permission List"
         AddPackageButton={AddButton}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && (
         <AddAdminPermission

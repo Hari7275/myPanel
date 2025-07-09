@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../cssfolder/sidebar.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import HistoryOutlinedIcon from "@mui/icons-material/HistoryOutlined";
@@ -12,6 +12,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 // import { hasPermission } from "../_store/api/tokenHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageTitle } from "../_store/slices/pageTitleSlice";
+import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
 
 import "aos/dist/aos.css";
 
@@ -23,9 +24,11 @@ const Sidebar = () => {
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
   const [isNotice, setIsNotice] = useState();
+  const [isQuickDate, setIsQuickDate] = useState();
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
+  const permissions = usePermissions();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -44,6 +47,9 @@ const Sidebar = () => {
   const noticeDropdown = () => {
     setIsNotice(!isNotice);
   };
+  const quickDateDropdown = () => {
+    setIsQuickDate(!isQuickDate);
+  };
 
   // code for highlighted text
 
@@ -51,9 +57,11 @@ const Sidebar = () => {
     setActiveItem(item);
   };
 
-  const permissions = useSelector((state) => state.auth?.permissions || {});
+  // const permissions = useSelector((state) => state.auth?.permissions || {});
 
-  console.log("permissions/////", permissions);
+  // console.log("permissions in sidebar", permissions);
+
+  console.log("permissions by hooks", permissions);
 
   return (
     <div className="sideContainer">
@@ -66,49 +74,64 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-grou">
-            <div className="menu-item-child">
-              <div className="child" onClick={adminDropdown}>
-                <SupervisorAccountIcon />
-                <span>Admin Section</span>
+            {/* allow permission */}
+            {permissions?.["admin"] && (
+              <div className="menu-item-child">
+                <div className="child" onClick={adminDropdown}>
+                  <SupervisorAccountIcon />
+                  <span>Admin Section</span>
 
-                <span>{isAdmin ? "⬇️" : "⬅️"}</span>
-              </div>
-
-              {isAdmin && (
-                <div className="menu-item-sub">
-                  <Link to="admin-roles">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "Roles" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("Roles")}
-                    >
-                      <div className="dropdown-item"> Roles</div>
-                    </div>
-                  </Link>
-                  <Link to="/admin-permission">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "Permission" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("Permission")}
-                    >
-                      <div className="dropdown-item">Permission </div>
-                    </div>
-                  </Link>
-                  <Link to="/admin-user">
-                    <div
-                      className={`menu-item ${
-                        activeItem === "admin-user" ? "active" : ""
-                      }`}
-                      onClick={() => handleItemClick("admin-user")}
-                    >
-                      <div className="dropdown-item">Admin User </div>
-                    </div>
-                  </Link>
+                  <span>{isAdmin ? "⬇️" : "⬅️"}</span>
                 </div>
-              )}
-            </div>
+
+                {isAdmin && (
+                  <div className="menu-item-sub">
+                    {permissions?.["admin"]?.includes("view_admin_role") && ( //permission for role
+                      <Link to="admin-roles">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "Roles" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("Roles")}
+                        >
+                          <div className="dropdown-item"> Roles</div>
+                        </div>
+                      </Link>
+                    )}
+                    {permissions?.["admin"]?.includes(
+                      "view_admin_permission_group_section"
+                    ) && (
+                      <Link to="/admin-permission">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "Permission" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("Permission")}
+                        >
+                          <div className="dropdown-item">Permission Group </div>
+                        </div>
+                      </Link>
+                    )}
+
+                    {permissions?.["admin"]?.includes(
+                      "view_admin_users_section"
+                    ) && (
+                      <Link to="/admin-user">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "admin-user" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("admin-user")}
+                        >
+                          <div className="dropdown-item">Admin User </div>
+                        </div>
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+
             <div>
               {/* {permissions?.["Dashboard"] && ( */}
               <Link to="/dashboard">
@@ -152,7 +175,7 @@ const Sidebar = () => {
                     width="24"
                     height="24"
                   />
-                  <span>Coaches </span>
+                  <span>Coaches</span>
                 </div>
               </Link>
 
@@ -167,7 +190,7 @@ const Sidebar = () => {
                   <span>Listeners</span>
                 </div>
               </Link>
-
+              {/* {permissions?.["dashboard"] && ( */}
               <Link to="/astrologer">
                 <div
                   className={`menu-item ${
@@ -184,6 +207,7 @@ const Sidebar = () => {
                   <span>Astrologer</span>
                 </div>
               </Link>
+              {/* )} */}
             </div>
           </div>
 
@@ -196,7 +220,7 @@ const Sidebar = () => {
                 onClick={() => handleItemClick("Order")}
               >
                 <CardGiftcardOutlinedIcon />
-                <span>Order</span>
+                <span>Orders</span>
               </div>
             </Link>
 
@@ -222,7 +246,7 @@ const Sidebar = () => {
                 width="24"
                 height="24"
               />
-              <span>Payment Services</span>
+              <span>Payments</span>
 
               <span>{isPayment ? "⬇️" : "⬅️"}</span>
             </div>
@@ -332,7 +356,7 @@ const Sidebar = () => {
           <div className="menu-item-child">
             <div className="child" onClick={toggleDropdown}>
               <ManageHistoryOutlinedIcon />
-              <span>Profile Options</span>
+              <span>Dating Meta Data</span>
 
               <span>{isDropdownOpen ? "⬇️" : "⬅️"}</span>
             </div>
@@ -419,6 +443,56 @@ const Sidebar = () => {
               </div>
             )}
           </div>
+
+          {/* Quick Date */}
+
+          <div className="menu-item-child">
+            <div className="child" onClick={quickDateDropdown}>
+              <img
+                src="/adminPannel_icons/QD trips.png"
+                width="24"
+                height="24"
+              />
+              <span>Quick Date</span>
+
+              <span>{isQuickDate ? "⬇️" : "⬅️"}</span>
+            </div>
+
+            {isQuickDate && (
+              <div className="menu-item-sub">
+                <Link to="qd-trips">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "qd-trips" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("qd-trips")}
+                  >
+                    <img
+                      src="/adminPannel_icons/QD trips.png"
+                      width="24"
+                      height="24"
+                    />
+                    <div className="dropdown-item">QD Trips</div>
+                  </div>
+                </Link>
+                <Link to="/qd-location">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "qd-location" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("qd-location")}
+                  >
+                    <img
+                      src="/adminPannel_icons/QD_location.png"
+                      width="24"
+                      height="24"
+                    />
+                    <div className="dropdown-item">QD Location</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
           <div className="menu-group">
             <Link to="/user-support">
               <div
@@ -436,7 +510,7 @@ const Sidebar = () => {
               </div>
             </Link>
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "package Update" ? "active" : ""
               }`}
@@ -448,11 +522,11 @@ const Sidebar = () => {
                   width="24"
                   height="24"
                 />
-                <span>package Update</span>
+                <span>Package Update</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "QD Trips" ? "active" : ""
               }`}
@@ -466,9 +540,9 @@ const Sidebar = () => {
                 />
                 <span>QD Trips</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "qd-location" ? "active" : ""
               }`}
@@ -480,11 +554,11 @@ const Sidebar = () => {
                   width="24"
                   height="24"
                 />
-                <span>QD Loaction</span>
+                <span>QD Location</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div
+            {/* <div
               className={`menu-item ${
                 activeItem === "feedback" ? "active" : ""
               }`}
@@ -498,12 +572,12 @@ const Sidebar = () => {
                 />
                 <span>Feedback</span>
               </Link>
-            </div>
+            </div> */}
 
-            <div className="menu-item">
+            {/* <div className="menu-item">
               <HistoryOutlinedIcon />
               <span>Next Entry</span>
-            </div>
+            </div> */}
           </div>
         </div>
       ) : (
@@ -547,6 +621,7 @@ const Sidebar = () => {
               <div className="item">
                 <img
                   src="/adminPannel_icons/Coach.png"
+                  // src="/adminPannel_icons/astrologers.png"
                   width="24"
                   height="24"
                 />

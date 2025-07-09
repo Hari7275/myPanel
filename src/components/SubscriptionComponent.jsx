@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "../cssfolder/subscriptionPackage.css";
 import AcUnitIcon from "@mui/icons-material/AcUnit";
 import PersonOutlineIcon from "@mui/icons-material/PersonOutline";
@@ -7,10 +7,10 @@ import { useDispatch } from "react-redux";
 import { setPageTitle } from "../_store/slices/pageTitleSlice";
 
 const GoodVibes = ({ selectedOption, handleChange, options }) => {
-  const dispatch  = useDispatch();
-  useEffect(()=>{
+  const dispatch = useDispatch();
+  useEffect(() => {
     dispatch(setPageTitle("Package Update"));
-  },[])
+  }, []);
   return (
     <div className="sub-second-section">
       <div>
@@ -48,7 +48,6 @@ const GoodVibes = ({ selectedOption, handleChange, options }) => {
 };
 
 const SubscriptionComponent = () => {
-  
   const [selectedOption, setSelectedOption] = useState(null);
   const options = [
     { value: "location1", label: "Location 1" },
@@ -167,9 +166,15 @@ const SubscriptionComponent = () => {
           </div>
           <div>
             <label className="sub-label">Good Vibes Enable</label>
-            <div className="second-section-checkbox">
-              <input type="checkbox" />
-              <div>Yes</div>
+            <div style={{ display: "flex" }}>
+              <div className="second-section-checkbox">
+                <input type="checkbox" />
+                <div>Yes</div>
+              </div>
+              <div className="second-section-checkbox" >
+                <input type="checkbox" />
+                <div>No</div>
+              </div>
             </div>
           </div>
           <div>

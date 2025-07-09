@@ -1,150 +1,172 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { toast } from "react-hot-toast";
 
 import {
-  useGetConsultantListQuery,
   useGetNoticeListQuery,
   useCreateAssigneConsultantNoticeMutation,
-  useGetConsultantAssignedNoticeListQuery,
+  useGetConsultantListAssignedNoticeQuery,
+  useDeleteAssigneConsultantNoticeMutation,
 } from "../../../../_store/api";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-
-const consultantTypes = [
-  { label: "All", value: "all" },
-  { label: "Astrologer", value: "astrologer" },
-  { label: "Coach", value: "coach" },
-  { label: "Listener", value: "listener" },
-];
 
 const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
-  const [selectedType, setSelectedType] = useState("all");
   const [selectedConsultants, setSelectedConsultants] = useState([]);
   const [selectedNotice, setSelectedNotice] = useState(null);
-
   const [options, setOptions] = useState([]);
   const [noticeListData, setNoticeListData] = useState([]);
-  const { data: fetchData } = useGetConsultantListQuery();
+  const [formData, setFormData] = useState({ description: "" });
+
   const { data: noticeList } = useGetNoticeListQuery();
-  const { data: assignedNotice } = useGetConsultantAssignedNoticeListQuery({});
+  const { data: consultantList } = useGetConsultantListAssignedNoticeQuery(
+    { noticeId: selectedNotice?.value },
+    { skip: !selectedNotice } //
+  );
+
   const [createData, { isLoading }] =
     useCreateAssigneConsultantNoticeMutation();
 
-  const [formData, setFormData] = useState({
-    description: "",
-  });
+  const [deleteData, { isLoading: isDeleting }] =
+    useDeleteAssigneConsultantNoticeMutation();
 
-  const handleDescriptionChange = (html) => {
-    setFormData((prevData) => ({ ...prevData, description: html }));
+  // Custom Option Component with Checkbox
+  const CustomOption = ({ innerRef, innerProps, label, isSelected }) => (
+    <div
+      ref={innerRef}
+      {...innerProps}
+      style={{
+        padding: "8px 12px",
+        display: "flex",
+        alignItems: "center",
+        cursor: "pointer",
+        backgroundColor: isSelected ? "#f0f0f0" : "white",
+      }}
+    >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        readOnly
+        style={{ marginRight: "8px" }}
+      />
+      {label}
+    </div>
+  );
+
+  // Custom Menu with Select All/Deselect All
+  const CustomMenu = ({ children, ...props }) => {
+    const allSelected =
+      selectedConsultants.length === options.length && options.length > 0;
+
+    const handleSelectAll = () => {
+      if (allSelected) {
+        setSelectedConsultants([]);
+      } else {
+        setSelectedConsultants(options);
+      }
+    };
+
+    return (
+      <components.Menu {...props}>
+        <div
+          onClick={handleSelectAll}
+          style={{
+            padding: "8px 12px",
+            display: "flex",
+            alignItems: "center",
+            cursor: "pointer",
+            backgroundColor: "#f0f0f0",
+            fontWeight: "bold",
+            borderBottom: "1px solid #e0e0e0",
+          }}
+        >
+          <input
+            type="checkbox"
+            checked={allSelected}
+            readOnly
+            style={{ marginRight: "8px" }}
+          />
+          {allSelected ? "Deselect All" : "Select All"}
+        </div>
+        {children}
+      </components.Menu>
+    );
   };
 
+  // Load notice list
   useEffect(() => {
-    if (noticeList && noticeList?.data) {
-      setNoticeListData(noticeList?.data);
-      // Set the initial selected notice to the passed selectedRow
-
-      const notice = noticeList.data;
-      if (notice) {
-        setSelectedNotice({
-          value: notice.id,
-          label: notice.title,
-        });
-        setFormData({ description: notice.description });
-      }
+    if (noticeList?.data) {
+      setNoticeListData(noticeList.data);
     }
   }, [noticeList]);
 
+  // Load consultants based on selected notice and auto-select
   useEffect(() => {
-    if (fetchData?.data && assignedNotice?.data) {
-      const assignedIds = assignedNotice.data.map((item) => item.consultant_id);
-      const filtered = fetchData.data
-        .filter((item) => !assignedIds.includes(item.id))
-        .filter((item) =>
-          selectedType === "all"
-            ? true
-            : item?.type?.toLowerCase() === selectedType
-        )
-        .map((item) => ({
-          value: item.id,
-          label: `${item.id} - ${item.full_name || item.first_name || "N/A"}`,
-        }));
-      setOptions(filtered);
+    if (consultantList?.data) {
+      const consultantOptions = consultantList.data.map((item) => ({
+        value: item.id,
+        label: `${item.ConsultantProfile.id} - ${
+          item?.ConsultantProfile?.full_name ||
+          item?.ConsultantProfile?.first_name ||
+          "N/A"
+        }`,
+      }));
+      setOptions(consultantOptions);
+      setSelectedConsultants(consultantOptions); // ✅ auto-select all
+    } else {
+      setOptions([]);
+      setSelectedConsultants([]);
     }
-  }, [fetchData, assignedNotice, selectedType]);
+  }, [consultantList]);
 
+  // Handle Notice Change
   const handleNoticeChange = (selectedOption) => {
     setSelectedNotice(selectedOption);
-    if (selectedOption) {
-      const notice = noticeListData.find(
-        (item) => item.id === selectedOption.value
-      );
-      if (notice) {
-        setFormData({ description: notice.description });
-      }
+    const notice = noticeListData.find(
+      (item) => item.id === selectedOption?.value
+    );
+    if (notice) {
+      setFormData({ description: notice.description });
+    } else {
+      setFormData({ description: "" });
     }
   };
 
   const handleSubmit = async () => {
-    const consultantIds = selectedConsultants.map((c) => c.value);
-    if (!consultantIds.length || !selectedNotice) {
-      toast.error("Please fill all required fields");
+    // Extract assign_id values from selected consultants
+    const assignIds = selectedConsultants.map(
+      (consultant) => consultant?.value
+    );
+
+    if (!Array.isArray(assignIds) || assignIds.length === 0) {
+      alert("Please select at least one consultant.");
       return;
     }
 
     const payload = {
-      notice_id: selectedNotice.value,
-      consultant_ids: consultantIds,
-      description: formData.description,
+      id: assignIds, // Pass the array of assign_id values
     };
 
+    console.log("payload", payload);
+
+    // return;
+
     try {
-      await createData(payload).unwrap();
-      toast.success("Assigned successfully!");
-      onClose();
+      const response = await deleteData(payload).unwrap();
+      console.log("resposne",response)
+      if (response.status) {
+        toast.success(response.message);
+        onClose();
+      } else {
+        toast.error(response.message);
+        return;
+      }
     } catch (error) {
-      toast.error(error?.data?.message || "Submission failed");
+      console.error("Error submitting data:", error);
+      if (error?.data?.message) {
+        alert(`Submission failed: ${error.data.message}`);
+      }
     }
   };
-
-  // Quill modules and formats configuration
-  const quillModules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      [{ direction: "rtl" }],
-      [{ color: [] }, { background: [] }],
-      [{ font: [] }],
-      [{ align: [] }],
-      ["link", "image", "video"],
-      ["clean"],
-    ],
-  };
-
-  const quillFormats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "script",
-    "indent",
-    "direction",
-    "color",
-    "background",
-    "font",
-    "align",
-    "link",
-    "image",
-    "video",
-  ];
 
   return (
     <ReactModal
@@ -152,6 +174,7 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
       onRequestClose={onClose}
       className="modal"
       overlayClassName="overlay"
+      ariaHideApp={false}
     >
       <div style={{ minWidth: "500px", padding: "20px" }}>
         <h2
@@ -167,22 +190,7 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
           Remove Notice
         </h2>
 
-        {/* Consultant Type Filter */}
-        <div className="ProfileData-checklist">
-          {consultantTypes.map((type) => (
-            <label key={type.value} className="input-group-options">
-              <input
-                type="radio"
-                checked={selectedType === type.value}
-                onChange={() => setSelectedType(type.value)}
-                className="input-group-radio"
-              />
-              {type.label}
-            </label>
-          ))}
-        </div>
-
-        {/* Notice Select */}
+        {/* Notice Dropdown */}
         <label
           style={{
             fontSize: "20px",
@@ -202,9 +210,10 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
           onChange={handleNoticeChange}
           placeholder="Select Notice"
           className="mb-4"
+          isClearable
         />
 
-        {/* Consultant Select */}
+        {/* Consultant Dropdown */}
         <label
           style={{
             fontSize: "20px",
@@ -220,10 +229,28 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
           options={options}
           value={selectedConsultants}
           onChange={setSelectedConsultants}
-          placeholder="Select"
+          placeholder="Select Consultants"
+          components={{
+            Option: CustomOption,
+            Menu: CustomMenu,
+          }}
+          hideSelectedOptions={false}
+          closeMenuOnSelect={false}
+          styles={{
+            control: (provided) => ({
+              ...provided,
+              minHeight: "44px",
+            }),
+            menu: (provided) => ({
+              ...provided,
+              zIndex: 9999,
+            }),
+          }}
+          isClearable={false}
+          isDisabled={!selectedNotice} // 🚫 disable if no notice selected
         />
 
-        {/* Submit Button */}
+        {/* Submit & Back */}
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
@@ -232,7 +259,6 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
           >
             Back
           </button>
-
           <button
             className="fifthButton"
             style={{ backgroundColor: "green" }}

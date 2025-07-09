@@ -6,18 +6,20 @@ import {
 } from "../../../_store/api";
 import { useParams } from "react-router-dom";
 import toast from "react-hot-toast";
+import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AssignPermissionToRole = () => {
   const { id } = useParams(); // Assuming route has role_id as a param
-  const { data: fetchData } = useGetAdminAssignPermissionListQuery();
-  const { data: selectedPermission } = useGetAdminselectedPermissionListQuery(
-    parseInt(id)
-  );
+  const { data: fetchData, isLoading } = useGetAdminAssignPermissionListQuery();
+  const { data: selectedPermission, isLoading: isGetting } =
+    useGetAdminselectedPermissionListQuery(parseInt(id));
   const [updateData, { isLoading: isUpdating }] =
     useCreateAdminRolePermissionMutation();
 
   const [data, setData] = useState([]);
   const [selectedPermissions, setSelectedPermissions] = useState({});
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData) {
@@ -38,7 +40,6 @@ const AssignPermissionToRole = () => {
       });
 
       setSelectedPermissions(mappedPermissions);
-      console.log("mappedPermissions", mappedPermissions);
     }
   }, [selectedPermission]);
 
@@ -81,11 +82,25 @@ const AssignPermissionToRole = () => {
     }
   };
 
+  if (isLoading && isGetting) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
+
   return (
-    <div className="ProfileData-card">
-      <h2 className="tableHeadingDiv" style={{ padding: "20px 40px" }}>
+    <div
+      className="ProfileData-card"
+      style={{
+        overflow: "scroll",
+        height: "calc(-67px + 100vh)",
+      }}
+    >
+      {/* <h2 className="tableHeadingDiv" style={{ padding: "20px 40px" }}>
         Assign Permissions
-      </h2>
+      </h2> */}
       <form onSubmit={handleSubmit}>
         <div className="row-inside" style={{ margin: "20px 60px" }}>
           <div className="col-12">
@@ -116,10 +131,13 @@ const AssignPermissionToRole = () => {
               </div>
             ))}
           </div>
+
           <div className="divider"></div>
-          <button type="submit" className="fifthButton" disabled={isUpdating}>
-            {isUpdating ? "Updating..." : "Update Permissions"}
-          </button>
+          {permissions?.["admin"]?.includes("assign_role_permissions") && (
+            <button type="submit" className="fifthButton" disabled={isUpdating}>
+              {isUpdating ? "Updating..." : "Update Permissions"}
+            </button>
+          )}
         </div>
       </form>
     </div>

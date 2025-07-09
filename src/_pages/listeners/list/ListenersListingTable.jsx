@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
@@ -67,7 +70,7 @@ const ListenersListingTable = () => {
       setPage(location.state.previousPage);
       setPageSize(location.state.previousPageSize);
     }
-  }, [location.state])
+  }, [location.state]);
 
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
@@ -77,6 +80,7 @@ const ListenersListingTable = () => {
 
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    dispatch(setCurrentProfileStatus(data?.status));
     // Use setTimeout or batch it after dispatch
     console.log("page in arrow.......", pageRef.current);
 
@@ -84,8 +88,8 @@ const ListenersListingTable = () => {
       navigate(`/listener_Profile?${data?.id}`, {
         state: {
           currentPage: pageRef.current,
-          pageSize: pageSize
-        }
+          pageSize: pageSize,
+        },
       });
     }, 0);
   };
@@ -149,14 +153,17 @@ const ListenersListingTable = () => {
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
   const handleNameSearch = (e) => {
+    setPage(1);
     debouncedSearchName(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
   const handleConsultantPhoneSearch = (e) => {
+    setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
 
@@ -221,6 +228,8 @@ const ListenersListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
 
       {data?.length == 0 && (

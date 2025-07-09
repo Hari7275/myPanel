@@ -79,20 +79,20 @@ const ConsultantNoticeList = () => {
           }}
           onClick={() => toggleUnAssignNoticeNotice(data)}
         >
-          Unassign
+          Remove Notice
         </button>
 
         <button
           className="addButton"
           style={{
             position: "absolute",
-            right: "125px",
+            right: "175px",
             backgroundColor: "#18B164",
             padding: "6px",
           }}
           onClick={toggleAddData}
         >
-          Assign Notice
+          Add Notice
         </button>
       </>
     );
@@ -138,6 +138,7 @@ const ConsultantNoticeList = () => {
         includeActions={false}
         tableTitle="Notice Logs"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {showDescription && (

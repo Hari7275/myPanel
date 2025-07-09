@@ -70,6 +70,9 @@
 }
 
 .crossIcon {
+  position: absolute;
+  right: 2%;
+  top: 10%;
   cursor: pointer;
   background: #1c2434;
   color: white !important;
@@ -99,7 +102,6 @@
   padding: 1rem;
   border-radius: 10px;
 }
-
 
 /* Flex row layout */
 .user-details-row {
@@ -147,6 +149,51 @@
   border-radius: 5px;
   width: max-content;
   padding: 2px 5px;
+}
+
+.inActive-status {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  color: red;
+  font-weight: 500;
+  border: #ed8282 1px solid;
+  border-radius: 5px;
+  width: max-content;
+  padding: 2px 5px;
+  font-size: 16px !important;
+}
+
+/* back button */
+
+.backButton {
+  /* Positioning */
+  position: absolute;
+  right: 1%;
+  top: 10%;
+
+  padding: 8px 10px !important;
+
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  color: black;
+  border: 1px solid #1d2432;
+  border-radius: 12px;
+  box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  cursor: pointer;
+}
+
+.backButton:hover {
+  scale: 1.04;
+  transition: ease-in 0.3s;
 }
 
 /* Social icons section */
@@ -201,6 +248,8 @@
     border-right: none;
     border-bottom: 1px solid #eaeaea;
     padding: 10px 0;
+    max-height: calc(100vh - 220px);
+    overflow-y: scroll;
   }
 
   .nav-link {

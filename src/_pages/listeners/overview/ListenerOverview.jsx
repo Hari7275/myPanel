@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
+
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
     <div className="info-pair">
@@ -39,7 +43,11 @@ const ListenerOverview = () => {
   };
 
   if (isLoading) {
-    return <span> loading .....</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (error) {
@@ -52,20 +60,21 @@ const ListenerOverview = () => {
           <footer className="userProfile-footer">
             <div className="userProfile-footer-content">
               <InfoItem
-                label="Listener Language"
+                label="Mobile Number"
+                value={`${data?.phone_code} ${data?.phoneNumber}`}
+              />
+              <InfoItem
+                label="Language"
                 value={(data?.languages || [])
                   .map((language) => capitalizeFirstLetter(language))
                   .join(", ")}
               />
               <div className="line"></div>
 
-              <InfoItem label="Listener Country" value={data?.country} />
+              <InfoItem label="Country" value={data?.country} />
               <div className="line"></div>
 
-              <InfoItem
-                label="Listener Address"
-                value={data?.address || "N/A"}
-              />
+              <InfoItem label="Address" value={data?.address || "N/A"} />
               <div className="line"></div>
 
               <InfoItem

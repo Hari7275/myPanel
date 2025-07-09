@@ -31,6 +31,7 @@ const ConsultantPayoutHistory = () => {
         includeActions={false}
         tableTitle="Payout History"
         // AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
     

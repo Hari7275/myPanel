@@ -254,7 +254,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             type="text"
             id="first_name"
             name="first_name"
-            value={formData.first_name}
+            value={formData?.first_name}
             onChange={handleChange}
           />
           <UpdateInputField
@@ -275,6 +275,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            disabled={true}
           />
           <div className="input-container">
             <label htmlFor="gender">Gender</label>

@@ -1,5 +1,3 @@
-
-
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 const CustomIdCell = ({ value }) => {
   return <span className="orderId-color">{value}</span>;
@@ -11,8 +9,8 @@ const OrderIdCell = ({ value }) => {
 
 export const COLUMNORDER = [
   {
-    Header: "GiftId",
-    accessor: "gift_id",
+    Header: "Id",
+    accessor: "id",
     Cell: OrderIdCell,
   },
   {

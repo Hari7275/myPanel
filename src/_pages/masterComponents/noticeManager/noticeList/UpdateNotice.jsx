@@ -121,7 +121,7 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
             textAlign: "center",
           }}
         >
-          Update Gift
+          Update Notice
         </h2>
 
         <div style={{ display: "flex", justifyContent: "space-between" }}>

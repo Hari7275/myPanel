@@ -111,6 +111,7 @@ const ConsultantServiceRate = () => {
         includeActions={false}
         tableTitle=" Consultant Service Rate"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
       {addService && (
         <AddServiceRate isOpen={addService} onClose={toggleAddService} />

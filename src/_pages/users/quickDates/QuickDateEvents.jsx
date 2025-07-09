@@ -5,9 +5,10 @@ import { ArrowRight } from "lucide-react";
 import EventsParticipantsModal from "./EventsParticipantsModal";
 import { useGetQDEventsListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const QuickDateEvents = () => {
-  const [selectedRow , setSelectedRow]=  useState(null)
+  const [selectedRow, setSelectedRow] = useState(null);
   const userId = useSelector((state) => state.user.userData);
 
   const {
@@ -27,8 +28,7 @@ const QuickDateEvents = () => {
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
 
   const toggleParticipantsModal = (row) => {
-   
-    setSelectedRow(row)
+    setSelectedRow(row);
     setShowParticipantsModal(!showParticipantsModal);
   };
 
@@ -58,12 +58,17 @@ const QuickDateEvents = () => {
     []
   );
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (isError) return <div>Error loading data.</div>;
 
   return (
     <>
-  
       {data.length > 0 ? (
         <CommonTable
           columns={columns}

@@ -91,10 +91,28 @@
   border: none;
   cursor: pointer;
 } */
- .edit-profile-icon {
+.edit-profile-icon {
   position: absolute;
   top: 8px;
   right: 8px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #9c1ef0;
+  border: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.edit-profile-active-status {
+  position: absolute;
+  top: -10px;
+  right: -10px;
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -173,6 +191,8 @@
   padding: 20px 0;
   min-width: 250px;
   border-right: 1px solid #eaeaea;
+  max-height: calc(100vh - 220px);
+  overflow-y: scroll;
 }
 
 .nav-link {
@@ -203,7 +223,7 @@
 }
 
 .nav-link.active::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   top: 0;

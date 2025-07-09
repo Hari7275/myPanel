@@ -129,13 +129,7 @@ const DatingProducts = () => {
 
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={result}
-        includeActions={false}
-        tableTitle=" Dating Products"
-        AddPackageButton={AddPackageButton}
-      /> */}
+      
 
       <DyCommonTable
         columns={columns}
@@ -149,6 +143,7 @@ const DatingProducts = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
 
       {showDescriptionModal && (

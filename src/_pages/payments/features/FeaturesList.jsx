@@ -123,6 +123,7 @@ const FeaturesList = () => {
         includeActions={false}
         tableTitle="Features List"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
       />
 
       {showFeaturesUpdate && (

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { useSearchParams } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const AstrologerPriceListingTable = () => {
   const [data, setData] = useState([]);
@@ -59,20 +60,26 @@ const AstrologerPriceListingTable = () => {
             </span>
           )}
 
-          {row.original.status == 2 && (
+          {/* {row.original.status == 2 && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
-          )}
+          )} */}
         </div>
       ),
     },
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (isError) return <div>Error loading data.</div>;
 
   return (

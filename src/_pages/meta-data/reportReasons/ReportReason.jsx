@@ -101,6 +101,7 @@ const ReportReason = () => {
         includeActions={false}
         tableTitle="Report Reason"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && <AddReportReason isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

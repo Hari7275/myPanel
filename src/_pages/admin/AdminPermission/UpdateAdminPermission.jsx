@@ -70,7 +70,7 @@ const UpdateAdminPermission = ({ isOpen, onClose, selectedRow }) => {
             textAlign: "center",
           }}
         >
-          Update Group
+          Update Permission
         </h2>
 
         <form
@@ -81,7 +81,7 @@ const UpdateAdminPermission = ({ isOpen, onClose, selectedRow }) => {
         >
           <div style={{ display: "flex" }}>
             <UpdateInputField
-              label="Group Name"
+              label="Permission Name"
               type="text"
               id="name"
               name="name"

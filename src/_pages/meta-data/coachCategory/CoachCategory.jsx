@@ -113,6 +113,7 @@ const CoachCategory = () => {
         includeActions={false}
         tableTitle=" Consultant Categories"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       <Modal
         isOpen={modalIsOpen}

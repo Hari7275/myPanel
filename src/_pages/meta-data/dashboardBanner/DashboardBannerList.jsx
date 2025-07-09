@@ -153,6 +153,7 @@ const DashboardBannerList = () => {
         includeActions={false}
         tableTitle=" Dashboard Bannner list"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {addData && (

@@ -5,107 +5,130 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
     <>
       <div className="vertical-nav">
         <div
-          className={`nav-link ${activeComponent === "Overview" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "Overview" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("Overview")}
         >
-          <span>overview</span>
+          <span>Overview</span>
         </div>
         <div
-          className={`nav-link ${activeComponent === "CoachStatus" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("CoachStatus")}
-        >
-          <span>Coach Status</span>
-        </div>
-
-        <div
-          className={`nav-link ${activeComponent === "AstrologerInfo" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "AstrologerInfo" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("AstrologerInfo")}
         >
           <span>Update Info</span>
         </div>
         <div
-          className={`nav-link ${activeComponent === "Gallery" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "Profile-Progress" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Profile-Progress")}
+        >
+          <span>Onboarding Progress</span>
+        </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "Gallery" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("Gallery")}
         >
           <span>Gallery</span>
         </div>
+
         <div
-          className={`nav-link ${activeComponent === "account" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("account")}
-        >
-          <span>Accounts</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("Wallet")}
-        >
-          <span>Wallet</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "AstrologerOrder" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "AstrologerOrder" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("AstrologerOrder")}
         >
-          <span>orders</span>
+          <span>Orders</span>
         </div>
         <div
-          className={`nav-link ${activeComponent === "AstrologerFollowers" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("AstrologerFollowers")}
-        >
-          <span>Followers</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "AstroReviewsListingTable" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("AstroReviewsListingTable")}
-        >
-          <span>review & notifications</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "AstrologerGifts" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "AstrologerGifts" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("AstrologerGifts")}
         >
           <span>Gifts</span>
         </div>
 
         <div
-          className={`nav-link ${activeComponent === "live-stream" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("live-stream")}
-        >
-          <span>Live stream</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "Profile-Progress" ? "active" : ""
-            }`}
-          onClick={() => onComponentChange("Profile-Progress")}
-        >
-          <span>Profile Progress</span>
-        </div>
-
-        <div
-          className={`nav-link ${activeComponent === "session-slot" ? "active" : ""
-            }`}
+          className={`nav-link ${
+            activeComponent === "session-slot" ? "active" : ""
+          }`}
           onClick={() => onComponentChange("session-slot")}
         >
-          <span>Session Appointment</span>
+          <span>Appointment Session</span>
         </div>
 
         <div
-          className={`profile-link ${
+          className={`nav-link ${
+            activeComponent === "live-stream" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("live-stream")}
+        >
+          <span>Live Stream</span>
+        </div>
+        <div
+          className={`nav-link ${
+            activeComponent === "AstrologerFollowers" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("AstrologerFollowers")}
+        >
+          <span>Followers</span>
+        </div>
+        <div
+          className={`nav-link ${
+            activeComponent === "AstroReviewsListingTable" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("AstroReviewsListingTable")}
+        >
+          <span>Reviews</span>
+        </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "account" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("account")}
+        >
+          <span>Bank Details</span>
+        </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "Price-chart" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("Price-chart")}
+        >
+          <span>Price Chart</span>
+        </div>
+        <div
+          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}
+          onClick={() => onComponentChange("Wallet")}
+        >
+          <span>Wallet</span>
+        </div>
+
+        <div
+          className={`nav-link  ${
             activeComponent === "consultant-commission" ? "active" : ""
           }`}
           onClick={() => onComponentChange("consultant-commission")}
         >
-          <span>commission</span>
+          <span>Flute Commission</span>
+        </div>
+
+        <div
+          className={`nav-link ${
+            activeComponent === "CoachStatus" ? "active" : ""
+          }`}
+          onClick={() => onComponentChange("CoachStatus")}
+        >
+          <span>Service Status</span>
         </div>
         {/* <div
           className={`nav-link ${

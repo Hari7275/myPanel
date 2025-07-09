@@ -3,7 +3,7 @@ import ListenerOverview from "../overview/ListenerOverview";
 import ListenerInfo from "../info/ListenerInfo";
 // import ListenerGallery from "../gallery/ListenerGallery";
 import Gallery from "../gallery/Gallery";
-import ListenerAccountList from "../account/ListenerAccountList";
+import ListenerAccountList from "../bankAccount/ListenerAccountList";
 import ListenerFollowers from "../followers/ListenerFollowers";
 import ListenerOrder from "../orders/ListenerOrder";
 import Wallet from "../wallet/Wallet";
@@ -13,6 +13,8 @@ import ConlstProfileProgressList from "../../../_components/reuseComponents/cons
 // import SessionSlot from "../../../_components/reuseComponents/sessionSlot/SessionSlot";
 import CoachStatus from "../../coaches/status/CoachStatus";
 import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
+
+import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -25,6 +27,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
           {activeComponent === "ListenerInfo" && <ListenerInfo />}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "ListenerAccount" && <ListenerAccountList />}
+
           {activeComponent === "ListenerFollowers" && <ListenerFollowers />}
           {activeComponent === "ListenerReviewsListingTable" && (
             <ListenerReviewsListingTable />
@@ -36,9 +39,12 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ConlstProfileProgressList />
           )}
           {activeComponent === "consultant-commission" && <CommissionList />}
+          {activeComponent === "Price-chart" && <ListenersPriceListingTable />}
 
           {/* {activeComponent === "session-slot" && <SessionSlot />} */}
-          {activeComponent === "CoachStatus" && <CoachStatus listenerType={listenerType} />}
+          {activeComponent === "CoachStatus" && (
+            <CoachStatus listenerType={listenerType} />
+          )}
         </div>
       </div>
     </>

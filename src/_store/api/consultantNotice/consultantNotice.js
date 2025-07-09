@@ -24,6 +24,18 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       providesTags: ["notice"],
     }),
 
+    // ye api notice list jis consultant ko assign hai uski list get karne ke liye hai
+    getConsultantListAssignedNotice: builder.query({
+      query: ({ noticeId }) => ({
+        url: `/api/v1/consultant/profile/admin/notices/assign-list/${noticeId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["notice"],
+    }),
+
     getConsultantList: builder.query({
       query: ({ type }) => ({
         url: `/api/v1/consultant/profile/all-list?type=${type}`,
@@ -105,12 +117,26 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["notice"],
     }),
+
+    // update particular notice (description)
+    updateParticularConsultantDescription: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/admin/notices/update/${id}`,
+        method: "PATCH",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["notice"],
+    }),
   }),
 });
 
 export const {
   useGetNoticeListQuery,
   useGetConsultantAssignedNoticeListQuery,
+  useGetConsultantListAssignedNoticeQuery,
   useGetConsultantListQuery,
   useCreateNoticeMutation,
   useCreateAssigneConsultantNoticeMutation,
@@ -118,4 +144,5 @@ export const {
   useUpdateNoticestatusMutation,
   useDeleteNoticeMutation,
   useDeleteAssigneConsultantNoticeMutation,
+  useUpdateParticularConsultantDescriptionMutation,
 } = noticeApiSlice;

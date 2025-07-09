@@ -68,7 +68,7 @@ const NameCell = ({ row }) => {
 
 export const ASTROLOGER_COLUMNS = [
   {
-    Header: "User Id",
+    Header: "Id",
     accessor: "id",
   },
   {
@@ -77,7 +77,7 @@ export const ASTROLOGER_COLUMNS = [
   },
   {
     Header: "Email",
-    accessor: "email",
+    accessor: "email_address",
   },
   {
     Header: "Gender",
@@ -93,11 +93,11 @@ export const ASTROLOGER_COLUMNS = [
     Header: "Location",
     accessor: "country",
   },
-  {
-    Header: "Status",
-    accessor: "profile_status",
-    Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "profile_status",
+  //   Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+  // },
   {
     Header: "Status",
     accessor: "status",

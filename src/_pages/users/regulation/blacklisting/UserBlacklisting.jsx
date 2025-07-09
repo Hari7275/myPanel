@@ -8,6 +8,7 @@ import {
   useDeleteBlacklistedUserMutation,
 } from "../../../../_store/api/user/blacklistedUser";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const UserBlacklisting = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -64,7 +65,11 @@ const UserBlacklisting = () => {
   );
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (isError) {

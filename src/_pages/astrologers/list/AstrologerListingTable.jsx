@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -71,16 +74,16 @@ const AstrologerListingTable = () => {
     setSelectedRow(row);
   };
 
-
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
+    dispatch(setCurrentProfileStatus(data?.status));
 
     setTimeout(() => {
       navigate(`/astrologer_Profile?${data?.id}`, {
         state: {
           currentPage: page,
-          pageSize: pageSize
-        }
+          pageSize: pageSize,
+        },
       });
     }, 0);
 
@@ -139,14 +142,17 @@ const AstrologerListingTable = () => {
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
   const handleNameSearch = (e) => {
+    setPage(1);
     debouncedSearchName(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
   const handleConsultantPhoneSearch = (e) => {
+    setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
 
@@ -207,6 +213,8 @@ const AstrologerListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {data?.length === 0 && (
         <div>

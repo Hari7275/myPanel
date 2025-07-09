@@ -94,7 +94,7 @@ const CoachSkills = () => {
           // onClick={toggleMenuOrder}
           onClick={() => toggleSetOrderData(data)}
         >
-          Set order Skills
+          Set Order Skills
         </button>
       </>
     );
@@ -170,6 +170,7 @@ const CoachSkills = () => {
         includeActions={false}
         tableTitle="Coach Skills"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {updateOrder && (

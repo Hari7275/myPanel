@@ -108,6 +108,7 @@ const LanguageTable = () => {
         includeActions={false}
         tableTitle="Meta Language"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {addLanguage && (

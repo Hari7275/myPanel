@@ -4,6 +4,7 @@ import {
   useUpdateUserInterstsTypeMutation,
 } from "../../../_store/api";
 import { toast } from "react-hot-toast";
+import { Atom } from "react-loading-indicators";
 
 const UserDesires = ({
   usersData,
@@ -68,7 +69,11 @@ const UserDesires = ({
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   if (isError) {

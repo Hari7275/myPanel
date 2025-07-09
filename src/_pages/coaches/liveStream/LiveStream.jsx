@@ -23,7 +23,9 @@ const LiveStream = () => {
     }
   }, [fetchData]);
 
-  const toggleLiveStreamUserListing = () => {
+  const toggleLiveStreamUserListing = (row) => {
+    setSelectedRow(row);
+
     setOpenStreamListing(!openStremListing);
   };
 
@@ -49,7 +51,7 @@ const LiveStream = () => {
             >
               <ArrowRight
                 className="iconSmall"
-                onClick={() => toggleLiveStreamUserListing()}
+                onClick={() => toggleLiveStreamUserListing(row.original)}
               />
             </span>
 
@@ -72,13 +74,14 @@ const LiveStream = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Live Stream"
+        tableTitle="Live Streams"
       />
 
       {openStremListing && (
         <LiveStreamUserListing
           isOpen={openStremListing}
           onClose={toggleLiveStreamUserListing}
+          selectedId={selectedRow.id}
         />
       )}
 

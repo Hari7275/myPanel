@@ -8,6 +8,8 @@ import AddAdminRole from "./AddAdminRole";
 
 import DeleteComponent from "../../payments/DeleteComponent";
 import { useNavigate } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetAdminRoleListQuery,
@@ -20,9 +22,10 @@ const AdminRole = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminRoleListQuery();
+  const { data: fetchData, isLoading } = useGetAdminRoleListQuery();
   const [deleteData] = useDeleteAdminRoleMutation();
 
   const navigate = useNavigate();
@@ -66,18 +69,20 @@ const AdminRole = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add new roles
-      </button>
+      permissions?.["admin"]?.includes("create_admin_role") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add new roles
+        </button>
+      )
     );
   };
 
@@ -88,35 +93,50 @@ const AdminRole = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            title="view details"
-            className="secondIcon"
-            style={{
-              display: "inline-block",
-              height: "35px",
-              width: "35px",
-            }}
-            onClick={() => handleActionClick(row.original)}
-            // onClick={() => handleViewDetails(row.original.id)}
-          >
-            <ArrowRight className="iconSmall" />
-          </span>
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("view_admin_roles_section") && (
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{
+                display: "inline-block",
+                height: "35px",
+                width: "35px",
+              }}
+              onClick={() => handleActionClick(row.original)}
+              // onClick={() => handleViewDetails(row.original.id)}
+            >
+              <ArrowRight className="iconSmall" />
+            </span>
+          )}
+          {permissions?.["admin"]?.includes("delete_admin_role") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+
+          {permissions?.["admin"]?.includes("update_admin_role") && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>
@@ -126,6 +146,8 @@ const AdminRole = () => {
         includeActions={false}
         tableTitle="Admin Roles"
         AddPackageButton={AddButton}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && <AddAdminRole isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

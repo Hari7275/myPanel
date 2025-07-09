@@ -8,15 +8,15 @@ import UserDetailsComponent from "./UserDetailsComponent";
 const UsersProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const handleProfileClose = () => {
     // navigate(-1);
-    navigate("/user",{
+    navigate("/user", {
       state: {
         previousPage: location.state?.currentPage || 1,
-        previousPageSize: location.state?.pageSize || 10
-      }
-    })
+        previousPageSize: location.state?.pageSize || 10,
+      },
+    });
   };
 
   const [activeComponent, setActiveComponent] = useState("UserOverview");
@@ -27,14 +27,14 @@ const UsersProfile = () => {
   return (
     <>
       <div className="profile-section">
-        <div className="crossIconContainer">
+        {/* <div className="crossIconContainer">
           <div
             className="crossIcon"
             onClick={handleProfileClose}
           >
             <X />
           </div>
-        </div>
+        </div> */}
         <div className="profile-top-container">
           <div className="">
             <UserDetailsComponent />

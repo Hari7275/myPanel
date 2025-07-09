@@ -3,13 +3,14 @@ import CommonTable from "../../../_components/table/CommonTable";
 import { ORDERCHARTCOLUMN } from "./astrologerColumn";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const AstrologerOrder = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
-
-  const { data: fetchData, isLoading } = useGetConsultantsOrderQuery(consultantId);
+  const { data: fetchData, isLoading } =
+    useGetConsultantsOrderQuery(consultantId);
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
@@ -25,8 +26,16 @@ const AstrologerOrder = () => {
 
   const columns = useMemo(() => ORDERCHARTCOLUMN, []);
 
+  // if (isLoading) {
+  //   return <span>Loading ...</span>;
+  // }
+
   if (isLoading) {
-    return <span>Lodaing ...</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   return (
@@ -37,7 +46,7 @@ const AstrologerOrder = () => {
             columns={columns}
             data={data}
             includeActions={false}
-            tableTitle=" Orders Chart"
+            tableTitle=" Order History"
             includeCheckbox={false}
           />
         </div>

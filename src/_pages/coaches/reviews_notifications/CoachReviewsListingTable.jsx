@@ -71,21 +71,21 @@ const CoachReviews = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          position: "absolute",
-          top: "125px",
-          right: "40px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          zIndex: "9999",
-        }
+            position: "absolute",
+            top: "125px",
+            right: "40px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            zIndex: "9999",
+          }
         : {
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          zIndex: "9999",
-        };
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            zIndex: "9999",
+          };
 
     return (
       <button
@@ -93,7 +93,7 @@ const CoachReviews = () => {
         style={buttonStyle}
         onClick={() => toggleAddReviews(coachId)}
       >
-        Add Reviews
+        Add Review
       </button>
     );
   };
@@ -144,7 +144,8 @@ const CoachReviews = () => {
             columns={columns}
             data={data}
             includeActions={false}
-            tableTitle="Reviews Chart"
+            tableTitle="Review List"
+            includeCheckbox={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 import { useSearchParams } from "react-router-dom";
 import DyCommonTable from "../../table/DyCommonTable";
+import { Atom } from "react-loading-indicators";
 
 const SessionSlot = () => {
   const [data, setData] = useState([]);
@@ -37,7 +38,15 @@ const SessionSlot = () => {
   const columns = useMemo(() => [...SESSIONSLOTCOLUMN]);
   const totalPage = fetchData?.meta?.totalPages;
 
-  if (isLoading) return <div>Loading...</div>;
+
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (isError) return <div>Error loading data.</div>;
 
   return (
@@ -52,7 +61,7 @@ const SessionSlot = () => {
       <DyCommonTable
         columns={columns}
         data={data}
-        tableTitle="Session Appointment"
+        tableTitle="Appointment Session"
         includeActions={false}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

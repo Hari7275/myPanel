@@ -1,4 +1,10 @@
-import React, { useMemo, useState, useEffect, useRef, useCallback } from "react";
+import React, {
+  useMemo,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
 import { ArrowRight, Pencil } from "lucide-react";
@@ -6,7 +12,10 @@ import { ArrowRight, Pencil } from "lucide-react";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import {
+  setCurrentConsultant,
+  setCurrentProfileStatus,
+} from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -41,7 +50,7 @@ const CoachListingTable = () => {
     phone,
     consultant_type: 2,
   });
-  console.log("coach page........", page);
+
   useEffect(() => {
     pageRef.current = page;
   }, [page]);
@@ -74,19 +83,22 @@ const CoachListingTable = () => {
     setSelectedRow(row);
   };
 
-  const handleActionClick = useCallback((data) => {
-    dispatch(setCurrentConsultant(data?.id));
-    // Use setTimeout or batch it after dispatch
-    console.log("page in arrow.......", pageRef.current);
-    setTimeout(() => {
-      navigate(`/coach-profile?${data?.id}`, {
-        state: {
-          currentPage: pageRef.current,
-          pageSize: pageSize
-        }
-      });
-    }, 0);
-  }, [pageRef, pageSize, dispatch, navigate]);
+  const handleActionClick = useCallback(
+    (data) => {
+      dispatch(setCurrentConsultant(data?.id));
+      dispatch(setCurrentProfileStatus(data?.status));
+
+      setTimeout(() => {
+        navigate(`/coach-profile?${data?.id}`, {
+          state: {
+            currentPage: pageRef.current,
+            pageSize: pageSize,
+          },
+        });
+      }, 0);
+    },
+    [pageRef, pageSize, dispatch, navigate]
+  );
 
   const columns = useMemo(
     () => [
@@ -143,14 +155,17 @@ const CoachListingTable = () => {
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
   const handleNameSearch = (e) => {
+    setPage(1);
     debouncedSearchName(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
+    setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
   const handleConsultantPhoneSearch = (e) => {
+    setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
   const customFilterComponent = () => (
@@ -213,6 +228,8 @@ const CoachListingTable = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {data?.length == 0 && (
         <span className="no-data-new">No Coach Avaliable</span>

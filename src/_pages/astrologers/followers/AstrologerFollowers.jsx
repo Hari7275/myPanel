@@ -25,10 +25,11 @@ const AstrologerFollowers = () => {
           columns={columns}
           data={data}
           includeActions={false}
-          tableTitle="Astrologer Followers"
+          tableTitle="Follower List"
+          includeCheckbox={false}
         />
       ) : (
-        <p>No followers available.</p>
+        <p>No Data Available.</p>
       )}
     </div>
   );

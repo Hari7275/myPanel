@@ -9,6 +9,7 @@ import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatu
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { useSearchParams } from "react-router-dom";
 import AddCommission from "./AddCommission";
+import { Atom } from "react-loading-indicators";
 
 const CommissionList = () => {
   const [data, setData] = useState([]);
@@ -101,7 +102,13 @@ const CommissionList = () => {
     // },
   ]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   if (isError) return <div>Error loading data.</div>;
 
   return (

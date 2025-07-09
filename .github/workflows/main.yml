@@ -1,0 +1,89 @@
+name: Deploy to Production 🚀
+on:
+  push:
+    branches: ["dev"]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: ap-south-1
+      ECR_REPO: flute-admin-panel-v1
+      ECR_REGISTRY: 739275483901.dkr.ecr.ap-south-1.amazonaws.com
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GIT_TOKEN }}
+
+      - name: Deploy to Production
+        run: echo "Deploying from main branch..."
+
+      - name: Get Last Commit Message
+        id: last_commit
+        run: |
+          msg=$(git log -1 --pretty=%B)
+          echo "message=$msg" >> $GITHUB_OUTPUT
+
+      - name: Set up Git Identity
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Read & Bump Version
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        id: version
+        run: |
+          old_version=$(cat VERSION | tr -d v)
+          new_version=$((old_version + 1))
+          echo "v$new_version" > VERSION
+          echo "VERSION=v$new_version" >> $GITHUB_ENV
+
+      - name: Commit & Push New Version
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        run: |
+          git add VERSION
+          git commit -m "Bump version to $VERSION"
+          git push
+
+      - name: Configure AWS Credentials
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Configure AWS Credentials
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Login to Amazon ECR
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Fetch .env from AWS Secrets Manager and Save to File
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        run: |
+          SECRET_JSON=$(aws secretsmanager get-secret-value \
+            --secret-id flute-admin-panel-v1 \
+            --query SecretString \
+            --output text)
+
+          echo "$SECRET_JSON" | jq -r 'to_entries | .[] | "\(.key)=\(.value)"' > .env
+
+      - name: Build, Tag and Push Docker Image
+        if: "!startsWith(steps.last_commit.outputs.message, 'Bump version')"
+        run: |
+          docker build -t $ECR_REPO:${{ env.VERSION }} .
+          docker tag $ECR_REPO:${{ env.VERSION }} $ECR_REGISTRY/$ECR_REPO:${{ env.VERSION }}
+          docker tag $ECR_REPO:${{ env.VERSION }} $ECR_REGISTRY/$ECR_REPO:latest
+          docker push $ECR_REGISTRY/$ECR_REPO:${{ env.VERSION }}
+          docker push $ECR_REGISTRY/$ECR_REPO:latest

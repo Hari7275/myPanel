@@ -9,6 +9,7 @@ import {
 import { format } from "date-fns";
 import { getGenderLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import { Atom } from "react-loading-indicators";
 
 const CoachInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -18,7 +19,8 @@ const CoachInfo = () => {
   const [skills, setSkills] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
-  const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
+  const { data: fetchdata, isLoading } =
+    useGetConsultantsDetailsQuery(consultantId);
 
   const { data: constantData } = useGetCoachCategoryListQuery();
   const { data: constantSkills } = useGetCoachSkillsListQuery();
@@ -48,8 +50,12 @@ const CoachInfo = () => {
     }
   }, [fetchdata]);
 
-  if (!formData) {
-    return <div>loading...</div>;
+  if (isLoading || !formData) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const toggleUpdataInfo = (data) => {

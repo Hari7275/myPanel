@@ -1,33 +1,37 @@
-import { ArrowRight } from "lucide-react";
 export const FOLLOWERSCOLUMN = [
   {
-    Header: "Id",
-    accessor: "id",
+    Header: "Pro. Pic",
+    Cell: ({ row }) => {
+      const imgSrc = row?.original?.photo_url
+        ? row?.original?.photo_url
+        : "girl-avtar.png";
+      return <img src={imgSrc} alt="Avatar" width="80" height="80" />;
+    },
   },
   {
-    Header: "First Name",
-    accessor: "firstName",
+    Header: "User Id",
+    accessor: "user_id",
   },
+
   {
-    Header: "Last Name",
-    accessor: "lastName",
+    Header: "Name",
+    accessor: "first_name",
+    Cell: ({ value }) => value || "N/A",
   },
+
   {
     Header: "Age",
     accessor: "age",
+    Cell: ({ value }) => value || "N/A",
   },
-  {
-    Header: "Image",
-    Cell: ({ row }) => (
-      <img src={row.original.img} alt="Avatar" width="80" height="80" />
-    ),
-  },
-  {
-    Header: "Action",
-    Cell: ({ row }) => (
-      <div className="secondIcon">
-        <ArrowRight />
-      </div>
-    ),
-  },
+  // {
+  //   Header: "Gender",
+  //   accessor: "gender",
+  //   Cell: ({ value }) => value || "N/A",
+  // },
+  // {
+  //   Header: "Country",
+  //   accessor: "country",
+  //   Cell: ({ value }) => value || "N/A",
+  // },
 ];

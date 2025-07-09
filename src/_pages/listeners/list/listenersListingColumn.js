@@ -34,7 +34,7 @@ const NameCell = ({ row }) => {
     <div className="column_container">
       <div className="card-img">
         <img
-          src={row?.original.profile_pic || "girl-avtar.png"}
+          src={row?.original.profile_pic || "/girl-avtar.png"}
           alt="Avatar"
           width="40"
           height="40"
@@ -65,7 +65,7 @@ const NameCell = ({ row }) => {
 
 export const LISTENERSCOLUMNS = [
   {
-    Header: "User Id",
+    Header: "Id",
     accessor: "id",
   },
 
@@ -75,7 +75,7 @@ export const LISTENERSCOLUMNS = [
   },
   {
     Header: "Email",
-    accessor: "email",
+    accessor: "email_address",
   },
   {
     Header: "Gender",
@@ -93,11 +93,11 @@ export const LISTENERSCOLUMNS = [
     Header: "Location",
     accessor: "country",
   },
-  {
-    Header: "Status",
-    accessor: "profile_status",
-    Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "profile_status",
+  //   Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
+  // },
 
   {
     Header: "Status",

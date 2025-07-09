@@ -7,6 +7,8 @@ import AddAdminUser from "./AddAdminUser";
 import UpdateAdminUser from "./UpdateAdminUser";
 
 import DeleteComponent from "../../payments/DeleteComponent";
+import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetAdminUserListQuery,
@@ -19,9 +21,10 @@ const AdminUser = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetAdminUserListQuery();
+  const { data: fetchData, isLoading } = useGetAdminUserListQuery();
   const [deleteData] = useDeleteAdminUserMutation();
 
   useEffect(() => {
@@ -57,18 +60,20 @@ const AdminUser = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add new User
-      </button>
+      permissions?.["admin"]?.includes("create_admin_user") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add new User
+        </button>
+      )
     );
   };
 
@@ -79,22 +84,34 @@ const AdminUser = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["admin"]?.includes("delete_admin_user") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+          {permissions?.["admin"]?.includes("update_admin_user") && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
   ]);
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>
@@ -104,6 +121,8 @@ const AdminUser = () => {
         includeActions={false}
         tableTitle="Admin Users"
         AddPackageButton={AddButton}
+        showTableHeading={false}
+        includeCheckbox={false}
       />
       {addData && <AddAdminUser isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

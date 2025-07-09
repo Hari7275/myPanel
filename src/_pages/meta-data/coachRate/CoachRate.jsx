@@ -132,6 +132,7 @@ const CoachRate = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
       {addService && (
         <AddCoachRate isOpen={addService} onClose={toggleAddService} />

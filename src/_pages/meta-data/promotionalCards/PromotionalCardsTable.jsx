@@ -164,6 +164,7 @@ const PromotionalCardsTable = () => {
         includeActions={false}
         tableTitle="Promotional card"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       <Modal
         isOpen={modalIsOpen}

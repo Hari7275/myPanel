@@ -40,8 +40,6 @@ const DashboardOrderList = () => {
 
   // function for description
 
- 
-
   const toggleAssignNotice = (row) => {
     setShowAssigneNotice(!showAssigneNotice);
     setSelectedRow(row.original);
@@ -172,6 +170,7 @@ const DashboardOrderList = () => {
         includeActions={false}
         tableTitle="Dashboard Order List"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {addData && (
