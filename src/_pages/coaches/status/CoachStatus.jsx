@@ -5,6 +5,7 @@ import { getFetaureLabel } from "../../../_constants/consultantConstant";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ServiceStatusModal from "./ServiceStatusModal";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const availableStatus = {
   0: "Offline",
@@ -18,6 +19,7 @@ const CoachStatus = () => {
   const [alignment, setAlignment] = useState({});
   const [selectedService, setSelectedService] = useState(null);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const permissions = usePermissions();
 
   const { data: fetchData } = useGetConsultantsServiceStatusQuery({
     id: consultantId,
@@ -99,32 +101,38 @@ const CoachStatus = () => {
                   exclusive
                   aria-label="Display Status"
                 >
-                  <ToggleButton
-                    value={1}
-                    sx={{
-                      borderRadius: "10px",
-                      padding: "4px 12px",
-                      "&.Mui-selected": {
-                        backgroundColor: "#696cff",
-                        color: "white",
-                      },
-                    }}
-                  >
-                    Show
-                  </ToggleButton>
-                  <ToggleButton
-                    value={0}
-                    sx={{
-                      borderRadius: "10px",
-                      padding: "4px 12px",
-                      "&.Mui-selected": {
-                        backgroundColor: "#696cff",
-                        color: "white",
-                      },
-                    }}
-                  >
-                    Hide
-                  </ToggleButton>
+                  {permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status") && (
+
+                    <ToggleButton
+                      value={1}
+                      sx={{
+                        borderRadius: "10px",
+                        padding: "4px 12px",
+                        "&.Mui-selected": {
+                          backgroundColor: "#696cff",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      Show
+                    </ToggleButton>
+                  )}
+                  {permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status") && (
+
+                    <ToggleButton
+                      value={0}
+                      sx={{
+                        borderRadius: "10px",
+                        padding: "4px 12px",
+                        "&.Mui-selected": {
+                          backgroundColor: "#696cff",
+                          color: "white",
+                        },
+                      }}
+                    >
+                      Hide
+                    </ToggleButton>
+                  )}
                 </ToggleButtonGroup>
               </div>
             </div>

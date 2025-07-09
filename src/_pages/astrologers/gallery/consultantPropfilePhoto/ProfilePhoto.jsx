@@ -9,6 +9,7 @@ import AstrologerSettings from "../AstrologerSettings";
 import { ConsultantGalleryStatus } from "../../../../_constants/consultantConstant";
 
 import { useGetGalleryListQuery } from "../../../../_store/api";
+import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 
 const ProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -17,7 +18,7 @@ const ProfilePhoto = () => {
   const [imageStatuses, setImageStatuses] = useState([]);
   const [loadedImages, setLoadedImages] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
-
+  const permissions = usePermissions();
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
@@ -71,12 +72,13 @@ const ProfilePhoto = () => {
                         </a>
                       )}
                     </div>
-
-                    <div className="galleryIcons">
-                      <span onClick={() => toggleSettingModal(imageUrls)}>
-                        <Settings />
-                      </span>
-                    </div>
+                    {permissions?.["astrologer"]?.includes("update_astrologer_profile_gallery") && (
+                      <div className="galleryIcons">
+                        <span onClick={() => toggleSettingModal(imageUrls)}>
+                          <Settings />
+                        </span>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -92,7 +94,7 @@ const ProfilePhoto = () => {
             onClose={toggleSettingModal}
             imageUrl={selectedImage}
             currentStatus={selectedImage?.status}
-            // onStatusChange={handleStatusChange}
+          // onStatusChange={handleStatusChange}
           />
         )}
       </div>

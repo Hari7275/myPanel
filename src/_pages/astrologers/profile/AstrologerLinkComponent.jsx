@@ -1,143 +1,110 @@
 import React from "react";
 
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
+  const permissions = usePermissions();
+
+  // Sabhi links aur unke permissions ki list
+  const menuItems = [
+    {
+      component: "Overview",
+      label: "Overview",
+      permission: "view_astrologer_profile_overview"
+    },
+    {
+      component: "AstrologerInfo",
+      label: "Update Info",
+      permission: "update_astrologer_profile_info"
+    },
+    {
+      component: "Profile-Progress",
+      label: "Onboarding Progress",
+      permission: "view_astrologer_profile_onboarding_progress"
+    },
+    {
+      component: "Gallery",
+      label: "Gallery",
+      permission: "view_astrologer_profile_gallery"
+    },
+    {
+      component: "AstrologerOrder",
+      label: "Orders",
+      permission: "view_astrologer_profile_orders"
+    },
+    {
+      component: "AstrologerGifts",
+      label: "Gifts",
+      permission: "view_astrologer_profile_gift"
+    },
+    {
+      component: "session-slot",
+      label: "Appointment Session",
+      permission: "view_astrologer_profile_appointment_session"
+    },
+    {
+      component: "live-stream",
+      label: "Live Stream",
+      permission: "view_astrologer_profile_livestream"
+    },
+    {
+      component: "AstrologerFollowers",
+      label: "Followers",
+      permission: "view_astrologer_profile_followers"
+    },
+    {
+      component: "AstroReviewsListingTable",
+      label: "Reviews",
+      permission: "view_astrologer_profile_reviews"
+    },
+    {
+      component: "account",
+      label: "Bank Details",
+      permission: "view_astrologer_profile_bank_details"
+    },
+    {
+      component: "Price-chart",
+      label: "Price Chart",
+      permission: "view_astrologer_profile_price_chart"
+    },
+    {
+      component: "Wallet",
+      label: "Wallet",
+      permission: "view_astrologer_profile_wallet"
+    },
+    {
+      component: "consultant-commission",
+      label: "Flute Commission",
+      permission: "view_astrologer_profile_flute_commission"
+    },
+    {
+      component: "CoachStatus",
+      label: "Service Status",
+      permission: "view_astrologer_profile_service_status"
+    }
+  ];
+
+
   return (
     <>
       <div className="vertical-nav">
-        <div
-          className={`nav-link ${
-            activeComponent === "Overview" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Overview")}
-        >
-          <span>Overview</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "AstrologerInfo" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstrologerInfo")}
-        >
-          <span>Update Info</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "Profile-Progress" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Profile-Progress")}
-        >
-          <span>Onboarding Progress</span>
-        </div>
+        {menuItems.map((item) => {
+          // Check if user has permission for this item
+          const hasPermission = permissions?.astrologer?.includes(item.permission);
 
-        <div
-          className={`nav-link ${
-            activeComponent === "Gallery" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Gallery")}
-        >
-          <span>Gallery</span>
-        </div>
+          // Agar permission nahi hai toh skip karo
+          if (!hasPermission) return null;
 
-        <div
-          className={`nav-link ${
-            activeComponent === "AstrologerOrder" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstrologerOrder")}
-        >
-          <span>Orders</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "AstrologerGifts" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstrologerGifts")}
-        >
-          <span>Gifts</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "session-slot" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("session-slot")}
-        >
-          <span>Appointment Session</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "live-stream" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("live-stream")}
-        >
-          <span>Live Stream</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "AstrologerFollowers" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstrologerFollowers")}
-        >
-          <span>Followers</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "AstroReviewsListingTable" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstroReviewsListingTable")}
-        >
-          <span>Reviews</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "account" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("account")}
-        >
-          <span>Bank Details</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "Price-chart" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Price-chart")}
-        >
-          <span>Price Chart</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}
-          onClick={() => onComponentChange("Wallet")}
-        >
-          <span>Wallet</span>
-        </div>
-
-        <div
-          className={`nav-link  ${
-            activeComponent === "consultant-commission" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("consultant-commission")}
-        >
-          <span>Flute Commission</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachStatus" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachStatus")}
-        >
-          <span>Service Status</span>
-        </div>
-        {/* <div
-          className={`nav-link ${
-            activeComponent === "AstrologerSetting" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("AstrologerSetting")}
-        >
-          <span>Settings</span>
-        </div> */}
+          return (
+            <div
+              key={item.component}
+              className={`nav-link ${activeComponent === item.component ? "active" : ""
+                }`}
+              onClick={() => onComponentChange(item.component)}
+            >
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
       </div>
     </>
   );

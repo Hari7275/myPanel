@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 import UpdateProgressLevel from "./UpdateProgressLevel";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../reuseComponents/permission/EmpPermission";
 
 const ConlstProfileProgressList = () => {
   const [data, setData] = useState([]);
@@ -22,6 +23,8 @@ const ConlstProfileProgressList = () => {
     isLoading,
     isError,
   } = useGetConsultantProfileProgressListQuery(consultantId);
+  const permissions = usePermissions();
+
   useEffect(() => {
     if (fetchData && fetchData?.data) {
       setData(fetchData?.data || []);
@@ -41,12 +44,14 @@ const ConlstProfileProgressList = () => {
       Cell: ({ row }) => (
         <div className="actions-cell">
           {row.original.status !== "completed" && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateConsultantPrice(row?.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
+            permissions?.["astrologer"]?.includes("update_astrologer_profile_onboarding_progress") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateConsultantPrice(row?.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )
           )}
         </div>
       ),

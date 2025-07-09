@@ -10,6 +10,7 @@ import EditconsultantPrice from "../../../_components/reuseComponents/Editconsul
 import { useSearchParams } from "react-router-dom";
 import AddCommission from "./AddCommission";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CommissionList = () => {
   const [data, setData] = useState([]);
@@ -18,6 +19,7 @@ const CommissionList = () => {
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
   const [searchParams] = useSearchParams();
   const [addData, setAddData] = useState(false);
+  const permissions = usePermissions();
 
   // const url = window.location.href;
 
@@ -58,18 +60,21 @@ const CommissionList = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Update Commission
-      </button>
+      permissions?.["astrologer"]?.includes("update_astrologer_profile_flute_commission") && (
+
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Update Commission
+        </button>
+      )
     );
   };
 

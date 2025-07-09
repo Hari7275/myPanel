@@ -12,6 +12,7 @@ import {
 import AstroNotificationsListingTable from "./AstroNotificationsListingTable";
 import { useSelector } from "react-redux";
 import Description from "./Description";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AstroReviewsListingTable = () => {
   const [addReview, setAddReview] = useState(false);
@@ -21,7 +22,7 @@ const AstroReviewsListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
-
+  const permissions = usePermissions();
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetReviewsListQuery(consultantId);
   const [deleteReview] = useDeleteReviewMutation();
@@ -66,30 +67,33 @@ const AstroReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-            position: "absolute",
-            top: "125px",
-            right: "40px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          }
+          position: "absolute",
+          top: "125px",
+          right: "40px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        }
         : {
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          };
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        };
 
     return (
-      <button
-        className="addButton"
-        style={buttonStyle}
-        onClick={() => toggleAddReviews(coachId)}
-      >
-        Add Review
-      </button>
+      permissions?.["astrologer"]?.includes("create_astrologer_profile_review") && (
+
+        <button
+          className="addButton"
+          style={buttonStyle}
+          onClick={() => toggleAddReviews(coachId)}
+        >
+          Add Review
+        </button>
+      )
     );
   };
 
@@ -107,18 +111,22 @@ const AstroReviewsListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateReviews(row?.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row?.original)}
-              />
-            </span>
+            {permissions?.["astrologer"]?.includes("update_astrologer_profile_review") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateReviews(row?.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
+            {permissions?.["astrologer"]?.includes("delete_astrologer_profile_review") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row?.original)}
+                />
+              </span>
+            )}
             <span className="secondIcon">
               <ArrowRight
                 className=""

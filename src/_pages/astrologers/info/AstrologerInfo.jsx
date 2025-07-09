@@ -14,6 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../overview/AstrologerOverview";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AstrologerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -30,6 +31,7 @@ const AstrologerInfo = () => {
   const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
   const { data: constantData } = useGetCoachCategoryListQuery();
   const { data: constantSkills } = useGetCoachSkillsListQuery();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (constantData) {
@@ -102,12 +104,14 @@ const AstrologerInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
-            <span
-              className="secondIcon editIcon"
-              onClick={() => toggleUpdateInfo(formData)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
+            {permissions?.["astrologer"]?.includes("update_astrologer_profile_info") && (
+              <span
+                className="secondIcon editIcon"
+                onClick={() => toggleUpdateInfo(formData)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
           </div>
 
           <div className="info-pair">

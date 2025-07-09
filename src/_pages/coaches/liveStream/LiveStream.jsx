@@ -6,6 +6,7 @@ import LiveStreamUserListing from "./liveStreamDetails/LiveStreamUserListing";
 import { useSelector } from "react-redux";
 import { useGetLiveStreamListQuery } from "../../../_store/api";
 import EditLiveStreamStatus from "../../../_components/reuseComponents/EditLiveStreamStatus";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const LiveStream = () => {
   const [data, setData] = useState([]);
@@ -14,6 +15,7 @@ const LiveStream = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const { data: fetchData } = useGetLiveStreamListQuery(consultantId);
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -43,25 +45,27 @@ const LiveStream = () => {
         Header: () => <div className="actions-header">Actions</div>,
         id: "actions",
         Cell: ({ row }) => (
-          <div className="actions-cell">
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{ height: "35px", width: "35px" }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={() => toggleLiveStreamUserListing(row.original)}
-              />
-            </span>
+          permissions?.["astrologer"]?.includes("update_astrologer_profile_livestream") && (
+            <div className="actions-cell">
+              <span
+                title="view details"
+                className="secondIcon"
+                style={{ height: "35px", width: "35px" }}
+              >
+                <ArrowRight
+                  className="iconSmall"
+                  onClick={() => toggleLiveStreamUserListing(row.original)}
+                />
+              </span>
 
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateStatus(row.original)}
-              />
-            </span>
-          </div>
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateStatus(row.original)}
+                />
+              </span>
+            </div>
+          )
         ),
       },
     ],

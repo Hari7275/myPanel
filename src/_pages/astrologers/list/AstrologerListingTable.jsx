@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useEffect } from "react";
+import React, { useMemo, useState, useEffect, use } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { ASTROLOGER_COLUMNS } from "./astrologerListingColumn";
 import { ArrowRight, Pencil } from "lucide-react";
@@ -15,6 +15,7 @@ import { useSearchParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -30,6 +31,7 @@ const AstrologerListingTable = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
   let [profileStatus, SetProfileStatus] = useState(null);
+  const permissions = usePermissions();
 
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
@@ -99,32 +101,36 @@ const AstrologerListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {/* <Link to={`/astrologer_Profile?${row?.original?.id}`}> */}
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{
-                display: "inline-block",
-                height: "35px",
-                width: "35px",
-              }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={() => {
-                  handleActionClick(row.original);
-                  setQueryParams(row.original.id);
+            {permissions?.["astrologer"]?.includes("view_astrologer_profile") && (
+              <span
+                title="view details"
+                className="secondIcon"
+                style={{
+                  display: "inline-block",
+                  height: "35px",
+                  width: "35px",
                 }}
-              />
-            </span>
+              >
+                <ArrowRight
+                  className="iconSmall"
+                  onClick={() => {
+                    handleActionClick(row.original);
+                    setQueryParams(row.original.id);
+                  }}
+                />
+              </span>
+            )}
             {/* </Link> */}
 
             {[3, 4, 5, 2].includes(row?.original?.status) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original)}
-                />
-              </span>
+              permissions?.["astrologer"]?.includes("update_astrologer_profile_status") && (
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )
             )}
           </div>
         ),
@@ -200,37 +206,39 @@ const AstrologerListingTable = () => {
     );
   }
   return (
-    <div>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        tableTitle="Astrologer"
-        includeActions={false}
-        customFilterComponent={customFilterComponent}
-        dynamicPagination={dynamicPagination}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        showTableHeading={false}
-        includeCheckbox={false}
-      />
-      {data?.length === 0 && (
-        <div>
-          <span className="no-data-new">No Astrologer Avaliable</span>
-        </div>
-      )}
-
-      {showEditStatus && (
-        <EditStatus
-          isOpen={showEditStatus}
-          onClose={toggleEditStatus}
-          selectedRow={selectedRow?.id}
-          profileStatus={profileStatus}
+    permissions?.["astrologer"]?.includes("view_astrologer_list") && (
+      <div>
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          tableTitle="Astrologer"
+          includeActions={false}
+          customFilterComponent={customFilterComponent}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          showTableHeading={false}
+          includeCheckbox={false}
         />
-      )}
-    </div>
+        {data?.length === 0 && (
+          <div>
+            <span className="no-data-new">No Astrologer Avaliable</span>
+          </div>
+        )}
+
+        {showEditStatus && (
+          <EditStatus
+            isOpen={showEditStatus}
+            onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+      </div>
+    )
   );
 };
 

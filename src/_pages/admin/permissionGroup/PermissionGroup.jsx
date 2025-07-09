@@ -113,24 +113,24 @@ const PermissionGroup = () => {
           {permissions?.["admin"]?.includes(
             "delete_admin_permission_group"
           ) && (
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
-          )}
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
 
           {permissions?.["admin"]?.includes(
             "update_admin_permission_group"
           ) && (
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-          )}
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateData(row.original)}
+                />
+              </span>
+            )}
         </div>
       ),
     },
