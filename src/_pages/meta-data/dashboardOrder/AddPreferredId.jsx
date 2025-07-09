@@ -4,6 +4,7 @@ import Select from "react-select";
 
 import {
   useGetConsultantListQuery,
+  useGetConsultantListDashboardOrderQuery,
   useUpdateDashboardOrderListMutation,
 } from "../../../_store/api";
 
@@ -34,11 +35,13 @@ const AddPreferredId = ({ isOpen, onClose, selectedRow }) => {
   const [options, setOptions] = useState([]);
   const [selectedConsultants, setSelectedConsultants] = useState([]);
 
-  const { data: fetchData } = useGetConsultantListQuery();
+  // const { data: fetchData } = useGetConsultantListQuery();
+  const { data: fetchData } = useGetConsultantListDashboardOrderQuery({});
 
   const [createData, { isLoading }] = useUpdateDashboardOrderListMutation();
 
-  console.log("selectedRow", selectedRow.preferred_ids);
+  // console.log("selectedRow", selectedRow.preferred_ids);
+  // console.log("selectedRow", fetchData);
 
   useEffect(() => {
     if (fetchData?.data) {
@@ -104,7 +107,7 @@ const AddPreferredId = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
     >
       <div style={{ minWidth: "500px", minHeight: "500px" }}>
-        <label htmlFor="categories">Assign Consultant Notice</label>
+        <label htmlFor="categories">Assign Consultant</label>
         <Select
           isMulti
           options={options} // Show only available consultants who are not assigned

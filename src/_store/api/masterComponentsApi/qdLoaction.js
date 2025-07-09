@@ -3,11 +3,12 @@ import apiSlice from "../api";
 export const qdLoactionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getqdLoactionList: builder.query({
-      query: ({ currentPage, pageSize }) => ({
-        url: `/meta/qd_type/get_all_qds/trip?page=${currentPage}&size=${pageSize}`,
+      query: ({ currentPage, pageSize, location }) => ({
+        // url: `/meta/qd_type/get_all_qds/trip?page=${currentPage}&size=${pageSize}`,
+        url: `/meta/qd_type/admin/get-all-trips?page=${currentPage}&size=${pageSize}&location_name=${location}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer guest_token",
+          Authorization: "Bearer admin_token",
         },
       }),
       providesTags: ["loaction"],
