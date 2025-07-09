@@ -168,3 +168,10 @@
   backdrop-filter: blur(15px);
   border-radius: 10px;
 }
+
+.button-container {
+  display: flex;
+  width: 100%;
+  /* border: 1px solid #130781; */
+  margin-top: 1em;
+}

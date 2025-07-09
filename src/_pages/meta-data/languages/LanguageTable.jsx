@@ -111,11 +111,8 @@ const LanguageTable = () => {
       />
 
       {addLanguage && (
-        <AddLanguage_New isOpen={addLanguage} onClose={toggleAddLanguage} />
-      )}
-      {/* {addLanguage && (
         <AddLanguage isOpen={addLanguage} onClose={toggleAddLanguage} />
-      )} */}
+      )}
       {updateLanguage && (
         <EditLanguage
           isOpen={updateLanguage}

@@ -1,64 +1,228 @@
 /* inputComponents.css */
-
-.input-field {
-  position: relative;
-  margin-bottom: 1.5rem;
-  width: 100%;
+* {
+  box-sizing: border-box;
+  /* Sab elements ke liye */
 }
 
-.input-field label {
+.input-form-field {
+  height: auto !important;
+  position: relative;
+  width: 100%;
+  /* border: 1px solid #1265d3; */
+  border-radius: 8px;
+  /* padding: 8px; */
+}
+
+.input-form-field input:disabled {
+  background-color: #f7fafc;
+  cursor: not-allowed;
+}
+
+.input-form-field label {
   display: block;
   margin-bottom: 0.2rem;
-  font-size: 0.75rem;
   color: #000000;
-  /* Medium gray color */
-  font-weight: 200;
+  font-weight: 400;
   transition: all 0.3s ease;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 12px !important;
 }
 
-.input-field input {
+.input-form-field input,
+.input-form-field select {
   width: 100%;
-  padding: 6px 12px;
+  padding: 4px 12px;
   font-size: 1rem;
-  border: 1px solid #747a81;
-  /* Light gray border */
+  border: 1.5px solid #747a81;
   border-radius: 0.375rem;
-  /* 6px */
   background-color: #fff;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.input-field input:focus {
+.input-form-field input:focus {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
-
 }
 
-
-.input-field input:disabled {
-  background-color: #f7fafc;
-  /* Very light gray */
-  cursor: not-allowed;
+.input-form-field select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-/* Optional: For floating label effect (agar tumhe woh modern floating label chahiye) */
-/*
-.input-field.floating-label label {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  background: white;
-  padding: 0 0.25rem;
-  color: #718096;
-  transition: all 0.2s ease;
+.input-form-field textarea {
+  width: 100%;
+  padding: 6px 6px;
+  font-size: 12px;
+  border: 1.5px solid #747a81;
+  border-radius: 0.375rem;
+  background-color: #fff;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  resize: vertical;
 }
 
-.input-field.floating-label input:focus + label,
-.input-field.floating-label input:not(:placeholder-shown) + label {
-  top: -0.5rem;
-  left: 0.5rem;
+.input-form-field textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.input-form-field input::placeholder,
+.input-form-field textarea::placeholder {
+  color: black;
+  opacity: 0.4;
+}
+
+/* Shared Styles for Both Components Radio and checkbox */
+.input-radio-field,
+.input-checkbox-field {
+  /* margin-bottom: .5rem; */
+  width: 100%;
+  /* border: 1px solid #022c63; */
+}
+
+.radio-main-label,
+.checkbox-main-label {
+  display: block;
+  margin-bottom: 0.2rem;
   font-size: 0.75rem;
-  color: #4299e1;
+  color: #333;
+  font-weight: 500;
+  font-family: "Open Sans", sans-serif !important;
+  font-size: 12px !important;
 }
-*/
+
+.radio-options-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.checkbox-options-container {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.radio-option,
+.checkbox-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.radio-input {
+  margin: 0;
+  width: 16px;
+  height: 16px;
+  accent-color: #000000;
+  cursor: pointer;
+}
+
+.checkbox-input {
+  width: 16px;
+  height: 16px;
+  accent-color: rgb(255, 248, 248);
+  cursor: pointer;
+}
+
+.radio-label,
+.checkbox-label {
+  font-size: 0.75rem;
+  color: #333;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Disabled States (Shared) */
+.radio-input:disabled,
+.checkbox-input:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.radio-input:disabled+.radio-label,
+.checkbox-input:disabled+.checkbox-label {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Radio-Specific Styles */
+.radio-input {
+  border-radius: 50%;
+  /* Makes it circular */
+}
+
+/* Checkbox-Specific Styles */
+.checkbox-input {
+  border-radius: 3px;
+  /* Slightly rounded corners */
+}
+
+/* Modern Modal Header */
+.form-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.2rem 0rem;
+  /* Thoda aur padding for breathing space */
+  position: relative;
+}
+
+/* Title */
+.form-modal-title {
+  font-size: 1.5rem;
+  /* Thoda badda font */
+  font-weight: 600;
+  /* Bold weight */
+  color: #1f2937;
+  /* Dark gray */
+  letter-spacing: -0.025em;
+  position: relative;
+}
+
+/* Underline accent below title */
+.form-modal-title::after {
+  content: "";
+  display: block;
+  width: 3rem;
+  /* Underline length */
+  height: 3px;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  /* Gradient accent */
+  border-radius: 2px;
+  margin-bottom: 1rem;
+}
+
+/* Close button */
+.form-close-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  /* Slightly smaller icon */
+  cursor: pointer;
+  color: #6b7280;
+  /* Gray 500 */
+  padding: 0.5rem;
+  /* Bada clickable area */
+  transition: color 0.2s ease, transform 0.2s ease;
+  line-height: 1;
+}
+
+/* Hover state */
+.form-close-btn:hover {
+  color: #111827;
+  /* Gray 900 */
+  transform: scale(1.1);
+  /* Subtle zoom */
+}
+
+/* Focus state for accessibility */
+.form-close-btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.5);
+  /* Indigo focus ring */
+}
