@@ -175,7 +175,7 @@ const Sidebar = () => {
                     width="24"
                     height="24"
                   />
-                  <span>Coaches </span>
+                  <span>Coaches</span>
                 </div>
               </Link>
 
@@ -621,6 +621,7 @@ const Sidebar = () => {
               <div className="item">
                 <img
                   src="/adminPannel_icons/Coach.png"
+                  // src="/adminPannel_icons/astrologers.png"
                   width="24"
                   height="24"
                 />

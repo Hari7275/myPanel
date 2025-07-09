@@ -5,6 +5,7 @@ import { QDLOACTIONCOLUMN } from "./qdColumn";
 import UpdateQdLoaction from "./UpdateQdLoaction";
 import AddQdLoaction from "./AddQdLoaction";
 import DeleteComponent from "../../payments/DeleteComponent";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 import {
   useGetqdLoactionListQuery,
@@ -17,9 +18,16 @@ const QDLoaction = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
+
+  const [pageSize, setPageSize] = useState(10);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetqdLoactionListQuery();
+  const { data: fetchData } = useGetqdLoactionListQuery({
+    currentPage: page,
+    pageSize: pageSize,
+  });
   const [deleteLoaction] = useDeleteqdLoactionListMutation();
 
   useEffect(() => {
@@ -96,9 +104,13 @@ const QDLoaction = () => {
     },
   ]);
 
+  // for pagination
+
+  const totalPage = fetchData?.data?.pagination?.totalPages;
+
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={data}
         includeActions={false}
@@ -106,6 +118,22 @@ const QDLoaction = () => {
         AddPackageButton={AddButton}
         showTableHeading={false}
         includeCheckbox={false}
+      /> */}
+
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        includeActions={false}
+        tableTitle="QD Trips Location"
+        AddPackageButton={AddButton}
+        showTableHeading={false}
+        includeCheckbox={false}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
       />
 
       {addLocation && (
