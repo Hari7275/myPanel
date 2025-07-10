@@ -142,17 +142,18 @@ const Sidebar = () => {
                 </div>
               </Link>
               {/* )}  */}
-
-              <Link to="/user">
-                <div
-                  className={`menu-item ${activeItem === "Users" ? "active" : ""
-                    }`}
-                  onClick={() => handleItemClick("Users")}
-                >
-                  <GroupOutlinedIcon />
-                  <span>Users</span>
-                </div>
-              </Link>
+              {permissions?.["user"] && (
+                <Link to="/user">
+                  <div
+                    className={`menu-item ${activeItem === "Users" ? "active" : ""
+                      }`}
+                    onClick={() => handleItemClick("Users")}
+                  >
+                    <GroupOutlinedIcon />
+                    <span>Users</span>
+                  </div>
+                </Link>
+              )}
             </div>
 
             {/* changes for coaches */}
@@ -572,14 +573,14 @@ const Sidebar = () => {
               </div>
             </Link>
             {/* )} */}
-            {/* {permissions?.["User"] && ( */}
-            <Link to="/user">
-              <div className="item">
-                <GroupOutlinedIcon />
-                <span>Users</span>
-              </div>
-            </Link>
-            {/* )} */}
+            {permissions?.["user"] && (
+              <Link to="/user">
+                <div className="item">
+                  <GroupOutlinedIcon />
+                  <span>Users</span>
+                </div>
+              </Link>
+            )}
             {permissions?.["astrologer"].includes('view_astrologer_list') && (
               <Link to="astrologer">
                 <div className="item">

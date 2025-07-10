@@ -4,10 +4,12 @@ import { useNavigate, useLocation } from "react-router-dom";
 import UserRightComponent from "./UserRightComponent";
 import UserLinkComponent from "./UserLinkComponent";
 import UserDetailsComponent from "./UserDetailsComponent";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const UsersProfile = () => {
   const navigate = useNavigate();
   const location = useLocation();
+  const permissions = usePermissions();
 
   const handleProfileClose = () => {
     // navigate(-1);

@@ -10,6 +10,7 @@ import { setCurrentUser } from "../../../_store/slices/userSlice";
 import Modal from "react-modal";
 import { Atom } from "react-loading-indicators";
 import { debounce } from "lodash";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 Modal.setAppElement("#root");
 
@@ -25,6 +26,7 @@ const UserListingTable = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const permissions = usePermissions();
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -83,25 +85,29 @@ const UserListingTable = () => {
                 pageSize: pageSize,
               }}
             >
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
-                onClick={() => handleViewDetails(row.original.id)}
-              >
-                <ArrowRight className="iconSmall" />
-              </span>
+              {permissions?.["user"]?.includes("view_user_profile") && ( // Check if user has permission to view user profile}
+                <span
+                  title="view details"
+                  className="secondIcon"
+                  style={{
+                    display: "inline-block",
+                    height: "35px",
+                    width: "35px",
+                  }}
+                  onClick={() => handleViewDetails(row.original.id)}
+                >
+                  <ArrowRight className="iconSmall" />
+                </span>
+              )}
             </Link>
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleEditStatus(row.original.id)}
-              />
-            </span>
+            {permissions?.["user"]?.includes("update_user_profile_status") && ( // Check if user has permission to view user profile}
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleEditStatus(row.original.id)}
+                />
+              </span>
+            )}
           </div>
         ),
       },
@@ -174,53 +180,55 @@ const UserListingTable = () => {
   }
 
   return (
-    <>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        tableTitle="User List"
-        includeActions={false}
-        customFilterComponent={customFilterComponent}
-        dynamicPagination={dynamicPagination}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        showTableHeading={false}
-      />
+    permissions?.["user"]?.includes("view_user_list") && (// Check if user has permission to view user list
+      <>
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          tableTitle="User List"
+          includeActions={false}
+          customFilterComponent={customFilterComponent}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          showTableHeading={false}
+        />
 
-      {data?.length === 0 && (
-        <div>
-          <span className="no-data-new">No User Avaliable</span>
-        </div>
-      )}
-
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={toggleModal}
-        contentLabel="Image Modal"
-        className="imageModal"
-        overlayClassName="overlay"
-      >
-        {selectedImage && (
+        {data?.length === 0 && (
           <div>
-            <img src={selectedImage} alt="Selected" className="large-image" />
-            <button className="image-modal" onClick={toggleModal}>
-              X
-            </button>
+            <span className="no-data-new">No User Avaliable</span>
           </div>
         )}
-      </Modal>
 
-      {showEditStatus && (
-        <EditStatus
-          isOpen={showEditStatus}
-          onClose={toggleEditStatus}
-          selectedRow={selectedRow}
-        />
-      )}
-    </>
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={toggleModal}
+          contentLabel="Image Modal"
+          className="imageModal"
+          overlayClassName="overlay"
+        >
+          {selectedImage && (
+            <div>
+              <img src={selectedImage} alt="Selected" className="large-image" />
+              <button className="image-modal" onClick={toggleModal}>
+                X
+              </button>
+            </div>
+          )}
+        </Modal>
+
+        {showEditStatus && (
+          <EditStatus
+            isOpen={showEditStatus}
+            onClose={toggleEditStatus}
+            selectedRow={selectedRow}
+          />
+        )}
+      </>
+    )
   );
 };
 
