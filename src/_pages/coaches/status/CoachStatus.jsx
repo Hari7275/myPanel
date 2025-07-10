@@ -71,6 +71,12 @@ const CoachStatus = () => {
     setSelectedService(null);
   };
 
+  const canUpdateStatus = {
+    astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status"),
+    coach: permissions?.["coach"]?.includes("update_coach_profile_service_status"),
+  }
+  const hasEditPermission = Object.values(canUpdateStatus).some(Boolean);
+
   return (
     <div className="status-availability">
       <label className="sub-heading">STATUS (AVAILABILITY) :</label>
@@ -101,37 +107,35 @@ const CoachStatus = () => {
                   exclusive
                   aria-label="Display Status"
                 >
-                  {permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status") && (
-
-                    <ToggleButton
-                      value={1}
-                      sx={{
-                        borderRadius: "10px",
-                        padding: "4px 12px",
-                        "&.Mui-selected": {
-                          backgroundColor: "#696cff",
-                          color: "white",
-                        },
-                      }}
-                    >
-                      Show
-                    </ToggleButton>
-                  )}
-                  {permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status") && (
-
-                    <ToggleButton
-                      value={0}
-                      sx={{
-                        borderRadius: "10px",
-                        padding: "4px 12px",
-                        "&.Mui-selected": {
-                          backgroundColor: "#696cff",
-                          color: "white",
-                        },
-                      }}
-                    >
-                      Hide
-                    </ToggleButton>
+                  {hasEditPermission && (
+                    <>
+                      <ToggleButton
+                        value={1}
+                        sx={{
+                          borderRadius: "10px",
+                          padding: "4px 12px",
+                          "&.Mui-selected": {
+                            backgroundColor: "#696cff",
+                            color: "white",
+                          },
+                        }}
+                      >
+                        Show
+                      </ToggleButton>
+                      <ToggleButton
+                        value={0}
+                        sx={{
+                          borderRadius: "10px",
+                          padding: "4px 12px",
+                          "&.Mui-selected": {
+                            backgroundColor: "#696cff",
+                            color: "white",
+                          },
+                        }}
+                      >
+                        Hide
+                      </ToggleButton>
+                    </>
                   )}
                 </ToggleButtonGroup>
               </div>

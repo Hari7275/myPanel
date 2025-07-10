@@ -58,10 +58,16 @@ const CommissionList = () => {
     setAddData(!addData);
   };
 
+  const canEditCommission = {
+    astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_flute_commission"),
+    coach: permissions?.["coach"]?.includes("update_coach_profile_flute_commission"),
+  }
+
+  const hasEditPermission = Object.values(canEditCommission).some(Boolean);
+
   const AddButton = () => {
     return (
-      permissions?.["astrologer"]?.includes("update_astrologer_profile_flute_commission") && (
-
+      hasEditPermission && (
         <button
           className="addButton"
           style={{

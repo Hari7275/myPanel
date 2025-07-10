@@ -60,7 +60,7 @@ const CoachAccountList = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {permissions?.["coach"]?.includes("view_coach_profile") && (
+          {permissions?.["coach"]?.includes("update-coach_profile_bank_details") && (
             <span
               title="view details"
               className="secondIcon"

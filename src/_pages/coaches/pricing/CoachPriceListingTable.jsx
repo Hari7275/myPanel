@@ -7,12 +7,14 @@ import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachPriceListingTable = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
+  const permissions = usePermissions();
 
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
@@ -39,6 +41,10 @@ const CoachPriceListingTable = () => {
     setShowConsultantPrice(!showConsultantEditPrice);
   };
 
+  const hasPermission = () => {
+    return permissions?.["coach"]?.includes("update_coach_profile_price_chart");
+  }
+
   const columns = useMemo(() => [
     ...PRICECHARTCOLUMN,
     {
@@ -46,7 +52,7 @@ const CoachPriceListingTable = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {row.original.status === 1 && (
+          {row.original.status === 1 && hasPermission && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateStatus(row?.original)}
