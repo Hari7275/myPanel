@@ -10,6 +10,7 @@ import CoachSettings from "../CoachSettings";
 import { ConsultantGalleryStatus } from "../../../../_constants/consultantConstant";
 
 import { useGetGalleryListQuery } from "../../../../_store/api";
+import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -22,6 +23,7 @@ const CoachProfilePhoto = () => {
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.other) {
@@ -81,12 +83,13 @@ const CoachProfilePhoto = () => {
                         </a>
                       )}
                     </div>
-
-                    <div className="galleryIcons">
-                      <span onClick={() => toggleSettingModal(imageUrls)}>
-                        <Settings />
-                      </span>
-                    </div>
+                    {permissions?.["coach"]?.includes("update_coach_profile_gallery") && (
+                      <div className="galleryIcons">
+                        <span onClick={() => toggleSettingModal(imageUrls)}>
+                          <Settings />
+                        </span>
+                      </div>
+                    )}
                   </>
                 )}
               </div>
@@ -102,7 +105,7 @@ const CoachProfilePhoto = () => {
             onClose={toggleSettingModal}
             imageUrl={selectedImage}
             currentStatus={selectedImage.status}
-            // onStatusChange={handleStatusChange}
+          // onStatusChange={handleStatusChange}
           />
         )}
       </div>

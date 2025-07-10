@@ -47,23 +47,27 @@ const LiveStream = () => {
         Cell: ({ row }) => (
           permissions?.["astrologer"]?.includes("update_astrologer_profile_livestream") && (
             <div className="actions-cell">
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{ height: "35px", width: "35px" }}
-              >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => toggleLiveStreamUserListing(row.original)}
-                />
-              </span>
+              {permissions?.["coach"]?.includes("view_coach_profile") && (
+                <span
+                  title="view details"
+                  className="secondIcon"
+                  style={{ height: "35px", width: "35px" }}
+                >
+                  <ArrowRight
+                    className="iconSmall"
+                    onClick={() => toggleLiveStreamUserListing(row.original)}
+                  />
+                </span>
+              )}
 
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleUpdateStatus(row.original)}
-                />
-              </span>
+              {permissions?.["coach"]?.includes("update_coach_profile_livestream") && (
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleUpdateStatus(row.original)}
+                  />
+                </span>
+              )}
             </div>
           )
         ),

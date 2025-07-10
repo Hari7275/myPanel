@@ -8,6 +8,7 @@ import {
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -20,6 +21,7 @@ const CoachProfilePhotos = () => {
   const [addImage, { isLoading }] = useCreateConsultantCoverPhotoMutation();
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
   const [deleteImage] = useDeleteGalleryMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData) {
@@ -60,7 +62,7 @@ const CoachProfilePhotos = () => {
     if (selectedImage && selectedImage?.id) {
       try {
         await deleteImage({ id: selectedImage?.id }).unwrap();
- 
+
       } catch (error) {
         console.error("Failed to delete the image:", error);
       }
@@ -105,14 +107,17 @@ const CoachProfilePhotos = () => {
                       objectFit: "cover",
                     }}
                   />
-                  <div className="hover-buttons">
-                    <button
-                      className="hover-button"
-                      onClick={() => toggleDeleteComponent(data)}
-                    >
-                      <Trash />
-                    </button>
-                  </div>
+                  {permissions?.["coach"]?.includes("update_coach_profile_gallery") && (
+
+                    <div className="hover-buttons">
+                      <button
+                        className="hover-button"
+                        onClick={() => toggleDeleteComponent(data)}
+                      >
+                        <Trash />
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <p>No cover photo available</p>

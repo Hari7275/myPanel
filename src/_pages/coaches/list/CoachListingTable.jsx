@@ -21,6 +21,7 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -37,6 +38,7 @@ const CoachListingTable = () => {
   const navigate = useNavigate();
   const location = useLocation();
   let [profileStatus, SetProfileStatus] = useState(null);
+  const permissions = usePermissions();
 
   const {
     data: fetchData,
@@ -109,20 +111,23 @@ const CoachListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {/* <Link to="/coach-profile"> */}
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{
-                display: "inline-block",
-                height: "35px",
-                width: "35px",
-              }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={() => handleActionClick(row?.original)}
-              />
-            </span>
+            {permissions?.["coach"]?.includes("view_coach_profile") && (
+
+              <span
+                title="view details"
+                className="secondIcon"
+                style={{
+                  display: "inline-block",
+                  height: "35px",
+                  width: "35px",
+                }}
+              >
+                <ArrowRight
+                  className="iconSmall"
+                  onClick={() => handleActionClick(row?.original)}
+                />
+              </span>
+            )}
             {/* </Link> */}
             {/* <span className="editIcon">
               <Pencil
@@ -132,12 +137,15 @@ const CoachListingTable = () => {
             </span> */}
 
             {[3, 4, 5, 2].includes(row?.original?.status) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original)}
-                />
-              </span>
+              permissions?.["coach"]?.includes("update_coach_profile_status") && (
+
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )
             )}
           </div>
         ),
@@ -216,33 +224,36 @@ const CoachListingTable = () => {
     return <div>Error: {error.message}</div>;
   }
   return (
-    <div>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        tableTitle="Coaches List"
-        customFilterComponent={customFilterComponent}
-        dynamicPagination={dynamicPagination}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        showTableHeading={false}
-        includeCheckbox={false}
-      />
-      {data?.length == 0 && (
-        <span className="no-data-new">No Coach Avaliable</span>
-      )}
-      {showEditStatus && (
-        <EditStatus
-          isOpen={showEditStatus}
-          onClose={toggleEditStatus}
-          selectedRow={selectedRow?.id}
-          profileStatus={profileStatus}
+    permissions?.["coach"]?.includes("view_coach_list") && (
+
+      <div>
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          tableTitle="Coaches List"
+          customFilterComponent={customFilterComponent}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          showTableHeading={false}
+          includeCheckbox={false}
         />
-      )}
-    </div>
+        {data?.length == 0 && (
+          <span className="no-data-new">No Coach Avaliable</span>
+        )}
+        {showEditStatus && (
+          <EditStatus
+            isOpen={showEditStatus}
+            onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+      </div>
+    )
   );
 };
 

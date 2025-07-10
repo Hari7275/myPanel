@@ -16,6 +16,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import ProfilePhoto from "./ProfilePhoto";
 import MyGallery from "../../../_constants/MyGallery";
 import toast from "react-hot-toast";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -26,6 +27,7 @@ const CoachGallery = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [profilePic, setProfilePic] = useState(false);
+  const permissions = usePermissions();
 
   // state to open image as popup
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -253,24 +255,26 @@ const CoachGallery = () => {
                       ) : (
                         ""
                       )}
+                      {permissions?.["coach"]?.includes("update_coach_profile_gallery") && (
 
-                      <div className="galleryIcons">
-                        <span onClick={() => toggleImageCropper(image)}>
-                          <img src="/cropAdmin.png" className="galleryIcon" />
-                        </span>
-                        <span>
-                          <Download onClick={() => downloadImage(image.url)} />
-                        </span>
-                        <span onClick={() => toggleProfilePic(image)}>
-                          <UserRound />
-                        </span>
-                        <span onClick={() => toggleSettingModal(image)}>
-                          <Settings />
-                        </span>
-                        <span onClick={() => toggleDeleteComponent(image)}>
-                          <Trash />
-                        </span>
-                      </div>
+                        <div className="galleryIcons">
+                          <span onClick={() => toggleImageCropper(image)}>
+                            <img src="/cropAdmin.png" className="galleryIcon" />
+                          </span>
+                          <span>
+                            <Download onClick={() => downloadImage(image.url)} />
+                          </span>
+                          <span onClick={() => toggleProfilePic(image)}>
+                            <UserRound />
+                          </span>
+                          <span onClick={() => toggleSettingModal(image)}>
+                            <Settings />
+                          </span>
+                          <span onClick={() => toggleDeleteComponent(image)}>
+                            <Trash />
+                          </span>
+                        </div>
+                      )}
                     </>
                   )}
                 </div>

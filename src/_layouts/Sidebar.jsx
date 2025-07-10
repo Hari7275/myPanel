@@ -158,21 +158,22 @@ const Sidebar = () => {
             {/* changes for coaches */}
 
             <div>
-              <Link to="/coaches">
-                <div
-                  className={`menu-item ${activeItem === "Coaches" ? "active" : ""
-                    }`}
-                  onClick={() => handleItemClick("Coaches")}
-                >
-                  <img
-                    src="/adminPannel_icons/Coach.png"
-                    width="24"
-                    height="24"
-                  />
-                  <span>Coaches</span>
-                </div>
-              </Link>
-
+              {permissions?.["coach"] && (
+                <Link to="/coaches">
+                  <div
+                    className={`menu-item ${activeItem === "Coaches" ? "active" : ""
+                      }`}
+                    onClick={() => handleItemClick("Coaches")}
+                  >
+                    <img
+                      src="/adminPannel_icons/Coach.png"
+                      width="24"
+                      height="24"
+                    />
+                    <span>Coaches</span>
+                  </div>
+                </Link>
+              )}
               <Link to="/listeners">
                 <div
                   className={`menu-item ${activeItem === "Listeners" ? "active" : ""
@@ -183,6 +184,7 @@ const Sidebar = () => {
                   <span>Listeners</span>
                 </div>
               </Link>
+
               {permissions?.["astrologer"] && (
                 <Link to="/astrologer">
                   <div

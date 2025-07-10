@@ -10,6 +10,7 @@ import { format } from "date-fns";
 import { getGenderLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -18,6 +19,7 @@ const CoachInfo = () => {
   const [category, setCategory] = useState([]);
   const [skills, setSkills] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const permissions = usePermissions();
 
   const { data: fetchdata, isLoading } =
     useGetConsultantsDetailsQuery(consultantId);
@@ -100,13 +102,15 @@ const CoachInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
+            {permissions?.["coach"]?.includes("update_coach_profile_info") && (
 
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdataInfo(formData)}
-              />
-            </span>
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdataInfo(formData)}
+                />
+              </span>
+            )}
           </div>
 
           <div className="info-pair">

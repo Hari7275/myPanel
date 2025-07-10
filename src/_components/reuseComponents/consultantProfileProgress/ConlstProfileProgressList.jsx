@@ -41,10 +41,17 @@ const ConlstProfileProgressList = () => {
     {
       Header: () => <div className="actions-header">Actions</div>,
       id: "actions",
-      Cell: ({ row }) => (
-        <div className="actions-cell">
-          {row.original.status !== "completed" && (
-            permissions?.["astrologer"]?.includes("update_astrologer_profile_onboarding_progress") && (
+      Cell: ({ row }) => {
+        const canEdit = {
+          astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_onboarding_progress"),
+          coach: permissions?.["coach"]?.includes("update_coach_profile_onboarding_progress"),
+          listener: permissions?.["listener"]?.includes("update_listener_profile_onboarding_progress"),
+        };
+        const hashEditPermissions = Object.values(canEdit).some(Boolean);
+
+        return (
+          <div className="actions-cell">
+            {row.original.status !== "completed" && hashEditPermissions && (
               <span
                 className="editIcon"
                 onClick={() => toggleUpdateConsultantPrice(row?.original)}
@@ -52,11 +59,12 @@ const ConlstProfileProgressList = () => {
                 <Pencil className="iconSmall" />
               </span>
             )
-          )}
-        </div>
-      ),
+            }
+          </div>
+        )
+      },
     },
-  ]);
+  ], [permissions]);
 
   if (isLoading) {
     return (

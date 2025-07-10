@@ -12,6 +12,7 @@ import {
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import Description from "../../astrologers/reviews_notifications/Description";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachReviews = () => {
   const [addReview, setAddReview] = useState(false);
@@ -21,6 +22,7 @@ const CoachReviews = () => {
   const [description, setDescription] = useState(false);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetReviewsListQuery(consultantId);
@@ -71,30 +73,33 @@ const CoachReviews = () => {
     const buttonStyle =
       data.length > 0
         ? {
-            position: "absolute",
-            top: "125px",
-            right: "40px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          }
+          position: "absolute",
+          top: "125px",
+          right: "40px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        }
         : {
-            position: "absolute",
-            top: "20px",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-            zIndex: "9999",
-          };
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+          zIndex: "9999",
+        };
 
     return (
-      <button
-        className="addButton"
-        style={buttonStyle}
-        onClick={() => toggleAddReviews(coachId)}
-      >
-        Add Review
-      </button>
+      permissions?.["coach"]?.includes("create_coach_profile_review") && (
+
+        <button
+          className="addButton"
+          style={buttonStyle}
+          onClick={() => toggleAddReviews(coachId)}
+        >
+          Add Review
+        </button>
+      )
     );
   };
 
@@ -107,18 +112,24 @@ const CoachReviews = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateReviews(row.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
+            {permissions?.["coach"]?.includes("update_coach_profile_review") && (
+
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateReviews(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
+            {permissions?.["coach"]?.includes("delete_coach_profile_review") && (
+
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
             <span className="secondIcon">
               <ArrowRight
                 className=""

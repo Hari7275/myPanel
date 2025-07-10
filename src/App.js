@@ -275,8 +275,8 @@ function App() {
         element={
           <PrivateRoute
             element={<Layout />}
-            // isAuthenticated={isAuthenticated}
-            // requiredPermissions={["access_admin_panel"]}
+          // isAuthenticated={isAuthenticated}
+          // requiredPermissions={["access_admin_panel"]}
           />
         }
       />

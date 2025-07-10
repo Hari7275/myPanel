@@ -1,134 +1,109 @@
 import React from "react";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
+
+  const permissions = usePermissions();
+
+  // Mapping of components to their respective permissions
+  const menuItems = [
+    {
+      component: "Overview",
+      label: "Overview",
+      permission: "view_coach_profile_overview"
+    },
+    {
+      component: "UpdateInfo",
+      label: "Update Info",
+      permission: "view_coach_profile_info"
+    },
+    {
+      component: "Profile-Progress",
+      label: "Onboarding Progress",
+      permission: "view_coach_profile_onboarding_progress"
+    },
+    {
+      component: "Gallery",
+      label: "Gallery",
+      permission: "view_coach_profile_gallery"
+    },
+    {
+      component: "CoachOrder",
+      label: "Orders",
+      permission: "view_coach_profile_orders"
+    },
+    {
+      component: "CoachGifts",
+      label: "Gifts",
+      permission: "view_coach_profile_gift"
+    },
+    {
+      component: "session-slot",
+      label: "Appointment Session",
+      permission: "view_coach_profile_appointment_session"
+    },
+    {
+      component: "LiveStream",
+      label: "Live Stream",
+      permission: "view_coach_profile_livestream"
+    },
+    {
+      component: "CoachFollowers",
+      label: "Followers",
+      permission: "view_coach_profile_followers"
+    },
+    {
+      component: "CoachReviews",
+      label: "Reviews",
+      permission: "view_coach_profile_reviews"
+    },
+    {
+      component: "CoacheAccount",
+      label: "Bank Details",
+      permission: "view_coach_profile_bank_details"
+    },
+    {
+      component: "Price-chart",
+      label: "Price Chart",
+      permission: "view_coach_profile_price_chart"
+    },
+    {
+      component: "Wallet",
+      label: "Wallet",
+      permission: "view_coach_profile_wallet"
+    },
+    {
+      component: "consultant-commission",
+      label: "Flute Commission",
+      permission: "view_coach_profile_flute_commission"
+    },
+    {
+      component: "CoachStatus",
+      label: "Service Status",
+      permission: "view_coach_profile_service_status"
+    }
+  ];
+
   return (
     <>
       <header className="vertical-nav">
-        <div
-          className={`nav-link ${
-            activeComponent === "Overview" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Overview")}
-        >
-          <span>Overview</span>
-        </div>
+        {menuItems.map((item) => {
+          // Check if user has permission for this item
+          const hasPermission = permissions?.coach?.includes(item.permission);
 
-        <div
-          className={`nav-link ${
-            activeComponent === "UpdateInfo" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("UpdateInfo")}
-        >
-          <span>Update Info</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "Profile-Progress" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Profile-Progress")}
-        >
-          <span>Onboarding Progress</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "Gallery" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Gallery")}
-        >
-          <span>Gallery</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachOrder" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachOrder")}
-        >
-          <span>Orders</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachGifts" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachGifts")}
-        >
-          <span>Gifts</span>
-        </div>
+          // Skip rendering if no permission
+          if (!hasPermission) return null;
 
-        <div
-          className={`nav-link ${
-            activeComponent === "session-slot" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("session-slot")}
-        >
-          <span>Appointment Session</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "LiveStream" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("LiveStream")}
-        >
-          <span>Live Stream</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachFollowers" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachFollowers")}
-        >
-          <span>Followers</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachReviews" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachReviews")}
-        >
-          <span>Reviews</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "CoacheAccount" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoacheAccount")}
-        >
-          <span>Bank Details</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "Price-chart" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Price-chart")}
-        >
-          <span>Price Chart</span>
-        </div>
-        <div
-          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}
-          onClick={() => onComponentChange("Wallet")}
-        >
-          <span>Wallet</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "consultant-commission" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("consultant-commission")}
-        >
-          <span>Flute Commission</span>
-        </div>
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachStatus" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachStatus")}
-        >
-          <span>Service Status</span>
-        </div>
+          return (
+            <div
+              key={item.component}
+              className={`nav-link ${activeComponent === item.component ? "active" : ""}`}
+              onClick={() => onComponentChange(item.component)}
+            >
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
       </header>
     </>
   );
