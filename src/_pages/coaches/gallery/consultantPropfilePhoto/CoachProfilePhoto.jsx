@@ -82,11 +82,11 @@ const CoachProfilePhoto = () => {
                       )}
                     </div>
 
-                    <div className="galleryIcons">
+                    {/* <div className="galleryIcons">
                       <span onClick={() => toggleSettingModal(imageUrls)}>
                         <Settings />
                       </span>
-                    </div>
+                    </div> */}
                   </>
                 )}
               </div>

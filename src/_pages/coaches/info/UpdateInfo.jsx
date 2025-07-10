@@ -16,7 +16,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     first_name: selectedData?.first_name,
     last_name: selectedData?.last_name,
     gender: Number(selectedData?.gender),
-    email: selectedData?.email,
+    email: selectedData?.email_address,
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
     address: selectedData?.address,
     services: selectedData?.services,

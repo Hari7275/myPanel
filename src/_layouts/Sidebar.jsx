@@ -606,6 +606,17 @@ const Sidebar = () => {
             </Link>
             {/* )} */}
 
+            <Link to="auth-consultant">
+              <div className="item">
+                <img
+                  src="/adminPannel_icons/Coach.png"
+                  width="24"
+                  height="24"
+                />
+                <span>Consultant</span>
+              </div>
+            </Link>
+
             <Link to="astrologer">
               <div className="item">
                 <img

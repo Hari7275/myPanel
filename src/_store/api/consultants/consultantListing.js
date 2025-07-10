@@ -89,6 +89,20 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["consultants"],
     }),
+
+    // ye uss consultant ki api hai jo unregistered hai
+
+    getUnregisteredConsultantsList: builder.query({
+      query: ({ page, size, email_address, phone_number, id }) => ({
+        url: `/api/v1/consultant/auth/admin/uncreated-consultants?&page=${page}&size=${size}&phone_number=${phone_number}&email_address=${email_address}&id=${id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -99,4 +113,5 @@ export const {
   useGetConsultantsServiceStatusQuery,
   useUpdateDisplayStatusMutation,
   useUpdateConsultantProfileStatusMutation,
+  useGetUnregisteredConsultantsListQuery,
 } = consultantsApiSlice;
