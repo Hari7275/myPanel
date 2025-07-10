@@ -61,6 +61,7 @@ const CommissionList = () => {
   const canEditCommission = {
     astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_flute_commission"),
     coach: permissions?.["coach"]?.includes("update_coach_profile_flute_commission"),
+    listener: permissions?.["listener"]?.includes("update_listener_profile_flute_commission"),
   }
 
   const hasEditPermission = Object.values(canEditCommission).some(Boolean);

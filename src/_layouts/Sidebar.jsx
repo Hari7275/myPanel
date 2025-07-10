@@ -174,17 +174,18 @@ const Sidebar = () => {
                   </div>
                 </Link>
               )}
-              <Link to="/listeners">
-                <div
-                  className={`menu-item ${activeItem === "Listeners" ? "active" : ""
-                    }`}
-                  onClick={() => handleItemClick("Listeners")}
-                >
-                  <HeadphonesOutlinedIcon />
-                  <span>Listeners</span>
-                </div>
-              </Link>
-
+              {permissions?.["listener"] && (
+                <Link to="/listeners">
+                  <div
+                    className={`menu-item ${activeItem === "Listeners" ? "active" : ""
+                      }`}
+                    onClick={() => handleItemClick("Listeners")}
+                  >
+                    <HeadphonesOutlinedIcon />
+                    <span>Listeners</span>
+                  </div>
+                </Link>
+              )}
               {permissions?.["astrologer"] && (
                 <Link to="/astrologer">
                   <div

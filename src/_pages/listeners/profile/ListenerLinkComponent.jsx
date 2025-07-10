@@ -1,132 +1,105 @@
 import React from "react";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
+  const permissions = usePermissions();
+  // Mapping of components to their respective permissions
+  const menuItems = [
+    {
+      component: "ListenerOverview",
+      label: "Overview",
+      permission: "view_listener_profile_overview"
+
+    },
+    {
+      component: "ListenerInfo",
+      label: "Update Info",
+      permission: "view_listener_profile_info"
+
+    },
+    {
+      component: "Profile-Progress",
+      label: "Onboarding Progress",
+      permission: "view_listener_profile_onboarding_progress"
+
+    },
+    {
+      component: "Gallery",
+      label: "Gallery",
+      permission: "view_listener_profile_gallery"
+
+    },
+    {
+      component: "ListenerOrder",
+      label: "Orders",
+      permission: "view_listener_profile_orders"
+
+    },
+    {
+      component: "ListenerFollowers",
+      label: "Favourite",
+      permission: "view_listener_profile_favorites"
+
+    },
+    {
+      component: "ListenerReviewsListingTable",
+      label: "Reviews",
+      permission: "view_listener_profile_reviews"
+
+    },
+    {
+      component: "ListenerAccount",
+      label: "Bank Details",
+      permission: "view_listener_profile_bank_details"
+
+    },
+    {
+      component: "Price-chart",
+      label: "Price Chart",
+      permission: "view_listener_profile_price_chart"
+
+    },
+    {
+      component: "Wallet",
+      label: "Wallet",
+      permission: "view_listener_profile_wallet"
+
+    },
+    {
+      component: "consultant-commission",
+      label: "Flute Commission",
+      permission: "view_listener_profile_flute_commission"
+
+    },
+    {
+      component: "CoachStatus",
+      label: "Service Status",
+      permission: "view_listener_profile_service_status"
+
+    }
+  ];
+
+
   return (
     <>
       <header className="vertical-nav">
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerOverview" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerOverview")}
-        >
-          <span>Overview</span>
-        </div>
+        {menuItems.map((item) => {
+          // Check if user has permission for this item
+          const hasPermission = permissions?.listener?.includes(item.permission);
 
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerInfo" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerInfo")}
-        >
-          <span>Update Info</span>
-        </div>
+          // Skip rendering if no permission
+          if (!hasPermission) return null;
 
-        <div
-          className={`nav-link ${
-            activeComponent === "Profile-Progress" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Profile-Progress")}
-        >
-          <span>Onboarding Progress</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "Gallery" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Gallery")}
-        >
-          <span>Gallery</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerOrder" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerOrder")}
-        >
-          <span>Orders</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerFollowers" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerFollowers")}
-        >
-          <span>Favourite</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerReviewsListingTable" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerReviewsListingTable")}
-        >
-          <span>Reviews</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "ListenerAccount" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerAccount")}
-        >
-          <span>Bank Details</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "Price-chart" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("Price-chart")}
-        >
-          <span>Price Chart</span>
-        </div>
-
-        <div
-          className={`nav-link ${activeComponent === "Wallet" ? "active" : ""}`}
-          onClick={() => onComponentChange("Wallet")}
-        >
-          <span>Wallet</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "consultant-commission" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("consultant-commission")}
-        >
-          <span>Flute Commission</span>
-        </div>
-
-        <div
-          className={`nav-link ${
-            activeComponent === "CoachStatus" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("CoachStatus")}
-        >
-          <span>Service Status</span>
-        </div>
-
-        {/* <div
-          className={`nav-link ${
-            activeComponent === "session-slot" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("session-slot")}
-        >
-          <span>Session Appointment</span>
-        </div> */}
-
-        {/* <div
-          className={`nav-link ${
-            activeComponent === "ListenerSetting" ? "active" : ""
-          }`}
-          onClick={() => onComponentChange("ListenerSetting")}
-        >
-          <span>Settings</span>
-        </div> */}
+          return (
+            <div
+              key={item.component}
+              className={`nav-link ${activeComponent === item.component ? "active" : ""}`}
+              onClick={() => onComponentChange(item.component)}
+            >
+              <span>{item.label}</span>
+            </div>
+          );
+        })}
       </header>
     </>
   );

@@ -9,6 +9,7 @@ import {
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -16,6 +17,7 @@ const ListenerInfo = () => {
   const [formData, setFormData] = useState(null);
   // const [category, setCategory] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const permissions = usePermissions();
 
   const { data: fetchdata, isLoading } =
     useGetConsultantsDetailsQuery(consultantId);
@@ -55,12 +57,14 @@ const ListenerInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
-            <button
-              className="secondIcon"
-              onClick={() => toggleUpdateInfo(formData)}
-            >
-              <Pencil />
-            </button>
+            {permissions?.["listener"]?.includes("update_listener_profile_info") && (
+              <button
+                className="secondIcon"
+                onClick={() => toggleUpdateInfo(formData)}
+              >
+                <Pencil />
+              </button>
+            )}
           </div>
 
           <div className="info-pair">

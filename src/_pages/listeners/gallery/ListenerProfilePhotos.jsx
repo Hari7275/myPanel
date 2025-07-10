@@ -8,6 +8,7 @@ import {
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenerProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -20,6 +21,7 @@ const ListenerProfilePhotos = () => {
   const [addImage, { isLoading }] = useCreateConsultantCoverPhotoMutation();
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
   const [deleteImage, { isLoading: isDeleting }] = useDeleteGalleryMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -104,16 +106,16 @@ const ListenerProfilePhotos = () => {
                       objectFit: "cover",
                     }}
                   />
-                  <div className="hover-buttons">
-                    <button
-                      className="hover-button"
-                      onClick={() => toggleDeleteComponent(data)}
-                    >
-                      <Trash />
-                    </button>
-
-                  
-                  </div>
+                  {permissions?.["listener"]?.includes("update_listener_profile_gallery") && (
+                    <div className="hover-buttons">
+                      <button
+                        className="hover-button"
+                        onClick={() => toggleDeleteComponent(data)}
+                      >
+                        <Trash />
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <p>No cover photo available</p>

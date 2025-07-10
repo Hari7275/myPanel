@@ -13,6 +13,7 @@ import {
 import LIstenerNotificationListingTable from "./LIstenerNotificationListingTable";
 import { useSelector } from "react-redux";
 import Description from "../../astrologers/reviews_notifications/Description";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenerReviewsListingTable = () => {
   const [addReview, setAddReview] = useState(false);
@@ -27,6 +28,7 @@ const ListenerReviewsListingTable = () => {
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetReviewsListQuery(consultantId);
   const [deleteReview] = useDeleteReviewMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData) {
@@ -85,13 +87,15 @@ const ListenerReviewsListingTable = () => {
         };
 
     return (
-      <button
-        className="addButton"
-        style={buttonStyle}
-        onClick={() => toggleAddReviews(coachId)}
-      >
-        Add Review
-      </button>
+      permissions?.["listener"]?.includes("create_listener_profile_review") && (
+        <button
+          className="addButton"
+          style={buttonStyle}
+          onClick={() => toggleAddReviews(coachId)}
+        >
+          Add Review
+        </button>
+      )
     );
   };
 
@@ -109,18 +113,22 @@ const ListenerReviewsListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateReviews(row.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
+            {permissions?.["listener"]?.includes("update_listener_profile_review") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateReviews(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
+            {permissions?.["listener"]?.includes("delete_listener_profile_review") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
             <span className="secondIcon">
               <ArrowRight
                 className=""

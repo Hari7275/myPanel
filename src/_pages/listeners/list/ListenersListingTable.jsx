@@ -14,6 +14,7 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenersListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -30,6 +31,7 @@ const ListenersListingTable = () => {
   const location = useLocation();
   console.log("page in arrow.......", pageRef.current);
   let [profileStatus, SetProfileStatus] = useState(null);
+  const permissions = usePermissions();
 
   const {
     data: fetchData,
@@ -107,20 +109,22 @@ const ListenersListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {/* <Link to="/listener_Profile"> */}
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{
-                display: "inline-block",
-                height: "35px",
-                width: "35px",
-              }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={() => handleActionClick(row.original)}
-              />
-            </span>
+            {permissions?.["listener"]?.includes("view_listener_profile") && (
+              <span
+                title="view details"
+                className="secondIcon"
+                style={{
+                  display: "inline-block",
+                  height: "35px",
+                  width: "35px",
+                }}
+              >
+                <ArrowRight
+                  className="iconSmall"
+                  onClick={() => handleActionClick(row.original)}
+                />
+              </span>
+            )}
             {/* </Link> */}
             {/* <span className="editIcon">
               <Pencil
@@ -130,12 +134,15 @@ const ListenersListingTable = () => {
             </span> */}
 
             {[3, 4, 5, 2].includes(row?.original?.status) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original)}
-                />
-              </span>
+              permissions?.["listener"]?.includes("update_listener_profile_status") && (
+
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )
             )}
           </div>
         ),
@@ -215,36 +222,38 @@ const ListenersListingTable = () => {
   }
 
   return (
-    <>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        tableTitle="Listeners"
-        includeActions={false}
-        customFilterComponent={customFilterComponent}
-        dynamicPagination={dynamicPagination}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        showTableHeading={false}
-        includeCheckbox={false}
-      />
-
-      {data?.length == 0 && (
-        <span className="no-data-new">No Listener Avaliable</span>
-      )}
-
-      {showEditStatus && (
-        <EditStatus
-          isOpen={showEditStatus}
-          onClose={toggleEditStatus}
-          selectedRow={selectedRow?.id}
-          profileStatus={profileStatus}
+    permissions?.["listener"]?.includes("view_listener_list") && (
+      <>
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          tableTitle="Listeners"
+          includeActions={false}
+          customFilterComponent={customFilterComponent}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          showTableHeading={false}
+          includeCheckbox={false}
         />
-      )}
-    </>
+
+        {data?.length == 0 && (
+          <span className="no-data-new">No Listener Avaliable</span>
+        )}
+
+        {showEditStatus && (
+          <EditStatus
+            isOpen={showEditStatus}
+            onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+      </>
+    )
   );
 };
 

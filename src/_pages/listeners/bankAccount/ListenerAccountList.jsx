@@ -10,6 +10,7 @@ import {
   useGetConsultantsPayPalDetailsQuery,
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenerAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);
@@ -18,6 +19,7 @@ const ListenerAccountList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const permissions = usePermissions();
 
   const { data: fetchData } = useGetConsultantsBankDetailsQuery(consultantId);
   const { data: payPalData } =
@@ -56,23 +58,27 @@ const ListenerAccountList = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            title="view details"
-            className="secondIcon"
-            style={{ height: "35px", width: "35px" }}
-          >
-            <ArrowRight
-              className="iconSmall"
-              onClick={() => toggleBankDetails(row.original)}
-            />
-          </span>
+          {permissions?.["listener"]?.includes("view_listener_bank_details") && (
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{ height: "35px", width: "35px" }}
+            >
+              <ArrowRight
+                className="iconSmall"
+                onClick={() => toggleBankDetails(row.original)}
+              />
+            </span>
+          )}
 
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleEditStatus(row.original)}
-            />
-          </span>
+          {permissions?.["listener"]?.includes("update_listener_profile_bank_details") && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },

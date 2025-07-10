@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { Atom } from "react-loading-indicators";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ListenersPriceListingTable = () => {
   const [data, setData] = useState([]);
@@ -21,6 +22,11 @@ const ListenersPriceListingTable = () => {
     isLoading,
     isError,
   } = useGetConsultantsPriceQuery(consultantId);
+  const permissions = usePermissions();
+
+  const hasPermission = (permission) => {
+    return permissions?.["listener"]?.includes(permission);
+  };
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -45,7 +51,7 @@ const ListenersPriceListingTable = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {row.original.status === 1 && (
+          {row.original.status === 1 && hasPermission("update_listener_profile_price_chart") && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateStatus(row?.original)}
