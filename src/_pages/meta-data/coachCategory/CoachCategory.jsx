@@ -10,6 +10,7 @@ import {
   useDeleteCoachCategoryMutation,
 } from "../../../_store/api";
 import Modal from "react-modal";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 Modal.setAppElement("#root");
 
@@ -25,6 +26,7 @@ const CoachCategory = () => {
   // fetching api data fro listing reviews
   const { data: fetchData } = useGetCoachCategoryListQuery();
   const [deleteCategories] = useDeleteCoachCategoryMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -106,6 +108,7 @@ const CoachCategory = () => {
   ]);
 
   return (
+    permissions?.["meta data"]?.includes("Coach Categories") &&
     <>
       <CommonTable
         columns={columns}

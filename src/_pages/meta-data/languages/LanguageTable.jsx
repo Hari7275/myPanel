@@ -10,6 +10,7 @@ import {
   useDeleteLanguageMutation,
 } from "../../../_store/api";
 import AddLanguage_New from "./AddLanguage_New";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const LanguageTable = () => {
   const [addLanguage, setAddLanguage] = useState(false);
@@ -21,6 +22,7 @@ const LanguageTable = () => {
   const { data: fetchData } = useGetLanguagesListQuery();
 
   const [deleteLanguage] = useDeleteLanguageMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -101,6 +103,7 @@ const LanguageTable = () => {
   );
 
   return (
+    permissions?.["meta data"]?.includes("App Languages") &&
     <>
       <CommonTable
         columns={columns}

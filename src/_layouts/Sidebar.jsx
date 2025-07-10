@@ -612,13 +612,14 @@ const Sidebar = () => {
               </div>
             </Link>
             {/* )} */}
-
-            <Link to="/meta-data">
-              <div className="item">
-                <CategoryOutlinedIcon />
-                <span>Meta Data</span>
-              </div>
-            </Link>
+            {permissions?.["meta data"] && (
+              <Link to="/meta-data">
+                <div className="item">
+                  <CategoryOutlinedIcon />
+                  <span>Meta Data</span>
+                </div>
+              </Link>
+            )}
 
             {/* {permissions?.[("Dashboard", "Listeners")]?.includes(
               "Review Profilkem"

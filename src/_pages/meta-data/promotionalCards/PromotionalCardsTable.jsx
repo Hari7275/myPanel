@@ -6,6 +6,7 @@ import "./promotionalCard.css";
 import UpdatePromotionalCard from "./UpdatePromotionalCard";
 import AddPromotionalCard from "./AddPromotionalCard";
 import DeleteComponent from "../../payments/DeleteComponent";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 // Set the app element for accessibility
 import {
@@ -25,6 +26,7 @@ const PromotionalCardsTable = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [categoryData, setCategoryData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetPromotionalCardListQuery();
@@ -123,10 +125,10 @@ const PromotionalCardsTable = () => {
           value === 1
             ? "Astrologer"
             : value === 2
-            ? "Coach"
-            : value === 3
-            ? "Listener"
-            : "Unknown",
+              ? "Coach"
+              : value === 3
+                ? "Listener"
+                : "Unknown",
       },
       {
         Header: "Status",
@@ -157,6 +159,7 @@ const PromotionalCardsTable = () => {
   );
 
   return (
+    permissions?.["meta data"]?.includes("Promotional Cards") &&
     <>
       <CommonTable
         columns={columns}
