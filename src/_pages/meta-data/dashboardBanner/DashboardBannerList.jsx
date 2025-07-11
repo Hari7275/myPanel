@@ -8,6 +8,7 @@ import UpdateDashboardBanner from "./UpdateDashboardBanner";
 import SetDisplayBannerOrder from "./SetDisplayBannerOrder";
 // import NoticeDescription from "./NoticeDescription";
 import DragAndDropOrder from "./DragAndDropOrder";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetDashboardBannerListQuery,
@@ -23,6 +24,7 @@ const DashboardBannerList = () => {
   const [data, setData] = useState([]);
   const [allData, setAllData] = useState(null);
   const [dnd, setDnd] = useState(false);
+  const permissions = usePermissions();
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetDashboardBannerListQuery();
@@ -73,30 +75,34 @@ const DashboardBannerList = () => {
   const AddButton = () => {
     return (
       <>
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          onClick={toggleAddData}
-        >
-          Add Banner
-        </button>
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "220px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          onClick={toggleOpenDnd}
-        >
-          Testing drag and drop
-        </button>
+        {permissions?.["meta_data_section"]?.includes("create_dashboard_banner") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "20px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            onClick={toggleAddData}
+          >
+            Add Banner
+          </button>
+        )}
+        {permissions?.["meta_data_section"]?.includes("update_dashboard_banner") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "220px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            onClick={toggleOpenDnd}
+          >
+            Testing drag and drop
+          </button>
+        )}
       </>
     );
   };
@@ -126,18 +132,22 @@ const DashboardBannerList = () => {
                 onClick={() => toggleAssignNotice(row.original)}
               />
             </span>
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("update_dashboard_banner") && (
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateData(row.original)}
+                />
+              </span>
+            )}
+            {permissions?.["meta_data_section"]?.includes("delete_dashboard_banner") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
           </div>
         ),
       },

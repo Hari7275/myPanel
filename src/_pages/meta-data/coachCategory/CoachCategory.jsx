@@ -68,18 +68,20 @@ const CoachCategory = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddCategory}
-      >
-        Add Category
-      </button>
+      permissions?.["meta_data_section"]?.includes("create_coach_categories") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddCategory}
+        >
+          Add Category
+        </button>
+      )
     );
   };
 
@@ -90,25 +92,28 @@ const CoachCategory = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateCategory(row.original)}
-            />
-          </span>
+          {permissions?.["meta_data_section"]?.includes("delete_coach_categories") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+          {permissions?.["meta_data_section"]?.includes("update_coach_categories") && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateCategory(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
   ]);
 
   return (
-    permissions?.["meta data"]?.includes("Coach Categories") &&
     <>
       <CommonTable
         columns={columns}

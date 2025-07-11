@@ -77,6 +77,7 @@ const PromotionalCardsTable = () => {
 
   const AddButton = () => {
     return (
+      permissions?.["meta_data_section"]?.includes("create_promotional_card") &&
       <button
         className="addButton"
         style={{
@@ -139,18 +140,22 @@ const PromotionalCardsTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateCard(row.original)}
-              />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("delete_promotional_card") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
+            {permissions?.["meta_data_section"]?.includes("update_promotional_card") && (
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateCard(row.original)}
+                />
+              </span>
+            )}
           </div>
         ),
       },
@@ -159,7 +164,6 @@ const PromotionalCardsTable = () => {
   );
 
   return (
-    permissions?.["meta data"]?.includes("Promotional Cards") &&
     <>
       <CommonTable
         columns={columns}

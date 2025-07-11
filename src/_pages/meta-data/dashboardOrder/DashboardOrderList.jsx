@@ -8,6 +8,7 @@ import UpdateDashboardOrder from "./UpdateDashboardOrder";
 import AddPreferredId from "./AddPreferredId";
 import DragAndDropOrder from "../dashboardBanner/DragAndDropOrder";
 import toast from "react-hot-toast";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 import {
   useGetDashboardOrderListQuery,
@@ -29,6 +30,7 @@ const DashboardOrderList = () => {
   const { data: fetchData } = useGetDashboardOrderListQuery();
   const [deleteData, { isLoading }] = useDeleteDashboardOrderMutation();
   const [createData] = useUpdateDashboardOrderListMutation();
+  const permissions = usePermissions();
 
   // store data
   useEffect(() => {
@@ -105,6 +107,7 @@ const DashboardOrderList = () => {
 
   const AddButton = () => {
     return (
+      permissions?.["meta_data_section"]?.includes("create_dashboard_order") &&
       <button
         className="addButton"
         style={{
@@ -117,6 +120,7 @@ const DashboardOrderList = () => {
       >
         Add List
       </button>
+
     );
   };
 
@@ -136,25 +140,30 @@ const DashboardOrderList = () => {
                 onClick={() => toggleSetOrderData(row.original)}
               />
             </span>
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-            <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
-              <Truck
-                className="iconSmall"
-                onClick={() => toggleAssignNotice(row)}
-              />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("update_dashboard_order") &&
+              <>
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleUpdateData(row.original)}
+                  />
+                </span>
 
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
+                <span className="editIcon" style={{ backgroundColor: "#8f7a1cfc" }}>
+                  <Truck
+                    className="iconSmall"
+                    onClick={() => toggleAssignNotice(row)}
+                  />
+                </span>
+              </>}
+            {permissions?.["meta_data_section"]?.includes("delete_dashboard_order") &&
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            }
           </div>
         ),
       },

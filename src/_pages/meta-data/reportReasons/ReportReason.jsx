@@ -9,6 +9,7 @@ import {
   useGetReportReasonListQuery,
   useDeleteReportReasonMutation,
 } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ReportReason = () => {
   const [addData, setAddData] = useState(false);
@@ -16,6 +17,7 @@ const ReportReason = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetReportReasonListQuery();
@@ -54,18 +56,20 @@ const ReportReason = () => {
 
   const AddButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={toggleAddData}
-      >
-        Add Report Reason
-      </button>
+      permissions?.["meta_data_section"]?.includes("create_report_reason") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Report Reason
+        </button>
+      )
     );
   };
 
@@ -76,18 +80,22 @@ const ReportReason = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-          <span className="editIcon">
-            <Pencil
-              className="iconSmall"
-              onClick={() => toggleUpdateData(row.original)}
-            />
-          </span>
+          {permissions?.["meta_data_section"]?.includes("delete_report_reason") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+          {permissions?.["meta_data_section"]?.includes("update_report_reason") && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },

@@ -12,6 +12,7 @@ import {
 } from "../../../_store/api";
 import SkillsDragAndDropOrder from "./SkillsDragAndDropOrder";
 import toast from "react-hot-toast";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachSkills = () => {
   const [addCard, setAddCard] = useState(false);
@@ -20,6 +21,7 @@ const CoachSkills = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const [updateOrder, setUpdateOrder] = useState(false);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetCoachSkillsListQuery();
@@ -70,32 +72,35 @@ const CoachSkills = () => {
   const AddButton = () => {
     return (
       <>
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          onClick={toggleAddCard}
-        >
-          Add Skills
-        </button>
-
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "125px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          // onClick={toggleMenuOrder}
-          onClick={() => toggleSetOrderData(data)}
-        >
-          Set Order Skills
-        </button>
+        {permissions?.["meta_data_section"]?.includes("create_coach_skill") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "20px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            onClick={toggleAddCard}
+          >
+            Add Skills
+          </button>
+        )}
+        {permissions?.["meta_data_section"]?.includes("update_coach_skill") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "125px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            // onClick={toggleMenuOrder}
+            onClick={() => toggleSetOrderData(data)}
+          >
+            Set Order Skills
+          </button>
+        )}
       </>
     );
   };
@@ -107,19 +112,22 @@ const CoachSkills = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            className="deleteIcon"
-            onClick={() => toggleDeleteComponent(row.original)}
-          >
-            <Trash className="iconSmall" />
-          </span>
-
-          <span
-            className="editIcon"
-            onClick={() => toggleUpdateCard(row.original)}
-          >
-            <Pencil className="iconSmall" />
-          </span>
+          {permissions?.["meta_data_section"]?.includes("delete_coach_skill") && (
+            <span
+              className="deleteIcon"
+              onClick={() => toggleDeleteComponent(row.original)}
+            >
+              <Trash className="iconSmall" />
+            </span>
+          )}
+          {permissions?.["meta_data_section"]?.includes("update_coach_skill") && (
+            <span
+              className="editIcon"
+              onClick={() => toggleUpdateCard(row.original)}
+            >
+              <Pencil className="iconSmall" />
+            </span>
+          )}
         </div>
       ),
     },

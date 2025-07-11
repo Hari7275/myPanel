@@ -68,18 +68,22 @@ const LanguageTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="deleteIcon"
-              onClick={() => toggleDeleteComponent(row.original)}
-            >
-              <Trash className="iconSmall" />
-            </span>
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateLanguage(row.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("delete_app_language") && (
+              <span
+                className="deleteIcon"
+                onClick={() => toggleDeleteComponent(row.original)}
+              >
+                <Trash className="iconSmall" />
+              </span>
+            )}
+            {permissions?.["meta_data_section"]?.includes("update_app_language") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateLanguage(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
           </div>
         ),
       },
@@ -88,22 +92,23 @@ const LanguageTable = () => {
   );
 
   const AddButton = () => (
-    <button
-      className="addButton"
-      style={{
-        position: "absolute",
-        right: "20px",
-        backgroundColor: "#18B164",
-        padding: "6px",
-      }}
-      onClick={toggleAddLanguage}
-    >
-      Add language
-    </button>
+    permissions?.["meta_data_section"]?.includes("create_app_language") && (
+      <button
+        className="addButton"
+        style={{
+          position: "absolute",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+        }}
+        onClick={toggleAddLanguage}
+      >
+        Add language
+      </button>
+    )
   );
 
   return (
-    permissions?.["meta data"]?.includes("App Languages") &&
     <>
       <CommonTable
         columns={columns}

@@ -5,6 +5,7 @@ import { Pencil, Trash } from "lucide-react";
 import AddProfileProgress from "./AddProfileProgress";
 import UpdateProfileProgress from "./UpdateProfileProgress";
 import { useGetProfileProgressListQuery } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const ProfileProgress = () => {
   const [addService, setAddService] = useState(false);
@@ -12,6 +13,7 @@ const ProfileProgress = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const permissions = usePermissions();
 
   // calling api for listing data and deleting data
 
@@ -47,18 +49,20 @@ const ProfileProgress = () => {
   // Button component to add package
   const AddPackageButton = () => {
     return (
-      <button
-        className="addButton"
-        style={{
-          position: "absolute",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-        }}
-        onClick={() => toggleAddService()}
-      >
-        Add Progress Lavel
-      </button>
+      permissions?.["meta_data_section"]?.includes("create_consultant_profile_progress") && (
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={() => toggleAddService()}
+        >
+          Add Progress Lavel
+        </button>
+      )
     );
   };
 
@@ -71,12 +75,14 @@ const ProfileProgress = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateService(row.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("update_consultant_profile_progress") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateService(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
           </div>
         ),
       },

@@ -10,6 +10,7 @@ import {
   useGetCoachRateListQuery,
   useDeleteCoachRateMutation,
 } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachRate = () => {
   const [addService, setAddService] = useState(false);
@@ -20,6 +21,7 @@ const CoachRate = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const permissions = usePermissions();
 
   // calling api for listing data and deleting data
 
@@ -93,18 +95,22 @@ const CoachRate = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateService(row.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
+            {permissions?.["meta_data_section"]?.includes("update_consultant_rate") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateService(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
+            {permissions?.["meta_data_section"]?.includes("delete_consultant_rate") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
           </div>
         ),
       },

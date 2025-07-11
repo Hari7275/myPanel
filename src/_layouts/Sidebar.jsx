@@ -613,7 +613,7 @@ const Sidebar = () => {
               </div>
             </Link>
             {/* )} */}
-            {permissions?.["meta data"] && (
+            {permissions?.["meta_data_section"] && (
               <Link to="/meta-data">
                 <div className="item">
                   <CategoryOutlinedIcon />

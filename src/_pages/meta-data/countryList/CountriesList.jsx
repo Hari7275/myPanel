@@ -4,12 +4,13 @@ import { Pencil, Trash } from "lucide-react";
 import { COUNTRYLISTCOLUMN } from "./countryListColumn";
 import UpdateCountry from "./UpdateCountry";
 import { useGetCountryListQuery } from "../../../_store/api/meta-data/countryList";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CountriesList = () => {
   const [updateCountry, setUpdateCountry] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
-
+  const permissions = usePermissions();
   // Fetching API data for listing country
   const { data: fetchData } = useGetCountryListQuery();
 
@@ -33,12 +34,14 @@ const CountriesList = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            className="editIcon"
-            onClick={() => toggleUpdateCountry(row.original)}
-          >
-            <Pencil className="iconSmall" />
-          </span>
+          {permissions?.["meta_data_section"]?.includes("update_country") && (
+            <span
+              className="editIcon"
+              onClick={() => toggleUpdateCountry(row.original)}
+            >
+              <Pencil className="iconSmall" />
+            </span>
+          )}
         </div>
       ),
     },

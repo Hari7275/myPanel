@@ -13,6 +13,7 @@ import {
   useGetmenuOrderListQuery,
   useDeletemenuOrderMutation,
 } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 Modal.setAppElement("#root");
 
@@ -26,6 +27,7 @@ const MenuOrders = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [menuOrder, setMenuOrder] = useState(false);
   const [childMenuItems, setChildMenuItems] = useState(false);
+  const permissions = usePermissions();
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetmenuOrderListQuery({ id: 0 });
@@ -84,31 +86,34 @@ const MenuOrders = () => {
   const AddButton = () => {
     return (
       <>
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          onClick={toggleAddCard}
-        >
-          Add Item
-        </button>
-
-        <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "125px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
-          onClick={toggleMenuOrder}
-        >
-          Set Menu Order
-        </button>
+        {permissions?.["meta_data_section"]?.includes("create_menu_item") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "20px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            onClick={toggleAddCard}
+          >
+            Add Item
+          </button>
+        )}
+        {permissions?.["meta_data_section"]?.includes("update_menu_item") && (
+          <button
+            className="addButton"
+            style={{
+              position: "absolute",
+              right: "125px",
+              backgroundColor: "#18B164",
+              padding: "6px",
+            }}
+            onClick={toggleMenuOrder}
+          >
+            Set Menu Order
+          </button>
+        )}
       </>
     );
   };
@@ -120,29 +125,34 @@ const MenuOrders = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          <span
-            title="view details"
-            className="secondIcon"
-            style={{ height: "35px", width: "35px" }}
-          >
-            <ArrowRight
-              className="iconSmall"
-              onClick={() => toggleChildMenuItems(row)}
-            />
-          </span>
-          <span className="deleteIcon">
-            <Trash
-              className="iconSmall"
-              onClick={() => toggleDeleteComponent(row.original)}
-            />
-          </span>
-
-          <span
-            className="editIcon"
-            onClick={() => toggleUpdateCard(row.original)}
-          >
-            <Pencil className="iconSmall" />
-          </span>
+          {permissions?.["meta_data_section"]?.includes("update_menu_item") && (
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{ height: "35px", width: "35px" }}
+            >
+              <ArrowRight
+                className="iconSmall"
+                onClick={() => toggleChildMenuItems(row)}
+              />
+            </span>
+          )}
+          {permissions?.["meta_data_section"]?.includes("delete_menu_item") && (
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+          )}
+          {permissions?.["meta_data_section"]?.includes("update_menu_item") && (
+            <span
+              className="editIcon"
+              onClick={() => toggleUpdateCard(row.original)}
+            >
+              <Pencil className="iconSmall" />
+            </span>
+          )}
         </div>
       ),
     },
