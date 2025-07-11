@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { X } from "lucide-react";
+
 import {
   useUpdateBankDetailStatusMutation,
   useUpdatePayPalDetailStatusMutation,
@@ -35,7 +36,7 @@ const EditStatus = ({ isOpen, onClose, currentStatus, phoneCode }) => {
   ] = useUpdatePayPalDetailStatusMutation();
 
   useEffect(() => {
-    setSelectedStatus(currentStatus.status);
+    setSelectedStatus(currentStatus?.status);
   }, [currentStatus]);
 
   const handleSave = async () => {
@@ -70,16 +71,13 @@ const EditStatus = ({ isOpen, onClose, currentStatus, phoneCode }) => {
     const { value } = event.target;
     setSelectedStatus(value);
   };
-
   const handleChange = (e) => {
     const { value } = e.target;
 
     setSelectedRejectReason(value);
   };
-
   const isUpdating = isBankUpdating || isPayPalUpdating;
   const error = bankError || paypalError;
-
   return (
     <ReactModal
       className="modal"
@@ -99,13 +97,12 @@ const EditStatus = ({ isOpen, onClose, currentStatus, phoneCode }) => {
 
           <div className="radio-group">
             <RadioButton
-              id="pending"
+              id="approved"
               name="status"
-              value="pending"
-              checked={selectedStatus === "pending"}
+              value="approved"
+              checked={selectedStatus === "approved"}
               onChange={handleStatusChange}
-              label="Pending"
-              disabled
+              label="Approved"
             />
 
             <RadioButton

@@ -581,6 +581,16 @@ const Sidebar = () => {
                 </div>
               </Link>
             )}
+            <Link to="auth-consultant">
+              <div className="item">
+                <img
+                  src="/adminPannel_icons/Coach.png"
+                  width="24"
+                  height="24"
+                />
+                <span>Consultant</span>
+              </div>
+            </Link>
             {permissions?.["astrologer"].includes('view_astrologer_list') && (
               <Link to="astrologer">
                 <div className="item">

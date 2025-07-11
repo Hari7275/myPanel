@@ -36,6 +36,9 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       providesTags: ["notice"],
     }),
 
+
+   
+
     getConsultantList: builder.query({
       query: ({ type }) => ({
         url: `/api/v1/consultant/profile/all-list?type=${type}`,

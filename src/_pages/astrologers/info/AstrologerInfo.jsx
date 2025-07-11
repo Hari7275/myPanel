@@ -55,7 +55,6 @@ const AstrologerInfo = () => {
   //   return <div>loading...</div>;
   // }
 
-
   if (!formData) {
     return (
       <span className="loadPage">
@@ -129,7 +128,7 @@ const AstrologerInfo = () => {
               <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
             </p>
             <p className="info-item">
-              <strong>Email : </strong> {formData?.email}
+              <strong>Email : </strong> {formData?.email_address}
             </p>
           </div>
 

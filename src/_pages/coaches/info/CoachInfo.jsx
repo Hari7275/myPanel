@@ -128,7 +128,7 @@ const CoachInfo = () => {
               <strong>Gender : </strong> {getGenderLabel(formData.gender)}
             </p>
             <p className="info-item">
-              <strong>Email : </strong> {formData.email}
+              <strong>Email : </strong> {formData.email_address}
             </p>
           </div>
 

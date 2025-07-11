@@ -22,6 +22,7 @@ import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { statusNameToValue } from "../../../_constants/consultantConstant";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -30,6 +31,7 @@ const CoachListingTable = () => {
   const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
@@ -48,6 +50,8 @@ const CoachListingTable = () => {
     page,
     size: pageSize,
     name: name,
+    auth_status: statusSearch,
+
     id: consultantId,
     phone,
     consultant_type: 2,
@@ -161,6 +165,10 @@ const CoachListingTable = () => {
     500
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
+  const debouncedSearchStatus = debounce(
+    (value) => setStatusSearch(value),
+    500
+  );
 
   const handleNameSearch = (e) => {
     setPage(1);
@@ -176,6 +184,20 @@ const CoachListingTable = () => {
     setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
+
+  const handleConsultantStatusSearch = (e) => {
+    setPage(1);
+    const inputValue = e?.target?.value?.trim();
+
+    // Convert input to title case (first letter capitalized) for matching
+    const formattedInput =
+      inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
+
+    // Try to find a matching status name, fall back to raw input if not found
+    const statusValue = statusNameToValue[formattedInput] || inputValue;
+    debouncedSearchStatus(statusValue);
+  };
+
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px" }}>
       <input
@@ -208,6 +230,17 @@ const CoachListingTable = () => {
           width: "20%",
         }}
         onChange={handleConsultantPhoneSearch}
+      />
+
+      <input
+        className="inputBox"
+        placeholder="Search by status"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleConsultantStatusSearch}
       />
     </div>
   );

@@ -11,6 +11,7 @@ import {
   useGetqdLoactionListQuery,
   useDeleteqdLoactionListMutation,
 } from "../../../_store/api";
+import { debounce } from "lodash";
 
 const QDLoaction = () => {
   const [addLocation, setAddLocation] = useState(false);
@@ -20,6 +21,7 @@ const QDLoaction = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [citylocation, setCityLocation] = useState("");
 
   const [pageSize, setPageSize] = useState(10);
 
@@ -27,6 +29,7 @@ const QDLoaction = () => {
   const { data: fetchData } = useGetqdLoactionListQuery({
     currentPage: page,
     pageSize: pageSize,
+    location: citylocation,
   });
   const [deleteLoaction] = useDeleteqdLoactionListMutation();
 
@@ -61,6 +64,16 @@ const QDLoaction = () => {
         console.error("Failed to delete the service:", error);
       });
     }
+  };
+
+  const debouncedSearchLocation = debounce(
+    (value) => setCityLocation(value),
+    500
+  );
+
+  const handleLocationSearch = (e) => {
+    setPage(1);
+    debouncedSearchLocation(e?.target?.value);
   };
 
   const AddButton = () => {
@@ -104,28 +117,34 @@ const QDLoaction = () => {
     },
   ]);
 
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by location"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleLocationSearch}
+      />
+    </div>
+  );
+
   // for pagination
 
-  const totalPage = fetchData?.data?.pagination?.totalPages;
+  const totalPage = fetchData?.data?.totalPages;
 
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="QD Trips Location"
-        AddPackageButton={AddButton}
-        showTableHeading={false}
-        includeCheckbox={false}
-      /> */}
-
       <DyCommonTable
         columns={columns}
         data={data}
         includeActions={false}
         tableTitle="QD Trips Location"
         AddPackageButton={AddButton}
+        customFilterComponent={customFilterComponent}
         showTableHeading={false}
         includeCheckbox={false}
         dynamicPagination={dynamicPagination}

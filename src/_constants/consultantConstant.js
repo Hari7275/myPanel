@@ -249,3 +249,13 @@ export const OrderStatus = (value) => {
       return "Rejected";
   }
 };
+
+export const statusNameToValue = {
+  Registered: 1,
+  Pending: 2,
+  Verified: 3,
+  Suspended: 4,
+  Blocked: 5,
+  Rejected: 6,
+  Deleted: 7,
+};

@@ -14,6 +14,7 @@ import LoginForm from "./_pages/loginPage/LoginForm";
 import LogoutPopup from "./_pages/loginPage/LogoutPopup";
 import UserListingTable from "./_pages/users/list/UserListingTable";
 
+import AuthConsultantList from "./_pages/authConsultant/AuthConsultantList";
 import CoachListingTable from "./_pages/coaches/list/CoachListingTable";
 import ListenersListingTable from "./_pages/listeners/list/ListenersListingTable";
 import AstrologerListingTable from "./_pages/astrologers/list/AstrologerListingTable";
@@ -145,6 +146,7 @@ const Layout = () => (
               />
             }
           />
+          <Route path="auth-consultant" element={<AuthConsultantList />} />
           <Route path="listeners" element={<ListenersListingTable />} />
           <Route path="astrologer" element={<AstrologerListingTable />} />
 

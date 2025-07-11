@@ -4,7 +4,7 @@ export const userListingSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsersList: builder.query({
       query: ({ page, limit, id, name, user_id, phone_number }) => ({
-        url: `user/profile/all-users?page=${page}&limit=${limit}&name=${name}&user_id=${user_id}&phone_number=${phone_number}`,
+        url: `user/profile/all-users?page=${page}&limit=${limit}&name=${name}&user_id=${user_id}&phone=${phone_number}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
