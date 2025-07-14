@@ -36,7 +36,7 @@ const NameCell = ({ row }) => {
     <div className="column_container">
       <div className="card-img">
         <img
-          src={row?.original.profile_pic || "girl-avtar.png"}
+          src={row?.original.profile_pic || "avatar11.png"}
           alt="Avatar"
           width="40"
           height="40"
@@ -56,7 +56,7 @@ const NameCell = ({ row }) => {
         overlayClassName="overlay"
       >
         <img
-          src={row?.original.profile_pic || "girl-avtar.png"}
+          src={row?.original.profile_pic || "avatar11.png"}
           alt="Avatar"
           width="100%"
           height="600px"

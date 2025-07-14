@@ -9,6 +9,8 @@ import {
   getGenderLabel,
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
+import { Atom } from "react-loading-indicators";
+
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
@@ -112,8 +114,14 @@ const AstrologerDetailsComponent = () => {
     // navigate(-1);
   };
 
+ 
+
   if (isLoading) {
-    <span>loaading.....</span>;
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
   return (
     // MAIN ROW/ CONTAINER ROW
@@ -134,9 +142,9 @@ const AstrologerDetailsComponent = () => {
         <div className="profile-img-section">
           <img
             className="profile-img"
-            src={urls || "girl-avtar.png"}
+            src={urls || "avatar11.png"}
             alt="astrologer Profile"
-            onClick={() => openImageModal(urls)}
+            onClick={() => openImageModal(urls || "avatar11.png")}
           />
           {/* <div className="edit-profile-img">     //  **************ye code background removal ka popup open karne ke liye hai 
             <button className="edit-profile-icon" onClick={openModal}>

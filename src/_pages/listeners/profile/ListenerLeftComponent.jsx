@@ -14,6 +14,7 @@ import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
+import { Atom } from "react-loading-indicators";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -110,6 +111,14 @@ const ListenerLeftComponent = () => {
     setSelectedData(data.profile_status);
   };
 
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
+
   return (
     //MAIN ROW OF LISTNER CONTAINER
     <div className="user-details-container" style={{ position: "relative" }}>
@@ -128,11 +137,19 @@ const ListenerLeftComponent = () => {
         {/* FIRST COLUMN OF LISTNER DETAILS(IMAGE SECTION) */}
         <div className="profile-img-section">
           <div className="">
-            <img
+            {/* <img
               className="profile-img"
               src={urls || "girl-avtar.png"}
               alt="Listener Profile"
               onClick={() => openImageModal(urls || "girl-avtar.png")}
+              style={{ cursor: "pointer" }}
+            /> */}
+
+            <img
+              className="profile-img"
+              src={urls || "avatar11.png"}
+              alt="astrologer Profile"
+              onClick={() => openImageModal(urls || "avatar11.png")}
               style={{ cursor: "pointer" }}
             />
             {/* <div className="edit-profile-img">

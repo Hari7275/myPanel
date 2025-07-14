@@ -8,6 +8,7 @@ import {
   getMaritalStatus,
 } from "../../../_constants/consultantConstant";
 import { Pencil } from "lucide-react";
+import { Atom } from "react-loading-indicators";
 
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
@@ -99,6 +100,14 @@ const CoachLeftComponent = () => {
     setSelectedData(data.profile_status);
   };
 
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
+
   return (
     //MAIN ROW CONTAINER ROW
     <div className="user-details-container" style={{ position: "relative" }}>
@@ -116,11 +125,19 @@ const CoachLeftComponent = () => {
       <div className="user-details-row">
         {/* FIRST COLUMN OF COACH DETAILS (IMAGE SECTION) */}
         <div className="profile-img-section">
-          <img
+          {/* <img
             className="profile-img"
             src={urls || "girl-avtar.png"}
             alt="coach Profile"
             onClick={() => openImageModal(urls)}
+            style={{ cursor: "pointer" }}
+          /> */}
+
+          <img
+            className="profile-img"
+            src={urls || "avatar11.png"}
+            alt="astrologer Profile"
+            onClick={() => openImageModal(urls || "avatar11.png")}
             style={{ cursor: "pointer" }}
           />
         </div>
