@@ -10,15 +10,12 @@
 
 // export default EmpPermission;
 
-
-
-
 // _hooks/usePermissions.js
 import { useSelector } from "react-redux";
 
 const usePermissions = () => {
-  const permissions = useSelector((state) => state.auth?.permissions || {});
-  return permissions;
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  return permissions || {};
 };
 
 export default usePermissions;

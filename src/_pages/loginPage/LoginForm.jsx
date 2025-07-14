@@ -40,15 +40,18 @@ const LoginForm = () => {
         const user = response?.data;
 
         const permissionsByGroup = {};
-        user.results?.forEach((result) => {
-          const groupName = result?.PermissionGroup?.name;
-          const permissions = result?.PermissionGroup?.permissions?.map(
-            (p) => p.name || []
-          );
-          if (groupName) {
-            permissionsByGroup[groupName] = permissions;
-          }
-        });
+
+        if (user?.results && user?.results?.length > 0) {
+          user.results?.forEach((result) => {
+            const groupName = result?.PermissionGroup?.name;
+            const permissions = result?.PermissionGroup?.permissions?.map(
+              (p) => p?.name || []
+            );
+            if (groupName) {
+              permissionsByGroup[groupName] = permissions;
+            }
+          });
+        }
 
         dispatch(
           login({

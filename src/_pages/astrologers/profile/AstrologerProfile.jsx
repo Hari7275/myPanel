@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import AstrologerDetailsComponent from './AstrologerDetailsComponent'
+import AstrologerDetailsComponent from "./AstrologerDetailsComponent";
 import AstrologerRightComponent from "./AstrologerRightComponent";
 import AstrologerLinkComponent from "./AstrologerLinkComponent";
 
@@ -9,11 +9,10 @@ import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const AstrologerProfile = () => {
-
   const dispatch = useDispatch();
   const location = useLocation();
   const permissions = usePermissions();
-  console.log("location...................", location.state)
+  console.log("location...................", location.state);
 
   // Redux state for active tab
   const profileActiveTab = useSelector((state) => state?.activeTab?.activeTab);
@@ -30,8 +29,6 @@ const AstrologerProfile = () => {
     }
   }, [profileActiveTab]);
 
-
-
   const handleComponentChange = (component) => {
     setActiveComponent(component);
 
@@ -41,8 +38,6 @@ const AstrologerProfile = () => {
   return (
     <>
       <div className="profile-section">
-
-
         <div className="profile-top-container">
           <div className="">
             <AstrologerDetailsComponent />

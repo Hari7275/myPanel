@@ -56,7 +56,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const PrivateRoute = ({ element, requiredPermissions }) => {
-  const authState = useSelector((state) => state.auth);
+  const authState = useSelector((state) => state?.auth);
   const { isAuthenticated, role } = authState;
   const rawPermissions = authState?.permissions;
 
@@ -89,12 +89,12 @@ const PrivateRoute = ({ element, requiredPermissions }) => {
     }
 
     const hasPerm = requiredPermissions.some((perm) =>
-      permissions.includes(perm)
+      permissions?.includes(perm)
     );
     console.log("Permission check result:", hasPerm);
     console.log(
       "Missing permissions:",
-      requiredPermissions.filter((perm) => !permissions.includes(perm))
+      requiredPermissions?.filter((perm) => !permissions?.includes(perm))
     );
 
     return hasPerm;

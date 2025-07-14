@@ -205,6 +205,7 @@ const NotificationBell = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
 
       {notificationdatas?.length === 0 && (

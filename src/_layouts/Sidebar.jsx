@@ -89,8 +89,9 @@ const Sidebar = () => {
                     {permissions?.["admin"]?.includes("view_admin_role") && ( //permission for role
                       <Link to="admin-roles">
                         <div
-                          className={`menu-item ${activeItem === "Roles" ? "active" : ""
-                            }`}
+                          className={`menu-item ${
+                            activeItem === "Roles" ? "active" : ""
+                          }`}
                           onClick={() => handleItemClick("Roles")}
                         >
                           <div className="dropdown-item"> Roles</div>
@@ -100,30 +101,32 @@ const Sidebar = () => {
                     {permissions?.["admin"]?.includes(
                       "view_admin_permission_group_section"
                     ) && (
-                        <Link to="/admin-permission">
-                          <div
-                            className={`menu-item ${activeItem === "Permission" ? "active" : ""
-                              }`}
-                            onClick={() => handleItemClick("Permission")}
-                          >
-                            <div className="dropdown-item">Permission Group </div>
-                          </div>
-                        </Link>
-                      )}
+                      <Link to="/admin-permission">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "Permission" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("Permission")}
+                        >
+                          <div className="dropdown-item">Permission Group </div>
+                        </div>
+                      </Link>
+                    )}
 
                     {permissions?.["admin"]?.includes(
                       "view_admin_users_section"
                     ) && (
-                        <Link to="/admin-user">
-                          <div
-                            className={`menu-item ${activeItem === "admin-user" ? "active" : ""
-                              }`}
-                            onClick={() => handleItemClick("admin-user")}
-                          >
-                            <div className="dropdown-item">Admin User </div>
-                          </div>
-                        </Link>
-                      )}
+                      <Link to="/admin-user">
+                        <div
+                          className={`menu-item ${
+                            activeItem === "admin-user" ? "active" : ""
+                          }`}
+                          onClick={() => handleItemClick("admin-user")}
+                        >
+                          <div className="dropdown-item">Admin User </div>
+                        </div>
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
@@ -133,8 +136,9 @@ const Sidebar = () => {
               {/* {permissions?.["Dashboard"] && ( */}
               <Link to="/dashboard">
                 <div
-                  className={`menu-item ${activeItem === "Dashboard" ? "active" : ""
-                    }`}
+                  className={`menu-item ${
+                    activeItem === "Dashboard" ? "active" : ""
+                  }`}
                   onClick={() => handleItemClick("Dahboard")}
                 >
                   <GridViewOutlinedIcon />
@@ -145,8 +149,9 @@ const Sidebar = () => {
               {permissions?.["user"] && (
                 <Link to="/user">
                   <div
-                    className={`menu-item ${activeItem === "Users" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Users" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Users")}
                   >
                     <GroupOutlinedIcon />
@@ -162,8 +167,9 @@ const Sidebar = () => {
               {permissions?.["coach"] && (
                 <Link to="/coaches">
                   <div
-                    className={`menu-item ${activeItem === "Coaches" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Coaches" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Coaches")}
                   >
                     <img
@@ -178,8 +184,9 @@ const Sidebar = () => {
               {permissions?.["listener"] && (
                 <Link to="/listeners">
                   <div
-                    className={`menu-item ${activeItem === "Listeners" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Listeners" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Listeners")}
                   >
                     <HeadphonesOutlinedIcon />
@@ -190,8 +197,9 @@ const Sidebar = () => {
               {permissions?.["astrologer"] && (
                 <Link to="/astrologer">
                   <div
-                    className={`menu-item ${activeItem === "Astrologer" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Astrologer" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Astrologer")}
                   >
                     {/* <HeadphonesOutlinedIcon /> */}
@@ -210,8 +218,9 @@ const Sidebar = () => {
           <div className="menu-group">
             <Link to="/order">
               <div
-                className={`menu-item ${activeItem === "Order" ? "active" : ""
-                  }`}
+                className={`menu-item ${
+                  activeItem === "Order" ? "active" : ""
+                }`}
                 onClick={() => handleItemClick("Order")}
               >
                 <CardGiftcardOutlinedIcon />
@@ -221,8 +230,9 @@ const Sidebar = () => {
 
             <Link to="/gift">
               <div
-                className={`menu-item ${activeItem === "Gifts" ? "active" : ""
-                  }`}
+                className={`menu-item ${
+                  activeItem === "Gifts" ? "active" : ""
+                }`}
                 onClick={() => handleItemClick("Gifts")}
               >
                 <CardGiftcardOutlinedIcon />
@@ -249,8 +259,9 @@ const Sidebar = () => {
               <div className="menu-item-sub">
                 <Link to="dating-products">
                   <div
-                    className={`menu-item ${activeItem === "Dating-Products" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Dating-Products" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Dating-Products")}
                   >
                     <div className="dropdown-item"> Dating Products</div>
@@ -258,8 +269,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="qd-products">
                   <div
-                    className={`menu-item ${activeItem === "qd-Products" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "qd-Products" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("qd-Products")}
                   >
                     <div className="dropdown-item"> Qd Products</div>
@@ -267,8 +279,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/feature-list">
                   <div
-                    className={`menu-item ${activeItem === "Feature-List" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Feature-List" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Feature-List")}
                   >
                     <div className="dropdown-item">Featuers </div>
@@ -277,8 +290,9 @@ const Sidebar = () => {
 
                 <Link to="payment-transactions">
                   <div
-                    className={`menu-item ${activeItem === "Payment-Transactions" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Payment-Transactions" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Payment-Transactions")}
                   >
                     <div className="dropdown-item">Payment Transactions</div>
@@ -287,8 +301,9 @@ const Sidebar = () => {
 
                 <Link to="recharge-plans">
                   <div
-                    className={`menu-item ${activeItem === "Recharge-Plans" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Recharge-Plans" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Recharge-Plans")}
                   >
                     <div className="dropdown-item">Recharge Plans</div>
@@ -297,8 +312,9 @@ const Sidebar = () => {
 
                 <Link to="subscriptions-plans">
                   <div
-                    className={`menu-item ${activeItem === "Subscription-plans" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Subscription-plans" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Subscription-plans")}
                   >
                     <div className="dropdown-item">Subscription Plans</div>
@@ -307,8 +323,9 @@ const Sidebar = () => {
 
                 <Link to="payout-request">
                   <div
-                    className={`menu-item ${activeItem === "payout-request" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "payout-request" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("payout-request")}
                   >
                     <div className="dropdown-item">Payout Request</div>
@@ -317,8 +334,9 @@ const Sidebar = () => {
 
                 <Link to="payout-History">
                   <div
-                    className={`menu-item ${activeItem === "payout-History" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "payout-History" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("payout-History")}
                   >
                     <div className="dropdown-item">Payout History</div>
@@ -327,8 +345,9 @@ const Sidebar = () => {
 
                 <Link to="coupon">
                   <div
-                    className={`menu-item ${activeItem === "coupon" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "coupon" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("coupon")}
                   >
                     <div className="dropdown-item">Coupon</div>
@@ -350,8 +369,9 @@ const Sidebar = () => {
               <div className="menu-item-sub">
                 <Link to="user-profile-option">
                   <div
-                    className={`menu-item ${activeItem === "Profile-Options" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Profile-Options" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Profile-Options")}
                   >
                     <div className="dropdown-item">Profile Options</div>
@@ -359,8 +379,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/prompt-question">
                   <div
-                    className={`menu-item ${activeItem === "Prompt-Questions" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Prompt-Questions" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Prompt-Questions")}
                   >
                     <div className="dropdown-item">Prompt Questions</div>
@@ -368,8 +389,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="user-passion">
                   <div
-                    className={`menu-item ${activeItem === "Passion-Options" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "Passion-Options" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("Passion-Options")}
                   >
                     <div className="dropdown-item">Passion Options</div>
@@ -378,8 +400,9 @@ const Sidebar = () => {
 
                 <Link to="user-desire">
                   <div
-                    className={`menu-item ${activeItem === "user-desire" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "user-desire" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("user-desire")}
                   >
                     <div className="dropdown-item">User Desire</div>
@@ -403,8 +426,9 @@ const Sidebar = () => {
               <div className="menu-item-sub">
                 <Link to="consultant-notice">
                   <div
-                    className={`menu-item ${activeItem === "consultant-notice" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "consultant-notice" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("consultant-notice")}
                   >
                     <div className="dropdown-item">Notice List</div>
@@ -412,8 +436,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/assign-notice">
                   <div
-                    className={`menu-item ${activeItem === "assign-notice" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "assign-notice" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("assign-notice")}
                   >
                     <div className="dropdown-item">Manage Notice</div>
@@ -441,8 +466,9 @@ const Sidebar = () => {
               <div className="menu-item-sub">
                 <Link to="qd-trips">
                   <div
-                    className={`menu-item ${activeItem === "qd-trips" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "qd-trips" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("qd-trips")}
                   >
                     <img
@@ -455,8 +481,9 @@ const Sidebar = () => {
                 </Link>
                 <Link to="/qd-location">
                   <div
-                    className={`menu-item ${activeItem === "qd-location" ? "active" : ""
-                      }`}
+                    className={`menu-item ${
+                      activeItem === "qd-location" ? "active" : ""
+                    }`}
                     onClick={() => handleItemClick("qd-location")}
                   >
                     <img
@@ -473,8 +500,9 @@ const Sidebar = () => {
           <div className="menu-group">
             <Link to="/user-support">
               <div
-                className={`menu-item ${activeItem === "user-support" ? "active" : ""
-                  }`}
+                className={`menu-item ${
+                  activeItem === "user-support" ? "active" : ""
+                }`}
                 onClick={() => handleItemClick("user-support")}
               >
                 <img
@@ -591,7 +619,7 @@ const Sidebar = () => {
                 <span>Consultant</span>
               </div>
             </Link>
-            {permissions?.["astrologer"].includes('view_astrologer_list') && (
+            {permissions?.["astrologer"]?.includes("view_astrologer_list") && (
               <Link to="astrologer">
                 <div className="item">
                   <img
