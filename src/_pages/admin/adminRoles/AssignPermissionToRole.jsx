@@ -103,6 +103,12 @@ const AssignPermissionToRole = () => {
       </h2> */}
       <form onSubmit={handleSubmit}>
         <div className="row-inside" style={{ margin: "20px 60px" }}>
+          {permissions?.["admin"]?.includes("assign_role_permissions") && (
+            <button type="submit" className="role-fifthButton" disabled={isUpdating}>
+              {isUpdating ? "Updating..." : "Update Permissions"}
+            </button>
+          )}
+          <div className="divider"></div>
           <div className="col-12">
             {data?.map((group, groupIndex) => (
               <div key={groupIndex} style={{ marginBottom: "10px" }}>
@@ -132,12 +138,6 @@ const AssignPermissionToRole = () => {
             ))}
           </div>
 
-          <div className="divider"></div>
-          {permissions?.["admin"]?.includes("assign_role_permissions") && (
-            <button type="submit" className="fifthButton" disabled={isUpdating}>
-              {isUpdating ? "Updating..." : "Update Permissions"}
-            </button>
-          )}
         </div>
       </form>
     </div>
