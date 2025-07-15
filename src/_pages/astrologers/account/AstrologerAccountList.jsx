@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, Info } from "lucide-react";
 import AstrologerBankDetails from "./AstrologerBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
 import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
@@ -66,7 +66,7 @@ const AstrologerAccountList = () => {
             className="secondIcon"
             style={{ height: "35px", width: "35px" }}
           >
-            <ArrowRight
+            <Info
               className="iconSmall"
               onClick={() => toggleBankDetails(row?.original)}
             />

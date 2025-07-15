@@ -68,10 +68,10 @@ const UserDetailsComponent = () => {
           {/* {userData.profile_images.length > 0 && ( */}
           <img
             className="profile-img"
-            src={userData?.profile_images[0]?.url || "praveen.png"}
+            src={userData?.profile_images[0]?.url || "avatar11.png"}
             alt="user Profile"
             onClick={() =>
-              openImageModal(userData?.profile_images[0]?.url || "praveen.png")
+              openImageModal(userData?.profile_images[0]?.url || "avatar11.png")
             }
           />
         </div>

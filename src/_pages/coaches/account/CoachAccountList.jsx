@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, Info } from "lucide-react";
 import CoachBankDetails from "./CoachBankDetails";
 import CommonTable from "../../../_components/table/CommonTable";
 import { ACCOUNTCOLUMNS, PAYPALCOLUMNS } from "./accountColumn";
@@ -60,19 +60,23 @@ const CoachAccountList = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {permissions?.["coach"]?.includes("update-coach_profile_bank_details") && (
+          {permissions?.["coach"]?.includes(
+            "update-coach_profile_bank_details"
+          ) && (
             <span
               title="view details"
               className="secondIcon"
               style={{ height: "35px", width: "35px" }}
             >
-              <ArrowRight
+              <Info
                 className="iconSmall"
                 onClick={() => toggleBankDetails(row.original)}
               />
             </span>
           )}
-          {permissions?.["coach"]?.includes("update-coach_profile_bank_details") && (
+          {permissions?.["coach"]?.includes(
+            "update-coach_profile_bank_details"
+          ) && (
             <span className="editIcon">
               <Pencil
                 className="iconSmall"

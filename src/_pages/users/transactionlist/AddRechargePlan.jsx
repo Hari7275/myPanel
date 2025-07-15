@@ -3,10 +3,12 @@ import ReactModal from "react-modal";
 
 import { useCreateUserRechargeMutation } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+import toast from "react-hot-toast";
 
 const AddRechargePlan = ({ isOpen, onClose, userId }) => {
   const [formData, setFormData] = useState({
     type: "recharge",
+    description: "Recharge",
     transaction_type: "credit",
     amount: null,
     status: "successful",
@@ -26,11 +28,19 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
       type: formData.type,
       amount: formData.amount,
       status: formData.status,
+      description: formData.description || "Recharge",
     };
 
     try {
-      await createData({ body: newData });
-      onClose();
+      const response = await createData({ body: newData });
+      console.log("response", response);
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+        onClose();
+      } else {
+        toast.error(response?.data?.error);
+        return;
+      }
     } catch (error) {
       console.log("Failed to add new report reason", error);
     }
@@ -89,6 +99,20 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
             <option value="credit">Credit</option>
             <option value="debit">Debit</option>
           </select>
+        </div>
+
+        <div className="userProfile-grid-item">
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+            Description
+          </label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="type here"
+            className="userProfile-input-field"
+          />
         </div>
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>

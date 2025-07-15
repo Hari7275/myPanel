@@ -31,13 +31,13 @@ export const COLUMNS = (toggleModal) => [
             src={
               row?.original?.profile_image
                 ? row?.original?.profile_image
-                : "praveen.png"
+                : "avatar11.png"
             }
             alt="Avatar"
             width="40"
             height="40"
             onClick={() =>
-              toggleModal(row.original.profile_image || "praveen.png")
+              toggleModal(row.original.profile_image || "avatar11.png")
             }
             style={{ cursor: "pointer" }}
           />
