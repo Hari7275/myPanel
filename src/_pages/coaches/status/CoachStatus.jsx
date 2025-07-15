@@ -72,10 +72,16 @@ const CoachStatus = () => {
   };
 
   const canUpdateStatus = {
-    astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_service_status"),
-    coach: permissions?.["coach"]?.includes("update_coach_profile_service_status"),
-    listrner: permissions?.["listener"]?.includes("update_listener_profile_service_status")
-  }
+    astrologer: permissions?.["astrologer"]?.includes(
+      "update_astrologer_profile_service_status"
+    ),
+    coach: permissions?.["coach"]?.includes(
+      "update_coach_profile_service_status"
+    ),
+    listrner: permissions?.["listener"]?.includes(
+      "update_listener_profile_service_status"
+    ),
+  };
   const hasEditPermission = Object.values(canUpdateStatus).some(Boolean);
 
   return (
@@ -128,6 +134,7 @@ const CoachStatus = () => {
                         sx={{
                           borderRadius: "10px",
                           padding: "4px 12px",
+                          marginLeft: "10px",
                           "&.Mui-selected": {
                             backgroundColor: "#696cff",
                             color: "white",

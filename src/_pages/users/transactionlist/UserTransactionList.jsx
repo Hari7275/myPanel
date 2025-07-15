@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect, useState } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
+ 
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { USERTRANSACTIONCOLUMN } from "./userTransactionsColumn";
 import { useGetUserTransactionsListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
@@ -8,6 +9,9 @@ import { Atom } from "react-loading-indicators";
 
 const UserTransactionList = () => {
   const [addData, setAddData] = useState(false);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const userId = useSelector((state) => state.user.userData);
 
   const [result, setResult] = useState([]);
@@ -17,7 +21,7 @@ const UserTransactionList = () => {
     data: fetchData,
     isLoading,
     error,
-  } = useGetUserTransactionsListQuery(userId);
+  } = useGetUserTransactionsListQuery({ userId, page: page, limit: pageSize });
 
   useEffect(() => {
     if (fetchData) {
@@ -56,14 +60,24 @@ const UserTransactionList = () => {
   }
   if (error) return <div>Error fetching data</div>;
 
+  const totalPage = fetchData?.data?.totalPages || 1;
+
+  console.log("totalPage", totalPage);
+
   return (
     <>
-      <CommonTable
+      <DyCommonTable
         columns={columns}
         data={result}
+        tableTitle="User Transaction List"
         includeActions={false}
         AddPackageButton={AddButton}
-        tableTitle="User Transaction List"
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
       />
       {addData && (
         <AddRechargePlan

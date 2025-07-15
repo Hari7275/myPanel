@@ -110,8 +110,9 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            placeholder="type here"
+            placeholder="Type here"
             className="userProfile-input-field"
+            maxLength={20}
           />
         </div>
 

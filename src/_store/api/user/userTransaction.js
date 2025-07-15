@@ -4,8 +4,8 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // ********************** get user transaction list *********************************
     getUserTransactionsList: builder.query({
-      query: (userId) => ({
-        url: `user/profile/user-transactions/${userId}?page=1&limit=200`,
+      query: ({ userId, page, limit }) => ({
+        url: `user/profile/user-transactions/${userId}?page=${page}&limit=${limit}`,
         method: "GET",
       }),
       providesTags: ["transactions"],
