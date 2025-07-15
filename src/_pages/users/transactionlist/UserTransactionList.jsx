@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from "react";
- 
+
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { USERTRANSACTIONCOLUMN } from "./userTransactionsColumn";
 import { useGetUserTransactionsListQuery } from "../../../_store/api";
@@ -61,8 +61,6 @@ const UserTransactionList = () => {
   if (error) return <div>Error fetching data</div>;
 
   const totalPage = fetchData?.data?.totalPages || 1;
-
-  console.log("totalPage", totalPage);
 
   return (
     <>

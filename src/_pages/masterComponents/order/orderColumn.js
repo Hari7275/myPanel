@@ -29,7 +29,7 @@ export const COLUMNORDER = [
   },
 
   {
-    Header: "Order Revenue",
+    Header: "Revenue",
     accessor: "order_revenue",
   },
 
@@ -37,7 +37,32 @@ export const COLUMNORDER = [
     Header: "Flute Earning",
     accessor: "flute_earning",
   },
-
+  {
+    Header: "Start Time",
+    accessor: "call_start_time",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+  {
+    Header: "End Time",
+    accessor: "call_end_time",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+  {
+    Header: "Duration(min)",
+    accessor: "actual_duration",
+  },
   {
     Header: "Status",
     accessor: "status",

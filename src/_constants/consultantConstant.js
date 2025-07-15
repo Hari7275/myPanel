@@ -247,6 +247,12 @@ export const OrderStatus = (value) => {
       return "Cancelled";
     case 6:
       return "Rejected";
+    case 7:
+      return "Waiting";
+    case 8:
+      return "USER_NOT_RESPONDED";
+    case 9:
+      return "CONSULTANT_NOT_RESPONDED";
   }
 };
 
