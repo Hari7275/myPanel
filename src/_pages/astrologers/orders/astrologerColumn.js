@@ -15,7 +15,7 @@ export const ORDERCHARTCOLUMN = [
     Cell: ({ value }) => OrderType(value),
   },
   {
-    Header: "Duration",
+    Header: "Duration(min)",
     accessor: "actual_duration",
   },
   {
@@ -37,6 +37,18 @@ export const ORDERCHARTCOLUMN = [
   {
     Header: "Comm. Rate",
     accessor: "commission_rate",
+  },
+  {
+    Header: "Start Time",
+    accessor: "call_start_time",
+    Cell: ({ value }) => {
+      if (!value) return "null";
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
   },
 
   {

@@ -41,6 +41,7 @@ export const COLUMNORDER = [
     Header: "Start Time",
     accessor: "call_start_time",
     Cell: ({ value }) => {
+      if (!value) return "null";
       const date = new Date(value);
       return date.toLocaleString("en-US", {
         dateStyle: "medium",
@@ -52,6 +53,7 @@ export const COLUMNORDER = [
     Header: "End Time",
     accessor: "call_end_time",
     Cell: ({ value }) => {
+      if (!value) return "null";
       const date = new Date(value);
       return date.toLocaleString("en-US", {
         dateStyle: "medium",
