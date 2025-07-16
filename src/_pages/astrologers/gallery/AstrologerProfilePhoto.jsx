@@ -8,6 +8,7 @@ import {
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
 
 const AstrologerProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -41,6 +42,13 @@ const AstrologerProfilePhotos = () => {
           body: formData,
         }).unwrap();
 
+        // console.log("response");
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+          return;
+        }
         // Reset file input
         inputRef.current.value = null;
       } catch (error) {

@@ -9,6 +9,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import toast from "react-hot-toast";
 
 const CoachProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -41,6 +42,14 @@ const CoachProfilePhotos = () => {
           body: formData,
         }).unwrap();
 
+        // console.log("response");
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+          return;
+        }
+
         // Reset file input
         inputRef.current.value = null;
       } catch (error) {
@@ -62,7 +71,6 @@ const CoachProfilePhotos = () => {
     if (selectedImage && selectedImage?.id) {
       try {
         await deleteImage({ id: selectedImage?.id }).unwrap();
-
       } catch (error) {
         console.error("Failed to delete the image:", error);
       }
@@ -107,8 +115,9 @@ const CoachProfilePhotos = () => {
                       objectFit: "cover",
                     }}
                   />
-                  {permissions?.["coach"]?.includes("update_coach_profile_gallery") && (
-
+                  {permissions?.["coach"]?.includes(
+                    "update_coach_profile_gallery"
+                  ) && (
                     <div className="hover-buttons">
                       <button
                         className="hover-button"

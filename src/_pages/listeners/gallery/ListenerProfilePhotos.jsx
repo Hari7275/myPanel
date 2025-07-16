@@ -9,6 +9,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import toast from "react-hot-toast";
 
 const ListenerProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -40,6 +41,14 @@ const ListenerProfilePhotos = () => {
           id: consultantId,
           body: formData,
         }).unwrap();
+
+        // console.log("response");
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+          return;
+        }
 
         // Reset file input
         inputRef.current.value = null;
@@ -106,7 +115,9 @@ const ListenerProfilePhotos = () => {
                       objectFit: "cover",
                     }}
                   />
-                  {permissions?.["listener"]?.includes("update_listener_profile_gallery") && (
+                  {permissions?.["listener"]?.includes(
+                    "update_listener_profile_gallery"
+                  ) && (
                     <div className="hover-buttons">
                       <button
                         className="hover-button"
