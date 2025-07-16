@@ -1,16 +1,24 @@
 import React, { useMemo, useEffect, useState } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { ORDERCHARTCOLUMN } from "./astrologerColumn";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { debounce } from "lodash";
 
 const AstrologerOrder = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  const { data: fetchData, isLoading } =
-    useGetConsultantsOrderQuery(consultantId);
+  const { data: fetchData, isLoading } = useGetConsultantsOrderQuery({
+    consultantId,
+    page,
+    pageSize,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
@@ -25,6 +33,10 @@ const AstrologerOrder = () => {
   }, [fetchData]);
 
   const columns = useMemo(() => ORDERCHARTCOLUMN, []);
+
+  const totalPage = fetchData?.meta?.total_page;
+  // ? Math.ceil(fetchData.data.total_records / pageSize)
+  // : 1;
 
   // if (isLoading) {
   //   return <span>Loading ...</span>;
@@ -42,12 +54,19 @@ const AstrologerOrder = () => {
     <>
       {fetchData ? (
         <div className="ProfileData-container profile-right-sub-container">
-          <CommonTable
+          <DyCommonTable
             columns={columns}
             data={data}
+            tableTitle="Order History"
             includeActions={false}
-            tableTitle=" Order History"
             includeCheckbox={false}
+            dynamicPagination={dynamicPagination}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            // showTableHeading={false}
           />
         </div>
       ) : (

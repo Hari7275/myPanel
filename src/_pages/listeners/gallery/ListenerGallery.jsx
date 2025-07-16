@@ -13,13 +13,13 @@ import {
 } from "../../../_store/api";
 import { ConsultantGalleryStatus } from "../../../_constants/consultantConstant";
 import DeleteComponent from "../../payments/DeleteComponent";
-import ProfilePhoto from "./ProfilePhoto";
+// import ProfilePhoto from "./ProfilePhoto";
 
 import MyGallery from "../../../_constants/MyGallery";
 
 import toast from "react-hot-toast";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
-
+import ProfilePhoto from "../../astrologers/gallery/ProfilePhoto";
 
 const ListenerGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -245,13 +245,17 @@ const ListenerGallery = () => {
                       ) : (
                         ""
                       )}
-                      {permissions?.["listener"]?.includes("update_listener_profile_gallery") && (
+                      {permissions?.["listener"]?.includes(
+                        "update_listener_profile_gallery"
+                      ) && (
                         <div className="galleryIcons">
                           <span onClick={() => toggleImageCropper(image)}>
                             <img src="/cropAdmin.png" className="galleryIcon" />
                           </span>
                           <span>
-                            <Download onClick={() => downloadImage(image.url)} />
+                            <Download
+                              onClick={() => downloadImage(image.url)}
+                            />
                           </span>
 
                           <span onClick={() => toggleProfilePic(image)}>

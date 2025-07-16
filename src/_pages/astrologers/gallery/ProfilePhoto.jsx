@@ -35,6 +35,8 @@ const ProfilePhoto = ({ isOpen, onClose, selectedImage }) => {
     }
   };
 
+  // this is request profile pic
+
   return (
     <ReactModal
       isOpen={isOpen}

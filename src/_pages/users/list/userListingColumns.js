@@ -62,6 +62,11 @@ export const COLUMNS = (toggleModal) => [
   },
 
   {
+    Header: "Email",
+    accessor: "email_address",
+  },
+
+  {
     Header: "User Type",
     accessor: "user_type",
     Cell: ({ value }) => (value == 0 ? "External" : "Internal"),
