@@ -180,7 +180,7 @@ const UserListingTable = () => {
   }
 
   return (
-    permissions?.["user"]?.includes("view_user_list") && (// Check if user has permission to view user list
+    permissions?.["user"]?.includes("view_user_list") && ( // Check if user has permission to view user list
       <>
         <DyCommonTable
           columns={columns}
