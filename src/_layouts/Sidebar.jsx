@@ -525,7 +525,7 @@ const Sidebar = () => {
                   width="24"
                   height="24"
                 />
-                <span>Blog Count</span>
+                <span>Blog View Count</span>
               </div>
             </Link>
 
