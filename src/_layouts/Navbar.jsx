@@ -70,6 +70,7 @@ const Navbar = () => {
     "/payout-request": "Payout Request",
     "/payout-History": "Payout History",
     "/coupon": "Coupon List",
+    "/blog-count": "Blog Count",
   };
 
   //

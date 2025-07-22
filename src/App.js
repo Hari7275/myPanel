@@ -87,6 +87,7 @@ import SupportSection from "./_pages/masterComponents/support/SupportSection";
 import SupportQuestion from "./_pages/masterComponents/support/supportQuestion/SupportQuestion";
 import ExecutiveList from "./_pages/masterComponents/support/executiveSection/ExecutiveList";
 import UserSupportRequest from "./_pages/masterComponents/support/userSupportRequest/UserSupportRequest";
+import BlogCount from "./_pages/masterComponents/blogCount/BlogCount";
 
 // SuperAdmin control
 import UnauthorizedPage from "./_pages/loginPage/UnauthorizedPage";
@@ -235,6 +236,7 @@ const Layout = () => (
           <Route path="support-question" element={<SupportQuestion />} />
           <Route path="Support-executive" element={<ExecutiveList />} />
           <Route path="user-support-request" element={<UserSupportRequest />} />
+          <Route path="blog-count" element={<BlogCount />} />
 
           {/* ****************************************SuperAdmin*************************** */}
 
@@ -277,8 +279,8 @@ function App() {
         element={
           <PrivateRoute
             element={<Layout />}
-          // isAuthenticated={isAuthenticated}
-          // requiredPermissions={["access_admin_panel"]}
+            // isAuthenticated={isAuthenticated}
+            // requiredPermissions={["access_admin_panel"]}
           />
         }
       />

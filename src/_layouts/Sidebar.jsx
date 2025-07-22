@@ -513,6 +513,21 @@ const Sidebar = () => {
                 <span>Support</span>
               </div>
             </Link>
+            <Link to="/blog-count">
+              <div
+                className={`menu-item ${
+                  activeItem === "blog-count" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("blog-count")}
+              >
+                <img
+                  src="/adminPannel_icons/support.png"
+                  width="24"
+                  height="24"
+                />
+                <span>Blog Count</span>
+              </div>
+            </Link>
 
             {/* <div
               className={`menu-item ${

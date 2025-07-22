@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,8 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/admin/details/${id}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["consultants", "gallery"],
@@ -18,7 +20,8 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
