@@ -14,8 +14,8 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
 
     getBlogCountList: builder.query({
-      query: ({ page, size }) => ({
-        url: `meta/admin/get-blog-view?page=${page}&limit=${size}&start_date=2025-07-20&end_date=2025-07-22`,
+      query: ({ page, size, start_date, end_date }) => ({
+        url: `meta/admin/get-blog-view?page=${page}&limit=${size}&start_date=${start_date}&end_date=${end_date}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

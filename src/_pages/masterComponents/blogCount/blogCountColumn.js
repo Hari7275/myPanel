@@ -1,8 +1,15 @@
 export const BLOGCOUNTCOLUMNS = [
   {
-    Header: "Blog Id",
-    accessor: "blog_id",
+    Header: "Id",
+    accessor: (row) => {
+      console.log("Row Data:", row); // 👈 Log row here
+      return row.index || "NIL";
+    },
   },
+  //   {
+  //     Header: "Blog Id",
+  //     accessor: "blog_id",
+  //   },
   {
     Header: "Title",
     accessor: "title",
