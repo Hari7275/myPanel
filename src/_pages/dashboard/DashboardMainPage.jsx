@@ -1,14 +1,14 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 import DashboardSubPage from "./DashboardSubPage";
 
 const DashboardMainPage = () => {
   const dispatch = useDispatch();
-  useEffect(()=>{
+  useEffect(() => {
     // dispatch(setPageTitle("Flute Admin Panel"));
     dispatch(setPageTitle("Dashboard"));
-  },[])
+  }, [])
   return (
     <>
       <div className="profile-section">

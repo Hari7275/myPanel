@@ -54,7 +54,7 @@ export default function BasicArea() {
       </div>
 
       <LineChart
-        height={600}
+        height={320}
         series={[
           {
             data: uData,
