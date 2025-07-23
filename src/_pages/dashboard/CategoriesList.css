@@ -5,11 +5,30 @@
     padding: 10px;
 }
 
+.dashboard-card-style {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 10px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.14);
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
+    /* border: 1px solid blue */
+}
+
 .dashboard-sub-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     /* border: 2px solid blue; */
     max-height: 400px;
+}
+
+.dashboard-sub-concentric {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .dashboard-sub-card {
