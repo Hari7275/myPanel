@@ -3,12 +3,23 @@ import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { BLOGCOUNTCOLUMNS } from "./blogCountColumn";
 import { useGetBlogCountListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+// import DatePicker from "react-datepicker";
+// import "react-datepicker/dist/react-datepicker.css";
+import { debounce } from "lodash";
 
 const BlogCount = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+
+  const formatDate = (date) => {
+    return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
+  };
+
+  const today = new Date();
+  const [start_date, setStart_date] = useState(formatDate(today));
+  const [end_date, setEnd_Date] = useState(formatDate(today));
 
   const {
     data: fetchData,
@@ -17,15 +28,92 @@ const BlogCount = () => {
   } = useGetBlogCountListQuery({
     page,
     size: pageSize,
+    start_date,
+    end_date,
   });
 
-  const columns = useMemo(() => BLOGCOUNTCOLUMNS, []);
+  //   const columns = useMemo(() => BLOGCOUNTCOLUMNS, []);
+  const columns = useMemo(
+    () =>
+      BLOGCOUNTCOLUMNS.map((column, index) => {
+        if (index === 0) {
+          // Assuming first column is the Id column
+          return {
+            ...column,
+            accessor: (row, rowIndex) => (page - 1) * pageSize + rowIndex + 1,
+          };
+        }
+        return column;
+      }),
+    [page, pageSize]
+  );
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       setData(fetchData?.data?.records || []);
     }
   }, [fetchData]);
+
+  // Apply debounce to search handlers
+  const debouncedSearchStartDate = debounce(
+    (value) => setStart_date(value),
+    500
+  );
+  const debouncedSearchEndDate = debounce((value) => setEnd_Date(value), 500);
+
+  const handleStartDateSearch = (e) => {
+    setPage(1);
+    debouncedSearchStartDate(e?.target?.value);
+  };
+
+  const handleEndDateSearch = (e) => {
+    setPage(1);
+    debouncedSearchEndDate(e?.target?.value);
+  };
+
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <label
+        style={{
+          marginLeft: "25px",
+        }}
+      >
+        Start Date
+      </label>
+      <input
+        className="inputBox"
+        value={start_date}
+        type="date"
+        placeholder="Search by Id"
+        style={{
+          marginLeft: "5px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleStartDateSearch}
+      />
+
+      <label
+        style={{
+          marginLeft: "25px",
+        }}
+      >
+        End Date
+      </label>
+      <input
+        className="inputBox"
+        type="date"
+        value={end_date}
+        placeholder="Search by Name"
+        style={{
+          marginLeft: "5px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleEndDateSearch}
+      />
+    </div>
+  );
 
   const totalPage = fetchData?.data?.meta?.totalPages || 1;
 
@@ -36,7 +124,7 @@ const BlogCount = () => {
       </span>
     );
   }
-  if (error) return <p>Error fetching data: {error?.data?.message}</p>;
+  //   if (error) return <p>Error fetching data: {error?.data?.message}</p>;
 
   return (
     <div>
@@ -44,6 +132,7 @@ const BlogCount = () => {
         columns={columns}
         data={data}
         includeActions={false}
+        customFilterComponent={customFilterComponent}
         tableTitle="Blog Count"
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
