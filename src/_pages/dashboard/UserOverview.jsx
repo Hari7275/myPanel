@@ -5,8 +5,8 @@ import "./CategoriesList.css";
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
     <div>
         <div
-            className="card dashboard-sub-card"
-            style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "10px", border: "none" }}
+            className="dashboard-sub-card"
+            style={{ backgroundColor: bgcolor, boxShadow: "none" }}
         >
             <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
             <span style={{ fontSize: "24px", fontWeight: "700" }}>{price}</span>
@@ -50,9 +50,9 @@ const UserOverview = () => {
         <>
             <div className='useroverview'>
                 <span>
-                    <h2 style={{ marginLeft: "25px" }}>UserOverview</h2>
+                    <h2 style={{ paddingLeft: "25px" }}>UserOverview</h2>
                 </span>
-                <div className="category-card-container-grid">
+                <div className="category-card-container-grid" style={{}}>
                     {overviewItems.map((item) => (
                         <CategoryCard
                             key={item.name}

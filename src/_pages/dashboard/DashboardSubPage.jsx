@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import UserOverview from "./UserOverview";
 import TrafficConsultant from "./TrafficConsultant";
+import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
@@ -212,6 +213,9 @@ const DashboardSubPage = () => {
         <div className="dashboard-sub-grid">
           <TrafficConsultant />
           <UserOverview />
+        </div>
+        <div className="dashboard-sub-grid">
+          <TopActiveConsultants />
         </div>
       </div>
     </>

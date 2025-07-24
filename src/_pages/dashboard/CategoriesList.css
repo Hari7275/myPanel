@@ -12,9 +12,10 @@
     margin: 10px;
     padding: 15px;
     background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 0 8px 26px 0 rgba(0, 0, 0, 0.14);
+    box-shadow: 4px 8px 26px 0 rgba(0, 0, 0, 0.14);
     backdrop-filter: blur(15px);
     border-radius: 10px;
+    justify-content: center;
     /* border: 1px solid blue */
 }
 
@@ -31,14 +32,29 @@
     justify-content: center;
 }
 
-.dashboard-sub-card {
+/* .dashboard-sub-card {
     max-width: 85%;
     min-height: 14vh;
+    margin: 25px;
     gap: 20px;
     font-size: 18px;
     font-weight: 500;
     box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
     transition: transform 0.3s ease, color 0.3s ease;
+} */
+
+.dashboard-sub-card {
+    display: flex;
+    flex-direction: column;
+    max-width: 85%;
+    min-height: 14vh;
+    margin: 15px;
+    padding: 15px;
+    /* border: 1px solid #ddd; */
+    background-color: rgba(255, 255, 255, 0.65);
+    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
+    backdrop-filter: blur(15px);
+    border-radius: 10px;
 }
 
 .dashboard-main-card {
@@ -57,6 +73,66 @@
 .category-card:hover {
     transform: scale(1.1);
     color: #8d1cb7c8;
+}
+
+
+.list-container {
+    position: relative;
+    text-align: center;
+    width: 250px;
+    /* border: 1px solid blue; */
+    margin: 30px;
+}
+
+.list-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.color-circle {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.item-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.item-percentage {
+    font-weight: normal;
+}
+
+/* Specific color classes */
+.color-astrologers {
+    background-color: #1C1C1C;
+}
+
+.color-coach {
+    background-color: #BAEDBD;
+}
+
+.color-psychic {
+    background-color: #95A4FC;
+}
+
+.color-other {
+    background-color: #95A4FC;
+}
+
+.top-active-consultant {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 300px;
+    border: 1px solid blue;
+    padding: 0 35px;
 }
 
 /* For tablets (screens 768px and up) */
