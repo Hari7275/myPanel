@@ -15,6 +15,8 @@ import { Atom } from "react-loading-indicators";
 import UserOverview from "./UserOverview";
 import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
+import ReferralTracking from "./referralTracking/ReferralTracking";
+import RevenueByLocation from "./revenueByLocation/RevenueByLocation";
 
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
@@ -216,6 +218,10 @@ const DashboardSubPage = () => {
         </div>
         <div className="dashboard-sub-grid">
           <TopActiveConsultants />
+          <RevenueByLocation />
+        </div>
+        <div className="dashboard-referal-card">
+          <ReferralTracking />
         </div>
       </div>
     </>

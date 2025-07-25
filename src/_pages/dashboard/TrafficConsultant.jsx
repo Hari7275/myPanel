@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from "react-router-dom";
 import "./CategoriesList.css";
 
-export const CategoryCard = ({ link, label, price, bgcolor, segments }) => {
+export const CategoryCard = ({ label, segments }) => {
   const size = 200;
   const radius = 70;
   const strokeWidth = 30;
@@ -71,7 +71,7 @@ export const CategoryCard = ({ link, label, price, bgcolor, segments }) => {
   ];
 
   return (
-    <div className='dashboard-card-style' style={{ height: '280px' }}>
+    <div className='dashboard-card-style' style={{ height: '320px' }}>
       <div>
         <span style={{ fontSize: "20px", fontWeight: "600" }}>
           {label}
@@ -83,8 +83,8 @@ export const CategoryCard = ({ link, label, price, bgcolor, segments }) => {
           display: "flex",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "center",
-          // border: "1px solid blue"
+          justifyContent: "space-evenly",
+          // border: "1px solid blue",
         }}
       >
         {/* Concentric Circle */}
