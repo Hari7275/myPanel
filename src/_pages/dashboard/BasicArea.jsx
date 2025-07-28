@@ -20,11 +20,11 @@ export default function BasicArea() {
     "Dec",
   ];
   return (
-    <div style={{ padding: "0 0px", margin: "0px 25px" }}>
+    <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h2>Revenue</h2>
         <div>
-          <div style={{ width: "290px" }}>
+          <div style={{ width: "auto" }}>
             <form
               className="simple-form"
               noValidate
@@ -55,7 +55,7 @@ export default function BasicArea() {
 
       <LineChart
         className="dashboard-card-style"
-        height={320}
+        height={300}
         series={[
           {
             data: uData,

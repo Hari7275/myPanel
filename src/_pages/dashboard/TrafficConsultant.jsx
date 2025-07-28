@@ -72,7 +72,7 @@ export const CategoryCard = ({ label, segments }) => {
 
   return (
     <div className='dashboard-card-style' style={{ height: '320px' }}>
-      <div>
+      <div style={{ margin: '0px 0px 20px 20px' }}>
         <span style={{ fontSize: "20px", fontWeight: "600" }}>
           {label}
         </span>
@@ -137,7 +137,7 @@ const TrafficConsultant = () => {
   ];
   return (
     <>
-      <div className='traffic-consultants' style={{ padding: "10px 25px" }}>
+      <div className='traffic-consultants' style={{ padding: '25px 0px' }}>
         <div className="" style={{ width: "100%" }}>
           {overviewItems.map((item) => (
             <CategoryCard

@@ -48,11 +48,11 @@ const UserOverview = () => {
     ];
     return (
         <>
-            <div className='useroverview'>
+            <div className='useroverview' style={{ paddingLeft: '25px' }}>
                 <span>
-                    <h2 style={{ paddingLeft: "25px" }}>UserOverview</h2>
+                    <h2 style={{ padding: "15px 5px" }}>UserOverview</h2>
                 </span>
-                <div className="category-card-container-grid" style={{}}>
+                <div className="dashboard-card-container-grid" style={{ marginTop: '10px' }}>
                     {overviewItems.map((item) => (
                         <CategoryCard
                             key={item.name}

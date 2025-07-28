@@ -13,6 +13,7 @@ import BasicArea from "./BasicArea";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import UserOverview from "./UserOverview";
+import ConsltantOverview from "./consultantOverview/ConsultantOverview"
 import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 import ReferralTracking from "./referralTracking/ReferralTracking";
@@ -207,21 +208,23 @@ const DashboardSubPage = () => {
             ))}
           </div>
         </div> */}
-        <div className="dashboard-sub-grid">
-          <BasicArea />
-          {/* <UserOverview /> */}
-          <UserOverview />
-        </div>
-        <div className="dashboard-sub-grid">
-          <TrafficConsultant />
-          <UserOverview />
-        </div>
-        <div className="dashboard-sub-grid">
-          <TopActiveConsultants />
-          <RevenueByLocation />
-        </div>
-        <div className="dashboard-referal-card">
-          <ReferralTracking />
+        <div className="second-sub-div" style={{ margin: '0px 40px' }}>
+          <div className="dashboard-sub-grid">
+            <BasicArea />
+            {/* <UserOverview /> */}
+            <UserOverview />
+          </div>
+          <div className="dashboard-sub-grid">
+            <TrafficConsultant />
+            <ConsltantOverview />
+          </div>
+          <div className="dashboard-sub-grid">
+            <TopActiveConsultants />
+            <RevenueByLocation />
+          </div>
+          <div className="dashboard-referal-card">
+            <ReferralTracking />
+          </div>
         </div>
       </div>
     </>
