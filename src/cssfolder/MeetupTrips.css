@@ -51,7 +51,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: transform 0.3s ease;
-  box-shadow: 2px 2px 2px 1px rgba(24, 177, 100, 0.5);
+  /* box-shadow: 2px 2px 2px 1px rgba(24, 177, 100, 0.5); */
 }
 
 .fifthButton:hover {

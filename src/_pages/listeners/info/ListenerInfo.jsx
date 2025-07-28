@@ -58,12 +58,12 @@ const ListenerInfo = () => {
               Update Info
             </h3>
             {permissions?.["listener"]?.includes("update_listener_profile_info") && (
-              <button
-                className="secondIcon"
+              <span
+                className="editIcon"
                 onClick={() => toggleUpdateInfo(formData)}
               >
-                <Pencil />
-              </button>
+                <Pencil className="iconSmall" />
+              </span>
             )}
           </div>
 

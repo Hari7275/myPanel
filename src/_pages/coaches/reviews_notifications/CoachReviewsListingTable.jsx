@@ -78,7 +78,7 @@ const CoachReviews = () => {
           right: "40px",
           backgroundColor: "#18B164",
           padding: "6px",
-          zIndex: "9999",
+          // zIndex: "9999",
         }
         : {
           position: "absolute",
@@ -86,7 +86,7 @@ const CoachReviews = () => {
           right: "20px",
           backgroundColor: "#18B164",
           padding: "6px",
-          zIndex: "9999",
+          // zIndex: "9999",
         };
 
     return (

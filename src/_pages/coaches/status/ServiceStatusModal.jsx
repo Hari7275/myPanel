@@ -7,7 +7,7 @@ import { getFetaureLabel } from "../../../_constants/consultantConstant";
 const ServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
   const [updateDisplayStatus] = useUpdateDisplayStatusMutation();
   const [loading, setLoading] = useState(false);
- 
+
   const isHiding = service?.newDisplayStatus === 0;
   const actionText = isHiding ? "Hide" : "Show";
   const statusValue = service?.newDisplayStatus;
@@ -27,7 +27,7 @@ const ServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
       if (response?.status) {
         toast.success(
           response.message ||
-            `Service ${actionText.toLowerCase()}n successfully!`
+          `Service ${actionText.toLowerCase()}n successfully!`
         );
         // onSuccess(service.id, statusValue);
         onClose();
@@ -75,19 +75,19 @@ const ServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-            disabled={loading}
-          >
-            No
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ backgroundColor: "green", marginRight: "10px" }}
             onClick={handleSubmit}
             disabled={loading}
           >
             {loading ? "Processing..." : "Yes"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+            disabled={loading}
+          >
+            No
           </button>
         </div>
       </div>

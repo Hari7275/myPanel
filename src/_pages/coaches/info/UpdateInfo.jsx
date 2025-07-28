@@ -59,8 +59,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const filteredSkillOptions =
     selectedCategories.length > 0
       ? allSkillOptions.filter((skill) =>
-          selectedCategories.some((cat) => cat.value === skill.category_id)
-        )
+        selectedCategories.some((cat) => cat.value === skill.category_id)
+      )
       : allSkillOptions;
 
   // Define Language options from API data
@@ -454,7 +454,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           <button
             type="button"
             className="fifthButton"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", backgroundColor: 'red' }}
             onClick={onClose}
           >
             Cancel

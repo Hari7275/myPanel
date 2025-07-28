@@ -119,19 +119,19 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSubmit}
+          >
+            {"Submit"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
             onClick={onClose}
           >
             Back
           </button>
 
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSubmit}
-          >
-            {"Submit"}
-          </button>
         </div>
       </div>
     </ReactModal>

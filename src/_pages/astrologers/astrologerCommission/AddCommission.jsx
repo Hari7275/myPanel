@@ -226,23 +226,24 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
           }}
         >
           <button
-            type="button"
-            onClick={onClose}
-            className="fifthButton"
-            style={{ marginRight: "10px", padding: "8px 16px" }}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="fifthButton"
             style={{
+              marginRight: "10px",
               backgroundColor: "green",
               color: "white",
               padding: "8px 16px",
             }}
           >
             Save
+          </button>
+          <button
+            type="button"
+            onClick={onClose}
+            className="fifthButton"
+            style={{ padding: "8px 16px", backgroundColor: 'red' }}
+          >
+            Cancel
           </button>
         </div>
       </form>

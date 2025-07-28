@@ -1,6 +1,13 @@
 .category-card-container-grid {
   display: grid;
-  grid-template-columns: repeat(4, 0.3f);
+  grid-template-columns: repeat(4, 0.3fr);
+  gap: 10px;
+  padding: 10px;
+}
+
+.meta-card-container-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 0.3fr);
   gap: 10px;
   padding: 10px;
 }

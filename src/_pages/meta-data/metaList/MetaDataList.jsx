@@ -82,7 +82,7 @@ const MetaDataList = () => {
   ];
   return (
     <>
-      <div className="category-card-container-grid">
+      <div className="meta-card-container-grid">
         {metadataItems.map((item) => (
           hasPermission(item.permissions) && (
             <CategoryCard
