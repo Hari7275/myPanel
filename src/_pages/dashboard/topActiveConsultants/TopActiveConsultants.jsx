@@ -32,7 +32,7 @@ const TopActiveConsultants = () => {
                 <p>View all</p>
             </div>
             {/* Image Section...................................... */}
-            <div className='image-container'>
+            <div className='top-active-image-container'>
                 {images.map((image) => (
                     <>
                         <div key={image.id} className="image-wrapper">
