@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const consultantsBankDetails = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,8 @@ export const consultantsBankDetails = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/bank/admin/get-account-list/${consultantId}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["consultants"],
@@ -29,7 +31,8 @@ export const consultantsBankDetails = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/bank/admin/update-status/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -41,7 +44,8 @@ export const consultantsBankDetails = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/paypal/admin/update-status/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),

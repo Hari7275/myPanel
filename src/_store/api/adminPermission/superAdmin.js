@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const superAdminSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,8 @@ export const superAdminSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices?page=1&size=100`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["admin"],
@@ -19,7 +21,8 @@ export const superAdminSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["admin"],
@@ -31,7 +34,8 @@ export const superAdminSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["admin"],
@@ -42,7 +46,8 @@ export const superAdminSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["admin"],

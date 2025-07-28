@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const consultantReviewListApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,8 @@ export const consultantReviewListApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/profile-review-detail/${id}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["review"],
@@ -29,7 +31,8 @@ export const consultantReviewListApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/profile-detail-update/${id}`,
         method: "PATCH",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),

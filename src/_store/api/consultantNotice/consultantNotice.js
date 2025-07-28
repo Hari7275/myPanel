@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const noticeApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices?page=1&size=100`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["notice"],
@@ -18,7 +19,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices/assign-list?page=1&size=10`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["notice"],
@@ -30,14 +31,14 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices/assign-list/${noticeId}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["notice"],
     }),
 
 
-   
+
 
     getConsultantList: builder.query({
       query: ({ type }) => ({
@@ -56,7 +57,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -68,7 +69,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -80,7 +81,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -92,7 +93,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -103,7 +104,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/notices/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -115,7 +116,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "DELETE",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],
@@ -128,7 +129,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["notice"],

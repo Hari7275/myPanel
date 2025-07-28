@@ -1,4 +1,5 @@
 import apiSlice from "./api";
+import { getAdminToken } from "./tokenHelper";
 
 export const galleryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -7,7 +8,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/admin/details/${id}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["gallery"],
@@ -20,7 +22,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/update-image/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -33,7 +36,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/${id}`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -47,7 +51,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/${id}?photo_type=2`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -61,7 +66,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -73,7 +79,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -85,7 +92,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/reject-image-request/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -98,7 +106,8 @@ export const galleryApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/delete-image/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["gallery"],

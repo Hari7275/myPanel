@@ -59,7 +59,8 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/service-status/admin/${id}`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["consultants"],
@@ -72,7 +73,8 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/service-status/admin/update-display-status/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -85,7 +87,8 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/profile/admin/update-profile-status/${id}`,
         method: "PATCH",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),

@@ -83,8 +83,8 @@ const DyCommonTable = ({
         ...columns,
         ...(includeActions
           ? [
-              // Define custom actions here if required
-            ]
+            // Define custom actions here if required
+          ]
           : []),
       ]);
     }

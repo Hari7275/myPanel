@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -8,7 +9,8 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=100`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["commission"],
@@ -19,7 +21,8 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
         url: `api/v1/consultant/profile/consultant-price-list/admin/update-commission/${consultantId}`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
