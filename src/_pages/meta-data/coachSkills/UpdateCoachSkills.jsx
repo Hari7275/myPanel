@@ -25,7 +25,7 @@ const UpdateCoachSkills = ({ isOpen, onClose, selectedRow }) => {
     icon: selectedRow?.icon || "",
     status: selectedRow?.status || "",
   });
-  
+
 
   const [updateCard, { isLoading: isUpdating, error }] =
     useUpdateCoachSkillsMutation();
@@ -93,7 +93,7 @@ const UpdateCoachSkills = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       aria-labelledby="update-promotional-card-title"
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           id="update-promotional-card-title"
@@ -107,47 +107,49 @@ const UpdateCoachSkills = ({ isOpen, onClose, selectedRow }) => {
           Update Skill
         </h2>
 
-        <UpdateData
-          label="Category id"
-          type="number"
-          id="category_id"
-          name="category_id"
-          value={formData.category_id}
-          onChange={handleChange}
-          readOnly
-        />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateData
+            label="Category id"
+            type="number"
+            id="category_id"
+            name="category_id"
+            value={formData.category_id}
+            onChange={handleChange}
+            readOnly
+          />
 
-        <UpdateData
-          label="Skill Name"
-          type="text"
-          id="skill_name"
-          name="skill_name"
-          value={formData.skill_name}
-          onChange={handleChange}
-        />
-        <UpdateData
-          label="Card Icon"
-          type="file"
-          id="icon"
-          name="icon"
-          onChange={handleChange}
-        />
+          <UpdateData
+            label="Skill Name"
+            type="text"
+            id="skill_name"
+            name="skill_name"
+            value={formData.skill_name}
+            onChange={handleChange}
+          />
+          <UpdateData
+            label="Card Icon"
+            type="file"
+            id="icon"
+            name="icon"
+            onChange={handleChange}
+          />
+        </div>
 
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
         {error && <p className="error-message">Error: {error?.message}</p>}

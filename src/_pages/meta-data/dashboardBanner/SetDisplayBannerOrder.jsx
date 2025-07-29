@@ -130,6 +130,7 @@ const SetDisplayBannerOrder = ({ isOpen, onClose, selectedRow, allData }) => {
           >
             {isUpdating ? "Saving..." : "Save"}
           </button>
+
         </div>
         {error && <p className="error-message">Error: {error?.message}</p>}
       </div>

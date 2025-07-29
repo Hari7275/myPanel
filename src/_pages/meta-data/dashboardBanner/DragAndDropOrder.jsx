@@ -158,15 +158,23 @@ const DragAndDropOrder = ({
           </Droppable>
         </DragDropContext>
       </div>
-      <div style={{ marginTop: "30px", textAlign: "center" }}>
+      <div style={{ textAlign: "center" }}>
         <button
           className="fifthButton"
-          style={{ backgroundColor: "green" }}
+          style={{ margin: "10px", backgroundColor: "green" }}
           onClick={() => onSubmit(dragItems)}
-          // disabled={isLoading}
+        // disabled={isLoading}
         >
           {"Submit"}
         </button>
+        <button
+          className="fifthButton"
+          style={{}}
+          onClick={onClose}
+        >
+          Back
+        </button>
+
       </div>
     </ReactModal>
   );
