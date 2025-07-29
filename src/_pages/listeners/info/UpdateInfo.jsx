@@ -135,16 +135,11 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         isOpen={isOpen}
         onRequestClose={onClose}
       >
-        <label
-          className="sub-heading"
-          style={{
-            marginBottom: "20px",
-            display: "block",
-            backgroundColor: "#f0f0f0",
-          }}
+        <h2
+          className="top-main-heading"
         >
           Update Info
-        </label>
+        </h2>
 
         <form className="simple-form" noValidate autoComplete="off">
           <div style={{ display: "flex" }}>
