@@ -4,10 +4,10 @@ import { useCreateReportReasonMutation } from "../../../_store/api";
 
 const AddReportReason = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
-    parent_id:0,
+    parent_id: 0,
     text: "",
-    type: "text",  
-    status: "active",  
+    type: "text",
+    status: "active",
   });
 
   const [createData, { isLoading }] = useCreateReportReasonMutation();
@@ -53,7 +53,7 @@ const AddReportReason = ({ isOpen, onClose }) => {
           Add Reason
         </h2>
 
-      
+
 
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
@@ -100,19 +100,19 @@ const AddReportReason = ({ isOpen, onClose }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSubmit}
+          >
+            {"Submit"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
             onClick={onClose}
           >
             Back
           </button>
 
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSubmit}
-          >
-            {"Submit"}
-          </button>
         </div>
       </div>
     </ReactModal>

@@ -60,7 +60,7 @@ const UpdateMenuOrder = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       aria-labelledby="update-promotional-card-title"
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           id="update-promotional-card-title"
@@ -82,48 +82,49 @@ const UpdateMenuOrder = ({ isOpen, onClose, selectedRow }) => {
           onChange={handleChange}
           readOnly
         /> */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="Parent id"
+            type="number"
+            id="parent_id"
+            name="parent_id"
+            value={formData.parent_id}
+            onChange={handleChange}
+          />
 
-        <UpdateInputField
-          label="Parent id"
-          type="number"
-          id="parent_id"
-          name="parent_id"
-          value={formData.parent_id}
-          onChange={handleChange}
-        />
+          <UpdateInputField
+            label="Title"
+            type="text"
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+          />
 
-        <UpdateInputField
-          label="Title"
-          type="text"
-          id="title"
-          name="title"
-          value={formData.title}
-          onChange={handleChange}
-        />
+          <UpdateInputField
+            label="item Icon"
+            type="file"
+            id="icon"
+            name="icon"
+            onChange={handleChange}
+          />
+        </div>
 
-        <UpdateInputField
-          label="item Icon"
-          type="file"
-          id="icon"
-          name="icon"
-          onChange={handleChange}
-        />
-
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
         {error && <p className="error-message">Error: {error?.message}</p>}

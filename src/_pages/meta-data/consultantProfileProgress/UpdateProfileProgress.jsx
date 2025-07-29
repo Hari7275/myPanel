@@ -65,54 +65,55 @@ const UpdateProfileProgress = ({ isOpen, onClose, selectedRow }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           style={{
             marginBottom: "20px",
             display: "block",
             backgroundColor: "#f0f0f0",
+            textAlign: 'center'
           }}
         >
           Edit Update level
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="input-container">
+            <label htmlFor="level_name">Level Name</label>
+            <input
+              type="text"
+              id="level_name"
+              name="level_name"
+              value={formData?.level_name}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="feature_name">Display Text</label>
+            <input
+              type="text"
+              id="display_text"
+              name="display_text"
+              value={formData?.display_text}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
 
-        <div className="input-container">
-          <label htmlFor="level_name">Level Name</label>
-          <input
-            type="text"
-            id="level_name"
-            name="level_name"
-            value={formData?.level_name}
-            onChange={handleChange}
-            className="info-input"
-          />
+          <div className="input-container">
+            <label htmlFor="level_group"> Level Group</label>
+            <input
+              type="text"
+              id="level_group"
+              name="level_group"
+              value={formData?.level_group}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
         </div>
-        <div className="input-container">
-          <label htmlFor="feature_name">Display Text</label>
-          <input
-            type="text"
-            id="display_text"
-            name="display_text"
-            value={formData?.display_text}
-            onChange={handleChange}
-            className="info-input"
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="level_group"> Level Group</label>
-          <input
-            type="text"
-            id="level_group"
-            name="level_group"
-            value={formData?.level_group}
-            onChange={handleChange}
-            className="info-input"
-          />
-        </div>
-
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
             style={{ marginRight: "10px", backgroundColor: "green" }}

@@ -52,7 +52,7 @@ const UpdateCoachRate = ({ isOpen, onClose, selectedRow }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -63,60 +63,61 @@ const UpdateCoachRate = ({ isOpen, onClose, selectedRow }) => {
         >
           Edit Feature
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="input-container">
+            <label htmlFor="feature_name"> Rate A</label>
+            <input
+              type="number"
+              id="rate"
+              name="rate"
+              value={formData.rate}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
 
-        <div className="input-container">
-          <label htmlFor="feature_name"> Rate A</label>
-          <input
-            type="number"
-            id="rate"
-            name="rate"
-            value={formData.rate}
-            onChange={handleChange}
-            className="info-input"
-          />
+          <div className="input-container">
+            <label htmlFor="feature_name"> Commission</label>
+            <input
+              type="number"
+              id="commission"
+              name="commission"
+              value={formData.commission}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
+
+          <div className="input-container">
+            <label htmlFor="type">Status</label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="userProfile-input-field"
+            >
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         </div>
 
-        <div className="input-container">
-          <label htmlFor="feature_name"> Commission</label>
-          <input
-            type="number"
-            id="commission"
-            name="commission"
-            value={formData.commission}
-            onChange={handleChange}
-            className="info-input"
-          />
-        </div>
-
-        <div className="input-container">
-          <label htmlFor="type">Status</label>
-          <select
-            id="status"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            className="userProfile-input-field"
-          >
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
-        </div>
-
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSave}
+          // disabled={isUpdating}
           >
-            Back
+            {"Save"}
           </button>
           <button
             className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSave}
-            // disabled={isUpdating}
+            style={{}}
+            onClick={onClose}
           >
-            {"Save"}
+            Back
           </button>
         </div>
       </div>

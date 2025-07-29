@@ -101,6 +101,7 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
           noValidate
           autoComplete="off"
           onSubmit={handleSave}
+          style={{ display: 'flex', alignItems: 'center' }}
         >
           <div className="input-container">
             <label htmlFor="status">Status</label>
@@ -119,12 +120,12 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
                 </option>
               ))}
             </select>
-            <p style={{ marginTop: "20px" }}>
+            <p style={{ margin: "20px 10px" }}>
               Select a status for the consultant.
             </p>
           </div>
 
-          <div style={{ margin: "120px 0 0 40px" }}>
+          <div style={{ margin: "120px 0 0 0px" }}>
             <button
               type="submit"
               className="fifthButton"
