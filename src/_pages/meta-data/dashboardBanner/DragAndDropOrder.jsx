@@ -25,23 +25,7 @@ const DragAndDropOrder = ({
   selectedRow,
   onSubmit, // Add this prop
 }) => {
-  const [dragItems, setDragItems] = useState([
-    "item1",
-    "item2",
-    "item3",
-    "item4",
-    "item5",
-    "item6",
-    "item7",
-    "item8",
-    "item9",
-    "item10",
-    "item11",
-    "item12",
-    "item13",
-    "item14",
-    "item15",
-  ]);
+  const [dragItems, setDragItems] = useState([]);
 
   // Update dragItems when selectedRow changes
   useEffect(() => {
@@ -100,7 +84,7 @@ const DragAndDropOrder = ({
             marginBottom: "20px",
           }}
         >
-          <h2 style={{ margin: 0 }}>Drag and Drop List</h2>
+          <h2 style={{ margin: 0 }}>Set the order of consultant</h2>
         </div>
 
         <DragDropContext onDragEnd={handleOnDragEnd}>
@@ -158,16 +142,19 @@ const DragAndDropOrder = ({
           </Droppable>
         </DragDropContext>
       </div>
-      <div style={{ marginTop: "30px", textAlign: "center" }}>
-        <button
-          className="fifthButton"
-          style={{ backgroundColor: "green" }}
-          onClick={() => onSubmit(dragItems)}
-          // disabled={isLoading}
-        >
-          {"Submit"}
-        </button>
-      </div>
+
+      {selectedRow.length > 1 && (
+        <div style={{ marginTop: "30px", textAlign: "center" }}>
+          <button
+            className="fifthButton"
+            style={{ backgroundColor: "green" }}
+            onClick={() => onSubmit(dragItems)}
+            // disabled={isLoading}
+          >
+            {"Submit"}
+          </button>
+        </div>
+      )}
     </ReactModal>
   );
 };
