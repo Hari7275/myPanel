@@ -112,70 +112,71 @@ const AddQdLoaction = ({ isOpen, onClose }) => {
         >
           Add Trip Location
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="City Name"
+            type="text"
+            name="location_name"
+            placeholder="City Name"
+            value={cityName}
+            onChange={handleChangeCityName}
+          />
 
-        <UpdateInputField
-          label="City Name"
-          type="text"
-          name="location_name"
-          placeholder="City Name"
-          value={cityName}
-          onChange={handleChangeCityName}
-        />
+          <div style={{ width: '300px', marginBottom: '8px' }}>
+            <label htmlFor="categories">City</label>
+            <Select options={cityOptions} onChange={handleCitySelect} />
+          </div>
 
-        <div>
-          <label htmlFor="categories">City</label>
-          <Select options={cityOptions} onChange={handleCitySelect} />
+          <UpdateInputField
+            label="Location Id"
+            type="text"
+            id="location_id"
+            name="location_id"
+            placeholder="Location Id"
+            value={formData.location_id}
+            readOnly
+            disabled
+          />
+
+          <UpdateInputField
+            label="Location Name"
+            type="text"
+            id="location_name"
+            name="location_name"
+            placeholder="Location Name"
+            value={formData.location_name}
+            readOnly
+            disabled
+          />
+
+          <UpdateInputField
+            label="Image"
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleChange}
+          />
         </div>
-
-        <UpdateInputField
-          label="Location Id"
-          type="text"
-          id="location_id"
-          name="location_id"
-          placeholder="Location Id"
-          value={formData.location_id}
-          readOnly
-          disabled
-        />
-
-        <UpdateInputField
-          label="Location Name"
-          type="text"
-          id="location_name"
-          name="location_name"
-          placeholder="Location Name"
-          value={formData.location_name}
-          readOnly
-          disabled
-        />
-
-        <UpdateInputField
-          label="Image"
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleChange}
-        />
 
         {showError && <p style={{ color: "red" }}>{showError}</p>}
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
+          </button>
+
         </div>
       </div>
     </ReactModal>

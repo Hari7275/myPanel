@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { UpdateInputField } from "../../../_components/ui/inputForm";
 import { useCreateCoachCategoryMutation } from "../../../_store/api";
@@ -8,11 +8,11 @@ const parseRGBA = (color) => {
   const match = color.match(/rgba?\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
   return match
     ? {
-        r: match[1],
-        g: match[2],
-        b: match[3],
-        a: match[4],
-      }
+      r: match[1],
+      g: match[2],
+      b: match[3],
+      a: match[4],
+    }
     : { r: "", g: "", b: "", a: "" };
 };
 
@@ -234,20 +234,20 @@ const AddCoachCategory = ({ isOpen, onClose }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
+          </button>
+
         </div>
       </div>
     </ReactModal>

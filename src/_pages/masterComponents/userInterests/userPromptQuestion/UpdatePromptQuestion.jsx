@@ -71,46 +71,46 @@ const UpdatePromptQuestion = ({ isOpen, onClose, selectedRow }) => {
         >
           Update Prompt
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="input-container">
+            <label htmlFor="id">Id</label>
+            <input
+              type="number"
+              id="id"
+              name="id"
+              value={formData.id}
+              className="info-input"
+              readOnly
+            />
+          </div>
 
-        <div className="input-container">
-          <label htmlFor="id">Id</label>
-          <input
-            type="number"
-            id="id"
-            name="id"
-            value={formData.id}
-            className="info-input"
-            readOnly
-          />
+          <div className="input-container">
+            <label htmlFor="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="info-input"
+            />
+          </div>
         </div>
-
-        <div className="input-container">
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="info-input"
-          />
-        </div>
-
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", display: 'flex', justifyContent: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
       </div>

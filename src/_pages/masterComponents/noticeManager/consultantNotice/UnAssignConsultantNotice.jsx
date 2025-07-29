@@ -104,11 +104,10 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
     if (consultantList?.data) {
       const consultantOptions = consultantList.data.map((item) => ({
         value: item.id,
-        label: `${item.ConsultantProfile.id} - ${
-          item?.ConsultantProfile?.full_name ||
+        label: `${item.ConsultantProfile.id} - ${item?.ConsultantProfile?.full_name ||
           item?.ConsultantProfile?.first_name ||
           "N/A"
-        }`,
+          }`,
       }));
       setOptions(consultantOptions);
       setSelectedConsultants(consultantOptions); // ✅ auto-select all
@@ -152,7 +151,7 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
 
     try {
       const response = await deleteData(payload).unwrap();
-      console.log("resposne",response)
+      console.log("resposne", response)
       if (response.status) {
         toast.success(response.message);
         onClose();
@@ -254,18 +253,18 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
       </div>

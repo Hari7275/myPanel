@@ -282,7 +282,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             /> */}
           </div>
 
-          <div style={{ marginTop: "20px" }}>
+          <div style={{ marginTop: "20px", textAlign: 'center' }}>
             <button
               type="submit"
               className="fifthButton"

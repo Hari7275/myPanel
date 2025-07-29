@@ -61,8 +61,8 @@ const UpdateCoupon = ({ isOpen, onClose, selectedRow, refetchData }) => {
           formData?.is_active === true
             ? 1
             : formData?.is_active === false
-            ? 0
-            : formData?.is_active,
+              ? 0
+              : formData?.is_active,
       };
       await updateProducts({
         id: selectedRow?.id,
@@ -254,18 +254,18 @@ const UpdateCoupon = ({ isOpen, onClose, selectedRow, refetchData }) => {
         >
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
       </div>

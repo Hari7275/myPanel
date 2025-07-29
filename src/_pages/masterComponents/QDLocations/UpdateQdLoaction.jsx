@@ -77,46 +77,48 @@ const UpdateQdLoaction = ({ isOpen, onClose, selectedRow }) => {
         >
           Update Location List
         </h2>
-        <UpdateInputField
-          label="location_id"
-          // type="number"
-          id="location_id"
-          name="location_id"
-          value={formData.id}
-          onChange={handleChange}
-          readOnly
-        />
-        <UpdateInputField
-          label="Location Name"
-          type="text"
-          id="location_name"
-          name="location_name"
-          value={formData.location_name}
-          onChange={handleChange}
-        />
-        <UpdateInputField
-          label="Card Image"
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleChange}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="location_id"
+            // type="number"
+            id="location_id"
+            name="location_id"
+            value={formData.id}
+            onChange={handleChange}
+            readOnly
+          />
+          <UpdateInputField
+            label="Location Name"
+            type="text"
+            id="location_name"
+            name="location_name"
+            value={formData.location_name}
+            onChange={handleChange}
+          />
+          <UpdateInputField
+            label="Card Image"
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleChange}
+          />
+        </div>
 
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", display: 'flex', justifyContent: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
         {error && <p className="error-message">Error: {error?.message}</p>}

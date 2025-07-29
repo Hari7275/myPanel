@@ -154,18 +154,18 @@ const UpdateSupportQuestion = ({ isOpen, onClose, selectedRow }) => {
         <div style={{ marginTop: "30px" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSave}
+          // disabled={isUpdating}
           >
-            Back
+            {"Save"}
           </button>
           <button
             className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSave}
-            // disabled={isUpdating}
+            style={{}}
+            onClick={onClose}
           >
-            {"Save"}
+            Back
           </button>
         </div>
       </div>

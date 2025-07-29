@@ -151,18 +151,18 @@ const UpdateSubscriptionPlan = ({ isOpen, onClose, selectedRow }) => {
         >
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
       </div>

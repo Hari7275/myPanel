@@ -255,7 +255,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             }
           />
 
-          <div style={{ marginTop: "20px", textAlign: "right" }}>
+          <div style={{ marginTop: "20px", textAlign: 'center' }}>
             <button
               type="submit"
               className="fifthButton"
