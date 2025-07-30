@@ -49,7 +49,7 @@ const AddAdminRole = ({ isOpen, onClose }) => {
       overlayClassName="overlay"
       ariaHideApp={false} // avoid accessibility warning
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "350px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -67,6 +67,7 @@ const AddAdminRole = ({ isOpen, onClose }) => {
           noValidate
           autoComplete="off"
           onSubmit={handleSubmit}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
         >
           <div style={{ display: "flex" }}>
             <UpdateInputField
@@ -103,25 +104,24 @@ const AddAdminRole = ({ isOpen, onClose }) => {
           <div
             style={{
               marginTop: "20px",
-              justifyContent: "center",
-              display: "flex",
+              textAlign: 'center'
             }}
           >
             <button
-              type="button"
-              className="fifthButton"
-              style={{ marginRight: "10px" }}
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="fifthButton"
-              style={{ backgroundColor: "green" }}
+              style={{ marginRight: "10px", backgroundColor: "green" }}
               disabled={isUpdating}
             >
               {isUpdating ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              className="fifthButton"
+              style={{ backgroundColor: 'red' }}
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>

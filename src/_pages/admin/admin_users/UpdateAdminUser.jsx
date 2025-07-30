@@ -63,7 +63,7 @@ const UpdateAdminUser = ({ isOpen, onClose, selectedRow }) => {
       } else {
         toast.error(
           response?.error?.data?.message ||
-            "Something went wrong. Please try again."
+          "Something went wrong. Please try again."
         );
       }
     } catch (error) {
@@ -183,20 +183,20 @@ const UpdateAdminUser = ({ isOpen, onClose, selectedRow }) => {
             }}
           >
             <button
-              type="button"
-              className="fifthButton"
-              style={{ marginRight: "10px" }}
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="fifthButton"
-              style={{ backgroundColor: "green" }}
+              style={{ marginRight: "10px", backgroundColor: "green" }}
               disabled={isUpdating}
             >
               {isUpdating ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              className="fifthButton"
+              style={{ backgroundColor: 'red' }}
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>

@@ -57,7 +57,7 @@ const EditLiveStreamStatus = ({ isOpen, onClose, selectedRow }) => {
           Edit Status
         </h2>
         <form
-          className="simple-form"
+          className="simple-form center-form"
           noValidate
           autoComplete="off"
           onSubmit={handleSave}
@@ -78,12 +78,12 @@ const EditLiveStreamStatus = ({ isOpen, onClose, selectedRow }) => {
               <option value="3">Finished</option>
               {/* <option value="4">Cancelled</option> */}
             </select>
-            <p style={{ marginTop: "20px" }}>
+            <p style={{ marginTop: "20px 20px" }}>
               Select a status for the consultant.
             </p>
           </div>
 
-          <div style={{ margin: "120px 0 0 40px" }}>
+          <div style={{ margin: "120px 0 0 0px" }}>
             <button
               type="submit"
               className="fifthButton"

@@ -71,8 +71,8 @@ const ListenerReviewsListingTable = () => {
       data.length > 0
         ? {
           position: "absolute",
-          top: "125px",
-          right: "40px",
+          top: "105px",
+          right: "20px",
           backgroundColor: "#18B164",
           padding: "6px",
           // zIndex: "9999",
@@ -89,8 +89,7 @@ const ListenerReviewsListingTable = () => {
     return (
       permissions?.["listener"]?.includes("create_listener_profile_review") && (
         <button
-          className="addButton"
-          style={buttonStyle}
+          className="addButton right-addButton"
           onClick={() => toggleAddReviews(coachId)}
         >
           Add Review
@@ -148,7 +147,7 @@ const ListenerReviewsListingTable = () => {
         className="ProfileData-container profile-right-sub-container"
         style={{ position: "relative" }}
       >
-        <AddPackageButton />
+        {/* <AddPackageButton /> */}
         {data.length > 0 ? (
           <CommonTable
             columns={columns}
@@ -156,6 +155,7 @@ const ListenerReviewsListingTable = () => {
             includeActions={false}
             tableTitle="Review List"
             includeCheckbox={false}
+            AddPackageButton={AddPackageButton}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

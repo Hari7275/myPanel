@@ -67,7 +67,7 @@ const AstroReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          position: "absolute",
+          // position: "absolute",
           top: "125px",
           right: "40px",
           backgroundColor: "#18B164",
@@ -87,8 +87,7 @@ const AstroReviewsListingTable = () => {
       permissions?.["astrologer"]?.includes("create_astrologer_profile_review") && (
 
         <button
-          className="addButton"
-          style={buttonStyle}
+          className="addButton right-addButton"
           onClick={() => toggleAddReviews(coachId)}
         >
           Add Review
@@ -146,7 +145,7 @@ const AstroReviewsListingTable = () => {
         className="ProfileData-container profile-right-sub-container"
         style={{ position: "relative" }}
       >
-        <AddPackageButton />
+        {/* <AddPackageButton /> */}
         {data.length > 0 ? (
           <CommonTable
             columns={columns}
@@ -154,6 +153,7 @@ const AstroReviewsListingTable = () => {
             includeActions={false}
             tableTitle="Review List"
             includeCheckbox={false}
+            AddPackageButton={AddPackageButton}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

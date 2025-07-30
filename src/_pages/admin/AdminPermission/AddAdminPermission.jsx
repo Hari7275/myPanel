@@ -46,7 +46,7 @@ const AddAdminPermission = ({ isOpen, onClose, group_id }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "350px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -59,7 +59,7 @@ const AddAdminPermission = ({ isOpen, onClose, group_id }) => {
           Create Permission
         </h2>
 
-        <form className="simple-form" noValidate autoComplete="off">
+        <form className="simple-form center-form" noValidate autoComplete="off">
           <div style={{ display: "flex" }}>
             <UpdateInputField
               label="Permisssion Name"
@@ -106,21 +106,21 @@ const AddAdminPermission = ({ isOpen, onClose, group_id }) => {
             }}
           >
             <button
-              type="button"
-              className="fifthButton"
-              style={{ marginRight: "10px" }}
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="fifthButton"
-              style={{ backgroundColor: "green" }}
+              style={{ marginRight: "10px", backgroundColor: "green" }}
               onClick={handleSubmit}
               disabled={isUpdating}
             >
               {isUpdating ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              className="fifthButton"
+              style={{ backgroundColor: 'red' }}
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>

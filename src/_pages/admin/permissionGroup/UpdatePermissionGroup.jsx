@@ -63,7 +63,7 @@ const UpdatePermissionGroup = ({ isOpen, onClose, selectedRow }) => {
       overlayClassName="overlay"
       ariaHideApp={false} // avoid accessibility warning
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "350px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -77,10 +77,11 @@ const UpdatePermissionGroup = ({ isOpen, onClose, selectedRow }) => {
         </h2>
 
         <form
-          className="simple-form"
+          className="simple-form center-form"
           noValidate
           autoComplete="off"
           onSubmit={handleSubmit}
+          style={{}}
         >
           <div style={{ display: "flex" }}>
             <UpdateInputField
@@ -95,11 +96,11 @@ const UpdatePermissionGroup = ({ isOpen, onClose, selectedRow }) => {
 
           <label
             htmlFor="description"
-            style={{ width: "100%", marginTop: "20px" }}
+            style={{ width: "300px", marginTop: "20px" }}
           >
             Description:
           </label>
-          <div style={{ width: "100%", marginTop: "4px" }}>
+          <div style={{ width: "300px", marginTop: "4px" }}>
             <textarea
               style={{
                 width: "100%",
@@ -148,20 +149,20 @@ const UpdatePermissionGroup = ({ isOpen, onClose, selectedRow }) => {
             }}
           >
             <button
-              type="button"
-              className="fifthButton"
-              style={{ marginRight: "10px" }}
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="fifthButton"
-              style={{ backgroundColor: "green" }}
+              style={{ marginRight: "10px", backgroundColor: "green" }}
               disabled={isUpdating}
             >
               {isUpdating ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              className="fifthButton"
+              style={{ backgroundColor: 'red' }}
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>

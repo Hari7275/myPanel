@@ -60,7 +60,7 @@ const UpdateAdminRole = ({ isOpen, onClose, selectedRow }) => {
       overlayClassName="overlay"
       ariaHideApp={false} // avoid accessibility warning
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "350px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -74,7 +74,7 @@ const UpdateAdminRole = ({ isOpen, onClose, selectedRow }) => {
         </h2>
 
         <form
-          className="simple-form"
+          className="simple-form center-form"
           noValidate
           autoComplete="off"
           onSubmit={handleSubmit}
@@ -119,20 +119,20 @@ const UpdateAdminRole = ({ isOpen, onClose, selectedRow }) => {
             }}
           >
             <button
-              type="button"
-              className="fifthButton"
-              style={{ marginRight: "10px" }}
-              onClick={onClose}
-            >
-              Cancel
-            </button>
-            <button
               type="submit"
               className="fifthButton"
-              style={{ backgroundColor: "green" }}
+              style={{ marginRight: "10px", backgroundColor: "green" }}
               disabled={isUpdating}
             >
               {isUpdating ? "Saving..." : "Save"}
+            </button>
+            <button
+              type="button"
+              className="fifthButton"
+              style={{ backgroundColor: 'red' }}
+              onClick={onClose}
+            >
+              Cancel
             </button>
           </div>
         </form>
