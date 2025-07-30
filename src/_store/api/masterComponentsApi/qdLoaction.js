@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const qdLoactionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,8 @@ export const qdLoactionApiSlice = apiSlice.injectEndpoints({
         url: `/meta/qd_type/admin/add/trip`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -29,7 +31,8 @@ export const qdLoactionApiSlice = apiSlice.injectEndpoints({
         url: `/meta/qd_type/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -40,7 +43,8 @@ export const qdLoactionApiSlice = apiSlice.injectEndpoints({
         url: `/meta/qd_type/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["loaction"],

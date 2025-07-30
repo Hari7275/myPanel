@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const metaLanguageApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLanguagesList: builder.query({
@@ -18,7 +18,8 @@ export const metaLanguageApiSlice = apiSlice.injectEndpoints({
         url: `/meta/languages/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -30,7 +31,8 @@ export const metaLanguageApiSlice = apiSlice.injectEndpoints({
         url: `/meta/languages/admin/update_language/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -42,7 +44,8 @@ export const metaLanguageApiSlice = apiSlice.injectEndpoints({
         url: `/meta/languages/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["languages"],

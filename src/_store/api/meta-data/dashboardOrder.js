@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardOrderList: builder.query({
@@ -7,7 +7,8 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/dashboard_order/admin/get_all?page=1&size=100`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["dashboard"],
@@ -31,7 +32,8 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/dashboard_order/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -44,7 +46,8 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["dashboard"],
@@ -56,7 +59,8 @@ export const dashboardOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/dashboard_order/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["dashboard"],
