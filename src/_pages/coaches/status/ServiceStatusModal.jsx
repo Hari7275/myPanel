@@ -82,7 +82,7 @@ const ServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
             {loading ? "Processing..." : "Yes"}
           </button>
           <button
-            className="fifthButton"
+            className="fifthButton back-Button"
             style={{}}
             onClick={onClose}
             disabled={loading}

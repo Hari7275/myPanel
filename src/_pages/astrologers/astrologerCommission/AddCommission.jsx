@@ -221,7 +221,7 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
+            justifyContent: "center",
             marginTop: "20px",
           }}
         >

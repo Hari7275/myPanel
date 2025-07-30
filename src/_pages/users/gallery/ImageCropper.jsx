@@ -70,7 +70,7 @@ const ImageCropper = ({
       if (onUpdate) {
         onUpdate({
           id: photoId,
-          url: response.data.url, 
+          url: response.data.url,
         });
       }
 
