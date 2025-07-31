@@ -95,8 +95,7 @@ const CoachSettings = ({
 
           <button
             onClick={handleSave}
-            style={{ width: "35%", marginLeft: "20px" }}
-            className="fifthButton"
+            className="fifthButton save-Button"
           >
             Save
           </button>

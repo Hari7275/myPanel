@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const menuOrderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getmenuOrderList: builder.query({
@@ -28,7 +28,8 @@ export const menuOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/menu_items/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -39,7 +40,8 @@ export const menuOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/menu_items/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],
@@ -52,7 +54,8 @@ export const menuOrderApiSlice = apiSlice.injectEndpoints({
         url: `/meta/menu_items/get_all/0`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["consultant"],

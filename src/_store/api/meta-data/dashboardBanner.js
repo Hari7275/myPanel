@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const dashboardBannerApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getDashboardBannerList: builder.query({
@@ -19,7 +19,8 @@ export const dashboardBannerApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["banner"],
@@ -31,7 +32,8 @@ export const dashboardBannerApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["banner"],
@@ -43,7 +45,8 @@ export const dashboardBannerApiSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["banner"],
@@ -54,7 +57,8 @@ export const dashboardBannerApiSlice = apiSlice.injectEndpoints({
         url: `/meta/dashboard-banner/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["banner"],

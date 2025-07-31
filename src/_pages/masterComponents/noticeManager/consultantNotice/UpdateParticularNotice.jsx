@@ -121,13 +121,21 @@ const UpdateParticularNotice = ({ isOpen, onClose, selectedRow }) => {
       <div style={{ marginTop: "30px", textAlign: "center" }}>
         <button
           className="fifthButton"
-          style={{ backgroundColor: "green" }}
+          style={{ marginRight: '10px', backgroundColor: "green" }}
           onClick={handleSubmit}
-          // disabled={isLoading}
+        // disabled={isLoading}
         >
           Submit
           {/* {isLoading ? "Submitting..." : "Submit"} */}
         </button>
+        <button
+          className="fifthButton"
+          style={{}}
+          onClick={onClose}
+        >
+          Back
+        </button>
+
       </div>
     </ReactModal>
   );

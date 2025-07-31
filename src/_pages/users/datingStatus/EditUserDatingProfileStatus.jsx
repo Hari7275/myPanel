@@ -34,7 +34,7 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       ariaHideApp={false}
     >
-      <div style={{ width: "400px", height: "400px" }}>
+      <div style={{ width: "350px", height: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -54,6 +54,8 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
           style={{
             display: "flex",
             justifyContent: "center",
+            alignItems: 'center'
+
           }}
         >
           <div className="input-container">
@@ -76,7 +78,7 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
               <option value="10">Rejected</option>
               {/* <option value="7">Deleted</option> */}
             </select>
-            <p style={{ marginTop: "40px" }}>Select a status for the User.</p>
+            <p style={{ margin: "20px 20px" }}>Select a status for the User.</p>
           </div>
 
           <div

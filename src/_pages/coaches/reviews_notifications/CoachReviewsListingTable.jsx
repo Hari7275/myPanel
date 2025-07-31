@@ -78,7 +78,7 @@ const CoachReviews = () => {
           right: "40px",
           backgroundColor: "#18B164",
           padding: "6px",
-          // zIndex: "9999",
+          zIndex: "9999",
         }
         : {
           position: "absolute",
@@ -91,10 +91,8 @@ const CoachReviews = () => {
 
     return (
       permissions?.["coach"]?.includes("create_coach_profile_review") && (
-
         <button
-          className="addButton"
-          style={buttonStyle}
+          className="addButton right-addButton"
           onClick={() => toggleAddReviews(coachId)}
         >
           Add Review
@@ -149,7 +147,7 @@ const CoachReviews = () => {
         className="ProfileData-container profile-right-sub-container"
         style={{ position: "relative" }}
       >
-        <AddPackageButton />
+        {/* <AddPackageButton /> */}
         {data.length > 0 ? (
           <CommonTable
             columns={columns}
@@ -157,6 +155,7 @@ const CoachReviews = () => {
             includeActions={false}
             tableTitle="Review List"
             includeCheckbox={false}
+            AddPackageButton={AddPackageButton}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

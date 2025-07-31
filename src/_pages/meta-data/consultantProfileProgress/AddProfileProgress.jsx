@@ -115,17 +115,17 @@ const AddProfileProgress = ({ isOpen, onClose }) => {
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
           >
             Submit
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
       </div>

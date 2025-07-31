@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const fluteMagzineApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getfluteMagzineList: builder.query({
@@ -17,7 +17,8 @@ export const fluteMagzineApiSlice = apiSlice.injectEndpoints({
         url: `/meta/magazine_categories/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -28,7 +29,8 @@ export const fluteMagzineApiSlice = apiSlice.injectEndpoints({
         url: `/meta/magazine_categories/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -39,7 +41,8 @@ export const fluteMagzineApiSlice = apiSlice.injectEndpoints({
         url: `/meta/magazine_categories/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

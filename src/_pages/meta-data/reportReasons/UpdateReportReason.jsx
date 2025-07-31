@@ -53,7 +53,7 @@ const UpdateReportReason = ({ isOpen, onClose, selectedRow }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -65,49 +65,50 @@ const UpdateReportReason = ({ isOpen, onClose, selectedRow }) => {
         >
           Update report reason
         </h2>
-
-        <UpdateInputField
-          label="Report Reason"
-          id="text"
-          name="text"
-          value={formData.text}
-          onChange={handleChange}
-        />
-
-        <div className="input-container">
-          <label htmlFor="gender">Type</label>
-          <select
-            id="type"
-            name="type"
-            value={formData.type}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="Report Reason"
+            id="text"
+            name="text"
+            value={formData.text}
             onChange={handleChange}
-            className="info-input"
-            style={{
-              width: "100%",
-              height: "56px",
-              borderRadius: "inherit",
-            }}
-          >
-            <option value="select">Select</option>
-            <option value="text">Text</option>
-          </select>
+          />
+
+          <div className="input-container">
+            <label htmlFor="gender">Type</label>
+            <select
+              id="type"
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="info-input"
+              style={{
+                width: "100%",
+                height: "56px",
+                borderRadius: "inherit",
+              }}
+            >
+              <option value="select">Select</option>
+              <option value="text">Text</option>
+            </select>
+          </div>
         </div>
 
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSave}
+          // disabled={isUpdating}
           >
-            Back
+            {"Save"}
           </button>
           <button
             className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSave}
-            // disabled={isUpdating}
+            style={{}}
+            onClick={onClose}
           >
-            {"Save"}
+            Back
           </button>
         </div>
       </div>

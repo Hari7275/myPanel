@@ -98,6 +98,12 @@
   gap: 10px;
 }
 
+.center-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .input-container {
   position: relative;
   margin: 8px;

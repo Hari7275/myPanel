@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const coachSkillsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,7 @@ export const coachSkillsApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_skill/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -30,7 +31,8 @@ export const coachSkillsApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_skill/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -42,7 +44,8 @@ export const coachSkillsApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_skill/admin/update-display-order`,
         method: "PATCH",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -54,7 +57,8 @@ export const coachSkillsApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_skill/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

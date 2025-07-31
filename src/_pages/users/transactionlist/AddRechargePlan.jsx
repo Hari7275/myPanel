@@ -125,7 +125,7 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
             {"Submit"}
           </button>
           <button
-            className="fifthButton"
+            className="back-Button fifthButton"
             style={{}}
             onClick={onClose}
           >

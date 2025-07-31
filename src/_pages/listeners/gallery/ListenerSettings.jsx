@@ -95,8 +95,8 @@ const ListenerSettings = ({
 
           <button
             onClick={handleSave}
-            style={{ width: "35%", marginLeft: "20px" }}
-            className="fifthButton"
+            style={{ width: "35%" }}
+            className="fifthButton save-Button"
           >
             Save
           </button>

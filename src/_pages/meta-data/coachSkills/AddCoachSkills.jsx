@@ -24,7 +24,7 @@ const AddCoachSkills = ({ isOpen, onClose }) => {
 
   // get category list
   const Response = data?.map((response) => response);
-  
+
 
   const handleChange = (event) => {
     const { name, value, files } = event.target;
@@ -61,7 +61,7 @@ const AddCoachSkills = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -73,62 +73,63 @@ const AddCoachSkills = ({ isOpen, onClose }) => {
         >
           Add Skills
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div className="input-container">
+            <label htmlFor="type">Category Name</label>
+            <select
+              id=" id"
+              name="id"
+              value={formData.id}
+              onChange={handleChange}
+              className="userProfile-input-field"
+              style={{ height: "55px" }}
+            >
+              <option value="">Select a Category</option>
+              {Response.map((categoryName, index) => (
+                <option key={index} value={categoryName.id}>
+                  {categoryName.category_name}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        <div className="input-container">
-          <label htmlFor="type">Category Name</label>
-          <select
-            id=" id"
-            name="id"
-            value={formData.id}
-            onChange={handleChange}
-            className="userProfile-input-field"
-            style={{ height: "55px" }}
-          >
-            <option value="">Select a Category</option>
-            {Response.map((categoryName, index) => (
-              <option key={index} value={categoryName.id}>
-                {categoryName.category_name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <UpdateInputField
-          label=" Skill Name"
-          type="text"
-          id="skill_name"
-          name="skill_name"
-          placeholder="skill_name"
-          value={formData.skill_name}
-          onChange={handleChange}
-        />
-
-        <div style={{ width: "500px" }}>
           <UpdateInputField
-            label=" Icon"
-            type="file"
-            id="icon"
-            name="icon"
+            label=" Skill Name"
+            type="text"
+            id="skill_name"
+            name="skill_name"
+            placeholder="skill_name"
+            value={formData.skill_name}
             onChange={handleChange}
           />
+
+          <div style={{}}>
+            <UpdateInputField
+              label=" Icon"
+              type="file"
+              id="icon"
+              name="icon"
+              onChange={handleChange}
+            />
+          </div>
         </div>
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSubmit}
+          >
+            {isLoading ? "Submitting..." : "Submit"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
             onClick={onClose}
           >
             Back
           </button>
 
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSubmit}
-          >
-            {isLoading ? "Submitting..." : "Submit"}
-          </button>
         </div>
       </div>
     </ReactModal>

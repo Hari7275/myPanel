@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const promotionalCardApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPromotionalCardList: builder.query({
@@ -17,7 +17,8 @@ export const promotionalCardApiSlice = apiSlice.injectEndpoints({
         url: `/meta/promotional_cards/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body: formData,
       }),
@@ -28,7 +29,8 @@ export const promotionalCardApiSlice = apiSlice.injectEndpoints({
         url: `meta/promotional_cards/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -39,7 +41,8 @@ export const promotionalCardApiSlice = apiSlice.injectEndpoints({
         url: `meta/promotional_cards/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

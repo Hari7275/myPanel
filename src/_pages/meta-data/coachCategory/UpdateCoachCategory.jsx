@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useUpdateCoachCategoryMutation } from "../../../_store/api";
 
@@ -100,7 +100,7 @@ const UpdateCoachCategory = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       aria-labelledby="update-promotional-card-title"
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           id="update-promotional-card-title"
@@ -113,80 +113,82 @@ const UpdateCoachCategory = ({ isOpen, onClose, selectedRow }) => {
         >
           Update coach category
         </h2>
-        <UpdateData
-          label="Id"
-          type="number"
-          id="id"
-          name="id"
-          value={formData.id}
-          onChange={handleChange}
-          readOnly
-        />
-        <UpdateData
-          label="Category Name"
-          type="text"
-          id="category_name"
-          name="category_name"
-          value={formData.category_name}
-          onChange={handleChange}
-        />
-        <UpdateData
-          label="Card Image"
-          type="file"
-          id="image"
-          name="image"
-          onChange={handleChange}
-        />
-        <div className="input-container">
-          <label htmlFor="category_bg_color">Category bg Color</label>
-          <textarea
-            name="category_bg_color"
-            id="category_bg_color"
-            value={JSON.stringify(formData.category_bg_color, null, 2)}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateData
+            label="Id"
+            type="number"
+            id="id"
+            name="id"
+            value={formData.id}
             onChange={handleChange}
-            rows="4"
-            className="info-input"
-          ></textarea>
-        </div>
-        <div className="input-container">
-          <label htmlFor="category_card_bg_color">Category card bg Color</label>
-          <textarea
-            name="category_card_bg_color"
-            id="category_card_bg_color"
-            value={JSON.stringify(formData.category_card_bg_color, null, 2)}
-            onChange={handleChange}
-            rows="4"
-            className="info-input"
+            readOnly
           />
-        </div>
-        <div className="input-container">
-          <label htmlFor="status">Status</label>
-          <select
-            id="status"
-            name="status"
-            value={formData.status}
+          <UpdateData
+            label="Category Name"
+            type="text"
+            id="category_name"
+            name="category_name"
+            value={formData.category_name}
             onChange={handleChange}
-            className="userProfile-input-field"
-          >
-            <option value="active">Active</option>
-            <option value="inactive">Inactive</option>
-          </select>
+          />
+          <UpdateData
+            label="Card Image"
+            type="file"
+            id="image"
+            name="image"
+            onChange={handleChange}
+          />
+          <div className="input-container">
+            <label htmlFor="category_bg_color">Category bg Color</label>
+            <textarea
+              name="category_bg_color"
+              id="category_bg_color"
+              value={JSON.stringify(formData.category_bg_color, null, 2)}
+              onChange={handleChange}
+              rows="4"
+              className="info-input"
+            ></textarea>
+          </div>
+          <div className="input-container">
+            <label htmlFor="category_card_bg_color">Category card bg Color</label>
+            <textarea
+              name="category_card_bg_color"
+              id="category_card_bg_color"
+              value={JSON.stringify(formData.category_card_bg_color, null, 2)}
+              onChange={handleChange}
+              rows="4"
+              className="info-input"
+            />
+          </div>
+          <div className="input-container">
+            <label htmlFor="status">Status</label>
+            <select
+              id="status"
+              name="status"
+              value={formData.status}
+              onChange={handleChange}
+              className="userProfile-input-field"
+            >
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+          </div>
         </div>
-        <div style={{ marginTop: "30px" }}>
+        <div style={{ marginTop: "30px", textAlign: 'center' }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSave}
             disabled={isUpdating}
           >
             {isUpdating ? "Saving..." : "Save"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
           </button>
         </div>
         {error && <p className="error-message">Error: {error?.message}</p>}

@@ -74,11 +74,11 @@ const CommonTable = ({
         ...columns,
         ...(includeActions
           ? [
-              // {
-              //   Header: "Actions",
-              //   Cell: ({ row }) => <Actions actionType={row.values.Button} />,
-              // },
-            ]
+            // {
+            //   Header: "Actions",
+            //   Cell: ({ row }) => <Actions actionType={row.values.Button} />,
+            // },
+          ]
           : []),
       ]);
     }

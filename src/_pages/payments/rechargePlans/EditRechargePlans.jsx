@@ -159,7 +159,7 @@ const EditRechargePlans = ({ isOpen, onClose, selectedRow }) => {
               </select>
             </div>
 
-            <div style={{ marginTop: "20px" }}>
+            <div style={{ marginTop: "20px", display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
               <button
                 type="submit"
                 className="fifthButton"

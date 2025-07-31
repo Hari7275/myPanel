@@ -117,12 +117,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
     >
       <div style={{ width: "500px" }}>
         <h2
-          className="sub-heading"
-          style={{
-            marginBottom: "20px",
-            display: "block",
-            backgroundColor: "#f0f0f0",
-          }}
+          className=" top-main-heading"
         >
           Update User Info
         </h2>
@@ -255,7 +250,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             }
           />
 
-          <div style={{ marginTop: "20px", textAlign: "right" }}>
+          <div style={{ marginTop: "20px", textAlign: 'center' }}>
             <button
               type="submit"
               className="fifthButton"

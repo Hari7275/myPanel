@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const reportReasonApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getReportReasonList: builder.query({
@@ -17,7 +17,8 @@ export const reportReasonApiSlice = apiSlice.injectEndpoints({
         url: `/meta/report_reason/admin/add_reason`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -28,7 +29,8 @@ export const reportReasonApiSlice = apiSlice.injectEndpoints({
         url: `meta/report_reason/admin/update_reason/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -39,7 +41,8 @@ export const reportReasonApiSlice = apiSlice.injectEndpoints({
         url: `/meta/report_reason/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

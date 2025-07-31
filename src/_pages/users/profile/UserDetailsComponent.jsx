@@ -50,7 +50,8 @@ const UserDetailsComponent = () => {
 
   return (
     // MAIN ROW/ CONTAINER ROW
-    <div className="user-details-container">
+    <div className="user-details-container" style={{ position: "relative" }}>
+
       <div className="backButton" onClick={handleProfileClose}>
         <img
           src="/backbutton.png"

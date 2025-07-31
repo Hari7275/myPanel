@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const serviceRateApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getServiceRateList: builder.query({
@@ -7,7 +7,8 @@ export const serviceRateApiSlice = apiSlice.injectEndpoints({
         url: `meta/consultant_service_rate/admin/all?page=1&limit=10`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["consultant"],
@@ -18,7 +19,8 @@ export const serviceRateApiSlice = apiSlice.injectEndpoints({
         url: `meta/consultant_service_rate/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -30,7 +32,8 @@ export const serviceRateApiSlice = apiSlice.injectEndpoints({
         url: `meta/consultant_service_rate/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -42,7 +45,8 @@ export const serviceRateApiSlice = apiSlice.injectEndpoints({
         url: `meta/consultant_service_rate/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

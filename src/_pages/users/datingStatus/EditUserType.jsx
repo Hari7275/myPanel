@@ -45,7 +45,7 @@ const EditUserType = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       ariaHideApp={false}
     >
-      <div style={{ width: "400px", height: "400px" }}>
+      <div style={{ width: "350px", height: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -65,6 +65,7 @@ const EditUserType = ({ isOpen, onClose, selectedRow }) => {
           style={{
             display: "flex",
             justifyContent: "center",
+            alignItems: 'center'
           }}
         >
           <div className="input-container">
@@ -81,7 +82,7 @@ const EditUserType = ({ isOpen, onClose, selectedRow }) => {
               <option value={0}>External</option>
               <option value={1}>Internal</option>
             </select>
-            <p style={{ marginTop: "40px" }}>Select a User Type.</p>
+            <p style={{ margin: "20px 20px" }}>Select a User Type.</p>
           </div>
 
           <div

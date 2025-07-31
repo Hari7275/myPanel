@@ -70,13 +70,7 @@ const CommissionList = () => {
     return (
       hasEditPermission && (
         <button
-          className="addButton"
-          style={{
-            position: "absolute",
-            right: "20px",
-            backgroundColor: "#18B164",
-            padding: "6px",
-          }}
+          className="addButton right-addButton"
           onClick={toggleAddData}
         >
           Update Commission

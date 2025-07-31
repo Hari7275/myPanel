@@ -81,59 +81,61 @@ const AddMenuOrder = ({ isOpen, onClose }) => {
         >
           Add Menu Item
         </h2>
-        <UpdateInputField
-          label="Parent Id"
-          type="number"
-          id="parent_id"
-          name="parent_id"
-          placeholder="Parent Id"
-          value={formData.parent_id}
-          onChange={handleChange}
-        />
-        <UpdateInputField
-          label="Menu Title"
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Item Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
-        <UpdateInputField
-          label="Menu Navigate"
-          type="text"
-          id="navigate"
-          name="navigate"
-          placeholder="Navigate"
-          value={formData.navigate} // Corrected value
-          onChange={handleChange}
-        />
-        <UpdateInputField
-          label="Icon"
-          type="file"
-          id="icon"
-          name="icon"
-          onChange={handleChange}
-        />
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="Parent Id"
+            type="number"
+            id="parent_id"
+            name="parent_id"
+            placeholder="Parent Id"
+            value={formData.parent_id}
+            onChange={handleChange}
+          />
+          <UpdateInputField
+            label="Menu Title"
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Item Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <UpdateInputField
+            label="Menu Navigate"
+            type="text"
+            id="navigate"
+            name="navigate"
+            placeholder="Navigate"
+            value={formData.navigate} // Corrected value
+            onChange={handleChange}
+          />
+          <UpdateInputField
+            label="Icon"
+            type="file"
+            id="icon"
+            name="icon"
+            onChange={handleChange}
+          />
+        </div>
         {error && <p style={{ color: "red" }}>{error}</p>}{" "}
         {/* Display error if any */}
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
-            onClick={onClose}
-          >
-            Back
-          </button>
-
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
+          <button
+            className="fifthButton"
+            style={{}}
+            onClick={onClose}
+          >
+            Back
+          </button>
+
         </div>
       </div>
     </ReactModal>

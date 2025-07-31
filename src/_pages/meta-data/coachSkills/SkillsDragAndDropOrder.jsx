@@ -156,6 +156,13 @@ const SkillsDragAndDropOrder = ({
         >
           {"Save Order"}
         </button>
+        <button
+          className="fifthButton"
+          style={{ marginLeft: '10px' }}
+          onClick={onClose}
+        >
+          Back
+        </button>
       </div>
     </ReactModal>
   );

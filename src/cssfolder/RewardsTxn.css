@@ -67,3 +67,12 @@
   color: #667187;
   font-weight: 600;
 }
+
+.top-main-heading {
+  margin-bottom: 20px !important;
+  display: block;
+  background-color: #f0f0f0 !important;
+  text-align: center !important;
+  color: #667187 !important;
+  font-weight: 600 !important;
+}

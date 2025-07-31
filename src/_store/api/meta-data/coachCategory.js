@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const coachCategoryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,8 @@ export const coachCategoryApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_categories/admin/add`,
         method: "POST",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body: formData,
       }),
@@ -30,7 +32,8 @@ export const coachCategoryApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_categories/admin/update/${id}`,
         method: "PUT",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),
@@ -42,7 +45,8 @@ export const coachCategoryApiSlice = apiSlice.injectEndpoints({
         url: `/meta/coach_categories/admin/delete/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["consultant"],

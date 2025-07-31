@@ -71,7 +71,7 @@ const AddDashboardOrder = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <div style={{ width: "500px" }}>
+      <div style={{ width: "400px" }}>
         <h2
           className="sub-heading"
           style={{
@@ -83,81 +83,82 @@ const AddDashboardOrder = ({ isOpen, onClose }) => {
         >
           Add dashboard order list
         </h2>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <UpdateInputField
+            label="Content Type"
+            type="text"
+            id="content_type"
+            name="content_type"
+            placeholder="Content Type"
+            value={formData.content_type}
+            onChange={handleChange}
+          />
+          <div style={{}}>
+            <label htmlFor="category_ids" style={{ paddingLeft: '10px' }}>Category Name</label>
+            <Select
+              id="category_ids"
+              name="category_ids"
+              className="input-container"
+              isMulti
+              options={Response}
+              value={Response.filter((option) =>
+                formData.category_ids.includes(option.value)
+              )}
+              onChange={handleSelectChange}
+            />
+          </div>
 
-        <UpdateInputField
-          label="Content Type"
-          type="text"
-          id="content_type"
-          name="content_type"
-          placeholder="Content Type"
-          value={formData.content_type}
-          onChange={handleChange}
-        />
-        <div className="input-containe">
-          <label htmlFor="category_ids">Category Name</label>
-          <Select
-            id="category_ids"
-            name="category_ids"
-            isMulti
-            options={Response}
-            value={Response.filter((option) =>
-              formData.category_ids.includes(option.value)
-            )}
-            onChange={handleSelectChange}
+          <div className="input-container">
+            <label htmlFor="consultant_type">Consultant Type</label>
+            <select
+              id="consultant_type"
+              name="consultant_type"
+              value={formData.consultant_type}
+              onChange={handleChange}
+              className="userProfile-input-field"
+              style={{ height: "55px" }}
+            >
+              <option value="">Select a Consultant Type</option>
+              <option value={1}>Astrologer</option>
+              <option value={2}>Coach</option>
+              <option value={3}>Listener</option>
+            </select>
+          </div>
+          <UpdateInputField
+            label="Title"
+            type="text"
+            id="title"
+            name="title"
+            placeholder="Title"
+            value={formData.title}
+            onChange={handleChange}
+          />
+          <UpdateInputField
+            label="Display Order"
+            type="text"
+            id="display_order"
+            name="display_order"
+            placeholder="Display Order"
+            value={formData.display_order}
+            onChange={handleChange}
           />
         </div>
-
-        <div className="input-container">
-          <label htmlFor="consultant_type">Consultant Type</label>
-          <select
-            id="consultant_type"
-            name="consultant_type"
-            value={formData.consultant_type}
-            onChange={handleChange}
-            className="userProfile-input-field"
-            style={{ height: "55px" }}
-          >
-            <option value="">Select a Consultant Type</option>
-            <option value={1}>Astrologer</option>
-            <option value={2}>Coach</option>
-            <option value={3}>Listener</option>
-          </select>
-        </div>
-        <UpdateInputField
-          label="Title"
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-        />
-        <UpdateInputField
-          label="Display Order"
-          type="text"
-          id="display_order"
-          name="display_order"
-          placeholder="Display Order"
-          value={formData.display_order}
-          onChange={handleChange}
-        />
-
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"
-            style={{ marginRight: "10px" }}
+            style={{ marginRight: "10px", backgroundColor: "green" }}
+            onClick={handleSubmit}
+          >
+            {isLoading ? "Submitting..." : "Submit"}
+          </button>
+          <button
+            className="fifthButton"
+            style={{}}
             onClick={onClose}
           >
             Back
           </button>
 
-          <button
-            className="fifthButton"
-            style={{ backgroundColor: "green" }}
-            onClick={handleSubmit}
-          >
-            {isLoading ? "Submitting..." : "Submit"}
-          </button>
         </div>
       </div>
     </ReactModal>
