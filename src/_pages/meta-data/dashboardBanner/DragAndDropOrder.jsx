@@ -142,8 +142,6 @@ const DragAndDropOrder = ({
           </Droppable>
         </DragDropContext>
       </div>
-<<<<<<< HEAD
-
       {selectedRow.length > 1 && (
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
@@ -156,26 +154,6 @@ const DragAndDropOrder = ({
           </button>
         </div>
       )}
-=======
-      <div style={{ textAlign: "center" }}>
-        <button
-          className="fifthButton"
-          style={{ margin: "10px", backgroundColor: "green" }}
-          onClick={() => onSubmit(dragItems)}
-        // disabled={isLoading}
-        >
-          {"Submit"}
-        </button>
-        <button
-          className="fifthButton"
-          style={{}}
-          onClick={onClose}
-        >
-          Back
-        </button>
-
-      </div>
->>>>>>> 973a96e6879531d45eb8c4e8d1a5655afcb8beee
     </ReactModal>
   );
 };
