@@ -1,22 +1,31 @@
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { format } from "date-fns";
 import { Switch } from "@mui/material";
 import ReactModal from "react-modal";
 import { useUpdateCoachSkillsMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.status);
   const [updateStatus, { isLoading }] = useUpdateCoachSkillsMutation();
-
+  const [ category_id ]= useState(row?.original?.category_id)
+ 
   const handleToggle = async () => {
     const newStatus = status === "active" ? "inactive" : "active";
     setStatus(newStatus);
 
     try {
-      await updateStatus({
+      const response = await updateStatus({
         id: row.original.id,
-        body: { status: newStatus },
+        body: { status: newStatus , category_id },
       });
+ 
+      if(response?.data?.status){
+        toast.success(response?.data?.message)
+      }
+      else{
+        toast.error(response?.data?.message)
+      }
     } catch (error) {
       console.error("Failed to update status", error);
       setStatus(status);

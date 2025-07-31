@@ -82,4 +82,15 @@ export const COLUMNS = (toggleModal) => [
     accessor: "profile_status",
     Cell: StatusCell,
   },
+  {
+    Header: "Last Modified",
+    accessor: "last_active",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
 ];
