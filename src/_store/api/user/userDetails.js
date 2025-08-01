@@ -1,4 +1,6 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
+
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -35,6 +37,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
         headers: {
           Authorization: "Bearer admin_token",
         },
+
+      
       }),
       invalidatesTags: ["user"],
     }),
@@ -48,6 +52,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
         // headers: {
         //   Authorization: "Bearer admin_token",
         // },
+        
       }),
       invalidatesTags: ["user"],
     }),
