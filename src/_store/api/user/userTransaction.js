@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const userTransactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +17,9 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
       query: ({ body }) => ({
         url: `user/profile/user-wallet-transactions`,
         method: "POST",
+        headers: {
+          Authorization: getAdminToken(),
+        },
         body,
       }),
       invalidatesTags: ["transactions"],

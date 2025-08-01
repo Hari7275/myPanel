@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const blacklistedApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -18,7 +19,8 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer internal_token",
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["blacklisted"],
@@ -42,7 +44,8 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/delete-user-avoid-list/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer internal_token",
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["avoided"],
@@ -55,7 +58,8 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/admin/users-blacklist/reported/${userId}?page=1&limit=10`,
         method: "GET",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       providesTags: ["reported"],
@@ -66,7 +70,8 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer internal_token",
+          // Authorization: "Bearer internal_token", 
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["reported"],
@@ -90,7 +95,8 @@ export const blacklistedApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/users-removefrom-blacklist/${id}`,
         method: "DELETE",
         headers: {
-          Authorization: "Bearer internal_token",
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["hidden"],

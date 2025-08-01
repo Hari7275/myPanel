@@ -1,4 +1,5 @@
 import apiSlice from "../api";
+import { getAdminToken } from "../tokenHelper";
 
 export const userListingSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -22,6 +23,9 @@ export const userListingSlice = apiSlice.injectEndpoints({
         url: `user/profile/update-user-status/${user_id}/${id}`,
         // url: `api/v1/user/auth/update-status/${user_id}}`,
         method: "PUT",
+        headers: {
+          Authorization: getAdminToken(),
+        },
         body,
       }),
       invalidatesTags: ["user"],
@@ -42,7 +46,7 @@ export const userListingSlice = apiSlice.injectEndpoints({
         method: "PATCH",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["user"],

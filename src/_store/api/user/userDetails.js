@@ -35,10 +35,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
 
-      
+
       }),
       invalidatesTags: ["user"],
     }),
@@ -49,10 +50,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/update-user-interests?requestType=admin`,
         method: "PUT",
         body,
-        // headers: {
-        //   Authorization: "Bearer admin_token",
-        // },
-        
+        headers: {
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
+        },
+
       }),
       invalidatesTags: ["user"],
     }),
@@ -61,11 +63,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     getNotification: builder.query({
       query: ({ page, size, sender_id }) => ({
-        url: `notification/1?page=${page}&size=${size}&user_type=admin${
-          sender_id !== undefined && sender_id !== null
-            ? `&sender_id=${sender_id}`
-            : ""
-        }`,
+        url: `notification/1?page=${page}&size=${size}&user_type=admin${sender_id !== undefined && sender_id !== null
+          ? `&sender_id=${sender_id}`
+          : ""
+          }`,
         method: "GET",
       }),
       providesTags: ["user"],

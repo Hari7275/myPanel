@@ -9,7 +9,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         url: `/user/profile/update-image`,
         method: "POST",
         body: formData,
-         headers: {
+        headers: {
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
         },
@@ -36,7 +36,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         url: `/user/profile/update-image-status/${id}`,
         method: "PUT",
         body,
-          headers: {
+        headers: {
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
         },
@@ -70,7 +70,8 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["user"],
@@ -80,7 +81,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `/user/profile/delete-profile-image/${id}`,
         method: "DELETE",
-          headers: {
+        headers: {
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
         },

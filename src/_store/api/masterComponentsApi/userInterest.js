@@ -1,5 +1,5 @@
 import apiSlice from "../api";
-
+import { getAdminToken } from "../tokenHelper";
 export const userInterestApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // get intrest data
@@ -51,6 +51,10 @@ export const userInterestApiSlice = apiSlice.injectEndpoints({
       query: ({ body }) => ({
         url: `/user/profile/admin/add-interest`,
         method: "POST",
+        headers: {
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
+        },
         body,
       }),
       invalidatesTags: ["interest"],
@@ -62,6 +66,10 @@ export const userInterestApiSlice = apiSlice.injectEndpoints({
       query: ({ id, body }) => ({
         url: `/user/profile/admin/update-interest`,
         method: "PUT",
+        headers: {
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
+        },
         body,
       }),
       invalidatesTags: ["interest"],
@@ -72,6 +80,10 @@ export const userInterestApiSlice = apiSlice.injectEndpoints({
       query: ({ id }) => ({
         url: `/user/profile/admin/delete-interest/${id}`,
         method: "DELETE",
+        headers: {
+          // Authorization: "Bearer internal_token",
+          Authorization: getAdminToken(),
+        },
       }),
       invalidatesTags: ["interest"],
     }),
