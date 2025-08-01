@@ -83,7 +83,7 @@ export const COLUMNS = (toggleModal) => [
     Cell: StatusCell,
   },
   {
-    Header: "Last Modified",
+    Header: "Created Date",
     accessor: "last_active",
     Cell: ({ value }) => {
       const date = new Date(value);
