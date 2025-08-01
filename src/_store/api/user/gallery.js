@@ -9,6 +9,10 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         url: `/user/profile/update-image`,
         method: "POST",
         body: formData,
+         headers: {
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
+        },
       }),
       invalidatesTags: ["user"],
     }),
