@@ -15,7 +15,7 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
     // ********************** Add user wallet Balance *********************************
     createUserRecharge: builder.mutation({
       query: ({ body }) => ({
-        url: `user/profile/user-wallet-transactions`,
+        url: `user/profile/admin/user-wallet-transactions`,
         method: "POST",
         headers: {
           Authorization: getAdminToken(),
