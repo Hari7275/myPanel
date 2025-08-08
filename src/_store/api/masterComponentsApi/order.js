@@ -47,6 +47,20 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["blogCount"],
     }),
+
+    // get particular subscription details
+    // user All Subscription List
+    getSingleSubscriptionDetails: builder.query({
+      query: ({ id }) => ({
+        // user/profile/admin/all-subscriptions?page=1&limit=10
+        url: `api/v1/user/payment/subscription/${id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer internal_token",
+        },
+      }),
+      providesTags: ["blogCount"],
+    }),
   }),
 });
 
@@ -55,4 +69,5 @@ export const {
   useGetBlogCountListQuery,
   useGetUserRechargeListQuery,
   useGetUserAllSubscriptionListQuery,
+  useGetSingleSubscriptionDetailsQuery,
 } = orderApiSlice;

@@ -13,6 +13,7 @@ const UserSubscriptionLists = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const [showSubscriptionDetails, setShowSubscriptionDetails] = useState(false);
 
@@ -27,7 +28,8 @@ const UserSubscriptionLists = () => {
 
   // const columns = useMemo(() => COLUMNSUBSCRIPTION, []);
 
-  const handleSubscriptionDetails = () => {
+  const handleSubscriptionDetails = (item) => {
+    setSelectedRow(item);
     setShowSubscriptionDetails(!showSubscriptionDetails);
   };
 
@@ -47,7 +49,9 @@ const UserSubscriptionLists = () => {
                 height: "35px",
                 width: "35px",
               }}
-              // onClick={() => handleSubscriptionDetails(row.original.id)}
+              onClick={() =>
+                handleSubscriptionDetails(row?.original?.subscription_plan_id)
+              }
             >
               <ArrowRight className="iconSmall" />
             </span>
@@ -95,13 +99,13 @@ const UserSubscriptionLists = () => {
         showTableHeading={false}
       />
 
-      {/* {showEditUserType && (
-        <EditUserType
-          isOpen={showEditUserType}
-          onClose={toggleEditUserType}
+      {showSubscriptionDetails && (
+        <SubscriptionDetails
+          isOpen={showSubscriptionDetails}
+          onClose={handleSubscriptionDetails}
           selectedRow={selectedRow}
         />
-      )} */}
+      )}
     </div>
   );
 };
