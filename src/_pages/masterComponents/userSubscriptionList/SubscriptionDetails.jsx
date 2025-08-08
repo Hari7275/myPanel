@@ -61,7 +61,7 @@ const SubscriptionDetails = ({ isOpen, onClose, selectedRow }) => {
         <div className="line"></div>
         <InfoItem
           label="Validity Period"
-          value={data?.validity_period || "N/A"}
+          value={` ${data?.validity_period || "N/A"} hours`}
         />
         <div className="line"></div>
         <InfoItem label="Description" value={data?.description || "N/A"} />
@@ -70,6 +70,7 @@ const SubscriptionDetails = ({ isOpen, onClose, selectedRow }) => {
           label="Device Type"
           value={data?.device_type == 1 ? "Andriod" : "IOS" || "N/A"}
         />
+        <InfoItem label="Status" value={data?.status || "N/A"} />
         <div className="line"></div>
       </div>
     </ReactModal>

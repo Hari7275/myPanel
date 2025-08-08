@@ -3,8 +3,8 @@ import apiSlice from "../api";
 export const subscriptionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getSubscriptionList: builder.query({
-      query: () => ({
-        url: `api/v1/user/payment/subscription/admin`,
+      query: ({ page, size }) => ({
+        url: `api/v1/user/payment/subscription/admin?page=${page}&size=${size}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

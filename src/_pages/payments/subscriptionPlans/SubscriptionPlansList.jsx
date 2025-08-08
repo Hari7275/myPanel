@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { SUBSCRIPTIONPLANCOLUMN } from "./subscriptionPlansColumn";
 import { Info, Pencil, Trash } from "lucide-react";
 import PackageDescription from "./PackageDescription";
@@ -18,9 +19,15 @@ const SubscriptionPlanList = () => {
   const [showPlanUpdate, setShowPlanUpdate] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching subscription plans data using RTK Query.
-  const { data: fetchData } = useGetSubscriptionListQuery();
+  const { data: fetchData } = useGetSubscriptionListQuery({
+    page,
+    size: pageSize,
+  });
 
   const result = useMemo(() => fetchData?.data || [], [fetchData]);
 
@@ -114,14 +121,34 @@ const SubscriptionPlanList = () => {
     []
   );
 
+  const totalPage = fetchData?.meta?.total_page || 1;
+  // ? Math.ceil(fetchData.data.totalRecords / pageSize)
+  // : 1;
+
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={result}
         includeActions={false}
         tableTitle="Subscription Plan"
         AddPackageButton={AddPackageButton}
+        showTableHeading={false}
+      /> */}
+
+      <DyCommonTable
+        columns={columns}
+        data={result}
+        includeActions={false}
+        tableTitle="Subscription Plan"
+        AddPackageButton={AddPackageButton}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        includeCheckbox={false}
         showTableHeading={false}
       />
 
