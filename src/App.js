@@ -20,6 +20,8 @@ import ListenersListingTable from "./_pages/listeners/list/ListenersListingTable
 import AstrologerListingTable from "./_pages/astrologers/list/AstrologerListingTable";
 import SubscriptionComponent from "./components/SubscriptionComponent";
 import OrderLists from "./_pages/masterComponents/order/OrderLists";
+import UserRechargeLists from "./_pages/masterComponents/userRechargeList/UserRechargeLists";
+import UserSubscriptionLists from "./_pages/masterComponents/userSubscriptionList/UserSubscriptionLists";
 import GiftLists from "./_pages/masterComponents/gifts/GiftLists";
 import CoachProfile from "./_pages/coaches/profile/CoachProfile";
 import UsersProfile from "./_pages/users/profile/UsersProfile";
@@ -152,6 +154,8 @@ const Layout = () => (
           <Route path="astrologer" element={<AstrologerListingTable />} />
 
           <Route path="subs-package" element={<SubscriptionComponent />} />
+          <Route path="user-recharge" element={<UserRechargeLists />} />
+          <Route path="user-subscription" element={<UserSubscriptionLists />} />
           <Route path="order" element={<OrderLists />} />
           <Route path="gift" element={<GiftLists />} />
 
@@ -279,8 +283,8 @@ function App() {
         element={
           <PrivateRoute
             element={<Layout />}
-          // isAuthenticated={isAuthenticated}
-          // requiredPermissions={["access_admin_panel"]}
+            // isAuthenticated={isAuthenticated}
+            // requiredPermissions={["access_admin_panel"]}
           />
         }
       />

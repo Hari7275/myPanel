@@ -216,6 +216,31 @@ const Sidebar = () => {
           </div>
 
           <div className="menu-group">
+            {/* user recaharge list */}
+            <Link to="/user-recharge">
+              <div
+                className={`menu-item ${
+                  activeItem === "user-recharge" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("user-recharge")}
+              >
+                <CardGiftcardOutlinedIcon />
+                <span>User Recharge List</span>
+              </div>
+            </Link>
+
+            {/* user subscription  list  */}
+            <Link to="/user-subscription">
+              <div
+                className={`menu-item ${
+                  activeItem === "user-subscription" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("user-subscription")}
+              >
+                <CardGiftcardOutlinedIcon />
+                <span>User Subscription List</span>
+              </div>
+            </Link>
             <Link to="/order">
               <div
                 className={`menu-item ${

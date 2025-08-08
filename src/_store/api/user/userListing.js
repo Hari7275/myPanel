@@ -24,7 +24,8 @@ export const userListingSlice = apiSlice.injectEndpoints({
         // url: `api/v1/user/auth/update-status/${user_id}}`,
         method: "PUT",
         headers: {
-          Authorization: getAdminToken(),
+          // Authorization: getAdminToken(),
+          Authorization: "Bearer admin_token",
         },
         body,
       }),
@@ -47,6 +48,7 @@ export const userListingSlice = apiSlice.injectEndpoints({
         body,
         headers: {
           Authorization: getAdminToken(),
+          // Authorization: "Bearer admin_token",
         },
       }),
       invalidatesTags: ["user"],

@@ -1,7 +1,6 @@
 import apiSlice from "../api";
 import { getAdminToken } from "../tokenHelper";
 
-
 export const userGalleryApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     updateUserGallery: builder.mutation({
@@ -26,7 +25,6 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
         },
-
       }),
       invalidatesTags: ["user"],
     }),
@@ -70,8 +68,8 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body,
         headers: {
-          // Authorization: "Bearer admin_token",
-          Authorization: getAdminToken(),
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
         },
       }),
       invalidatesTags: ["user"],

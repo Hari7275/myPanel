@@ -22,21 +22,24 @@ const UserSubscription = () => {
 
   // Extract subscription ID once user data is fetched
 
-  useEffect(() => {
-    if (userData?.data?.subscription) {
-      setSubscriptionId(userData?.data?.subscription?.id);
-    } else {
-      setSubscriptionId(null);
-    }
-  }, [userData]);
+  // useEffect(() => {
+  //   console.log("userData?.data?.subscription", userData?.data);
+  //   if (userData?.data?.subscription) {
+  //     setSubscriptionId(userData?.data?.subscription?.id);
+  //   } else {
+  //     setSubscriptionId(null);
+  //   }
+  // }, [userData]);
 
   // Fetch subscription details using the subscription ID
   const {
     data: fetchData,
     error,
     isLoading: isSubscriptionLoading,
-  } = useGetUserSubscriptionListQuery(subscriptionId, {
-    skip: !subscriptionId,
+    // } = useGetUserSubscriptionListQuery(subscriptionId, {
+  } = useGetUserSubscriptionListQuery(userId, {
+    // skip: !subscriptionId,
+    skip: !userId,
   });
 
   // Update data for the table
