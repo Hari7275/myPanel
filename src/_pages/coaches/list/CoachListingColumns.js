@@ -106,6 +106,18 @@ export const COACHES_COLUMNS = [
     accessor: "status",
     Cell: StatusCell,
   },
+
+  {
+    Header: "Created Date",
+    accessor: "created_at",
+    Cell: ({ value }) => {
+      const date = new Date(value) || "Aug 9, 2025, 2:12 AM";
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
   {
     Header: "Last Modified",
     accessor: "updated_at",

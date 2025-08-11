@@ -1,12 +1,24 @@
 import { useEffect, useState } from "react";
 import { useGetSubscriptionListQuery } from "../../../_store/api";
-
-const CustomIdCell = ({ value }) => {
-  return <span className="orderId-color">{value}</span>;
-};
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../../_store/slices/userSlice";
 
 const OrderIdCell = ({ value }) => {
   return <span className="custumerId-color">{value}</span>;
+};
+
+const CustomIdCell = ({ value }) => {
+  const dispatch = useDispatch();
+
+  const handleUserClick = () => {
+    dispatch(setCurrentUser(value));
+  };
+  return (
+    <Link to="/users_profile" onClick={handleUserClick}>
+      <span className="orderId-color">{value}</span>
+    </Link>
+  );
 };
 
 export const COLUMNSUBSCRIPTION = [
