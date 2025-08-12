@@ -26,7 +26,8 @@ export const consultantsIncome = apiSlice.injectEndpoints({
 
     getFluteIncomeByUsers: builder.query({
       query: () => ({
-        url: `user/qd/flute-income-from-qd`,
+        // url: `user/qd/flute-income-from-qd`,
+        url: `user/profile/qd/flute-income-from-qd`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -37,7 +38,8 @@ export const consultantsIncome = apiSlice.injectEndpoints({
 
     getFluteRefundToUser: builder.query({
       query: () => ({
-        url: `user/qd/flute-refund-to-user`,
+        // url: `user/qd/flute-refund-to-user`,
+        url: `user/profile/qd/flute-refund-to-user`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -48,7 +50,8 @@ export const consultantsIncome = apiSlice.injectEndpoints({
 
     getConsultantIncome: builder.query({
       query: () => ({
-        url: `/api/v1/consultant/payment/admin/total-consultants-income`,
+        // url: `/api/v1/consultant/payment/admin/total-consultants-income`,
+        url: `/api/v1/consultant/management/order/admin/total-consultants-income`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -88,5 +91,5 @@ export const {
   useGetFluteRefundToUserQuery,
   useGetConsultantIncomeQuery,
   useGetConsultantPayoutAmountQuery,
-  useGetFluteRefferalAmountQuery
+  useGetFluteRefferalAmountQuery,
 } = consultantsIncome;

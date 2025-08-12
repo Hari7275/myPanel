@@ -105,8 +105,8 @@ export const LISTENERSCOLUMNS = [
     accessor: "status",
     Cell: StatusCell,
   },
-   {
-    Header: "Created Date",
+  {
+    Header: "Applied On",
     accessor: "created_at",
     Cell: ({ value }) => {
       const date = new Date(value) || "Aug 9, 2025, 2:12 AM";

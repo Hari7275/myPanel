@@ -16,7 +16,7 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
 
     getConsultantAssignedNoticeList: builder.query({
       query: () => ({
-        url: `/api/v1/consultant/profile/admin/notices/assign-list?page=1&size=10`,
+        url: `/api/v1/consultant/profile/admin/notices/assign-list?page=1&size=100`,
         method: "GET",
         headers: {
           Authorization: getAdminToken(),
@@ -36,9 +36,6 @@ export const noticeApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["notice"],
     }),
-
-
-
 
     getConsultantList: builder.query({
       query: ({ type }) => ({
