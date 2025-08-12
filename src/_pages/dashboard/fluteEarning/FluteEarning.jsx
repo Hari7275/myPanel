@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CategoryCard } from "../DashboardSubPage";
 import {
   useGetConsultantIncomeQuery,
+  useGetConsultantIncomeBySessionQuery,
   useGetFluteIncomeQuery,
   useGetFluteIncomeByConsultantsQuery,
   useGetFluteIncomeByUsersQuery,
@@ -13,6 +14,7 @@ import { Atom } from "react-loading-indicators";
 
 const FluteEarning = () => {
   const [consultantEarning, setConsultantEarning] = useState([]);
+  const [consultantEarningSession, setConsultantEarningSession] = useState([]);
   const [fluteEarning, setFluteEarning] = useState([]);
   const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
   const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
@@ -20,6 +22,7 @@ const FluteEarning = () => {
   const [consltPayoutIncome, setConsltPayoutIncome] = useState([]);
   const [fluteRefAmt, setFluteRefAmt] = useState([]);
   const { data: fetchData } = useGetConsultantIncomeQuery();
+  const { data: SessionIncom } = useGetConsultantIncomeBySessionQuery();
   const { data: fluteIncome, isLoading } = useGetFluteIncomeQuery();
   const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery();
   const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery();
@@ -30,6 +33,9 @@ const FluteEarning = () => {
   useEffect(() => {
     if (fetchData && fetchData?.data) {
       setConsultantEarning(fetchData?.data);
+    }
+    if (SessionIncom && SessionIncom?.data) {
+      setConsultantEarningSession(SessionIncom?.data);
     }
     if (fluteIncome && fluteIncome?.data) {
       setFluteEarning(fluteIncome?.data);
@@ -125,9 +131,23 @@ const FluteEarning = () => {
       </div>
 
       <div className=" dashboard-main-card ">
-        <h2 className="dashboard-heading">Consultant Income</h2>
+        <h2 className="dashboard-heading">Consultant Income by Order</h2>
         <div className="dashboard-grid">
           {consultantEarning.map((item) => (
+            <CategoryCard
+              key={item.title}
+              label={item.name}
+              price={item.value}
+              bgcolor={item.color}
+            />
+          ))}
+        </div>
+      </div>
+
+      <div className=" dashboard-main-card ">
+        <h2 className="dashboard-heading">Consultant Income by session</h2>
+        <div className="dashboard-grid">
+          {consultantEarningSession.map((item) => (
             <CategoryCard
               key={item.title}
               label={item.name}

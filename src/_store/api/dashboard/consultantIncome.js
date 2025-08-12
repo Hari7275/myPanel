@@ -60,6 +60,18 @@ export const consultantsIncome = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
+    getConsultantIncomeBySession: builder.query({
+      query: () => ({
+        // url: `/api/v1/consultant/payment/admin/total-consultants-income`,
+        url: `/api/v1/consultant/management/session/admin/session-consultants-income`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
     getConsultantPayoutAmount: builder.query({
       query: () => ({
         url: `/api/v1/consultant/payment/payout/admin/total-consultants-payout`,
@@ -81,6 +93,21 @@ export const consultantsIncome = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+
+    // user overview 
+
+
+     getFluteUserOverview: builder.query({
+      query: () => ({
+        url: `user/profile/admin//user-overview`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -90,6 +117,9 @@ export const {
   useGetFluteIncomeByUsersQuery,
   useGetFluteRefundToUserQuery,
   useGetConsultantIncomeQuery,
+  useGetConsultantIncomeBySessionQuery,
   useGetConsultantPayoutAmountQuery,
   useGetFluteRefferalAmountQuery,
+
+  useGetFluteUserOverviewQuery
 } = consultantsIncome;

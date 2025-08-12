@@ -1,275 +1,273 @@
 .dashboard-card-container-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    /* padding: 40px 0px; */
-    height: 300px;
-    /* border: 1px solid blue; */
-    /* margin-top: 40px; */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  /* padding: 40px 0px; */
+  height: 300px;
+  /* border: 1px solid blue; */
+  /* margin-top: 40px; */
 }
 
 .dashboard-card-style {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    /* margin: 10px; */
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 4px 8px 26px 0 rgba(0, 0, 0, 0.14);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    /* border: 1px solid blue */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  /* margin: 10px; */
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 4px 8px 26px 0 rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+  /* border: 1px solid blue */
 }
 
 .revenue-card-style {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    padding: 15px;
-    background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 4px 8px 26px 0 rgba(0, 0, 0, 0.14);
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
-    /* border: 1px solid blue */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 4px 8px 26px 0 rgba(0, 0, 0, 0.14);
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
+  /* border: 1px solid blue */
 }
 
 .dashboard-sub-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* border: 2px solid blue; */
-    max-height: 400px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* border: 2px solid blue; */
+  max-height: 400px;
 }
 
 .dashboard-referal-card {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    /* border: 2px solid blue; */
-    max-height: 400px;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  /* border: 2px solid blue; */
+  max-height: 400px;
 }
 
 .dashboard-sub-concentric {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .dashboard-sub-card {
-    display: flex;
-    flex-direction: column;
-    max-width: 100%;
-    min-height: 14vh;
-    /* margin: 15px; */
-    padding: 15px;
-    /* border: 1px solid #ddd; */
-    background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  max-width: 100%;
+  min-height: 14vh;
+  /* margin: 15px; */
+  padding: 15px;
+  /* border: 1px solid #ddd; */
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
 }
 
-
 .dashboard-heading {
-    margin: 20px 0px 0px 40px;
+  margin: 20px 0px 0px 40px;
 }
 
 .category-card:hover {
-    transform: scale(1.1);
-    color: #8d1cb7c8;
+  transform: scale(1.1);
+  color: #8d1cb7c8;
 }
 
-
 .list-container {
-    position: relative;
-    text-align: center;
-    width: 250px;
-    /* border: 1px solid blue; */
-    margin: 30px;
+  position: relative;
+  text-align: center;
+  width: 250px;
+  /* border: 1px solid blue; */
+  margin: 30px;
 }
 
 .list-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
-    font-size: 16px;
-    line-height: 1.5;
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .color-circle {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    margin-right: 10px;
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-right: 10px;
 }
 
 .item-text {
-    flex-grow: 1;
-    text-align: left;
+  flex-grow: 1;
+  text-align: left;
 }
 
 .item-percentage {
-    font-weight: normal;
+  font-weight: normal;
 }
 
 /* Specific color classes */
 .color-astrologers {
-    background-color: #1C1C1C;
+  background-color: #1c1c1c;
 }
 
 .color-coach {
-    background-color: #BAEDBD;
+  background-color: #baedbd;
 }
 
 .color-psychic {
-    background-color: #95A4FC;
+  background-color: #95a4fc;
 }
 
 .color-other {
-    background-color: #95A4FC;
+  background-color: #95a4fc;
 }
 
 .top-active-consultant {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* height: 300px; */
-    width: 600px;
-    /* border: 1px solid blue; */
-    align-items: center;
-    padding: 0 35px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* height: 300px; */
+  width: 600px;
+  /* border: 1px solid blue; */
+  align-items: center;
+  padding: 0 35px;
 }
 
 .top-active-image-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    /* flex-wrap: wrap; */
-    /* यह लाइन जरूरी है */
-    gap: 20px;
-    /* Images के बीच spacing */
-    width: 100%;
-    padding: 25px;
-    box-sizing: border-box;
-    margin-top: 40px;
-    /* border: 1px solid #1C1C1C; */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  /* यह लाइन जरूरी है */
+  gap: 20px;
+  /* Images के बीच spacing */
+  width: 100%;
+  padding: 25px;
+  box-sizing: border-box;
+  margin-top: 40px;
+  /* border: 1px solid #1C1C1C; */
 }
 
 .image-wrapper {
-    aspect-ratio: 1/1;
-    /* overflow: hidden; */
-    /* border: 1px solid #1C1C1C; */
-    /* border-radius: 50%; */
-    /* box-sizing: border-box; */
-    /* Important to include padding in width */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: #434D56;
-    font-size: 14px;
+  aspect-ratio: 1/1;
+  /* overflow: hidden; */
+  /* border: 1px solid #1C1C1C; */
+  /* border-radius: 50%; */
+  /* box-sizing: border-box; */
+  /* Important to include padding in width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #434d56;
+  font-size: 14px;
 }
 
 .consultant-image {
-    width: 70%;
-    height: 70%;
-    /* width: 70px;
+  width: 70%;
+  height: 70%;
+  /* width: 70px;
     height: 70px; */
-    object-fit: cover;
-    /* Image को properly fit करने के लिए */
-    padding: 5px;
-    border: 2px solid #303030;
-    border-radius: 50%;
+  object-fit: cover;
+  /* Image को properly fit करने के लिए */
+  padding: 5px;
+  border: 2px solid #303030;
+  border-radius: 50%;
 }
 
 .consultant-card-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    /* border: 1px solid greenyellow; */
-    position: relative;
-    gap: 20px;
-    /* padding: 0 15px; */
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  /* border: 1px solid greenyellow; */
+  position: relative;
+  gap: 20px;
+  /* padding: 0 15px; */
+  flex-wrap: wrap;
 }
 
 .active-consultant-card {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    min-height: 8vh;
-    width: 100%;
-    gap: 10px;
-    padding: 15px;
-    /* border: 1px solid #ddd; */
-    background-color: rgba(255, 255, 255, 0.65);
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  min-height: 8vh;
+  width: 100%;
+  gap: 10px;
+  padding: 15px;
+  /* border: 1px solid #ddd; */
+  background-color: rgba(255, 255, 255, 0.65);
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
 }
 
 .left-cards {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 60px;
-    align-items: center;
-    /* border: 1px solid blue; */
-    margin-left: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 60px;
+  align-items: center;
+  /* border: 1px solid blue; */
+  margin-left: 40px;
 }
 
 .info-container {
-    display: flex;
-    flex-direction: column;
-    align-items: self-start;
-    min-height: 8vh;
-    width: auto;
-    gap: 10px;
-    padding: 25px;
-    background-color: #C5D7FF;
-    box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
-    backdrop-filter: blur(15px);
-    border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  min-height: 8vh;
+  width: auto;
+  gap: 10px;
+  padding: 25px;
+  background-color: #c5d7ff;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: blur(15px);
+  border-radius: 10px;
 }
 
 .card-info {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    /* border: 1px solid blue; */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  /* border: 1px solid blue; */
 }
 
 .score-barr {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 240px;
-    width: auto;
-    /* border: 1px solid blue; */
-    margin-right: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 240px;
+  width: auto;
+  /* border: 1px solid blue; */
+  margin-right: 40px;
 }
 
 .label-top,
 .label-bottom {
-    font: 8px Arial, sans-serif;
-    fill: #181F29;
-    text-anchor: middle;
+  font: 8px Arial, sans-serif;
+  fill: #181f29;
+  text-anchor: middle;
 }
 
 .main-score {
-    font: bold 28px Arial, sans-serif;
-    fill: #181F29;
-    text-anchor: middle;
-    dominant-baseline: central;
+  font: bold 28px Arial, sans-serif;
+  fill: #181f29;
+  text-anchor: middle;
+  dominant-baseline: central;
 }
 
 /* For tablets (screens 768px and up) */
 @media (max-width: 1024px) {
-    .category-card-container-grid .category-card-grid-dashboard {
-        grid-template-columns: repeat(2, 1fr);
-    }
+  .category-card-container-grid .category-card-grid-dashboard {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }

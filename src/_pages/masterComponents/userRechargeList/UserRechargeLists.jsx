@@ -28,6 +28,26 @@ const UserRechargeLists = () => {
     }
   }, [fetchData]);
 
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      {/* <input
+        className="inputBox"
+        placeholder="Search by id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }} */}
+      {/* // onChange={handleUserIdSearch}/ */}
+      {/* /> */}
+
+      <select>
+        <option>External</option>
+        <option>Internal</option>
+      </select>
+    </div>
+  );
+
   // const totalPage = fetchData?.data?.totalPages || 1;
   const totalPage = fetchData?.data?.totalRecords
     ? Math.ceil(fetchData.data.totalRecords / pageSize)
@@ -48,7 +68,8 @@ const UserRechargeLists = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="User Recharge List"
+        tableTitle="Users Recharge List"
+        customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
         currentPage={page}
