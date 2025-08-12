@@ -10,6 +10,7 @@ const UserRechargeLists = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [userType, setUSerType] = useState(0);
 
   const {
     data: fetchData,
@@ -18,6 +19,7 @@ const UserRechargeLists = () => {
   } = useGetUserRechargeListQuery({
     page,
     size: pageSize,
+    user_type: userType,
   });
 
   const columns = useMemo(() => COLUMNRECHARGE, []);
@@ -27,6 +29,11 @@ const UserRechargeLists = () => {
       setData(fetchData?.data?.data || []);
     }
   }, [fetchData]);
+
+  const handleSetUserType = (e) => {
+    setPage(1);
+    setUSerType(e.target.value);
+  };
 
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px" }}>
@@ -41,9 +48,17 @@ const UserRechargeLists = () => {
       {/* // onChange={handleUserIdSearch}/ */}
       {/* /> */}
 
-      <select>
-        <option>External</option>
-        <option>Internal</option>
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onClick={handleSetUserType}
+      >
+        <option value={0}>External</option>
+        <option value={1}>Internal</option>
       </select>
     </div>
   );
