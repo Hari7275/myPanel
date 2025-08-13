@@ -36,6 +36,7 @@
     "react-hot-toast": "^2.4.1",
     "react-image-gallery": "^1.4.0",
     "react-loading-indicators": "^1.0.1",
+    "react-minimal-pie-chart": "^9.1.1",
     "react-modal": "^3.16.1",
     "react-modal-image": "^2.6.0",
     "react-quill": "^2.0.0",

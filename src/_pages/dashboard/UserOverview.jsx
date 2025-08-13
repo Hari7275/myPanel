@@ -24,45 +24,14 @@ const UserOverview = () => {
       setOverviewItems(fetchData.data);
     }
   }, [fetchData]);
-  // List of all possible metadata items with their routes
+   
 
-  //   const overviewItems = [
-  //     {
-  //       name: "Total Users",
-  //       link: "/coach-category_metadata",
-  //       permissions: "view_coach_categories_list",
-  //       price: "₹3781",
-  //       bgcolor: "#E3F5FF",
-  //     },
-  //     {
-  //       name: "Today's downloads",
-  //       link: "/language-metadata",
-  //       permissions: "view_app_languages_list",
-  //       price: "30.1%",
-  //       bgcolor: "#E5ECF6",
-  //     },
-  //     {
-  //       name: "Weekly downloads",
-  //       link: "/promotional-card-metadata",
-  //       permissions: "view_promotional_cards_list",
-  //       price: "1219",
-  //       bgcolor: "#FFFFFF",
-  //     },
-  //     {
-  //       name: "Monthly downloads",
-  //       link: "/dashboard-banner-metadata",
-  //       permissions: "view_dashboard_banner_list",
-  //       price: "$694",
-  //       bgcolor: "#FFFFFF",
-  //     },
-  //   ];
-
-  console.log("overviewItems", overviewItems);
+  
   return (
     <>
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <span>
-          <h2 style={{ padding: "15px 5px" }}>UserOverview</h2>
+          <h2 style={{ padding: "15px 5px" }}>User Overview</h2>
         </span>
         <div
           className="dashboard-card-container-grid"
