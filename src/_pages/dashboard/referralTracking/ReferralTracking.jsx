@@ -17,7 +17,7 @@ const ReferralTracking = () => {
    return (
       <div className="dashboard-card-style" style={{ height: '300px', margin: '40px 0px' }}>
          <div className='heading' style={{ marginLeft: '40px' }}>
-            <h2>Referral Tracking</h2>
+            <h2>Referral Tracking </h2>
          </div>
          {/* Card information.................................................... */}
          <div className='card-info'>

@@ -1,24 +1,26 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import { LineChart, lineElementClasses } from "@mui/x-charts/LineChart";
+import { useGetFluteRevenueOnGraphQuery } from "../../_store/api";
 
 export default function BasicArea() {
-  const uData = [
-    4000, 3000, 2000, 2780, 1890, 2390, 3490, 6000, 2000, 4000, 5000, 5000,
-  ];
-  const xLabels = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "April",
-    "May",
-    "Jun",
-    "July",
-    "Aug",
-    "Sept",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const [data, setData] = useState([]);
+  const [dateFilter, setDateFilter] = useState("weekly");
+  const { data: fetchData } = useGetFluteRevenueOnGraphQuery({ dateFilter });
+
+  useEffect(() => {
+    if (fetchData?.data) {
+      setData(fetchData.data);
+    }
+  }, [fetchData]);
+
+  // Extract labels and totals from API data
+  const labels = data.map((item) => item.label);
+  const totals = data.map((item) => item.total);
+
+  const handleClickDateFilter = (e) => {
+    setDateFilter(e.target.value);
+  };
+
   return (
     <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -29,20 +31,16 @@ export default function BasicArea() {
               className="simple-form"
               noValidate
               autoComplete="off"
-              style={{
-                display: "flex",
-                justifyContent: "center",
-              }}
+              style={{ display: "flex", justifyContent: "center" }}
             >
               <div className="input-container">
-                {/* <label htmlFor="status">Status</label> */}
                 <select
                   id="status"
                   name="status"
                   className="userProfile-input-field"
                   aria-describedby="status-desc"
+                  onClick={handleClickDateFilter}
                 >
-                  {/* <option value="">Select Status</option> */}
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
@@ -58,24 +56,22 @@ export default function BasicArea() {
         height={300}
         series={[
           {
-            data: uData,
-            label: "graph for flute revenue",
+            data: totals,
+            label: "Flute Revenue",
             area: true,
             showMark: true,
             color: "#DBA5FF",
-            // areaColor: "#000",
           },
-
-          // {
-          //   data: uData,
-          //   label: "graph for flute revenue",
-          //   area: true,
-          //   showMark: true,
-          //   color: "#4CAF50",
-          //   areaColor: "rgba(76, 175, 80, 0.3)",
-          // },
         ]}
-        xAxis={[{ scaleType: "point", data: xLabels }]}
+        // xAxis={[{ scaleType: "point", data: labels }]}
+
+        xAxis={[
+          {
+            scaleType: "point",
+            data: labels,
+            // tickLabelInterval: () => true,
+          },
+        ]}
         sx={{
           [`& .${lineElementClasses.root}`]: {
             display: "none",

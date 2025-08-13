@@ -39,14 +39,14 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   /* border: 2px solid blue; */
-  max-height: 400px;
+  /* max-height: 400px; */
 }
 
 .dashboard-referal-card {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
   /* border: 2px solid blue; */
-  max-height: 400px;
+  /* max-height: 400px; */
 }
 
 .dashboard-sub-concentric {
@@ -153,6 +153,9 @@
   box-sizing: border-box;
   margin-top: 40px;
   /* border: 1px solid #1C1C1C; */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
 }
 
 .image-wrapper {
@@ -191,6 +194,8 @@
   gap: 20px;
   /* padding: 0 15px; */
   flex-wrap: wrap;
+
+   
 }
 
 .active-consultant-card {
@@ -207,6 +212,7 @@
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
   backdrop-filter: blur(15px);
   border-radius: 10px;
+  
 }
 
 .left-cards {

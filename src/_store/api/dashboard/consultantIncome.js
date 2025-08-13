@@ -130,6 +130,42 @@ export const consultantsIncome = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+    // most active consultant
+    getFluteMostActiveConsultant: builder.query({
+      query: () => ({
+        url: `api/v1/consultant/management/order/admin/most-active-consultant`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
+    // total blog and buzz count
+    getFluteMagzineAndBuzzCount: builder.query({
+      query: () => ({
+        url: `https://api.fluteconnect.com/api/v1/cms/get-counts`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
+    // total Revenue by graph
+    getFluteRevenueOnGraph: builder.query({
+      query: ({ dateFilter }) => ({
+        url: `user/profile/admin/graph-data?type=${dateFilter}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -146,4 +182,7 @@ export const {
   useGetFluteUserOverviewQuery,
   useGetFluteConsultantOverviewQuery,
   useGetFluteConsultantTrafficQuery,
+  useGetFluteMostActiveConsultantQuery,
+  useGetFluteMagzineAndBuzzCountQuery,
+  useGetFluteRevenueOnGraphQuery,
 } = consultantsIncome;

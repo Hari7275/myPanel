@@ -8,7 +8,6 @@ import {
   useGetFluteIncomeByUsersQuery,
   useGetFluteRefundToUserQuery,
   useGetConsultantPayoutAmountQuery,
-  useGetFluteRefferalAmountQuery,
 } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 
@@ -20,7 +19,7 @@ const FluteEarning = () => {
   const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
   const [fluteRefToUser, setFluteRefToUser] = useState([]);
   const [consltPayoutIncome, setConsltPayoutIncome] = useState([]);
-  const [fluteRefAmt, setFluteRefAmt] = useState([]);
+
   const { data: fetchData } = useGetConsultantIncomeQuery();
   const { data: SessionIncom } = useGetConsultantIncomeBySessionQuery();
   const { data: fluteIncome, isLoading } = useGetFluteIncomeQuery();
@@ -28,7 +27,6 @@ const FluteEarning = () => {
   const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery();
   const { data: fluteRefToUsers } = useGetFluteRefundToUserQuery();
   const { data: ConsltPayoutInc } = useGetConsultantPayoutAmountQuery();
-  const { data: FluteReferralAmt } = useGetFluteRefferalAmountQuery();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -53,9 +51,6 @@ const FluteEarning = () => {
     if (ConsltPayoutInc && ConsltPayoutInc?.data) {
       setConsltPayoutIncome(ConsltPayoutInc?.data);
     }
-    if (FluteReferralAmt && FluteReferralAmt?.data) {
-      setFluteRefAmt(FluteReferralAmt?.data);
-    }
   }, [
     fetchData,
     fluteIncome,
@@ -63,7 +58,6 @@ const FluteEarning = () => {
     fluteIncomeByUsers,
     fluteRefToUsers,
     ConsltPayoutInc,
-    FluteReferralAmt,
   ]);
 
   if (isLoading) {
@@ -162,22 +156,6 @@ const FluteEarning = () => {
         <h2 className="dashboard-heading">Consultants Payout Amount</h2>
         <div className="dashboard-grid">
           {consltPayoutIncome.map((item) => (
-            <CategoryCard
-              key={item.title}
-              label={item.name}
-              price={item.value}
-              bgcolor={item.color}
-            />
-          ))}
-        </div>
-      </div>
-
-      <div className=" dashboard-main-card ">
-        <h2 className="dashboard-heading">
-          Flute Referral/Reference/Coupon Amount
-        </h2>
-        <div className="dashboard-grid">
-          {fluteRefAmt.map((item) => (
             <CategoryCard
               key={item.title}
               label={item.name}
