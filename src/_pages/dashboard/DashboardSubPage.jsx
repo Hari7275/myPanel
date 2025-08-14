@@ -218,13 +218,13 @@ const DashboardSubPage = () => {
             <TrafficConsultant />
             <ConsltantOverview />
           </div>
-          <div className="dashboard-sub-grid">
+          <div className="dashboard-sub-grid" style={{marginBottom:"40px"}}>
             <TopActiveConsultants />
             <RevenueByLocation />
           </div>
-          <div className="dashboard-referal-card">
+          {/* <div className="dashboard-referal-card">
             <ReferralTracking />
-          </div>
+          </div> */}
         </div>
       </div>
     </>
