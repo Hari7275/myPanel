@@ -122,6 +122,7 @@ const UserPassionOption = () => {
         includeActions={false}
         includeCheckbox={false}
         AddPackageButton={AddButton}
+         showTableHeading={false}
       />
       {addData && <AddUserPassion isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

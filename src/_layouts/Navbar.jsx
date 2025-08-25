@@ -73,6 +73,17 @@ const Navbar = () => {
     "/payout-History": "Payout History",
     "/coupon": "Coupon List",
     "/blog-count": "Blog View Count",
+
+
+
+    // prompt  , profile  options
+
+    "/user-profile-option": "Profile Options",
+    "/prompt-question": "prompt Question",
+    "/user-passion": "Passion Options",
+    "/user-desire": "User Desires",
+
+
   };
 
   //

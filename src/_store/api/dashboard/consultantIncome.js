@@ -98,7 +98,7 @@ export const consultantsIncome = apiSlice.injectEndpoints({
 
     getFluteUserOverview: builder.query({
       query: () => ({
-        url: `user/profile/admin//user-overview`,
+        url: `user/profile/admin/user-overview`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

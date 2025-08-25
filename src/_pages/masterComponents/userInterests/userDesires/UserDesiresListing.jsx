@@ -121,6 +121,7 @@ const UserDesiresListing = () => {
         includeActions={false}
         includeCheckbox={false}
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && <AddUserDesire isOpen={addData} onClose={toggleAddData} />}
 

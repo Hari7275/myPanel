@@ -109,6 +109,7 @@ const PromptQuestionTable = () => {
         includeActions={false}
         includeCheckbox={false}
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
 
       {addData && (

@@ -3,15 +3,13 @@ import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { BLOGCOUNTCOLUMNS } from "./blogCountColumn";
 import { useGetBlogCountListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
-// import DatePicker from "react-datepicker";
-// import "react-datepicker/dist/react-datepicker.css";
 import { debounce } from "lodash";
 
 const BlogCount = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
-  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
   const [blogSlug, setBlogSlug] = useState("");
 
   const formatDate = (date) => {
@@ -19,27 +17,29 @@ const BlogCount = () => {
   };
 
   const today = new Date();
-  const [start_date, setStart_date] = useState(formatDate(today));
-  const [end_date, setEnd_Date] = useState(formatDate(today));
+  // Initialize with empty strings instead of today's date for better UX
+  const [start_date, setStart_date] = useState("");
+  const [end_date, setEnd_Date] = useState("");
+
+  // Build query params conditionally
+  const queryParams = {
+    page,
+    size: pageSize,
+    ...(blogSlug && { title: blogSlug }),
+    ...(start_date && { start_date }),
+    ...(end_date && { end_date }),
+  };
 
   const {
     data: fetchData,
     isLoading,
     error,
-  } = useGetBlogCountListQuery({
-    page,
-    size: pageSize,
-    title: blogSlug,
-    start_date,
-    end_date,
-  });
+  } = useGetBlogCountListQuery(queryParams);
 
-  //   const columns = useMemo(() => BLOGCOUNTCOLUMNS, []);
   const columns = useMemo(
     () =>
       BLOGCOUNTCOLUMNS.map((column, index) => {
         if (index === 0) {
-          // Assuming first column is the Id column
           return {
             ...column,
             accessor: (row, rowIndex) => (page - 1) * pageSize + rowIndex + 1,
@@ -64,29 +64,48 @@ const BlogCount = () => {
   const debouncedSearchEndDate = debounce((value) => setEnd_Date(value), 500);
 
   const handleStartDateSearch = (e) => {
+    const value = e?.target?.value || "";
     setPage(1);
-    debouncedSearchStartDate(e?.target?.value);
+    debouncedSearchStartDate(value);
+    
+    // Clear blog search when using date filters
+    if (value && blogSlug) {
+      setBlogSlug("");
+    }
   };
 
   const handleEndDateSearch = (e) => {
+    const value = e?.target?.value || "";
     setPage(1);
-    debouncedSearchEndDate(e?.target?.value);
+    debouncedSearchEndDate(value);
+    
+    // Clear blog search when using date filters
+    if (value && blogSlug) {
+      setBlogSlug("");
+    }
   };
 
   const debouncedSearchBlogSlug = debounce((value) => setBlogSlug(value), 500);
 
   const handleBlogSlugSearch = (e) => {
-    setStart_date(null)
-    setEnd_Date(null)
+    const value = e?.target?.value || "";
+    
+    // Only clear dates if there's a search value
+    if (value) {
+      setStart_date("");
+      setEnd_Date("");
+    }
+    
     setPage(1);
-    debouncedSearchBlogSlug(e?.target?.value);
+    debouncedSearchBlogSlug(value);
   };
 
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
+    <div style={{ width: "100%", height: "35px", display: "flex", alignItems: "center" }}>
       <input
         className="inputBox"
         placeholder="Search by title"
+        value={blogSlug}
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
@@ -105,13 +124,14 @@ const BlogCount = () => {
         className="inputBox"
         value={start_date}
         type="date"
-        placeholder="Search by Id"
+        placeholder="Start date"
         style={{
           marginLeft: "5px",
           height: "-webkit-fill-available",
           width: "20%",
         }}
         onChange={handleStartDateSearch}
+        max={end_date || undefined} // Prevent start date from being after end date
       />
 
       <label
@@ -125,13 +145,14 @@ const BlogCount = () => {
         className="inputBox"
         type="date"
         value={end_date}
-        placeholder="Search by Name"
+        placeholder="End date"
         style={{
           marginLeft: "5px",
           height: "-webkit-fill-available",
           width: "20%",
         }}
         onChange={handleEndDateSearch}
+        min={start_date || undefined} // Prevent end date from being before start date
       />
     </div>
   );
@@ -145,7 +166,6 @@ const BlogCount = () => {
       </span>
     );
   }
-  //   if (error) return <p>Error fetching data: {error?.data?.message}</p>;
 
   return (
     <div>

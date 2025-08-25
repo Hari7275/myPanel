@@ -120,8 +120,11 @@ const UserProfileOptions = () => {
         data={data}
         tableTitle="Profile Options"
         includeActions={false}
+        showTableHeading={false}
         includeCheckbox={false}
         AddPackageButton={AddButton}
+
+
       />
 
       {showOptionFeature && (
