@@ -26,10 +26,10 @@ export const REVIEWLISTCOLUMN = [
     Header: "Name",
     accessor: "ConsultantProfile.first_name",
   },
-  {
-    Header: "Email",
-    accessor: "ConsultantProfile.email",
-  },
+  // {
+  //   Header: "Email",
+  //   accessor: "ConsultantProfile.email",
+  // },
 
   {
     Header: "Status",

@@ -1,3 +1,16 @@
+import { Link } from "react-router-dom";
+
+const handleViewBlog = ({ value, row }) => {
+  console.log(".....", row.original.blog_id);
+  const navigationRoute = `https://fluteconnect.com/magazine/${row.original.blog_id}`;
+
+  return (
+    <a href={navigationRoute} target="blank" style={{ color: "#a84444ff" }}>
+      {value}
+    </a>
+  );
+};
+
 export const BLOGCOUNTCOLUMNS = [
   {
     Header: "Id",
@@ -13,6 +26,7 @@ export const BLOGCOUNTCOLUMNS = [
   {
     Header: "Title",
     accessor: "title",
+    Cell: handleViewBlog,
   },
 
   {

@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 
-// Custom cell component for Order ID
+// Custom cell component for Order IDs
 const OrderIdCell = ({ value }) => {
   return <span className="custumerId-color">{value}</span>;
 };

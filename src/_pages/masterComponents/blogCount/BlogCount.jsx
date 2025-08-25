@@ -133,7 +133,7 @@ const BlogCount = () => {
         data={data}
         includeActions={false}
         customFilterComponent={customFilterComponent}
-        tableTitle="Blog Count"
+        tableTitle="Blog view Count"
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
         currentPage={page}
