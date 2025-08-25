@@ -14,13 +14,24 @@ export const orderApiSlice = apiSlice.injectEndpoints({
     }),
 
     getBlogCountList: builder.query({
-      query: ({ page, size, start_date, end_date }) => ({
-        url: `meta/admin/get-blog-view?page=${page}&limit=${size}&start_date=${start_date}&end_date=${end_date}`,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-      }),
+      query: ({ page, size, start_date, end_date, title }) => {
+        const params = new URLSearchParams({
+          page: page,
+          limit: size,
+        });
+
+        if (title) params.append("title", title);
+        if (start_date) params.append("start_date", start_date);
+        if (end_date) params.append("end_date", end_date);
+
+        return {
+          url: `meta/admin/get-blog-view?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
       providesTags: ["blogCount"],
     }),
 

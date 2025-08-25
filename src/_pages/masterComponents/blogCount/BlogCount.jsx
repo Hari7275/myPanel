@@ -12,6 +12,7 @@ const BlogCount = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [blogSlug, setBlogSlug] = useState("");
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
@@ -28,6 +29,7 @@ const BlogCount = () => {
   } = useGetBlogCountListQuery({
     page,
     size: pageSize,
+    title: blogSlug,
     start_date,
     end_date,
   });
@@ -71,8 +73,27 @@ const BlogCount = () => {
     debouncedSearchEndDate(e?.target?.value);
   };
 
+  const debouncedSearchBlogSlug = debounce((value) => setBlogSlug(value), 500);
+
+  const handleBlogSlugSearch = (e) => {
+    setStart_date(null)
+    setEnd_Date(null)
+    setPage(1);
+    debouncedSearchBlogSlug(e?.target?.value);
+  };
+
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by title"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleBlogSlugSearch}
+      />
       <label
         style={{
           marginLeft: "25px",
