@@ -159,7 +159,7 @@ const FluteEarning = () => {
             <CategoryCard
               key={item.title}
               label={item.name}
-              price={item.value}
+              price={item.value || 0}
               bgcolor={item.color}
             />
           ))}

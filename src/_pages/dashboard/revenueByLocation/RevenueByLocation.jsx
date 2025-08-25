@@ -27,11 +27,14 @@ const RevenueByLocation = () => {
   return (
     <div className="" style={{ height: "100%", paddingLeft: "25px" }}>
       <div className="revenue-card-style" style={{ height: "100%" }}>
-        <div className=" dashboard-main-card ">
-          <h2 className="dashboard-heading">
-            Flute Referral/Reference/Coupon Amount
-          </h2>
-          <div className="dashboard-grid">
+        <div className=" dashboard-main-card " style={{ border: "none" }}>
+          <h2 className="">Flute Referral/Reference/Coupon Amount</h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+            }}
+          >
             {fluteRefAmt.map((item) => (
               <CategoryCard
                 key={item.title}

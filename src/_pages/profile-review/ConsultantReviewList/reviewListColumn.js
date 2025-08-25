@@ -10,6 +10,19 @@ export const REVIEWLISTCOLUMN = [
     accessor: "consultant_id",
   },
   {
+    Header: "Consultant type",
+    accessor: "ConsultantProfile.consultant_type",
+    Cell: ({ value }) => {
+      const types = {
+        1: "Astrologer",
+        2: "Coach",
+        3: "Listener",
+      };
+      return types[value] || value;
+    },
+  },
+
+  {
     Header: "Name",
     accessor: "ConsultantProfile.first_name",
   },

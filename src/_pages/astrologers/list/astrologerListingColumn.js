@@ -46,7 +46,7 @@ const NameCell = ({ row }) => {
 
       <span className="column_container_name">
         {/* {row.original.first_name} {` `} {row.original.last_name} */}
-        {`${row.original.first_name} ${row.original.last_name}`}
+        {`${row.original.first_name} ${row.original.last_name || ""}`}
       </span>
 
       <ReactModal
@@ -105,7 +105,7 @@ export const ASTROLOGER_COLUMNS = [
     Cell: StatusCell,
   },
   {
-   Header: "Applied On",
+    Header: "Applied On",
     accessor: "created_at",
     Cell: ({ value }) => {
       const date = new Date(value) || "Aug 9, 2025, 2:12 AM";

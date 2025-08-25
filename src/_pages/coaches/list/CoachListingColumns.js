@@ -45,7 +45,7 @@ const NameCell = ({ row }) => {
       <span className="column_container_name">
         {/* {row.original.first_name} {` `}
         {row.original.last_name} */}
-        {`${row.original.first_name} ${row.original.last_name}`}
+        {`${row.original.first_name} ${row.original.last_name || ""}`}
       </span>
 
       <ReactModal
