@@ -13,6 +13,18 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       providesTags: ["order"],
     }),
 
+    updateqRunningOrder: builder.mutation({
+      query: ({ body }) => ({
+        url: `/api/v1/consultant/management/order/complete-order-by-admin`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["order"],
+    }),
+
     getBlogCountList: builder.query({
       query: ({ page, size, start_date, end_date, title }) => {
         const params = new URLSearchParams({
@@ -77,6 +89,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 
 export const {
   useGetOrderListQuery,
+  useUpdateqRunningOrderMutation,
   useGetBlogCountListQuery,
   useGetUserRechargeListQuery,
   useGetUserAllSubscriptionListQuery,

@@ -67,10 +67,7 @@ export const COLUMNORDER = [
     accessor: "consultant_id",
     Cell: ConsultantNavigationCell,
   },
-  {
-    Header: "consultant_type",
-    accessor: "description.consultant_type",
-  },
+
   {
     Header: "User Id ",
     accessor: "user_id",
