@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import { getStatusColor } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 const CustomIdCell = ({ value }) => {
@@ -119,6 +120,8 @@ export const COLUMNORDER = [
   {
     Header: "Status",
     accessor: "status",
-    Cell: ({ value }) => <span>{OrderStatus(value)}</span>,
+    Cell: ({ value }) => (
+      <span style={{ color: getStatusColor(value) }}>{OrderStatus(value)}</span>
+    ),
   },
 ];

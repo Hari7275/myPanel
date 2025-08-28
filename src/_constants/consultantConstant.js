@@ -256,6 +256,32 @@ export const OrderStatus = (value) => {
   }
 };
 
+
+export const getStatusColor = (value) => {
+  switch (Number(value)) {
+    case 1:
+      return "#FFA500"; // Orange - Pending
+    case 2:
+      return "#4CAF50"; // Green - Confirmed
+    case 3:
+      return "#2196F3"; // Blue - Running
+    case 4:
+      return "#008000"; // Dark Green - Completed
+    case 5:
+      return "#DC143C"; // Crimson - Cancelled
+    case 6:
+      return "#FF0000"; // Red - Rejected
+    case 7:
+      return "#FFD700"; // Gold - Waiting
+    case 8:
+      return "#FF6347"; // Tomato - User Not Responded
+    case 9:
+      return "#FF4500"; // Orange Red - Consultant Not Responded
+    default:
+      return "#808080"; // Gray - Unknown
+  }
+};
+
 export const statusNameToValue = {
   Registered: 1,
   Pending: 2,
