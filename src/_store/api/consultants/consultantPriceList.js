@@ -44,7 +44,7 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
 
     getConsultantsWallet: builder.query({
       query: (consultantId) => ({
-        url: `https://dev-api.fluteconnect.com/api/v1/consultant/payment/admin/${consultantId}?page=1&limit=100`,
+        url: `/api/v1/consultant/payment/admin/${consultantId}?page=1&limit=100`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

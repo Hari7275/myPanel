@@ -73,11 +73,18 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
 
     // Calculate the final amount based on is_forgin flag
     let finalAmount = parseFloat(formData.amount);
-    
+
     // If is_forgin is true, multiply by conversion_rate
     if (formData.is_forgin && formData.conversion_rate) {
       finalAmount = finalAmount * parseFloat(formData.conversion_rate);
     }
+
+    console.log("finalAmount", finalAmount);
+    console.log("formData.amount", formData.amount);
+    console.log(
+      "parseFloat(formData.conversion_rate)",
+      parseFloat(formData.conversion_rate)
+    );
 
     let apiPayload = {};
 
@@ -106,9 +113,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       };
     }
     console.log("apiPayload", apiPayload);
-
-    // Remove this return statement when you're ready to make the API call
-    // return;
 
     try {
       const response = await createData({ body: apiPayload });
@@ -236,7 +240,12 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           />
           {formData.is_forgin && formData.conversion_rate && (
             <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
-              Conversion rate: {formData.conversion_rate} (Final amount: {formatAmountDisplay(parseFloat(formData.amount || 0) * parseFloat(formData.conversion_rate))})
+              Conversion rate: {formData.conversion_rate} (Final amount:{" "}
+              {formatAmountDisplay(
+                parseFloat(formData.amount || 0) *
+                  parseFloat(formData.conversion_rate)
+              )}
+              )
             </div>
           )}
         </div>
