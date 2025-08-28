@@ -11,6 +11,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
     userId: selectedRow.user_id,
     amount: selectedRow?.flute_earning || "",
     description: "",
+    is_forgin: selectedRow.description.userData.is_foreigner || null,
+    conversion_rate: selectedRow.conversion_rate || "",
   });
   const [wordCount, setWordCount] = useState(0);
 
@@ -69,6 +71,14 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       return;
     }
 
+    // Calculate the final amount based on is_forgin flag
+    let finalAmount = parseFloat(formData.amount);
+    
+    // If is_forgin is true, multiply by conversion_rate
+    if (formData.is_forgin && formData.conversion_rate) {
+      finalAmount = finalAmount * parseFloat(formData.conversion_rate);
+    }
+
     let apiPayload = {};
 
     if (transactionMode === "userRefund") {
@@ -77,7 +87,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
         user_id: formData.userId,
         transaction_type: "credit",
         type: "refund",
-        amount: parseFloat(formData.amount),
+        amount: finalAmount, // Use the calculated final amount
         status: "successful",
         description: formData.description || "User Refund",
         reference_id: selectedRow?.id,
@@ -88,7 +98,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
         consultant_id: selectedRow?.consultant_id,
         transaction_type: "debit",
         type: "consultant_debit",
-        amount: parseFloat(formData.amount),
+        amount: finalAmount, // Use the calculated final amount
         status: "successful",
         description: formData.description || "Consultant Debit",
         order_id: selectedRow?.id,
@@ -111,6 +121,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           userId: selectedRow.user_id,
           amount: selectedRow?.flute_earning || "",
           description: "",
+          is_forgin: selectedRow.description.userData.is_foreigner || null,
+          conversion_rate: selectedRow.conversion_rate || "",
         });
         setWordCount(0);
       } else {
@@ -222,6 +234,11 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             max={selectedRow?.flute_earning || 0}
             step="1"
           />
+          {formData.is_forgin && formData.conversion_rate && (
+            <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
+              Conversion rate: {formData.conversion_rate} (Final amount: {formatAmountDisplay(parseFloat(formData.amount || 0) * parseFloat(formData.conversion_rate))})
+            </div>
+          )}
         </div>
 
         {/* Description Field */}
