@@ -58,6 +58,11 @@ export const COLUMNRECHARGE = [
     Header: "Total Balance",
     accessor: "remaining_balance",
   },
+   {
+    Header: "Trans By",
+    accessor: "is_admin_txn",
+    Cell: ({ value }) => (value == true ? "Admin" : "User"),
+  },
   {
     Header: "Transaction Time",
     accessor: "transaction_time",

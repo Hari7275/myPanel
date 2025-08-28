@@ -14,6 +14,15 @@ export const USERTRANSACTIONCOLUMN = [
     accessor: "transaction_type",
   },
   {
+    Header: "Activity Type",
+    accessor: "type",
+  },
+  {
+    Header: "Trans By",
+    accessor: "is_admin_txn",
+    Cell: ({ value }) => (value == true ? "Admin" : "User"),
+  },
+  {
     Header: "Trans. Date",
     accessor: "transaction_time",
     Cell: ({ value }) => format(new Date(value), "P"),

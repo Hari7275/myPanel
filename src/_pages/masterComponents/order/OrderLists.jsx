@@ -3,8 +3,9 @@ import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNORDER } from "./orderColumn";
 import { useGetOrderListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pencil } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
+import RefundBalance from "./RefundBalance";
 const OrderLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -12,6 +13,7 @@ const OrderLists = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [refundBalance, setRefundBalance] = useState(false);
 
   const {
     data: fetchData,
@@ -27,6 +29,11 @@ const OrderLists = () => {
     setSelectedRow(value);
     setAddOrder(!addOrder);
   };
+
+  const toggleRefundBalance = (value) => {
+    setSelectedRow(value);
+    setRefundBalance(!refundBalance);
+  };
   // const columns = useMemo(() => COLUMNORDER, []);
   const columns = useMemo(
     () => [
@@ -36,20 +43,29 @@ const OrderLists = () => {
         id: "actions",
         Cell: ({ row }) => (
           <>
-            {row.original.status == 3 && (
-              <div className="actions-cell">
+            <div className="actions-cell">
+              {row.original.status == 3 && (
                 <span
                   title="view details"
                   className="secondIcon"
                   style={{ height: "35px", width: "35px" }}
                 >
-                  <ArrowRight
+                  <Pencil
                     className="iconSmall"
                     onClick={() => toggleCompleteOrder(row.original)}
                   />
                 </span>
-              </div>
-            )}
+              )}
+
+              {row.original.status == 4 && (
+                <span className="editIcon">
+                  <ArrowRight
+                    className="iconSmall"
+                    onClick={() => toggleRefundBalance(row.original)}
+                  />
+                </span>
+              )}
+            </div>
           </>
         ),
       },
@@ -94,6 +110,13 @@ const OrderLists = () => {
         <CompleteOrder
           isOpen={addOrder}
           onClose={toggleCompleteOrder}
+          selectedRow={selectedRow}
+        />
+      )}
+      {refundBalance && (
+        <RefundBalance
+          isOpen={refundBalance}
+          onClose={toggleRefundBalance}
           selectedRow={selectedRow}
         />
       )}

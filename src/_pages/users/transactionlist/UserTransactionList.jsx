@@ -76,6 +76,7 @@ const UserTransactionList = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        
       />
       {addData && (
         <AddRechargePlan
