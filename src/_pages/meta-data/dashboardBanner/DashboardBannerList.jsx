@@ -75,7 +75,9 @@ const DashboardBannerList = () => {
   const AddButton = () => {
     return (
       <>
-        {permissions?.["meta_data_section"]?.includes("create_dashboard_banner") && (
+        {permissions?.["meta_data_section"]?.includes(
+          "create_dashboard_banner"
+        ) && (
           <button
             className="addButton"
             style={{
@@ -89,7 +91,9 @@ const DashboardBannerList = () => {
             Add Banner
           </button>
         )}
-        {permissions?.["meta_data_section"]?.includes("update_dashboard_banner") && (
+        {/* {permissions?.["meta_data_section"]?.includes(
+          "update_dashboard_banner"
+        ) && (
           <button
             className="addButton"
             style={{
@@ -100,9 +104,9 @@ const DashboardBannerList = () => {
             }}
             onClick={toggleOpenDnd}
           >
-            Testing drag and drop
+            Testing Drag and drop
           </button>
-        )}
+        )} */}
       </>
     );
   };
@@ -132,7 +136,9 @@ const DashboardBannerList = () => {
                 onClick={() => toggleAssignNotice(row.original)}
               />
             </span>
-            {permissions?.["meta_data_section"]?.includes("update_dashboard_banner") && (
+            {permissions?.["meta_data_section"]?.includes(
+              "update_dashboard_banner"
+            ) && (
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
@@ -140,7 +146,9 @@ const DashboardBannerList = () => {
                 />
               </span>
             )}
-            {permissions?.["meta_data_section"]?.includes("delete_dashboard_banner") && (
+            {permissions?.["meta_data_section"]?.includes(
+              "delete_dashboard_banner"
+            ) && (
               <span className="deleteIcon">
                 <Trash
                   className="iconSmall"
@@ -170,7 +178,7 @@ const DashboardBannerList = () => {
         <AddDashboardBanner isOpen={addData} onClose={toggleAddData} />
       )}
 
-      {dnd && <DragAndDropOrder isOpen={dnd} onClose={toggleOpenDnd} />}
+      {/* {dnd && <DragAndDropOrder isOpen={dnd} onClose={toggleOpenDnd} />} */}
 
       {updateData && (
         <UpdateDashboardBanner

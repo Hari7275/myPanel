@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import "../CategoriesList.css";
 import { useGetFluteMostActiveConsultantQuery } from "../../../_store/api";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 
 export const CategoryCard = ({ src, count, text }) => (
   <div>
@@ -18,7 +21,8 @@ export const CategoryCard = ({ src, count, text }) => (
 
 const TopActiveConsultants = () => {
   const [activeConsultant, setActiveConsultant] = useState([]);
-  const { data: fetchData, isLoading } = useGetFluteMostActiveConsultantQuery();
+  const { data: fetchData } = useGetFluteMostActiveConsultantQuery();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -28,35 +32,60 @@ const TopActiveConsultants = () => {
     }
   }, [fetchData]);
 
+  // Navigation route map
+  const navigationRoute = {
+    1: "/astrologer_Profile",
+    2: "/coach-profile",
+    3: "/listener_Profile",
+  };
+
   return (
     <div style={{ width: "100%", height: "auto" }}>
       <div className="top-active-consultant">
         <h2> Top Active Consultants</h2>
       </div>
+
       {/* Image Section...................................... */}
       <div className="top-active-image-container">
-        {activeConsultant?.map((item) => (
-          <>
-            <div key={item?.id} className="image-wrapper">
-              <img
-                src={item?.consultant?.profile_pic || "/avatar11.png"}
-                alt={item?.consultant?.consultant_type}
-                className="consultant-image"
-              />
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                }}
-              >
-                <h3>{item?.consultant?.first_name}</h3>
-                <h3>Id: {item?.consultant_id}</h3>
-                <h3>Order:{item?.total_count}</h3>
+        {activeConsultant?.map((item) => {
+          const consultantType = item?.consultant?.consultant_type;
+          const consultantId = item?.consultant_id;
+          const route =
+            consultantType && navigationRoute[consultantType]
+              ? `${navigationRoute[consultantType]}?${consultantId}`
+              : "/";
+
+          return (
+            <Link
+              key={item?.id}
+              to={route}
+              onClick={() => dispatch(setCurrentConsultant(consultantId))}
+              style={{
+                textDecoration: "none",
+                color: "inherit",
+              }}
+            >
+              <div className="image-wrapper">
+                <img
+                  src={item?.consultant?.profile_pic || "/avatar11.png"}
+                  alt={item?.consultant?.consultant_type}
+                  className="consultant-image"
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                  }}
+                >
+                  <h3>{item?.consultant?.first_name}</h3>
+                  <h3>Id: {consultantId}</h3>
+                  <h3>Order: {item?.total_count}</h3>
+                </div>
               </div>
-            </div>
-          </>
-        ))}
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

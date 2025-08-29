@@ -35,7 +35,7 @@ const ConsltantOverview = () => {
           className="dashboard-card-container-grid"
           style={{ marginTop: "10px" }}
         >
-          {overviewItems.map((item) => (
+          {overviewItems?.map((item) => (
             <CategoryCard
               key={item.name}
               label={item.name}

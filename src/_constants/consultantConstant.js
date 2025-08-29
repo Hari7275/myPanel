@@ -264,19 +264,19 @@ export const getStatusColor = (value) => {
     case 2:
       return "#4CAF50"; // Green - Confirmed
     case 3:
-      return "#2196F3"; // Blue - Running
+      return "#8A8CD9"; // Blue - Running
     case 4:
       return "#008000"; // Dark Green - Completed
     case 5:
-      return "#DC143C"; // Crimson - Cancelled
+      return "#1C1C1C99"; // Crimson - Cancelled
     case 6:
-      return "#FF0000"; // Red - Rejected
+      return "#DC143C"; //  - Rejected
     case 7:
       return "#FFD700"; // Gold - Waiting
     case 8:
       return "#FF6347"; // Tomato - User Not Responded
     case 9:
-      return "#FF4500"; // Orange Red - Consultant Not Responded
+      return "#964020ff"; // Orange Red - Consultant Not Responded
     default:
       return "#808080"; // Gray - Unknown
   }

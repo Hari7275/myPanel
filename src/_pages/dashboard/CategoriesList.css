@@ -160,17 +160,21 @@
 
 .image-wrapper {
   aspect-ratio: 1/1;
-  /* overflow: hidden; */
-  /* border: 1px solid #1C1C1C; */
-  /* border-radius: 50%; */
-  /* box-sizing: border-box; */
-  /* Important to include padding in width */
+
+  /* border: 1px solid #1c1c1c; */
+  cursor: pointer;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #434d56;
-  font-size: 14px;
+  font-size: 12px;
+    transition: transform 0.3s ease-in-out; /* smooth animation */
+}
+
+.image-wrapper:hover {
+  transform: scale(1.05); /* zoom in */
 }
 
 .consultant-image {
@@ -194,8 +198,6 @@
   gap: 20px;
   /* padding: 0 15px; */
   flex-wrap: wrap;
-
-   
 }
 
 .active-consultant-card {
@@ -212,7 +214,6 @@
   box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.15) !important;
   backdrop-filter: blur(15px);
   border-radius: 10px;
-  
 }
 
 .left-cards {

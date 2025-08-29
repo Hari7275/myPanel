@@ -29,8 +29,10 @@ const DragAndDropOrder = ({
 
   // Update dragItems when selectedRow changes
   useEffect(() => {
-    if (selectedRow && selectedRow.length > 0) {
+    if (selectedRow && selectedRow?.length > 0) {
       setDragItems(selectedRow);
+    } else {
+      setDragItems([]);
     }
   }, [selectedRow]);
 
@@ -106,7 +108,7 @@ const DragAndDropOrder = ({
                   position: "relative",
                 }}
               >
-                {dragItems.map((item, index) => (
+                {dragItems?.map((item, index) => (
                   <Draggable
                     key={item}
                     draggableId={item.toString()}
@@ -142,7 +144,7 @@ const DragAndDropOrder = ({
           </Droppable>
         </DragDropContext>
       </div>
-      {selectedRow.length > 1 && (
+      {selectedRow?.length > 1 && (
         <div style={{ marginTop: "30px", textAlign: "center" }}>
           <button
             className="fifthButton"

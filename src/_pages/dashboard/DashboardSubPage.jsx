@@ -13,7 +13,7 @@ import BasicArea from "./BasicArea";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import UserOverview from "./UserOverview";
-import ConsltantOverview from "./consultantOverview/ConsultantOverview"
+import ConsltantOverview from "./consultantOverview/ConsultantOverview";
 import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 import ReferralTracking from "./referralTracking/ReferralTracking";
@@ -108,19 +108,24 @@ const DashboardSubPage = () => {
               />
             ))}
           </div>
-          <span
+          <div
             style={{
               display: "flex",
-              justifyContent: "end",
-              marginRight: "30px",
-              fontSize: "25px",
-              cursor: "pointer",
-              fontWeight: "600",
+              justifyContent: "flex-end",
+              padding: "5px 10px",
             }}
-            onClick={handleClick}
           >
-            View All
-          </span>
+            <span
+              style={{
+                fontSize: "25px",
+                cursor: "pointer",
+                fontWeight: "600",
+              }}
+              onClick={handleClick}
+            >
+              View All
+            </span>
+          </div>
         </div>
 
         {/* <div className=" dashboard-main-card ">
@@ -208,7 +213,7 @@ const DashboardSubPage = () => {
             ))}
           </div>
         </div> */}
-        <div className="second-sub-div" style={{ margin: '0px 40px' }}>
+        <div className="second-sub-div" style={{ margin: "0px 40px" }}>
           <div className="dashboard-sub-grid">
             <BasicArea />
             {/* <UserOverview /> */}
@@ -218,7 +223,7 @@ const DashboardSubPage = () => {
             <TrafficConsultant />
             <ConsltantOverview />
           </div>
-          <div className="dashboard-sub-grid" style={{marginBottom:"40px"}}>
+          <div className="dashboard-sub-grid" style={{ marginBottom: "40px" }}>
             <TopActiveConsultants />
             <RevenueByLocation />
           </div>

@@ -2,6 +2,7 @@
 import { format } from "date-fns";
 // import { ArrowRight } from "lucide-react";
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
+import { getStatusColor } from "../../../_constants/consultantConstant";
 
 export const ORDERCHARTCOLUMN = [
   {
@@ -54,6 +55,8 @@ export const ORDERCHARTCOLUMN = [
   {
     Header: "Status",
     accessor: "status",
-    Cell: ({ value }) => OrderStatus(value),
+    Cell: ({ value }) => (
+      <span style={{ color: getStatusColor(value) }}>{OrderStatus(value)}</span>
+    ),
   },
 ];

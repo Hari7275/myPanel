@@ -113,6 +113,10 @@ const NotificationBell = () => {
       accessor: "sender_id",
     },
     {
+      Header: "Type",
+      accessor: "key",
+    },
+    {
       Header: "Consultant Id",
       accessor: "id",
     },
