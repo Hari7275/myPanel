@@ -221,15 +221,23 @@ export const OrderType = (value) => {
     case 4:
       return "Anonymous Call";
     case 5:
-      return "Privat Call";
+      return "Private Call";
     case 6:
-      return "Gifts";
+      return "Live";
     case 7:
-      return "Live Video Call";
-    case 8:
-      return "Live Audio Call";
-    case 9:
       return "Live Chat";
+    case 8:
+      return "Live Audio";
+    case 9:
+      return "Live Video";
+    case 10:
+      return "Session Chat";
+    case 11:
+      return "Session Audio Call";
+    case 12:
+      return "Session Video Call";
+    default:
+      return "unknown";
   }
 };
 
@@ -255,7 +263,6 @@ export const OrderStatus = (value) => {
       return "CONSULTANT_NOT_RESPONDED";
   }
 };
-
 
 export const getStatusColor = (value) => {
   switch (Number(value)) {
