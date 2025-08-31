@@ -48,6 +48,11 @@ const UserOverview = () => {
       <div className="userProfile-container profile-right-sub-container">
         <div className="userProfile-card">
           <footer className="userProfile-footer">
+            <InfoItem
+              label="Phone no."
+              value={userData?.phone_number || "N/A"}
+            />
+            <div className="line"></div>
             <InfoItem label="Eduction" value={userData?.education || "N/A"} />
             <div className="line"></div>
 
