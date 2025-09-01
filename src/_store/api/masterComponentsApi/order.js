@@ -3,13 +3,26 @@ import apiSlice from "../api";
 export const orderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getOrderList: builder.query({
-      query: ({ page, size }) => ({
-        url: `api/v1/consultant/management/order/admin/all-orders?page=${page}&size=${size}`,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-      }),
+      query: ({ page, size, user_id, consultant_id }) => {
+        const params = new URLSearchParams({
+          page: page,
+          size: size,
+        });
+
+        if (user_id != null) {
+          params.append("user_id", user_id);
+        }
+        if (consultant_id != null) {
+          params.append("consultant_id", consultant_id);
+        }
+        return {
+          url: `api/v1/consultant/management/order/admin/all-orders?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
       providesTags: ["order"],
     }),
 

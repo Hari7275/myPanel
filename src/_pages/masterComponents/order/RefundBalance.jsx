@@ -6,10 +6,9 @@ import { Atom } from "react-loading-indicators";
 import toast from "react-hot-toast";
 
 const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
-  const [transactionMode, setTransactionMode] = useState("userRefund");
   const [formData, setFormData] = useState({
     userId: selectedRow.user_id,
-    amount: selectedRow?.flute_earning || "",
+    amount: selectedRow?.order_revenue || "",
     description: "",
     is_forgin: selectedRow.description.userData.is_foreigner || null,
     conversion_rate: selectedRow.conversion_rate || "",
@@ -30,10 +29,10 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // Validate amount based on flute_earning
+    // Validate amount based on order_revenue
     if (name === "amount") {
       const numValue = parseFloat(value);
-      const maxAmount = parseFloat(selectedRow?.flute_earning || 0);
+      const maxAmount = parseFloat(selectedRow?.order_revenue || 0);
 
       if (numValue > maxAmount) {
         toast.error(`Amount cannot exceed flute earning of ${maxAmount}`);
@@ -86,32 +85,17 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       parseFloat(formData.conversion_rate)
     );
 
-    let apiPayload = {};
+    // User Refund API payload
+    const apiPayload = {
+      user_id: formData.userId,
+      transaction_type: "credit",
+      type: "refund",
+      amount: finalAmount, // Use the calculated final amount
+      status: "successful",
+      description: formData.description || "User Refund",
+      reference_id: selectedRow?.id,
+    };
 
-    if (transactionMode === "userRefund") {
-      // User Refund API payload
-      apiPayload = {
-        user_id: formData.userId,
-        transaction_type: "credit",
-        type: "refund",
-        amount: finalAmount, // Use the calculated final amount
-        status: "successful",
-        description: formData.description || "User Refund",
-        reference_id: selectedRow?.id,
-      };
-    } else {
-      // Consultant Debit API payload
-      apiPayload = {
-        consultant_id: selectedRow?.consultant_id,
-        transaction_type: "debit",
-        type: "consultant_debit",
-        amount: finalAmount, // Use the calculated final amount
-        status: "successful",
-        description: formData.description || "Consultant Debit",
-        order_id: selectedRow?.id,
-        user_id: formData.userId,
-      };
-    }
     console.log("apiPayload", apiPayload);
 
     try {
@@ -123,14 +107,14 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
         // Reset form
         setFormData({
           userId: selectedRow.user_id,
-          amount: selectedRow?.flute_earning || "",
+          amount: selectedRow?.order_revenue || "",
           description: "",
           is_forgin: selectedRow.description.userData.is_foreigner || null,
           conversion_rate: selectedRow.conversion_rate || "",
         });
         setWordCount(0);
       } else {
-        toast.error(response?.data?.error);
+        toast.error(response?.data?.message);
         return;
       }
     } catch (error) {
@@ -170,52 +154,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             textAlign: "center",
           }}
         >
-          {transactionMode === "userRefund"
-            ? "User Refund"
-            : "Consultant Debit"}
+          User Refund
         </h2>
-
-        {/* Transaction Mode Selection */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginBottom: "25px",
-            gap: "20px",
-          }}
-        >
-          <button
-            onClick={() => setTransactionMode("userRefund")}
-            style={{
-              padding: "10px 20px",
-              backgroundColor:
-                transactionMode === "userRefund" ? "#1c2434" : "#e0e0e0",
-              color: transactionMode === "userRefund" ? "white" : "black",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontWeight: transactionMode === "userRefund" ? "bold" : "normal",
-            }}
-          >
-            User Refund
-          </button>
-          <button
-            onClick={() => setTransactionMode("consultantDebit")}
-            style={{
-              padding: "10px 20px",
-              backgroundColor:
-                transactionMode === "consultantDebit" ? "#1c2434" : "#e0e0e0",
-              color: transactionMode === "consultantDebit" ? "white" : "black",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-              fontWeight:
-                transactionMode === "consultantDebit" ? "bold" : "normal",
-            }}
-          >
-            Consultant Debit
-          </button>
-        </div>
 
         {/* Amount Field */}
         <div className="userProfile-grid-item">
@@ -224,7 +164,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             <span
               style={{ fontSize: "14px", color: "#666", marginLeft: "10px" }}
             >
-              (Max: {formatAmountDisplay(selectedRow?.flute_earning)})
+              (Max: {formatAmountDisplay(selectedRow?.order_revenue)})
             </span>
           </label>
           <input
@@ -235,7 +175,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             placeholder="Enter amount"
             className="userProfile-input-field"
             min={0}
-            max={selectedRow?.flute_earning || 0}
+            max={selectedRow?.order_revenue || 0}
             step="1"
           />
           {formData.is_forgin && formData.conversion_rate && (

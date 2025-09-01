@@ -6,6 +6,8 @@ import { Atom } from "react-loading-indicators";
 import { ArrowRight, Pencil } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
+import { debounce } from "lodash";
+
 const OrderLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -14,15 +16,24 @@ const OrderLists = () => {
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [refundBalance, setRefundBalance] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [consultantId, setConsultantId] = useState(null);
+
+  // Only include user_id if it has a truthy value (not null, undefined, or empty string)
+  const queryParams = {
+    page,
+    size: pageSize,
+    ...(userId && userId.trim() !== "" ? { user_id: userId } : {}),
+    ...(consultantId && consultantId.trim() !== ""
+      ? { consultant_id: consultantId }
+      : {}),
+  };
 
   const {
     data: fetchData,
     isLoading,
     error,
-  } = useGetOrderListQuery({
-    page,
-    size: pageSize,
-  });
+  } = useGetOrderListQuery(queryParams);
 
   const toggleCompleteOrder = (value) => {
     console.log("first...", value);
@@ -35,6 +46,7 @@ const OrderLists = () => {
     setRefundBalance(!refundBalance);
   };
   // const columns = useMemo(() => COLUMNORDER, []);
+
   const columns = useMemo(
     () => [
       ...COLUMNORDER,
@@ -79,6 +91,65 @@ const OrderLists = () => {
     }
   }, [fetchData]);
 
+  const debouncedSearchUserId = debounce((value) => setUserId(value), 500);
+  const debouncedSearchConsultantId = debounce(
+    (value) => setConsultantId(value),
+    500
+  );
+  const handleUserIdSearch = (e) => {
+    setPage(1);
+    debouncedSearchUserId(e?.target?.value);
+  };
+  const handleConsultantIdSearch = (e) => {
+    setPage(1);
+    debouncedSearchConsultantId(e?.target?.value);
+  };
+
+  const customFilterComponent = () => (
+    <div style={{ width: "100%", height: "35px" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by user id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleUserIdSearch}
+      />
+      <input
+        className="inputBox"
+        placeholder="Search by consultant id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
+      {/* <input
+        className="inputBox"
+        placeholder="Search by Name"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleNameSearch}
+      />
+      <input
+        className="inputBox"
+        placeholder="Search by Phone Number"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleUserPhoneNumberSearch}
+      /> */}
+    </div>
+  );
+
   const totalPage = fetchData?.meta?.total_page || 1;
 
   if (isLoading) {
@@ -98,6 +169,7 @@ const OrderLists = () => {
         includeActions={false}
         tableTitle="Order List"
         dynamicPagination={dynamicPagination}
+        customFilterComponent={customFilterComponent}
         totalPage={totalPage}
         currentPage={page}
         pageSize={pageSize}

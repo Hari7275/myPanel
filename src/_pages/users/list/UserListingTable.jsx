@@ -213,9 +213,9 @@ const UserListingTable = () => {
           {selectedImage && (
             <div>
               <img src={selectedImage} alt="Selected" className="large-image" />
-              <button className="image-modal" onClick={toggleModal}>
+              {/* <button className="image-modal" onClick={toggleModal}>
                 X
-              </button>
+              </button> */}
             </div>
           )}
         </Modal>
