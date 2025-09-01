@@ -99,6 +99,7 @@ import AdminPermission from "./_pages/admin/AdminPermission/AdminPermission";
 import PermissionGroup from "./_pages/admin/permissionGroup/PermissionGroup";
 import AdminUser from "./_pages/admin/admin_users/AdminUser";
 import AssignPermissionToRole from "./_pages/admin/adminRoles/AssignPermissionToRole";
+import PayableAmountHistory from "./_pages/payments/payableAmountHistory/PayableAmountHistory";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -215,6 +216,7 @@ const Layout = () => (
           />
           <Route path="payout-request" element={<ConsultantPayout />} />
           <Route path="payout-History" element={<ConsultantPayoutHistory />} />
+          <Route path="payable-History" element={<PayableAmountHistory />} />
           <Route path="coupon" element={<CouponListing />} />
           {/* *************************************************QdList */}
 

@@ -43,3 +43,29 @@ const statusMap = {
   2: "Success",
   3: "Rejected",
 };
+
+export const PAYABLECOLUMN = [
+  // {
+  //   Header: "Id",
+  //   accessor: "id",
+  // },
+
+  {
+    Header: "Consultant Id",
+    accessor: "consultant_id",
+  },
+
+  {
+    Header: "Total Earning (₹)",
+    accessor: "total_credit",
+  },
+
+  {
+    Header: " Total Debit Amount (₹)",
+    accessor: "total_debit",
+  },
+  {
+    Header: "Payable Amount (₹)",
+    accessor: "remaining_amount",
+  },
+];

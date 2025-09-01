@@ -41,7 +41,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
   const route =
     consultantType && navigationRoute[consultantType]
       ? `${navigationRoute[consultantType]}?${value}`
-      : "/";
+      : "";
   return (
     <Link
       to={route}

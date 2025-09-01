@@ -24,8 +24,22 @@ export const payoutApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["payout"],
     }),
+
+    getPayableList: builder.query({
+      query: () => ({
+        url: `/api/v1/consultant/payment/admin/monthly-transactions`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["payout"],
+    }),
   }),
 });
 
-export const { useGetPayoutListQuery, useUpdatePayoutMutation } =
-  payoutApiSlice;
+export const {
+  useGetPayoutListQuery,
+  useUpdatePayoutMutation,
+  useGetPayableListQuery,
+} = payoutApiSlice;

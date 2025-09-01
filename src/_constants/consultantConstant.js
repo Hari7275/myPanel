@@ -223,13 +223,13 @@ export const OrderType = (value) => {
     case 5:
       return "Private Call";
     case 6:
-      return "Live";
+      return "Gift";
     case 7:
       return "Live Chat";
     case 8:
-      return "Live Audio";
+      return "Live Audio Call";
     case 9:
-      return "Live Video";
+      return "Live Video Call";
     case 10:
       return "Session Chat";
     case 11:

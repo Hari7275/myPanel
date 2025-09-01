@@ -346,7 +346,7 @@ const Sidebar = () => {
                   </div>
                 </Link>
 
-                <Link to="payout-request">
+                {/* <Link to="payout-request">
                   <div
                     className={`menu-item ${
                       activeItem === "payout-request" ? "active" : ""
@@ -355,7 +355,7 @@ const Sidebar = () => {
                   >
                     <div className="dropdown-item">Payout Request</div>
                   </div>
-                </Link>
+                </Link> */}
 
                 <Link to="payout-History">
                   <div
@@ -365,6 +365,17 @@ const Sidebar = () => {
                     onClick={() => handleItemClick("payout-History")}
                   >
                     <div className="dropdown-item">Payout History</div>
+                  </div>
+                </Link>
+
+                <Link to="payable-History">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "payable-History" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("payable-History")}
+                  >
+                    <div className="dropdown-item">Payable Log</div>
                   </div>
                 </Link>
 
