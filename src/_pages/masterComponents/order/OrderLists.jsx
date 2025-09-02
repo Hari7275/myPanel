@@ -1,3 +1,5 @@
+// OrderLists.js - Updated version with Filter integration
+
 import React, { useMemo, useState, useEffect } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNORDER } from "./orderColumn";
@@ -7,19 +9,30 @@ import { ArrowRight, Pencil } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
+import Button from "@mui/material/Button";
+import FilterPopover from "../../../_components/reuseComponents/PopoverComponent";
 
 const OrderLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
-  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [refundBalance, setRefundBalance] = useState(false);
   const [userId, setUserId] = useState(null);
   const [consultantId, setConsultantId] = useState(null);
 
-  // Only include user_id if it has a truthy value (not null, undefined, or empty string)
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    orderType: "",
+    status: "",
+  });
+
+  // Build query params including filters
   const queryParams = {
     page,
     size: pageSize,
@@ -27,6 +40,15 @@ const OrderLists = () => {
     ...(consultantId && consultantId.trim() !== ""
       ? { consultant_id: consultantId }
       : {}),
+    // Add filter params
+    ...(appliedFilters.startDate
+      ? { start_date: appliedFilters.startDate }
+      : {}),
+    ...(appliedFilters.endDate ? { end_date: appliedFilters.endDate } : {}),
+    ...(appliedFilters.orderType
+      ? { order_type: appliedFilters.orderType }
+      : {}),
+    ...(appliedFilters.status ? { status: appliedFilters.status } : {}),
   };
 
   const {
@@ -45,7 +67,6 @@ const OrderLists = () => {
     setSelectedRow(value);
     setRefundBalance(!refundBalance);
   };
-  // const columns = useMemo(() => COLUMNORDER, []);
 
   const columns = useMemo(
     () => [
@@ -96,27 +117,33 @@ const OrderLists = () => {
     (value) => setConsultantId(value),
     500
   );
+
   const handleUserIdSearch = (e) => {
     setPage(1);
     debouncedSearchUserId(e?.target?.value);
   };
+
   const handleConsultantIdSearch = (e) => {
     setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
-      <input
-        className="inputBox"
-        placeholder="Search by user id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleUserIdSearch}
-      />
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <input
         className="inputBox"
         placeholder="Search by consultant id"
@@ -127,26 +154,35 @@ const OrderLists = () => {
         }}
         onChange={handleConsultantIdSearch}
       />
-      {/* <input
-        className="inputBox"
-        placeholder="Search by Name"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleNameSearch}
-      />
       <input
         className="inputBox"
-        placeholder="Search by Phone Number"
+        placeholder="Search by user id"
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "20%",
         }}
-        onChange={handleUserPhoneNumberSearch}
-      /> */}
+        onChange={handleUserIdSearch}
+      />
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+        </Button>
+
+        <FilterPopover
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 

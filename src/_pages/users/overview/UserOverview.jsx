@@ -69,8 +69,14 @@ const UserOverview = () => {
             <div className="line"></div>
 
             <InfoItem
-              label="Live Loaction"
-              value={userData?.live_location || "N/A"}
+              label="Live Location"
+              value={
+                userData?.current_location?.city &&
+                userData.current_location.state &&
+                userData.current_location.country
+                  ? `${userData.current_location.city}, ${userData.current_location.state}, ${userData.current_location.country}`
+                  : "N/A"
+              }
             />
             <div className="line"></div>
 
@@ -79,13 +85,25 @@ const UserOverview = () => {
 
             <InfoItem
               label="Current Address"
-              value={userData?.current_address || "N/A"}
+              value={
+                userData?.living_location?.city &&
+                userData.living_location.state &&
+                userData.living_location.country
+                  ? `${userData.living_location.city}, ${userData.living_location.state}, ${userData.living_location.country}`
+                  : "N/A"
+              }
             />
             <div className="line"></div>
 
             <InfoItem
               label="Permanent Address"
-              value={userData?.permanent_address || "N/A"}
+              value={
+                userData?.hometown_location?.city &&
+                userData.hometown_location.state &&
+                userData.hometown_location.country
+                  ? `${userData.hometown_location.city}, ${userData.hometown_location.state}, ${userData.hometown_location.country}`
+                  : "N/A"
+              }
             />
             <div className="line"></div>
 

@@ -212,6 +212,24 @@ const Sidebar = () => {
                   </div>
                 </Link>
               )}
+              {/* {permissions?.["astrologer"] && ( */}
+              <Link to="/profile-review">
+                <div
+                  className={`menu-item ${
+                    activeItem === "profile-review" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("profile-review")}
+                >
+                  {/* <HeadphonesOutlinedIcon /> */}
+                  <img
+                    src="/adminPannel_icons/Coach.png"
+                    width="24"
+                    height="24"
+                  />
+                  <span>Review Request</span>
+                </div>
+              </Link>
+              {/* )} */}
             </div>
           </div>
 

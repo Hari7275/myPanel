@@ -71,10 +71,9 @@ const Navbar = () => {
     "/subscriptions-plans": "Subscription Plan",
     "/payout-request": "Payout Request",
     "/payout-History": "Payout History",
+    "/payable-History": "Payable Log",
     "/coupon": "Coupon List",
     "/blog-count": "Blog View Count",
-
-
 
     // prompt  , profile  options
 
@@ -82,8 +81,6 @@ const Navbar = () => {
     "/prompt-question": "prompt Question",
     "/user-passion": "Passion Options",
     "/user-desire": "User Desires",
-
-
   };
 
   //
