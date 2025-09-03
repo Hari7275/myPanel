@@ -30,6 +30,7 @@ const DyCommonTable = ({
   pageSize,
   setPage,
   setPageSize,
+  setShowMoreCloumn,
 }) => {
   const dispatch = useDispatch();
 
@@ -83,8 +84,8 @@ const DyCommonTable = ({
         ...columns,
         ...(includeActions
           ? [
-            // Define custom actions here if required
-          ]
+              // Define custom actions here if required
+            ]
           : []),
       ]);
     }

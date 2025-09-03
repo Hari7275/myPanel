@@ -5,7 +5,8 @@ import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { getStatusColor } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
-const CustomIdCell = ({ value }) => {
+const CustomIdCell = ({ value, row }) => {
+  const userName = row?.original?.description?.userData.name;
   const dispatch = useDispatch();
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
@@ -17,7 +18,7 @@ const CustomIdCell = ({ value }) => {
       style={{ textDecoration: "none" }}
     >
       <span className="orderId-color" style={{ cursor: "pointer" }}>
-        {value}
+        {userName} ({value})
       </span>
     </Link>
   );
@@ -74,6 +75,7 @@ export const COLUMNORDER = [
     accessor: "user_id",
     Cell: CustomIdCell,
   },
+
   {
     Header: "Type",
     accessor: "order_type",
@@ -81,16 +83,21 @@ export const COLUMNORDER = [
   },
 
   {
-    Header: "Revenue",
+    Header: "Revenue/Flute Earning",
     accessor: "order_revenue",
+    Cell: ({ row }) => (
+      <span>
+        {row.original.order_revenue}/{row.original.flute_earning}
+      </span>
+    ),
   },
 
+  // {
+  //   Header: "Flute Earning",
+  //   accessor: "flute_earning",
+  // },
   {
-    Header: "Flute Earning",
-    accessor: "flute_earning",
-  },
-  {
-    Header: "Start Time",
+    Header: "Time",
     accessor: "createdAt",
     Cell: ({ value }) => {
       if (!value) return "null";

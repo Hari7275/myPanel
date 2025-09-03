@@ -275,7 +275,7 @@ export const getStatusColor = (value) => {
     case 4:
       return "#008000"; // Dark Green - Completed
     case 5:
-      return "#1C1C1C99"; // Crimson - Cancelled
+      return "#ED0C0C"; // Crimson - Cancelled
     case 6:
       return "#DC143C"; //  - Rejected
     case 7:
