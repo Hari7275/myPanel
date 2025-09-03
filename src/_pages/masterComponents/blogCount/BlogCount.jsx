@@ -4,30 +4,38 @@ import { BLOGCOUNTCOLUMNS } from "./blogCountColumn";
 import { useGetBlogCountListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import { debounce } from "lodash";
+import Button from "@mui/material/Button";
+import BlogFilter from "./BlogFilter";
 
 const BlogCount = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(15);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [blogSlug, setBlogSlug] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   const formatDate = (date) => {
     return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
   };
 
   const today = new Date();
-  // Initialize with empty strings instead of today's date for better UX
-  const [start_date, setStart_date] = useState("");
-  const [end_date, setEnd_Date] = useState("");
+
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+  });
 
   // Build query params conditionally
   const queryParams = {
     page,
     size: pageSize,
     ...(blogSlug && { title: blogSlug }),
-    ...(start_date && { start_date }),
-    ...(end_date && { end_date }),
+
+    ...(appliedFilters.startDate && { start_date: appliedFilters.startDate }),
+    ...(appliedFilters.endDate && { end_date: appliedFilters.endDate }),
   };
 
   const {
@@ -56,56 +64,39 @@ const BlogCount = () => {
     }
   }, [fetchData]);
 
-  // Apply debounce to search handlers
-  const debouncedSearchStartDate = debounce(
-    (value) => setStart_date(value),
-    500
-  );
-  const debouncedSearchEndDate = debounce((value) => setEnd_Date(value), 500);
-
-  const handleStartDateSearch = (e) => {
-    const value = e?.target?.value || "";
-    setPage(1);
-    debouncedSearchStartDate(value);
-    
-    // Clear blog search when using date filters
-    if (value && blogSlug) {
-      setBlogSlug("");
-    }
-  };
-
-  const handleEndDateSearch = (e) => {
-    const value = e?.target?.value || "";
-    setPage(1);
-    debouncedSearchEndDate(value);
-    
-    // Clear blog search when using date filters
-    if (value && blogSlug) {
-      setBlogSlug("");
-    }
-  };
-
   const debouncedSearchBlogSlug = debounce((value) => setBlogSlug(value), 500);
 
   const handleBlogSlugSearch = (e) => {
     const value = e?.target?.value || "";
-    
-    // Only clear dates if there's a search value
-    if (value) {
-      setStart_date("");
-      setEnd_Date("");
-    }
-    
+    setSearchInput(value); // Update input immediately
     setPage(1);
+    setAppliedFilters({
+      startDate: "",
+      endDate: "",
+    }); // Fix: properly update the state
+
     debouncedSearchBlogSlug(value);
+  };
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
   };
 
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px", display: "flex", alignItems: "center" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <input
         className="inputBox"
         placeholder="Search by title"
-        value={blogSlug}
+        // value={blogSlug}
+        value={searchInput}
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
@@ -113,47 +104,25 @@ const BlogCount = () => {
         }}
         onChange={handleBlogSlugSearch}
       />
-      <label
-        style={{
-          marginLeft: "25px",
-        }}
-      >
-        Start Date
-      </label>
-      <input
-        className="inputBox"
-        value={start_date}
-        type="date"
-        placeholder="Start date"
-        style={{
-          marginLeft: "5px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleStartDateSearch}
-        max={end_date || undefined} // Prevent start date from being after end date
-      />
 
-      <label
-        style={{
-          marginLeft: "25px",
-        }}
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
       >
-        End Date
-      </label>
-      <input
-        className="inputBox"
-        type="date"
-        value={end_date}
-        placeholder="End date"
-        style={{
-          marginLeft: "5px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleEndDateSearch}
-        min={start_date || undefined} // Prevent end date from being before start date
-      />
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+        </Button>
+
+        <BlogFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 

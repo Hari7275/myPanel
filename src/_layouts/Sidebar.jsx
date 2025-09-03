@@ -259,15 +259,27 @@ const Sidebar = () => {
                 <span>User Subscription List</span>
               </div>
             </Link>
-            <Link to="/order">
+            <Link to="payable-History">
               <div
                 className={`menu-item ${
-                  activeItem === "Order" ? "active" : ""
+                  activeItem === "payable-History" ? "active" : ""
                 }`}
-                onClick={() => handleItemClick("Order")}
+                onClick={() => handleItemClick("payable-History")}
               >
                 <CardGiftcardOutlinedIcon />
-                <span>Orders</span>
+                <span>Payable Log</span>
+              </div>
+            </Link>
+
+            <Link to="payout-History">
+              <div
+                className={`menu-item ${
+                  activeItem === "payout-History" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("payout-History")}
+              >
+                <CardGiftcardOutlinedIcon />
+                <span>Payout History</span>
               </div>
             </Link>
 
@@ -375,7 +387,7 @@ const Sidebar = () => {
                   </div>
                 </Link> */}
 
-                <Link to="payout-History">
+                {/* <Link to="payout-History">
                   <div
                     className={`menu-item ${
                       activeItem === "payout-History" ? "active" : ""
@@ -384,9 +396,9 @@ const Sidebar = () => {
                   >
                     <div className="dropdown-item">Payout History</div>
                   </div>
-                </Link>
+                </Link> */}
 
-                <Link to="payable-History">
+                {/* <Link to="payable-History">
                   <div
                     className={`menu-item ${
                       activeItem === "payable-History" ? "active" : ""
@@ -395,7 +407,7 @@ const Sidebar = () => {
                   >
                     <div className="dropdown-item">Payable Log</div>
                   </div>
-                </Link>
+                </Link> */}
 
                 <Link to="coupon">
                   <div
@@ -732,12 +744,24 @@ const Sidebar = () => {
             {/* {permissions?.[("Dashboard", "Listeners")]?.includes(
               "Review Profilkem"
             ) && ( */}
-            <Link to="/profile-review">
+            <Link to="/order">
               <div className="item">
-                <CategoryOutlinedIcon />
-                <span>Review</span>
+                <CardGiftcardOutlinedIcon />
+                <span>Orders</span>
               </div>
             </Link>
+
+            {/* <Link to="/order">
+              <div
+                className={`menu-item ${
+                  activeItem === "Order" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("Order")}
+              >
+                <CardGiftcardOutlinedIcon />
+                <span>Orders</span>
+              </div>
+            </Link> */}
             {/* )} */}
           </div>
         </aside>

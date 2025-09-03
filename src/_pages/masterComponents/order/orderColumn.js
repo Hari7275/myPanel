@@ -91,7 +91,7 @@ export const COLUMNORDER = [
   },
   {
     Header: "Start Time",
-    accessor: "call_start_time",
+    accessor: "createdAt",
     Cell: ({ value }) => {
       if (!value) return "null";
       const date = new Date(value);
@@ -101,18 +101,18 @@ export const COLUMNORDER = [
       });
     },
   },
-  {
-    Header: "End Time",
-    accessor: "call_end_time",
-    Cell: ({ value }) => {
-      if (!value) return "null";
-      const date = new Date(value);
-      return date.toLocaleString("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
-    },
-  },
+  // {
+  //   Header: "End Time",
+  //   accessor: "call_end_time",
+  //   Cell: ({ value }) => {
+  //     if (!value) return "null";
+  //     const date = new Date(value);
+  //     return date.toLocaleString("en-US", {
+  //       dateStyle: "medium",
+  //       timeStyle: "short",
+  //     });
+  //   },
+  // },
   {
     Header: "Duration(min)",
     accessor: "actual_duration",
