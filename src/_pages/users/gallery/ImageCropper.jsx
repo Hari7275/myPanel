@@ -102,14 +102,14 @@ const ImageCropper = ({
           <Cropper
             className="reactCropper_cropper"
             style={{ height: `${height}px`, width: `${width}px` }}
-            initialAspectRatio={16 / 9}
+            initialAspectRatio={1 / 1}
             src={imageUrl}
             ref={cropperRef}
             crossOrigin="anonymous"
             viewMode={1}
             guides={true}
-            minCropBoxHeight={10}
-            minCropBoxWidth={10}
+            // minCropBoxHeight={10}
+            // minCropBoxWidth={10}
             background={false}
             responsive={true}
             checkOrientation={true}
@@ -118,6 +118,8 @@ const ImageCropper = ({
             cropBoxResizable={true}
             minContainerWidth={10}
             minContainerHeight={50}
+            minCropBoxWidth={100} // Set minimum crop box width
+            minCropBoxHeight={100} // Set minimum crop box heights
           />
         )}
 

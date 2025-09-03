@@ -119,7 +119,7 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
               cropBoxResizable={true} // Allows resizing the crop box
               cropBoxMovable={true} // Allows moving the crop box
               minCropBoxWidth={100} // Set minimum crop box width
-              minCropBoxHeight={100} // Set minimum crop box height
+              minCropBoxHeight={100} // Set minimum crop box heights
             />
           )}
 
