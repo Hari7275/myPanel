@@ -176,7 +176,7 @@ const WalletDetails = () => {
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <div
           className="dashboard-card-container-grid"
-          style={{ marginTop: "10px" }}
+         style={{ margin: "10px 0" , height:"60vh" , overflow:"scroll" }}
         >
           {cardData.map((card, index) => (
             <CategoryCard

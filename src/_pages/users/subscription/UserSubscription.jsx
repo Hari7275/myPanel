@@ -95,26 +95,26 @@ const UserSubscription = () => {
 
   return (
     <>
-      {data.length > 0 ? (
-        <>
-          <CommonTable
-            columns={columns}
-            data={data}
-            includeActions={false}
-            tableTitle="Membership"
-          />
+      {/* {data.length > 0 ? ( */}
+      <>
+        <CommonTable
+          columns={columns}
+          data={data}
+          includeActions={false}
+          tableTitle="Membership"
+        />
 
-          {description && selectedRow && (
-            <Description
-              isOpen={description}
-              onClose={toggleDescription}
-              Descriptions={selectedRow?.description || ""}
-            />
-          )}
-        </>
-      ) : (
+        {description && selectedRow && (
+          <Description
+            isOpen={description}
+            onClose={toggleDescription}
+            Descriptions={selectedRow?.description || ""}
+          />
+        )}
+      </>
+      {/* ) : (
         <div>No plans found</div>
-      )}
+      )} */}
     </>
   );
 };

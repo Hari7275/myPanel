@@ -43,8 +43,8 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
     }),
 
     getConsultantsWallet: builder.query({
-      query: (consultantId) => ({
-        url: `/api/v1/consultant/payment/admin/${consultantId}?page=1&limit=100`,
+      query: ({ consultantId, page, limit }) => ({
+        url: `/api/v1/consultant/payment/admin/${consultantId}?page=${page}&limit=${limit}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

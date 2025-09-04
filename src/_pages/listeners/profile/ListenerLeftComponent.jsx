@@ -243,32 +243,48 @@ const ListenerLeftComponent = () => {
       </div>
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
       <div className="social-icons-section">
-        {socialMediaLinks.facebook && (
-          <a href={socialMediaLinks.facebook} className="fa fa-facebook">
+        {socialMediaLinks?.facebook && (
+          <a
+            href={socialMediaLinks.facebook}
+            className="fa fa-facebook"
+            target="blank"
+          >
             <Facebook />
           </a>
         )}
 
-        {socialMediaLinks.instagram && (
-          <a href={socialMediaLinks.instagram} className="fa fa-instagram">
+        {socialMediaLinks?.instagram && (
+          <a
+            href={socialMediaLinks.instagram}
+            className="fa fa-instagram"
+            target="blank"
+          >
             <Instagram />
           </a>
         )}
 
-        {socialMediaLinks.linkedin && (
-          <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
+        {socialMediaLinks?.linkedin && (
+          <a
+            href={socialMediaLinks.linkedin}
+            className="fa fa-linkedin"
+            target="blank"
+          >
             <Linkedin />
           </a>
         )}
 
-        {socialMediaLinks.x && (
-          <a href={socialMediaLinks.x} className="fa fa-twitter">
+        {socialMediaLinks?.x && (
+          <a href={socialMediaLinks.x} className="fa fa-twitter" target="blank">
             <Twitter />
           </a>
         )}
 
-        {socialMediaLinks.youtube && (
-          <a href={socialMediaLinks.youtube} className="fa fa-youtube">
+        {socialMediaLinks?.youtube && (
+          <a
+            href={socialMediaLinks.youtube}
+            className="fa fa-youtube"
+            target="blank"
+          >
             <Youtube />
           </a>
         )}

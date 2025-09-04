@@ -114,8 +114,6 @@ const AstrologerDetailsComponent = () => {
     // navigate(-1);
   };
 
- 
-
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -232,31 +230,47 @@ const AstrologerDetailsComponent = () => {
       {/* SECOND COLUMN ASTROLOGER DETAILS ROW */}
       <div className="social-icons-section">
         {socialMediaLinks.facebook && (
-          <a href={socialMediaLinks.facebook} className="fa fa-facebook">
+          <a
+            href={socialMediaLinks.facebook}
+            className="fa fa-facebook"
+            target="blank"
+          >
             <Facebook />
           </a>
         )}
 
         {socialMediaLinks.instagram && (
-          <a href={socialMediaLinks.instagram} className="fa fa-instagram">
+          <a
+            href={socialMediaLinks.instagram}
+            className="fa fa-instagram"
+            target="blank"
+          >
             <Instagram />
           </a>
         )}
 
         {socialMediaLinks.linkedin && (
-          <a href={socialMediaLinks.linkedin} className="fa fa-linkedin">
+          <a
+            href={socialMediaLinks.linkedin}
+            className="fa fa-linkedin"
+            target="blank"
+          >
             <Linkedin />
           </a>
         )}
 
         {socialMediaLinks.x && (
-          <a href={socialMediaLinks.x} className="fa fa-twitter">
+          <a href={socialMediaLinks.x} className="fa fa-twitter" target="blank">
             <Twitter />
           </a>
         )}
 
         {socialMediaLinks.youtube && (
-          <a href={socialMediaLinks.youtube} className="fa fa-youtube">
+          <a
+            href={socialMediaLinks.youtube}
+            className="fa fa-youtube"
+            target="blank"
+          >
             <Youtube />
           </a>
         )}
