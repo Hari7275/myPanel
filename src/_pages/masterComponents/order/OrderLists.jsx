@@ -90,7 +90,7 @@ const OrderLists = () => {
                 </span>
               )}
 
-              {row.original.status == 4 && (
+              {row.original.status == 4 && row.original.actual_duration < 2 && (
                 <span className="editIcon">
                   <ArrowRight
                     className="iconSmall"
@@ -175,7 +175,6 @@ const OrderLists = () => {
         >
           Filter
         </Button>
-        
 
         <FilterPopover
           isOpen={showFilterPopover}

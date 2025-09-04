@@ -4,8 +4,8 @@ import { getAdminToken } from "../tokenHelper";
 export const userListingSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUsersList: builder.query({
-      query: ({ page, limit, id, name, user_id, phone_number }) => ({
-        url: `user/profile/all-users?page=${page}&limit=${limit}&name=${name}&user_id=${user_id}&phone=${phone_number}`,
+      query: ({ page, limit, id, name, user_id, phone_number , start_date , end_date }) => ({
+        url: `user/profile/all-users?page=${page}&limit=${limit}&name=${name}&user_id=${user_id}&phone=${phone_number}&start_date=${start_date}&end_date=${end_date}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

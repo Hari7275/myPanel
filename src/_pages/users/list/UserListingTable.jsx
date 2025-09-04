@@ -11,6 +11,8 @@ import Modal from "react-modal";
 import { Atom } from "react-loading-indicators";
 import { debounce } from "lodash";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import UserFilter from "./UserFilter";
+import Button from "@mui/material/Button";
 
 Modal.setAppElement("#root");
 
@@ -27,6 +29,12 @@ const UserListingTable = () => {
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+  });
 
   const dispatch = useDispatch();
   const location = useLocation();
@@ -38,6 +46,8 @@ const UserListingTable = () => {
     name,
     user_id: userId,
     phone_number,
+    start_date: appliedFilters.startDate,
+    end_date: appliedFilters.endDate,
   });
 
   useEffect(() => {
@@ -135,15 +145,28 @@ const UserListingTable = () => {
     debouncedSearchPhone(e?.target?.value);
   };
 
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <input
         className="inputBox"
         placeholder="Search by id"
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleUserIdSearch}
       />
@@ -153,7 +176,7 @@ const UserListingTable = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleNameSearch}
       />
@@ -163,10 +186,29 @@ const UserListingTable = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleUserPhoneNumberSearch}
       />
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+        </Button>
+
+        <UserFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 

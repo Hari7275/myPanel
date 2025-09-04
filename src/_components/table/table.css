@@ -78,7 +78,7 @@ table td {
 }
 
 .inputBox {
-  width: 25%;
+  width: 15%;
   height: 70%;
   border-radius: 4px;
   border: 1px solid rgb(179, 179, 179);
@@ -220,7 +220,5 @@ table th {
   gap: 8px;
 }
 
-
-.tableDiv{
-  
+.tableDiv {
 }
