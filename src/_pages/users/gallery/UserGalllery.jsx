@@ -13,6 +13,7 @@ import ProfilePhoto from "./ProfilePhoto";
 import { useSelector } from "react-redux";
 import { saveAs } from "file-saver";
 import MyGallery from "../../../_constants/MyGallery";
+import toast from "react-hot-toast";
 
 const UserGallery = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -45,8 +46,8 @@ const UserGallery = () => {
       setImageUrls(urls);
 
       setImageStatuses(
-        urls.reduce((acc, photo) => {
-          acc[photo.url] = photo.status;
+        urls?.reduce((acc, photo) => {
+          acc[photo?.url] = photo?.status;
           return acc;
         }, {})
       );
@@ -76,14 +77,14 @@ const UserGallery = () => {
   };
 
   const handleUploadImage = () => {
-    fileInputRef.current.click();
+    fileInputRef?.current?.click();
   };
 
   const handleFileChange = async (event) => {
-    const file = event.target.files[0];
+    const file = event?.target?.files[0];
     if (file) {
       const formData = new FormData();
-      formData.append("image", file);
+      formData?.append("image", file);
 
       console.log("image", file);
 
@@ -92,6 +93,12 @@ const UserGallery = () => {
           id: consultantId,
           body: formData,
         }).unwrap();
+
+        if (response?.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+        }
 
         // Directly update the imageUrls state
         setImageUrls((prevUrls) => [
@@ -104,7 +111,7 @@ const UserGallery = () => {
         // Update imageStatuses state with the new image status
         setImageStatuses((prevStatuses) => ({
           ...prevStatuses,
-          [URL.createObjectURL(file)]: response.data.status, // Update status here
+          [URL.createObjectURL(file)]: response?.data?.status, // Update status here
         }));
 
         // Reset file input
@@ -119,7 +126,15 @@ const UserGallery = () => {
   const handleDelete = async () => {
     if (selectedRow && selectedRow.id) {
       try {
-        await deleteImage({ id: selectedRow.id }).unwrap();
+        const deleteResponse = await deleteImage({
+          id: selectedRow.id,
+        }).unwrap();
+
+        if (deleteResponse.status) {
+          toast.success(deleteResponse.message);
+        } else {
+          toast.error(deleteResponse.message);
+        }
 
         // Remove the deleted image from imageUrls and imageStatuses
         setImageUrls((prevUrls) =>
@@ -207,23 +222,23 @@ const UserGallery = () => {
                   <span style={{ fontSize: "35px", cursor: "pointer" }}>+</span>
                 </div>
               </div>
-              {imageUrls.map((photo, index) => (
+              {imageUrls?.map((photo, index) => (
                 <div key={index} className="image-container">
                   <img
-                    src={photo.url}
+                    src={photo?.url}
                     alt={`Image ${index + 1}`}
                     onClick={() => popupImage(photo, index)}
                     style={{ cursor: "pointer" }}
                   />
 
                   <div className="topnav">
-                    {imageStatuses[photo.url] && (
+                    {imageStatuses[photo?.url] && (
                       <a
                         className={`topnav-${imageStatuses[
-                          photo.url
+                          photo?.url
                         ].toLowerCase()}`}
                       >
-                        {imageStatuses[photo.url]}
+                        {imageStatuses[photo?.url]}
                       </a>
                     )}
                   </div>

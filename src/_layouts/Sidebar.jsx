@@ -159,6 +159,20 @@ const Sidebar = () => {
                   </div>
                 </Link>
               )}
+
+              {/* {permissions?.["user"] && ( */}
+              {/* <Link to="/untracked-user"> */}
+                <div
+                  className={`menu-item ${
+                    activeItem === "untracked-user" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("untracked-user")}
+                >
+                  <GroupOutlinedIcon />
+                  <span>Untracked User</span>
+                </div>
+              {/* </Link> */}
+              {/* )} */}
             </div>
 
             {/* changes for coaches */}

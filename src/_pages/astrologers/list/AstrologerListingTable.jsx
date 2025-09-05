@@ -69,9 +69,9 @@ const AstrologerListingTable = () => {
     : 1;
 
   useEffect(() => {
-    if (location.state) {
-      setPage(location.state.previousPage);
-      setPageSize(location.state.previousPageSize);
+    if (location?.state) {
+      setPage(location?.state?.previousPage);
+      setPageSize(location?.state?.previousPageSize);
     }
   }, [location.state]);
 

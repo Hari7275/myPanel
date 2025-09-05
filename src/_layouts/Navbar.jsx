@@ -20,6 +20,7 @@ const Navbar = () => {
 
   const pathTitleMap = {
     "/user": "User List",
+    "/untracked-user": "Unregistered  User List",
     "/users_Profile": "User Details",
     "/coaches": "Coach List",
     "/auth-consultant": "Unregistered Consultant List",

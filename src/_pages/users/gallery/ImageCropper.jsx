@@ -19,10 +19,14 @@ const ImageCropper = ({
   const [width, setWidth] = useState(200);
   const cropperRef = useRef(null);
   const [updateUserGallery] = useUpdateUserGalleryMutation();
+  const [cropCoords, setCropCoords] = useState({});
 
   const getCropData = () => {
     if (cropperRef?.current?.cropper) {
       const canvas = cropperRef.current.cropper.getCroppedCanvas();
+      const coords = cropperRef.current.cropper.getData();
+      setCropCoords(coords);
+
       setCropData(canvas.toDataURL());
     }
   };
@@ -137,6 +141,20 @@ const ImageCropper = ({
             Back Rotate Image
           </button>
         </div>
+
+        {cropData && (
+          <div className="reactCropper_input-container">
+            <input
+              className="reactCropper_input"
+              value={`x1: ${cropCoords.x}, y1: ${cropCoords.y}, x2: ${
+                cropCoords.x + cropCoords.width
+              }, y2: ${cropCoords.y + cropCoords.height}, width: ${
+                cropCoords.width
+              }, height: ${cropCoords.height}`}
+              readOnly
+            />
+          </div>
+        )}
 
         {cropData && (
           <div className="reactCropper_image-container">

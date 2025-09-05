@@ -1,20 +1,20 @@
-import React, { useRef,  useState } from "react";
+import React, { useRef, useState } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "../cssfolder/ReactCropper.css";
 import { Button } from "@mui/material";
 import { useSelector } from "react-redux";
 
-const ReactCropper = ({  closeImageDelete_Modal }) => {
+const ReactCropper = ({ closeImageDelete_Modal }) => {
   const [cropData, setCropData] = useState("");
   const [cropCoords, setCropCoords] = useState({});
   const [rotate, setRotate] = useState(0);
-  const [height] = useState(200); 
-  const [width] = useState(200); 
+  const [height] = useState(200);
+  const [width] = useState(200);
   const cropperRef = useRef(null);
- 
+
   const selectedImage = useSelector((state) => state.image.coverPhoto);
-  console.log("selectedImg" , selectedImage)
+  console.log("selectedImg", selectedImage);
 
   const getCropData = () => {
     if (cropperRef.current && cropperRef.current.cropper) {
@@ -39,8 +39,8 @@ const ReactCropper = ({  closeImageDelete_Modal }) => {
     }
   };
 
-  const handleUpdate = () => { 
-    console.log("Updated cropped image data:", cropData); 
+  const handleUpdate = () => {
+    console.log("Updated cropped image data:", cropData);
     closeImageDelete_Modal();
   };
 

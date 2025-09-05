@@ -25,6 +25,7 @@ import UserSubscriptionLists from "./_pages/masterComponents/userSubscriptionLis
 import GiftLists from "./_pages/masterComponents/gifts/GiftLists";
 import CoachProfile from "./_pages/coaches/profile/CoachProfile";
 import UsersProfile from "./_pages/users/profile/UsersProfile";
+import UntrackedUser from "./_pages/users/untracked-user/UntrackedUser";
 import AstrologerProfile from "./_pages/astrologers/profile/AstrologerProfile";
 import ListenersProfile from "./_pages/listeners/profile/ListenersProfile";
 import FeedbackList from "./_pages/masterComponents/feedback/FeedbackList";
@@ -140,6 +141,7 @@ const Layout = () => (
               />
             }
           />
+          <Route path="untracked-user" element={<UntrackedUser />} />
           {/* <Route path="coaches" element={<CoachListingTable />} /> */}
           <Route
             path="/coaches"
@@ -150,6 +152,7 @@ const Layout = () => (
               />
             }
           />
+
           <Route path="auth-consultant" element={<AuthConsultantList />} />
           <Route path="listeners" element={<ListenersListingTable />} />
           <Route path="astrologer" element={<AstrologerListingTable />} />
