@@ -23,6 +23,13 @@ const AstrologerPriceListingTable = () => {
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
   );
+  const consultantCateg = useSelector(
+    (state) => state?.consultant?.consultantType
+  );
+
+  const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
+
+  console.log("consultantType", consultantCateg);
   const {
     data: fetchData,
     isLoading,
@@ -30,7 +37,12 @@ const AstrologerPriceListingTable = () => {
   } = useGetConsultantsPriceQuery(consultantId);
   useEffect(() => {
     if (fetchData && fetchData?.data) {
-      setData(fetchData?.data || []);
+      setData(
+        fetchData?.data?.filter(
+          (item) =>
+            item?.status !== 7 && item.category == convertedConsultantCateg
+        ) || []
+      );
     } else setData([]);
   }, [fetchData]);
 
@@ -60,14 +72,14 @@ const AstrologerPriceListingTable = () => {
             </span>
           )}
 
-          {/* {row.original.status == 2 && (
+          {row.original.status == 2 && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
-          )} */}
+          )}
         </div>
       ),
     },

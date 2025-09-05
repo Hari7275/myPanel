@@ -19,6 +19,12 @@ const CoachPriceListingTable = () => {
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
   );
+
+  const consultantCateg = useSelector(
+    (state) => state?.consultant?.consultantType
+  );
+
+  const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
   const {
     data: fetchData,
     isLoading,
@@ -27,7 +33,12 @@ const CoachPriceListingTable = () => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
-      setData(fetchData?.data || []);
+      setData(
+        fetchData?.data?.filter(
+          (item) =>
+            item?.status !== 7 && item.category == convertedConsultantCateg
+        ) || []
+      );
     } else setData([]);
   }, [fetchData]);
 
@@ -43,7 +54,7 @@ const CoachPriceListingTable = () => {
 
   const hasPermission = () => {
     return permissions?.["coach"]?.includes("update_coach_profile_price_chart");
-  }
+  };
 
   const columns = useMemo(() => [
     ...PRICECHARTCOLUMN,
@@ -61,14 +72,14 @@ const CoachPriceListingTable = () => {
             </span>
           )}
 
-          {/* {row.original.status == 2 && (
+          {row.original.status == 2 && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
-          )} */}
+          )}
         </div>
       ),
     },

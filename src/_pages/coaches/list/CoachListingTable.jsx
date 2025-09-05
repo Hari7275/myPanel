@@ -15,6 +15,7 @@ import { useDispatch } from "react-redux";
 import {
   setCurrentConsultant,
   setCurrentProfileStatus,
+  setConsultantType,
 } from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
@@ -93,6 +94,7 @@ const CoachListingTable = () => {
     (data) => {
       dispatch(setCurrentConsultant(data?.id));
       dispatch(setCurrentProfileStatus(data?.status));
+      dispatch(setConsultantType(data?.phone_code));
 
       setTimeout(() => {
         navigate(`/coach-profile?${data?.id}`, {
@@ -116,7 +118,6 @@ const CoachListingTable = () => {
           <div className="actions-cell">
             {/* <Link to="/coach-profile"> */}
             {permissions?.["coach"]?.includes("view_coach_profile") && (
-
               <span
                 title="view details"
                 className="secondIcon"
@@ -140,17 +141,17 @@ const CoachListingTable = () => {
               />
             </span> */}
 
-            {[3, 4, 5, 2].includes(row?.original?.status) && (
-              permissions?.["coach"]?.includes("update_coach_profile_status") && (
-
+            {[3, 4, 5, 2].includes(row?.original?.status) &&
+              permissions?.["coach"]?.includes(
+                "update_coach_profile_status"
+              ) && (
                 <span className="editIcon">
                   <Pencil
                     className="iconSmall"
                     onClick={() => toggleEditStatus(row.original)}
                   />
                 </span>
-              )
-            )}
+              )}
           </div>
         ),
       },
@@ -258,7 +259,6 @@ const CoachListingTable = () => {
   }
   return (
     permissions?.["coach"]?.includes("view_coach_list") && (
-
       <div>
         <DyCommonTable
           columns={columns}

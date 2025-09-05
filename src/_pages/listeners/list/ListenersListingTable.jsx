@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   setCurrentConsultant,
   setCurrentProfileStatus,
+  setConsultantType,
 } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
@@ -86,6 +87,8 @@ const ListenersListingTable = () => {
   const handleActionClick = (data) => {
     dispatch(setCurrentConsultant(data?.id));
     dispatch(setCurrentProfileStatus(data?.status));
+    dispatch(setConsultantType(data?.phone_code));
+
     // Use setTimeout or batch it after dispatch
     console.log("page in arrow.......", pageRef.current);
 
@@ -136,17 +139,17 @@ const ListenersListingTable = () => {
               />
             </span> */}
 
-            {[3, 4, 5, 2].includes(row?.original?.status) && (
-              permissions?.["listener"]?.includes("update_listener_profile_status") && (
-
+            {[3, 4, 5, 2].includes(row?.original?.status) &&
+              permissions?.["listener"]?.includes(
+                "update_listener_profile_status"
+              ) && (
                 <span className="editIcon">
                   <Pencil
                     className="iconSmall"
                     onClick={() => toggleEditStatus(row.original)}
                   />
                 </span>
-              )
-            )}
+              )}
           </div>
         ),
       },

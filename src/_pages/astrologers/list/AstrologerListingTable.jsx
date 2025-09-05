@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   setCurrentConsultant,
   setCurrentProfileStatus,
+  setConsultantType,
 } from "../../../_store/slices/consultantSlice";
 import { debounce } from "lodash";
 import { useSearchParams } from "react-router-dom";
@@ -81,8 +82,10 @@ const AstrologerListingTable = () => {
   };
 
   const handleActionClick = (data) => {
+    console.log("sdfffsdff", data);
     dispatch(setCurrentConsultant(data?.id));
     dispatch(setCurrentProfileStatus(data?.status));
+    dispatch(setConsultantType(data?.phone_code));
 
     setTimeout(() => {
       navigate(`/astrologer_Profile?${data?.id}`, {
@@ -105,7 +108,9 @@ const AstrologerListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {/* <Link to={`/astrologer_Profile?${row?.original?.id}`}> */}
-            {permissions?.["astrologer"]?.includes("view_astrologer_profile") && (
+            {permissions?.["astrologer"]?.includes(
+              "view_astrologer_profile"
+            ) && (
               <span
                 title="view details"
                 className="secondIcon"
@@ -126,16 +131,17 @@ const AstrologerListingTable = () => {
             )}
             {/* </Link> */}
 
-            {[3, 4, 5, 2].includes(row?.original?.status) && (
-              permissions?.["astrologer"]?.includes("update_astrologer_profile_status") && (
+            {[3, 4, 5, 2].includes(row?.original?.status) &&
+              permissions?.["astrologer"]?.includes(
+                "update_astrologer_profile_status"
+              ) && (
                 <span className="editIcon">
                   <Pencil
                     className="iconSmall"
                     onClick={() => toggleEditStatus(row.original)}
                   />
                 </span>
-              )
-            )}
+              )}
           </div>
         ),
       },

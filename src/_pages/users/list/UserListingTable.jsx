@@ -151,6 +151,11 @@ const UserListingTable = () => {
     console.log("Applied filters:", filterData);
   };
 
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined
+  ).length;
+
   const customFilterComponent = () => (
     <div
       style={{
@@ -200,6 +205,7 @@ const UserListingTable = () => {
           onClick={() => setShowFilterPopover(!showFilterPopover)}
         >
           Filter
+          <span style={{marginLeft:"10px" , color:"#dcfe01ff"}}>{appliedFilterCount}</span>
         </Button>
 
         <UserFilter

@@ -17,6 +17,12 @@ const ListenersPriceListingTable = () => {
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
   );
+
+  const consultantCateg = useSelector(
+    (state) => state?.consultant?.consultantType
+  );
+
+  const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
   const {
     data: fetchData,
     isLoading,
@@ -28,11 +34,16 @@ const ListenersPriceListingTable = () => {
     return permissions?.["listener"]?.includes(permission);
   };
 
-  useEffect(() => {
-    if (fetchData && fetchData?.data) {
-      setData(fetchData?.data || []);
-    } else setData([]);
-  }, [fetchData]);
+   useEffect(() => {
+     if (fetchData && fetchData?.data) {
+       setData(
+         fetchData?.data?.filter(
+           (item) =>
+             item?.status !== 7 && item.category == convertedConsultantCateg
+         ) || []
+       );
+     } else setData([]);
+   }, [fetchData]);
 
   const toggleUpdateStatus = (row) => {
     setSelectedRow(row);
@@ -51,23 +62,24 @@ const ListenersPriceListingTable = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {row.original.status === 1 && hasPermission("update_listener_profile_price_chart") && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateStatus(row?.original)}
-            >
-              <NotebookPen className="iconSmall" />
-            </span>
-          )}
+          {row.original.status === 1 &&
+            hasPermission("update_listener_profile_price_chart") && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateStatus(row?.original)}
+              >
+                <NotebookPen className="iconSmall" />
+              </span>
+            )}
 
-          {/* {row.original.status == 2 && (
+          {row.original.status == 2 && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}
             >
               <Pencil className="iconSmall" />
             </span>
-          )} */}
+          )}
         </div>
       ),
     },
