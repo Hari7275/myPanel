@@ -39,7 +39,7 @@ const ListenersPriceListingTable = () => {
        setData(
          fetchData?.data?.filter(
            (item) =>
-             item?.status !== 7 && item.category == convertedConsultantCateg
+             item?.status !== 7 
          ) || []
        );
      } else setData([]);
@@ -72,7 +72,7 @@ const ListenersPriceListingTable = () => {
               </span>
             )}
 
-          {row.original.status == 2 && (
+          {row.original.status == 2 &&  row.original.category == convertedConsultantCateg && (
             <span
               className="editIcon"
               onClick={() => toggleUpdateConsultantPrice(row?.original)}

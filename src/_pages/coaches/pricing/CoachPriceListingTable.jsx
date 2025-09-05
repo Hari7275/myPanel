@@ -33,12 +33,7 @@ const CoachPriceListingTable = () => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
-      setData(
-        fetchData?.data?.filter(
-          (item) =>
-            item?.status !== 7 && item.category == convertedConsultantCateg
-        ) || []
-      );
+      setData(fetchData?.data?.filter((item) => item?.status !== 7) || []);
     } else setData([]);
   }, [fetchData]);
 
@@ -72,14 +67,15 @@ const CoachPriceListingTable = () => {
             </span>
           )}
 
-          {row.original.status == 2 && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateConsultantPrice(row?.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-          )}
+          {row.original.status == 2 &&
+            row.original.category == convertedConsultantCateg && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateConsultantPrice(row?.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
         </div>
       ),
     },
