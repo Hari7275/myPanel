@@ -13,19 +13,23 @@ const FeatureCell = ({ value }) => {
 };
 
 const CategoriesCell = ({ value }) => {
-  return <span>{getConsultantPriceCategory(value)}</span>;
+  // return <span>{getConsultantPriceCategory(value)}</span>;
+
+  console.log("value", value);
+  return <span>{value == "A" ? "India" : "Foreign"}</span>;
 };
 
 export const PRICECHARTCOLUMN = [
+  // { Header: "id", accessor: "id" },
   {
     Header: "Feature",
     accessor: "feature",
     Cell: FeatureCell,
   },
   {
-    Header: "Catg.",
+    Header: "User Catg.",
     accessor: "category",
-    // Cell:PriceCategoryCell,
+    Cell: CategoriesCell,
   },
   {
     Header: "CP",

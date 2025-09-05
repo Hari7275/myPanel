@@ -9,7 +9,8 @@ const PriceStatusCell = ({ value }) => {
 };
 
 const PriceCategoryCell = ({ value }) => {
-  return <span>{getConsultantPriceCategory(value)}</span>;
+  // return <span>{getConsultantPriceCategory(value)}</span>;
+  return <span>{value == "A" ? "India" : "Foreign"}</span>;
 };
 const FeatureLabelCell = ({ value }) => {
   return (
@@ -27,9 +28,9 @@ export const PRICECHARTCOLUMN = [
     Cell: FeatureLabelCell,
   },
   {
-    Header: "Catg.",
+    Header: "User Catg.",
     accessor: "category",
-    // Cell:PriceCategoryCell,
+    Cell: PriceCategoryCell,
   },
   {
     Header: "CP",

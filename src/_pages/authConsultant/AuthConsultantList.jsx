@@ -24,6 +24,16 @@ const AuthConsultantList = () => {
 
   const location = useLocation();
 
+  const [count, setCount] = useState(0);
+
+  useEffect(() => {
+    console.log("effect running");
+
+    return () => {
+      console.log("cleanup called");
+    };
+  }, [count]);
+
   const {
     data: fetchData,
     isLoading,
@@ -152,6 +162,10 @@ const AuthConsultantList = () => {
         showTableHeading={false}
         includeCheckbox={false}
       />
+
+      {/* <p>{count}</p>
+
+      <button onClick={() => setCount(count + 1)}>INcrement</button> */}
       {data?.length == 0 && (
         <span className="no-data-new">No Consultant Avaliable</span>
       )}
