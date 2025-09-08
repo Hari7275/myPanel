@@ -8,7 +8,7 @@ import { Atom } from "react-loading-indicators";
 const UserRechargeLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(15); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const [userType, setUSerType] = useState(0);
 
