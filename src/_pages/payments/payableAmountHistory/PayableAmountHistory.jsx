@@ -12,7 +12,7 @@ const PayableAmountHistory = () => {
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
-      const result = fetchData?.data.filter((item) => item.status !== 1);
+      const result = fetchData?.data?.filter((item) => item.status !== 1);
       setData(result);
     } else {
       setData([]);

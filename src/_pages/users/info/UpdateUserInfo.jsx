@@ -39,8 +39,8 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
         bio: selectedData.bio || "",
         date_of_birth: selectedData.date_of_birth || "",
         gender: selectedData.gender || "",
-        permanent_address: selectedData.permanent_address || "",
-        current_address: selectedData.current_address || "",
+        // permanent_address: selectedData.permanent_address || "",
+        // current_address: selectedData.current_address || "",
         country: selectedData.country || "",
         languages: languages,
       });

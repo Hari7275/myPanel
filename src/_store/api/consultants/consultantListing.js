@@ -108,6 +108,21 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
       providesTags: ["consultants"],
     }),
+
+    // ye uss consultant ki api hai consultant ke device token ko get karne ke liye
+
+    getConsultantsDeviceTokenList: builder.query({
+      query: ({ page, size, email_address, phone_number, id }) => ({
+        // url: `/api/v1/consultant/auth/admin/uncreated-consultants?&page=${page}&size=${size}&phone_number=${phone_number}&email_address=${email_address}&id=${id}`,
+        url: `/api/v1/consultant/auth/consultant-device/device-info/list?page=1&consultant_id=306&device_id=lahaina&platform=2&start_date=2025-09-05&end_date=2025-09-05&size=20`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -119,4 +134,5 @@ export const {
   useUpdateDisplayStatusMutation,
   useUpdateConsultantProfileStatusMutation,
   useGetUnregisteredConsultantsListQuery,
+  useGetConsultantsDeviceTokenListQuery
 } = consultantsApiSlice;
