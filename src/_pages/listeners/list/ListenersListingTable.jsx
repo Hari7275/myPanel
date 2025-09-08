@@ -18,6 +18,9 @@ import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { statusNameToValue } from "../../../_constants/consultantConstant";
 
+import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
+import Button from "@mui/material/Button";
+
 const ListenersListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
@@ -36,6 +39,15 @@ const ListenersListingTable = () => {
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
 
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    orderType: "",
+    status: "",
+  });
+
   const {
     data: fetchData,
     isLoading,
@@ -44,7 +56,8 @@ const ListenersListingTable = () => {
     page,
     size: pageSize,
     name: name,
-    auth_status: statusSearch,
+    // auth_status: statusSearch,
+    auth_status: appliedFilters?.status,
     id: consultantId,
     phone,
     consultant_type: 3,
@@ -197,15 +210,27 @@ const ListenersListingTable = () => {
     debouncedSearchStatus(statusValue);
   };
 
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined
+  ).length;
+
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
+    <div style={{ width: "100%", height: "35px", display: "flex" }}>
       <input
         className="inputBox"
         placeholder="Search by Id"
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleConsultantIdSearch}
       />
@@ -216,7 +241,7 @@ const ListenersListingTable = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleNameSearch}
       />
@@ -226,11 +251,11 @@ const ListenersListingTable = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleConsultantPhoneSearch}
       />
-      <input
+      {/* <input
         className="inputBox"
         placeholder="Search by status"
         style={{
@@ -239,7 +264,29 @@ const ListenersListingTable = () => {
           width: "20%",
         }}
         onChange={handleConsultantStatusSearch}
-      />
+      /> */}
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+            {appliedFilterCount == 0 ? null : appliedFilterCount}
+          </span>
+        </Button>
+
+        <AstrologerListFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 
