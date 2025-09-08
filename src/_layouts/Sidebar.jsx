@@ -9,6 +9,7 @@ import ManageHistoryOutlinedIcon from "@mui/icons-material/ManageHistoryOutlined
 import CategoryOutlinedIcon from "@mui/icons-material/CategoryOutlined";
 import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 // import { hasPermission } from "../_store/api/tokenHelper";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageTitle } from "../_store/slices/pageTitleSlice";
@@ -162,17 +163,28 @@ const Sidebar = () => {
 
               {/* {permissions?.["user"] && ( */}
               {/* <Link to="/untracked-user"> */}
-                <div
-                  className={`menu-item ${
-                    activeItem === "untracked-user" ? "active" : ""
-                  }`}
-                  onClick={() => handleItemClick("untracked-user")}
-                >
-                  <GroupOutlinedIcon />
-                  <span>Guest User's</span>
-                </div>
+              <div
+                className={`menu-item ${
+                  activeItem === "untracked-user" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("untracked-user")}
+              >
+                <GroupOutlinedIcon />
+                <span>Guest User's</span>
+              </div>
               {/* </Link> */}
               {/* )} */}
+              <Link to="/consultant-device-info">
+                <div
+                  className={`menu-item ${
+                    activeItem === "device-info" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("device-info")}
+                >
+                  <DeviceUnknownIcon />
+                  <span>Consultant device info</span>
+                </div>
+              </Link>
             </div>
 
             {/* changes for coaches */}

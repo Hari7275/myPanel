@@ -156,7 +156,7 @@ const OrderLists = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleConsultantIdSearch}
       />
@@ -166,7 +166,7 @@ const OrderLists = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleUserIdSearch}
       />

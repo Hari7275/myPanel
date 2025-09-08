@@ -33,10 +33,12 @@ const ListenerAccountList = () => {
 
   // paypal details
   useEffect(() => {
+    console.log("payPalData?.data", payPalData?.data);
     if (payPalData && payPalData?.data) {
       setPaypalData(payPalData?.data);
+    } else {
+      setPaypalData([]);
     }
-    setPaypalData([]);
   }, [payPalData]);
 
   const phoneCode = useMemo(() => localStorage.getItem("phone_code"), [data]);
