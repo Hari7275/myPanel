@@ -19,6 +19,28 @@ const InfoItem = ({ label, value }) => (
   </div>
 );
 
+// function for calculate date of birth
+
+const calculateAge = (dob) => {
+  const birthDate = new Date(dob);
+
+  const today = new Date();
+
+  let age = today.getFullYear() - birthDate.getFullYear();
+
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+
+  // Adjust age if the current month/day is before the birth month/day
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
+};
+
 const UserDetailsComponent = () => {
   const userId = useSelector((state) => state.user.userData);
 
@@ -45,13 +67,15 @@ const UserDetailsComponent = () => {
         previousPageSize: location.state?.pageSize || 10,
       },
     });
-    // navigate(-1);
+    // navigate(-1);;
   };
+  const age = userData?.date_of_birth
+    ? calculateAge(userData?.date_of_birth)
+    : "N/A";
 
   return (
     // MAIN ROW/ CONTAINER ROW
     <div className="user-details-container" style={{ position: "relative" }}>
-
       <div className="backButton" onClick={handleProfileClose}>
         <img
           src="/backbutton.png"
@@ -78,7 +102,12 @@ const UserDetailsComponent = () => {
         </div>
         {/* SECOND COLUMN: User Info (column layout) */}
         <div className="user-info-section">
-          <div className="userName">{userData.fullName}</div>
+          {/* <div className="userName">
+            {`${data.first_name || ""} ${data.last_name || ""}`}({age})
+          </div> */}
+          <div className="userName">
+            {userData.fullName} ({age})
+          </div>
           <InfoItem label="User ID " value={userData.id || "N/A"} />
           <div className="active-status">
             <img

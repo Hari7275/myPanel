@@ -9,24 +9,63 @@ export const CONSULTANT_DEVICE_INFO = [
     Header: "Id",
     accessor: "id",
   },
-
   {
-    Header: "Email",
-    accessor: "email_address",
-  },
-  {
-    Header: "Phone Code",
-    accessor: "phone_code",
-  },
-  {
-    Header: "Country Code",
-    accessor: "country_code",
+    Header: "Consultant id",
+    accessor: "consultant_id",
   },
 
   {
-    Header: "Phone No.",
-    accessor: "phone_number",
+    Header: "Device id",
+    accessor: "device_id",
+  },
+  {
+    Header: "Device name",
+    accessor: "device_name",
+  },
+  {
+    Header: "Device model",
+    accessor: "device_model",
+  },
+  {
+    Header: "Device brand",
+    accessor: "device_brand",
+  },
+
+  {
+    Header: "Platform.",
+    accessor: "platform",
     Cell: CustomUserType,
+  },
+  {
+    Header: "Os version",
+    accessor: "os_version",
+  },
+  {
+    Header: "App version",
+    accessor: "app_version",
+  },
+  {
+    Header: "Is Primary",
+    accessor: "is_primary",
+  },
+  {
+    Header: "Is active",
+    accessor: "is_active",
+  },
+  {
+    Header: "Login count",
+    accessor: "login_count",
+  },
+  {
+    Header: "Deactivated",
+    accessor: "deactivated_at",
+    Cell: ({ value }) => {
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
   },
 
   {

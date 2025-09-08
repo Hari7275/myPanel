@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { CONSULTANT_DEVICE_INFO } from "./ConsultantDeviceInfoColumn";
-import { useGetUnregisteredConsultantsListQuery } from "../../../_store/api";
+import { useGetConsultantsDeviceTokenListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
@@ -19,7 +19,7 @@ const ConsultantDeviceInfo = () => {
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(15);
+  const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   const location = useLocation();
@@ -28,7 +28,7 @@ const ConsultantDeviceInfo = () => {
     data: fetchData,
     isLoading,
     error,
-  } = useGetUnregisteredConsultantsListQuery({
+  } = useGetConsultantsDeviceTokenListQuery({
     page,
     size: pageSize,
     email_address: email_address,
@@ -41,8 +41,9 @@ const ConsultantDeviceInfo = () => {
   }, [page]);
 
   useEffect(() => {
-    if (fetchData && fetchData?.data && fetchData?.data) {
-      const consultantData = fetchData?.data;
+    console.log("fetchData?.data", fetchData?.data);
+    if (fetchData && fetchData?.data && fetchData?.data?.records) {
+      const consultantData = fetchData?.data?.records;
       setData(consultantData);
     } else {
       setData([]);
@@ -50,9 +51,9 @@ const ConsultantDeviceInfo = () => {
     dispatch(resetActiveTab());
   }, [fetchData, resetActiveTab]);
 
-  const totalPage = fetchData?.meta?.total
-    ? Math.ceil(fetchData.meta.total / pageSize)
-    : 1;
+  const totalPage = fetchData?.data?.pagination?.totalPages || 1;
+  // ? Math.ceil(fetchData.meta.total / pageSize)
+  // : 1;
 
   useEffect(() => {
     if (location.state) {
