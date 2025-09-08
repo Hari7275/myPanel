@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ArrowRight, Loader, Pencil } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useSearchParams } from "react-router-dom";
 import EditStatus from "./EditStatus";
 import { useGetUsersListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
@@ -17,6 +17,15 @@ import Button from "@mui/material/Button";
 Modal.setAppElement("#root");
 
 const UserListingTable = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const [searchParams] = useSearchParams();
+
+  // Get pageSize from URL params, default to 10 if not present
+  const urlPageSize = searchParams.get("pageSize");
+
+  const initialPageSize = urlPageSize ? parseInt(urlPageSize) : 10;
+
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
@@ -26,7 +35,7 @@ const UserListingTable = () => {
   const [phone_number, setPhone_number] = useState("");
   const [userId, setUserId] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(initialPageSize); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
   // Filter states
@@ -35,9 +44,6 @@ const UserListingTable = () => {
     startDate: "",
     endDate: "",
   });
-
-  const dispatch = useDispatch();
-  const location = useLocation();
 
   // Dynamic query with name and phoneNumber
   const { data: fetchData, isLoading } = useGetUsersListQuery({
@@ -49,6 +55,15 @@ const UserListingTable = () => {
     start_date: appliedFilters.startDate,
     end_date: appliedFilters.endDate,
   });
+  // Clean up URL after reading pageSize
+  useEffect(() => {
+    if (urlPageSize) {
+      // Remove pageSize from URL after using it
+      const newUrl = window.location.pathname;
+
+      window.history.replaceState({}, "", newUrl);
+    }
+  }, []); // Run only once on mount
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -60,11 +75,11 @@ const UserListingTable = () => {
   const totalPage = fetchData?.data?.pagination?.totalPages || 1;
 
   useEffect(() => {
-    if (location.state) {
-      setPage(location.state.previousPage);
-      setPageSize(location.state.previousPageSize);
+    if (location?.state) {
+      setPage(location?.state?.previousPage);
+      setPageSize(location?.state?.previousPageSize);
     }
-  }, [location.state]);
+  }, [location?.state]);
 
   const toggleEditStatus = (row) => {
     setSelectedRow(row);

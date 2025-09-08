@@ -170,7 +170,7 @@
   justify-content: center;
   color: #434d56;
   font-size: 12px;
-    transition: transform 0.3s ease-in-out; /* smooth animation */
+  transition: transform 0.3s ease-in-out; /* smooth animation */
 }
 
 .image-wrapper:hover {
@@ -277,4 +277,10 @@
   .category-card-container-grid .category-card-grid-dashboard {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+.hover-card-category:hover {
+  transform: scale(1.05);
+  background-color: #f0f0f0;
+  transition: 0.3s ease;
 }
