@@ -111,60 +111,37 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
     // ye uss consultant ki api hai consultant ke device token ko get karne ke liye
 
-    //  getBlogCountList: builder.query({
-    //   query: ({ page, size, start_date, end_date, title }) => {
-    //     const params = new URLSearchParams({
-    //       page: page,
-    //       limit: size,
-    //     });
-
-    //     if (title) params.append("title", title);
-    //     if (start_date) params.append("start_date", start_date);
-    //     if (end_date) params.append("end_date", end_date);
-
-    //     return {
-    //       url: `meta/admin/get-blog-view?${params.toString()}`,
-    //       method: "GET",
-    //       headers: {
-    //         Authorization: "Bearer admin_token",
-    //       },
-    //     };
-    //   },
-    //   providesTags: ["blogCount"],
-    // }),
-
     getConsultantsDeviceTokenList: builder.query({
-  query: ({
-    page,
-    size,
-    consultantId,
-    device_id,
-    platform,
-    start_date,
-    end_date,
-  }) => {
-    const params = new URLSearchParams({
-      page,
-      size,
-    });
+      query: ({
+        page,
+        size,
+        consultantId,
+        device_id,
+        platform,
+        start_date,
+        end_date,
+      }) => {
+        const params = new URLSearchParams({
+          page,
+          size,
+        });
 
-    if (consultantId) params.append("consultant_id", consultantId);
-    if (platform) params.append("platform", platform);
-    if (device_id) params.append("device_id", device_id);
-    if (start_date) params.append("start_date", start_date);
-    if (end_date) params.append("end_date", end_date);
+        if (consultantId) params.append("consultant_id", consultantId);
+        if (platform) params.append("platform", platform);
+        if (device_id) params.append("device_id", device_id);
+        if (start_date) params.append("start_date", start_date);
+        if (end_date) params.append("end_date", end_date);
 
-    return {
-      url: `/api/v1/consultant/auth/consultant-device/device-info/list?${params.toString()}`,
-      method: "GET",
-      headers: {
-        Authorization: "Bearer admin_token",
+        return {
+          url: `/api/v1/consultant/auth/consultant-device/device-info/list?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
       },
-    };
-  },
-  providesTags: ["consultants"],
-}),
-
+      providesTags: ["consultants"],
+    }),
   }),
 });
 

@@ -1,7 +1,9 @@
 // import "../../../cssfolder/column.css";
 
 const CustomUserType = ({ value }) => {
-  return <span className="orderId-color">{value}</span>;
+  return (
+    <span className="orderId-color">{value == 1 ? "Android" : "IOS"}</span>
+  );
 };
 
 export const CONSULTANT_DEVICE_INFO = [
@@ -14,10 +16,10 @@ export const CONSULTANT_DEVICE_INFO = [
     accessor: "consultant_id",
   },
 
-  {
-    Header: "Device id",
-    accessor: "device_id",
-  },
+  //   {
+  //     Header: "Device id",
+  //     accessor: "device_id",
+  //   },
   {
     Header: "Device name",
     accessor: "device_name",
@@ -32,7 +34,7 @@ export const CONSULTANT_DEVICE_INFO = [
   },
 
   {
-    Header: "Platform.",
+    Header: "Platform",
     accessor: "platform",
     Cell: CustomUserType,
   },

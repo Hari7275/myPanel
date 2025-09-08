@@ -13,9 +13,6 @@ import { useLocation } from "react-router-dom";
 const ConsultantDeviceInfo = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
-  const [email_address, setEmailAddress] = useState("");
-  const [phone, setPhone] = useState("");
-
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
@@ -31,9 +28,8 @@ const ConsultantDeviceInfo = () => {
   } = useGetConsultantsDeviceTokenListQuery({
     page,
     size: pageSize,
-    email_address: email_address,
-    id: consultantId,
-    phone_number: phone,
+
+    consultantId: consultantId,
   });
 
   useEffect(() => {
@@ -65,63 +61,28 @@ const ConsultantDeviceInfo = () => {
   const columns = useMemo(() => [...CONSULTANT_DEVICE_INFO], []);
 
   // Apply debounce to search handlers
-  const debouncedSearchEmailAddress = debounce(
-    (value) => setEmailAddress(value),
-    500
-  );
+
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
     500
   );
-  const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
-
-  const handleEmailSearch = (e) => {
-    setPage(1);
-    debouncedSearchEmailAddress(e?.target?.value);
-  };
 
   const handleConsultantIdSearch = (e) => {
     setPage(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 
-  const handleConsultantPhoneSearch = (e) => {
-    setPage(1);
-    debouncedSearchPhone(e?.target?.value);
-  };
-
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px" }}>
       <input
         className="inputBox"
-        placeholder="Search by Id"
+        placeholder="Search by consultant Id"
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "15%",
         }}
         onChange={handleConsultantIdSearch}
-      />
-
-      <input
-        className="inputBox"
-        placeholder="Search by Email"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleEmailSearch}
-      />
-      <input
-        className="inputBox"
-        placeholder="Search by Phone No."
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleConsultantPhoneSearch}
       />
     </div>
   );
