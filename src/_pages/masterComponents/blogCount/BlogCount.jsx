@@ -120,7 +120,7 @@ const BlogCount = () => {
         >
           Filter
           <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
-            {appliedFilterCount}
+            {appliedFilterCount == 0 ? "" : appliedFilterCount}
           </span>
         </Button>
 

@@ -216,7 +216,7 @@ table th {
 .actions-header,
 .actions-cell {
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   gap: 8px;
 }
 

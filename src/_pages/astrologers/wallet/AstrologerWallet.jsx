@@ -23,7 +23,7 @@ const AstrologerWallet = () => {
   });
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData?.data || []);
+      setData(fetchData?.data?.rows || []);
     }
   }, [fetchData]);
 

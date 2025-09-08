@@ -90,7 +90,8 @@ const OrderLists = () => {
                 </span>
               )}
 
-              {row.original.status == 4 && row.original.actual_duration < 2 && (
+              {/* {row.original.status == 4 && row.original.actual_duration < 2 && ( */}
+              {row.original.status == 4 && (
                 <span className="editIcon">
                   <ArrowRight
                     className="iconSmall"
@@ -180,7 +181,7 @@ const OrderLists = () => {
         >
           Filter
           <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
-            {appliedFilterCount}
+            {appliedFilterCount == 0 ? null : appliedFilterCount}
           </span>
         </Button>
 

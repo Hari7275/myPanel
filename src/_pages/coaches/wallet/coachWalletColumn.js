@@ -13,7 +13,7 @@ export const WALLETCHARTCOLUMN = [
   },
   {
     Header: "Order Type",
-    accessor: "order.order_type",
+    accessor: "order_type",
     Cell: ({ value }) => getCategoryTypes(value) || "N/A",
   },
   {

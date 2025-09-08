@@ -6,7 +6,7 @@ export const WALLETCHARTCOLUMN = [
     accessor: "id",
     Cell: ({ value }) => <span style={{ color: "#8c57ff" }}>{value}</span>,
   },
- 
+
   {
     Header: "Transaction Type",
     accessor: "transaction_type",
@@ -17,7 +17,7 @@ export const WALLETCHARTCOLUMN = [
   },
   {
     Header: "Order Type",
-    accessor: "order.order_type",
+    accessor: "order_type",
     Cell: ({ value }) => getCategoryTypes(value) || "N/A",
   },
   {

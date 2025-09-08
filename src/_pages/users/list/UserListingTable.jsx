@@ -205,7 +205,9 @@ const UserListingTable = () => {
           onClick={() => setShowFilterPopover(!showFilterPopover)}
         >
           Filter
-          <span style={{marginLeft:"10px" , color:"#dcfe01ff"}}>{appliedFilterCount}</span>
+          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+            {appliedFilterCount == 0 ? "" : appliedFilterCount}
+          </span>
         </Button>
 
         <UserFilter
