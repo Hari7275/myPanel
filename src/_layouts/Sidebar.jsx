@@ -776,19 +776,12 @@ const Sidebar = () => {
                 <span>Orders</span>
               </div>
             </Link>
-
-            {/* <Link to="/order">
-              <div
-                className={`menu-item ${
-                  activeItem === "Order" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("Order")}
-              >
+            <Link to="/user-recharge">
+              <div className="item">
                 <CardGiftcardOutlinedIcon />
-                <span>Orders</span>
+                <span>Recharge List</span>
               </div>
-            </Link> */}
-            {/* )} */}
+            </Link>
           </div>
         </aside>
       )}

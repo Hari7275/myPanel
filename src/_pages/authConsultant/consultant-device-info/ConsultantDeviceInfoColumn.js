@@ -53,6 +53,9 @@ export const CONSULTANT_DEVICE_INFO = [
   {
     Header: "Is active",
     accessor: "is_active",
+    Cell: ({ value }) => {
+      return value == 1 ? "active" : "Inactive";
+    },
   },
   {
     Header: "Login count",

@@ -25,7 +25,7 @@ const UserTransactionList = () => {
 
   useEffect(() => {
     if (fetchData) {
-      setResult(fetchData.data.transactions);
+      setResult(fetchData?.data?.transactions);
     }
   }, [fetchData]);
 

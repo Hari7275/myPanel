@@ -9,6 +9,8 @@ import { debounce } from "lodash";
 
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import DeviceInfoFilter from "./DeviceInfoFilter";
+import Button from "@mui/material/Button";
 
 const ConsultantDeviceInfo = () => {
   const [data, setData] = useState([]);
@@ -19,6 +21,15 @@ const ConsultantDeviceInfo = () => {
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    platformType: "",
+    activeStatus: "",
+  });
+
   const location = useLocation();
 
   const {
@@ -28,8 +39,10 @@ const ConsultantDeviceInfo = () => {
   } = useGetConsultantsDeviceTokenListQuery({
     page,
     size: pageSize,
-
+    platform: appliedFilters.platformType,
     consultantId: consultantId,
+    end_date: appliedFilters.endDate,
+    start_date: appliedFilters.startDate,
   });
 
   useEffect(() => {
@@ -72,8 +85,27 @@ const ConsultantDeviceInfo = () => {
     debouncedSearchConsultantId(e?.target?.value);
   };
 
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined
+  ).length;
+
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <input
         className="inputBox"
         placeholder="Search by consultant Id"
@@ -84,6 +116,28 @@ const ConsultantDeviceInfo = () => {
         }}
         onChange={handleConsultantIdSearch}
       />
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+            {appliedFilterCount == 0 ? null : appliedFilterCount}
+          </span>
+        </Button>
+
+        <DeviceInfoFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 
