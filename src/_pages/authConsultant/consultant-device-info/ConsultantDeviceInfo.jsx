@@ -40,6 +40,7 @@ const ConsultantDeviceInfo = () => {
     page,
     size: pageSize,
     platform: appliedFilters.platformType,
+    is_active: appliedFilters.activeStatus,
     consultantId: consultantId,
     end_date: appliedFilters.endDate,
     start_date: appliedFilters.startDate,
@@ -157,7 +158,7 @@ const ConsultantDeviceInfo = () => {
       <DyCommonTable
         columns={columns}
         data={data}
-        tableTitle="Unregistered Consultant List"
+        tableTitle="Consultant Device Info"
         customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

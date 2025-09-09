@@ -117,6 +117,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         size,
         consultantId,
         device_id,
+        is_active,
         platform,
         start_date,
         end_date,
@@ -128,6 +129,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
         if (consultantId) params.append("consultant_id", consultantId);
         if (platform) params.append("platform", platform);
+        if (is_active ) params.append("is_active", is_active );
         if (device_id) params.append("device_id", device_id);
         if (start_date) params.append("start_date", start_date);
         if (end_date) params.append("end_date", end_date);

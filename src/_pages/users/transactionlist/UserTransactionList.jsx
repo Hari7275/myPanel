@@ -6,6 +6,8 @@ import { useGetUserTransactionsListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import AddRechargePlan from "./AddRechargePlan";
 import { Atom } from "react-loading-indicators";
+import UserRechargeFilter from "./UserRechargeFilter";
+import Button from "@mui/material/Button";
 
 const UserTransactionList = () => {
   const [addData, setAddData] = useState(false);
@@ -17,11 +19,28 @@ const UserTransactionList = () => {
   const [result, setResult] = useState([]);
   const columns = useMemo(() => USERTRANSACTIONCOLUMN, []);
 
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    allowedActivityType: "",
+    transationType: "",
+  });
+
   const {
     data: fetchData,
     isLoading,
     error,
-  } = useGetUserTransactionsListQuery({ userId, page: page, limit: pageSize });
+  } = useGetUserTransactionsListQuery({
+    userId,
+    page: page,
+    limit: pageSize,
+    ALLOWED_ACTIVITY_TYPES: appliedFilters.allowedActivityType,
+    type: appliedFilters.transationType,
+    start_date: appliedFilters.startDate,
+    end_date: appliedFilters.endDate,
+  });
 
   useEffect(() => {
     if (fetchData) {
@@ -51,6 +70,51 @@ const UserTransactionList = () => {
     );
   };
 
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined
+  ).length;
+
+  const customFilterComponent = () => (
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+            {appliedFilterCount == 0 ? null : appliedFilterCount}
+          </span>
+        </Button>
+
+        <UserRechargeFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
+    </div>
+  );
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -68,6 +132,7 @@ const UserTransactionList = () => {
         columns={columns}
         data={result}
         tableTitle="User Transaction List"
+        customFilterComponent={customFilterComponent}
         includeActions={false}
         AddPackageButton={AddButton}
         dynamicPagination={dynamicPagination}
@@ -76,7 +141,6 @@ const UserTransactionList = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
-        
       />
       {addData && (
         <AddRechargePlan
