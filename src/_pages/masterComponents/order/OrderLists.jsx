@@ -15,7 +15,7 @@ import FilterPopover from "../../../_components/reuseComponents/PopoverComponent
 const OrderLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(15);
+  const [pageSize, setPageSize] = useState(20);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -90,15 +90,17 @@ const OrderLists = () => {
                 </span>
               )}
 
-              {/* {row.original.status == 4 && row.original.actual_duration < 2 && ( */}
-              {row.original.status == 4 && (
-                <span className="editIcon">
-                  <ArrowRight
-                    className="iconSmall"
-                    onClick={() => toggleRefundBalance(row.original)}
-                  />
-                </span>
-              )}
+              {row.original.status == 4 &&
+                row.original.actual_duration < 2 &&
+                !row.original.is_refunded && (
+                  // {row.original.status == 4 && (
+                  <span className="editIcon">
+                    <ArrowRight
+                      className="iconSmall"
+                      onClick={() => toggleRefundBalance(row.original)}
+                    />
+                  </span>
+                )}
             </div>
           </>
         ),

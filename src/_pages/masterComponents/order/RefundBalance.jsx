@@ -78,13 +78,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       finalAmount = finalAmount * parseFloat(formData.conversion_rate);
     }
 
-    console.log("finalAmount", finalAmount);
-    console.log("formData.amount", formData.amount);
-    console.log(
-      "parseFloat(formData.conversion_rate)",
-      parseFloat(formData.conversion_rate)
-    );
-
     // User Refund API payload
     const apiPayload = {
       user_id: formData.userId,
@@ -118,8 +111,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
         return;
       }
     } catch (error) {
-      console.log("Failed to process transaction", error);
-      toast.error("Failed to process transaction");
+      toast.error("Failed to process transaction", error);
     }
   };
 
@@ -177,7 +169,9 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             min={0}
             max={selectedRow?.order_revenue || 0}
             step="1"
+            readOnly
           />
+
           {formData.is_forgin && formData.conversion_rate && (
             <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
               Conversion rate: {formData.conversion_rate} (Final amount:{" "}

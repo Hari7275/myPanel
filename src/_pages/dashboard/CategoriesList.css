@@ -281,6 +281,6 @@
 
 .hover-card-category:hover {
   transform: scale(1.05);
-  background-color: #f0f0f0;
+  /* background-color: #f1f5f9; */
   transition: 0.3s ease;
 }

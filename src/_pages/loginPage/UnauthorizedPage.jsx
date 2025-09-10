@@ -15,7 +15,7 @@ const UnauthorizedPage = () => {
   return (
     <>
       <div style={{ color: "black" }}>
-        {" "}
+        {"  "}
         "You do not have permission to access this page. Please contact the
         admin or try logging in with a different account."
       </div>
