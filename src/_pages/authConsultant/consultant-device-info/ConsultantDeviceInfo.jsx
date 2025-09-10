@@ -18,7 +18,7 @@ const ConsultantDeviceInfo = () => {
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(20);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // Filter states

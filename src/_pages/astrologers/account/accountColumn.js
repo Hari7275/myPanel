@@ -3,6 +3,7 @@ import { ImageCell } from "../../listeners/bankAccount/accountColumn";
 export const ACCOUNTCOLUMNS = [
   { Header: "Id", accessor: "id" },
   { Header: "Holder Name", accessor: "account_holder_name" },
+
   {
     Header: "Passbook Photo",
     Cell: ({ row }) => <ImageCell imageSrc={row.original.passbook_photo} />,
@@ -10,6 +11,11 @@ export const ACCOUNTCOLUMNS = [
   {
     Header: "Pan Card ",
     Cell: ({ row }) => <ImageCell imageSrc={row.original.pancard_photo} />,
+  },
+  {
+    Header: "Current Status",
+    accessor: "is_active",
+    Cell: ({ value }) => <span>{value ? "Active" : "Inactive"}</span>,
   },
   {
     Header: "Status",
@@ -25,6 +31,11 @@ export const ACCOUNTCOLUMNS = [
 export const PAYPALCOLUMNS = [
   { Header: "Id", accessor: "id" },
   { Header: "PayPal ID ", accessor: "paypal_id" },
+  {
+    Header: "Current Status",
+    accessor: "is_active",
+    Cell: ({ value }) => <span>{value ? "Active" : "Inactive"}</span>,
+  },
 
   {
     Header: "Status",

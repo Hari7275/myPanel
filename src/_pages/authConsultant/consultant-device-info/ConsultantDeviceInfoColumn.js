@@ -54,7 +54,7 @@ export const CONSULTANT_DEVICE_INFO = [
     Header: "Is active",
     accessor: "is_active",
     Cell: ({ value }) => {
-      return value == 1 ? "active" : "Inactive";
+      return value == 1 ? "Active" : "Inactive";
     },
   },
   {
@@ -65,6 +65,8 @@ export const CONSULTANT_DEVICE_INFO = [
     Header: "Deactivated",
     accessor: "deactivated_at",
     Cell: ({ value }) => {
+      if (!value) return "N/A";
+
       const date = new Date(value);
       return date.toLocaleString("en-US", {
         dateStyle: "medium",

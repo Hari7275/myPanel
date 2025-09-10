@@ -164,6 +164,7 @@ const NotificationBell = () => {
   );
 
   const handleConsultantIdSearch = (e) => {
+    // setPageSize(1);
     debouncedSearchConsultantId(e?.target?.value);
   };
 

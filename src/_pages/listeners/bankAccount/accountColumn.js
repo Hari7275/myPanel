@@ -65,6 +65,11 @@ export const ACCOUNTCOLUMNS = [
     Cell: ({ row }) => <ImageCell imageSrc={row.original.pancard_photo} />,
   },
   {
+    Header: "Current Status",
+    accessor: "is_active",
+    Cell: ({ value }) => <span>{value ? "Active" : "Inactive"}</span>,
+  },
+  {
     Header: "Status",
     accessor: "status",
     Cell: ({ value }) => {
@@ -78,6 +83,11 @@ export const ACCOUNTCOLUMNS = [
 export const PAYPALCOLUMNS = [
   { Header: "Id", accessor: "id" },
   { Header: "PayPal ID ", accessor: "paypal_id" },
+  {
+    Header: "Current Status",
+    accessor: "is_active",
+    Cell: ({ value }) => <span>{value ? "Active" : "Inactive"}</span>,
+  },
 
   {
     Header: "Status",
