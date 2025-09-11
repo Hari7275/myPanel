@@ -4,7 +4,12 @@ import "cropperjs/dist/cropper.css";
 import "../../../cssfolder/ReactCropper.css";
 import { Button } from "@mui/material";
 import ReactModal from "react-modal";
-import { useUpdateUserGalleryMutation } from "../../../_store/api";
+import {
+  useUpdateUserGalleryMutation,
+  useUpdateUserFaceAreaMutation,
+} from "../../../_store/api";
+
+import toast from "react-hot-toast";
 
 const ImageCropper = ({
   isOpen,
@@ -13,12 +18,14 @@ const ImageCropper = ({
   photoType,
   photoId,
   onUpdate,
+  isFaceAreaMode = false, // New prop to determine which API to use
 }) => {
   const [cropData, setCropData] = useState("");
   const [height, setHeight] = useState(200);
   const [width, setWidth] = useState(200);
   const cropperRef = useRef(null);
   const [updateUserGallery] = useUpdateUserGalleryMutation();
+  const [updateUserFaceArea] = useUpdateUserFaceAreaMutation();
   const [cropCoords, setCropCoords] = useState({});
 
   const getCropData = () => {
@@ -26,7 +33,6 @@ const ImageCropper = ({
       const canvas = cropperRef.current.cropper.getCroppedCanvas();
       const coords = cropperRef.current.cropper.getData();
       setCropCoords(coords);
-
       setCropData(canvas.toDataURL());
     }
   };
@@ -44,43 +50,86 @@ const ImageCropper = ({
   };
 
   const handleUpdate = async () => {
-    if (!cropData) {
+    if (!cropData && !isFaceAreaMode) {
       console.error("No image data to upload.");
       return;
     }
 
     try {
-      const byteString = atob(cropData.split(",")[1]);
-      const mimeString = cropData.split(",")[0].split(":")[1].split(";")[0];
-      const ab = new ArrayBuffer(byteString.length);
-      const ia = new Uint8Array(ab);
+      if (isFaceAreaMode) {
+        // Handle face area update
+        const faceAreaData = {
+          face_area: [
+            {
+              x1: cropCoords.x,
+              y1: cropCoords.y,
+              x2: cropCoords.x + cropCoords.width,
+              y2: cropCoords.y + cropCoords.height,
+              width: cropCoords.width,
+              height: cropCoords.height,
+            },
+          ],
+          is_facearea_set: true,
+        };
 
-      for (let i = 0; i < byteString.length; i++) {
-        ia[i] = byteString.charCodeAt(i);
-      }
+        console.log("faceAreaData", faceAreaData);
 
-      const blob = new Blob([ab], { type: mimeString });
-      const file = new File([blob], "cropped-image.jpg", { type: mimeString });
+        // return;
 
-      const formData = new FormData();
-      formData.append("photo_type", photoType);
-      formData.append("photo_id", photoId);
-      formData.append("image", file);
+        const response = await updateUserFaceArea({
+          photo_id: photoId,
+          formData: faceAreaData,
+        }).unwrap();
 
-      const response = await updateUserGallery({ formData }).unwrap();
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+        }
 
-      console.log("Image updated successfully:", response);
+        if (onUpdate) {
+          onUpdate({
+            id: photoId,
+            faceAreaData: faceAreaData.face_area[0],
+            ...response.data,
+          });
+        }
+      } else {
+        // Handle regular gallery image update
+        const byteString = atob(cropData.split(",")[1]);
+        const mimeString = cropData.split(",")[0].split(":")[1].split(";")[0];
+        const ab = new ArrayBuffer(byteString.length);
+        const ia = new Uint8Array(ab);
 
-      if (onUpdate) {
-        onUpdate({
-          id: photoId,
-          url: response.data.url,
+        for (let i = 0; i < byteString.length; i++) {
+          ia[i] = byteString.charCodeAt(i);
+        }
+
+        const blob = new Blob([ab], { type: mimeString });
+        const file = new File([blob], "cropped-image.jpg", {
+          type: mimeString,
         });
+
+        const formData = new FormData();
+        formData.append("photo_type", photoType);
+        formData.append("photo_id", photoId);
+        formData.append("image", file);
+
+        const response = await updateUserGallery({ formData }).unwrap();
+
+        console.log("Image updated successfully:", response);
+
+        if (onUpdate) {
+          onUpdate({
+            id: photoId,
+            url: response.data.url,
+          });
+        }
       }
 
       onClose();
     } catch (error) {
-      console.error("Failed to update image:", error);
+      console.error("Failed to update:", error);
     }
   };
 
@@ -112,8 +161,6 @@ const ImageCropper = ({
             crossOrigin="anonymous"
             viewMode={1}
             guides={true}
-            // minCropBoxHeight={10}
-            // minCropBoxWidth={10}
             background={false}
             responsive={true}
             checkOrientation={true}
@@ -122,14 +169,14 @@ const ImageCropper = ({
             cropBoxResizable={true}
             minContainerWidth={10}
             minContainerHeight={50}
-            minCropBoxWidth={100} // Set minimum crop box width
-            minCropBoxHeight={100} // Set minimum crop box heights
+            minCropBoxWidth={100}
+            minCropBoxHeight={100}
           />
         )}
 
         <div className="reactCropper_controls">
           <button className="reactCropper_button" onClick={getCropData}>
-            Crop Image
+            {isFaceAreaMode ? "Set Face Area" : "Crop Image"}
           </button>
           <button className="reactCropper_button" onClick={handleRotateForward}>
             Rotate Image
@@ -142,15 +189,19 @@ const ImageCropper = ({
           </button>
         </div>
 
-        {cropData && (
+        {cropCoords && cropCoords.x !== undefined && (
           <div className="reactCropper_input-container">
             <input
               className="reactCropper_input"
-              value={`x1: ${cropCoords.x}, y1: ${cropCoords.y}, x2: ${
+              value={`x1: ${cropCoords.x?.toFixed(
+                2
+              )}, y1: ${cropCoords.y?.toFixed(2)}, x2: ${(
                 cropCoords.x + cropCoords.width
-              }, y2: ${cropCoords.y + cropCoords.height}, width: ${
-                cropCoords.width
-              }, height: ${cropCoords.height}`}
+              )?.toFixed(2)}, y2: ${(cropCoords.y + cropCoords.height)?.toFixed(
+                2
+              )}, width: ${cropCoords.width?.toFixed(
+                2
+              )}, height: ${cropCoords.height?.toFixed(2)}`}
               readOnly
             />
           </div>
@@ -175,8 +226,9 @@ const ImageCropper = ({
               color="primary"
               style={{ marginRight: "10px" }}
               onClick={handleUpdate}
+              disabled={isFaceAreaMode ? !cropCoords.x : !cropData}
             >
-              Update
+              {isFaceAreaMode ? "Update Face Area" : "Update"}
             </Button>
             <Button
               variant="contained"

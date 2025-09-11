@@ -16,6 +16,19 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    updateUserFaceArea: builder.mutation({
+      query: ({ formData, photo_id }) => ({
+        url: `/user/profile/admin/update-face-area/${photo_id}`,
+        method: "PATCH",
+        body: formData,
+        headers: {
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+        },
+      }),
+      invalidatesTags: ["user"],
+    }),
+
     createUserGallery: builder.mutation({
       query: ({ id, body }) => ({
         url: `/user/profile/upload-admin-image/${id}`,
@@ -96,4 +109,5 @@ export const {
   useUpdateUserProfilePicMutation,
   useUpdateUserVerificationStatusMutation,
   useDeleteUserGalleryMutation,
+  useUpdateUserFaceAreaMutation,
 } = userGalleryApiSlice;

@@ -30,6 +30,7 @@ const OrderLists = () => {
     endDate: "",
     orderType: "",
     status: "",
+    userMode: "",
   });
 
   // Build query params including filters
@@ -49,6 +50,7 @@ const OrderLists = () => {
       ? { order_type: appliedFilters.orderType }
       : {}),
     ...(appliedFilters.status ? { status: appliedFilters.status } : {}),
+    ...(appliedFilters.userMode ? { userMode: appliedFilters.userMode } : {}),
   };
 
   const {

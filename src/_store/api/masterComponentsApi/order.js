@@ -10,6 +10,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         consultant_id,
         order_type,
         status,
+        userMode,
         start_date,
         end_date,
       }) => {
@@ -29,6 +30,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         }
         if (status != null) {
           params.append("status", status);
+        }
+        if (userMode != null) {
+          params.append("order_mode", userMode);
         }
         if (start_date != null) {
           params.append("start_date", start_date);
@@ -118,6 +122,53 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["blogCount"],
     }),
+
+    // GET THE SESSION DATA
+
+    getSessionList: builder.query({
+      query: ({
+        page,
+        size,
+        user_id,
+        consultant_id,
+        session_type,
+        status,
+        start_date,
+        end_date,
+      }) => {
+        const params = new URLSearchParams({
+          page: page,
+          size: size,
+        });
+
+        if (user_id != null) {
+          params.append("user_id", user_id);
+        }
+        if (consultant_id != null) {
+          params.append("consultant_id", consultant_id);
+        }
+        if (session_type != null) {
+          params.append("session_type", session_type);
+        }
+        if (status != null) {
+          params.append("status", status);
+        }
+        if (start_date != null) {
+          params.append("start_date", start_date);
+        }
+        if (end_date != null) {
+          params.append("end_date", end_date);
+        }
+        return {
+          url: `api/v1/consultant/management/session/admin/all-session?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["order"],
+    }),
   }),
 });
 
@@ -128,4 +179,5 @@ export const {
   useGetUserRechargeListQuery,
   useGetUserAllSubscriptionListQuery,
   useGetSingleSubscriptionDetailsQuery,
+  useGetSessionListQuery,
 } = orderApiSlice;

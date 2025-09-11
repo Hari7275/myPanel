@@ -776,10 +776,18 @@ const Sidebar = () => {
                 <span>Orders</span>
               </div>
             </Link>
+
             <Link to="/user-recharge">
               <div className="item">
                 <CardGiftcardOutlinedIcon />
                 <span>Recharge List</span>
+              </div>
+            </Link>
+
+            <Link to="/session">
+              <div className="item">
+                <CardGiftcardOutlinedIcon />
+                <span>Session</span>
               </div>
             </Link>
           </div>

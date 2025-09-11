@@ -9,6 +9,7 @@ import PrivateRoute from "./_pages/loginPage/PrivateRoute";
 import { ROUTE_PERMISSIONS } from "./_pages/loginPage/permissions";
 
 import "./App.css";
+import useAutoLogout from "./_components/reuseComponents/useAutoLogout";
 // import LoginForm from "./commonComponents/LoginForm";
 import LoginForm from "./_pages/loginPage/LoginForm";
 import LogoutPopup from "./_pages/loginPage/LogoutPopup";
@@ -21,6 +22,7 @@ import ListenersListingTable from "./_pages/listeners/list/ListenersListingTable
 import AstrologerListingTable from "./_pages/astrologers/list/AstrologerListingTable";
 import SubscriptionComponent from "./components/SubscriptionComponent";
 import OrderLists from "./_pages/masterComponents/order/OrderLists";
+import SessionLists from "./_pages/masterComponents/session/SessionLists";
 import UserRechargeLists from "./_pages/masterComponents/userRechargeList/UserRechargeLists";
 import UserSubscriptionLists from "./_pages/masterComponents/userSubscriptionList/UserSubscriptionLists";
 import GiftLists from "./_pages/masterComponents/gifts/GiftLists";
@@ -166,6 +168,7 @@ const Layout = () => (
           <Route path="user-recharge" element={<UserRechargeLists />} />
           <Route path="user-subscription" element={<UserSubscriptionLists />} />
           <Route path="order" element={<OrderLists />} />
+          <Route path="session" element={<SessionLists />} />
           <Route path="gift" element={<GiftLists />} />
 
           <Route path="coach-profile" element={<CoachProfile />} />
@@ -275,6 +278,7 @@ const Layout = () => (
 
 function App() {
   const dispatch = useDispatch();
+  useAutoLogout();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   console.log("ROUTE_PERMISSIONS.dashboard", ROUTE_PERMISSIONS.dashboard);

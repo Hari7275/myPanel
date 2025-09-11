@@ -29,6 +29,11 @@ const OrderStatusOptions = [
   { value: 9, label: "CONSULTANT_NOT_RESPONDED" },
 ];
 
+const OrderMode = [
+  { value: 0, label: "External" },
+  { value: 2, label: "Internal" },
+];
+
 const FilterPopover = ({
   isOpen,
   onClose,
@@ -174,6 +179,24 @@ const FilterPopover = ({
               >
                 <option value="">All Status</option>
                 {OrderStatusOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="filter-section">
+              <div className="filter-section-title">User Type</div>
+              <select
+                className="filter-dropdown"
+                value={filters.userMode}
+                onChange={(e) =>
+                  handleDropdownChange("userMode", e.target.value)
+                }
+              >
+                <option value="">User Mode</option>
+                {OrderMode.map((option) => (
                   <option key={option.value} value={option.value}>
                     {option.label}
                   </option>

@@ -1,7 +1,6 @@
 import apiSlice from "../api";
 import { getAdminToken } from "../tokenHelper";
 
-
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUserList: builder.query({
@@ -12,7 +11,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer guest_token",
         },
       }),
-      providesTags: ["user"],
+      providesTags: ["user" || "user"],
     }),
 
     // *******************************************************this api is for user verfication photo****************************************
@@ -38,8 +37,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
           // Authorization: getAdminToken(),
         },
-
-
       }),
       invalidatesTags: ["user"],
     }),
@@ -54,7 +51,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
         },
-
       }),
       invalidatesTags: ["user"],
     }),
@@ -63,10 +59,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     getNotification: builder.query({
       query: ({ page, size, sender_id }) => ({
-        url: `notification/1?page=${page}&size=${size}&user_type=admin${sender_id !== undefined && sender_id !== null
-          ? `&sender_id=${sender_id}`
-          : ""
-          }`,
+        url: `notification/1?page=${page}&size=${size}&user_type=admin${
+          sender_id !== undefined && sender_id !== null
+            ? `&sender_id=${sender_id}`
+            : ""
+        }`,
         method: "GET",
       }),
       providesTags: ["user"],

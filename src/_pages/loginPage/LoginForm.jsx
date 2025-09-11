@@ -42,7 +42,7 @@ const LoginForm = () => {
         const permissionsByGroup = {};
 
         if (user?.results && user?.results?.length > 0) {
-          user.results?.forEach((result) => {
+          user?.results?.forEach((result) => {
             const groupName = result?.PermissionGroup?.name;
             const permissions = result?.PermissionGroup?.permissions?.map(
               (p) => p?.name || []

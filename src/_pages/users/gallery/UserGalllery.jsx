@@ -23,8 +23,8 @@ const UserGallery = () => {
 
   const [openSetting, setOpenSetting] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
-  const [showImageCropper, setShowImageCropper] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
+  const [showImageCropper, setShowImageCropper] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageStatuses, setImageStatuses] = useState({});

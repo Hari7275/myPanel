@@ -1,25 +1,82 @@
 import React, { useState, useRef, useEffect } from "react";
-
 import { Settings } from "lucide-react";
-
 import { useGetUserListQuery } from "../../../../_store/api";
-
-// import UserVerificationSettings from "../userVerificationPhoto/UserVerificationSettings";
-
+import { useUpdateUserFaceAreaMutation } from "../../../../_store/api";
 import UserSettings from "../UserSettings";
-
 import { useSelector } from "react-redux";
+import ImageCropper from "../ImageCropper";
+
+// Component to display cropped face area
+const FaceAreaImage = ({ imageUrl, faceArea }) => {
+  const canvasRef = useRef(null);
+  const [croppedImageUrl, setCroppedImageUrl] = useState(null);
+
+  useEffect(() => {
+    if (imageUrl && faceArea && faceArea.length > 0) {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+
+      img.onload = () => {
+        const canvas = canvasRef.current;
+        if (canvas) {
+          const ctx = canvas.getContext("2d");
+          const area = faceArea[0];
+
+          // Set canvas dimensions to match the face area
+          canvas.width = area.width;
+          canvas.height = area.height;
+
+          // Draw the cropped area
+          ctx.drawImage(
+            img,
+            area.x1, // source x
+            area.y1, // source y
+            area.width, // source width
+            area.height, // source height
+            0, // destination x
+            0, // destination y
+            area.width, // destination width
+            area.height // destination height
+          );
+
+          // Convert canvas to data URL
+          setCroppedImageUrl(canvas.toDataURL());
+        }
+      };
+
+      img.src = imageUrl;
+    }
+  }, [imageUrl, faceArea]);
+
+  return (
+    <>
+      <canvas ref={canvasRef} style={{ display: "none" }} />
+      {croppedImageUrl && (
+        <img
+          src={croppedImageUrl}
+          alt="Face Area"
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            borderRadius: "10px",
+            border: "1px solid #ddd",
+          }}
+        />
+      )}
+    </>
+  );
+};
 
 const UserProfilePhoto = () => {
   const userId = useSelector((state) => state?.user?.userData);
-
   const { data: fetchData } = useGetUserListQuery(userId);
-
   const [openSetting, setOpenSetting] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);
-
   const [selectedImage, setSelectedImage] = useState(null);
   const [imageStatuses, setImageStatuses] = useState({});
+  const [showImageCropper, setShowImageCropper] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   useEffect(() => {
     if (fetchData) {
@@ -28,9 +85,9 @@ const UserProfilePhoto = () => {
         reject_note: photo?.reject_note,
         id: photo?.id,
         status: photo?.status,
+        face_area: photo.face_area,
       }));
       setImageUrls(urls);
-       
 
       setImageStatuses(
         urls?.reduce((acc, photo) => {
@@ -41,7 +98,12 @@ const UserProfilePhoto = () => {
     }
   }, [fetchData]);
 
-   
+  console.log("imageUrls", imageUrls);
+
+  const toggleImageCropper = (photo) => {
+    setShowImageCropper(!showImageCropper);
+    setSelectedRow(photo);
+  };
 
   const toggleSettingModal = (url) => {
     setSelectedImage(url);
@@ -55,16 +117,40 @@ const UserProfilePhoto = () => {
     }));
   };
 
+  const handleImageUpdate = (updatedPhoto) => {
+    setImageUrls((prevUrls) =>
+      prevUrls.map((photo) =>
+        photo.id === updatedPhoto.id
+          ? {
+              ...photo,
+              url: updatedPhoto.url || photo.url,
+              face_area: updatedPhoto.faceAreaData
+                ? [updatedPhoto.faceAreaData]
+                : photo.face_area,
+            }
+          : photo
+      )
+    );
+  };
+
   return (
     <>
-      <div className="ProfileData-container ">
+      <div className="ProfileData-container" style={{ display: "flex" }}>
         <div className="ProfileData-card">
-          <h3 className="ProfileData-subheading">profile photo Request </h3>
+          <h3 className="ProfileData-subheading">Profile Photo Request</h3>
           <div className="gallery-maincontainer">
-            <div className="gallery-grid">
+            <div className="gallery-gri">
               {imageUrls?.map((photo, index) => (
                 <div key={index} className="image-container">
-                  <img src={photo?.url} alt={`Image ${index + 1}`} />
+                  <img
+                    src={photo?.url}
+                    alt={`Image ${index + 1}`}
+                    style={{
+                      height: "460px",
+                      borderRadius: "10px 10px 0px 0px",
+                      border: "1px solid #ddd",
+                    }}
+                  />
 
                   <div className="topnav">
                     {imageStatuses[photo?.url] && (
@@ -78,6 +164,9 @@ const UserProfilePhoto = () => {
                     )}
                   </div>
                   <div className="galleryIcons">
+                    <span onClick={() => toggleImageCropper(photo)}>
+                      <img src="/cropAdmin.png" className="galleryIcon" />
+                    </span>
                     <span onClick={() => toggleSettingModal(photo)}>
                       <Settings />
                     </span>
@@ -88,15 +177,47 @@ const UserProfilePhoto = () => {
           </div>
         </div>
 
-        {/* {openSetting && selectedImage && (
-          <UserVerificationSettings
-            isOpen={openSetting}
-            onClose={toggleSettingModal}
-            imageData={selectedImage}
-            currentStatus={imageStatuses[selectedImage]}
-            onUpdateStatus={handleUpdateStatus}
-          />
-        )} */}
+        <div
+          className="ProfileData-card"
+          style={{
+            marginLeft: "20%",
+          }}
+        >
+          <h3 className="ProfileData-subheading">Face Area Photo</h3>
+          <div className="gallery-maincontainer">
+            <div className="gallery-gri">
+              {imageUrls?.map((photo, index) => (
+                <div
+                  key={index}
+                  className="image-container"
+                  style={{ height: "460px" }}
+                >
+                  {photo?.face_area && photo.face_area.length > 0 ? (
+                    <FaceAreaImage
+                      imageUrl={photo.url}
+                      faceArea={photo.face_area}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        height: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        backgroundColor: "#f5f5f5",
+                        borderRadius: "10px",
+                        border: "1px solid #ddd",
+                      }}
+                    >
+                      <p style={{ color: "#999" }}>No face area set</p>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {openSetting && selectedImage && (
           <UserSettings
             isOpen={openSetting}
@@ -104,6 +225,18 @@ const UserProfilePhoto = () => {
             imageData={selectedImage}
             currentStatus={imageStatuses[selectedImage]}
             onUpdateStatus={handleUpdateStatus}
+          />
+        )}
+
+        {showImageCropper && selectedRow && (
+          <ImageCropper
+            isOpen={showImageCropper}
+            onClose={toggleImageCropper}
+            imageUrl={selectedRow.url}
+            photoType={selectedRow.photo_type}
+            photoId={selectedRow.id}
+            onUpdate={handleImageUpdate}
+            isFaceAreaMode={true}
           />
         )}
       </div>
