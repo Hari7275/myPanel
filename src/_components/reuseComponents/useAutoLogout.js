@@ -10,7 +10,7 @@ const useAutoLogout = () => {
   const inactivityTimer = useRef(null);
 
   // Configuration - 30 minutes of inactivity
-  const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 30 minutes
+  const INACTIVITY_TIMEOUT = 120 * 60 * 1000; // 30 minutes
 
   // Handle logout
   const handleLogout = useCallback(() => {
