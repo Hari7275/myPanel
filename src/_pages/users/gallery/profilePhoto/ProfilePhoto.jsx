@@ -62,6 +62,7 @@ const FaceAreaImage = ({ imageUrl, faceArea }) => {
             borderRadius: "10px",
             border: "1px solid #ddd",
           }}
+          crossOrigin="anonymous"
         />
       )}
     </>
@@ -195,6 +196,7 @@ const UserProfilePhoto = () => {
                   {photo?.face_area && photo.face_area.length > 0 ? (
                     <FaceAreaImage
                       imageUrl={photo.url}
+
                       faceArea={photo.face_area}
                     />
                   ) : (
