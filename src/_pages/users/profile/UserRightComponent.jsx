@@ -11,6 +11,7 @@ import QuickDate from "../quickDates/QuickDate";
 
 import UserRegulation from "../regulation/UserRegulation";
 import UserDatingStatus from "../datingStatus/UserDatingStatus";
+import UserBankDetails from "../bankDetails/UserBankDetails";
 
 
 
@@ -32,6 +33,7 @@ const UserRightComponent = ({ activeComponent }) => {
 
           {activeComponent === "UserRegulation" && <UserRegulation />}
           {activeComponent === "UserDatingStatus" && <UserDatingStatus />}
+          {activeComponent === "UserBankDetails" && <UserBankDetails />}
         </div>
       </div>
     </>

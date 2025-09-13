@@ -65,6 +65,12 @@ const UserLinkComponent = ({ onComponentChange, activeComponent }) => {
       label: "User Type & Dating Status",
       permission: "view_user_profile_dating_info"
 
+    },
+    {
+      component: "UserBankDetails",
+      label: "User Bank Details",
+      permission: "view_user_profile_dating_info"
+
     }
   ];
 

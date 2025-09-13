@@ -17,6 +17,7 @@ export * from "../api/user/blacklistedUser";
 export * from "../api/user/userTransaction";
 export * from "../api/user/feedback";
 export * from "../api/user/gallery";
+export * from "../api/user/userCollaborator"
 
 // data for consultants (coach , astrologer , listener);
 
