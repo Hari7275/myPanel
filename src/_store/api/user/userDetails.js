@@ -41,6 +41,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+
+    
     // update user intersts type (passion  , prompt question  , feature )
     updateUserInterstsType: builder.mutation({
       query: (body) => ({

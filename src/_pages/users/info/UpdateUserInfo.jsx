@@ -5,6 +5,7 @@ import {
   useGetLanguagesListQuery,
 } from "../../../_store/api";
 import Select from "react-select";
+import toast from "react-hot-toast";
 
 const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
@@ -93,14 +94,39 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      await updateInfo({
+      // Filter out empty fields
+      const filteredData = Object.entries(formData).reduce(
+        (acc, [key, value]) => {
+          // Check if value has data
+          if (value !== "" && value !== null && value !== undefined) {
+            // For arrays (like languages), check if they have elements
+            if (Array.isArray(value) && value.length > 0) {
+              acc[key] = key === "languages" ? JSON.stringify(value) : value;
+            } else if (!Array.isArray(value)) {
+              // For non-array values, include them
+              acc[key] = value;
+            }
+          }
+          return acc;
+        },
+        {}
+      );
+
+      const response = await updateInfo({
         id: selectedData.id,
         body: {
-          ...formData,
-          languages: JSON.stringify(formData.languages || []),
+          ...filteredData,
         },
       });
-      onClose();
+
+      console.log("response", response);
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       console.log("API error", error);
     }
@@ -116,11 +142,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
       onRequestClose={onClose}
     >
       <div style={{ width: "500px" }}>
-        <h2
-          className=" top-main-heading"
-        >
-          Update User Info
-        </h2>
+        <h2 className=" top-main-heading">Update User Info</h2>
 
         <form className="simple-form" noValidate autoComplete="off">
           <div style={{ display: "flex" }}>
@@ -250,7 +272,7 @@ const UpdateUserInfo = ({ isOpen, onClose, selectedData }) => {
             }
           />
 
-          <div style={{ marginTop: "20px", textAlign: 'center' }}>
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
             <button
               type="submit"
               className="fifthButton"
