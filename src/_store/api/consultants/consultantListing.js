@@ -129,7 +129,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
         if (consultantId) params.append("consultant_id", consultantId);
         if (platform) params.append("platform", platform);
-        if (is_active ) params.append("is_active", is_active );
+        if (is_active) params.append("is_active", is_active);
         if (device_id) params.append("device_id", device_id);
         if (start_date) params.append("start_date", start_date);
         if (end_date) params.append("end_date", end_date);
@@ -144,6 +144,20 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["consultants"],
     }),
+
+    // ye uss user ki api hai Device token ke liye
+
+    getUserDeviceTokenList: builder.query({
+      query: ({ page, size }) => ({
+        url: `/api/v1/user/auth/admin/guest-user-tracking?&page=${page}&size=${size}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -156,4 +170,5 @@ export const {
   useUpdateConsultantProfileStatusMutation,
   useGetUnregisteredConsultantsListQuery,
   useGetConsultantsDeviceTokenListQuery,
+  useGetUserDeviceTokenListQuery,
 } = consultantsApiSlice;

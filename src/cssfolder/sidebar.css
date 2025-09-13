@@ -9,30 +9,29 @@
 }
 
 .sidebarContainer {
-  font-family: "Roboto", sans-serif; 
+  font-family: "Roboto", sans-serif;
   color: white;
   display: flex;
   overflow: hidden;
-
 }
 
 .sidebar {
   width: 120px;
   height: 100%;
+  overflow: auto;
   background-color: #1c2434;
-   color: #DEE4EE;  /* this css is applicable before siderbar open */ 
+  color: #dee4ee; /* this css is applicable before siderbar open */
   padding: 16px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 16px;
 }
- 
 
 .menu-btn {
   /* position:fixed ; */
- right: 0;
- top: 10px; 
+  right: 0;
+  top: 10px;
   cursor: pointer;
   border-radius: 50%;
 }
@@ -74,16 +73,15 @@
   height: 100%;
   overflow: auto;
   background-color: #1c2434;
-  color: #DEE4EE; /* this css is applicable after sidebar opens */
+  color: #dee4ee; /* this css is applicable after sidebar opens */
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
   transform: translateX(-100%);
   z-index: 10;
   scrollbar-width: none;
-  transition: transform 0.5s ease-in-out !important;   
+  transition: transform 0.5s ease-in-out !important;
 }
- 
 
 #menu.visible {
   transform: translateX(0);
@@ -162,8 +160,6 @@ main h1 {
   cursor: pointer;
 }
 
- 
-
 .menu-item-child {
   font-size: 14px;
   display: block;
@@ -198,10 +194,7 @@ main h1 {
 .menu-item.active,
 .dropdown-item.active,
 .item.active {
-  background-color: #d3d3d3;  
-  color: #000;  
-  border-radius: 4px;  
+  background-color: #d3d3d3;
+  color: #000;
+  border-radius: 4px;
 }
-
-
- 

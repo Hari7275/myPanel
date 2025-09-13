@@ -81,10 +81,10 @@ const ImageCropper = ({
           formData: faceAreaData,
         }).unwrap();
 
-        if (response.status) {
-          toast.success(response.message);
+        if (response?.status) {
+          toast.success(response?.message);
         } else {
-          toast.error(response.message);
+          toast.error(response?.message);
         }
 
         if (onUpdate) {
@@ -116,6 +116,12 @@ const ImageCropper = ({
         formData.append("image", file);
 
         const response = await updateUserGallery({ formData }).unwrap();
+
+        if (response.status) {
+          toast.success(response.message);
+        } else {
+          toast.error(response.message);
+        }
 
         console.log("Image updated successfully:", response);
 

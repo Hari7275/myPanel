@@ -11,26 +11,28 @@ export const UNTRACKEDUSER_COLUMNS = [
   },
 
   {
-    Header: "Email",
-    accessor: "email_address",
+    Header: "Device Name",
+    accessor: "device_name",
   },
   {
-    Header: "Phone Code",
-    accessor: "phone_code",
+    Header: "Device Version",
+    accessor: "device_version",
   },
   {
-    Header: "Country Code",
-    accessor: "country_code",
+    Header: "Platform",
+    accessor: "platform",
+  },
+  {
+    Header: "Ip Address",
+    accessor: "ip_address",
+  },
+  {
+    Header: "Device Id",
+    accessor: "device_id",
   },
 
-//   {
-//     Header: "Phone No.",
-//     accessor: "phone_number",
-//     Cell: CustomUserType,
-//   },
-
   {
-    Header: "Last Modified",
+    Header: "Created Date",
     accessor: "created_at",
     Cell: ({ value }) => {
       const date = new Date(value);

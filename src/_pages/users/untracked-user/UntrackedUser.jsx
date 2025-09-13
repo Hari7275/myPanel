@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { UNTRACKEDUSER_COLUMNS } from "./UntrackedUserListColumn";
-import { useGetUnregisteredConsultantsListQuery } from "../../../_store/api";
+import { useGetUserDeviceTokenListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
 
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
@@ -28,12 +28,9 @@ const UntrackedUser = () => {
     data: fetchData,
     isLoading,
     error,
-  } = useGetUnregisteredConsultantsListQuery({
+  } = useGetUserDeviceTokenListQuery({
     page,
     size: pageSize,
-    email_address: email_address,
-    id: consultantId,
-    phone_number: phone,
   });
 
   useEffect(() => {
@@ -42,7 +39,7 @@ const UntrackedUser = () => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data) {
-      const consultantData = fetchData?.data;
+      const consultantData = fetchData?.data && fetchData?.data?.records;
       setData(consultantData);
     } else {
       setData([]);
@@ -89,41 +86,41 @@ const UntrackedUser = () => {
     debouncedSearchPhone(e?.target?.value);
   };
 
-  const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
-      <input
-        className="inputBox"
-        placeholder="Search by Id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleConsultantIdSearch}
-      />
+  // const customFilterComponent = () => (
+  //   <div style={{ width: "100%", height: "35px" }}>
+  //     <input
+  //       className="inputBox"
+  //       placeholder="Search by Id"
+  //       style={{
+  //         marginLeft: "25px",
+  //         height: "-webkit-fill-available",
+  //         width: "20%",
+  //       }}
+  //       onChange={handleConsultantIdSearch}
+  //     />
 
-      <input
-        className="inputBox"
-        placeholder="Search by Email"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleEmailSearch}
-      />
-      <input
-        className="inputBox"
-        placeholder="Search by Phone No."
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleConsultantPhoneSearch}
-      />
-    </div>
-  );
+  //     <input
+  //       className="inputBox"
+  //       placeholder="Search by Email"
+  //       style={{
+  //         marginLeft: "25px",
+  //         height: "-webkit-fill-available",
+  //         width: "20%",
+  //       }}
+  //       onChange={handleEmailSearch}
+  //     />
+  //     <input
+  //       className="inputBox"
+  //       placeholder="Search by Phone No."
+  //       style={{
+  //         marginLeft: "25px",
+  //         height: "-webkit-fill-available",
+  //         width: "20%",
+  //       }}
+  //       onChange={handleConsultantPhoneSearch}
+  //     />
+  //   </div>
+  // );
 
   if (isLoading) {
     return (
@@ -142,7 +139,7 @@ const UntrackedUser = () => {
         columns={columns}
         data={data}
         tableTitle="Unregistered Consultant List"
-        customFilterComponent={customFilterComponent}
+        // customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
         currentPage={page}
@@ -152,9 +149,7 @@ const UntrackedUser = () => {
         showTableHeading={false}
         includeCheckbox={false}
       />
-      {data?.length == 0 && (
-        <span className="no-data-new">No Consultant Avaliable</span>
-      )}
+      {data?.length == 0 && <span className="no-data-new">No Device Info</span>}
     </div>
   );
 };

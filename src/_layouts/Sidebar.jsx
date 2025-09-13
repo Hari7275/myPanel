@@ -162,17 +162,17 @@ const Sidebar = () => {
               )}
 
               {/* {permissions?.["user"] && ( */}
-              {/* <Link to="/untracked-user"> */}
-              <div
-                className={`menu-item ${
-                  activeItem === "untracked-user" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("untracked-user")}
-              >
-                <GroupOutlinedIcon />
-                <span>Guest User's</span>
-              </div>
-              {/* </Link> */}
+              <Link to="/untracked-user">
+                <div
+                  className={`menu-item ${
+                    activeItem === "untracked-user" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("untracked-user")}
+                >
+                  <GroupOutlinedIcon />
+                  <span>User Device Info</span>
+                </div>
+              </Link>
               {/* )} */}
               <Link to="/consultant-device-info">
                 <div

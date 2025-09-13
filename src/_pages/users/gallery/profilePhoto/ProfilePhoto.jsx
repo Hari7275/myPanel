@@ -196,7 +196,6 @@ const UserProfilePhoto = () => {
                   {photo?.face_area && photo.face_area.length > 0 ? (
                     <FaceAreaImage
                       imageUrl={photo.url}
-
                       faceArea={photo.face_area}
                     />
                   ) : (
