@@ -39,9 +39,9 @@ const ConsultantDeviceInfo = () => {
   } = useGetConsultantsDeviceTokenListQuery({
     page,
     size: pageSize,
+    consultantId: consultantId,
     platform: appliedFilters.platformType,
     is_active: appliedFilters.activeStatus,
-    consultantId: consultantId,
     end_date: appliedFilters.endDate,
     start_date: appliedFilters.startDate,
   });

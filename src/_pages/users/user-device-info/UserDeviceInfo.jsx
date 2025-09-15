@@ -9,6 +9,8 @@ import { debounce } from "lodash";
 
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import DeviceInfoFilter from "../../authConsultant/consultant-device-info/DeviceInfoFilter";
+import Button from "@mui/material/Button";
 
 const UserDeviceInfo = () => {
   const [data, setData] = useState([]);
@@ -22,6 +24,14 @@ const UserDeviceInfo = () => {
   const [pageSize, setPageSize] = useState(15);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    platformType: "",
+    activeStatus: "",
+  });
+
   const location = useLocation();
 
   const {
@@ -32,6 +42,11 @@ const UserDeviceInfo = () => {
     page,
     size: pageSize,
     user_id: userId,
+
+    platform: appliedFilters.platformType,
+    is_active: appliedFilters.activeStatus,
+    end_date: appliedFilters.endDate,
+    start_date: appliedFilters.startDate,
   });
 
   useEffect(() => {
@@ -80,6 +95,18 @@ const UserDeviceInfo = () => {
     debouncedSearchPhone(e?.target?.value);
   };
 
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters
+    console.log("Applied filters:", filterData);
+  };
+
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined
+  ).length;
+
   const customFilterComponent = () => (
     <div
       style={{
@@ -100,7 +127,7 @@ const UserDeviceInfo = () => {
         onChange={handleUserIdSearch}
       />
 
-      {/* <div
+      <div
         style={{ marginLeft: "20px", position: "relative" }}
         className="filter-button-wrapper"
       >
@@ -120,7 +147,7 @@ const UserDeviceInfo = () => {
           onApplyFilter={handleApplyFilter}
           initialFilters={appliedFilters}
         />
-      </div> */}
+      </div>
     </div>
   );
 
