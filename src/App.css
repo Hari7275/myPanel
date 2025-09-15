@@ -110,3 +110,7 @@
           alignItems: "center",
           fontSize: "40px",
         }} */
+
+.pac-container {
+  z-index: 999999999999999999999 !important;
+}

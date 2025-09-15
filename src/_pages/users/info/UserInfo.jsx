@@ -82,10 +82,20 @@ const UserInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Current Address : </strong> {formData.current_address}
+              <strong>Current Address : </strong>{" "}
+              {formData?.living_location?.city &&
+              formData.living_location.state &&
+              formData.living_location.country
+                ? `${formData.living_location.city}, ${formData.living_location.state}, ${formData.living_location.country}`
+                : "N/A"}
             </p>
             <p className="info-item">
-              <strong>Permanent Address : </strong> {formData.permanent_address}
+              <strong>Permanent Address : </strong>{" "}
+              {formData?.hometown_location?.city &&
+              formData.hometown_location.state &&
+              formData.hometown_location.country
+                ? `${formData.hometown_location.city}, ${formData.hometown_location.state}, ${formData.hometown_location.country}`
+                : "N/A"}
             </p>
           </div>
           <div className="dividerm"></div>
