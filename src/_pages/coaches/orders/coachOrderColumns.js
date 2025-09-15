@@ -4,10 +4,34 @@ import { format } from "date-fns";
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 import { getStatusColor } from "../../../_constants/consultantConstant";
 
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../../_store/slices/userSlice";
+
+const CustomIdCell = ({ value, row }) => {
+  const userName = row?.original?.description?.userData.name;
+  const dispatch = useDispatch();
+  const handleUserClick = () => {
+    dispatch(setCurrentUser(value));
+  };
+  return (
+    <Link
+      to="/users_Profile"
+      onClick={handleUserClick}
+      style={{ textDecoration: "none" }}
+    >
+      <span className="orderId-color" style={{ cursor: "pointer" }}>
+        {userName} ({value})
+      </span>
+    </Link>
+  );
+};
+
 export const ORDERCHARTCOLUMN = [
   {
     Header: "User Id",
     accessor: "user_id",
+    Cell: CustomIdCell,
   },
 
   {

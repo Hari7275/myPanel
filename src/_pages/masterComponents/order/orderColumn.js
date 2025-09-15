@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
+import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { getStatusColor } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
