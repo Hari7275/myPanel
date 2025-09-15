@@ -138,7 +138,7 @@ const UntrackedUser = () => {
       <DyCommonTable
         columns={columns}
         data={data}
-        tableTitle="Unregistered Consultant List"
+        tableTitle="User Device Info"
         // customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

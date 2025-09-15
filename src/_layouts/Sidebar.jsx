@@ -170,6 +170,18 @@ const Sidebar = () => {
                   onClick={() => handleItemClick("untracked-user")}
                 >
                   <GroupOutlinedIcon />
+                  <span>Guest Device Info</span>
+                </div>
+              </Link>
+
+              <Link to="/user-device-info">
+                <div
+                  className={`menu-item ${
+                    activeItem === "user-device-info" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("user-device-info")}
+                >
+                  <GroupOutlinedIcon />
                   <span>User Device Info</span>
                 </div>
               </Link>

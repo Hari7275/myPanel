@@ -145,7 +145,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
-    // ye uss user ki api hai Device token ke liye
+    // ye guest user ki api hai Device token ke liye
 
     getUserDeviceTokenList: builder.query({
       query: ({ page, size }) => ({
@@ -158,6 +158,54 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
       providesTags: ["consultants"],
     }),
+
+    // ye register user ki api hai Device token ke liye
+
+    getRegisterUserDeviceTokenList: builder.query({
+      query: ({
+        page,
+        size,
+        user_id,
+        device_id,
+        is_active,
+        platform,
+        start_date,
+        end_date,
+      }) => {
+        const params = new URLSearchParams({
+          page,
+          size,
+        });
+
+        if (user_id) params.append("user_id", user_id);
+        if (platform) params.append("platform", platform);
+        if (is_active) params.append("is_active", is_active);
+        if (device_id) params.append("device_id", device_id);
+        if (start_date) params.append("start_date", start_date);
+        if (end_date) params.append("end_date", end_date);
+
+        return {
+          url: `/api/v1/user/auth/admin/device-info/list?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["consultants"],
+    }),
+
+    // getRegisterUserDeviceTokenList: builder.query({
+    //   query: ({ page, size }) => ({
+    //     url: `/api/v1/user/auth/admin/device-info/list?&page=${page}&size=${size}`,
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //   }),
+
+    //   providesTags: ["consultants"],
+    // }),
   }),
 });
 
@@ -171,4 +219,5 @@ export const {
   useGetUnregisteredConsultantsListQuery,
   useGetConsultantsDeviceTokenListQuery,
   useGetUserDeviceTokenListQuery,
+  useGetRegisterUserDeviceTokenListQuery,
 } = consultantsApiSlice;
