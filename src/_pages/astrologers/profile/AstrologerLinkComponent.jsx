@@ -17,6 +17,11 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "update_astrologer_profile_info"
     },
     {
+      component: "ConsultantDeviceInfo",
+      label: "Consultant Device Info",
+      permission: "update_astrologer_profile_info"
+    },
+    {
       component: "Profile-Progress",
       label: "Onboarding Progress",
       permission: "view_astrologer_profile_onboarding_progress"

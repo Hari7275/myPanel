@@ -104,10 +104,11 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
     if (consultantList?.data) {
       const consultantOptions = consultantList.data.map((item) => ({
         value: item.id,
-        label: `${item.ConsultantProfile.id} - ${item?.ConsultantProfile?.full_name ||
+        label: `${item.ConsultantProfile.id} - ${
+          item?.ConsultantProfile?.full_name ||
           item?.ConsultantProfile?.first_name ||
           "N/A"
-          }`,
+        }`,
       }));
       setOptions(consultantOptions);
       setSelectedConsultants(consultantOptions); // ✅ auto-select all
@@ -130,28 +131,35 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
     }
   };
 
+  console.log("selectedConsultants", selectedConsultants);
+
   const handleSubmit = async () => {
     // Extract assign_id values from selected consultants
-    const assignIds = selectedConsultants.map(
-      (consultant) => consultant?.value
+    // All consultant IDs
+    const allIds = options.map((consultant) => consultant.value);
+
+    // Selected consultant IDs
+    const selectedIds = selectedConsultants.map(
+      (consultant) => consultant.value
     );
 
-    if (!Array.isArray(assignIds) || assignIds.length === 0) {
-      alert("Please select at least one consultant.");
+    // Find deselected IDs
+    const deselectedIds = allIds.filter((id) => !selectedIds.includes(id));
+
+    if (!Array.isArray(deselectedIds) || deselectedIds.length === 0) {
+      alert("Please deselect at least one consultant.");
       return;
     }
 
     const payload = {
-      id: assignIds, // Pass the array of assign_id values
+      id: deselectedIds, // 👈 ab ye unselected/deselected IDs jayengi
     };
 
     console.log("payload", payload);
 
-    // return;
-
     try {
       const response = await deleteData(payload).unwrap();
-      console.log("resposne", response)
+      console.log("resposne", response);
       if (response.status) {
         toast.success(response.message);
         onClose();
@@ -259,11 +267,7 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
         </div>

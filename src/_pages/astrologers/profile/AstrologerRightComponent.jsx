@@ -16,6 +16,7 @@ import LiveStream from "../../coaches/liveStream/LiveStream";
 import CoachStatus from "../../coaches/status/CoachStatus";
 import CommissionList from "../astrologerCommission/CommissionList";
 import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable";
+import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -24,6 +25,9 @@ const AstrologerRightComponent = ({ activeComponent }) => {
         <div>
           {activeComponent === "Overview" && <AstrologerOverview />}
           {activeComponent === "AstrologerInfo" && <AstrologerInfo />}
+          {activeComponent === "ConsultantDeviceInfo" && (
+            <ConsultantDeviceInfo />
+          )}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "account" && <AstrologerAccountList />}
           {activeComponent === "Price-chart" && <AstrologerPriceListingTable />}
