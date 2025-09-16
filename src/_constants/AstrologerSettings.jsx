@@ -24,7 +24,7 @@ const AstrologerSettings = ({ isOpen, onClose }) => {
 
         <div className="setting-modal-body">
           <div className="profile-link">
-            <h2>Change Status</h2>
+            <h2>Change Status </h2>
           </div>
 
           <div className="radio-group">

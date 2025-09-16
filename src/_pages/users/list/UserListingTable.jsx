@@ -24,7 +24,7 @@ const UserListingTable = () => {
   // Get pageSize from URL params, default to 10 if not present
   const urlPageSize = searchParams.get("pageSize");
 
-  const initialPageSize = urlPageSize ? parseInt(urlPageSize) : 10;
+  const initialPageSize = urlPageSize ? parseInt(urlPageSize) : 50;
 
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);

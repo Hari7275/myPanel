@@ -59,6 +59,13 @@ const AstrologerOverview = () => {
   //      return format(new Date(date), "MMMM dd, yyyy");
   // }
 
+  const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "N/A";
+    }
+    return format(new Date(date), "PPpp");
+  };
+
   return (
     <div>
       <div className="userProfile-container profile-right-sub-container">
@@ -103,6 +110,18 @@ const AstrologerOverview = () => {
                 value={`INR ${data?.wallet_balance}`}
               />
               <div className="line"></div>
+
+              <InfoItem
+                label="Applied Date "
+                value={formatDate(data?.created_at)}
+              />
+
+              <div className="line"></div>
+
+              <InfoItem
+                label="Last Update"
+                value={formatDate(data?.updated_at)}
+              />
 
               {/* <InfoItem
                 label="Last Active"

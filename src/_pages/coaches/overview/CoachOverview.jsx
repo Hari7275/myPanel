@@ -61,6 +61,13 @@ const CoachOverview = () => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   };
 
+  const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "N/A";
+    }
+    return format(new Date(date), "PPpp");
+  };
+
   return (
     <div>
       <div className="userProfile-containr profile-right-sub-container">
@@ -106,6 +113,18 @@ const CoachOverview = () => {
                 value={`INR ${data?.wallet_balance}`}
               />
               <div className="line"></div>
+
+              <InfoItem
+                label="Applied Date "
+                value={formatDate(data?.created_at)}
+              />
+
+              <div className="line"></div>
+
+              <InfoItem
+                label="Last Update"
+                value={formatDate(data?.updated_at)}
+              />
 
               {/* <InfoItem
                 label="Last Active"

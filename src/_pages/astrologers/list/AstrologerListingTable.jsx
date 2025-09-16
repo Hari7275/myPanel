@@ -32,7 +32,7 @@ const AstrologerListingTable = () => {
   const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
   const location = useLocation();
@@ -293,7 +293,7 @@ const AstrologerListingTable = () => {
         <DyCommonTable
           columns={columns}
           data={data}
-          tableTitle="Astrologer"
+          tableTitle="Astrologer List"
           includeActions={false}
           customFilterComponent={customFilterComponent}
           dynamicPagination={dynamicPagination}

@@ -2,11 +2,15 @@ import React, { useState, useEffect } from "react";
 
 import { useGetUserBankListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { Pencil } from "lucide-react";
+import UpdateAccountStatus from "./UpdateAccountStatus";
 
 const UserBankDetails = () => {
   const userId = useSelector((state) => state.user.userData);
 
   const [data, setData] = useState([]);
+  const [showAccountStatus, setShowAccountStatus] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
 
   const { data: fetchData } = useGetUserBankListQuery(userId);
 
@@ -43,6 +47,11 @@ const UserBankDetails = () => {
       default:
         return { backgroundColor: "#f3f4f6", color: "#4b5563" };
     }
+  };
+
+  const handleShowUpdateStatus = () => {
+    setSelectedRow(bankData);
+    setShowAccountStatus(!showAccountStatus);
   };
 
   // Styles
@@ -89,6 +98,7 @@ const UserBankDetails = () => {
     },
     statusBadge: {
       display: "inline-flex",
+      position: "relative",
       alignItems: "center",
       gap: "6px",
       padding: "6px 12px",
@@ -231,7 +241,21 @@ const UserBankDetails = () => {
                 {bankData?.account_holder_name} - {bankData?.account_type}{" "}
                 Account
               </div>
-              <div style={styles.statusBadge}>{bankData?.status} </div>
+              <div style={styles.statusBadge}>
+                {bankData?.status}
+                <button
+                  className="edit-profile-active-status"
+                  onClick={handleShowUpdateStatus}
+                >
+                  <Pencil
+                    style={{
+                      background: "none",
+                      height: "14px",
+                      width: "14px",
+                    }}
+                  />
+                </button>{" "}
+              </div>
             </div>
           </div>
 
@@ -323,6 +347,14 @@ const UserBankDetails = () => {
           </div>
         </div>
       </div>
+
+      {showAccountStatus && (
+        <UpdateAccountStatus
+          isOpen={showAccountStatus}
+          onClose={handleShowUpdateStatus}
+          currentStatus={selectedRow}
+        />
+      )}
     </div>
   );
 };

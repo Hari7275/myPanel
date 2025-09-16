@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { format } from "date-fns";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -40,6 +41,13 @@ const ListenerOverview = () => {
   // Helper function to capitalize the first letter of each word
   const capitalizeFirstLetter = (text) => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+  };
+
+  const formatDate = (date) => {
+    if (!date || isNaN(new Date(date).getTime())) {
+      return "N/A";
+    }
+    return format(new Date(date), "PPpp");
   };
 
   if (isLoading) {
@@ -94,6 +102,18 @@ const ListenerOverview = () => {
                 value={`INR ${data?.walletDetails?.payable_amount || 0}`}
               />
               <div className="line"></div>
+
+              <InfoItem
+                label="Applied Date "
+                value={formatDate(data?.created_at)}
+              />
+
+              <div className="line"></div>
+
+              <InfoItem
+                label="Last Update"
+                value={formatDate(data?.updated_at)}
+              />
 
               {/* <InfoItem label="Last Active" value={`29/04/2024`} />
               <div className="line"></div> */}

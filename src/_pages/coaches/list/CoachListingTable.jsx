@@ -38,7 +38,7 @@ const CoachListingTable = () => {
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
@@ -298,7 +298,7 @@ const CoachListingTable = () => {
         <DyCommonTable
           columns={columns}
           data={data}
-          tableTitle="Coaches List"
+          tableTitle="Coach List"
           customFilterComponent={customFilterComponent}
           dynamicPagination={dynamicPagination}
           totalPage={totalPage}

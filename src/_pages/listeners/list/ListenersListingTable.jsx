@@ -32,7 +32,7 @@ const ListenersListingTable = () => {
   const [statusSearch, setStatusSearch] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const location = useLocation();
   console.log("page in arrow.......", pageRef.current);
@@ -307,7 +307,7 @@ const ListenersListingTable = () => {
         <DyCommonTable
           columns={columns}
           data={data}
-          tableTitle="Listeners"
+          tableTitle="Listener list"
           includeActions={false}
           customFilterComponent={customFilterComponent}
           dynamicPagination={dynamicPagination}

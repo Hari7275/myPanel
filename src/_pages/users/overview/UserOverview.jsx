@@ -126,7 +126,12 @@ const UserOverview = () => {
             <div className="line"></div>
 
             <InfoItem
-              label="Last Active "
+              label="Applied Date"
+              value={formatDate(userData?.createdAt)}
+            />
+
+            <InfoItem
+              label="Last Update"
               value={formatDate(userData?.updatedAt)}
             />
             <div className="line"></div>

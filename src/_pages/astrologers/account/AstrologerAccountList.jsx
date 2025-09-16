@@ -10,7 +10,7 @@ import {
   useGetConsultantsPayPalDetailsQuery,
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
-import MyGallery from "../../../_constants/MyGallery";
+
 
 const AstrologerAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);

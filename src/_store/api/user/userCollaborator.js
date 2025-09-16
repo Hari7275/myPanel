@@ -11,9 +11,20 @@ export const userCollaboratorApiSlice = apiSlice.injectEndpoints({
           // Authorization: getAdminToken(),
         },
       }),
-      providesTags: ["feedback"],
+      providesTags: ["bankstatus"],
     }),
-
+    updateUserAccountStatus: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/user/auth/payout/admin/user-bank-status-update/${id}`,
+        method: "PATCH",
+        headers: {
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+        },
+        body,
+      }),
+      invalidatesTags: ["bankstatus"],
+    }),
     // createUserInfo: builder.mutation({
     //   query: ({ body, id }) => ({
     //     url: `user/profile/update-basic-info/7`,
@@ -42,4 +53,4 @@ export const userCollaboratorApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetUserBankListQuery } = userCollaboratorApiSlice;
+export const { useGetUserBankListQuery,useUpdateUserAccountStatusMutation } = userCollaboratorApiSlice;

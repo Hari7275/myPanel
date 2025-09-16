@@ -84,7 +84,7 @@ export const COLUMNS = (toggleModal) => [
   },
   {
     Header: "Created Date",
-    accessor: "last_active",
+    accessor: "created_date",
     Cell: ({ value }) => {
       const date = new Date(value);
       return date.toLocaleString("en-US", {
