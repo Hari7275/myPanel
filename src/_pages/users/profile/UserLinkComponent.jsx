@@ -9,69 +9,63 @@ const UserLinkComponent = ({ onComponentChange, activeComponent }) => {
     {
       component: "UserOverview",
       label: "Overview",
-      permission: "view_user_profile_overview"
-
+      permission: "view_user_profile_overview",
     },
     {
       component: "UserInfo",
       label: "User Info",
-      permission: "view_user_profile_user_info"
-
+      permission: "view_user_profile_user_info",
     },
     {
       component: "UserData",
       label: "User Data",
-      permission: "view_user_profile_dating_info"
-
+      permission: "view_user_profile_dating_info",
+    },
+    {
+      component: "ParticularUserDeviceInfo",
+      label: "User Device Info",
+      permission: "view_user_profile_user_info",
     },
     {
       component: "UserSubscription",
       label: "Subscription",
-      permission: "view_user_profile_subscriptions"
-
+      permission: "view_user_profile_subscriptions",
     },
     {
       component: "UserGalllery",
       label: "Gallery",
-      permission: "view_user_profile_gallery"
-
+      permission: "view_user_profile_gallery",
     },
     {
       component: "UserTransactionList",
       label: "Transaction List",
-      permission: "view_user_profile_transaction_list"
-
+      permission: "view_user_profile_transaction_list",
     },
     {
       component: "UserRegulation",
       label: "User Regulation",
-      permission: "view_user_profile_status"
-
+      permission: "view_user_profile_status",
     },
     {
       component: "QuickDate",
       label: "Quick Date",
-      permission: "view_user_profile_dating_info"
-
+      permission: "view_user_profile_dating_info",
     },
     {
       component: "Discovery",
       label: "Discovery",
-      permission: "view_user_profile_dating_info"
-
+      permission: "view_user_profile_dating_info",
     },
     {
       component: "UserDatingStatus",
       label: "User Type & Dating Status",
-      permission: "view_user_profile_dating_info"
-
+      permission: "view_user_profile_dating_info",
     },
     {
       component: "UserBankDetails",
       label: "User Bank Details",
-      permission: "view_user_profile_dating_info"
-
-    }
+      permission: "view_user_profile_dating_info",
+    },
   ];
 
   return (
@@ -87,7 +81,9 @@ const UserLinkComponent = ({ onComponentChange, activeComponent }) => {
           return (
             <div
               key={item.component}
-              className={`nav-link ${activeComponent === item.component ? "active" : ""}`}
+              className={`nav-link ${
+                activeComponent === item.component ? "active" : ""
+              }`}
               onClick={() => onComponentChange(item.component)}
             >
               <span>{item.label}</span>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useGetUserListQuery } from "../../_store/api";
+import { useGetParticularConsultantsDeviceTokenQuery } from "../../_store/api";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
@@ -17,18 +18,21 @@ const InfoItem = ({ label, value }) => (
 );
 
 const ConsultantDeviceInfo = () => {
-  const userId = useSelector((state) => state.user.userData);
-
-  const { data: fetchData, isLoading } = useGetUserListQuery(userId);
-  const [userData, setUserData] = useState(null);
+  const consultantId = useSelector(
+    (state) => state?.consultant?.consultantData
+  );
+  console.log("consultantId", consultantId);
+  const { data: fetchData, isLoading } =
+    useGetParticularConsultantsDeviceTokenQuery(consultantId);
+  const [deviceInfo, setDeviceInfo] = useState(null);
 
   useEffect(() => {
     if (fetchData) {
-      setUserData(fetchData?.data);
+      setDeviceInfo(fetchData?.data);
     }
   }, [fetchData]);
 
-  if (isLoading && !userData) {
+  if (isLoading && !deviceInfo) {
     return (
       <span className="loadPage">
         <Atom color="#1c2434" size="medium" text="" textColor="" />
@@ -43,96 +47,122 @@ const ConsultantDeviceInfo = () => {
     return format(new Date(date), "PPpp");
   };
 
+  const getPlatformName = (platform) => {
+    switch (platform) {
+      case "1":
+        return "Android";
+      case "2":
+        return "iOS";
+      default:
+        return platform || "N/A";
+    }
+  };
+
   return (
     <>
       <div className="userProfile-container profile-right-sub-container">
         <div className="userProfile-card">
           <footer className="userProfile-footer">
             <InfoItem
-              label="Phone no."
-              value={userData?.phone_number || "N/A"}
-            />
-            <div className="line"></div>
-            <InfoItem label="Eduction" value={userData?.education || "N/A"} />
-            <div className="line"></div>
-
-            <InfoItem label="Job" value={userData?.job || "N/A"} />
-            <div className="line"></div>
-
-            <InfoItem
-              label="Date Of Birth"
-              value={userData?.date_of_birth || "N/A"}
+              label="Device ID"
+              value={deviceInfo?.device_id || "N/A"}
             />
             <div className="line"></div>
 
-            <InfoItem label="User Bio " value={userData?.bio || "N/A"} />
+            <InfoItem
+              label="Device Name"
+              value={deviceInfo?.device_name || "N/A"}
+            />
             <div className="line"></div>
 
             <InfoItem
-              label="Live Location"
+              label="Device Model"
+              value={deviceInfo?.device_model || "N/A"}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Device Brand"
+              value={deviceInfo?.device_brand || "N/A"}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Platform"
+              value={getPlatformName(deviceInfo?.platform)}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="OS Version"
               value={
-                userData?.current_location?.city &&
-                userData.current_location.state &&
-                userData.current_location.country
-                  ? `${userData.current_location.city}, ${userData.current_location.state}, ${userData.current_location.country}`
-                  : "N/A"
-              }
-            />
-            <div className="line"></div>
-
-            <InfoItem label="Country" value={userData?.country || "N/A"} />
-            <div className="line"></div>
-
-            <InfoItem
-              label="Current Address"
-              value={
-                userData?.living_location?.city &&
-                userData.living_location.state &&
-                userData.living_location.country
-                  ? `${userData.living_location.city}, ${userData.living_location.state}, ${userData.living_location.country}`
+                deviceInfo?.os_version
+                  ? `Android ${deviceInfo.os_version}`
                   : "N/A"
               }
             />
             <div className="line"></div>
 
             <InfoItem
-              label="Permanent Address"
+              label="App Version"
+              value={deviceInfo?.app_version || "N/A"}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="App Build Number"
+              value={deviceInfo?.app_build_number || "N/A"}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="FCM Token"
               value={
-                userData?.hometown_location?.city &&
-                userData.hometown_location.state &&
-                userData.hometown_location.country
-                  ? `${userData.hometown_location.city}, ${userData.hometown_location.state}, ${userData.hometown_location.country}`
+                deviceInfo?.fcm_token
+                  ? `${deviceInfo.fcm_token.substring(0, 20)}...`
                   : "N/A"
               }
             />
             <div className="line"></div>
 
-            {/* <InfoItem
-              label="Remaining Balance"
-              value={`₹ ${userData.latest_balance.remaining_balance}`}
-            />
-            <div className="line"></div> */}
-
             <InfoItem
-              label="Spotlight  "
-              value={userData?.is_in_spotlight ? "Yes" : "No"}
+              label="Primary Device"
+              value={deviceInfo?.is_primary ? "Yes" : "No"}
             />
             <div className="line"></div>
 
             <InfoItem
-              label="Spotlight Time "
-              value={userData?.spotlight_time || 0}
+              label="Active Status"
+              value={deviceInfo?.is_active ? "Active" : "Inactive"}
             />
             <div className="line"></div>
 
             <InfoItem
-              label="Applied Date"
-              value={formatDate(userData?.createdAt)}
+              label="Login Count"
+              value={deviceInfo?.login_count || "0"}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Last Active"
+              value={formatDate(deviceInfo?.last_active)}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="FCM Token Updated"
+              value={formatDate(deviceInfo?.fcm_token_updated_at)}
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Created At"
+              value={formatDate(deviceInfo?.created_at)}
             />
 
             <InfoItem
               label="Last Update"
-              value={formatDate(userData?.updatedAt)}
+              value={formatDate(deviceInfo?.updated_at)}
             />
             <div className="line"></div>
           </footer>

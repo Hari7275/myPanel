@@ -12,8 +12,7 @@ import QuickDate from "../quickDates/QuickDate";
 import UserRegulation from "../regulation/UserRegulation";
 import UserDatingStatus from "../datingStatus/UserDatingStatus";
 import UserBankDetails from "../bankDetails/UserBankDetails";
-
-
+import ParticularUserDeviceInfo from "../user-device-info/ParticularUserDeviceInfo";
 
 const UserRightComponent = ({ activeComponent }) => {
   return (
@@ -22,6 +21,7 @@ const UserRightComponent = ({ activeComponent }) => {
         <div>
           {activeComponent === "UserOverview" && <UserOverview />}
           {activeComponent === "UserInfo" && <UserInfo />}
+          {activeComponent === "ParticularUserDeviceInfo" && <ParticularUserDeviceInfo />}
           {activeComponent === "UserData" && <UserData />}
           {/* {activeComponent === "UserGalllery" && <UserGalllery />} */}
           {activeComponent === "UserGalllery" && <Gallery />}

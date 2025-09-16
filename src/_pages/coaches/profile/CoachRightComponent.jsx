@@ -16,6 +16,8 @@ import SessionSlot from "../../../_components/reuseComponents/sessionSlot/Sessio
 import CoachStatus from "../status/CoachStatus";
 import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
 import CoachPriceListingTable from "../pricing/CoachPriceListingTable";
+import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
+
 const CoachRightComponent = ({ activeComponent }) => {
   return (
     <>
@@ -23,6 +25,9 @@ const CoachRightComponent = ({ activeComponent }) => {
         <div>
           {activeComponent === "Overview" && <CoachOverview />}
           {activeComponent === "UpdateInfo" && <UpdateInfo />}
+          {activeComponent === "ConsultantDeviceInfo" && (
+            <ConsultantDeviceInfo />
+          )}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "CoacheAccount" && <CoachAccountList />}
           {activeComponent === "Price-chart" && <CoachPriceListingTable />}

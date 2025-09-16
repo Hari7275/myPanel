@@ -11,7 +11,7 @@ export const CONSULTANT_DEVICE_INFO = [
     Header: "Id",
     accessor: "id",
   },
-  {
+  { 
     Header: "Consultant id",
     accessor: "consultant_id",
   },
@@ -20,6 +20,7 @@ export const CONSULTANT_DEVICE_INFO = [
   //     Header: "Device id",
   //     accessor: "device_id",
   //   },
+  
   {
     Header: "Device name",
     accessor: "device_name",
@@ -32,7 +33,6 @@ export const CONSULTANT_DEVICE_INFO = [
     Header: "Device brand",
     accessor: "device_brand",
   },
-
   {
     Header: "Platform",
     accessor: "platform",

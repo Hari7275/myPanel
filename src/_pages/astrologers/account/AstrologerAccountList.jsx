@@ -11,7 +11,6 @@ import {
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
-
 const AstrologerAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);
   const [data, setData] = useState([]);
@@ -33,6 +32,9 @@ const AstrologerAccountList = () => {
       setData([]);
     }
   }, [fetchData]);
+
+
+  console.log("data",data)
 
   useEffect(() => {
     if (payPalData && payPalData?.data) {

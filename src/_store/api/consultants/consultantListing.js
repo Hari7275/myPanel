@@ -195,6 +195,34 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
+    // ye kisi particular  consultant ke device token ko get karne ke liye
+
+    getParticularConsultantsDeviceToken: builder.query({
+      query: (consultantId) => ({
+        url: `/api/v1/consultant/auth/admin/latest-device-info/${consultantId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+
+      providesTags: ["consultants"],
+    }),
+
+    // ye kisi particular  user ke device token ko get karne ke liye
+
+    getParticularUserDeviceToken: builder.query({
+      query: (userId) => ({
+        url: `/api/v1/user/auth/admin/latest-device-info/${userId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+
+      providesTags: ["consultants"],
+    }),
+
     // getRegisterUserDeviceTokenList: builder.query({
     //   query: ({ page, size }) => ({
     //     url: `/api/v1/user/auth/admin/device-info/list?&page=${page}&size=${size}`,
@@ -218,6 +246,9 @@ export const {
   useUpdateConsultantProfileStatusMutation,
   useGetUnregisteredConsultantsListQuery,
   useGetConsultantsDeviceTokenListQuery,
-  useGetUserDeviceTokenListQuery,
+
   useGetRegisterUserDeviceTokenListQuery,
+  useGetParticularConsultantsDeviceTokenQuery,
+  useGetUserDeviceTokenListQuery,
+  useGetParticularUserDeviceTokenQuery,
 } = consultantsApiSlice;

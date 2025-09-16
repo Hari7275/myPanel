@@ -15,6 +15,7 @@ import CoachStatus from "../../coaches/status/CoachStatus";
 import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
 
 import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
+import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -25,6 +26,9 @@ const ListenerRightComponent = ({ activeComponent }) => {
         <div>
           {activeComponent === "ListenerOverview" && <ListenerOverview />}
           {activeComponent === "ListenerInfo" && <ListenerInfo />}
+          {activeComponent === "ConsultantDeviceInfo" && (
+            <ConsultantDeviceInfo />
+          )}
           {activeComponent === "Gallery" && <Gallery />}
           {activeComponent === "ListenerAccount" && <ListenerAccountList />}
 

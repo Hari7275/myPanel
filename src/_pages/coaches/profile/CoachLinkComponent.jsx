@@ -2,7 +2,6 @@ import React from "react";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
-
   const permissions = usePermissions();
 
   // Mapping of components to their respective permissions
@@ -10,78 +9,83 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
     {
       component: "Overview",
       label: "Overview",
-      permission: "view_coach_profile_overview"
+      permission: "view_coach_profile_overview",
     },
     {
       component: "UpdateInfo",
       label: "Update Info",
-      permission: "view_coach_profile_info"
+      permission: "view_coach_profile_info",
+    },
+    {
+      component: "ConsultantDeviceInfo",
+      label: "Consultant Device Info",
+      permission: "view_coach_profile_info",
     },
     {
       component: "Profile-Progress",
       label: "Onboarding Progress",
-      permission: "view_coach_profile_onboarding_progress"
+      permission: "view_coach_profile_onboarding_progress",
     },
     {
       component: "Gallery",
       label: "Gallery",
-      permission: "view_coach_profile_gallery"
+      permission: "view_coach_profile_gallery",
     },
     {
       component: "CoachOrder",
       label: "Orders",
-      permission: "view_coach_profile_orders"
+      permission: "view_coach_profile_orders",
     },
     {
       component: "CoachGifts",
       label: "Gifts",
-      permission: "view_coach_profile_gift"
+      permission: "view_coach_profile_gift",
     },
     {
       component: "session-slot",
       label: "Appointment Session",
-      permission: "view_coach_profile_appointment_session"
+      permission: "view_coach_profile_appointment_session",
     },
     {
       component: "LiveStream",
       label: "Live Stream",
-      permission: "view_coach_profile_livestream"
+      permission: "view_coach_profile_livestream",
     },
     {
       component: "CoachFollowers",
       label: "Followers",
-      permission: "view_coach_profile_followers"
+      permission: "view_coach_profile_followers",
     },
     {
       component: "CoachReviews",
       label: "Reviews",
-      permission: "view_coach_profile_reviews"
+      permission: "view_coach_profile_reviews",
     },
     {
       component: "CoacheAccount",
       label: "Bank Details",
-      permission: "view_coach_profile_bank_details"
+      permission: "view_coach_profile_bank_details",
     },
     {
       component: "Price-chart",
       label: "Price Chart",
-      permission: "view_coach_profile_price_chart"
+      permission: "view_coach_profile_price_chart",
     },
     {
       component: "Wallet",
       label: "Wallet",
-      permission: "view_coach_profile_wallet"
+      permission: "view_coach_profile_wallet",
     },
     {
       component: "consultant-commission",
       label: "Flute Commission",
-      permission: "view_coach_profile_flute_commission"
+      permission: "view_coach_profile_flute_commission",
     },
     {
       component: "CoachStatus",
       label: "Service Status",
-      permission: "view_coach_profile_service_status"
-    }
+      permission: "view_coach_profile_service_status",
+    },
   ];
 
   return (
@@ -97,7 +101,9 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
           return (
             <div
               key={item.component}
-              className={`nav-link ${activeComponent === item.component ? "active" : ""}`}
+              className={`nav-link ${
+                activeComponent === item.component ? "active" : ""
+              }`}
               onClick={() => onComponentChange(item.component)}
             >
               <span>{item.label}</span>
