@@ -33,7 +33,7 @@ export const COMMISSIONCOLUMN = [
   //     accessor: "discount_price",
   //   },
   {
-    Header: "Commission(%)",
+    Header: " Flute Commission(%)",
     accessor: "commission_rate",
   },
   {
