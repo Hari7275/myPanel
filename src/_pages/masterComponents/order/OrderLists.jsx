@@ -15,7 +15,7 @@ import FilterPopover from "../../../_components/reuseComponents/PopoverComponent
 const OrderLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
