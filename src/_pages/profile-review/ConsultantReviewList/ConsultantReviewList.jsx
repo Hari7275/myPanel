@@ -15,7 +15,7 @@ const ConsultantReviewList = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const navigate = useNavigate();
   const [consultantId, setConsultantId] = useState("");

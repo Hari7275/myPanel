@@ -18,7 +18,7 @@ const NotificationBell = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [sender_id, setSender_id] = useState();
 
@@ -47,6 +47,7 @@ const NotificationBell = () => {
               sender_id: item?.id,
               id: item?.sender_id,
               is_seen: item?.is_seen,
+              created_at: item?.created_at,
             }; // Attach sender_id to the parsed data
           } catch (error) {
             console.error("Error parsing notification data:", error);
@@ -125,6 +126,18 @@ const NotificationBell = () => {
       accessor: "message",
     },
     {
+      Header: "Created Date",
+      accessor: "created_at",
+      Cell: ({ value }) => {
+        if (!value) return "null";
+        const date = new Date(value);
+        return date.toLocaleString("en-US", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+      },
+    },
+    {
       Header: () => <div className="actions-header">Actions</div>,
       id: "actions",
       Cell: ({ row }) => (
@@ -201,7 +214,7 @@ const NotificationBell = () => {
         columns={columns}
         data={notificationdatas}
         includeCheckbox={false}
-        tableTitle="Notifications"
+        tableTitle="All Notifications"
         getRowProps={getRowProps}
         dynamicPagination={dynamicPagination}
         customFilterComponent={customFilterComponent}

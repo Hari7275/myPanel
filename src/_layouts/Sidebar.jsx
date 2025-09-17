@@ -25,6 +25,7 @@ const Sidebar = () => {
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
   const [isNotice, setIsNotice] = useState();
+  const [isNotification, setIsNotifications] = useState();
   const [isQuickDate, setIsQuickDate] = useState();
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
@@ -47,6 +48,10 @@ const Sidebar = () => {
   };
   const noticeDropdown = () => {
     setIsNotice(!isNotice);
+  };
+
+  const notificationDropdown = () => {
+    setIsNotifications(!isNotification);
   };
   const quickDateDropdown = () => {
     setIsQuickDate(!isQuickDate);
@@ -546,6 +551,42 @@ const Sidebar = () => {
                     onClick={() => handleItemClick("assign-notice")}
                   >
                     <div className="dropdown-item">Manage Notice</div>
+                  </div>
+                </Link>
+              </div>
+            )}
+          </div>
+
+          {/* notification setting */}
+
+          <div className="menu-item-child">
+            <div className="child" onClick={notificationDropdown}>
+              <ManageHistoryOutlinedIcon />
+              <span>Notification Manager</span>
+
+              <span>{isNotification ? "⬇️" : "⬅️"}</span>
+            </div>
+
+            {isNotification && (
+              <div className="menu-item-sub">
+                <Link to="user-notification">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "user-notif" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("user-notif")}
+                  >
+                    <div className="dropdown-item">User Notification</div>
+                  </div>
+                </Link>
+                <Link to="/notification-template">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "Notification-Template" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("Notification-Template")}
+                  >
+                    <div className="dropdown-item">Notification Template</div>
                   </div>
                 </Link>
               </div>

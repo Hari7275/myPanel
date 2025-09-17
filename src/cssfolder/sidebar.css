@@ -176,14 +176,25 @@ main h1 {
   padding: 10px 12px;
   border-radius: 10px;
   cursor: pointer;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .child:hover {
   background-color: #272727;
 }
 
-.child span {
+/* .child span {
   margin-left: 24px;
+} */
+
+
+.child span:first-of-type {
+  flex: 1;
+  margin-left: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .menu-item-child-sub {
@@ -198,3 +209,7 @@ main h1 {
   color: #000;
   border-radius: 4px;
 }
+
+
+
+

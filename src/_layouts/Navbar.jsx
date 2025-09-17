@@ -34,7 +34,7 @@ const Navbar = () => {
     "/astrologer_Profile": "Astrologer Details",
     "/listener_Profile": "Listener Details",
     "/coach-profile": "Coach Details",
-    "/notification": "Notifications",
+    "/notification": "All Notifications",
     "/qd-trips": "Quick Date Trips List",
     "/qd-location": "QD Trips Location List",
     "/assign-notice": "Notice Logs",
