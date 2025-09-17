@@ -6,16 +6,26 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import Discriptions from "./Discriptions";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 const AstrologerGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
+  
 
   const [data, setData] = useState([]);
 
-  const { data: fetchData } = useGetConsultantsOrderQuery(consultantId);
+  const { data: fetchData } = useGetConsultantsOrderQuery({
+    consultantId,
+    page,
+    pageSize,
+    order_type:6,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
@@ -76,16 +86,24 @@ const AstrologerGifts = () => {
     []
   );
 
+  const totalPage = fetchData?.meta?.total_page;
+
   return (
     <div className="ProfileData-container profile-right-sub-container">
-      <CommonTable
+      <DyCommonTable
         columns={columns}
         data={data}
+        tableTitle="Coach Gifts"
         includeActions={false}
-        tableTitle=" Received Gifts"
         includeCheckbox={false}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        // showTableHeading={false}
       />
-
       {showDescriptionModal && (
         <Discriptions
           isOpen={showDescriptionModal}

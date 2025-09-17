@@ -3,8 +3,10 @@ import apiSlice from "../api";
 export const consultantsOrderApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getConsultantsOrder: builder.query({
-      query: ({ consultantId, page, pageSize }) => ({
-        url: `/api/v1/consultant/management/order/admin/all-orders?page=${page}&size=${pageSize}&consultant_id=${consultantId}`,
+      query: ({ consultantId, page, pageSize, order_type }) => ({
+        url: `/api/v1/consultant/management/order/admin/all-orders?page=${page}&size=${pageSize}&consultant_id=${consultantId}${
+          order_type ? `&order_type=${order_type}` : ""
+        }`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

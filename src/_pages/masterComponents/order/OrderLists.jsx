@@ -93,6 +93,7 @@ const OrderLists = () => {
               )}
 
               {row.original.status == 4 &&
+                row.original.order_type !== 6 &&
                 row.original.actual_duration < 2 &&
                 !row.original.is_refunded && (
                   // {row.original.status == 4 && (

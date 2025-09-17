@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
+
 import { GIFTSCOLUMN } from "./giftsColumn";
 import { Trash, ArrowRight, Pencil } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
@@ -7,15 +9,22 @@ import Discriptions from "./Discriptions";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
-
 const CoachGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  const { data: fetchData } = useGetConsultantsOrderQuery(consultantId);
+  const { data: fetchData } = useGetConsultantsOrderQuery({
+    consultantId,
+    page,
+    pageSize,
+    order_type: 6,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData?.data) {
@@ -76,13 +85,23 @@ const CoachGifts = () => {
     []
   );
 
+  const totalPage = fetchData?.meta?.total_page;
+
   return (
     <div className="ProfileData-container profile-right-sub-container">
-      <CommonTable
+      <DyCommonTable
         columns={columns}
         data={data}
-        includeActions={false}
         tableTitle="Coach Gifts"
+        includeActions={false}
+        includeCheckbox={false}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        // showTableHeading={false}
       />
 
       {showDescriptionModal && (
