@@ -17,7 +17,7 @@ export * from "../api/user/blacklistedUser";
 export * from "../api/user/userTransaction";
 export * from "../api/user/feedback";
 export * from "../api/user/gallery";
-export * from "../api/user/userCollaborator"
+export * from "../api/user/userCollaborator";
 
 // data for consultants (coach , astrologer , listener);
 
@@ -83,3 +83,7 @@ export * from "../api/adminPermission/adminRole";
 export * from "../api/adminPermission/adminPermissionGroup";
 export * from "../api/adminPermission/superAdmin";
 export * from "../api/adminPermission/adminUser";
+
+// data for user notifications
+
+export * from "../api/masterComponentsApi/userNotification";

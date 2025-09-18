@@ -65,6 +65,7 @@ const Navbar = () => {
     "/gift": "Gifts List",
     "/user-subscription": "Users Subscription List",
     "/user-recharge": "Users Recharge List",
+    "/user-notification": "User Notifications",
 
     // master component payment section
     "/dating-products": "Dating Products",
