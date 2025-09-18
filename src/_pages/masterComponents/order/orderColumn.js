@@ -26,6 +26,8 @@ const CustomIdCell = ({ value, row }) => {
 
 const ConsultantNavigationCell = ({ value, row }) => {
   // Get consultant_type from the row data
+  const consultantName = row?.original?.description?.consultant_first_name;
+
   const consultantType = row?.original?.description?.consultant_type;
   const dispatch = useDispatch();
   const handleConsultantClick = () => {
@@ -49,7 +51,9 @@ const ConsultantNavigationCell = ({ value, row }) => {
       onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
-      <span style={{ cursor: "pointer", color: "#be5b18ff" }}>{value}</span>
+      <span style={{ cursor: "pointer", color: "#be5b18ff" }}>
+        {consultantName} ({value})
+      </span>
     </Link>
   );
 };
