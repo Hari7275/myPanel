@@ -29,6 +29,7 @@ export const USERTRANSACTIONCOLUMN = [
     accessor: "remaining_balance",
     Cell: ({ value }) => <span>{formatNumber(value)}</span>,
   },
+
   {
     Header: "Trans. Type",
     accessor: "transaction_type",
@@ -73,12 +74,25 @@ export const USERTRANSACTIONCOLUMN = [
       );
     },
   },
+  // {
+  //   Header: "Trans. Date",
+  //   accessor: "transaction_time",
+  //   Cell: ({ value }) => (
+  //     <span style={{ color: "#6b7280" }}>{format(new Date(value), "P")}</span>
+  //   ),
+  // },
+
   {
     Header: "Trans. Date",
     accessor: "transaction_time",
-    Cell: ({ value }) => (
-      <span style={{ color: "#6b7280" }}>{format(new Date(value), "P")}</span>
-    ),
+    Cell: ({ value }) => {
+      if (!value) return "null";
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
   },
   {
     Header: "Status",

@@ -20,7 +20,7 @@ const GiftLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10); // Adjusted default page size
-  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic paginations
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetGiftListQuery({

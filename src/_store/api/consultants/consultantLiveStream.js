@@ -3,8 +3,8 @@ import apiSlice from "../api";
 export const consultantsLiveStreamApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getLiveStreamList: builder.query({
-      query: (id) => ({
-        url: `/api/v1/live-stream/stream/admin/list?page=1&size=100&consultant_id=${id}`,
+      query: ({ id, page, size }) => ({
+        url: `/api/v1/live-stream/stream/admin/list?page=${page}&size=${size}&consultant_id=${id}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -16,8 +16,8 @@ export const consultantsLiveStreamApiSlice = apiSlice.injectEndpoints({
     // to get the user list which is connected on livestream
 
     getLiveStreamConnectedUserList: builder.query({
-      query: ({ id }) => ({
-        url: `/api/v1/live-stream/viewer/admin/?page=1&size=10&id=${id}`,
+      query: ({ id, page, size }) => ({
+        url: `/api/v1/live-stream/viewer/admin/?page=${page}&size=${size}&id=${id}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

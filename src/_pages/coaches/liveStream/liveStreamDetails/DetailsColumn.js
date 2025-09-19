@@ -1,37 +1,71 @@
 import moment from "moment"; // Make sure moment is installed and imported
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../../../_store/slices/userSlice";
+import {
+  formatDateTime,
+  formatDuration,
+} from "../../../../_constants/formatedDate";
+
+const OrderIdCell = ({ value }) => {
+  return <span className="custumerId-color">{value}</span>;
+};
+
+const CustomIdCell = ({ value, row }) => {
+  // const userName = row?.original?.description?.userData.name;
+  const dispatch = useDispatch();
+  // const handleUserClick = () => {
+  //   dispatch(setCurrentUser(value));
+  // };
+
+  const handleUserClick = (e) => {
+    if (value > 1000000) {
+      e.preventDefault(); // stop navigation
+      return;
+    }
+    dispatch(setCurrentUser(value));
+  };
+  return (
+    <Link
+      to="/users_Profile"
+      onClick={handleUserClick}
+      style={{ textDecoration: "none" }}
+    >
+      <span className="orderId-color" style={{ cursor: "pointer" }}>
+        {/* {userName}  */}
+        {value}
+      </span>
+    </Link>
+  );
+};
 
 export const DETAILSCOLUMN = [
   {
     Header: "Id",
     accessor: "id",
+    Cell: OrderIdCell,
   },
   {
-    Header: "Listener Id",
+    Header: "User Id",
     accessor: "listener_id",
+    Cell: CustomIdCell,
   },
   {
     Header: "Start Time",
     accessor: "joined_at",
-    Cell: ({ value }) => moment(value).format("MM-DD hh:mm:ss A"),
+    Cell: ({ value }) => formatDateTime(value),
   },
-  {
-    Header: "End Time",
-    accessor: "left_at",
-    Cell: ({ value }) => moment(value).format("MM-DD hh:mm:ss A"),
-  },
+
+  // {
+  //   Header: "End Time",
+  //   accessor: "left_at",
+
+  //   Cell: ({ value }) => formatDateTime(value),
+  // },
   {
     Header: "Duration",
     accessor: "duration",
-    Cell: ({ row }) => {
-      const start = moment(row.original.joined_at);
-      const end = moment(row.original.left_at);
-      const duration = moment.duration(end.diff(start));
-
-      const minutes = duration.minutes();
-      const seconds = duration.seconds();
-      const formatted = `${minutes}m ${seconds}s`;
-
-      return formatted;
-    },
+    Cell: ({ row }) =>
+      formatDuration(row.original.joined_at, row.original.left_at),
   },
 ];

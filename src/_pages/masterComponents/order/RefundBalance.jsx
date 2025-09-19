@@ -84,6 +84,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       transaction_type: "credit",
       type: "refund",
       amount: finalAmount, // Use the calculated final amount
+      activity_type: "order",
       status: "successful",
       description: formData.description || "User Refund",
       reference_id: selectedRow?.id,

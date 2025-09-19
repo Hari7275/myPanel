@@ -19,7 +19,7 @@ const UntrackedUser = () => {
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(15);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   const location = useLocation();
@@ -47,9 +47,7 @@ const UntrackedUser = () => {
     dispatch(resetActiveTab());
   }, [fetchData, resetActiveTab]);
 
-  const totalPage = fetchData?.meta?.total
-    ? Math.ceil(fetchData.meta.total / pageSize)
-    : 1;
+  const totalPage = fetchData?.data?.meta?.total_pages || 1;
 
   useEffect(() => {
     if (location.state) {
