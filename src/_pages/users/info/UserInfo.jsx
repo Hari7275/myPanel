@@ -124,7 +124,7 @@ const UserInfo = () => {
             {/* <p className="info-item">
               <strong>Languages : </strong>{" "}
               {JSON.parse(formData?.languages)?.join(",") || []}
-            </p> */}
+            </p>, */}
           </div>
         </div>
       </div>

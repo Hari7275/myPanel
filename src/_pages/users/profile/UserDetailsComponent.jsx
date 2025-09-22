@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { Atom } from "react-loading-indicators";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -44,7 +45,7 @@ const calculateAge = (dob) => {
 const UserDetailsComponent = () => {
   const userId = useSelector((state) => state.user.userData);
 
-  const { data: fetchData } = useGetUserListQuery(userId);
+  const { data: fetchData, isLoading } = useGetUserListQuery(userId);
   const [userData, setUserData] = useState(null);
   const { openImageModal, ImageModal } = UseImageModal();
   const navigate = useNavigate();
@@ -56,8 +57,12 @@ const UserDetailsComponent = () => {
     }
   }, [fetchData]);
 
-  if (!userData) {
-    return <div></div>;
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
   }
 
   const handleProfileClose = () => {
@@ -106,9 +111,9 @@ const UserDetailsComponent = () => {
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
           </div> */}
           <div className="userName">
-            {userData.fullName} ({age})
+            {userData?.fullName} ({age})
           </div>
-          <InfoItem label="User ID " value={userData.id || "N/A"} />
+          <InfoItem label="User ID " value={userData?.id || "N/A"} />
           <div className="active-status">
             <img
               className="button-img"

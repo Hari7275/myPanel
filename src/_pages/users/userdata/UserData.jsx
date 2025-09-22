@@ -32,6 +32,7 @@ const UserData = () => {
   const [selectedInterests, setSelectedInterests] = useState([]);
   const [selectedPassions, setSelectedPassions] = useState([]);
   const [userDatingStatus, setUserDatingStatus] = useState("");
+  const [isUserBoat, setIsUserBoat] = useState(true);
 
   useEffect(() => {
     const lifestyle = usersData?.data?.lifestyles || [];
@@ -47,6 +48,10 @@ const UserData = () => {
     // set dating status
     const datingStatus = usersData?.data?.user_dating_status;
     setUserDatingStatus(datingStatus);
+
+    // set UserBoat status
+    const boatStatus = usersData?.data?.is_bot;
+    setIsUserBoat(boatStatus);
   }, [usersData]);
 
   const [updateInterests] = useUpdateUserInterstsTypeMutation();
@@ -94,7 +99,7 @@ const UserData = () => {
   const handleInterestUpdate = async (event) => {
     event.preventDefault(); // Prevent the default form submission
 
-    if (userDatingStatus == "1") {
+    if (!isUserBoat && userDatingStatus == "1") {
       handleDatingStatus();
       return;
     }
@@ -126,7 +131,7 @@ const UserData = () => {
   };
 
   const handlePassionsUpdate = async (event) => {
-    if (userDatingStatus == "1") {
+    if (!isUserBoat && userDatingStatus == "1") {
       handleDatingStatus();
       return;
     }

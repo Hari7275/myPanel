@@ -340,13 +340,26 @@ const UpdateUserInfo = ({
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      // Gender mapping
+      const genderMapping = {
+        Man: "male",
+        Women: "female",
+        transgender: "transgender",
+        agender: "agender",
+        "non-binary": "non-binary",
+        pangender: "pangender",
+      };
+
       // Filter out empty fields and prepare data
       const filteredData = Object.entries(formData).reduce(
         (acc, [key, value]) => {
           // Check if value has data
           if (value !== "" && value !== null && value !== undefined) {
-            // For arrays (like languages), check if they have elements
-            if (Array.isArray(value) && value.length > 0) {
+            // Handle gender mapping
+            if (key === "gender" && genderMapping[value]) {
+              acc[key] = genderMapping[value];
+            } else if (Array.isArray(value) && value.length > 0) {
+              // For arrays (like languages), check if they have elements
               acc[key] = key === "languages" ? JSON.stringify(value) : value;
             } else if (!Array.isArray(value)) {
               // For location fields, ensure they are objects with city, state, country
@@ -372,8 +385,8 @@ const UpdateUserInfo = ({
                     country: value.country || "",
                   };
                 }
-              } else {
-                // For non-location fields, include them as is
+              } else if (key !== "gender") {
+                // For non-location fields (excluding gender which we already handled), include them as is
                 acc[key] = value;
               }
             }
@@ -483,8 +496,8 @@ const UpdateUserInfo = ({
                 }}
               >
                 <option value="">Select Gender</option>
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="Man">Man</option>
+                <option value="Women">Women</option>
                 <option value="transgender">Transgender</option>
                 <option value="agender">Agender</option>
                 <option value="non-binary">Non-binary</option>
