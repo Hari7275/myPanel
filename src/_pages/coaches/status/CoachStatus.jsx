@@ -6,6 +6,7 @@ import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ServiceStatusModal from "./ServiceStatusModal";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import CoachServiceStatus from "./coachServiceStatus/CoachServiceStatus";
 
 const availableStatus = {
   0: "Offline",
@@ -87,6 +88,7 @@ const CoachStatus = () => {
   return (
     <div className="status-availability">
       <label className="sub-heading">STATUS (AVAILABILITY) :</label>
+      {/* <label className="sub-heading">STATUS (AVAILABILITY) :</label> */}
       <div className="dividerm"></div>
 
       <footer className="card-footer">

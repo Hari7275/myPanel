@@ -25,8 +25,11 @@ const RevenueByLocation = () => {
   }, [fetchData, FluteReferralAmt]);
 
   return (
-    <div className="" style={{ height: "100%", paddingLeft: "25px" }}>
-      <div className="revenue-card-style" style={{ height: "100%" }}>
+    <div
+      className=""
+      style={{ height: "100%", paddingLeft: "2px", marginTop: "4%" }}
+    >
+      <div className="revenue-card-style">
         <div className=" dashboard-main-card " style={{ border: "none" }}>
           <h2 className="">Flute Referral/Reference/Coupon Amount</h2>
           <div
@@ -47,17 +50,20 @@ const RevenueByLocation = () => {
         </div>
 
         {/* Card Section....................................... */}
-        <div className="heading" style={{ marginLeft: "40px" }}>
+        <div className="heading" style={{ marginLeft: "14px" }}>
           <h2>Total Blog and Total Buzz</h2>
         </div>
         <div
           className="consultant-card-container "
-          style={{ margin: "40px 0px 0px 40px" }}
+          style={{ margin: "20px 0px 0px 40px" }}
         >
           {/* <CategoryCard text={blogBuzzCount.totalBlogs} />
           <CategoryCard text={blogBuzzCount.totalFluteBuzz} /> */}
           <div>
-            <div className="active-consultant-card">
+            <div
+              className="active-consultant-card"
+              style={{ backgroundColor: "#e0c3c3ff" }}
+            >
               <span style={{ fontSize: "22px", fontWeight: "500" }}>
                 Total Blogs:
               </span>
@@ -67,7 +73,10 @@ const RevenueByLocation = () => {
             </div>
           </div>
           <div>
-            <div className="active-consultant-card">
+            <div
+              className="active-consultant-card"
+              style={{ backgroundColor: "#93bcae97" }}
+            >
               <span style={{ fontSize: "22px", fontWeight: "500" }}>
                 Total Buzz:
               </span>

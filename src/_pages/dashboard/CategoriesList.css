@@ -192,7 +192,7 @@
 .consultant-card-container {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* border: 1px solid greenyellow; */
   position: relative;
   gap: 20px;

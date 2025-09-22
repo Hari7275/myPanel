@@ -13,6 +13,19 @@ export const UNTRACKEDUSER_COLUMNS = [
   {
     Header: "Device Name",
     accessor: "device_name",
+    Cell: ({ value }) => (
+      <span
+        style={{
+          display: "inline-block",
+          maxWidth: "150px",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          // whiteSpace: "nowrap",
+        }}
+      >
+        {value}
+      </span>
+    ),
   },
   {
     Header: "Device Version",
