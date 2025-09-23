@@ -12,11 +12,16 @@ const PayableAmountHistory = () => {
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  const { data: fetchData } = useGetPayableListQuery();
+  const { data: fetchData } = useGetPayableListQuery({
+    page,
+    size: pageSize,
+    // end_date: appliedFilters.endDate,
+    // start_date: appliedFilters.startDate,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
-      const result = fetchData?.data?.filter((item) => item.status !== 1);
+      const result = fetchData?.data?.data?.filter((item) => item.status !== 1);
       setData(result);
     } else {
       setData([]);
