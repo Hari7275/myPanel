@@ -87,8 +87,16 @@ export const orderApiSlice = apiSlice.injectEndpoints({
 
     // user All recharge List
     getUserRechargeList: builder.query({
-      query: ({ page, size, start_date, end_date, user_type }) => ({
-        url: `user/profile/admin/all-recharge-list?page=${page}&limit=${size}&user_type=${user_type}`,
+      query: ({
+        page,
+        size,
+        start_date,
+        end_date,
+        user_type,
+        user_id,
+        name,
+      }) => ({
+        url: `user/profile/admin/all-recharge-list?page=${page}&limit=${size}&user_id=${user_id}&name=${name}&user_type=${user_type}&start_date=${start_date}&end_date=${end_date}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
