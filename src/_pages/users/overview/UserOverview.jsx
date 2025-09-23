@@ -52,8 +52,6 @@ const UserOverview = () => {
     );
   }
 
-  console.log("rechargeData", userRechargeData);
-
   const formatDate = (date) => {
     if (!date || isNaN(new Date(date).getTime())) {
       return "N/A";
