@@ -111,9 +111,9 @@ const FluteEarning = () => {
       </div>
 
       <div className=" dashboard-main-card ">
-        <h2 className="dashboard-heading">Refund Amount to Users </h2>
+        <h2 className="dashboard-heading">Consultant Income by Order</h2>
         <div className="dashboard-grid">
-          {fluteRefToUser.map((item) => (
+          {consultantEarning.map((item) => (
             <CategoryCard
               key={item.title}
               label={item.name}
@@ -125,9 +125,9 @@ const FluteEarning = () => {
       </div>
 
       <div className=" dashboard-main-card ">
-        <h2 className="dashboard-heading">Consultant Income by Order</h2>
+        <h2 className="dashboard-heading">Refund Amount to Users </h2>
         <div className="dashboard-grid">
-          {consultantEarning.map((item) => (
+          {fluteRefToUser.map((item) => (
             <CategoryCard
               key={item.title}
               label={item.name}

@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/UserProfile.css";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
+import { useGetUserTransactionsListQuery } from "../../../_store/api";
+
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 
-const InfoItem = ({ label, value }) => (
+const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
     <div className="info-pair">
       <p className="info-item">
-        <strong>{label}: </strong>
+        <strong style={{ color: color }}>{label}: </strong>
         <span>{value}</span>
       </p>
     </div>
@@ -20,13 +22,27 @@ const UserOverview = () => {
   const userId = useSelector((state) => state.user.userData);
 
   const { data: fetchData, isLoading } = useGetUserListQuery(userId);
+
+  const { data: rechargeData, isLoading: isRechargeLoading } =
+    useGetUserTransactionsListQuery({
+      userId,
+      page: 1,
+      limit: 1,
+    });
   const [userData, setUserData] = useState(null);
+  const [userRechargeData, setUserRechargeData] = useState();
 
   useEffect(() => {
     if (fetchData) {
       setUserData(fetchData?.data);
     }
   }, [fetchData]);
+
+  useEffect(() => {
+    if (rechargeData) {
+      setUserRechargeData(rechargeData?.data?.recharge_details);
+    }
+  }, [rechargeData]);
 
   if (isLoading && !userData) {
     return (
@@ -35,6 +51,8 @@ const UserOverview = () => {
       </span>
     );
   }
+
+  console.log("rechargeData", userRechargeData);
 
   const formatDate = (date) => {
     if (!date || isNaN(new Date(date).getTime())) {
@@ -53,17 +71,37 @@ const UserOverview = () => {
               value={userData?.phone_number || "N/A"}
             />
             <div className="line"></div>
+            <InfoItem
+              label="Last Remaining Balance"
+              value={`₹ ${userRechargeData?.last_remaining_balance || "N/A"} `}
+              color="#4CAF50" // Green - represents available funds/positive balance
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Total Amount"
+              value={`₹ ${userRechargeData?.total_amount || "N/A"}`}
+              color="#2196F3" // Blue - represents cumulative/total value
+            />
+            <div className="line"></div>
+
+            <InfoItem
+              label="Total Number Of Recharge"
+              value={userRechargeData?.total_count || "N/A"}
+              color="#9C27B0" // Purple - represents count/frequency metric
+            />
+            <div className="line"></div>
             <InfoItem label="Eduction" value={userData?.education || "N/A"} />
             <div className="line"></div>
 
             <InfoItem label="Job" value={userData?.job || "N/A"} />
             <div className="line"></div>
 
-            <InfoItem
+            {/* <InfoItem
               label="Date Of Birth"
               value={userData?.date_of_birth || "N/A"}
-            />
-            <div className="line"></div>
+            /> */}
+            {/* <div className="line"></div> */}
 
             <InfoItem label="User Bio " value={userData?.bio || "N/A"} />
             <div className="line"></div>
@@ -119,10 +157,10 @@ const UserOverview = () => {
             />
             <div className="line"></div>
 
-            <InfoItem
+            {/* <InfoItem
               label="Spotlight Time "
               value={userData?.spotlight_time || 0}
-            />
+            /> */}
             <div className="line"></div>
 
             <InfoItem
