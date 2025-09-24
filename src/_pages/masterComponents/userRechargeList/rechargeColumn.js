@@ -10,8 +10,10 @@ const OrderIdCell = ({ value }) => {
 };
 
 // Custom cell component for User ID with navigation
-const CustomIdCell = ({ value }) => {
+const CustomIdCell = ({ value, row }) => {
   const dispatch = useDispatch();
+
+  const userName = row?.original?.first_name;
 
   const handleUserClick = () => {
     // Dispatch the user ID to Redux store
@@ -25,7 +27,7 @@ const CustomIdCell = ({ value }) => {
       style={{ textDecoration: "none" }}
     >
       <span className="orderId-color" style={{ cursor: "pointer" }}>
-        {value}
+        {userName}( {value})
       </span>
     </Link>
   );
@@ -39,15 +41,19 @@ export const COLUMNRECHARGE = [
     Cell: OrderIdCell,
   },
   {
+    Header: "Reff. Id",
+    accessor: "reference_id",
+  },
+  {
     Header: "User Id",
     accessor: "user_id",
     Cell: CustomIdCell,
   },
-  {
-    Header: "Name",
-    accessor: "first_name",
-    Cell: ({ value }) => <span style={{ color: "#1f2937" }}>{value}</span>,
-  },
+  // {
+  //   Header: "Name",
+  //   accessor: "first_name",
+  //   Cell: ({ value }) => <span style={{ color: "#1f2937" }}>{value}</span>,
+  // },
   {
     Header: "Phone Number",
     accessor: "phone_number",

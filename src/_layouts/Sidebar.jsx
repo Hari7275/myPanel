@@ -837,6 +837,13 @@ const Sidebar = () => {
               </div>
             </Link>
 
+            <Link to="/razorpay-recharge">
+              <div className="item">
+                <CardGiftcardOutlinedIcon />
+                <span>Razorpay List</span>
+              </div>
+            </Link>
+
             <Link to="/session">
               <div className="item">
                 <CardGiftcardOutlinedIcon />

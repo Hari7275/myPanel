@@ -24,6 +24,7 @@ import SubscriptionComponent from "./components/SubscriptionComponent";
 import OrderLists from "./_pages/masterComponents/order/OrderLists";
 import SessionLists from "./_pages/masterComponents/session/SessionLists";
 import UserRechargeLists from "./_pages/masterComponents/userRechargeList/UserRechargeLists";
+import RazorpayRechargeLists from "./_pages/masterComponents/RazorpayRecharge/RazorpayRechargeLists";
 import UserSubscriptionLists from "./_pages/masterComponents/userSubscriptionList/UserSubscriptionLists";
 import GiftLists from "./_pages/masterComponents/gifts/GiftLists";
 import CoachProfile from "./_pages/coaches/profile/CoachProfile";
@@ -169,6 +170,7 @@ const Layout = () => (
 
           <Route path="subs-package" element={<SubscriptionComponent />} />
           <Route path="user-recharge" element={<UserRechargeLists />} />
+          <Route path="razorpay-recharge" element={<RazorpayRechargeLists />} />
           <Route path="user-subscription" element={<UserSubscriptionLists />} />
           <Route path="order" element={<OrderLists />} />
           <Route path="session" element={<SessionLists />} />

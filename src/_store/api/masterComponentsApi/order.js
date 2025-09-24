@@ -117,6 +117,56 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       providesTags: ["blogCount"],
     }),
 
+    // user All Razorpay recharge List
+
+    getRazorpayRechargeList: builder.query({
+      query: ({
+        page,
+        size,
+        start_date,
+        end_date,
+        user_id,
+        status,
+        orderType,
+      }) => {
+        const params = new URLSearchParams({
+          page: page,
+          size: size,
+        });
+
+        console.log("orderType:", orderType, "status:", status);
+
+        if (orderType) params.append("type", orderType);
+        if (user_id) params.append("user_id", user_id);
+        if (status) params.append("status", status);
+        if (start_date) params.append("start_date", start_date);
+        if (end_date) params.append("end_date", end_date);
+
+        console.log("Final Params 👉", params.toString());
+
+        return {
+          url: `api/v1/user/payment/all-payment-list?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["blogCount"],
+    }),
+    // user All Subscription List
+    getUserAllSubscriptionList: builder.query({
+      query: ({ page, size, start_date, end_date }) => ({
+        // user/profile/admin/all-subscriptions?page=1&limit=10
+        url: `user/profile/admin/all-subscriptions?page=${page}&limit=${size}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["blogCount"],
+    }),
+
     // get particular subscription details
     // user All Subscription List
     getSingleSubscriptionDetails: builder.query({
@@ -188,4 +238,5 @@ export const {
   useGetUserAllSubscriptionListQuery,
   useGetSingleSubscriptionDetailsQuery,
   useGetSessionListQuery,
+  useGetRazorpayRechargeListQuery,
 } = orderApiSlice;

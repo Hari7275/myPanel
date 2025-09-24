@@ -1,10 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Settings } from "lucide-react";
-import { useGetUserListQuery } from "../../../../_store/api";
+import { Settings, Trash } from "lucide-react";
+import {
+  useDeleteUserGalleryMutation,
+  useGetUserListQuery,
+} from "../../../../_store/api";
 import { useUpdateUserFaceAreaMutation } from "../../../../_store/api";
 import UserSettings from "../UserSettings";
 import { useSelector } from "react-redux";
 import ImageCropper from "../ImageCropper";
+import toast from "react-hot-toast";
+import DeleteComponent from "../../../payments/DeleteComponent";
 
 // Component to display cropped face area
 const FaceAreaImage = ({ imageUrl, faceArea }) => {
@@ -78,6 +83,9 @@ const UserProfilePhoto = () => {
   const [imageStatuses, setImageStatuses] = useState({});
   const [showImageCropper, setShowImageCropper] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [showDeleteComponent, setShowDeleteComponent] = useState(false);
+
+  const [deleteImage] = useDeleteUserGalleryMutation();
 
   useEffect(() => {
     if (fetchData) {
@@ -134,6 +142,35 @@ const UserProfilePhoto = () => {
     );
   };
 
+  const toggleDeleteComponent = (row) => {
+    setSelectedRow(row);
+    setShowDeleteComponent(!showDeleteComponent);
+  };
+
+  // api handeling for delete image
+  const handleDelete = async () => {
+    if (selectedRow && selectedRow.id) {
+      try {
+        const deleteResponse = await deleteImage({
+          id: selectedRow.id,
+        }).unwrap();
+
+        if (deleteResponse.status) {
+          toast.success(deleteResponse.message);
+        } else {
+          toast.error(deleteResponse.message);
+        }
+
+        // Remove the deleted image from imageUrls and imageStatuses
+        setImageUrls((prevUrls) =>
+          prevUrls.filter((photo) => photo.id !== selectedRow.id)
+        );
+      } catch (error) {
+        console.error("Failed to delete the image:", error);
+      }
+    }
+  };
+
   return (
     <>
       <div className="ProfileData-container" style={{ display: "flex" }}>
@@ -168,8 +205,12 @@ const UserProfilePhoto = () => {
                     <span onClick={() => toggleImageCropper(photo)}>
                       <img src="/cropAdmin.png" className="galleryIcon" />
                     </span>
+
                     <span onClick={() => toggleSettingModal(photo)}>
                       <Settings />
+                    </span>
+                    <span onClick={() => toggleDeleteComponent(photo)}>
+                      <Trash />
                     </span>
                   </div>
                 </div>
@@ -238,6 +279,14 @@ const UserProfilePhoto = () => {
             photoId={selectedRow.id}
             onUpdate={handleImageUpdate}
             isFaceAreaMode={true}
+          />
+        )}
+
+        {showDeleteComponent && selectedRow && (
+          <DeleteComponent
+            isOpen={showDeleteComponent}
+            onClose={toggleDeleteComponent}
+            onDelete={handleDelete}
           />
         )}
       </div>

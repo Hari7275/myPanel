@@ -26,8 +26,8 @@ export const payoutApiSlice = apiSlice.injectEndpoints({
     }),
 
     getPayableList: builder.query({
-      query: () => ({
-        url: `/api/v1/consultant/payment/admin/monthly-transactions`,
+      query: ({ page, size }) => ({
+        url: `/api/v1/consultant/payment/admin/monthly-transactions?page=${page}&size=${size}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
