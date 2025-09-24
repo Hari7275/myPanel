@@ -25,7 +25,7 @@ const CustomIdCell = ({ value, row }) => {
 };
 
 const ConsultantNavigationCell = ({ value, row }) => {
-  // Get consultant_type from the row data
+  // Get consultant_type from the row data.
   const consultantName = row?.original?.description?.consultant_first_name;
 
   const consultantType = row?.original?.description?.consultant_type;

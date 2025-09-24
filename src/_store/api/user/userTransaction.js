@@ -4,13 +4,6 @@ import { getAdminToken } from "../tokenHelper";
 export const userTransactionsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     // ********************** get user transaction list *********************************
-    // getUserTransactionsList: builder.query({
-    //   query: ({ userId, page, limit }) => ({
-    //     url: `user/profile/user-transactions/${userId}?page=${page}&limit=${limit}`,
-    //     method: "GET",
-    //   }),
-    //   providesTags: ["transactions"],
-    // }),
 
     getUserTransactionsList: builder.query({
       query: ({

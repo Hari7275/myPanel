@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { PAYABLECOLUMN } from "../payoutRequest/payoutColumns";
 import { Info, Pencil, Trash } from "lucide-react";
@@ -20,7 +19,7 @@ const PayableAmountHistory = () => {
   });
 
   useEffect(() => {
-    if (fetchData && fetchData.data) {
+    if (fetchData && fetchData?.data && fetchData?.data?.data) {
       const result = fetchData?.data?.data?.filter((item) => item.status !== 1);
       setData(result);
     } else {
@@ -30,7 +29,12 @@ const PayableAmountHistory = () => {
 
   // Memoized columns definition for the table
   const columns = useMemo(() => [...PAYABLECOLUMN], []);
-  const totalPage = fetchData?.meta?.total_page || 1;
+  // const totalPage = fetchData?.meta?.total_page || 1;
+
+  // const totalPage = fetchData?.meta?.total_page || 1;
+  const totalPage = fetchData?.data?.total
+    ? Math.ceil(fetchData.data.total / pageSize)
+    : 1;
 
   return (
     <>
@@ -46,7 +50,7 @@ const PayableAmountHistory = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Order List"
+        tableTitle="Payable Log"
         dynamicPagination={dynamicPagination}
         // customFilterComponent={customFilterComponent}
         totalPage={totalPage}
