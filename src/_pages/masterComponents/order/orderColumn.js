@@ -129,6 +129,10 @@ export const COLUMNORDER = [
     accessor: "actual_duration",
   },
   {
+    Header: "Exp. Dur(min)",
+    accessor: "order_duration",
+  },
+  {
     Header: "Status",
     accessor: "status",
     Cell: ({ value }) => (
