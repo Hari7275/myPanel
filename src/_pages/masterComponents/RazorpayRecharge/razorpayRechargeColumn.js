@@ -44,6 +44,11 @@ export const RAZORPAYRECHARGECOLUMN = [
     Cell: CustomIdCell,
   },
   {
+    Header: "Phone Number",
+    accessor: "phone_number",
+    // Cell: CustomIdCell,
+  },
+  {
     Header: "Transaction Type",
     accessor: "transaction_type",
     Cell: ({ value }) => <span style={{ color: "#1f2937" }}>{value}</span>,
@@ -53,6 +58,14 @@ export const RAZORPAYRECHARGECOLUMN = [
     accessor: "plan_id",
     Cell: ({ value }) => (
       <span style={{ color: "#6b7280" }}>{value ? value : "Null"}</span>
+    ),
+  },
+
+  {
+    Header: "Device Info",
+    accessor: "platform",
+    Cell: ({ value }) => (
+      <span style={{ color: "#6b7280" }}>{value == 1 ? "Android" : "iOS"}</span>
     ),
   },
   {
