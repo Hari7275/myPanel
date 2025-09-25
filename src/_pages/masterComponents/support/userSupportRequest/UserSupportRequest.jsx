@@ -10,6 +10,7 @@ import UpdateSupportRequest from "./UpdateSupportRequest";
 import Description from "../../../users/subscription/Description";
 import { useGetUserSupportRequestQuery } from "../../../../_store/api";
 import { debounce } from "lodash";
+import { Atom } from "react-loading-indicators";
 
 const UserSupportRequest = () => {
   const [updateData, setUpdateData] = useState(false);
@@ -25,7 +26,7 @@ const UserSupportRequest = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetUserSupportRequestQuery({
+  const { data: fetchData, isLoading } = useGetUserSupportRequestQuery({
     status,
     userId,
   });
@@ -55,15 +56,6 @@ const UserSupportRequest = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {row.original?.status == 1 && (
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-          )}
-
           <span
             title="view description"
             className="secondIcon"
@@ -74,6 +66,15 @@ const UserSupportRequest = () => {
               onClick={() => toggleDescription(row?.original)}
             />
           </span>
+
+          {row.original?.status == 1 && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+          )}
         </div>
       ),
     },
@@ -124,17 +125,16 @@ const UserSupportRequest = () => {
   const totalPage = fetchData?.data?.total
     ? Math.ceil(fetchData.data.total / pageSize)
     : 1;
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="User Support Request"
-        customFilterComponent={customFilterComponent}
-        showTableHeading={false}
-      /> */}
-
       <DyCommonTable
         columns={columns}
         data={data}

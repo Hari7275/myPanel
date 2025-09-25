@@ -24,7 +24,7 @@ export default function BasicArea() {
   return (
     <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h2>Revenue</h2>
+        <h2>Recharge</h2>
         <div>
           <div style={{ width: "auto" }}>
             <form
