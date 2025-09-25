@@ -146,6 +146,11 @@ const OrderLists = () => {
     (val) => val !== "" && val !== null && val !== undefined
   ).length;
 
+  const handleRunningFilter = () => {
+    setAppliedFilters({ ...appliedFilters, status: 3 });
+    setPage(1); // Reset to first page
+  };
+
   const customFilterComponent = () => (
     <div
       style={{
@@ -196,6 +201,23 @@ const OrderLists = () => {
           onApplyFilter={handleApplyFilter}
           initialFilters={appliedFilters}
         />
+      </div>
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          style={{
+            // backgroundColor: "#4CAF50",
+            backgroundColor: "#6165d0ff",
+            color: "white",
+          }}
+          onClick={handleRunningFilter}
+        >
+          Running Call
+        </Button>
       </div>
     </div>
   );

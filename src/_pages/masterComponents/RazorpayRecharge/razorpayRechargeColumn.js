@@ -10,7 +10,9 @@ const OrderIdCell = ({ value }) => {
 };
 
 // Custom cell component for User ID with navigation
-const CustomIdCell = ({ value }) => {
+const CustomIdCell = ({ value, row }) => {
+  const userName = row?.original?.user_name;
+
   const dispatch = useDispatch();
 
   const handleUserClick = () => {
@@ -25,7 +27,7 @@ const CustomIdCell = ({ value }) => {
       style={{ textDecoration: "none" }}
     >
       <span className="orderId-color" style={{ cursor: "pointer" }}>
-        {value}
+        {userName}( {value})
       </span>
     </Link>
   );
@@ -46,7 +48,11 @@ export const RAZORPAYRECHARGECOLUMN = [
   {
     Header: "Phone Number",
     accessor: "phone_number",
-    // Cell: CustomIdCell,
+    Cell: ({ value, row }) => (
+      <span style={{ color: "#1f2937" }}>
+        {row?.original?.country_code}-{value}
+      </span>
+    ),
   },
   {
     Header: "Transaction Type",
