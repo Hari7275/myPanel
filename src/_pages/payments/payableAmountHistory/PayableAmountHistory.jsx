@@ -116,7 +116,9 @@ const PayableAmountHistory = () => {
         />
       </div>
 
-      <div style={{ marginLeft: "4%", position: "relative" }}>
+      <div
+        style={{ marginLeft: "20px", position: "relative", display: "flex" }}
+      >
         <div>
           <span style={{ color: "#4CAF50", fontWeight: "700" }}>
             Total Amount =
@@ -125,7 +127,7 @@ const PayableAmountHistory = () => {
             {` ₹ ${fetchData?.data?.consultant_payout?.total_overall_sum}`}
           </span>
         </div>
-        <div>
+        <div style={{ marginLeft: "20px" }}>
           <span style={{ color: "#2196F3", fontWeight: "700" }}>
             Total Payable Amount =
           </span>
