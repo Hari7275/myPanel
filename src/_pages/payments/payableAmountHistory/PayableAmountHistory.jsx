@@ -124,7 +124,7 @@ const PayableAmountHistory = () => {
             Total Amount =
           </span>
           <span style={{ color: "#151212ff", fontWeight: "600" }}>
-            {` ₹ ${fetchData?.data?.consultant_payout?.total_overall_sum}`}
+            {` ₹ ${fetchData?.data?.consultant_payout?.total_overall_sum || 0}`}
           </span>
         </div>
         <div style={{ marginLeft: "20px" }}>
@@ -132,7 +132,7 @@ const PayableAmountHistory = () => {
             Total Payable Amount =
           </span>
           <span style={{ color: "#151212ff", fontWeight: "600" }}>
-            {` ₹ ${fetchData?.data?.consultant_payout?.total_payable}`}
+            {` ₹ ${fetchData?.data?.consultant_payout?.total_payable || 0}`}
           </span>
         </div>
       </div>

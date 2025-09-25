@@ -61,10 +61,10 @@ const UserInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>First Name : </strong> {formData.first_name}
+              <strong>First Name : </strong> {formData?.full_first_name}
             </p>
             <p className="info-item">
-              <strong>Last Name : </strong> {formData.last_name}
+              <strong>Last Name : </strong> {formData?.last_name}
             </p>
           </div>
           <div className="dividerm"></div>

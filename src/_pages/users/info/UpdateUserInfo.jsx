@@ -121,7 +121,7 @@ const UpdateUserInfo = ({
           : selectedData.languages || [];
 
       setFormData({
-        first_name: selectedData.first_name || "",
+        first_name: selectedData.full_first_name || "",
         last_name: selectedData.last_name || "",
         bio: selectedData.bio || "",
         date_of_birth: selectedData.date_of_birth || "",
