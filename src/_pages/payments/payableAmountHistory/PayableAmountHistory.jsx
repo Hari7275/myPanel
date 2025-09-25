@@ -115,6 +115,25 @@ const PayableAmountHistory = () => {
           initialFilters={appliedFilters}
         />
       </div>
+
+      <div style={{ marginLeft: "4%", position: "relative" }}>
+        <div>
+          <span style={{ color: "#4CAF50", fontWeight: "700" }}>
+            Total Amount =
+          </span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ₹ ${fetchData?.data?.consultant_payout?.total_overall_sum}`}
+          </span>
+        </div>
+        <div>
+          <span style={{ color: "#2196F3", fontWeight: "700" }}>
+            Total Payable Amount =
+          </span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ₹ ${fetchData?.data?.consultant_payout?.total_payable}`}
+          </span>
+        </div>
+      </div>
     </div>
   );
 

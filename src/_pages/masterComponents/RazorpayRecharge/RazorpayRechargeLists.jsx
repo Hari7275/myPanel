@@ -33,15 +33,12 @@ const RazorpayRechargeLists = () => {
   } = useGetRazorpayRechargeListQuery({
     page,
     size: pageSize,
-
     user_id: userId,
     orderType: appliedFilters.orderType,
     status: appliedFilters.status,
     end_date: appliedFilters.endDate,
     start_date: appliedFilters.startDate,
   });
-
-  console.log("appliedFilters.orderType", appliedFilters.orderType);
 
   const columns = useMemo(() => RAZORPAYRECHARGECOLUMN, []);
 
