@@ -86,6 +86,8 @@ const Navbar = () => {
     "/prompt-question": "prompt Question",
     "/user-passion": "Passion Options",
     "/user-desire": "User Desires",
+
+    "/user-support-request": "User Support Request",
   };
 
   //

@@ -48,4 +48,17 @@ export const SUPPORTREQUESTCOLUMN = [
       return "Unknown";
     },
   },
+
+  {
+    Header: "Time",
+    accessor: "createdAt",
+    Cell: ({ value }) => {
+      if (!value) return "null";
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
 ];
