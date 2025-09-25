@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../../_components/table/CommonTable";
+import DyCommonTable from "../../../../_components/table/DyCommonTable";
+
 import { Pencil, Info } from "lucide-react";
 import { SUPPORTREQUESTCOLUMN } from "./supportRequestColumn";
 
@@ -17,6 +19,10 @@ const UserSupportRequest = () => {
   const [description, setDescription] = useState(false);
   const [status, setStatus] = useState("");
   const [userId, setUserId] = useState("");
+
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // Fetching API data for listing reviews
   const { data: fetchData } = useGetUserSupportRequestQuery({
@@ -113,14 +119,36 @@ const UserSupportRequest = () => {
       />
     </div>
   );
+
+  // const totalPage = fetchData?.meta?.total_page || 1;
+  const totalPage = fetchData?.data?.total
+    ? Math.ceil(fetchData.data.total / pageSize)
+    : 1;
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={data}
         includeActions={false}
         tableTitle="User Support Request"
         customFilterComponent={customFilterComponent}
+        showTableHeading={false}
+      /> */}
+
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        includeActions={false}
+        tableTitle="User Support Request"
+        dynamicPagination={dynamicPagination}
+        customFilterComponent={customFilterComponent}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        includeCheckbox={false}
+        showTableHeading={false}
       />
 
       {updateData && (
