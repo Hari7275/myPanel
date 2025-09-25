@@ -1,4 +1,7 @@
 // import { format } from "date-fns";
+import { formatDateTime } from "../../../../_constants/formatedDate";
+
+// Cell: ({ value }) => formatDateTime(value),
 
 export const SUPPORTREQUESTCOLUMN = [
   {
@@ -52,13 +55,6 @@ export const SUPPORTREQUESTCOLUMN = [
   {
     Header: "Time",
     accessor: "createdAt",
-    Cell: ({ value }) => {
-      if (!value) return "null";
-      const date = new Date(value);
-      return date.toLocaleString("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
-    },
+    Cell: ({ value }) => formatDateTime(value),
   },
 ];

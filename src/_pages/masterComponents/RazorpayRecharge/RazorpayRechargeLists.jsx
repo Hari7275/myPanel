@@ -163,7 +163,7 @@ const RazorpayRechargeLists = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Rozorpay Recharge List"
+        tableTitle="Razorpay Recharge List"
         customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
