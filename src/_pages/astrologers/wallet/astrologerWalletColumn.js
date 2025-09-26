@@ -1,4 +1,5 @@
 import { getCategoryTypes } from "../../../_constants/consultantConstant";
+import { formatDateTime } from "../../../_constants/formatedDate";
 
 export const WALLETCHARTCOLUMN = [
   {
@@ -29,7 +30,12 @@ export const WALLETCHARTCOLUMN = [
     accessor: "amount",
   },
   {
-    Header: "Remaining Balance",
+    Header: " Balance",
     accessor: "remaining_balance",
+  },
+  {
+    Header: "Date",
+    accessor: "createdAt",
+    Cell: ({ value }) => formatDateTime(value),
   },
 ];

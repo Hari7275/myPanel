@@ -1,4 +1,5 @@
 import { getCategoryTypes } from "../../../_constants/consultantConstant";
+import { formatDateTime } from "../../../_constants/formatedDate";
 
 export const WALLETCHARTCOLUMN = [
   {
@@ -6,7 +7,10 @@ export const WALLETCHARTCOLUMN = [
     accessor: "id",
     Cell: ({ value }) => <span style={{ color: "#8c57ff" }}>{value}</span>,
   },
-
+  // {
+  //   Header: "Order",
+  //   accessor: "order_id",
+  // },
   {
     Header: "Duration (min)",
     accessor: "duration",
@@ -16,6 +20,7 @@ export const WALLETCHARTCOLUMN = [
     accessor: "order_type",
     Cell: ({ value }) => getCategoryTypes(value) || "N/A",
   },
+
   {
     Header: "Transaction Type",
     accessor: "transaction_type",
@@ -25,7 +30,12 @@ export const WALLETCHARTCOLUMN = [
     accessor: "amount",
   },
   {
-    Header: "Remaining Balance",
+    Header: " Balance",
     accessor: "remaining_balance",
+  },
+  {
+    Header: "Date",
+    accessor: "createdAt",
+    Cell: ({ value }) => formatDateTime(value),
   },
 ];

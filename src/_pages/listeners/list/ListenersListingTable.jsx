@@ -84,6 +84,8 @@ const ListenersListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
+  console.log("totalPage", totalPage);
+
   useEffect(() => {
     if (location.state) {
       setPage(location.state.previousPage);

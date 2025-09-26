@@ -1,5 +1,4 @@
 import React, { useMemo, useState, useEffect } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 import { WALLETCHARTCOLUMN } from "./astrologerWalletColumn";
@@ -10,7 +9,7 @@ import { Atom } from "react-loading-indicators";
 const AstrologerWallet = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(20);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData

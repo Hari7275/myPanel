@@ -35,7 +35,7 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      providesTags: ["consultants"],
+      providesTags: ["consultants", "transactions", "Subcsription"],
     }),
 
     // ********************** Add user wallet Balance *********************************
