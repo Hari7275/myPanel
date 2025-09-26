@@ -5,6 +5,35 @@ import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { getStatusColor } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
+
+// Helper function to calculate end time
+const calculateEndTime = (startTime, durationInMinutes) => {
+  if (!startTime || !durationInMinutes) return null;
+
+  const startDate = new Date(startTime);
+  const endDate = new Date(startDate.getTime() + durationInMinutes * 60000); // 60000 ms = 1 minute
+
+  return endDate;
+};
+
+// Helper function to format end time
+const formatEndTime = (endDate) => {
+  if (!endDate) return "N/A";
+
+  return endDate.toLocaleString("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+  });
+};
+
+// Helper function to check if time is overdue (with 1 minute buffer)
+const isOverdue = (endTime, currentTime) => {
+  if (!endTime) return false;
+  // Add 1 minute (60000 ms) to the end time before comparing
+  const endTimeWithBuffer = new Date(endTime.getTime() + 60000);
+  return currentTime > endTimeWithBuffer;
+};
+
 const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.description?.userData.name;
   const dispatch = useDispatch();
@@ -39,7 +68,6 @@ const ConsultantNavigationCell = ({ value, row }) => {
     2: "/coach-profile",
     3: "/listener_Profile",
   };
-  // Get the route based on consultant type
   // Get the route based on consultant type
   const route =
     consultantType && navigationRoute[consultantType]
@@ -96,12 +124,8 @@ export const COLUMNORDER = [
     ),
   },
 
-  // {
-  //   Header: "Flute Earning",
-  //   accessor: "flute_earning",
-  // },
   {
-    Header: "Time",
+    Header: "Start Time",
     accessor: "createdAt",
     Cell: ({ value }) => {
       if (!value) return "null";
@@ -112,26 +136,37 @@ export const COLUMNORDER = [
       });
     },
   },
-  // {
-  //   Header: "End Time",
-  //   accessor: "call_end_time",
-  //   Cell: ({ value }) => {
-  //     if (!value) return "null";
-  //     const date = new Date(value);
-  //     return date.toLocaleString("en-US", {
-  //       dateStyle: "medium",
-  //       timeStyle: "short",
-  //     });
-  //   },
-  // },
+
+  {
+    Header: "Expected End Time",
+    accessor: "order_duration",
+    Cell: ({ value, row }) => {
+      const startTime = row.original.createdAt;
+      const status = row.original.status;
+      const endTime = calculateEndTime(startTime, value);
+
+      // Get current system time
+      const currentTime = new Date();
+
+      // Check if order is ongoing (status === 3) and overdue
+      const isOverdueOrder = status === 3 && isOverdue(endTime, currentTime);
+
+      return (
+        <span style={{ color: isOverdueOrder ? "red" : "inherit" }}>
+          {formatEndTime(endTime)}
+        </span>
+      );
+    },
+  },
+
   {
     Header: "Duration(min)",
     accessor: "actual_duration",
   },
-  {
-    Header: "Exp. Dur(min)",
-    accessor: "order_duration",
-  },
+  // {
+  //   Header: "Exp. Dur(min)",
+  //   accessor: "order_duration",
+  // },
   {
     Header: "Status",
     accessor: "status",
