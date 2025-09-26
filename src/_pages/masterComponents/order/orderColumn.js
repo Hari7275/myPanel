@@ -153,7 +153,7 @@ export const COLUMNORDER = [
 
       return (
         <span style={{ color: isOverdueOrder ? "red" : "inherit" }}>
-          {formatEndTime(endTime)}
+          {formatEndTime(endTime)} ( {value})
         </span>
       );
     },
