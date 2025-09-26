@@ -13,11 +13,17 @@ const ListenerFollowers = () => {
 
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
-  const { data: fetchData } = useGetListenerFavouriteListQuery(consultantId);
+  const { data: fetchData } = useGetListenerFavouriteListQuery({
+    consultantId,
+    page,
+    size: pageSize,
+  });
 
   useEffect(() => {
-    if (fetchData) {
-      setData(fetchData?.data || []);
+    if (fetchData && fetchData?.data) {
+      setData(fetchData?.data);
+    } else {
+      setData([]);
     }
   }, [fetchData]);
 
@@ -30,7 +36,7 @@ const ListenerFollowers = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Order List"
+        tableTitle="Favourit List"
         dynamicPagination={dynamicPagination}
         // customFilterComponent={customFilterComponent}
         totalPage={totalPage}
@@ -39,7 +45,7 @@ const ListenerFollowers = () => {
         setPage={setPage}
         setPageSize={setPageSize}
         includeCheckbox={false}
-        showTableHeading={false}
+        // showTableHeading={false}
       />
     </div>
   );

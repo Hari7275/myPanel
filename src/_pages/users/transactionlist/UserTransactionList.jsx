@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 const UserTransactionList = () => {
   const [addData, setAddData] = useState(false);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(20); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const userId = useSelector((state) => state.user.userData);
 

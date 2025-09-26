@@ -72,20 +72,20 @@ const UserOverview = () => {
 
             <InfoItem
               label="Total Recharge Amount"
-              value={`₹ ${userRechargeData?.total_amount || "N/A"}`}
+              value={`₹ ${userRechargeData?.total_amount || "0"}`}
               color="#2196F3" // Blue - represents cumulative/total value
             />
             <div className="line"></div>
             <InfoItem
               label="Remaining Balance"
-              value={`₹ ${userRechargeData?.last_remaining_balance || "N/A"} `}
+              value={`₹ ${userRechargeData?.last_remaining_balance || "0"} `}
               color="#4CAF50" // Green - represents available funds/positive balance
             />
             <div className="line"></div>
 
             <InfoItem
               label="Total Number Of Recharge"
-              value={userRechargeData?.total_count || "N/A"}
+              value={userRechargeData?.total_count || "0"}
               color="#9C27B0" // Purple - represents count/frequency metric
             />
             <div className="line"></div>

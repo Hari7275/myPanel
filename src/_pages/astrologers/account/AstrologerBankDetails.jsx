@@ -49,7 +49,7 @@ const AstrologerBankDetails = ({ isOpen, onClose, selectedRow }) => {
           />
           <div className="line"></div>
 
-          <InfoItem label="ifcs code " value={selectedRow?.ifsc_code} />
+          <InfoItem label="ifsc code " value={selectedRow?.ifsc_code} />
           <div className="line"></div>
 
           <InfoItem

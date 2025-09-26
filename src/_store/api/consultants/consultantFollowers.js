@@ -15,8 +15,8 @@ export const consultantsFollowersApiSlice = apiSlice.injectEndpoints({
 
     // get faviourts for listeners
     getListenerFavouriteList: builder.query({
-      query: (consultantId) => ({
-        url: `/api/v1/consultant/profile/listener-favourites/admin/list/${consultantId}?page=1&size=10`,
+      query: ({ consultantId, page, size }) => ({
+        url: `/api/v1/consultant/profile/listener-favourites/admin/list/${consultantId}?page=${page}&size=${size}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -27,4 +27,7 @@ export const consultantsFollowersApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetConsultantsFollowerQuery ,useGetListenerFavouriteListQuery} = consultantsFollowersApiSlice;
+export const {
+  useGetConsultantsFollowerQuery,
+  useGetListenerFavouriteListQuery,
+} = consultantsFollowersApiSlice;

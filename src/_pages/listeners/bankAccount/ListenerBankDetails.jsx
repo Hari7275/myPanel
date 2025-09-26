@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactModal from 'react-modal'
+import React from "react";
+import ReactModal from "react-modal";
 
 const ListenerBankDetails = ({ isOpen, onClose, selectedRow }) => {
   const InfoItem = ({ label, value }) => (
@@ -49,7 +49,7 @@ const ListenerBankDetails = ({ isOpen, onClose, selectedRow }) => {
           />
           <div className="line"></div>
 
-          <InfoItem label="ifcs code " value={selectedRow?.ifsc_code} />
+          <InfoItem label="ifsc code " value={selectedRow?.ifsc_code} />
           <div className="line"></div>
 
           <InfoItem
@@ -68,4 +68,4 @@ const ListenerBankDetails = ({ isOpen, onClose, selectedRow }) => {
   );
 };
 
-export default ListenerBankDetails
+export default ListenerBankDetails;

@@ -60,20 +60,20 @@ const ListenerAccountList = () => {
       id: "actions",
       Cell: ({ row }) => (
         <div className="actions-cell">
-          {permissions?.["listener"]?.includes(
+          {/* {permissions?.["listener"]?.includes(
             "view_listener_bank_details"
-          ) && (
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{ height: "35px", width: "35px" }}
-            >
-              <Info
-                className="iconSmall"
-                onClick={() => toggleBankDetails(row.original)}
-              />
-            </span>
-          )}
+          ) && ( */}
+          <span
+            title="view details"
+            className="secondIcon"
+            style={{ height: "35px", width: "35px" }}
+          >
+            <Info
+              className="iconSmall"
+              onClick={() => toggleBankDetails(row.original)}
+            />
+          </span>
+          {/* )} */}
 
           {permissions?.["listener"]?.includes(
             "update_listener_profile_bank_details"
