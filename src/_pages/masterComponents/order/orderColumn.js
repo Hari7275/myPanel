@@ -152,8 +152,13 @@ export const COLUMNORDER = [
       const isOverdueOrder = status === 3 && isOverdue(endTime, currentTime);
 
       return (
-        <span style={{ color: isOverdueOrder ? "red" : "inherit" }}>
-          {formatEndTime(endTime)} ( {value})
+        <span
+          style={{
+            color: isOverdueOrder ? "red" : "inherit",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {formatEndTime(endTime)} ({value})
         </span>
       );
     },
