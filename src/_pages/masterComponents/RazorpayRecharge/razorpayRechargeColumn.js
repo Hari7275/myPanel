@@ -102,6 +102,11 @@ export const RAZORPAYRECHARGECOLUMN = [
   //     );
   //   },
   // },
+
+  {
+    Header: "Transaction id",
+    accessor: "transaction_id",
+  },
   {
     Header: "Transaction Time",
     accessor: "created_at",
