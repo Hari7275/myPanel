@@ -8,9 +8,9 @@ const RechargeType = [
 
 const isActiveOptions = [
   { value: "SUCCESS", label: "SUCCESS" },
-  { value: "PENDING", label: "PENDING" },
+  { value: "PENDING", label: "INITIATED" },
   { value: "FAILED", label: "FAILED" },
-  { value: "AUTHORIZED", label: "AUTHORIZED" },
+  { value: "AUTHORIZED", label: "PENDING" },
 ];
 
 const UserRechargeListFilter = ({

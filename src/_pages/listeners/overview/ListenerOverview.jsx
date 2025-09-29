@@ -7,11 +7,11 @@ import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { format } from "date-fns";
 
-const InfoItem = ({ label, value }) => (
+const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
     <div className="info-pair">
       <p className="info-item">
-        <strong>{label}: </strong>
+        <strong style={{ color: color }}>{label}: </strong>
         <span>{value}</span>
       </p>
     </div>
@@ -88,18 +88,21 @@ const ListenerOverview = () => {
               <InfoItem
                 label="Lifetime Earning"
                 value={`INR ${data?.walletDetails?.lifetime_earning || 0}`}
+                color="#4CAF50" // Green - represents available funds/positive balance
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Current Balance "
                 value={`INR ${data?.walletDetails?.wallet_balance || 0}`}
+                color="#2196F3"
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Payable Balance "
                 value={`INR ${data?.walletDetails?.payable_amount || 0}`}
+                color="#9C27B0"
               />
               <div className="line"></div>
 

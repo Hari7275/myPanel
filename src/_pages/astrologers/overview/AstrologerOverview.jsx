@@ -4,11 +4,11 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
 
-const InfoItem = ({ label, value }) => (
+const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
     <div className="info-pair">
       <p className="info-item">
-        <strong>{label} : </strong>
+        <strong style={{ color: color }}>{label}: </strong>
         <span>{value}</span>
       </p>
     </div>
@@ -102,12 +102,14 @@ const AstrologerOverview = () => {
               <InfoItem
                 label="Lifetime Earning"
                 value={`INR ${data?.lifetime_earning}`}
+                color="#2196F3" // Blue - represents cumulative/total value
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Current Balance "
                 value={`INR ${data?.wallet_balance}`}
+                color="#4CAF50" // Green - represents available funds/positive balance
               />
               <div className="line"></div>
 

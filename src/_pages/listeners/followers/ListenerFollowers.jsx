@@ -36,7 +36,7 @@ const ListenerFollowers = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Favourit List"
+        tableTitle="Favourite List"
         dynamicPagination={dynamicPagination}
         // customFilterComponent={customFilterComponent}
         totalPage={totalPage}
