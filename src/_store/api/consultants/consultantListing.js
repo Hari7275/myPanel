@@ -66,11 +66,26 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
-    // update consultant status
+    // update consultant visibility status
 
     updateDisplayStatus: builder.mutation({
       query: ({ id, body }) => ({
         url: `/api/v1/consultant/profile/service-status/admin/update-display-status/${id}`,
+        method: "PUT",
+        headers: {
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
+        },
+        body,
+      }),
+      invalidatesTags: ["consultants"],
+    }),
+
+    // update consultant service status
+
+    updateConsultantServiceStatus: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/profile/service-status/admin/update-service-status/${id}`,
         method: "PUT",
         headers: {
           // Authorization: "Bearer admin_token",
@@ -246,7 +261,7 @@ export const {
   useUpdateConsultantProfileStatusMutation,
   useGetUnregisteredConsultantsListQuery,
   useGetConsultantsDeviceTokenListQuery,
-
+  useUpdateConsultantServiceStatusMutation,
   useGetRegisterUserDeviceTokenListQuery,
   useGetParticularConsultantsDeviceTokenQuery,
   useGetUserDeviceTokenListQuery,

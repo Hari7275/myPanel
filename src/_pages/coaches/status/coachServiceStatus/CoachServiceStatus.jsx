@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import { getFetaureLabel } from "../../../../_constants/consultantConstant";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import ServiceStatusModal from "../ServiceStatusModal";
+
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
+import CoachServiceStatusModal from "./CoachServiceStatusModal";
 
 const availableStatus = {
   0: "Offline",
@@ -33,7 +34,7 @@ const CoachServiceStatus = () => {
       const initialAlignment = {};
 
       fetchedData.forEach((item) => {
-        initialAlignment[item.id] = item.display_status === 1 ? 1 : 0;
+        initialAlignment[item.id] = item?.status === 1 ? 1 : 0;
       });
       setAlignment(initialAlignment);
     }
@@ -86,9 +87,6 @@ const CoachServiceStatus = () => {
 
   return (
     <div className="status-availability">
-      <label className="sub-heading">STATUS (AVAILABILITY) :</label>
-      <div className="dividerm"></div>
-
       <footer className="card-footer">
         {data?.map((status) => (
           <React.Fragment key={status.id}>
@@ -126,8 +124,9 @@ const CoachServiceStatus = () => {
                             color: "white",
                           },
                         }}
+                        disabled={status.display_status === 0}
                       >
-                        Show
+                        Active
                       </ToggleButton>
                       <ToggleButton
                         value={0}
@@ -140,8 +139,9 @@ const CoachServiceStatus = () => {
                             color: "white",
                           },
                         }}
+                        disabled={status.display_status === 0}
                       >
-                        Hide
+                        Inactive
                       </ToggleButton>
                     </>
                   )}
@@ -154,7 +154,7 @@ const CoachServiceStatus = () => {
       </footer>
 
       {selectedService && (
-        <ServiceStatusModal
+        <CoachServiceStatusModal
           isOpen={!!selectedService}
           onClose={handleModalClose}
           service={selectedService}

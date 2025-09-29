@@ -19,6 +19,9 @@ const CoachStatus = () => {
   const [data, setData] = useState([]);
   const [alignment, setAlignment] = useState({});
   const [selectedService, setSelectedService] = useState(null);
+  const [isOpenCoachServiceStatus, setIsOpenCoachServiceStatus] =
+    useState(false);
+  const [activeView, setActiveView] = useState("status"); // New state for view toggle
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const permissions = usePermissions();
 
@@ -72,6 +75,12 @@ const CoachStatus = () => {
     setSelectedService(null);
   };
 
+  const handleViewChange = (event, newView) => {
+    if (newView !== null) {
+      setActiveView(newView);
+    }
+  };
+
   const canUpdateStatus = {
     astrologer: permissions?.["astrologer"]?.includes(
       "update_astrologer_profile_service_status"
@@ -87,73 +96,130 @@ const CoachStatus = () => {
 
   return (
     <div className="status-availability">
-      <label className="sub-heading">STATUS (AVAILABILITY) :</label>
-      {/* <label className="sub-heading">STATUS (AVAILABILITY) :</label> */}
+      <div style={{ display: "flex", flexDirection: "row", gap: "20px" }}>
+        <ToggleButtonGroup
+          color="primary"
+          exclusive
+          value={activeView}
+          onChange={handleViewChange}
+          aria-label="Display Status"
+          sx={{
+            "& .MuiToggleButton-root": {
+              backgroundColor: "#f5f5f5",
+              "&:hover": {
+                backgroundColor: "#e0e0e0",
+              },
+              "&.Mui-selected": {
+                backgroundColor: "#1976d2",
+                color: "white",
+                "&:hover": {
+                  backgroundColor: "#1565c0",
+                },
+              },
+            },
+          }}
+        >
+          <ToggleButton
+            value="status"
+            sx={{
+              borderRadius: "10px",
+              padding: "4px 12px",
+              "&.Mui-selected": {
+                backgroundColor: "#696cff",
+                color: "white",
+              },
+            }}
+          >
+            STATUS (visibility)
+          </ToggleButton>
+
+          <ToggleButton
+            value="serviceStatus"
+            sx={{
+              borderRadius: "10px",
+              padding: "10px 12px",
+              marginLeft: "10px",
+              "&.Mui-selected": {
+                backgroundColor: "#696cff",
+                color: "white",
+              },
+            }}
+          >
+            SERVICESTATUS (AVAILABILITY)
+          </ToggleButton>
+        </ToggleButtonGroup>
+      </div>
+
       <div className="dividerm"></div>
 
-      <footer className="card-footer">
-        {data?.map((status) => (
-          <React.Fragment key={status.id}>
-            <div className="card-footer-content">
-              <div className="info-pair">
-                <p className="info-item">
-                  <strong>{getFetaureLabel(status?.type)}</strong>
-                </p>
-                <p className="info-item">
-                  <button className={getButtonClassName(status.status)}>
-                    {isLiveMode
-                      ? "Live"
-                      : availableStatus[status.status] || "Unknown"}
-                  </button>
-                </p>
+      {/* Conditionally render based on activeView */}
+      {activeView === "status" ? (
+        <footer className="card-footer">
+          {data?.map((status) => (
+            <React.Fragment key={status.id}>
+              <div className="card-footer-content">
+                <div className="info-pair">
+                  <p className="info-item">
+                    <strong>{getFetaureLabel(status?.type)}</strong>
+                  </p>
+                  <p className="info-item">
+                    <button className={getButtonClassName(status.status)}>
+                      {isLiveMode
+                        ? "Live"
+                        : availableStatus[status.status] || "Unknown"}
+                    </button>
+                  </p>
 
-                <ToggleButtonGroup
-                  color="primary"
-                  value={alignment[status.id]}
-                  onChange={(e, newVal) =>
-                    handleChange(status.id, newVal, status)
-                  }
-                  exclusive
-                  aria-label="Display Status"
-                >
-                  {hasEditPermission && (
-                    <>
-                      <ToggleButton
-                        value={1}
-                        sx={{
-                          borderRadius: "10px",
-                          padding: "4px 12px",
-                          "&.Mui-selected": {
-                            backgroundColor: "#696cff",
-                            color: "white",
-                          },
-                        }}
-                      >
-                        Show
-                      </ToggleButton>
-                      <ToggleButton
-                        value={0}
-                        sx={{
-                          borderRadius: "10px",
-                          padding: "4px 12px",
-                          marginLeft: "10px",
-                          "&.Mui-selected": {
-                            backgroundColor: "#696cff",
-                            color: "white",
-                          },
-                        }}
-                      >
-                        Hide
-                      </ToggleButton>
-                    </>
-                  )}
-                </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                    color="primary"
+                    value={alignment[status.id]}
+                    onChange={(e, newVal) =>
+                      handleChange(status.id, newVal, status)
+                    }
+                    exclusive
+                    aria-label="Display Status"
+                  >
+                    {hasEditPermission && (
+                      <>
+                        <ToggleButton
+                          value={1}
+                          sx={{
+                            borderRadius: "10px",
+                            padding: "4px 12px",
+                            "&.Mui-selected": {
+                              backgroundColor: "#696cff",
+                              color: "white",
+                            },
+                          }}
+                        >
+                          Show
+                        </ToggleButton>
+                        <ToggleButton
+                          value={0}
+                          sx={{
+                            borderRadius: "10px",
+                            padding: "4px 12px",
+                            marginLeft: "10px",
+                            "&.Mui-selected": {
+                              backgroundColor: "#696cff",
+                              color: "white",
+                            },
+                          }}
+                        >
+                          Hide
+                        </ToggleButton>
+                      </>
+                    )}
+                  </ToggleButtonGroup>
+                </div>
               </div>
-            </div>
-            <div className="dividerm"></div>
-          </React.Fragment>
-        ))}
-      </footer>
+              <div className="dividerm"></div>
+            </React.Fragment>
+          ))}
+        </footer>
+      ) : (
+        <CoachServiceStatus />
+      )}
 
       {selectedService && (
         <ServiceStatusModal

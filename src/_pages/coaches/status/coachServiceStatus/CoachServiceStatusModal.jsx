@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { useUpdateDisplayStatusMutation } from "../../../_store/api";
+import { useUpdateConsultantServiceStatusMutation } from "../../../../_store/api";
 import toast from "react-hot-toast";
-import { getFetaureLabel } from "../../../_constants/consultantConstant";
+import { getFetaureLabel } from "../../../../_constants/consultantConstant";
 
 const CoachServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
-  const [updateDisplayStatus] = useUpdateDisplayStatusMutation();
+  const [updateDisplayStatus] = useUpdateConsultantServiceStatusMutation();
   const [loading, setLoading] = useState(false);
 
   const isHiding = service?.newDisplayStatus === 0;
-  const actionText = isHiding ? "Hide" : "Show";
+  const actionText = isHiding ? "Inactive" : "Active";
   const statusValue = service?.newDisplayStatus;
 
   const handleSubmit = async () => {
@@ -69,7 +69,7 @@ const CoachServiceStatusModal = ({ isOpen, onClose, service, onSuccess }) => {
           <span style={{ color: "rgb(237 70 223)", fontSize: "24px" }}>
             {getFetaureLabel(service?.type)}
           </span>{" "}
-          service from display?
+          service from ?
         </h2>
 
         <div style={{ marginTop: "30px", textAlign: "center" }}>
