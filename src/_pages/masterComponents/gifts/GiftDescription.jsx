@@ -1,15 +1,13 @@
-import React from 'react'
-import ReactModal from 'react-modal'
+import React from "react";
+import ReactModal from "react-modal";
 
-const GiftDescription = ({isOpen ,onClose , Description}) => {
-
-    const description = (
-      <p className="info-item">
-        <strong style={{ fontSize: "20px" }}>Description:</strong>
-        <span style={{ fontSize: "14px" }}>{Description}</span>
-      </p>
-    );
-
+const GiftDescription = ({ isOpen, onClose, Description }) => {
+  const description = (
+    <p className="info-item">
+      <strong style={{ fontSize: "20px" }}>Description: </strong>
+      <span style={{ fontSize: "14px" }}>{Description}</span>
+    </p>
+  );
 
   return (
     <ReactModal
@@ -23,6 +21,6 @@ const GiftDescription = ({isOpen ,onClose , Description}) => {
       </div>
     </ReactModal>
   );
-}
+};
 
-export default GiftDescription
+export default GiftDescription;

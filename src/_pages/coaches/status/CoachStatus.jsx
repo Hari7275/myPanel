@@ -145,7 +145,7 @@ const CoachStatus = () => {
               },
             }}
           >
-            SERVICESTATUS (AVAILABILITY)
+            SERVICE STATUS (AVAILABILITY)
           </ToggleButton>
         </ToggleButtonGroup>
       </div>

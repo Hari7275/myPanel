@@ -36,6 +36,8 @@ import ListenersProfile from "./_pages/listeners/profile/ListenersProfile";
 import FeedbackList from "./_pages/masterComponents/feedback/FeedbackList";
 import QDLoaction from "./_pages/masterComponents/QDLocations/QDLoaction";
 import UserNotification from "./_pages/masterComponents/notificationManger/UserNotification";
+import NotificationTamplateList from "./_pages/masterComponents/notificationManger/notificationTamplate/NotificationTamplateList";
+
 import CommissionList from "./_pages/astrologers/astrologerCommission/CommissionList";
 
 import UserProfileOptions from "./_pages/masterComponents/userInterests/userProfileOption/UserProfileOptions";
@@ -213,6 +215,10 @@ const Layout = () => (
           <Route path="countries-list" element={<CountriesList />} />
           <Route path="/consultant-notice" element={<ConsultantNotice />} />
           <Route path="/user-notification" element={<UserNotification />} />
+          <Route
+            path="/notification-template"
+            element={<NotificationTamplateList />}
+          />
 
           <Route path="/assign-notice" element={<ConsultantNoticeList />} />
           <Route path="/coach-rate" element={<CoachRate />} />

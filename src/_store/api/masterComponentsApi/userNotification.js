@@ -23,46 +23,62 @@ export const userNotificationApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Notification"],
     }),
 
-    // createGift: builder.mutation({
-    //   query: ({ body }) => ({
-    //     url: `/api/v1/consultant/management/gift/admin/add`,
-    //     method: "POST",
-    //     body,
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   invalidatesTags: ["gift"],
-    // }),
+    // api for notification template
+    getUserNotificationTamplateList: builder.query({
+      query: ({ page, size, id }) => ({
+        url: `/notification/user-promotional/admin/template?page=1&size=10`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["Notification"],
+    }),
 
-    // updateGift: builder.mutation({
-    //   query: ({ id, body }) => ({
-    //     url: `/api/v1/consultant/management/gift/admin/update/${id}`,
-    //     method: "PUT",
-    //     body,
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   invalidatesTags: ["gift"],
-    // }),
+    createNotificationTemplate: builder.mutation({
+      query: ({ body }) => ({
+        url: `/notification/user-promotional/admin/template/add`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["Notification"],
+    }),
 
-    // deleteGift: builder.mutation({
-    //   query: ({ id }) => ({
-    //     url: `/api/v1/consultant/management/gift/admin/${id}`,
-    //     method: "DELETE",
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   invalidatesTags: ["gift"],
-    // }),
+    updateNotificationTemplate: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/notification/user-promotional/admin/template/edit/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["Notification"],
+    }),
+
+    deleteUserNotificationemplate: builder.mutation({
+      query: ({ id }) => ({
+        url: `/notification/user-promotional/admin/template/delete/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["Notification"],
+    }),
   }),
 });
 
 export const {
   useGetUserNotificationListQuery,
   useGetAllSendedUserNotificationListQuery,
+  useGetUserNotificationTamplateListQuery,
+  useCreateNotificationTemplateMutation,
+  useUpdateNotificationTemplateMutation,
+  useDeleteUserNotificationemplateMutation,
   //   useCreateGiftMutation,
   //   useUpdateGiftMutation,
   //   useDeleteGiftMutation,

@@ -20,7 +20,7 @@ export const SUPPORTREQUESTCOLUMN = [
   },
   {
     Header: "Support Issue Id",
-    accessor: "support_issue_id",
+    accessor: "supportIssue.title",
   },
 
   {

@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
     user_id: selectedRow?.user_id || "",
+    response_message: selectedRow.description || "",
     status: Number(selectedRow?.status),
   });
   console.log("selectedRow", selectedRow);
@@ -19,6 +20,7 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
       setFormData({
         status: selectedRow?.status,
         user_id: selectedRow?.user_id,
+        response_message: selectedRow?.description || "",
       });
     }
   }, [selectedRow]);
@@ -88,6 +90,34 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
           value={formData?.user_id}
           onChange={handleChange}
         />
+
+        <label
+          htmlFor="response_message"
+          style={{ width: "100%", marginTop: "20px" }}
+        >
+          Description:
+        </label>
+        <div style={{ width: "100%", marginTop: "4px", marginBottom: "15px" }}>
+          <textarea
+            style={{
+              width: "100%",
+              height: "150px",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              fontFamily: "'Arial', sans-serif",
+              resize: "vertical",
+            }}
+            label="description"
+            type="text"
+            id="response_message"
+            name="response_message"
+            value={formData?.response_message}
+            onChange={handleChange}
+            placeholder="this is description field"
+          />
+        </div>
 
         <div style={{ margin: "25px 0 0 10px", fontSize: "18px" }}>
           <input
