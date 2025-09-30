@@ -59,8 +59,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const filteredSkillOptions =
     selectedCategories.length > 0
       ? allSkillOptions.filter((skill) =>
-        selectedCategories.some((cat) => cat.value === skill.category_id)
-      )
+          selectedCategories.some((cat) => cat.value === skill.category_id)
+        )
       : allSkillOptions;
 
   // Define Language options from API data
@@ -177,7 +177,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       skills: skillsToSend,
       languages: languagesToSend,
     };
-
+    // Remove email since it's disabled
+    delete dataToSend.email;
     if (
       selectedCategories.length === preselectedCategories.length &&
       selectedCategories.every(
@@ -236,11 +237,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <h2
-        className="top-main-heading"
-      >
-        Update Info
-      </h2>
+      <h2 className="top-main-heading">Update Info</h2>
 
       <form className="simple-form" noValidate autoComplete="off">
         <div style={{ display: "flex" }}>
@@ -449,7 +446,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           <button
             type="button"
             className="fifthButton"
-            style={{ marginRight: "10px", backgroundColor: 'red' }}
+            style={{ marginRight: "10px", backgroundColor: "red" }}
             onClick={onClose}
           >
             Cancel
