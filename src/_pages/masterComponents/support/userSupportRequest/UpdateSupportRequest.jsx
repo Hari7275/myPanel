@@ -22,7 +22,7 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
         status: selectedRow?.status,
         // user_id: selectedRow?.user_id,
         user_ticket_id: selectedRow?.id,
-        support_executive_id: 2,
+        // support_executive_id: 2,
         response_message: selectedRow?.description || "",
       });
     }
@@ -85,13 +85,13 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
           Update User Support Request
         </h2>
 
-        <UpdateInputField
+        {/* <UpdateInputField
           label=" User Id"
           id="user_id"
           name="user_id"
           value={formData?.user_id}
           onChange={handleChange}
-        />
+        /> */}
 
         <label
           htmlFor="response_message"
