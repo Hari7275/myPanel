@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
+import { formatDateTime } from "../../../_constants/formatedDate";
 
 const statusMap = {
   1: "Pending",
@@ -102,9 +103,14 @@ export const PAYOUTCOLUMN = [
   },
 
   {
-    Header: "Time",
+    Header: "Created Time",
     accessor: "createdAt",
-    Cell: ({ value }) => format(new Date(value), "P"),
+    Cell: ({ value }) => formatDateTime(value),
+  },
+  {
+    Header: "Updated Time",
+    accessor: "updatedAt",
+    Cell: ({ value }) => formatDateTime(value),
   },
 
   {
