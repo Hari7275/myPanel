@@ -15,6 +15,7 @@ export const payoutApiSlice = apiSlice.injectEndpoints({
 
     updatePayout: builder.mutation({
       query: ({ body }) => ({
+        // url: `/api/v1/consultant/payment/payout/admin`,
         url: `/api/v1/consultant/payment/payout/admin`,
         method: "PUT",
         body,

@@ -7,7 +7,10 @@ import { toast } from "react-hot-toast";
 const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
 
-  const request_id = selectedRow.id;
+  const request_id = selectedRow;
+
+  console.log("response", request_id);
+  console.log("selectedRow", selectedRow);
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdatePayoutMutation();
@@ -25,12 +28,19 @@ const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
       status: Number(formData),
     };
 
+    // console.log("body", body);
+    // return;
     try {
-      const response = await updateStatus({ body });
-      toast.success("Reqest has been updated successfully");
+      const response = await updateStatus({ body }).unwrap();
+
+      if (response.status) {
+        toast.success(response.message);
+        onClose();
+      } else {
+        toast.error(response.message);
+      }
 
       if (response?.data?.status) {
-        onClose();
         setFormData("");
       } else {
         console.error(response?.data?.message || "Failed to update status");
@@ -57,7 +67,7 @@ const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
             justifyContent: "center",
           }}
         >
-          Edit Status
+          Edit payout Status
         </h2>
         <form
           className="simple-form"
