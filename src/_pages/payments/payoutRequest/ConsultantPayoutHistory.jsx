@@ -1,17 +1,27 @@
 import React, { useEffect, useMemo, useState } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
+
 import { PAYOUTCOLUMN } from "./payoutColumns";
 import { Info, Pencil, Trash } from "lucide-react";
 import { useGetPayoutListQuery } from "../../../_store/api";
 import EditPayoutRequest from "./EditPayoutRequest";
+import { Atom } from "react-loading-indicators";
+
 // import UpdateSubscriptionPlan from "./UpdateSubscriptionPlan";
 
 const ConsultantPayoutHistory = () => {
   const [data, setData] = useState([]);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  const { data: fetchData } = useGetPayoutListQuery();
+  const { data: fetchData, isLoading } = useGetPayoutListQuery({
+    page,
+    size: pageSize,
+  });
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
@@ -50,14 +60,41 @@ const ConsultantPayoutHistory = () => {
     [toggleEditStatus]
   );
 
+  // const totalPage = fetchData?.meta?.total_page || 1;
+  const totalPage = fetchData?.meta?.total_page
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
+
   return (
     <>
-      <CommonTable
+      {/* <CommonTable
         columns={columns}
         data={data}
         includeActions={false}
         tableTitle="Payout History"
         // AddPackageButton={AddPackageButton}
+        showTableHeading={false}
+      /> */}
+
+      <DyCommonTable
+        columns={columns}
+        data={data}
+        includeActions={false}
+        tableTitle="Payout History"
+        dynamicPagination={dynamicPagination}
+        // customFilterComponent={customFilterComponent}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        includeCheckbox={false}
         showTableHeading={false}
       />
 
