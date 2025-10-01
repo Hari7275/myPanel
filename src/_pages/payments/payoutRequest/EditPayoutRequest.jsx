@@ -83,7 +83,7 @@ const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
               <option value="2">Success</option>
               <option value="3">Rejected</option>
             </select>
-            <p style={{ marginTop: "40px" }}>Select a status for the User.</p>
+            {/* <p style={{ marginTop: "40px" }}>Select a status for the User.</p> */}
           </div>
 
           <div

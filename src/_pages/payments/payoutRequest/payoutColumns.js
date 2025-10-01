@@ -83,18 +83,22 @@ export const PAYOUTCOLUMN = [
     accessor: "consultant_id",
   },
 
-  {
-    Header: "Transaction Id",
-    accessor: "transaction_id",
-  },
+  // {
+  //   Header: "Transaction Id",
+  //   accessor: "transaction_id",
+  // },
 
   {
     Header: "Amount",
     accessor: "amount",
   },
+  // {
+  //   Header: "Payment Method",
+  //   accessor: "payment_method",
+  // },
   {
-    Header: "Payment Method",
-    accessor: "payment_method",
+    Header: "Amount After Tax",
+    accessor: "amount_after_tax",
   },
 
   {

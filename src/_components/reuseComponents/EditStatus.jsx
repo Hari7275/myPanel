@@ -37,9 +37,9 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
 
   useEffect(() => {
     if (data.length > 0 && selectedRow) {
-      const currentStatus = data.find((status) => status.id === selectedRow);
+      const currentStatus = data?.find((status) => status?.id === selectedRow);
       if (currentStatus) {
-        setFormData(currentStatus.status_value);
+        setFormData(currentStatus?.status_value);
       }
     }
   }, [data, selectedRow]);
@@ -101,7 +101,7 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
           noValidate
           autoComplete="off"
           onSubmit={handleSave}
-          style={{ display: 'flex', alignItems: 'center' }}
+          style={{ display: "flex", alignItems: "center" }}
         >
           <div className="input-container">
             <label htmlFor="status">Status</label>
