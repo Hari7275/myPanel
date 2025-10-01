@@ -9,7 +9,7 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
     // user_id: selectedRow?.user_id || "",
     user_ticket_id: selectedRow?.id,
     response_message: selectedRow.description || "",
-    status: Number(selectedRow?.status),
+    status: "",
   });
   console.log("selectedRow", selectedRow);
 
@@ -19,7 +19,7 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
   useEffect(() => {
     if (selectedRow) {
       setFormData({
-        status: selectedRow?.status,
+        // status: selectedRow?.status,
         // user_id: selectedRow?.user_id,
         user_ticket_id: selectedRow?.id,
         // support_executive_id: 2,
@@ -39,8 +39,19 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
+      // Build the request payload conditionally
+      const requestData = {
+        user_ticket_id: formData.user_ticket_id,
+        response_message: formData.response_message,
+      };
+
+      // Only include status if it exists and has been selected
+      if (formData.status !== undefined && formData.status !== null) {
+        requestData.status = formData.status;
+      }
+
       const response = await updateData({
-        body: formData,
+        body: requestData,
       });
 
       if (response?.data?.status === true) {

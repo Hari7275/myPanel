@@ -90,6 +90,8 @@ export const getStatusLabel = (value) => {
       return "Rejected";
     case 7:
       return "Deleted";
+    case 8:
+      return "Inactive";
     default:
       return "Unknown";
   }

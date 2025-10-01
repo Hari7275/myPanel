@@ -143,7 +143,7 @@ const AstrologerListingTable = () => {
             )}
             {/* </Link> */}
 
-            {[3, 4, 5, 2].includes(row?.original?.status) &&
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["astrologer"]?.includes(
                 "update_astrologer_profile_status"
               ) && (

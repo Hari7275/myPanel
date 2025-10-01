@@ -153,7 +153,7 @@ const CoachListingTable = () => {
               />
             </span> */}
 
-            {[3, 4, 5, 2].includes(row?.original?.status) &&
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["coach"]?.includes(
                 "update_coach_profile_status"
               ) && (
