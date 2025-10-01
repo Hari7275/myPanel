@@ -589,6 +589,16 @@ const Sidebar = () => {
                     <div className="dropdown-item">Notification Template</div>
                   </div>
                 </Link>
+                <Link to="/send-notification">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "send-Notification" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("send-Notification")}
+                  >
+                    <div className="dropdown-item">Send Notification</div>
+                  </div>
+                </Link>
               </div>
             )}
           </div>

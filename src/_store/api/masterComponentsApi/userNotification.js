@@ -69,6 +69,19 @@ export const userNotificationApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Notification"],
     }),
+
+    // send notifications to users
+    createSendNotificationToUser: builder.mutation({
+      query: ({ body }) => ({
+        url: `/notification/user-promotional/admin/send`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["Notification"],
+    }),
   }),
 });
 
@@ -79,6 +92,7 @@ export const {
   useCreateNotificationTemplateMutation,
   useUpdateNotificationTemplateMutation,
   useDeleteUserNotificationemplateMutation,
+  useCreateSendNotificationToUserMutation
   //   useCreateGiftMutation,
   //   useUpdateGiftMutation,
   //   useDeleteGiftMutation,

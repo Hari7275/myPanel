@@ -37,6 +37,7 @@ import FeedbackList from "./_pages/masterComponents/feedback/FeedbackList";
 import QDLoaction from "./_pages/masterComponents/QDLocations/QDLoaction";
 import UserNotification from "./_pages/masterComponents/notificationManger/UserNotification";
 import NotificationTamplateList from "./_pages/masterComponents/notificationManger/notificationTamplate/NotificationTamplateList";
+import SendNotification from "./_pages/masterComponents/notificationManger/sendNotification/SendNotification";
 
 import CommissionList from "./_pages/astrologers/astrologerCommission/CommissionList";
 
@@ -219,6 +220,7 @@ const Layout = () => (
             path="/notification-template"
             element={<NotificationTamplateList />}
           />
+          <Route path="/send-notification" element={<SendNotification />} />
 
           <Route path="/assign-notice" element={<ConsultantNoticeList />} />
           <Route path="/coach-rate" element={<CoachRate />} />

@@ -68,6 +68,7 @@ const Navbar = () => {
     "/razorpay-recharge": "Razorpay Recharge List",
     "/user-notification": "User Notifications",
     "/notification-template": "User Notifications Template",
+    "/send-notification": "Send Notifications To User",
 
     // master component payment section
     "/dating-products": "Dating Products",
