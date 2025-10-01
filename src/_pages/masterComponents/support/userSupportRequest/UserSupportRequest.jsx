@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../../_components/table/CommonTable";
 import DyCommonTable from "../../../../_components/table/DyCommonTable";
 
-import { Pencil, Info } from "lucide-react";
+import { Pencil, Info, ArrowRight } from "lucide-react";
 import { SUPPORTREQUESTCOLUMN } from "./supportRequestColumn";
 
 import UpdateSupportRequest from "./UpdateSupportRequest";
@@ -49,6 +49,8 @@ const UserSupportRequest = () => {
     setSelectedRow(row);
   };
 
+  const handleViewDetails = (row) => {};
+
   const columns = useMemo(() => [
     ...SUPPORTREQUESTCOLUMN,
     {
@@ -68,12 +70,26 @@ const UserSupportRequest = () => {
           </span>
 
           {row.original?.status == 1 && (
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
+            <>
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateData(row.original)}
+                />
+              </span>
+              <span
+                title="view details"
+                className="secondIcon"
+                style={{
+                  display: "inline-block",
+                  height: "35px",
+                  width: "35px",
+                }}
+                onClick={() => handleViewDetails(row.original.id)}
+              >
+                <ArrowRight className="iconSmall" />
+              </span>
+            </>
           )}
         </div>
       ),

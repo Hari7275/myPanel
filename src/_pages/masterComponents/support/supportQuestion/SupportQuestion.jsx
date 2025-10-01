@@ -9,6 +9,7 @@ import {
   useGetSupportQuestionListQuery,
   useDeleteSupportQuestionMutation,
 } from "../../../../_store/api";
+import { Atom } from "react-loading-indicators";
 
 const SupportQuestion = () => {
   const [addData, setAddData] = useState(false);
@@ -18,7 +19,7 @@ const SupportQuestion = () => {
   const [data, setData] = useState([]);
 
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetSupportQuestionListQuery();
+  const { data: fetchData, isLoading } = useGetSupportQuestionListQuery();
   const [deleteData] = useDeleteSupportQuestionMutation();
 
   useEffect(() => {
@@ -95,6 +96,15 @@ const SupportQuestion = () => {
     },
   ]);
 
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+    // return <Atom color="#32cd32" size="medium" text="" textColor="" />;
+  }
+
   return (
     <>
       <CommonTable
@@ -103,6 +113,7 @@ const SupportQuestion = () => {
         includeActions={false}
         tableTitle="Support Question"
         AddPackageButton={AddButton}
+        showTableHeading={false}
       />
       {addData && (
         <AddSupportQuestion isOpen={addData} onClose={toggleAddData} />

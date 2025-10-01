@@ -6,7 +6,8 @@ import toast from "react-hot-toast";
 
 const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
-    user_id: selectedRow?.user_id || "",
+    // user_id: selectedRow?.user_id || "",
+    user_ticket_id: selectedRow?.id,
     response_message: selectedRow.description || "",
     status: Number(selectedRow?.status),
   });
@@ -19,7 +20,9 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
     if (selectedRow) {
       setFormData({
         status: selectedRow?.status,
-        user_id: selectedRow?.user_id,
+        // user_id: selectedRow?.user_id,
+        user_ticket_id: selectedRow?.id,
+        support_executive_id: 2,
         response_message: selectedRow?.description || "",
       });
     }
@@ -37,7 +40,6 @@ const UpdateSupportRequest = ({ isOpen, onClose, selectedRow }) => {
     e.preventDefault();
     try {
       const response = await updateData({
-        id: selectedRow?.id,
         body: formData,
       });
 

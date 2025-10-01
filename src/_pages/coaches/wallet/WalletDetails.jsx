@@ -142,34 +142,34 @@ const WalletDetails = () => {
     return colorMap[label] || "#F5F5F5"; // Default light gray
   };
 
-  const cardData = [
+ const cardData = [
     {
-      label: "Last Month Earning",
-      value: data?.walletDetails?.last_month_earning || "0",
+      label: "Today Earning",
+      value: data?.walletDetails?.today_earning || "0",
     },
     {
       label: "Last Week Earning",
       value: data?.walletDetails?.last_week_earning || "0",
     },
     {
-      label: "Today Earning",
-      value: data?.walletDetails?.today_earning || "0",
-    },
-    {
-      label: "Total Debit",
-      value: data?.walletDetails?.total_debit || "0",
+      label: "Last Month Earning",
+      value: data?.walletDetails?.last_month_earning || "0",
     },
     {
       label: "Life Time Earning",
       value: data?.walletDetails?.lifetime_earning || 0,
     },
     {
-      label: "Current Wallet Balance",
-      value: data?.walletDetails?.wallet_balance || 0,
+      label: "Total Debit",
+      value: data?.walletDetails?.total_debit || "0",
     },
     {
       label: "Payable Amount",
       value: data?.walletDetails?.payable_amount || 0,
+    },
+    {
+      label: "Current Wallet Balance",
+      value: data?.walletDetails?.wallet_balance || 0,
     },
   ];
 

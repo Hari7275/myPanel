@@ -89,8 +89,6 @@
 
 // export default WalletDetails;
 
-
-
 import React, { useState, useEffect } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
@@ -142,32 +140,32 @@ const WalletDetails = () => {
 
   const cardData = [
     {
-      label: "Last Month Earning",
-      value: data?.walletDetails?.last_month_earning || "0",
+      label: "Today Earning",
+      value: data?.walletDetails?.today_earning || "0",
     },
     {
       label: "Last Week Earning",
       value: data?.walletDetails?.last_week_earning || "0",
     },
     {
-      label: "Today Earning",
-      value: data?.walletDetails?.today_earning || "0",
-    },
-    {
-      label: "Total Debit",
-      value: data?.walletDetails?.total_debit || "0",
+      label: "Last Month Earning",
+      value: data?.walletDetails?.last_month_earning || "0",
     },
     {
       label: "Life Time Earning",
       value: data?.walletDetails?.lifetime_earning || 0,
     },
     {
-      label: "Current Wallet Balance",
-      value: data?.walletDetails?.wallet_balance || 0,
+      label: "Total Debit",
+      value: data?.walletDetails?.total_debit || "0",
     },
     {
       label: "Payable Amount",
       value: data?.walletDetails?.payable_amount || 0,
+    },
+    {
+      label: "Current Wallet Balance",
+      value: data?.walletDetails?.wallet_balance || 0,
     },
   ];
 
@@ -176,7 +174,7 @@ const WalletDetails = () => {
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <div
           className="dashboard-card-container-grid"
-         style={{ margin: "10px 0" , height:"60vh" , overflow:"scroll" }}
+          style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
         >
           {cardData.map((card, index) => (
             <CategoryCard

@@ -94,6 +94,10 @@ const DashboardSubPage = () => {
     navigate("fluteEarning");
   };
 
+  const handleClickBarChart = () => {
+    navigate("fluteBarChart");
+  };
+
   return (
     <>
       <div>
@@ -124,6 +128,19 @@ const DashboardSubPage = () => {
               onClick={handleClick}
             >
               View All
+            </span>
+
+            <span
+              style={{
+                fontSize: "12px",
+                cursor: "pointer",
+                fontWeight: "400",
+                background: "#ab9a9aff",
+                marginLeft: "2%",
+              }}
+              onClick={handleClickBarChart}
+            >
+              for bar chart don't use it
             </span>
           </div>
         </div>

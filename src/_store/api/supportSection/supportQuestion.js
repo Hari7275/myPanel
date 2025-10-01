@@ -58,10 +58,24 @@ export const supportQuestionApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultant"],
     }),
 
+    // updateUserSupportRequest: builder.mutation({
+    //   query: ({ id, body }) => ({
+    //     url: `/api/v1/user/support/service/ticket/${id}`,
+    //     method: "PUT",
+    //     headers: {
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //     body,
+    //   }),
+    //   invalidatesTags: ["consultant"],
+    // }),
+
+    //
+
     updateUserSupportRequest: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/api/v1/user/support/service/ticket/${id}`,
-        method: "PUT",
+      query: ({ body }) => ({
+        url: `/api/v1/user/support/service/response/admin/`,
+        method: "POST",
         headers: {
           Authorization: "Bearer admin_token",
         },

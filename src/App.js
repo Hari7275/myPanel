@@ -88,6 +88,7 @@ import CouponListing from "./_pages/payments/coupons/CouponListing";
 
 import { Navigate } from "react-router-dom";
 import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
+import EarningByBarChart from "./_pages/dashboard/earningByBarChart/EarningByBarChart";
 
 // ProfileReview
 
@@ -138,6 +139,10 @@ const Layout = () => (
             }
           />
           <Route path="dashboard/fluteEarning" element={<FluteEarning />} />
+          <Route
+            path="dashboard/fluteBarChart"
+            element={<EarningByBarChart />}
+          />
 
           {/* <Route path="/user" element={<UserListingTable />} /> */}
 

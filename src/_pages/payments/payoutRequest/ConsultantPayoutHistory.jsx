@@ -6,14 +6,14 @@ import { useGetPayoutListQuery } from "../../../_store/api";
 // import UpdateSubscriptionPlan from "./UpdateSubscriptionPlan";
 
 const ConsultantPayoutHistory = () => {
- 
   const [data, setData] = useState([]);
 
-  const { data: fetchData } = useGetPayoutListQuery({ status: 1 });
+  const { data: fetchData } = useGetPayoutListQuery();
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
-      const result = fetchData?.data.filter((item) => item.status !== 1);
+      // const result = fetchData?.data.filter((item) => item.status !== 1);
+      const result = fetchData?.data;
       setData(result);
     } else {
       setData([]);
@@ -33,8 +33,6 @@ const ConsultantPayoutHistory = () => {
         // AddPackageButton={AddPackageButton}
         showTableHeading={false}
       />
-
-    
     </>
   );
 };

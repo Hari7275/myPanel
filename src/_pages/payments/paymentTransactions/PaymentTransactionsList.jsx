@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 import { PAYMENTTRANSACTIONSCOLUMN } from "./paymentTransactionsColumn";
 

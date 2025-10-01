@@ -14,7 +14,6 @@ const PayableAmountHistory = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-
   const [consultantId, setConsultantId] = useState("");
 
   const [showFilterPopover, setShowFilterPopover] = useState(false);
