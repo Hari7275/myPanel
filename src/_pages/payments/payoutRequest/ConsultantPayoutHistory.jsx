@@ -17,10 +17,12 @@ const ConsultantPayoutHistory = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [userType, setUSerType] = useState(null);
 
   const { data: fetchData, isLoading } = useGetPayoutListQuery({
     page,
     size: pageSize,
+    status: userType,
   });
 
   useEffect(() => {
@@ -38,6 +40,11 @@ const ConsultantPayoutHistory = () => {
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+  };
+
+  const handleSetUserType = (e) => {
+    setPage(1);
+    setUSerType(e.target.value);
   };
   const columns = useMemo(
     () => [
@@ -60,8 +67,33 @@ const ConsultantPayoutHistory = () => {
     [toggleEditStatus]
   );
 
+  const customFilterComponent = () => (
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleSetUserType}
+      >
+        <option value="">Select Status</option>
+        <option value={1}>Pending</option>
+        <option value={2}>Success</option>
+        <option value={3}>Rejected</option>
+      </select>
+    </div>
+  );
   // const totalPage = fetchData?.meta?.total_page || 1;
-  const totalPage = fetchData?.meta?.total_page
+  const totalPage = fetchData?.meta?.total_page;
 
   if (isLoading) {
     return (
@@ -88,7 +120,7 @@ const ConsultantPayoutHistory = () => {
         includeActions={false}
         tableTitle="Payout History"
         dynamicPagination={dynamicPagination}
-        // customFilterComponent={customFilterComponent}
+        customFilterComponent={customFilterComponent}
         totalPage={totalPage}
         currentPage={page}
         pageSize={pageSize}

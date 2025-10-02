@@ -3,8 +3,10 @@ import apiSlice from "../api";
 export const payoutApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPayoutList: builder.query({
-      query: ({ page, size }) => ({
-        url: `/api/v1/consultant/payment/payout/admin-requests/?page=${page}&limit=${size}`,
+      query: ({ page, size, status }) => ({
+        url: `/api/v1/consultant/payment/payout/admin-requests/?page=${page}&limit=${size}${
+          status ? `&status=${status}` : ""
+        }`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

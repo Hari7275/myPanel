@@ -116,6 +116,19 @@ export const PAYOUTCOLUMN = [
   {
     Header: "Status",
     accessor: "status",
-    Cell: ({ value }) => statusMap[value] || "Unknown",
+    Cell: ({ value }) => {
+      const status = statusMap[value] || "Unknown";
+
+      const colorMap = {
+        Pending: "orange",
+        Success: "green",
+        Rejected: "red",
+        Unknown: "gray",
+      };
+
+      return (
+        <span style={{ color: colorMap[status] || "black" }}>{status}</span>
+      );
+    },
   },
 ];
