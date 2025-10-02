@@ -11,9 +11,11 @@ import Description from "../../../users/subscription/Description";
 import { useGetUserSupportRequestQuery } from "../../../../_store/api";
 import { debounce } from "lodash";
 import { Atom } from "react-loading-indicators";
+import SupportResponseList from "./SupportResponseList";
 
 const UserSupportRequest = () => {
   const [updateData, setUpdateData] = useState(false);
+  const [responseList, setResponseList] = useState(false);
 
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
@@ -44,6 +46,12 @@ const UserSupportRequest = () => {
     setUpdateData(!updateData);
   };
 
+  // response list
+  const toggleResponseList = (row) => {
+    setSelectedRow(row);
+    setResponseList(!responseList);
+  };
+
   const toggleDescription = (row) => {
     setDescription(!description);
     setSelectedRow(row);
@@ -69,14 +77,8 @@ const UserSupportRequest = () => {
             />
           </span>
 
-          {row.original?.status == 1 && (
+          {[1, 2].includes(row.original?.status) && (
             <>
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleUpdateData(row.original)}
-                />
-              </span>
               <span
                 title="view details"
                 className="secondIcon"
@@ -85,9 +87,19 @@ const UserSupportRequest = () => {
                   height: "35px",
                   width: "35px",
                 }}
-                onClick={() => handleViewDetails(row.original.id)}
+                onClick={() => toggleResponseList(row.original)}
               >
                 <ArrowRight className="iconSmall" />
+              </span>
+            </>
+          )}
+          {row.original?.status == 1 && (
+            <>
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateData(row.original)}
+                />
               </span>
             </>
           )}
@@ -180,6 +192,14 @@ const UserSupportRequest = () => {
           isOpen={description}
           onClose={toggleDescription}
           Descriptions={selectedRow?.query_message || ""}
+        />
+      )}
+
+      {responseList && (
+        <SupportResponseList
+          isOpen={responseList}
+          onClose={toggleResponseList}
+          selectedData={selectedRow}
         />
       )}
     </>
