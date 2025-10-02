@@ -57,8 +57,6 @@ const UserSupportRequest = () => {
     setSelectedRow(row);
   };
 
-  const handleViewDetails = (row) => {};
-
   const columns = useMemo(() => [
     ...SUPPORTREQUESTCOLUMN,
     {

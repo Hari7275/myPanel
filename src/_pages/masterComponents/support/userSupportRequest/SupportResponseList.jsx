@@ -17,8 +17,6 @@ const SupportResponseList = ({ isOpen, onClose, selectedData }) => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
 
-  //   console.log("selectedData", selectedData?.id);
-
   const [deleteSupportResponse] = useDeleteSupportResponseListMutation();
 
   // Fetching API data for listing reviews
@@ -54,33 +52,29 @@ const SupportResponseList = ({ isOpen, onClose, selectedData }) => {
     }
   };
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    const baseColumns = [
       {
-        Header: "Id",
+        Header: "Response Id",
         accessor: "id",
       },
-
-      // {
-      //   Header: "Meta Key",
-      //   accessor: "meta_key",
-      // },
-
       {
         Header: "Support Executive",
         accessor: "support_executive_id",
       },
       {
-        Header: "Message",
+        Header: "Response Message",
         accessor: "response_message",
       },
       {
-        Header: "Time",
+        Header: "Date",
         accessor: "createdAt",
         Cell: ({ value }) => formatDateTime(value),
       },
+    ];
 
-      {
+    if (selectedData?.status !== 2) {
+      baseColumns.push({
         Header: () => <div className="actions-header">Actions</div>,
         id: "actions",
         Cell: ({ row }) => (
@@ -99,10 +93,11 @@ const SupportResponseList = ({ isOpen, onClose, selectedData }) => {
             </span>
           </div>
         ),
-      },
-    ],
-    []
-  );
+      });
+    }
+
+    return baseColumns;
+  }, [selectedData?.status, toggleDeleteComponent, toggleUpdateData]);
 
   return (
     <>
