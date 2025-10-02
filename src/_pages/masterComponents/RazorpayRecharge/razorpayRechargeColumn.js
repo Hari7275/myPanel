@@ -77,8 +77,14 @@ export const RAZORPAYRECHARGECOLUMN = [
   {
     Header: "Amount",
     accessor: "transaction_amount",
-    Cell: ({ value }) => (
-      <span style={{ color: "#10b981", fontWeight: "600" }}>
+    Cell: ({ value, row }) => (
+      <span
+        style={{
+          color: row.original.country_code == "IN" ? "#10b981" : "#810c0cff",
+          fontWeight: 600,
+        }}
+      >
+        {row.original.country_code == "IN" ? "" : "$"}
         {formatNumber(value)}
       </span>
     ),
@@ -86,8 +92,11 @@ export const RAZORPAYRECHARGECOLUMN = [
   {
     Header: "Total Balance",
     accessor: "wallet_amount",
-    Cell: ({ value }) => (
-      <span style={{ color: "#1f2937" }}>{formatNumber(value)}</span>
+    Cell: ({ value, row }) => (
+      <span style={{ color: "#1f2937" }}>
+        {row.original.country_code == "IN" ? "" : "$"}
+        {formatNumber(value)}
+      </span>
     ),
   },
   // {
@@ -129,19 +138,19 @@ export const RAZORPAYRECHARGECOLUMN = [
     Cell: ({ value }) => {
       const statusColors = {
         SUCCESS: "#10b981", // green
-        PENDING: "#0b17f5ff", // yellow
+        PENDING: "#855858ff", // yellow
         FAILED: "#ef4444", // red
-        AUTHORIZED: "#855858ff", // brown
+        AUTHORIZED: "#0b17f5ff", // brown
       };
 
-      const color = statusColors[value] || "#6b7280";
+      const color = statusColors[value] || "#545f75ff";
 
       let displayValue = value;
-      if (value === "PENDING") {
-        displayValue = "INITIATED";
-      } else if (value === "AUTHORIZED") {
-        displayValue = "PENDING";
-      }
+      // if (value === "PENDING") {
+      //   displayValue = "INITIATED";
+      // } else if (value === "AUTHORIZED") {
+      //   displayValue = "AUTHORIZED";
+      // }
 
       return <span style={{ color }}>{displayValue}</span>;
     },

@@ -62,8 +62,14 @@ export const COLUMNRECHARGE = [
   {
     Header: "Amount",
     accessor: "amount",
-    Cell: ({ value }) => (
-      <span style={{ color: "#10b981", fontWeight: "600" }}>
+    Cell: ({ value, row }) => (
+      <span
+        style={{
+          color: row.original.country_code == "IN" ? "#10b981" : "#810c0cff",
+          fontWeight: 600,
+        }}
+      >
+        {row.original.country_code == "IN" ? "" : "$"}
         {formatNumber(value)}
       </span>
     ),
@@ -71,8 +77,12 @@ export const COLUMNRECHARGE = [
   {
     Header: "Total Balance",
     accessor: "remaining_balance",
-    Cell: ({ value }) => (
-      <span style={{ color: "#1f2937" }}>{formatNumber(value)}</span>
+    Cell: ({ value, row }) => (
+      <span style={{ color: "#1f2937" }}>
+        {row.original.country_code == "IN" ? "" : "$"}
+
+        {formatNumber(value)}
+      </span>
     ),
   },
   {
