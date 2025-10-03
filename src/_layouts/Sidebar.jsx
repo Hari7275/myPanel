@@ -840,19 +840,24 @@ const Sidebar = () => {
               </div>
             </Link>
 
-            <Link to="/user-recharge">
-              <div className="item">
-                <CardGiftcardOutlinedIcon />
-                <span>Recharge List</span>
-              </div>
-            </Link>
-
-            <Link to="/razorpay-recharge">
-              <div className="item">
-                <CardGiftcardOutlinedIcon />
-                <span>Razorpay List</span>
-              </div>
-            </Link>
+            {permissions?.["user_recharge_list"]?.includes(
+              "view_recharge_list"
+            ) && (
+              <Link to="/user-recharge">
+                <div className="item">
+                  <CardGiftcardOutlinedIcon />
+                  <span>Recharge List</span>
+                </div>
+              </Link>
+            )}
+            {permissions?.["razorpay_list"]?.includes("view_razorpay_list") && (
+              <Link to="/razorpay-recharge">
+                <div className="item">
+                  <CardGiftcardOutlinedIcon />
+                  <span>Razorpay List</span>
+                </div>
+              </Link>
+            )}
 
             <Link to="/session">
               <div className="item">
