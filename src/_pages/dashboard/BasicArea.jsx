@@ -21,6 +21,8 @@ export default function BasicArea() {
     setDateFilter(e.target.value);
   };
 
+  console.log("data", data);
+
   return (
     <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -63,7 +65,7 @@ export default function BasicArea() {
             color: "#DBA5FF",
           },
         ]}
-        // xAxis={[{ scaleType: "point", data: labels }]}
+        // xAxis={[{ scaleType: "point", data: labels }]}}
 
         xAxis={[
           {
