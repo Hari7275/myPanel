@@ -139,19 +139,19 @@ const Sidebar = () => {
             )}
 
             <div>
-              {/* {permissions?.["Dashboard"] && ( */}
-              <Link to="/dashboard">
-                <div
-                  className={`menu-item ${
-                    activeItem === "Dashboard" ? "active" : ""
-                  }`}
-                  onClick={() => handleItemClick("Dahboard")}
-                >
-                  <GridViewOutlinedIcon />
-                  <span>Dashboard</span>
-                </div>
-              </Link>
-              {/* )}  */}
+              {permissions?.["Dashboard"]?.includes("view_dashboard") && (
+                <Link to="/dashboard">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "Dashboard" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("Dahboard")}
+                  >
+                    <GridViewOutlinedIcon />
+                    <span>Dashboard</span>
+                  </div>
+                </Link>
+              )}
               {permissions?.["user"] && (
                 <Link to="/user">
                   <div
@@ -278,17 +278,21 @@ const Sidebar = () => {
 
           <div className="menu-group">
             {/* user recaharge list */}
-            <Link to="/user-recharge">
-              <div
-                className={`menu-item ${
-                  activeItem === "user-recharge" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("user-recharge")}
-              >
-                <CardGiftcardOutlinedIcon />
-                <span>User Recharge List</span>
-              </div>
-            </Link>
+            {permissions?.["user_recharge_list"]?.includes(
+              "view_recharge_list"
+            ) && (
+              <Link to="/user-recharge">
+                <div
+                  className={`menu-item ${
+                    activeItem === "user-recharge" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("user-recharge")}
+                >
+                  <CardGiftcardOutlinedIcon />
+                  <span>User Recharge List</span>
+                </div>
+              </Link>
+            )}
 
             {/* user subscription  list  */}
             <Link to="/user-subscription">
@@ -761,16 +765,16 @@ const Sidebar = () => {
           </div>
 
           <div className="sidebar-items">
-            {/* {permissions?.["Dashboard"] && ( */}
-            <Link to="/dashboard">
-              <div className="item">
-                <span className="icon">
-                  <GridViewOutlinedIcon />
-                </span>
-                <span>Dashboard</span>
-              </div>
-            </Link>
-            {/* )} */}
+            {permissions?.["Dashboard"]?.includes("view_dashboard") && (
+              <Link to="/dashboard">
+                <div className="item">
+                  <span className="icon">
+                    <GridViewOutlinedIcon />
+                  </span>
+                  <span>Dashboard</span>
+                </div>
+              </Link>
+            )}
             {permissions?.["user"] && (
               <Link to="/user">
                 <div className="item">

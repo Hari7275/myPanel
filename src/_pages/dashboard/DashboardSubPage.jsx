@@ -229,7 +229,7 @@ const DashboardSubPage = () => {
               />
             ))}
           </div>
-        </div> */}
+        </div> .*/}
         <div className="second-sub-div" style={{ margin: "0px 40px" }}>
           <div className="dashboard-sub-grid">
             <BasicArea />
