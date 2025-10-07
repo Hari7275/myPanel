@@ -72,7 +72,7 @@ export const COLUMNS = (toggleModal) => [
     Cell: ({ value }) => (value == 0 ? "External" : "Internal"),
   },
   {
-    Header: "Platform",
+    Header: "Device Info",
     accessor: "platform",
     Cell: ({ value }) => (value == 1 ? "Andriod" : "iOS"),
   },

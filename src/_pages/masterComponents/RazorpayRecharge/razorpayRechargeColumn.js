@@ -54,6 +54,7 @@ export const RAZORPAYRECHARGECOLUMN = [
       </span>
     ),
   },
+
   {
     Header: "Transaction Type",
     accessor: "transaction_type",

@@ -50,7 +50,7 @@ export const COLUMNRECHARGE = [
     Cell: CustomIdCell,
   },
   {
-    Header: "Platform",
+    Header: "Device Info",
     accessor: "platform",
     Cell: ({ value }) => (value == 1 ? "Android" : "iOS"),
   },
