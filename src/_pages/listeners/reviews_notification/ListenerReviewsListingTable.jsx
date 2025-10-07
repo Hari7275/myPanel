@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
+
 import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 
 import AddListenerReview from "./AddListenerReview";
@@ -10,7 +12,7 @@ import {
   useGetReviewsListQuery,
   useDeleteReviewMutation,
 } from "../../../_store/api";
-import LIstenerNotificationListingTable from "./LIstenerNotificationListingTable";
+
 import { useSelector } from "react-redux";
 import Description from "../../astrologers/reviews_notifications/Description";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
@@ -25,8 +27,16 @@ const ListenerReviewsListingTable = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
+
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetReviewsListQuery(consultantId);
+  const { data: fetchData } = useGetReviewsListQuery({
+    consultantId,
+    page,
+    pageSize,
+  });
   const [deleteReview] = useDeleteReviewMutation();
   const permissions = usePermissions();
 
@@ -70,21 +80,21 @@ const ListenerReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          position: "absolute",
-          top: "105px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          // zIndex: "9999",
-        }
+            position: "absolute",
+            top: "105px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            // zIndex: "9999",
+          }
         : {
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          // zIndex: "9999",
-        };
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            // zIndex: "9999",
+          };
 
     return (
       permissions?.["listener"]?.includes("create_listener_profile_review") && (
@@ -112,7 +122,9 @@ const ListenerReviewsListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {permissions?.["listener"]?.includes("update_listener_profile_review") && (
+            {permissions?.["listener"]?.includes(
+              "update_listener_profile_review"
+            ) && (
               <span
                 className="editIcon"
                 onClick={() => toggleUpdateReviews(row.original)}
@@ -120,7 +132,9 @@ const ListenerReviewsListingTable = () => {
                 <Pencil className="iconSmall" />
               </span>
             )}
-            {permissions?.["listener"]?.includes("delete_listener_profile_review") && (
+            {permissions?.["listener"]?.includes(
+              "delete_listener_profile_review"
+            ) && (
               <span className="deleteIcon">
                 <Trash
                   className="iconSmall"
@@ -141,21 +155,36 @@ const ListenerReviewsListingTable = () => {
     []
   );
 
+  const totalPage = fetchData?.data?.pagination?.totalPages || 1;
+
   return (
     <div>
-      <div
-        className="ProfileData-container profile-right-sub-container"
-        style={{ position: "relative" }}
-      >
+      <div className="ProfileData-containe" style={{ position: "relative" }}>
         {/* <AddPackageButton /> */}
         {data.length > 0 ? (
-          <CommonTable
+          // <CommonTable
+          //   columns={columns}
+          //   data={data}
+          //   includeActions={false}
+          //   tableTitle="Review List"
+          //   includeCheckbox={false}
+          //   AddPackageButton={AddPackageButton}
+          // />
+
+          <DyCommonTable
             columns={columns}
             data={data}
             includeActions={false}
             tableTitle="Review List"
+            dynamicPagination={dynamicPagination}
+            // customFilterComponent={customFilterComponent}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
             includeCheckbox={false}
-            AddPackageButton={AddPackageButton}
+            // showTableHeading={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

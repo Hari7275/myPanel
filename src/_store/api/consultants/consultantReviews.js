@@ -3,8 +3,8 @@ import apiSlice from "../api";
 export const consultantReviewApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getReviewsList: builder.query({
-      query: (consultantId) => ({
-        url: `coach-rating/admin/get_coach_rating_and_reviews/${consultantId}?page=1&limit=10`,
+      query: ({ consultantId, page, pageSize }) => ({
+        url: `coach-rating/admin/get_coach_rating_and_reviews/${consultantId}?page=${page}&limit=${pageSize}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

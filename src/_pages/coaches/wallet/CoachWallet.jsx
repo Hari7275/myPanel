@@ -1,4 +1,3 @@
-
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
@@ -7,12 +6,16 @@ import { WALLETCHARTCOLUMN } from "./coachWalletColumn";
 import { useGetConsultantsWalletQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { Info } from "lucide-react";
+import Description from "../../users/subscription/Description";
 
 const CoachWallet = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [description, setDescription] = useState(false);
   const consultantId = useSelector(
     (state) => state?.consultant?.consultantData
   );
@@ -28,7 +31,32 @@ const CoachWallet = () => {
     }
   }, [fetchData]);
 
-  const columns = useMemo(() => WALLETCHARTCOLUMN, []);
+  const toggleDescription = (row) => {
+    setDescription(!description);
+    setSelectedRow(row);
+  };
+
+  const columns = useMemo(() => [
+    ...WALLETCHARTCOLUMN,
+    {
+      Header: () => <div className="actions-header">Actions</div>,
+      id: "actions",
+      Cell: ({ row }) => (
+        <div className="actions-cell">
+          <span
+            title="view description"
+            className="secondIcon"
+            style={{ height: "35px", width: "35px" }}
+          >
+            <Info
+              className="iconSmall"
+              onClick={() => toggleDescription(row?.original)}
+            />
+          </span>
+        </div>
+      ),
+    },
+  ]);
 
   const totalPage = fetchData?.meta?.total_page;
 
@@ -58,6 +86,13 @@ const CoachWallet = () => {
           // showTableHeading={false}
         />
       </div>
+      {description && selectedRow && (
+        <Description
+          isOpen={description}
+          onClose={toggleDescription}
+          Descriptions={selectedRow?.description || ""}
+        />
+      )}
     </>
   );
 };

@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
+
 import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 import AddAstrologerReview from "./AddAstrologerReview";
 import UpdateAstrologerReview from "./UpdateAstrologerReview";
@@ -23,8 +25,16 @@ const AstroReviewsListingTable = () => {
   const [data, setData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const permissions = usePermissions();
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetReviewsListQuery(consultantId);
+  // Fetching API data for listing reviews
+  const { data: fetchData } = useGetReviewsListQuery({
+    consultantId,
+    page,
+    pageSize,
+  });
   const [deleteReview] = useDeleteReviewMutation();
 
   useEffect(() => {
@@ -67,25 +77,26 @@ const AstroReviewsListingTable = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          // position: "absolute",
-          top: "125px",
-          right: "40px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          // zIndex: "9999",
-        }
+            // position: "absolute",
+            top: "125px",
+            right: "40px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            // zIndex: "9999",
+          }
         : {
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          // zIndex: "9999",
-        };
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            // zIndex: "9999",
+          };
 
     return (
-      permissions?.["astrologer"]?.includes("create_astrologer_profile_review") && (
-
+      permissions?.["astrologer"]?.includes(
+        "create_astrologer_profile_review"
+      ) && (
         <button
           className="addButton right-addButton"
           onClick={() => toggleAddReviews(coachId)}
@@ -110,7 +121,9 @@ const AstroReviewsListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {permissions?.["astrologer"]?.includes("update_astrologer_profile_review") && (
+            {permissions?.["astrologer"]?.includes(
+              "update_astrologer_profile_review"
+            ) && (
               <span
                 className="editIcon"
                 onClick={() => toggleUpdateReviews(row?.original)}
@@ -118,7 +131,9 @@ const AstroReviewsListingTable = () => {
                 <Pencil className="iconSmall" />
               </span>
             )}
-            {permissions?.["astrologer"]?.includes("delete_astrologer_profile_review") && (
+            {permissions?.["astrologer"]?.includes(
+              "delete_astrologer_profile_review"
+            ) && (
               <span className="deleteIcon">
                 <Trash
                   className="iconSmall"
@@ -139,6 +154,8 @@ const AstroReviewsListingTable = () => {
     []
   );
 
+  const totalPage = fetchData?.data?.pagination?.totalPages || 1;
+
   return (
     <div>
       <div
@@ -147,13 +164,20 @@ const AstroReviewsListingTable = () => {
       >
         {/* <AddPackageButton /> */}
         {data.length > 0 ? (
-          <CommonTable
+          <DyCommonTable
             columns={columns}
             data={data}
             includeActions={false}
             tableTitle="Review List"
+            dynamicPagination={dynamicPagination}
+            // customFilterComponent={customFilterComponent}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
             includeCheckbox={false}
-            AddPackageButton={AddPackageButton}
+            // showTableHeading={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

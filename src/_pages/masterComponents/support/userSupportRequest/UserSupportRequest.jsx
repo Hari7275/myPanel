@@ -17,8 +17,8 @@ const UserSupportRequest = () => {
   const [updateData, setUpdateData] = useState(false);
   const [responseList, setResponseList] = useState(false);
 
-  const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
   const [status, setStatus] = useState("");
   const [userId, setUserId] = useState("");

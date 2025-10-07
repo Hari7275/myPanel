@@ -1,7 +1,28 @@
 // import { format } from "date-fns";
 import { formatDateTime } from "../../../../_constants/formatedDate";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../../../../_store/slices/userSlice";
 
 // Cell: ({ value }) => formatDateTime(value),
+
+const CustomIdCell = ({ value }) => {
+  const dispatch = useDispatch();
+  const handleUserClick = () => {
+    dispatch(setCurrentUser(value));
+  };
+  return (
+    <Link
+      to="/users_Profile"
+      onClick={handleUserClick}
+      style={{ textDecoration: "none" }}
+    >
+      <span className="orderId-color" style={{ cursor: "pointer" }}>
+        {value}
+      </span>
+    </Link>
+  );
+};
 
 export const SUPPORTREQUESTCOLUMN = [
   {
@@ -12,6 +33,7 @@ export const SUPPORTREQUESTCOLUMN = [
   {
     Header: "User Id",
     accessor: "user_id",
+    Cell: CustomIdCell,
   },
 
   {

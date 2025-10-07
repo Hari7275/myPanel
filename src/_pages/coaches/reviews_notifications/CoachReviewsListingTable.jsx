@@ -1,5 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
+
 import { REVIEWSCOLUMN } from "./reviewsListingColumns";
 import AddCoachReviews from "./AddCoachReviews";
 import UpdateCoachReview from "./UpdateCoachReview";
@@ -24,8 +26,16 @@ const CoachReviews = () => {
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const permissions = usePermissions();
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
+
   // Fetching API data for listing reviews
-  const { data: fetchData } = useGetReviewsListQuery(consultantId);
+  const { data: fetchData } = useGetReviewsListQuery({
+    consultantId,
+    page,
+    pageSize,
+  });
   const [deleteReview] = useDeleteReviewMutation();
 
   useEffect(() => {
@@ -73,21 +83,21 @@ const CoachReviews = () => {
     const buttonStyle =
       data.length > 0
         ? {
-          position: "absolute",
-          top: "125px",
-          right: "40px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          zIndex: "9999",
-        }
+            position: "absolute",
+            top: "125px",
+            right: "40px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            zIndex: "9999",
+          }
         : {
-          position: "absolute",
-          top: "20px",
-          right: "20px",
-          backgroundColor: "#18B164",
-          padding: "6px",
-          // zIndex: "9999",
-        };
+            position: "absolute",
+            top: "20px",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+            // zIndex: "9999",
+          };
 
     return (
       permissions?.["coach"]?.includes("create_coach_profile_review") && (
@@ -110,8 +120,9 @@ const CoachReviews = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {permissions?.["coach"]?.includes("update_coach_profile_review") && (
-
+            {permissions?.["coach"]?.includes(
+              "update_coach_profile_review"
+            ) && (
               <span
                 className="editIcon"
                 onClick={() => toggleUpdateReviews(row.original)}
@@ -119,8 +130,9 @@ const CoachReviews = () => {
                 <Pencil className="iconSmall" />
               </span>
             )}
-            {permissions?.["coach"]?.includes("delete_coach_profile_review") && (
-
+            {permissions?.["coach"]?.includes(
+              "delete_coach_profile_review"
+            ) && (
               <span className="deleteIcon">
                 <Trash
                   className="iconSmall"
@@ -141,6 +153,8 @@ const CoachReviews = () => {
     []
   );
 
+  const totalPage = fetchData?.data?.pagination?.totalPages || 1;
+
   return (
     <div>
       <div
@@ -149,13 +163,20 @@ const CoachReviews = () => {
       >
         {/* <AddPackageButton /> */}
         {data.length > 0 ? (
-          <CommonTable
+          <DyCommonTable
             columns={columns}
             data={data}
             includeActions={false}
             tableTitle="Review List"
+            dynamicPagination={dynamicPagination}
+            // customFilterComponent={customFilterComponent}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
             includeCheckbox={false}
-            AddPackageButton={AddPackageButton}
+            // showTableHeading={false}
           />
         ) : (
           <p>No reviews available. Please add a review.</p>

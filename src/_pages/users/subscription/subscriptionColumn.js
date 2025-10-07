@@ -15,6 +15,7 @@ export const SUBSCRIPTIONCOLUMN = [
   {
     Header: "Likes",
     accessor: "like_count",
+    Cell: ({ value }) => (value == -1 ? "∞" : value),
   },
   {
     Header: "Good Vibes",
@@ -28,5 +29,11 @@ export const SUBSCRIPTIONCOLUMN = [
   {
     Header: "Compliment",
     accessor: "compliment_count",
+    Cell: ({ value }) => (value == -1 ? "∞" : value),
+  },
+  {
+    Header: "Rewind Count",
+    accessor: "rewind_count",
+    Cell: ({ value }) => (value == -1 ? "∞" : value),
   },
 ];
