@@ -135,11 +135,11 @@
   outline: none;
 }
 
-.input-container input:focus+label {
+.input-container input:focus + label {
   color: #3f51b5;
 }
 
-.input-container input[required]:valid+label {
+.input-container input[required]:valid + label {
   color: rgba(0, 0, 0, 0.54);
 }
 

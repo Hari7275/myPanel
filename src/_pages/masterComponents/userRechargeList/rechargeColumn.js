@@ -49,6 +49,11 @@ export const COLUMNRECHARGE = [
     accessor: "user_id",
     Cell: CustomIdCell,
   },
+  {
+    Header: "Platform",
+    accessor: "platform",
+    Cell: ({ value }) => (value == 1 ? "Android" : "iOS"),
+  },
   // {
   //   Header: "Name",
   //   accessor: "first_name",
