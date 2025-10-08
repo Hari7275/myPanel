@@ -18,12 +18,13 @@ const UserRechargeLists = () => {
 
   const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
+  const [platformType, setPlatformType] = useState("");
 
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
     startDate: "",
     endDate: "",
-    platformType: "",
+    // platformType: "",
     activeStatus: "",
   });
 
@@ -37,7 +38,8 @@ const UserRechargeLists = () => {
     user_type: userType,
     name,
     user_id: userId,
-    platform: appliedFilters.platformType,
+    platformType,
+    // platform: appliedFilters.platformType,
     is_active: appliedFilters.activeStatus,
     end_date: appliedFilters.endDate,
     start_date: appliedFilters.startDate,
@@ -67,6 +69,11 @@ const UserRechargeLists = () => {
   const handleUserIdSearch = (e) => {
     setPage(1);
     debouncedSearchUserId(e?.target?.value);
+  };
+
+  const handleSetPlatformType = (e) => {
+    setPage(1);
+    setPlatformType(e.target.value);
   };
 
   // Handle filter application
@@ -127,12 +134,26 @@ const UserRechargeLists = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "15%",
+          width: "10%",
         }}
         onClick={handleSetUserType}
       >
         <option value={0}>External</option>
         <option value={1}>Internal</option>
+      </select>
+
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "10%",
+        }}
+        onChange={handleSetPlatformType}
+      >
+        <option>Select Device</option>
+        <option value={1}>Andriod</option>
+        <option value={2}>iOS</option>
       </select>
 
       <div

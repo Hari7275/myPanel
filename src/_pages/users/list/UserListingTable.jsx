@@ -35,6 +35,7 @@ const UserListingTable = () => {
   const [phone_number, setPhone_number] = useState("");
   const [userId, setUserId] = useState("");
   const [page, setPage] = useState(1);
+  const [platformType, setPlatformType] = useState("");
   const [pageSize, setPageSize] = useState(initialPageSize); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
@@ -52,6 +53,7 @@ const UserListingTable = () => {
     name,
     user_id: userId,
     phone_number,
+    platformType,
     start_date: appliedFilters.startDate,
     end_date: appliedFilters.endDate,
   });
@@ -160,6 +162,11 @@ const UserListingTable = () => {
     debouncedSearchPhone(e?.target?.value);
   };
 
+  const handleSetPlatformType = (e) => {
+    setPage(1);
+    setPlatformType(e.target.value);
+  };
+
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1); // Reset to first page when applying filters
@@ -210,6 +217,20 @@ const UserListingTable = () => {
         }}
         onChange={handleUserPhoneNumberSearch}
       />
+
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleSetPlatformType}
+      >
+        <option>Select Device</option>
+        <option value={1}>Andriod</option>
+        <option value={2}>iOS</option>
+      </select>
 
       <div
         style={{ marginLeft: "20px", position: "relative" }}

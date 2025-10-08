@@ -133,7 +133,7 @@ const GiftLists = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle=" Gifts List"
+        tableTitle="Gifts List"
         AddPackageButton={AddButton}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

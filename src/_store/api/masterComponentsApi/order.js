@@ -95,8 +95,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         user_type,
         user_id,
         name,
+        platformType,
       }) => ({
-        url: `user/profile/admin/all-recharge-list?page=${page}&limit=${size}&user_id=${user_id}&name=${name}&user_type=${user_type}&start_date=${start_date}&end_date=${end_date}`,
+        url: `user/profile/admin/all-recharge-list?page=${page}&limit=${size}&user_id=${user_id}&name=${name}&user_type=${user_type}&start_date=${start_date}&end_date=${end_date}&platform=${platformType}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
