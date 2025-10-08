@@ -53,6 +53,7 @@ const Navbar = () => {
     "/coach-rate": "Consultant Rate List",
     "/profile-progress": "Consultant Profile Progress",
     "/dashboard-order": "Dashboard Order List",
+    "/app-version": "App Version",
     // Admin User
     "/admin-permission": "Permission Group",
     "/admin-permission/:id": "Permission List",

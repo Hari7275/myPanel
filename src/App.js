@@ -60,6 +60,7 @@ import CountriesList from "./_pages/meta-data/countryList/CountriesList";
 import CoachRate from "./_pages/meta-data/coachRate/CoachRate";
 import ProfileProgress from "./_pages/meta-data/consultantProfileProgress/profileProgress";
 import DashboardOrderList from "./_pages/meta-data/dashboardOrder/DashboardOrderList";
+import AppVersion from "./_pages/meta-data/appVersion/AppVersion";
 
 // QD TRIPS
 import QdList from "./_pages/masterComponents/QDTrips/QdList";
@@ -232,6 +233,7 @@ const Layout = () => (
           <Route path="/profile-progress" element={<ProfileProgress />} />
           <Route path="/consultant-commission" element={<CommissionList />} />
           <Route path="/dashboard-order" element={<DashboardOrderList />} />
+          <Route path="/app-version" element={<AppVersion />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="qd-products" element={<QdProducts />} />

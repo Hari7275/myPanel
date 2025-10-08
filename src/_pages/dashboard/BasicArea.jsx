@@ -62,7 +62,7 @@ export default function BasicArea() {
             label: "Flute Revenue",
             area: true,
             showMark: true,
-            color: "#DBA5FF",
+            color: "#189700a3",
           },
         ]}
         // xAxis={[{ scaleType: "point", data: labels }]}}
