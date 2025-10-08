@@ -13,18 +13,36 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
     is_forgin: selectedRow.description.userData.is_foreigner || null,
     conversion_rate: selectedRow.conversion_rate || "",
   });
-  const [wordCount, setWordCount] = useState(0);
-
-  console.log("selectedRow", selectedRow);
 
   const [createData, { isLoading }] = useCreateUserRechargeMutation();
 
-  const countWords = (text) => {
-    return text
-      .trim()
-      .split(/\s+/)
-      .filter((word) => word.length > 0).length;
-  };
+  // Dropdown options for description
+  const descriptionOptions = [
+    { value: "", label: "Select a reason" },
+    {
+      value: "Call/Chat/Video failed to connect",
+      label: "Call/Chat/Video failed to connect",
+    },
+    {
+      value: "Call dropped / technical issue",
+      label: "Call dropped / technical issue",
+    },
+    {
+      value: "Consultant did not answer",
+      label: "Consultant did not answer",
+    },
+    { value: "Consultant ended early", label: "Consultant ended early" },
+    { value: "Consultant unprofessional", label: "Consultant unprofessional" },
+    { value: "Wrong service selected", label: "Wrong service selected" },
+    {
+      value: "Duplicate/accidental payment",
+      label: "Duplicate/accidental payment",
+    },
+    {
+      value: "Admin-approved goodwill refund",
+      label: "Admin-approved goodwill refund",
+    },
+  ];
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -40,16 +58,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       }
     }
 
-    // Validate description word count
-    if (name === "description") {
-      const words = countWords(value);
-      if (words > 40) {
-        toast.error("Description cannot exceed 40 words");
-        return;
-      }
-      setWordCount(words);
-    }
-
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
@@ -62,11 +70,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
 
     if (!formData.amount || parseFloat(formData.amount) <= 0) {
       toast.error("Please enter a valid amount");
-      return;
-    }
-
-    if (countWords(formData.description) > 40) {
-      toast.error("Description cannot exceed 40 words");
       return;
     }
 
@@ -106,7 +109,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           is_forgin: selectedRow.description.userData.is_foreigner || null,
           conversion_rate: selectedRow.conversion_rate || "",
         });
-        setWordCount(0);
       } else {
         toast.error(response?.data?.message);
         return;
@@ -185,26 +187,27 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           )}
         </div>
 
-        {/* Description Field */}
+        {/* Description Dropdown Field */}
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
-            Description
-            <span
-              style={{ fontSize: "14px", color: "#666", marginLeft: "10px" }}
-            >
+            Refund Reason{" "}
+            <span style={{ fontSize: "14px", color: "#666" }}>
               <span style={{ color: "red" }}>*</span>
             </span>
           </label>
-          <textarea
+          <select
             name="description"
-            value={formData.description}
+            value={formData?.description}
             onChange={handleChange}
-            placeholder="Enter description (required, max 40 words)"
             className="userProfile-input-field"
-            rows="3"
-            style={{ resize: "vertical" }}
             required
-          />
+          >
+            {descriptionOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
 
         {/* Action Buttons */}
