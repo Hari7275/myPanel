@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useUpdateGiftMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const InputField = ({
   label,
@@ -37,6 +38,22 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
     commission: selectedRow.commission || "",
   });
 
+  const [initialData, setInitialData] = useState({});
+  const [changedFields, setChangedFields] = useState({});
+
+  useEffect(() => {
+    const initial = {
+      name: selectedRow.name || "",
+      description: selectedRow.description || "",
+      image_url: selectedRow?.image_url,
+      currency: selectedRow.currency || "INR",
+      price: selectedRow.price || "",
+      is_active: selectedRow.is_active || "true",
+      commission: selectedRow.commission || "",
+    };
+    setInitialData(initial);
+  }, [selectedRow]);
+
   const [updateData, { isLoading: isUpdating, error }] =
     useUpdateGiftMutation();
 
@@ -48,36 +65,73 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
         image: files[0],
         image_url: URL.createObjectURL(files[0]),
       }));
+      setChangedFields((prev) => ({ ...prev, image: true }));
     } else {
       setFormData((prevData) => ({
         ...prevData,
         [name]: value,
       }));
+
+      // Track if the value has actually changed
+      if (initialData[name] !== value) {
+        setChangedFields((prev) => ({ ...prev, [name]: true }));
+      } else {
+        setChangedFields((prev) => {
+          const updated = { ...prev };
+          delete updated[name];
+          return updated;
+        });
+      }
     }
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
-    const formDataToSend = new FormData();
-    formDataToSend.append("name", formData.name);
-    formDataToSend.append("description", formData.description);
-    formDataToSend.append("currency", formData.currency);
 
-    // Pass the actual image file
-    if (formData.image) {
-      formDataToSend.append("image", formData.image);
+    // Check if there are any changes
+    if (Object.keys(changedFields).length === 0) {
+      toast.error("No changes detected");
+      return;
     }
 
-    formDataToSend.append("price", formData.price);
-    formDataToSend.append("is_active", formData.is_active);
-    formDataToSend.append("commission", formData.commission);
+    const formDataToSend = new FormData();
+
+    // Only append changed fields
+    if (changedFields.name) {
+      formDataToSend.append("name", formData.name);
+    }
+    if (changedFields.description) {
+      formDataToSend.append("description", formData.description);
+    }
+    if (changedFields.currency) {
+      formDataToSend.append("currency", formData.currency);
+    }
+    if (changedFields.image && formData.image) {
+      formDataToSend.append("image", formData.image);
+    }
+    if (changedFields.price) {
+      formDataToSend.append("price", formData.price);
+    }
+    if (changedFields.is_active) {
+      formDataToSend.append("is_active", formData.is_active);
+    }
+    if (changedFields.commission) {
+      formDataToSend.append("commission", formData.commission);
+    }
 
     try {
-      await updateData({
+      const response = await updateData({
         id: formData.id,
         body: formDataToSend,
-      });
-      onClose();
+      }).unwrap();
+
+      if (response.status) {
+        toast.success(response.message);
+        setChangedFields({});
+        onClose();
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.error("API Error", error);
     }
@@ -174,11 +228,7 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
           >
             {isUpdating ? "Saving..." : "Save"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
         </div>

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useCreateGiftMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const InputField = ({ label, type, name, value, onChange, placeholder }) => (
   <div className="userProfile-grid-item">
@@ -49,8 +50,13 @@ const AddGift = ({ isOpen, onClose }) => {
     newData.append("commission", formData.commission);
 
     try {
-      await createData({ body: newData });
-      onClose();
+      const response = await createData({ body: newData }).unwrap();
+      if (response.status) {
+        toast.success(response.message);
+        onClose();
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.log("Failed to add new category", error);
     }
@@ -144,14 +150,9 @@ const AddGift = ({ isOpen, onClose }) => {
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
-
         </div>
       </div>
     </ReactModal>

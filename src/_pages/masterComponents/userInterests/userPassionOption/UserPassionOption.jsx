@@ -52,8 +52,9 @@ const UserPassionOption = () => {
 
   const COLUMNSProfileOptions = [
     {
-      Header: "SR. No.",
-      Cell: ({ row }) => row.index + 1,
+      Header: "Id",
+      accessor: "id",
+      // Cell: ({ row }) => row.index + 1,
     },
     {
       Header: "Title",
@@ -122,7 +123,7 @@ const UserPassionOption = () => {
         includeActions={false}
         includeCheckbox={false}
         AddPackageButton={AddButton}
-         showTableHeading={false}
+        showTableHeading={false}
       />
       {addData && <AddUserPassion isOpen={addData} onClose={toggleAddData} />}
       {updateData && (

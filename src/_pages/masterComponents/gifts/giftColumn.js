@@ -10,6 +10,16 @@ export const GIFTCOLUMN = [
   {
     Header: "Price",
     accessor: "price",
+    Cell: ({ row }) => {
+      const currency = row?.original?.currency === "USD" ? "$" : "₹";
+      const price = row?.original?.price;
+      return (
+        <span>
+          {currency}
+          {price}
+        </span>
+      );
+    },
   },
   {
     Header: "Image",
