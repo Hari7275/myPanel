@@ -18,6 +18,7 @@ import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 import ReferralTracking from "./referralTracking/ReferralTracking";
 import RevenueByLocation from "./revenueByLocation/RevenueByLocation";
+import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
 
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
@@ -81,6 +82,7 @@ const DashboardSubPage = () => {
     // ConsltPayoutInc,
     // FluteReferralAmt,
   ]);
+  const permissions = usePermissions();
 
   if (isLoading) {
     return (
@@ -229,13 +231,15 @@ const DashboardSubPage = () => {
               />
             ))}
           </div>
-        </div> .*/}
+        </div> ..*/}
         <div className="second-sub-div" style={{ margin: "0px 40px" }}>
-          <div className="dashboard-sub-grid">
-            <BasicArea />
-            {/* <UserOverview /> */}
-            <UserOverview />
-          </div>
+          {permissions?.["Dashboard"]?.includes("view_recharge") && (
+            <div className="dashboard-sub-grid">
+              <BasicArea />
+              {/* <UserOverview /> */}
+              <UserOverview />
+            </div>
+          )}
           <div className="dashboard-sub-grid">
             <TrafficConsultant />
             <ConsltantOverview />
