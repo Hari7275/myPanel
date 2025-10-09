@@ -1,61 +1,53 @@
 .divider {
-    width: 100%;
-    height: 1px;
-    margin-bottom: 16px;
-    background-color: rgba(216, 216, 216, 0.986);
-  }
+  width: 100%;
+  height: 1px;
+  margin-bottom: 16px;
+  background-color: rgba(216, 216, 216, 0.986);
+}
 
-  .maindivider{
-    width: 100%;
-    height: 2px;
-    margin-bottom: 16px;
-    background-color: rgba(183, 23, 23, 0.986);
+.maindivider {
+  width: 100%;
+  height: 2px;
+  margin-bottom: 16px;
+  background-color: rgba(183, 23, 23, 0.986);
+}
 
-  }
-
-
-.ProfileData-container{
+.ProfileData-container {
   padding: 20px;
 }
 
- 
-  .ProfileData-subheading {
-    font-size: 20px;
-    margin-bottom: 20px;
-  }
-  
-  
-  .row-inside {    
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
-     
-  }
-  
-  .ProfileData-checklist {
-    margin: 60px 0px 25px 0px;
-     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-gap: 20px;
-    margin-top: 12px;
-  }
-  
-  .ProfileData-options{
-    font-size: 16px;
-  
-  
-  }
-  
-  .input-group-options {
-    display: flex;
-    font-size: 14px;
-  }
-  
-  .input-group-radio {
-    margin-right: 7px;
-  }
-  
-  
-  /* .fifthButton {
+.ProfileData-subheading {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.row-inside {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5;
+}
+
+.ProfileData-checklist {
+  margin: 60px 0px 25px 0px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 20px;
+  margin-top: 12px;
+}
+
+.ProfileData-options {
+  font-size: 16px;
+}
+
+.input-group-options {
+  display: flex;
+  font-size: 14px;
+}
+
+.input-group-radio {
+  margin-right: 7px;
+}
+
+/* .fifthButton {
     padding: 10px 20px;
     font-size: 16px;
     background-color: #000;
@@ -72,39 +64,42 @@
     color: #fff; 
   }
     */
-  
-  
-  /* css for prompt question */
-  
-  .prompt-question{
-    margin-bottom: 6px;
-  }
-  
-  .prompt-options{
-    width: 100%;
-    font-size: 16px;
-    padding: 10px 4px;
-    border-radius: 6px;
-  }
-  
-  .prompt-textarea{
-    margin: 12px 0px 25px 0px;
-  }
-  
-  .textarea{
-    border-radius: 6px;
-    font-size: 16px;
-    width: 100%;
-    padding: 4px 0px 0px 6px;
-  }
-  
-  .textarea::placeholder{
-    font-size: 16px;
-     display: flex;
-    justify-content: center;
-    
-  }
-  
-  
-  
-  
+
+/* css for prompt question */
+
+.prompt-question {
+  margin-bottom: 6px;
+}
+
+.prompt-options {
+  width: 100%;
+  font-size: 16px;
+  padding: 10px 4px;
+  border-radius: 6px;
+}
+
+.prompt-textarea {
+  margin: 12px 0px 25px 0px;
+}
+
+.textarea {
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  padding: 4px 0px 0px 6px;
+}
+
+.textarea::placeholder {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.app-version-text {
+  font-size: 16px;
+  font-weight: 700;
+  color: #333;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}

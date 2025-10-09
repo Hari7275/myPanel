@@ -30,8 +30,7 @@ const AddLanguage = ({ isOpen, onClose }) => {
 
     try {
       await createLanguage({ body: newLanguage });
-        onClose()
-     
+      onClose();
     } catch (error) {
       console.error("Failed to add language", error);
     }
@@ -44,8 +43,6 @@ const AddLanguage = ({ isOpen, onClose }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-    
-
       <div style={{ width: "500px" }}>
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>

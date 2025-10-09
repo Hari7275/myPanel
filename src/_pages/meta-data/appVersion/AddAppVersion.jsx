@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
-import { useCreateLanguageMutation } from "../../../_store/api";
+import { useCreateAppVersionMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const AddAppVersion = ({ isOpen, onClose }) => {
   const [key, setKey] = useState(1); // 1 for Android, 2 for iOS
   const [type, setType] = useState(1); // 1 for User App, 2 for Consultant App
   const [version, setVersion] = useState("");
-  const [forceUpdate, setForceUpdate] = useState(false);
+  const [forceUpdate, setForceUpdate] = useState(true);
 
-  const [createLanguage] = useCreateLanguageMutation();
+  const [createAppVersion] = useCreateAppVersionMutation();
 
   const handleKeyChange = (value) => {
     setKey(value);
@@ -22,6 +23,10 @@ const AddAppVersion = ({ isOpen, onClose }) => {
     setVersion(event.target.value);
   };
 
+  const handleStatusChange = (event) => {
+    setForceUpdate(event.target.value);
+  };
+
   const handleSubmit = async () => {
     const newAppVersion = {
       key: key,
@@ -31,13 +36,14 @@ const AddAppVersion = ({ isOpen, onClose }) => {
     };
 
     try {
-      await createLanguage({ body: newAppVersion });
-      onClose();
-      // Reset form
-      setKey(1);
-      setType(1);
-      setVersion("");
-      setForceUpdate(false);
+      const response = await createAppVersion({ body: newAppVersion }).unwrap();
+
+      if (response.status) {
+        toast.success(response.message);
+        onClose();
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.error("Failed to add app version", error);
     }
@@ -51,9 +57,10 @@ const AddAppVersion = ({ isOpen, onClose }) => {
       onRequestClose={onClose}
     >
       <div style={{ width: "500px" }}>
+        <h2 className="top-main-heading">Update App Version</h2>
         <div className="userProfile-grid-item">
           <div>
-            <div className="ProfileData-options">Key</div>
+            <div className="app-version-text">Device Platform</div>
             <div
               className="input-group"
               style={{ display: "flex", gap: "20px" }}
@@ -86,7 +93,7 @@ const AddAppVersion = ({ isOpen, onClose }) => {
           </div>
 
           <div style={{ marginTop: "20px" }}>
-            <div className="ProfileData-options">Type</div>
+            <div className="app-version-text">Application Type</div>
             <div
               className="input-group"
               style={{ display: "flex", gap: "20px" }}
@@ -119,8 +126,8 @@ const AddAppVersion = ({ isOpen, onClose }) => {
           </div>
         </div>
 
-        <div className="userProfile-grid-item">
-          <label style={{ fontSize: "20px", marginTop: "20px" }}>Version</label>
+        <div className="userProfile-grid-item app-version-text">
+          <label style={{ marginTop: "20px" }}>Version</label>
           <input
             type="text"
             value={version}
@@ -128,6 +135,20 @@ const AddAppVersion = ({ isOpen, onClose }) => {
             placeholder="App Version (e.g., 1.24)"
             className="userProfile-input-field"
           />
+        </div>
+
+        <div className="userProfile-grid-item app-version-text">
+          <label style={{  marginTop: "20px" }}>
+            Force Update
+          </label>
+          <select
+            value={forceUpdate}
+            onChange={handleStatusChange}
+            className="userProfile-input-field"
+          >
+            <option value="true">True</option>
+            <option value="false">False</option>
+          </select>
         </div>
 
         <div style={{ marginTop: "30px" }}>
