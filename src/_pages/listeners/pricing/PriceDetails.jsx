@@ -27,10 +27,23 @@ export const CategoryPriceCard = ({
 }) => (
   <div>
     <div
-      className="card dashboard-card"
-      style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "20px" }}
+      className="card "
+      style={{
+        backgroundColor: bgcolor,
+        boxShadow: "none",
+
+        margin: "0px",
+      }}
     >
-      <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
+      <span
+        style={{
+          fontSize: "20px",
+          fontWeight: "600",
+          margin: "0 auto 20px",
+        }}
+      >
+        {label}
+      </span>
       <div className="info-pair">
         <p className="info-item">
           <strong>Current Price : </strong>
@@ -58,7 +71,6 @@ export const CategoryPriceCard = ({
 );
 
 const PriceDetails = () => {
-  const [data, setData] = useState([]);
   const [priceData, setPriceData] = useState([]);
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
@@ -76,9 +88,9 @@ const PriceDetails = () => {
   // Color mapping based on label
   const getCardColor = (label) => {
     const colorMap = {
-      "This Month Earning": "#E3F2FD", // Light Blue
-      "This Week Earning": "#F3E5F5", // Light Purple
-      "Today Earning": "#E8F5E9", // Light Green
+      "Audio Call": "#E3F2FD", // Light Blue
+      "Video Call": "#F3E5F5", // Light Purple
+      Chat: "#E8F5E9", // Light Green
       "Total Debit": "#FFF3E0", // Light Orange
       "Life Time Earning": "#E0F2F1", // Light Teal
       "Current Wallet Balance": "#D9F7E7", // Original Green
@@ -100,10 +112,10 @@ const PriceDetails = () => {
               key={`${card.label}-${index}`}
               label={getFetaureLabel(card.feature)}
               currentPrice={card.current_price}
-              discountPrice={card.current_price}
+              discountPrice={card.discount_price}
               commission={card.commission}
               currency={card.currency}
-              bgcolor={getCardColor(card.label)}
+              bgcolor={getCardColor(getFetaureLabel(card.feature))}
             />
           ))}
         </div>
