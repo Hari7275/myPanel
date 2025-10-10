@@ -138,9 +138,7 @@ const AddAppVersion = ({ isOpen, onClose }) => {
         </div>
 
         <div className="userProfile-grid-item app-version-text">
-          <label style={{  marginTop: "20px" }}>
-            Force Update
-          </label>
+          <label style={{ marginTop: "20px" }}>Force Update</label>
           <select
             value={forceUpdate}
             onChange={handleStatusChange}

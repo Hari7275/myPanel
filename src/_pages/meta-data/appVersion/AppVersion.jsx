@@ -8,13 +8,14 @@ import AddAppVersion from "./AddAppVersion";
 import { useGetAppVersionListQuery } from "../../../_store/api";
 
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { Atom } from "react-loading-indicators";
 
 const AppVersion = () => {
   const [addAppVersion, setAddAppVersion] = useState(false);
 
   const [data, setData] = useState([]);
 
-  const { data: fetchData } = useGetAppVersionListQuery();
+  const { data: fetchData, isLoading } = useGetAppVersionListQuery();
 
   const permissions = usePermissions();
 
@@ -50,6 +51,13 @@ const AppVersion = () => {
   );
   // );
 
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
   return (
     <>
       <CommonTable

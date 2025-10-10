@@ -35,8 +35,8 @@ const WalletDetails = () => {
   // Color mapping based on label
   const getCardColor = (label) => {
     const colorMap = {
-      "Last Month Earning": "#E3F2FD", // Light Blue
-      "Last Week Earning": "#F3E5F5", // Light Purple
+      "This Month Earning": "#E3F2FD", // Light Blue
+      "This Week Earning": "#F3E5F5", // Light Purple
       "Today Earning": "#E8F5E9", // Light Green
       "Total Debit": "#FFF3E0", // Light Orange
       "Life Time Earning": "#E0F2F1", // Light Teal
@@ -53,11 +53,11 @@ const WalletDetails = () => {
       value: data?.walletDetails?.today_earning || "0",
     },
     {
-      label: "Last Week Earning",
+      label: "This Week Earning",
       value: data?.walletDetails?.last_week_earning || "0",
     },
     {
-      label: "Last Month Earning",
+      label: "This Month Earning",
       value: data?.walletDetails?.last_month_earning || "0",
     },
     {

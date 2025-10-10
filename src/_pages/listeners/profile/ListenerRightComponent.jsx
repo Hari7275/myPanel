@@ -15,6 +15,7 @@ import CoachStatus from "../../coaches/status/CoachStatus";
 import CommissionList from "../../astrologers/astrologerCommission/CommissionList";
 
 import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
+import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 
 const ListenerRightComponent = ({ activeComponent }) => {
@@ -43,7 +44,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ConlstProfileProgressList />
           )}
           {activeComponent === "consultant-commission" && <CommissionList />}
-          {activeComponent === "Price-chart" && <ListenersPriceListingTable />}
+          {activeComponent === "Price-chart" && <Price />}
 
           {/* {activeComponent === "session-slot" && <SessionSlot />} */}
           {activeComponent === "CoachStatus" && (
