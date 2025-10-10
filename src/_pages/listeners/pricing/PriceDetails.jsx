@@ -41,18 +41,16 @@ export const CategoryPriceCard = ({
       </div>
       <div className="info-pair">
         <p className="info-item">
-          <strong>Current Price : </strong>
+          <strong>Discount Price : </strong>
           <span>
-            {currency} {currentPrice}
+            {currency} {discountPrice}
           </span>
         </p>
       </div>
       <div className="info-pair">
         <p className="info-item">
-          <strong>Current Price : </strong>
-          <span>
-            {currency} {currentPrice}
-          </span>
+          <strong>Commission : </strong>
+          <span>{commission}</span>
         </p>
       </div>
     </div>
