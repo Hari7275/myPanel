@@ -48,7 +48,7 @@ export const CategoryPriceCard = ({
         <p className="info-item">
           <strong>Current Price : </strong>
           <span>
-            {currency} {currentPrice}
+            {currency == "INR" ? "₹" : "$"} {currentPrice}
           </span>
         </p>
       </div>
@@ -56,7 +56,7 @@ export const CategoryPriceCard = ({
         <p className="info-item">
           <strong>Discount Price : </strong>
           <span>
-            {currency} {discountPrice}
+            {currency == "INR" ? "₹" : "$"} {discountPrice}
           </span>
         </p>
       </div>
@@ -80,7 +80,9 @@ const PriceDetails = () => {
   useEffect(() => {
     if (fetchPrice && fetchPrice?.data) {
       setPriceData(
-        fetchPrice?.data?.filter((item) => item?.status !== 7) || []
+        fetchPrice?.data
+          ?.filter((item) => item?.status !== 7 && item?.status == 2)
+          .reverse() || []
       );
     } else setPriceData([]);
   }, [fetchPrice]);
@@ -91,8 +93,8 @@ const PriceDetails = () => {
       "Audio Call": "#E3F2FD", // Light Blue
       "Video Call": "#F3E5F5", // Light Purple
       Chat: "#E8F5E9", // Light Green
-      "Total Debit": "#FFF3E0", // Light Orange
-      "Life Time Earning": "#E0F2F1", // Light Teal
+      INR: "#FFF3E0", // Light Orange
+      USD: "#E0F2F1", // Light Teal
       "Current Wallet Balance": "#D9F7E7", // Original Green
       "Payable Amount": "#FCE4EC", // Light Pink
     };
@@ -105,7 +107,12 @@ const PriceDetails = () => {
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <div
           className="dashboard-card-container-grid"
-          style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
+          style={{
+            margin: "10px 0",
+            height: "60vh",
+            overflow: "scroll",
+            alignContent: "start",
+          }}
         >
           {priceData?.map((card, index) => (
             <CategoryPriceCard
@@ -115,7 +122,8 @@ const PriceDetails = () => {
               discountPrice={card.discount_price}
               commission={card.commission}
               currency={card.currency}
-              bgcolor={getCardColor(getFetaureLabel(card.feature))}
+              //   bgcolor={getCardColor(getFetaureLabel(card.feature))}
+              bgcolor={getCardColor(card.currency)}
             />
           ))}
         </div>
