@@ -93,9 +93,9 @@ const PriceDetails = () => {
       "Audio Call": "#E3F2FD", // Light Blue
       "Video Call": "#F3E5F5", // Light Purple
       Chat: "#E8F5E9", // Light Green
-      INR: "#FFF3E0", // Light Orange
-      USD: "#E0F2F1", // Light Teal
-      "Current Wallet Balance": "#D9F7E7", // Original Green
+      //   INR: "#E0F2F1", // Light Orange
+      USD: "#FFF3E0", // Light Teal
+      INR: "#D9F7E7", // Original Green
       "Payable Amount": "#FCE4EC", // Light Pink
     };
 
