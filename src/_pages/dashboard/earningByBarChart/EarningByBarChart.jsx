@@ -11,20 +11,11 @@ const EarningByBarChart = () => {
   return (
     <>
       <div className="profile-section">
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <div
-            className="sub-container"
-            // style={{ width: "-webkit-fill-available" }}
-          >
-            <RevenueChart />
-          </div>
-
-          {/* <div
-            className="sub-container"
-            style={{ width: "-webkit-fill-available" }}
-          >
-            <RevenueChart />
-          </div> */}
+        <div
+          className="sub-container"
+          // style={{ width: "-webkit-fill-available" }}
+        >
+          <RevenueChart />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
