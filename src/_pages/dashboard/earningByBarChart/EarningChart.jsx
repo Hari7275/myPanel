@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Box from "@mui/material/Box";
 // import { useGetFluteEarningsQuery } from "../../_store/api"; // Uncomment in your actual code
+import { useGetRechargeGraphListQuery } from "../../../_store/api";
 
 // Example JSON structures for different filters
 const exampleAPIResponses = {

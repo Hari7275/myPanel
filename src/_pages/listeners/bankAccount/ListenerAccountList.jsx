@@ -114,7 +114,7 @@ const ListenerAccountList = () => {
     <>
       <div>
         <div className="ProfileData-container profile-right-sub-container">
-          {phoneCode == +91 ? (
+          {consultantId == 1996 || phoneCode == +91 ? (
             <CommonTable
               columns={columns}
               data={data}
@@ -126,7 +126,7 @@ const ListenerAccountList = () => {
               columns={payPalColumns}
               data={paypalData}
               includeActions={false}
-              tableTitle=" Astrologer PayPal List"
+              tableTitle="Listener PayPal List"
             />
           )}
         </div>

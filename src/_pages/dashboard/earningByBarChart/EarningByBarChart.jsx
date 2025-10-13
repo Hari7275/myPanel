@@ -14,17 +14,17 @@ const EarningByBarChart = () => {
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="sub-container"
-            style={{ width: "-webkit-fill-available" }}
+            // style={{ width: "-webkit-fill-available" }}
           >
             <RevenueChart />
           </div>
 
-          <div
+          {/* <div
             className="sub-container"
             style={{ width: "-webkit-fill-available" }}
           >
             <RevenueChart />
-          </div>
+          </div> */}
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div

@@ -168,14 +168,7 @@ export const COLUMNORDER = [
     Header: "Duration(min)",
     accessor: "actual_duration",
   },
-  {
-    Header: "Device Type",
-    accessor: "description", // accessor should be a direct key
-    Cell: ({ row }) => {
-      const platform = row?.original?.description?.userData?.platform;
-      return <span>{platform == 1 ? "Android" : "iOS"}</span>;
-    },
-  },
+
   // {
   //   Header: "Exp. Dur(min)",
   //   accessor: "order_duration",
@@ -186,5 +179,13 @@ export const COLUMNORDER = [
     Cell: ({ value }) => (
       <span style={{ color: getStatusColor(value) }}>{OrderStatus(value)}</span>
     ),
+  },
+  {
+    Header: "Device Type",
+    accessor: "description", // accessor should be a direct key
+    Cell: ({ row }) => {
+      const platform = row?.original?.description?.userData?.platform;
+      return <span>{platform == 1 ? "Android" : "iOS"}</span>;
+    },
   },
 ];
