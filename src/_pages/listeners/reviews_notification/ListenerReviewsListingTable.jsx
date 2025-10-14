@@ -184,6 +184,7 @@ const ListenerReviewsListingTable = () => {
             setPage={setPage}
             setPageSize={setPageSize}
             includeCheckbox={false}
+            AddPackageButton={AddPackageButton}
             // showTableHeading={false}
           />
         ) : (
