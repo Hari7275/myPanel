@@ -3,6 +3,7 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
+import { formatDate } from "../../users/overview/UserOverview";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -59,12 +60,12 @@ const AstrologerOverview = () => {
   //      return format(new Date(date), "MMMM dd, yyyy");
   // }
 
-  const formatDate = (date) => {
-    if (!date || isNaN(new Date(date).getTime())) {
-      return "N/A";
-    }
-    return format(new Date(date), "PPpp");
-  };
+  // const formatDate = (date) => {
+  //   if (!date || isNaN(new Date(date).getTime())) {
+  //     return "N/A";
+  //   }
+  //   return format(new Date(date), "PPpp");
+  // };
 
   return (
     <div>
@@ -121,8 +122,12 @@ const AstrologerOverview = () => {
               <div className="line"></div>
 
               <InfoItem
-                label="Last Update"
+                label="Last Profile Update"
                 value={formatDate(data?.updated_at)}
+              />
+              <InfoItem
+                label="Last login"
+                value={formatDate(data?.last_login)}
               />
 
               {/* <InfoItem

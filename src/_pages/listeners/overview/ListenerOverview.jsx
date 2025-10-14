@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { format } from "date-fns";
+import { formatDate } from "../../users/overview/UserOverview";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -43,12 +44,12 @@ const ListenerOverview = () => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   };
 
-  const formatDate = (date) => {
-    if (!date || isNaN(new Date(date).getTime())) {
-      return "N/A";
-    }
-    return format(new Date(date), "PPpp");
-  };
+  // const formatDate = (date) => {
+  //   if (!date || isNaN(new Date(date).getTime())) {
+  //     return "N/A";
+  //   }
+  //   return format(new Date(date), "PPpp");
+  // };
 
   if (isLoading) {
     return (
@@ -114,8 +115,13 @@ const ListenerOverview = () => {
               <div className="line"></div>
 
               <InfoItem
-                label="Last Update"
+                label="Last Profile Update"
                 value={formatDate(data?.updated_at)}
+              />
+
+              <InfoItem
+                label="Last login"
+                value={formatDate(data?.last_login)}
               />
 
               {/* <InfoItem label="Last Active" value={`29/04/2024`} />

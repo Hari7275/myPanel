@@ -6,6 +6,7 @@ import { useGetUserTransactionsListQuery } from "../../../_store/api";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import moment from "moment-timezone";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -17,6 +18,14 @@ const InfoItem = ({ label, value, color }) => (
     </div>
   </div>
 );
+
+ export const formatDate = (date) => {
+    if (!date) return "N/A";
+    return moment
+      .utc(date)
+      .tz("Asia/Kolkata")
+      .format("DD MMM YYYY, hh:mm:ss A");
+  };
 
 const UserOverview = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -52,12 +61,13 @@ const UserOverview = () => {
     );
   }
 
-  const formatDate = (date) => {
-    if (!date || isNaN(new Date(date).getTime())) {
-      return "N/A";
-    }
-    return format(new Date(date), "PPpp");
-  };
+  // const formatDate = (date) => {
+  //   if (!date || isNaN(new Date(date).getTime())) {
+  //     return "N/A";
+  //   }
+  //   return format(new Date(date), "PPpp");
+  // };
+ 
 
   return (
     <>
@@ -169,12 +179,18 @@ const UserOverview = () => {
               label="Applied Date"
               value={formatDate(userData?.createdAt)}
             />
+            <div className="line"></div>
 
             <InfoItem
-              label="Last Update"
+              label="Last Profile Update"
               value={formatDate(userData?.updatedAt)}
             />
+
             <div className="line"></div>
+            <InfoItem
+              label="Last Login"
+              value={formatDate(userData?.last_login)}
+            />
           </footer>
         </div>
       </div>

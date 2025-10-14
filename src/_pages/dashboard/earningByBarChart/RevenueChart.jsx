@@ -193,6 +193,7 @@ export default function RevenueChart() {
               }}
               margin={{ left: 100, right: 100, top: 40, bottom: 80 }}
               barLabel={false}
+              // barLabel="value"
               disableAxisListener
             />
           </Box>

@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
+import { formatDate } from "../../users/overview/UserOverview";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -61,12 +62,12 @@ const CoachOverview = () => {
     return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
   };
 
-  const formatDate = (date) => {
-    if (!date || isNaN(new Date(date).getTime())) {
-      return "N/A";
-    }
-    return format(new Date(date), "PPpp");
-  };
+  // const formatDate = (date) => {
+  //   if (!date || isNaN(new Date(date).getTime())) {
+  //     return "N/A";
+  //   }
+  //   return format(new Date(date), "PPpp");
+  // };
 
   return (
     <div>
@@ -145,8 +146,13 @@ const CoachOverview = () => {
               <div className="line"></div>
 
               <InfoItem
-                label="Last Update"
+                label="Last Profile Update"
                 value={formatDate(data?.updated_at)}
+              />
+
+              <InfoItem
+                label="Last login"
+                value={formatDate(data?.last_login)}
               />
 
               {/* <InfoItem
