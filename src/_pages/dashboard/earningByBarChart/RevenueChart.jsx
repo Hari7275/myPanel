@@ -12,6 +12,7 @@ export default function RevenueChart() {
     startDate: "",
     endDate: "",
     granularity: "",
+    platform: "",
   });
 
   // Applied filter state (actual params sent to API)
@@ -19,6 +20,7 @@ export default function RevenueChart() {
     startDate: "",
     endDate: "",
     granularity: "",
+    platform: "",
   });
 
   // Pass applied filters to the API query
@@ -26,16 +28,8 @@ export default function RevenueChart() {
     granularity: appliedFilters.granularity,
     startDate: appliedFilters.startDate,
     endDate: appliedFilters.endDate,
+    platform: appliedFilters.platform,
   });
-
-  // Debug: Log the query params
-  useEffect(() => {
-    console.log("API Query Params:", {
-      granularity: appliedFilters.granularity,
-      startDate: appliedFilters.startDate,
-      endDate: appliedFilters.endDate,
-    });
-  }, [appliedFilters]);
 
   useEffect(() => {
     if (fetchData?.data) {
@@ -52,20 +46,28 @@ export default function RevenueChart() {
   };
 
   // Handle granularity change (only updates UI state)
-  const handleDateFilterChange = (e) => {
+  const handleGranularityChange = (e) => {
     setFilters((prev) => ({
       ...prev,
       granularity: e.target.value,
     }));
   };
 
+  // Handle platform change (only updates UI state)
+  const handlePlatformChange = (e) => {
+    setFilters((prev) => ({
+      ...prev,
+      platform: e.target.value,
+    }));
+  };
+
   // Apply filters - updates the API params
   const handleApply = () => {
-    console.log("Applying filters:", filters); // Debug log
     setAppliedFilters({
       startDate: filters.startDate,
       endDate: filters.endDate,
       granularity: filters.granularity,
+      platform: filters.platform,
     });
   };
 
@@ -75,6 +77,7 @@ export default function RevenueChart() {
       startDate: "",
       endDate: "",
       granularity: "",
+      platform: "",
     };
     setFilters(resetValues);
     setAppliedFilters(resetValues);
@@ -82,13 +85,13 @@ export default function RevenueChart() {
 
   // Transform data for the bar chart
   const transformedData = data.map((item) => ({
-    admin: parseFloat(item?.admin || 0),
-    user: parseFloat(item?.user || 0),
+    android: parseFloat(item?.platforms?.["1"] || 0),
+    iOS: parseFloat(item?.platforms?.["2"] || 0),
   }));
 
   // Extract data for each series
-  const adminData = transformedData.map((item) => item.admin);
-  const userData = transformedData.map((item) => item.user);
+  const androidData = transformedData.map((item) => item.android);
+  const iOSData = transformedData.map((item) => item.iOS);
 
   // Use labels from API response
   const xAxisLabels = data.map((item) => item.label);
@@ -121,7 +124,7 @@ export default function RevenueChart() {
           gap: 2,
         }}
       >
-        <div style={{ width: "60%", overflowX: "auto" }}>
+        <div style={{ width: "75%", overflowX: "auto" }}>
           <Box
             sx={{
               width: "100%",
@@ -132,14 +135,14 @@ export default function RevenueChart() {
               height={400}
               series={[
                 {
-                  data: userData,
-                  label: "User Recharge",
+                  data: androidData,
+                  label: "Android",
                   stack: "total",
                   color: "#5174c0ff",
                 },
                 {
-                  data: adminData,
-                  label: "Admin Recharge",
+                  data: iOSData,
+                  label: "iOS",
                   stack: "total",
                   color: "#ff9040ff",
                 },
@@ -188,17 +191,16 @@ export default function RevenueChart() {
                   strokeWidth: 1,
                 },
                 "& .MuiBarElement-root": {
-                  width: "30px !important",
+                  width: "25px !important",
                 },
               }}
               margin={{ left: 100, right: 100, top: 40, bottom: 80 }}
               barLabel={false}
-              // barLabel="value"
               disableAxisListener
             />
           </Box>
         </div>
-        <div className="filter-section" style={{ width: "30%" }}>
+        <div className="filter-section" style={{ width: "25%" }}>
           <div className="filter-section-title">Date Range</div>
           <div className="date-inputs">
             <div className="date-input-group">
@@ -228,7 +230,7 @@ export default function RevenueChart() {
             <div className="filter-section-title">Granularity</div>
             <select
               value={filters.granularity}
-              onChange={handleDateFilterChange}
+              onChange={handleGranularityChange}
               style={{
                 padding: "8px 12px",
                 borderRadius: "4px",
@@ -243,6 +245,28 @@ export default function RevenueChart() {
               <option value="weekly">Weekly</option>
               <option value="monthly">Monthly</option>
               <option value="yearly">Yearly</option>
+            </select>
+          </div>
+
+          {/* <div className="filter-row"></div> */}
+          <div className="filter-section">
+            <div className="filter-section-title">Transaction </div>
+            <select
+              value={filters.platform}
+              onChange={handlePlatformChange}
+              style={{
+                padding: "8px 12px",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+                backgroundColor: "white",
+                fontSize: "14px",
+                cursor: "pointer",
+              }}
+              className="filter-dropdown"
+            >
+              <option value="">Select Type</option>
+              <option value={0}>User</option>
+              <option value={1}>Admin</option>
             </select>
           </div>
 
