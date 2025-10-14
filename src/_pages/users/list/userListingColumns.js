@@ -8,8 +8,13 @@ const StatusCell = ({ value }) => {
   return <span>{UserVerificationStatus(value)}</span>;
 };
 
-const CustomUserType = ({ value }) => {
-  return <span className="orderId-color">{value}</span>;
+const CustomUserType = ({ value, row }) => {
+  const color =
+    row.original.country_code === "IN"
+      ? "rgba(38, 38, 204, 0.596)"
+      : "#810c0cff";
+
+  return <span style={{ color, fontWeight: 600 }}>{value}</span>;
 };
 
 export const COLUMNS = (toggleModal) => [
@@ -44,7 +49,7 @@ export const COLUMNS = (toggleModal) => [
         </div>
 
         <span className="column_container_name">
-          {row?.original?.first_name}
+          {row?.original?.name}
         </span>
       </div>
     ),

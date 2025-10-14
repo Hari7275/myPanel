@@ -21,7 +21,6 @@ export default function RevenueChart() {
     granularity: "",
   });
 
-
   // Pass applied filters to the API query
   const { data: fetchData, isLoading } = useGetRechargeGraphListQuery({
     granularity: appliedFilters.granularity,
@@ -247,7 +246,7 @@ export default function RevenueChart() {
           </div>
 
           {/* Action Buttons */}
-          <div className="filter-actions">
+          <div className="filter-actions" style={{ width: "max-content" }}>
             <button className="apply-button" onClick={handleApply}>
               Apply Filters
             </button>

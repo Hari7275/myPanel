@@ -31,6 +31,7 @@ const DyCommonTable = ({
   setPage,
   setPageSize,
   setShowMoreCloumn,
+  showGlobalSearch = true,
 }) => {
   const dispatch = useDispatch();
 
@@ -111,7 +112,9 @@ const DyCommonTable = ({
         )}
 
         <div className="filterDiv">
-          <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          {showGlobalSearch && (
+            <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+          )}
           {customFilterComponent && customFilterComponent()}
           {AddPackageButton && AddPackageButton()}
         </div>

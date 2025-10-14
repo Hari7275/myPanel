@@ -191,9 +191,9 @@ const UserListingTable = () => {
         className="inputBox"
         placeholder="Search by id"
         style={{
-          marginLeft: "25px",
+          // marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "15%",
+          width: "10%",
         }}
         onChange={handleUserIdSearch}
       />
@@ -253,6 +253,23 @@ const UserListingTable = () => {
           initialFilters={appliedFilters}
         />
       </div>
+
+      <div
+        style={{ marginLeft: "20px", position: "relative", display: "flex" }}
+      >
+        <div>
+          <span style={{ color: "#4CAF50", fontWeight: "700" }}>Android =</span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ${fetchData?.data?.pagination?.overview?.android_users || 0}`}
+          </span>
+        </div>
+        <div style={{ marginLeft: "20px" }}>
+          <span style={{ color: "#2196F3", fontWeight: "700" }}>iOS =</span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ${fetchData?.data?.pagination?.overview?.ios_users || 0}`}
+          </span>
+        </div>
+      </div>
     </div>
   );
 
@@ -281,6 +298,7 @@ const UserListingTable = () => {
           setPage={setPage}
           setPageSize={setPageSize}
           showTableHeading={false}
+          showGlobalSearch={false}
         />
 
         {data?.length === 0 && (
