@@ -36,7 +36,7 @@ const AddListenerReview = ({ isOpen, onClose, coachId, listenerOrderData }) => {
   }, [listenerOrderData, isOpen]);
 
   console.log("listener id", coachId);
-
+  
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -72,6 +72,11 @@ const AddListenerReview = ({ isOpen, onClose, coachId, listenerOrderData }) => {
       review_text: formData.review_text,
       order_type: formData.order_type,
     };
+
+    // Add review_date only when listenerOrderData exists
+    if (listenerOrderData) {
+      newReview.review_date = listenerOrderData.createdAt;
+    }
 
     try {
       const response = await createReview({ body: newReview });
