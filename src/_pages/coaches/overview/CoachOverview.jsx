@@ -105,14 +105,14 @@ const CoachOverview = () => {
 
               <InfoItem
                 label="Lifetime Earning"
-                value={`INR ${data?.walletDetails?.lifetime_earning}`}
+                value={`INR ${data?.walletDetails?.lifetime_earning || 0}`}
                 color="#4CAF50"
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Current Balance "
-                value={`INR ${data?.walletDetails?.wallet_balance}`}
+                value={`INR ${data?.walletDetails?.wallet_balance || 0}`}
                 color="#2196F3"
               />
               <div className="line"></div>

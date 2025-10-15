@@ -122,7 +122,7 @@ const UserRechargeLists = () => {
         className="inputBox"
         placeholder="Search by User Name"
         style={{
-          marginLeft: "25px",
+          marginLeft: "10px",
           height: "-webkit-fill-available",
           width: "10%",
         }}
@@ -132,7 +132,7 @@ const UserRechargeLists = () => {
       <select
         className="inputBox"
         style={{
-          marginLeft: "25px",
+          marginLeft: "10px",
           height: "-webkit-fill-available",
           width: "10%",
         }}
@@ -145,7 +145,7 @@ const UserRechargeLists = () => {
       <select
         className="inputBox"
         style={{
-          marginLeft: "25px",
+          marginLeft: "10px",
           height: "-webkit-fill-available",
           width: "10%",
         }}
@@ -157,7 +157,7 @@ const UserRechargeLists = () => {
       </select>
 
       <div
-        style={{ marginLeft: "20px", position: "relative" }}
+        style={{ marginLeft: "10px", position: "relative" }}
         className="filter-button-wrapper"
       >
         <Button
@@ -178,22 +178,26 @@ const UserRechargeLists = () => {
         />
       </div>
       <div
-        style={{ marginLeft: "20px", position: "relative", display: "flex" }}
+        style={{ marginLeft: "10px", position: "relative", display: "flex" }}
       >
         <div>
           <span style={{ color: "#4CAF50", fontWeight: "700" }}>
             Android Recharge =
           </span>
           <span style={{ color: "#151212ff", fontWeight: "600" }}>
-            {` ₹ ${fetchData?.data?.android_amount || 0}`}
+            {` ₹ ${fetchData?.data?.device_data_info?.android_amount || 0}/${
+              fetchData?.data?.device_data_info?.total_android_count || 0
+            }`}
           </span>
         </div>
-        <div style={{ marginLeft: "20px" }}>
+        <div style={{ marginLeft: "10px" }}>
           <span style={{ color: "#2196F3", fontWeight: "700" }}>
             iOS Recharge =
           </span>
           <span style={{ color: "#151212ff", fontWeight: "600" }}>
-            {` ₹ ${fetchData?.data?.ios_amount || 0}`}
+            {` ₹ ${fetchData?.data?.device_data_info?.ios_amount || 0}/${
+              fetchData?.data?.device_data_info?.total_ios_count || 0
+            }`}
           </span>
         </div>
       </div>
