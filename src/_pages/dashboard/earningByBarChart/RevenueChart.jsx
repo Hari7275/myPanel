@@ -104,6 +104,8 @@ export default function RevenueChart() {
     );
   }
 
+  const categoryGapRatio = xAxisLabels.length < 5 ? 0.98 : 0.6;
+
   return (
     <Box sx={{ padding: 2 }}>
       <Box
@@ -155,7 +157,7 @@ export default function RevenueChart() {
                     angle: 0,
                     textAnchor: "middle",
                   },
-                  categoryGapRatio: 0.5,
+                  categoryGapRatio: categoryGapRatio,
                   barGapRatio: 0,
                 },
               ]}
