@@ -6,8 +6,8 @@ import { ORDERCHARTCOLUMN } from "./listenerOrderColumns";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
-
-
+import AddListenerReview from "../reviews_notification/AddListenerReview";
+import { Pencil } from "lucide-react";
 
 const ListenerOrder = () => {
   const [data, setData] = useState([]);
@@ -15,6 +15,9 @@ const ListenerOrder = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [addReview, setAddReview] = useState(false);
+  const [orderData, setOrderData] = useState(null);
 
   const { data: fetchData, isLoading } = useGetConsultantsOrderQuery({
     consultantId,
@@ -32,7 +35,36 @@ const ListenerOrder = () => {
       setData([]); // Set to empty if no data is fetched
     }
   }, [fetchData]);
-  const columns = useMemo(() => ORDERCHARTCOLUMN, []);
+
+  // Toggle function for adding a review
+  const toggleAddReviews = (data) => {
+    console.log("data", data);
+    setSelectedRow(consultantId);
+    setOrderData(data);
+    setAddReview(!addReview);
+  };
+
+  const columns = useMemo(
+    () => [
+      ...ORDERCHARTCOLUMN,
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) =>
+          row.original.status == 4 ? (
+            <div className="actions-cell">
+              <span
+                className="editIcon"
+                onClick={() => toggleAddReviews(row.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            </div>
+          ) : null,
+      },
+    ],
+    []
+  );
 
   const totalPage = fetchData?.meta?.total_page;
 
@@ -64,6 +96,15 @@ const ListenerOrder = () => {
         </div>
       ) : (
         "No data avaliable"
+      )}
+
+      {addReview && (
+        <AddListenerReview
+          isOpen={addReview}
+          onClose={toggleAddReviews}
+          coachId={selectedRow}
+          listenerOrderData={orderData}
+        />
       )}
     </>
   );

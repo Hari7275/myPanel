@@ -31,7 +31,7 @@ const ListenerReviewsListingTable = () => {
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  // Fetching API data for listing reviews
+  // Fetching API data for listing reviews.
   const { data: fetchData } = useGetReviewsListQuery({
     consultantId,
     page,

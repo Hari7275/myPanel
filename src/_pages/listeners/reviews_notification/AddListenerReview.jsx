@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useCreateReviewMutation } from "../../../_store/api";
 import toast from "react-hot-toast";
 
-const AddListenerReview = ({ isOpen, onClose, coachId }) => {
+const AddListenerReview = ({ isOpen, onClose, coachId, listenerOrderData }) => {
   const [formData, setFormData] = useState({
     order_id: "",
     user_id: "",
@@ -15,7 +15,28 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
   const [createReview, isloading] = useCreateReviewMutation();
   const [ratingError, setRatingError] = useState("");
 
+  // Prefill form data when listenerOrderData is available
+  useEffect(() => {
+    if (listenerOrderData) {
+      setFormData((prevData) => ({
+        ...prevData,
+        order_id: listenerOrderData.id || "",
+        user_id: listenerOrderData.user_id || "",
+      }));
+    } else {
+      // Reset form when modal opens without listenerOrderData
+      setFormData({
+        order_id: "",
+        user_id: "",
+        rating: "",
+        review_text: "",
+        order_type: "order",
+      });
+    }
+  }, [listenerOrderData, isOpen]);
+
   console.log("listener id", coachId);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -40,8 +61,11 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
       return;
     }
 
+    // Use consultant_id from listenerOrderData if available, otherwise use coachId prop
+    const coachIdToUse = listenerOrderData?.consultant_id || coachId;
+
     const newReview = {
-      coach_id: coachId,
+      coach_id: coachIdToUse,
       order_id: formData.order_id,
       user_id: formData.user_id,
       rating: formData.rating,
@@ -95,6 +119,7 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
             onChange={handleChange}
             placeholder="order_id"
             className="userProfile-input-field"
+            disabled={!!listenerOrderData}
           />
         </div>
 
@@ -107,6 +132,7 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
             onChange={handleChange}
             placeholder="user_id"
             className="userProfile-input-field"
+            disabled={!!listenerOrderData}
           />
         </div>
 
@@ -163,14 +189,9 @@ const AddListenerReview = ({ isOpen, onClose, coachId }) => {
           >
             {"Submit"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
-
         </div>
       </div>
     </ReactModal>

@@ -252,7 +252,7 @@ export default function RevenueChart() {
 
           {/* <div className="filter-row"></div> */}
           <div className="filter-section">
-            <div className="filter-section-title">Transaction By</div>
+            <div className="filter-section-title">Group By</div>
             <select
               value={filters.platform}
               onChange={handlePlatformChange}
