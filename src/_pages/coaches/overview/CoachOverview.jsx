@@ -105,17 +105,22 @@ const CoachOverview = () => {
 
               <InfoItem
                 label="Lifetime Earning"
-                value={`INR ${data?.lifetime_earning}`}
+                value={`INR ${data?.walletDetails?.lifetime_earning}`}
                 color="#4CAF50"
               />
               <div className="line"></div>
 
               <InfoItem
                 label="Current Balance "
-                value={`INR ${data?.wallet_balance}`}
+                value={`INR ${data?.walletDetails?.wallet_balance}`}
                 color="#2196F3"
               />
               <div className="line"></div>
+              <InfoItem
+                label="Payable Balance "
+                value={`INR ${data?.walletDetails?.payable_amount || 0}`}
+                color="#9C27B0"
+              />
 
               {/* <InfoItem
                 label="Lifetime Earning"

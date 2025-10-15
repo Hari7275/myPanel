@@ -163,25 +163,24 @@ const AstroReviewsListingTable = () => {
         style={{ position: "relative" }}
       >
         {/* <AddPackageButton /> */}
-        {data.length > 0 ? (
-          <DyCommonTable
-            columns={columns}
-            data={data}
-            includeActions={false}
-            tableTitle="Review List"
-            dynamicPagination={dynamicPagination}
-            // customFilterComponent={customFilterComponent}
-            totalPage={totalPage}
-            currentPage={page}
-            pageSize={pageSize}
-            setPage={setPage}
-            setPageSize={setPageSize}
-            includeCheckbox={false}
-            // showTableHeading={false}
-          />
-        ) : (
-          <p>No reviews available. Please add a review.</p>
-        )}
+
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          includeActions={false}
+          tableTitle="Review List"
+          dynamicPagination={dynamicPagination}
+          // customFilterComponent={customFilterComponent}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          includeCheckbox={false}
+          AddPackageButton={AddPackageButton}
+
+          // showTableHeading={false}
+        />
       </div>
 
       <AstroNotificationsListingTable />
