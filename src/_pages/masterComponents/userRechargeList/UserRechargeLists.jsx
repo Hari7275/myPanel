@@ -107,6 +107,16 @@ const UserRechargeLists = () => {
         }} */}
       {/* // onChange={handleUserIdSearch}/ */}
       {/* /> .*/}
+      <input
+        className="inputBox"
+        placeholder="Search by user id"
+        style={{
+          // marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "10%",
+        }}
+        onChange={handleUserIdSearch}
+      />
 
       <input
         className="inputBox"
@@ -114,19 +124,9 @@ const UserRechargeLists = () => {
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
-          width: "15%",
+          width: "10%",
         }}
         onChange={handleUserNameSearch}
-      />
-      <input
-        className="inputBox"
-        placeholder="Search by user id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "15%",
-        }}
-        onChange={handleUserIdSearch}
       />
 
       <select
@@ -177,6 +177,26 @@ const UserRechargeLists = () => {
           initialFilters={appliedFilters}
         />
       </div>
+      <div
+        style={{ marginLeft: "20px", position: "relative", display: "flex" }}
+      >
+        <div>
+          <span style={{ color: "#4CAF50", fontWeight: "700" }}>
+            Android Recharge =
+          </span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ₹ ${fetchData?.data?.android_amount || 0}`}
+          </span>
+        </div>
+        <div style={{ marginLeft: "20px" }}>
+          <span style={{ color: "#2196F3", fontWeight: "700" }}>
+            iOS Recharge =
+          </span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` ₹ ${fetchData?.data?.ios_amount || 0}`}
+          </span>
+        </div>
+      </div>
     </div>
   );
 
@@ -210,6 +230,7 @@ const UserRechargeLists = () => {
         setPageSize={setPageSize}
         includeCheckbox={false}
         showTableHeading={false}
+        showGlobalSearch={false}
       />
     </div>
   );
