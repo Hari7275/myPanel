@@ -166,6 +166,36 @@ export const getFetaureLabel = (value) => {
   }
 };
 
+export const getServiceStatusLabel = (value) => {
+  switch (value) {
+    case 1:
+      return "Chat";
+    case 2:
+      return "Audio Call";
+    case 3:
+      return "Video Call";
+    case 4:
+      return "Anonymous Call";
+    case 5:
+      return "Private Call";
+    case 6:
+      return "Live";
+    case 7:
+      return "Live Video Call";
+    case 8:
+      return "Live Audio Call";
+    case 9:
+      return "Live Chat";
+    // case 10:
+    //   return "Session Chat";
+    // case 11:
+    //   return "Session Audio Call";
+    // case 12:
+    //   return "Session Video Call";
+    default:
+      return "unknown";
+  }
+};
 export const UserVerificationStatus = (value) => {
   switch (Number(value)) {
     case 1:
