@@ -1,4 +1,4 @@
-import React , {useState} from "react"
+import React, { useState } from "react";
 import { Switch } from "@mui/material";
 import { useUpdateRechargeMutation } from "../../../_store/api";
 
@@ -30,7 +30,6 @@ const StatusSwitch = ({ row }) => {
   );
 };
 
-
 export const RECHARGECOLUMN = [
   {
     Header: "Id",
@@ -41,21 +40,33 @@ export const RECHARGECOLUMN = [
     accessor: "plan_name",
   },
   {
+    Header: "Coupon ID",
+    accessor: "coupon_id",
+    Cell: ({ value }) => <span>{value ? value : "N/A"}</span>,
+  },
+  {
     Header: "Price",
     accessor: "price",
+    // Cell: ({ value }) => <span>{value ? value : "N/A"}</span>,
+    Cell: ({ value, row }) => {
+      const currency = row.original.currency;
+      const symbol = currency === "INR" ? "₹" : "$";
+      return (
+        <span
+          style={{
+            color: currency == "INR" ? "#10b981" : "#810c0cff",
+            fontWeight: 600,
+          }}
+        >
+          {symbol} {value ? value : "N/A"}
+        </span>
+      );
+    },
   },
-  {
-    Header: "Discount",
-    accessor: "discount",
-  },
-  {
-    Header: "Final Price",
-    accessor: "final_price",
-  },
+
   {
     Header: "Status",
     accessor: "status",
     Cell: ({ row }) => <StatusSwitch row={row} />,
   },
- 
 ];

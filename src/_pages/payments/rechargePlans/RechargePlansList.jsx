@@ -1,5 +1,6 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 import { RECHARGECOLUMN } from "./rechargePlansColumns";
 import { Pencil, Trash } from "lucide-react";
@@ -18,6 +19,9 @@ const RechargePlansList = () => {
   const [showAddComponent, setShowAddComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(50); // Adjusted default page size
+  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching recharge plans data using RTK Query.
 
@@ -106,9 +110,6 @@ const RechargePlansList = () => {
 
   // at the time of loading page (data)
 
-  
-
-
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -116,18 +117,28 @@ const RechargePlansList = () => {
       </span>
     );
   }
+  const totalPage = fetchData?.meta?.total_page || 1;
 
   return (
     <>
-      {}
-      <CommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="Recharge Plans"
-        AddPackageButton={AddPackageButton}
-        showTableHeading={false}
-      />
+      <div>
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          includeActions={false}
+          tableTitle="Recharge Plans"
+          AddPackageButton={AddPackageButton}
+          showTableHeading={false}
+          // customFilterComponent={customFilterComponent}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          includeCheckbox={false}
+        />
+      </div>
 
       {showDeleteComponent && (
         <DeleteComponent
