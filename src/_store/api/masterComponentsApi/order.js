@@ -228,6 +228,27 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["order"],
     }),
+
+    // user recharge Summary List
+    getUserRechargeSummaryList: builder.query({
+      query: ({
+        page,
+        size,
+        start_date,
+        end_date,
+        user_type,
+        user_id,
+        name,
+        platformType,
+      }) => ({
+        url: `user/profile/admin/recharge-summary?page=${page}&size=${size}&user_id=${user_id}&name=${name}&user_type=${user_type}&start_date=${start_date}&end_date=${end_date}&platform=${platformType}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["blogCount"],
+    }),
   }),
 });
 
@@ -240,4 +261,5 @@ export const {
   useGetSingleSubscriptionDetailsQuery,
   useGetSessionListQuery,
   useGetRazorpayRechargeListQuery,
+  useGetUserRechargeSummaryListQuery,
 } = orderApiSlice;

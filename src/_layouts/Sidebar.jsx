@@ -294,6 +294,22 @@ const Sidebar = () => {
               </Link>
             )}
 
+            {permissions?.["user_recharge_list"]?.includes(
+              "view_recharge_list"
+            ) && (
+              <Link to="/user-recharge-summary">
+                <div
+                  className={`menu-item ${
+                    activeItem === "user-recharge-summary" ? "active" : ""
+                  }`}
+                  onClick={() => handleItemClick("user-recharge-summary")}
+                >
+                  <CardGiftcardOutlinedIcon />
+                  <span>Recharge Summary</span>
+                </div>
+              </Link>
+            )}
+
             {/* user subscription  list  */}
             <Link to="/user-subscription">
               <div

@@ -66,6 +66,7 @@ const Navbar = () => {
     "/gift": "Gifts List",
     "/user-subscription": "Users Subscription List",
     "/user-recharge": "Users Recharge List",
+    "/user-recharge-summary": "Recharge Summary List",
     "/razorpay-recharge": "Razorpay Recharge List",
     "/user-notification": "User Notifications",
     "/notification-template": "User Notifications Template",

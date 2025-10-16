@@ -269,6 +269,8 @@ export default function RevenueChart() {
               <option value="">Select Type</option>
               <option value={0}>User</option>
               <option value={1}>Admin</option>
+              <option value={2}>Internal</option>
+              <option value={3}>External</option>
             </select>
           </div>
 
