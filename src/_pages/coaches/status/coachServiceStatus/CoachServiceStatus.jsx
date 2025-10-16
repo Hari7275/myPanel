@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetConsultantsServiceStatusQuery } from "../../../../_store/api";
 import { useSelector } from "react-redux";
-import { getFetaureLabel } from "../../../../_constants/consultantConstant";
+import { getServiceStatusLabel } from "../../../../_constants/consultantConstant";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 
@@ -93,7 +93,7 @@ const CoachServiceStatus = () => {
             <div className="card-footer-content">
               <div className="info-pair">
                 <p className="info-item">
-                  <strong>{getFetaureLabel(status?.type)}</strong>
+                  <strong>{getServiceStatusLabel(status?.type)}</strong>
                 </p>
                 <p className="info-item">
                   <button className={getButtonClassName(status.status)}>
