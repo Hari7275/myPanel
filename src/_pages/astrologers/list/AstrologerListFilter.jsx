@@ -9,6 +9,7 @@ const statusNameToValue = [
   { value: 5, label: "Blocked" },
   { value: 6, label: "Rejected" },
   { value: 7, label: "Deleted" },
+  { value: 8, label: "Inactive" },
 ];
 
 const AstrologerListFilter = ({
