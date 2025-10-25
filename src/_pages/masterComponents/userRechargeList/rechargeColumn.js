@@ -103,6 +103,21 @@ export const COLUMNRECHARGE = [
     },
   },
   {
+    Header: "Activity Type",
+    accessor: "type",
+    Cell: ({ value }) => {
+      const activityColors = {
+        recharge: "#3b82f6",
+        consultant_activity: "#36648eff",
+        refund: "#f59e0b",
+      };
+
+      const color = activityColors[value] || "#6b7280";
+
+      return <span style={{ color: color }}>{value.replace(/_/g, " ")}</span>;
+    },
+  },
+  {
     Header: "Transaction Time",
     accessor: "transaction_time",
     Cell: ({ value }) => {
