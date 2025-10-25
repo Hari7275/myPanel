@@ -20,6 +20,10 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   const descriptionOptions = [
     { value: "", label: "Select a reason" },
     {
+      value: "Flute mock call",
+      label: "Flute mock call",
+    },
+    {
       value: "Call/Chat/Video failed to connect",
       label: "Call/Chat/Video failed to connect",
     },
