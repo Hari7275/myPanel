@@ -111,7 +111,11 @@ export const COLUMNORDER = [
   {
     Header: "Type",
     accessor: "order_type",
-    Cell: ({ value }) => OrderType(value),
+    Cell: ({ value }) => (
+      <span style={{ color: value == 3 ? "#008000" : "" }}>
+        {OrderType(value)}
+      </span>
+    ),
   },
 
   {

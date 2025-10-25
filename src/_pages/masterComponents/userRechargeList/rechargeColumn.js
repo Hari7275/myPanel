@@ -112,7 +112,7 @@ export const COLUMNRECHARGE = [
         refund: "#f59e0b",
       };
 
-      const color = activityColors[value] || "#6b7280";
+      const color = activityColors[value] || "#f59e0b";
 
       return <span style={{ color: color }}>{value.replace(/_/g, " ")}</span>;
     },
