@@ -5,6 +5,7 @@ import "../../../cssfolder/ReactCropper.css";
 import { Button } from "@mui/material";
 import ReactModal from "react-modal";
 import { useUpdateConsultantGalleryMutation } from "../../../_store/api";
+import Compressor from "compressorjs";
 
 const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
   const [imageUrl, setImageUrl] = useState(selectedImage.url);
@@ -25,13 +26,91 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
     }
   }, [imageUrl]);
 
-  const getCropData = () => {
-    if (cropperRef?.current && cropperRef?.current?.cropper) {
-      const canvas = cropperRef?.current?.cropper?.getCroppedCanvas();
-      setCropData(canvas?.toDataURL());
-      setIsCropped(true);
-    }
-  };
+  // const getCropData = () => {
+  //   if (cropperRef?.current && cropperRef?.current?.cropper) {
+  //     const canvas = cropperRef?.current?.cropper?.getCroppedCanvas();
+  //     setCropData(canvas?.toDataURL());
+  //     setIsCropped(true);
+  //   }
+  // };
+
+const getCropData = () => {
+  if (cropperRef?.current && cropperRef?.current?.cropper) {
+    const canvas = cropperRef?.current?.cropper?.getCroppedCanvas();
+    
+    // Convert canvas to blob with JPEG format for better compression
+    canvas.toBlob((blob) => {
+      console.log("Original image size:", (blob.size / 1024).toFixed(2), "KB");
+      
+      new Compressor(blob, {
+        quality: 0.8,
+        maxWidth: 1920,
+        maxHeight: 1920,
+        mimeType: 'image/jpeg', // Force JPEG format
+        success(compressedBlob) {
+          // Check if compressed image is still larger than 50KB
+          if (compressedBlob.size > 50 * 1024) {
+            // Further compress with lower quality
+            new Compressor(blob, {
+              quality: 0.6,
+              maxWidth: 1920,
+              maxHeight: 1920,
+              mimeType: 'image/jpeg',
+              success(furtherCompressedBlob) {
+                if (furtherCompressedBlob.size > 50 * 1024) {
+                  // Final attempt with even lower quality
+                  new Compressor(blob, {
+                    quality: 0.3,
+                    maxWidth: 1200,
+                    maxHeight: 1200,
+                    mimeType: 'image/jpeg',
+                    success(finalBlob) {
+                      console.log("Compressed image size:", (finalBlob.size / 1024).toFixed(2), "KB");
+                      
+                      const reader = new FileReader();
+                      reader.onloadend = () => {
+                        setCropData(reader.result);
+                        setIsCropped(true);
+                      };
+                      reader.readAsDataURL(finalBlob);
+                    },
+                    error(err) {
+                      console.error("Compression error:", err);
+                    },
+                  });
+                } else {
+                  console.log("Compressed image size:", (furtherCompressedBlob.size / 1024).toFixed(2), "KB");
+                  
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    setCropData(reader.result);
+                    setIsCropped(true);
+                  };
+                  reader.readAsDataURL(furtherCompressedBlob);
+                }
+              },
+              error(err) {
+                console.error("Compression error:", err);
+              },
+            });
+          } else {
+            console.log("Compressed image size:", (compressedBlob.size / 1024).toFixed(2), "KB");
+            
+            const reader = new FileReader();
+            reader.onloadend = () => {
+              setCropData(reader.result);
+              setIsCropped(true);
+            };
+            reader.readAsDataURL(compressedBlob);
+          }
+        },
+        error(err) {
+          console.error("Compression error:", err);
+        },
+      });
+    }, 'image/jpeg', 0.95); // Specify JPEG format and initial quality for canvas.toBlob
+  }
+};
 
   const handleRotateForward = () => {
     setRotate(rotate + 5);
@@ -119,7 +198,7 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
               cropBoxResizable={true} // Allows resizing the crop box
               cropBoxMovable={true} // Allows moving the crop box
               minCropBoxWidth={100} // Set minimum crop box width
-              minCropBoxHeight={100} // Set minimum crop box heights
+              minCropBoxHeight={100} // Set minimum crop box height
             />
           )}
 
