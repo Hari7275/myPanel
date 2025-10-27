@@ -11,6 +11,7 @@ import { ConsultantGalleryStatus } from "../../../../_constants/consultantConsta
 
 import { useGetGalleryListQuery } from "../../../../_store/api";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
+import ImageCropper from "../../../listeners/gallery/ImageCropper";
 
 const CoachProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -19,6 +20,7 @@ const CoachProfilePhoto = () => {
   const [imageStatuses, setImageStatuses] = useState([]);
   const [loadedImages, setLoadedImages] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
+  const [openImageCropper, setOpenImageCropper] = useState(false);
 
   const consultantId = useSelector((state) => state.consultant.consultantData);
 
@@ -49,7 +51,12 @@ const CoachProfilePhoto = () => {
   //     ...prevStatuses,
   //     [url]: status,
   //   }));
-  // };
+  // };;
+
+  const toggleImageCropper = (url) => {
+    setSelectedImage(url);
+    setOpenImageCropper(!openImageCropper);
+  };
 
   const handleImageLoad = (url) => {
     setLoadedImages((prevLoadedImages) => ({
@@ -83,10 +90,15 @@ const CoachProfilePhoto = () => {
                         </a>
                       )}
                     </div>
-                    {permissions?.["coach"]?.includes("update_coach_profile_gallery") && (
+                    {permissions?.["coach"]?.includes(
+                      "update_coach_profile_gallery"
+                    ) && (
                       <div className="galleryIcons">
                         <span onClick={() => toggleSettingModal(imageUrls)}>
                           <Settings />
+                        </span>
+                        <span onClick={() => toggleImageCropper(imageUrls)}>
+                          <img src="/cropAdmin.png" className="galleryIcon" />
                         </span>
                       </div>
                     )}
@@ -99,13 +111,22 @@ const CoachProfilePhoto = () => {
           )}
         </div>
 
+        {openImageCropper && selectedImage && (
+          <ImageCropper
+            isOpen={openImageCropper}
+            onClose={toggleImageCropper}
+            selectedImage={selectedImage}
+            caller="AstrologerGallery"
+          />
+        )}
+
         {openSetting && selectedImage && (
           <CoachSettings
             isOpen={openSetting}
             onClose={toggleSettingModal}
             imageUrl={selectedImage}
             currentStatus={selectedImage.status}
-          // onStatusChange={handleStatusChange}
+            // onStatusChange={handleStatusChange}
           />
         )}
       </div>
