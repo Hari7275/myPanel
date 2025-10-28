@@ -7,10 +7,10 @@ export const WALLETCHARTCOLUMN = [
     accessor: "id",
     Cell: ({ value }) => <span style={{ color: "#8c57ff" }}>{value}</span>,
   },
-  // {
-  //   Header: "Order",
-  //   accessor: "order_id",
-  // },
+  {
+    Header: "Order",
+    accessor: "order_id",
+  },
   {
     Header: "Duration (min)",
     accessor: "duration",
