@@ -70,6 +70,15 @@ const ConsultantNavigationCell = ({ value, row }) => {
     2: "/coach-profile",
     3: "/listener_Profile",
   };
+
+  // Define type labels
+  const typeLabel = {
+    1: "A",
+    2: "C",
+    3: "L",
+  };
+
+  const displayType = typeLabel[consultantType] || "";
   // Get the route based on consultant type
   const route =
     consultantType && navigationRoute[consultantType]
@@ -84,7 +93,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
       style={{ textDecoration: "none" }}
     >
       <span style={{ cursor: "pointer", color: "#be5b18ff" }}>
-        {consultantName} ({value})
+        {consultantName} ({value})<span style={{color: "#187cbeff"}}>({displayType})</span>
       </span>
     </Link>
   );
