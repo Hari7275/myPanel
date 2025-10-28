@@ -65,7 +65,7 @@ export const COLUMNRECHARGE = [
       value == 1 ? (
         <AndroidIcon sx={{ color: "#3DDC84" }} />
       ) : (
-        <AppleIcon sx={{ color: "#555555" }} />
+        <AppleIcon sx={{ color: "#7b7878ff" }} />
       ),
   },
   // {

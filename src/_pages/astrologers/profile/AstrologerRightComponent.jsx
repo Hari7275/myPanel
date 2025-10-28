@@ -18,6 +18,7 @@ import CommissionList from "../astrologerCommission/CommissionList";
 import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable";
 import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
+import OfflineOrder from "../../listeners/orders/OfflineOrder";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -35,6 +36,7 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           {activeComponent === "AstrologerFollowers" && <AstrologerFollowers />}
 
           {activeComponent === "AstrologerOrder" && <AstrologerOrder />}
+          {activeComponent === "OfflineOrder" && <OfflineOrder />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "AstroReviewsListingTable" && (
             <AstroReviewsListingTable />

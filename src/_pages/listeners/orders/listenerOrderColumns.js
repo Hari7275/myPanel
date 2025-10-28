@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 
 const CustomIdCell = ({ value, row }) => {
-  const userName = row?.original?.description?.userData.name;
+  const userName =
+    row?.original?.description?.userData.name || row?.original?.user_name;
   const dispatch = useDispatch();
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
@@ -127,7 +128,7 @@ export const OFFLINEORDERCHARTCOLUMN = [
 
   {
     Header: "Start Time",
-    accessor: "call_start_time",
+    accessor: "createdAt",
     Cell: ({ value }) => {
       if (!value) return "null";
       const date = new Date(value);

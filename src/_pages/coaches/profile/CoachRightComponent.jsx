@@ -18,6 +18,7 @@ import CommissionList from "../../astrologers/astrologerCommission/CommissionLis
 import CoachPriceListingTable from "../pricing/CoachPriceListingTable";
 import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
+import OfflineOrder from "../../listeners/orders/OfflineOrder";
 
 const CoachRightComponent = ({ activeComponent }) => {
   return (
@@ -34,6 +35,7 @@ const CoachRightComponent = ({ activeComponent }) => {
           {activeComponent === "Price-chart" && <Price />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "CoachOrder" && <CoachOrder />}
+          {activeComponent === "OfflineOrder" && <OfflineOrder />}
           {activeComponent === "CoachFollowers" && <CoachFollowers />}
           {activeComponent === "CoachReviews" && <CoachReviews />}
           {activeComponent === "CoachGifts" && <CoachGifts />}

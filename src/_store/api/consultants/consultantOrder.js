@@ -15,6 +15,19 @@ export const consultantsOrderApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
+    // https://api.fluteconnect.com/api/v1/consultant/management/offline/admin/list?page=1&size=10&consultant_id=368
+
+    getConsultantsOfflineOrder: builder.query({
+      query: ({ consultantId, page, pageSize, order_type }) => ({
+        url: `/api/v1/consultant/management/offline/admin/list?page=${page}&size=${pageSize}&consultant_id=${consultantId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
     // createLanguage: builder.mutation({
     //   query: ({ body }) => ({
     //     url: `/meta/languages/add`,
@@ -43,4 +56,4 @@ export const consultantsOrderApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetConsultantsOrderQuery } = consultantsOrderApiSlice;
+export const { useGetConsultantsOrderQuery,useGetConsultantsOfflineOrderQuery } = consultantsOrderApiSlice;

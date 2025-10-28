@@ -37,6 +37,11 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "view_coach_profile_orders",
     },
     {
+      component: "OfflineOrder",
+      label: "Offline Order",
+      permission: "view_coach_profile_orders",
+    },
+    {
       component: "CoachGifts",
       label: "Gifts",
       permission: "view_coach_profile_gift",
