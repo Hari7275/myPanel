@@ -112,7 +112,7 @@ const UserListingTable = () => {
                 pageSize: pageSize,
               }}
             >
-              {permissions?.["user"]?.includes("view_user_profile") && ( // Check if user has permission to view user profile}
+              {permissions?.["user"]?.includes("view_user_profile") && ( // Check if. user has permission to view user profile}
                 <span
                   title="view details"
                   className="secondIcon"

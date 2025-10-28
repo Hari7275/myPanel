@@ -9,6 +9,7 @@ import UpdateAdminUser from "./UpdateAdminUser";
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import toast from "react-hot-toast";
 
 import {
   useGetAdminUserListQuery,
@@ -24,14 +25,26 @@ const AdminUser = () => {
   const permissions = usePermissions();
 
   // Fetching API data for listing reviews
-  const { data: fetchData, isLoading } = useGetAdminUserListQuery();
+  const {
+    data: fetchData,
+    isLoading,
+    isError,
+    error,
+  } = useGetAdminUserListQuery();
   const [deleteData] = useDeleteAdminUserMutation();
 
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData?.data?.records);
-    } else setData([]);
-  }, [fetchData]);
+      setData(fetchData?.data?.records || []);
+    } else {
+      setData([]);
+    }
+
+    if (isError && error) {
+      const message = error?.data?.message || "Something went wrong!";
+      toast.error(message);
+    }
+  }, [fetchData, isError, error]);
 
   // Toggle function for adding a review
   const toggleAddData = () => {

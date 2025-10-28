@@ -63,7 +63,7 @@ const LoginForm = () => {
             role: user.role,
             token: user.auth_token,
             permissions: permissionsByGroup,
-            prod: prod, // for  radio button at the time of login
+            prod: prod, // for  radio button at the time of login.
           })
         );
 
