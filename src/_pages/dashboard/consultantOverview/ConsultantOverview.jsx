@@ -33,7 +33,7 @@ const ConsltantOverview = () => {
         </span>
         <div
           className="dashboard-card-container-grid"
-          style={{ marginTop: "10px" }}
+          style={{ marginTop: "px" }}
         >
           {overviewItems?.map((item) => (
             <CategoryCard

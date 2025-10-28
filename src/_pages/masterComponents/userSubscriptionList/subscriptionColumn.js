@@ -3,6 +3,8 @@ import { useGetSubscriptionListQuery } from "../../../_store/api";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
+import AndroidIcon from "@mui/icons-material/Android";
+import AppleIcon from "@mui/icons-material/Apple";
 
 const OrderIdCell = ({ value }) => {
   return <span className="custumerId-color">{value}</span>;
@@ -29,23 +31,33 @@ export const COLUMNSUBSCRIPTION = [
   },
   {
     Header: "User Id",
-    accessor: "user_id",
+    accessor: "DatingProfile.id",
     Cell: CustomIdCell,
   },
   {
     Header: "Name",
-    accessor: "first_name",
+    accessor: "DatingProfile.first_name",
   },
   {
     Header: "Phone Number",
     accessor: "phone_number",
   },
   {
+    Header: "Device Info",
+    accessor: "device_type",
+    Cell: ({ value }) =>
+      value == "android" ? (
+        <AndroidIcon sx={{ color: "#3DDC84" }} />
+      ) : (
+        <AppleIcon sx={{ color: "#555555" }} />
+      ),
+  },
+  {
     Header: "Subscription Plan",
     accessor: "subscription_plan_id",
   },
   {
-    Header: "Recharge Time",
+    Header: "Purchase Time",
     accessor: "created_at",
     Cell: ({ value }) => {
       if (!value) return "null";

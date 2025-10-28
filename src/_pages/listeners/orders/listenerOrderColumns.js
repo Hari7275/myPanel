@@ -85,3 +85,64 @@ export const ORDERCHARTCOLUMN = [
     ),
   },
 ];
+
+// offine order
+
+export const OFFLINEORDERCHARTCOLUMN = [
+  {
+    Header: "User Id",
+    accessor: "user_id",
+    Cell: CustomIdCell,
+  },
+
+  {
+    Header: "Order Type",
+    accessor: "order_type",
+    Cell: ({ value }) => OrderType(value),
+  },
+  // {
+  //   Header: "Duration(min)",
+  //   accessor: "actual_duration",
+  // },
+  // {
+  //   Header: "Earning",
+  //   accessor: "consultant_earning",
+  // },
+  // {
+  //   Header: "Revenue",
+  //   accessor: "order_revenue",
+  // },
+  // {
+  //   Header: "Flute Earning",
+  //   accessor: "flute_earning",
+  // },
+  // {
+  //   Header: "LS. Rate",
+  //   accessor: "consultant_rate",
+  // },
+  // {
+  //   Header: "Comm. Rate",
+  //   accessor: "commission_rate",
+  // },
+
+  {
+    Header: "Start Time",
+    accessor: "call_start_time",
+    Cell: ({ value }) => {
+      if (!value) return "null";
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+
+  {
+    Header: "Status",
+    accessor: "status",
+    Cell: ({ value }) => (
+      <span style={{ color: getStatusColor(value) }}>{OrderStatus(value)}</span>
+    ),
+  },
+];

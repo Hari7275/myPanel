@@ -59,16 +59,15 @@ export const COLUMNRECHARGE = [
   //   Cell: ({ value }) => (value == 1 ? "Android" : "iOS"),
   // },
   {
-  Header: "Device Info",
-  accessor: "platform",
-  Cell: ({ value }) => (
-    value == 1 ? (
-      <AndroidIcon sx={{ color: '#3DDC84' }} />
-    ) : (
-      <AppleIcon sx={{ color: '#ff0202ff' }} />
-    )
-  ),
-},
+    Header: "Device Info",
+    accessor: "platform",
+    Cell: ({ value }) =>
+      value == 1 ? (
+        <AndroidIcon sx={{ color: "#3DDC84" }} />
+      ) : (
+        <AppleIcon sx={{ color: "#555555" }} />
+      ),
+  },
   // {
   //   Header: "Name",
   //   accessor: "first_name",

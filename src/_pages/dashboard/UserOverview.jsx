@@ -32,11 +32,11 @@ const UserOverview = () => {
     <>
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <span>
-          <h2 style={{ padding: "15px 5px" }}>User Overview</h2>
+          <h2 style={{ padding: "10px 5px 0px" }}>User Overview</h2>
         </span>
         <div
           className="dashboard-card-container-grid"
-          style={{ marginTop: "10px" }}
+          style={{ margin: "10px 1px 30px " }}
         >
           {overviewItems?.map((item) => (
             <div key={item.name} className="hover-card-category">

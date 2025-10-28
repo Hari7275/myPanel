@@ -17,6 +17,7 @@ import CommissionList from "../../astrologers/astrologerCommission/CommissionLis
 import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
 import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
+import OfflineOrder from "../orders/OfflineOrder";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -38,6 +39,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ListenerReviewsListingTable />
           )}
           {activeComponent === "ListenerOrder" && <ListenerOrder />}
+          {activeComponent === "OfflineOrder" && <OfflineOrder/>}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "ListenerSetting" && <ListenerSetting />}
           {activeComponent === "Profile-Progress" && (
