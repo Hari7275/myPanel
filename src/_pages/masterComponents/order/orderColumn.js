@@ -43,6 +43,8 @@ const CustomIdCell = ({ value, row }) => {
   return (
     <Link
       to="/users_Profile"
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >
@@ -76,6 +78,8 @@ const ConsultantNavigationCell = ({ value, row }) => {
   return (
     <Link
       to={route}
+      target="_blank"
+      rel="noopener noreferrer"
       onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >

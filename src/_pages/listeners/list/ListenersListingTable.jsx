@@ -173,63 +173,61 @@ const ListenersListingTable = () => {
   //   []
   // );
 
-
-
   const columns = useMemo(
-  () => [
-    ...LISTENERSCOLUMNS,
-    {
-      Header: () => <div className="actions-header">Actions</div>,
-      id: "actions",
-      Cell: ({ row }) => (
-        <div className="actions-cell">
-          {permissions?.["listener"]?.includes("view_listener_profile") && (
-            <Link
-              to={`/listener_Profile?${row.original.id}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              state={{
-                currentPage: pageRef.current,
-                pageSize: pageSize,
-              }}
-              onClick={(e) => {
-                // Dispatch Redux actions
-                dispatch(setCurrentConsultant(row.original.id));
-                dispatch(setCurrentProfileStatus(row.original.status));
-                dispatch(setConsultantType(row.original.phone_code));
-              }}
-            >
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
+    () => [
+      ...LISTENERSCOLUMNS,
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) => (
+          <div className="actions-cell">
+            {permissions?.["listener"]?.includes("view_listener_profile") && (
+              <Link
+                to={`/listener_Profile?${row.original.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                state={{
+                  currentPage: pageRef.current,
+                  pageSize: pageSize,
+                }}
+                onClick={(e) => {
+                  // Dispatch Redux actions
+                  dispatch(setCurrentConsultant(row.original.id));
+                  dispatch(setCurrentProfileStatus(row.original.status));
+                  dispatch(setConsultantType(row.original.phone_code));
                 }}
               >
-                <ArrowRight className="iconSmall" />
-              </span>
-            </Link>
-          )}
-
-          {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
-            permissions?.["listener"]?.includes(
-              "update_listener_profile_status"
-            ) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleEditStatus(row.original)}
-                />
-              </span>
+                <span
+                  title="view details"
+                  className="secondIcon"
+                  style={{
+                    display: "inline-block",
+                    height: "35px",
+                    width: "35px",
+                  }}
+                >
+                  <ArrowRight className="iconSmall" />
+                </span>
+              </Link>
             )}
-        </div>
-      ),
-    },
-  ],
-  [pageRef.current, pageSize] // Add dependencies to useMemo
-);
+
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              permissions?.["listener"]?.includes(
+                "update_listener_profile_status"
+              ) && (
+                <span className="editIcon">
+                  <Pencil
+                    className="iconSmall"
+                    onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )}
+          </div>
+        ),
+      },
+    ],
+    [pageRef.current, pageSize] // Add dependencies to useMemo
+  );
 
   // Apply debounce to search handlers
   const debouncedSearchName = debounce((value) => setName(value), 500);
@@ -289,7 +287,7 @@ const ListenersListingTable = () => {
         className="inputBox"
         placeholder="Search by Id"
         style={{
-          marginLeft: "25px",
+          // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
@@ -379,6 +377,7 @@ const ListenersListingTable = () => {
           setPageSize={setPageSize}
           showTableHeading={false}
           includeCheckbox={false}
+          showGlobalSearch={false}
         />
 
         {data?.length == 0 && (
