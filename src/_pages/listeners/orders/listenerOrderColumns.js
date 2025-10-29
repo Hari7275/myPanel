@@ -91,6 +91,10 @@ export const ORDERCHARTCOLUMN = [
 
 export const OFFLINEORDERCHARTCOLUMN = [
   {
+    Header: "Id",
+    accessor: "id",
+  },
+  {
     Header: "User Id",
     accessor: "user_id",
     Cell: CustomIdCell,

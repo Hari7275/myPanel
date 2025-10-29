@@ -10,6 +10,7 @@ import { ConsultantGalleryStatus } from "../../../../_constants/consultantConsta
 
 import { useGetGalleryListQuery } from "../../../../_store/api";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
+import ImageCropper from "../../../listeners/gallery/ImageCropper";
 
 const ProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -20,6 +21,7 @@ const ProfilePhoto = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const permissions = usePermissions();
   const consultantId = useSelector((state) => state.consultant.consultantData);
+  const [openImageCropper, setOpenImageCropper] = useState(false);
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
 
@@ -40,6 +42,11 @@ const ProfilePhoto = () => {
   const toggleSettingModal = (url) => {
     setSelectedImage(url);
     setOpenSetting(!openSetting);
+  };
+
+    const toggleImageCropper = (url) => {
+    setSelectedImage(url);
+    setOpenImageCropper(!openImageCropper);
   };
 
   const handleImageLoad = (url) => {
@@ -72,10 +79,15 @@ const ProfilePhoto = () => {
                         </a>
                       )}
                     </div>
-                    {permissions?.["astrologer"]?.includes("update_astrologer_profile_gallery") && (
+                    {permissions?.["astrologer"]?.includes(
+                      "update_astrologer_profile_gallery"
+                    ) && (
                       <div className="galleryIcons">
                         <span onClick={() => toggleSettingModal(imageUrls)}>
                           <Settings />
+                        </span>
+                        <span onClick={() => toggleImageCropper(imageUrls)}>
+                          <img src="/cropAdmin.png" className="galleryIcon" />
                         </span>
                       </div>
                     )}
@@ -94,7 +106,16 @@ const ProfilePhoto = () => {
             onClose={toggleSettingModal}
             imageUrl={selectedImage}
             currentStatus={selectedImage?.status}
-          // onStatusChange={handleStatusChange}
+            // onStatusChange={handleStatusChange}.
+          />
+        )}
+
+        {openImageCropper && selectedImage && (
+          <ImageCropper
+            isOpen={openImageCropper}
+            onClose={toggleImageCropper}
+            selectedImage={selectedImage}
+            caller="AstrologerGallery"
           />
         )}
       </div>

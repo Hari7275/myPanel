@@ -36,11 +36,11 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
       label: "Orders",
       permission: "view_astrologer_profile_orders",
     },
-    {
-      component: "OfflineOrder",
-      label: "Offline Order",
-      permission: "view_coach_profile_orders",
-    },
+    // {
+    //   component: "OfflineOrder",
+    //   label: "Offline Order",
+    //   permission: "view_coach_profile_orders",
+    // },
     {
       component: "AstrologerGifts",
       label: "Gifts",

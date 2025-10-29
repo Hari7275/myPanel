@@ -36,7 +36,7 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           {activeComponent === "AstrologerFollowers" && <AstrologerFollowers />}
 
           {activeComponent === "AstrologerOrder" && <AstrologerOrder />}
-          {activeComponent === "OfflineOrder" && <OfflineOrder />}
+          {/* {activeComponent === "OfflineOrder" && <OfflineOrder />} */}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "AstroReviewsListingTable" && (
             <AstroReviewsListingTable />

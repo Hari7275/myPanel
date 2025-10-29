@@ -35,7 +35,7 @@ const CoachRightComponent = ({ activeComponent }) => {
           {activeComponent === "Price-chart" && <Price />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "CoachOrder" && <CoachOrder />}
-          {activeComponent === "OfflineOrder" && <OfflineOrder />}
+          {/* {activeComponent === "OfflineOrder" && <OfflineOrder />} */}
           {activeComponent === "CoachFollowers" && <CoachFollowers />}
           {activeComponent === "CoachReviews" && <CoachReviews />}
           {activeComponent === "CoachGifts" && <CoachGifts />}
