@@ -19,13 +19,10 @@ const InfoItem = ({ label, value, color }) => (
   </div>
 );
 
- export const formatDate = (date) => {
-    if (!date) return "N/A";
-    return moment
-      .utc(date)
-      .tz("Asia/Kolkata")
-      .format("DD MMM YYYY, hh:mm:ss A");
-  };
+export const formatDate = (date) => {
+  if (!date) return "N/A";
+  return moment.utc(date).tz("Asia/Kolkata").format("DD MMM YYYY, hh:mm:ss A");
+};
 
 const UserOverview = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -67,7 +64,6 @@ const UserOverview = () => {
   //   }
   //   return format(new Date(date), "PPpp");
   // };
- 
 
   return (
     <>
@@ -166,6 +162,11 @@ const UserOverview = () => {
             <InfoItem
               label="Spotlight  "
               value={userData?.is_in_spotlight ? "Yes" : "No"}
+            />
+            <div className="line"></div>
+            <InfoItem
+              label="Referral Code  "
+              value={userData?.referral_code }
             />
             <div className="line"></div>
 

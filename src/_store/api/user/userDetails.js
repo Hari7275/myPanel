@@ -41,8 +41,6 @@ export const userApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
-
-    
     // update user intersts type (passion  , prompt question  , feature )
     updateUserInterstsType: builder.mutation({
       query: (body) => ({
@@ -59,17 +57,16 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     // *******************************************************this api is for notification****************************************
 
-    getNotification: builder.query({
-      query: ({ page, size, sender_id }) => ({
-        url: `notification/1?page=${page}&size=${size}&user_type=admin${
-          sender_id !== undefined && sender_id !== null
-            ? `&sender_id=${sender_id}`
-            : ""
-        }`,
-        method: "GET",
-      }),
-      providesTags: ["user"],
-    }),
+   getNotification: builder.query({
+  query: ({ page, size, sender_id, notification_type_group }) => ({
+    url: `notification/1?page=${page}&size=${size}&user_type=admin${
+      sender_id ? `&sender_id=${sender_id}` : ""
+    }${notification_type_group ? `&notification_type_group=${notification_type_group}` : ""}`,
+    method: "GET",
+  }),
+  providesTags: ["user"],
+}),
+
 
     getNotificationUnreadCount: builder.query({
       query: () => ({
@@ -87,6 +84,14 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+
+    getNotificationGroup: builder.query({
+      query: () => ({
+        url: `notification/types/groups/`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
   }),
 });
 
@@ -98,4 +103,5 @@ export const {
   useGetNotificationQuery,
   useGetNotificationUnreadCountQuery,
   useUpdateNotificationReadCountMutation,
+  useGetNotificationGroupQuery,
 } = userApiSlice;

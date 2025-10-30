@@ -4,6 +4,7 @@ import { useGetUserListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditUserDatingProfileStatus from "./EditUserDatingProfileStatus";
 import EditUserType from "./EditUserType";
+import UpdateRefferalCode from "./UpdateRefferalCode";
 
 const UserDatingStatus = () => {
   const userId = useSelector((state) => state.user.userData);
@@ -13,6 +14,7 @@ const UserDatingStatus = () => {
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showEditUserType, setShowEditUserType] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
+  const [refferalCode, setRefferalCode] = useState(false);
 
   useEffect(() => {
     if (fetchData) {
@@ -24,7 +26,7 @@ const UserDatingStatus = () => {
     return <div></div>;
   }
 
-  console.log(" dating status ", userData);
+  // console.log(" dating status ", userData?.referral_code);
 
   const toggleEditUserType = (row) => {
     setSelectedRow(row);
@@ -34,6 +36,11 @@ const UserDatingStatus = () => {
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+  };
+  const toggleEditRefferalCode = (row) => {
+    // console.log("row", row);
+    setSelectedRow(userData?.referral_code);
+    setRefferalCode(!refferalCode);
   };
 
   const UserVerificationStatus = (value) => {
@@ -152,6 +159,48 @@ const UserDatingStatus = () => {
         </footer>
       </div>
 
+      {/* update promo refferal code */}
+
+      <div className="profile-sub-container  profile-right-sub-container">
+        <h2
+          className="main-heading "
+          style={{
+            marginBottom: "0px",
+            display: "flex",
+            justifyContent: "center",
+            lineHeight: "1.2",
+            fontSize: "26px",
+          }}
+        >
+          User Refferal code:
+        </h2>
+
+        {/* <Settings /> */}
+
+        <footer
+          className="userProfile-footer profile-mainContain "
+          style={{ display: "flex", justifyContent: "space-between" }}
+        >
+          <div>
+            <div className="card-footer-content">
+              <div className="info-pair">
+                <p className="info-item">
+                  <strong>Refferal code: </strong>
+                  <span>{userData?.referral_code}</span>
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="actions-cell">
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditRefferalCode()}
+              />
+            </span>
+          </div>
+        </footer>
+      </div>
       {showEditUserType && (
         <EditUserType
           isOpen={showEditUserType}
@@ -164,6 +213,14 @@ const UserDatingStatus = () => {
         <EditUserDatingProfileStatus
           isOpen={showEditStatus}
           onClose={toggleEditStatus}
+          selectedRow={selectedRow}
+        />
+      )}
+
+      {refferalCode && (
+        <UpdateRefferalCode
+          isOpen={refferalCode}
+          onClose={toggleEditRefferalCode}
           selectedRow={selectedRow}
         />
       )}

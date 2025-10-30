@@ -11,6 +11,7 @@ import { Eye } from "lucide-react";
 import {
   useGetNotificationQuery,
   useUpdateNotificationReadCountMutation,
+  useGetNotificationGroupQuery,
 } from "../_store/api/user/userDetails";
 import { Atom } from "react-loading-indicators";
 
@@ -21,6 +22,8 @@ const NotificationBell = () => {
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [sender_id, setSender_id] = useState();
+  const [notificationGroup, SetNotificationsGroup] = useState([]);
+  const [selectedGroup, setSelectedGroup] = useState("");
 
   const [notificationdatas, setNotificationData] = useState([]);
 
@@ -28,7 +31,11 @@ const NotificationBell = () => {
     page,
     size: pageSize,
     sender_id,
+    notification_type_group: selectedGroup ,
   });
+
+  const { data: notificationGroups } = useGetNotificationGroupQuery();
+
   const [updateNotificationReadCount] =
     useUpdateNotificationReadCountMutation();
 
@@ -48,7 +55,7 @@ const NotificationBell = () => {
               id: item?.sender_id,
               is_seen: item?.is_seen,
               created_at: item?.created_at,
-            }; // Attach sender_id to the parsed data
+            }; // Attach sender_id to the parsed data.
           } catch (error) {
             console.error("Error parsing notification data:", error);
             return null;
@@ -60,6 +67,19 @@ const NotificationBell = () => {
       setNotificationData(formatedData);
     }
   }, [notificationData]);
+  // fetch the data of notification types and groups
+
+  useEffect(() => {
+    if (notificationGroups) {
+      SetNotificationsGroup(notificationGroups?.data?.rows);
+    }
+    // if (notificationTypes) {
+    //   SetNotificationsType(notificationTypes?.data?.rows);
+    // }
+  }, [notificationGroups]);
+
+  console.log("notificationGroup", notificationGroup);
+  // console.log("notificationType", notificationType);
 
   const keyToBaseUrl = {
     coach: "/coach-profile",
@@ -181,6 +201,13 @@ const NotificationBell = () => {
     debouncedSearchConsultantId(e?.target?.value);
   };
 
+  // ✅ new handler for group filtering
+  const handleGroupChange = (e) => {
+    const value = e.target.value;
+    setSelectedGroup(value === "all" ? "" : value);
+    setPage(1); // reset pagination
+  };
+
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px" }}>
       <input
@@ -193,6 +220,21 @@ const NotificationBell = () => {
         }}
         onChange={handleConsultantIdSearch}
       />
+
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "10px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleGroupChange}
+      >
+        <option>Select Group Name</option>
+        {notificationGroup.map((item) => (
+          <option value={item?.id}>{item?.group_name}</option>
+        ))}
+      </select>
     </div>
   );
 
