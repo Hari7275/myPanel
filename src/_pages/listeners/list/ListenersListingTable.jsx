@@ -121,58 +121,6 @@ const ListenersListingTable = () => {
   //   dispatch(setCurrentConsultant(data?.id));
   // };
 
-  // const columns = useMemo(
-  //   () => [
-  //     ...LISTENERSCOLUMNS,
-  //     {
-  //       Header: () => <div className="actions-header">Actions</div>,
-  //       id: "actions",
-  //       Cell: ({ row }) => (
-  //         <div className="actions-cell">
-  //           {/* <Link to="/listener_Profile"> */}
-  //           {permissions?.["listener"]?.includes("view_listener_profile") && (
-  //             <span
-  //               title="view details"
-  //               className="secondIcon"
-  //               // target="blank"
-  //               style={{
-  //                 display: "inline-block",
-  //                 height: "35px",
-  //                 width: "35px",
-  //               }}
-  //             >
-  //               <ArrowRight
-  //                 className="iconSmall"
-  //                 onClick={() => handleActionClick(row.original)}
-  //               />
-  //             </span>
-  //           )}
-  //           {/* </Link> */}
-  //           {/* <span className="editIcon">
-  //             <Pencil
-  //               className="iconSmall"
-  //               onClick={() => toggleEditStatus(row.original.id)}
-  //             />
-  //           </span> */}
-
-  //           {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
-  //             permissions?.["listener"]?.includes(
-  //               "update_listener_profile_status"
-  //             ) && (
-  //               <span className="editIcon">
-  //                 <Pencil
-  //                   className="iconSmall"
-  //                   onClick={() => toggleEditStatus(row.original)}
-  //                 />
-  //               </span>
-  //             )}
-  //         </div>
-  //       ),
-  //     },
-  //   ],
-  //   []
-  // );
-
   const columns = useMemo(
     () => [
       ...LISTENERSCOLUMNS,
@@ -181,35 +129,31 @@ const ListenersListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
+            {/* <Link to="/listener_Profile"> */}
             {permissions?.["listener"]?.includes("view_listener_profile") && (
-              <Link
-                to={`/listener_Profile?${row.original.id}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                state={{
-                  currentPage: pageRef.current,
-                  pageSize: pageSize,
-                }}
-                onClick={(e) => {
-                  // Dispatch Redux actions
-                  dispatch(setCurrentConsultant(row.original.id));
-                  dispatch(setCurrentProfileStatus(row.original.status));
-                  dispatch(setConsultantType(row.original.phone_code));
+              <span
+                title="view details"
+                className="secondIcon"
+                // target="blank"
+                style={{
+                  display: "inline-block",
+                  height: "35px",
+                  width: "35px",
                 }}
               >
-                <span
-                  title="view details"
-                  className="secondIcon"
-                  style={{
-                    display: "inline-block",
-                    height: "35px",
-                    width: "35px",
-                  }}
-                >
-                  <ArrowRight className="iconSmall" />
-                </span>
-              </Link>
+                <ArrowRight
+                  className="iconSmall"
+                  onClick={() => handleActionClick(row.original)}
+                />
+              </span>
             )}
+            {/* </Link> */}
+            {/* <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus(row.original.id)}
+              />
+            </span> */}
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["listener"]?.includes(
@@ -226,8 +170,64 @@ const ListenersListingTable = () => {
         ),
       },
     ],
-    [pageRef.current, pageSize] // Add dependencies to useMemo
+    []
   );
+
+  // const columns = useMemo(
+  //   () => [
+  //     ...LISTENERSCOLUMNS,
+  //     {
+  //       Header: () => <div className="actions-header">Actions</div>,
+  //       id: "actions",
+  //       Cell: ({ row }) => (
+  //         <div className="actions-cell">
+  //           {permissions?.["listener"]?.includes("view_listener_profile") && (
+  //             <Link
+  //               to={`/listener_Profile?${row.original.id}`}
+  //               target="_blank"
+  //               rel="noopener noreferrer"
+  //               state={{
+  //                 currentPage: pageRef.current,
+  //                 pageSize: pageSize,
+  //               }}
+  //               onClick={(e) => {
+  //                 // Dispatch Redux actions
+  //                 dispatch(setCurrentConsultant(row.original.id));
+  //                 dispatch(setCurrentProfileStatus(row.original.status));
+  //                 dispatch(setConsultantType(row.original.phone_code));
+  //               }}
+  //             >
+  //               <span
+  //                 title="view details"
+  //                 className="secondIcon"
+  //                 style={{
+  //                   display: "inline-block",
+  //                   height: "35px",
+  //                   width: "35px",
+  //                 }}
+  //               >
+  //                 <ArrowRight className="iconSmall" />
+  //               </span>
+  //             </Link>
+  //           )}
+
+  //           {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+  //             permissions?.["listener"]?.includes(
+  //               "update_listener_profile_status"
+  //             ) && (
+  //               <span className="editIcon">
+  //                 <Pencil
+  //                   className="iconSmall"
+  //                   onClick={() => toggleEditStatus(row.original)}
+  //                 />
+  //               </span>
+  //             )}
+  //         </div>
+  //       ),
+  //     },
+  //   ],
+  //   [pageRef.current, pageSize] // Add dependencies to useMemo
+  // );
 
   // Apply debounce to search handlers
   const debouncedSearchName = debounce((value) => setName(value), 500);

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
 import { formatDate } from "../../users/overview/UserOverview";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -25,6 +26,7 @@ const CoachOverview = () => {
 
   const consultantId = useSelector((state) => state.consultant.consultantData);
   const { data: constantSkills } = useGetCoachSkillsListQuery();
+  const permissions = usePermissions();
 
   const {
     data: fetchData,
@@ -103,25 +105,30 @@ const CoachOverview = () => {
               <InfoItem label="Address" value={data?.address} />
               <div className="line"></div>
 
-              <InfoItem
-                label="Lifetime Earning"
-                value={`INR ${data?.walletDetails?.lifetime_earning || 0}`}
-                color="#4CAF50"
-              />
-              <div className="line"></div>
+              {permissions?.["coach"]?.includes(
+                "view_coach_profile_wallet"
+              ) && (
+                <>
+                  <InfoItem
+                    label="Lifetime Earning"
+                    value={`INR ${data?.walletDetails?.lifetime_earning || 0}`}
+                    color="#4CAF50"
+                  />
+                  <div className="line"></div>
 
-              <InfoItem
-                label="Current Balance "
-                value={`INR ${data?.walletDetails?.wallet_balance || 0}`}
-                color="#2196F3"
-              />
-              <div className="line"></div>
-              <InfoItem
-                label="Payable Balance "
-                value={`INR ${data?.walletDetails?.payable_amount || 0}`}
-                color="#9C27B0"
-              />
-
+                  <InfoItem
+                    label="Current Balance "
+                    value={`INR ${data?.walletDetails?.wallet_balance || 0}`}
+                    color="#2196F3"
+                  />
+                  <div className="line"></div>
+                  <InfoItem
+                    label="Payable Balance "
+                    value={`INR ${data?.walletDetails?.payable_amount || 0}`}
+                    color="#9C27B0"
+                  />
+                </>
+              )}
               {/* <InfoItem
                 label="Lifetime Earning"
                 value={`INR ${data?.walletDetails?.lifetime_earning || 0}`}

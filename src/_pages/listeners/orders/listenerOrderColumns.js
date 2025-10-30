@@ -35,10 +35,19 @@ export const ORDERCHARTCOLUMN = [
     Cell: CustomIdCell,
   },
 
+  // {
+  //   Header: "Order Type",
+  //   accessor: "order_type",
+  //   Cell: ({ value }) => OrderType(value),
+  // },
   {
-    Header: "Order Type",
+    Header: "Type",
     accessor: "order_type",
-    Cell: ({ value }) => OrderType(value),
+    Cell: ({ value }) => (
+      <span style={{ color: value == 3 ? "#008000" : "" }}>
+        {OrderType(value)}
+      </span>
+    ),
   },
   {
     Header: "Duration(min)",
@@ -112,9 +121,13 @@ export const OFFLINEORDERCHARTCOLUMN = [
   },
 
   {
-    Header: "Order Type",
+    Header: "Type",
     accessor: "order_type",
-    Cell: ({ value }) => OrderType(value),
+    Cell: ({ value }) => (
+      <span style={{ color: value == 3 ? "#008000" : "" }}>
+        {OrderType(value)}
+      </span>
+    ),
   },
   // {
   //   Header: "Duration(min)",
@@ -144,6 +157,19 @@ export const OFFLINEORDERCHARTCOLUMN = [
   {
     Header: "Start Time",
     accessor: "createdAt",
+    Cell: ({ value }) => {
+      if (!value) return "null";
+      const date = new Date(value);
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+
+  {
+    Header: "Action Time",
+    accessor: "updatedAt",
     Cell: ({ value }) => {
       if (!value) return "null";
       const date = new Date(value);

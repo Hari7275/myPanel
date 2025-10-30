@@ -183,6 +183,7 @@ export const COLUMNORDER = [
   },
 
   {
+  
     Header: "Duration(min)",
     accessor: "actual_duration",
   },

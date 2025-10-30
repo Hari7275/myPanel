@@ -36,7 +36,11 @@ export const ORDERCHARTCOLUMN = [
   {
     Header: "Order Type",
     accessor: "order_type",
-    Cell: ({ value }) => OrderType(value),
+    Cell: ({ value }) => (
+      <span style={{ color: value == 3 ? "#008000" : "" }}>
+        {OrderType(value)}
+      </span>
+    ),
   },
   {
     Header: "Duration(min)",
@@ -82,7 +86,7 @@ export const ORDERCHARTCOLUMN = [
         row.original.mode_type === 2 && row.original.status === 6;
 
       if (rejectedCall) {
-        return <span style={{ color: "red" }}>Consultant Cancelled</span>; 
+        return <span style={{ color: "red" }}>Consultant Cancelled</span>;
       }
 
       return (
