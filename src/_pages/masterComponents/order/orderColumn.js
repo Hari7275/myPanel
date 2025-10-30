@@ -199,7 +199,7 @@ export const COLUMNORDER = [
         row.original.mode_type === 2 && row.original.status === 6;
 
       if (rejectedCall) {
-        return <span style={{ color: "red" }}>Consultant Rejected</span>;
+        return <span style={{ color: "red" }}>Consultant Cancelled</span>;
       }
 
       return (

@@ -286,13 +286,13 @@ export const OrderStatus = (value) => {
     case 5:
       return "User Cancelled";
     case 6:
-      return "Rejected";
+      return "Consultant Rejected";
     case 7:
       return "Waiting";
     case 8:
-      return "USER_NOT_RESPONDED";
+      return "User not responded";
     case 9:
-      return "CONSULTANT_NOT_RESPONDED";
+      return "Consultant not responded";
   }
 };
 
