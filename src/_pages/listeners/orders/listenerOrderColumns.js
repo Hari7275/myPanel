@@ -81,9 +81,20 @@ export const ORDERCHARTCOLUMN = [
   {
     Header: "Status",
     accessor: "status",
-    Cell: ({ value }) => (
-      <span style={{ color: getStatusColor(value) }}>{OrderStatus(value)}</span>
-    ),
+    Cell: ({ value, row }) => {
+      const rejectedCall =
+        row.original.mode_type === 2 && row.original.status === 6;
+
+      if (rejectedCall) {
+        return <span style={{ color: "red" }}>Consultant Rejected</span>;
+      }
+
+      return (
+        <span style={{ color: getStatusColor(value) }}>
+          {OrderStatus(value)}
+        </span>
+      );
+    },
   },
 ];
 

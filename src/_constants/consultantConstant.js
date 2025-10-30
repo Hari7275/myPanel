@@ -284,7 +284,7 @@ export const OrderStatus = (value) => {
     case 4:
       return "Completed";
     case 5:
-      return "Cancelled";
+      return "User Cancelled";
     case 6:
       return "Rejected";
     case 7:

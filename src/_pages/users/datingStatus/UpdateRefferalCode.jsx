@@ -91,7 +91,7 @@ const UpdateRefferalCode = ({ isOpen, onClose, selectedRow }) => {
               value={formData}
               onChange={handleChange}
               className="info-input"
-              maxLength={6} // Limit typing to 6 chars
+              maxLength={6} 
               style={{
                 textTransform: "uppercase",
                 fontSize: "16px",
