@@ -249,6 +249,18 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["blogCount"],
     }),
+
+    updateAgoraCredentialsToJoinCall: builder.mutation({
+      query: ({ body }) => ({
+        url: `/api/v1/consultant/management/order/join-channel`,
+        method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["order"],
+    }),
   }),
 });
 
@@ -262,4 +274,5 @@ export const {
   useGetSessionListQuery,
   useGetRazorpayRechargeListQuery,
   useGetUserRechargeSummaryListQuery,
+  useUpdateAgoraCredentialsToJoinCallMutation,
 } = orderApiSlice;

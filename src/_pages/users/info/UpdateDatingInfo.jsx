@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import ReactModal from "react-modal";
 import {
-  useUpdateUserInfoMutation,
+  useUpdateUserDatingInfoMutation,
   useGetLanguagesListQuery,
 } from "../../../_store/api";
 import Select from "react-select";
@@ -58,7 +58,8 @@ const UpdateDatingInfo = ({
   const livingAutocompleteRef = useRef(null);
   const currentAutocompleteRef = useRef(null);
 
-  const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
+  const [updateInfo, { isLoading: isUpdating }] =
+    useUpdateUserDatingInfoMutation();
   const { data: languagesData } = useGetLanguagesListQuery();
 
   // Load Google Maps script

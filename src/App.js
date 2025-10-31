@@ -114,6 +114,8 @@ import AdminUser from "./_pages/admin/admin_users/AdminUser";
 import AssignPermissionToRole from "./_pages/admin/adminRoles/AssignPermissionToRole";
 import PayableAmountHistory from "./_pages/payments/payableAmountHistory/PayableAmountHistory";
 
+import AudioCallPage from "./_pages/masterComponents/order/AudioCallPage";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -285,6 +287,9 @@ const Layout = () => (
           <Route path="admin-permission/:id" element={<AdminPermission />} />
           <Route path="admin-permission" element={<PermissionGroup />} />
           <Route path="admin-user" element={<AdminUser />} />
+
+          {/* listent order call */}
+          <Route path="/audio-call" element={<AudioCallPage />} />
 
           <Route
             path="role-permission/:id"

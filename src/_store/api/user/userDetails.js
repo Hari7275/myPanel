@@ -30,6 +30,20 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     updateUserInfo: builder.mutation({
       query: ({ body, id }) => ({
+        url: `user/profile/admin/update-user-info/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+        },
+      }),
+      invalidatesTags: ["user"],
+    }),
+
+    // update user dating info
+    updateUserDatingInfo: builder.mutation({
+      query: ({ body, id }) => ({
         url: `user/profile/update-basic-info/${id}?requestType=admin`,
         method: "PUT",
         body,
@@ -57,16 +71,19 @@ export const userApiSlice = apiSlice.injectEndpoints({
 
     // *******************************************************this api is for notification****************************************
 
-   getNotification: builder.query({
-  query: ({ page, size, sender_id, notification_type_group }) => ({
-    url: `notification/1?page=${page}&size=${size}&user_type=admin${
-      sender_id ? `&sender_id=${sender_id}` : ""
-    }${notification_type_group ? `&notification_type_group=${notification_type_group}` : ""}`,
-    method: "GET",
-  }),
-  providesTags: ["user"],
-}),
-
+    getNotification: builder.query({
+      query: ({ page, size, sender_id, notification_type_group }) => ({
+        url: `notification/1?page=${page}&size=${size}&user_type=admin${
+          sender_id ? `&sender_id=${sender_id}` : ""
+        }${
+          notification_type_group
+            ? `&notification_type_group=${notification_type_group}`
+            : ""
+        }`,
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
 
     getNotificationUnreadCount: builder.query({
       query: () => ({
@@ -99,6 +116,7 @@ export const {
   useGetUserListQuery,
   useGetUserVerificationListQuery,
   useUpdateUserInfoMutation,
+  useUpdateUserDatingInfoMutation,
   useUpdateUserInterstsTypeMutation,
   useGetNotificationQuery,
   useGetNotificationUnreadCountQuery,

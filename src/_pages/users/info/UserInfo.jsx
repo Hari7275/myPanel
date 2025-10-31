@@ -31,8 +31,10 @@ const UserInfo = () => {
 
   const toggleUpdateInfo = (data) => {
     setShowUpdateUserInfo(!showUpdateUserInfo);
-    setSelectedData(data);
+    setSelectedData(data?.profileDetails);
   };
+
+  console.log("selectedData....", selectedData);
 
   return (
     <div className="main-container profile-right-sub-container">

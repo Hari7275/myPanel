@@ -1,18 +1,30 @@
-// OrderLists.js - Updated version with Filter integration.
-
+// OrderLists.js - Updated to navigate instead of modal
 import React, { useMemo, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux"; // Added
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNORDER } from "./orderColumn";
-import { useGetOrderListQuery } from "../../../_store/api";
+import {
+  useGetOrderListQuery,
+  useUpdateAgoraCredentialsToJoinCallMutation,
+} from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, Phone } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
 import Button from "@mui/material/Button";
 import FilterPopover from "../../../_components/reuseComponents/PopoverComponent";
+import { toast } from "react-toastify";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const OrderLists = () => {
+  const navigate = useNavigate();
+
+  // Added: Get user from Redux auth slice
+  const { user } = useSelector((state) => state.auth);
+  const permissions = usePermissions();
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
@@ -41,7 +53,6 @@ const OrderLists = () => {
     ...(consultantId && consultantId.trim() !== ""
       ? { consultant_id: consultantId }
       : {}),
-    // Add filter params
     ...(appliedFilters.startDate
       ? { start_date: appliedFilters.startDate }
       : {}),
@@ -59,8 +70,10 @@ const OrderLists = () => {
     error,
   } = useGetOrderListQuery(queryParams);
 
+  const [updateAgoraCredentials, { isLoading: isJoining }] =
+    useUpdateAgoraCredentialsToJoinCallMutation();
+
   const toggleCompleteOrder = (value) => {
-    console.log("first...", value);
     setSelectedRow(value);
     setAddOrder(!addOrder);
   };
@@ -68,6 +81,71 @@ const OrderLists = () => {
   const toggleRefundBalance = (value) => {
     setSelectedRow(value);
     setRefundBalance(!refundBalance);
+  };
+
+  // Updated Join Channel function with conditional user_id assignment
+  const joinChannel = async (orderData) => {
+    try {
+      // Determine user_id based on logged-in user's id
+      let assignedUserId;
+
+      if (user?.id === 20) {
+        assignedUserId = 104;
+      } else if (user?.id === 2) {
+        assignedUserId = 1;
+      } else if (user?.id === 4) {
+        assignedUserId = 184;
+      } else {
+        // Default fallback - use orderData.user_id for other cases
+        assignedUserId = null;
+      }
+
+      const requestBody = {
+        user_id: assignedUserId,
+        order_id: orderData.id || orderData.order_id,
+      };
+
+      console.log("Fetching channel credentials:", requestBody);
+      console.log("Logged-in user ID:", user?.id);
+      toast.info("Fetching call credentials...");
+
+      const response = await updateAgoraCredentials({
+        body: requestBody,
+      }).unwrap();
+
+      console.log("Join channel response:", response);
+
+      if (response && response.data) {
+        const { channel, user_token, uid } = response.data;
+
+        if (!channel) {
+          toast.error("Missing channel name in server response");
+          console.error("Missing channel in response:", response);
+          return;
+        }
+
+        // Navigate to audio call page with credentials
+        navigate("/audio-call", {
+          state: {
+            credentials: {
+              appId: "0bbb5db82c6b440f95944b3fda1f9bd1",
+              channel: channel || orderData.id,
+              token: user_token || null,
+              uid: assignedUserId || null,
+              orderData,
+            },
+          },
+        });
+
+        toast.success("Navigating to call...");
+      } else {
+        console.error("Invalid response structure:", response);
+        toast.error("Invalid response from server");
+      }
+    } catch (err) {
+      console.error("Error fetching channel credentials:", err);
+      toast.error(err?.data?.message || "Failed to fetch call credentials");
+    }
   };
 
   const columns = useMemo(
@@ -79,6 +157,30 @@ const OrderLists = () => {
         Cell: ({ row }) => (
           <>
             <div className="actions-cell">
+              {/* Join Call Button - Show for running calls (status == 3) */}
+              {row.original.status == 3 && (
+                <span
+                  title="Join Call"
+                  className="joinIcon"
+                  style={{
+                    height: "35px",
+                    width: "35px",
+                    marginRight: "8px",
+                    cursor: isJoining ? "not-allowed" : "pointer",
+                    opacity: isJoining ? 0.5 : 1,
+                  }}
+                >
+                  {permissions?.["orders"]?.includes("monitor_order") && (
+                    <Phone
+                      className="iconSmall"
+                      style={{ color: "#10b981" }}
+                      onClick={() => !isJoining && joinChannel(row.original)}
+                    />
+                  )}
+                </span>
+              )}
+
+              {/* Edit Button */}
               {row.original.status == 3 && (
                 <span
                   title="view details"
@@ -92,11 +194,10 @@ const OrderLists = () => {
                 </span>
               )}
 
+              {/* Refund Button */}
               {row.original.status == 4 &&
                 row.original.order_type !== 6 &&
-                // row.original.actual_duration < 2 &&
                 !row.original.is_refunded && (
-                  // {row.original.status == 4 && (
                   <span className="editIcon">
                     <ArrowRight
                       className="iconSmall"
@@ -109,7 +210,7 @@ const OrderLists = () => {
         ),
       },
     ],
-    []
+    [isJoining, navigate]
   );
 
   useEffect(() => {
@@ -134,21 +235,19 @@ const OrderLists = () => {
     debouncedSearchConsultantId(e?.target?.value);
   };
 
-  // Handle filter application
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
-    setPage(1); // Reset to first page when applying filters
+    setPage(1);
     console.log("Applied filters:", filterData);
   };
 
-  // Count applied filters (non-empty values)
   const appliedFilterCount = Object.values(appliedFilters).filter(
     (val) => val !== "" && val !== null && val !== undefined
   ).length;
 
   const handleRunningFilter = () => {
     setAppliedFilters({ ...appliedFilters, status: 3 });
-    setPage(1); // Reset to first page
+    setPage(1);
   };
 
   const customFilterComponent = () => (
@@ -210,7 +309,6 @@ const OrderLists = () => {
         <Button
           variant="contained"
           style={{
-            // backgroundColor: "#4CAF50",
             backgroundColor: "#6165d0ff",
             color: "white",
           }}
@@ -250,6 +348,8 @@ const OrderLists = () => {
         includeCheckbox={false}
         showTableHeading={false}
       />
+
+      {/* Complete Order Modal */}
       {addOrder && (
         <CompleteOrder
           isOpen={addOrder}
@@ -257,6 +357,8 @@ const OrderLists = () => {
           selectedRow={selectedRow}
         />
       )}
+
+      {/* Refund Balance Modal */}
       {refundBalance && (
         <RefundBalance
           isOpen={refundBalance}

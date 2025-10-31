@@ -1,10 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import ReactModal from "react-modal";
-import {
-  useUpdateUserInfoMutation,
-  useGetLanguagesListQuery,
-} from "../../../_store/api";
-import Select from "react-select";
+import { useUpdateUserInfoMutation } from "../../../_store/api";
 import toast from "react-hot-toast";
 
 // Google Maps script loader
@@ -32,34 +28,28 @@ const UpdateUserInfo = ({
   googleMapsApiKey = "AIzaSyBJmeMpRqFkqJ1L87Ic-EuvcNP7UDKj4aQ",
 }) => {
   const [formData, setFormData] = useState({
-    first_name: "",
-    last_name: "",
-    bio: "",
-    date_of_birth: "",
+    name: "",
     gender: "",
-    hometown_location: "",
-    living_location: "",
-    current_location: "",
-    country: "",
-    languages: [],
+    birth_time: "",
+    birth_place: "",
+    birth_date: "",
+    currency_category: "",
+    current_address: "",
   });
 
-  const [selectedLanguages, setSelectedLanguage] = useState([]);
-  const [languageOptions, setLanguageOptions] = useState([]);
+  console.log("selectedData", selectedData);
+
   const [googleMapsLoaded, setGoogleMapsLoaded] = useState(false);
 
   // Refs for autocomplete inputs
-  const hometownLocationRef = useRef(null);
-  const livingLocationRef = useRef(null);
-  const currentLocationRef = useRef(null);
+  const birthPlaceRef = useRef(null);
+  const currentAddressRef = useRef(null);
 
   // Refs for autocomplete instances
-  const hometownAutocompleteRef = useRef(null);
-  const livingAutocompleteRef = useRef(null);
-  const currentAutocompleteRef = useRef(null);
+  const birthPlaceAutocompleteRef = useRef(null);
+  const currentAddressAutocompleteRef = useRef(null);
 
   const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
-  const { data: languagesData } = useGetLanguagesListQuery();
 
   // Load Google Maps script
   useEffect(() => {
@@ -77,70 +67,48 @@ const UpdateUserInfo = ({
     }
   }, [googleMapsApiKey, googleMapsLoaded]);
 
-  // Parse address data helper function - Updated to handle double-stringified data
+  // Parse address data helper function
   const parseAddressData = (addressData) => {
     if (!addressData) return "";
 
     try {
-      // Handle double-stringified data
-      if (typeof addressData === "object" && addressData.city) {
-        // If city is a stringified JSON, parse it
-        if (
-          typeof addressData.city === "string" &&
-          addressData.city.startsWith("{")
-        ) {
-          const parsed = JSON.parse(addressData.city);
-          return parsed.city || parsed.state || parsed.country || "";
-        }
-        // Otherwise return the city value directly
-        return (
-          addressData.city || addressData.state || addressData.country || ""
-        );
-      }
-
       if (typeof addressData === "string") {
-        if (addressData.startsWith("{")) {
-          const parsed = JSON.parse(addressData);
-          return parsed.city || parsed.state || parsed.country || addressData;
-        }
         return addressData;
       }
-
+      if (typeof addressData === "object" && addressData.city) {
+        return addressData.city || addressData.state || addressData.country || "";
+      }
       return addressData.city || addressData.state || addressData.country || "";
     } catch (e) {
       return addressData;
     }
   };
 
+  // Format date from YYYY-MM-DD to DD/MM/YYYY
+  const formatDateForDisplay = (dateString) => {
+    if (!dateString) return "";
+    // If already in YYYY-MM-DD format (for date input), return as is
+    if (dateString.includes("-") && dateString.split("-")[0].length === 4) {
+      return dateString;
+    }
+    return dateString;
+  };
+
   useEffect(() => {
     if (selectedData) {
-      // Parse languages if it's a string, otherwise use as-is
-      const languages =
-        typeof selectedData.languages === "string"
-          ? JSON.parse(selectedData.languages)
-          : selectedData.languages || [];
-
       setFormData({
-        first_name: selectedData.full_first_name || "",
-        last_name: selectedData.last_name || "",
-        bio: selectedData.bio || "",
-        date_of_birth: selectedData.date_of_birth || "",
+        name: selectedData.name || "",
         gender: selectedData.gender || "",
-        hometown_location:
-          selectedData.permanent_address ||
-          selectedData.hometown_location ||
-          "",
-        living_location:
-          selectedData.current_address || selectedData.living_location || "",
-        current_location:
-          selectedData.live_location || selectedData.current_location || "",
-        country: selectedData.country || "",
-        languages: languages,
+        birth_time: selectedData.birth_time || "",
+        birth_place: selectedData.birth_place || "",
+        birth_date: formatDateForDisplay(selectedData.birth_date) || "",
+        currency_category: selectedData.currency_category || "",
+        current_address: selectedData.current_address || "",
       });
     }
   }, [selectedData]);
 
-  // Handle place selection from autocomplete - Updated to store object directly
+  // Handle place selection from autocomplete
   const handlePlaceChanged = useCallback((fieldName, autocomplete) => {
     const place = autocomplete.getPlace();
 
@@ -149,45 +117,14 @@ const UpdateUserInfo = ({
       return;
     }
 
-    let city = "";
-    let state = "";
-    let country = "";
+    // Use formatted_address as the full address
+    const fullAddress = place.formatted_address || place.name || "";
 
-    if (place.address_components) {
-      place.address_components.forEach((component) => {
-        const types = component.types;
-        if (types.includes("locality")) {
-          city = component.long_name;
-        }
-        if (types.includes("administrative_area_level_1")) {
-          state = component.long_name;
-        }
-        if (types.includes("country")) {
-          country = component.long_name;
-        }
-      });
-    }
-
-    // Create location object without lat/lng
-    const locationData = {
-      city: city,
-      state: state,
-      country: country,
-    };
-
-    // Update form data with the object directly (not stringified)
+    // Update form data with the full address string
     setFormData((prevData) => ({
       ...prevData,
-      [fieldName]: locationData,
+      [fieldName]: fullAddress,
     }));
-
-    // If this is the hometown location, also update the country field
-    if (fieldName === "hometown_location" && country) {
-      setFormData((prevData) => ({
-        ...prevData,
-        country: country,
-      }));
-    }
   }, []);
 
   // Initialize Google Places Autocomplete
@@ -196,68 +133,48 @@ const UpdateUserInfo = ({
 
     const initializeAutocomplete = () => {
       // Clean up existing instances
-      if (hometownAutocompleteRef.current) {
+      if (birthPlaceAutocompleteRef.current) {
         window.google.maps.event.clearInstanceListeners(
-          hometownAutocompleteRef.current
+          birthPlaceAutocompleteRef.current
         );
-        hometownAutocompleteRef.current = null;
+        birthPlaceAutocompleteRef.current = null;
       }
-      if (livingAutocompleteRef.current) {
+      if (currentAddressAutocompleteRef.current) {
         window.google.maps.event.clearInstanceListeners(
-          livingAutocompleteRef.current
+          currentAddressAutocompleteRef.current
         );
-        livingAutocompleteRef.current = null;
-      }
-      if (currentAutocompleteRef.current) {
-        window.google.maps.event.clearInstanceListeners(
-          currentAutocompleteRef.current
-        );
-        currentAutocompleteRef.current = null;
+        currentAddressAutocompleteRef.current = null;
       }
 
-      // Initialize autocomplete for hometown location
-      if (hometownLocationRef.current) {
-        hometownAutocompleteRef.current =
-          new window.google.maps.places.Autocomplete(
-            hometownLocationRef.current,
-            { types: ["address"] }
-          );
+      // Initialize autocomplete for birth place
+      if (birthPlaceRef.current) {
+        birthPlaceAutocompleteRef.current =
+          new window.google.maps.places.Autocomplete(birthPlaceRef.current, {
+            types: ["(cities)"],
+          });
 
-        hometownAutocompleteRef.current.addListener("place_changed", () => {
-          handlePlaceChanged(
-            "hometown_location",
-            hometownAutocompleteRef.current
-          );
+        birthPlaceAutocompleteRef.current.addListener("place_changed", () => {
+          handlePlaceChanged("birth_place", birthPlaceAutocompleteRef.current);
         });
       }
 
-      // Initialize autocomplete for living location
-      if (livingLocationRef.current) {
-        livingAutocompleteRef.current =
+      // Initialize autocomplete for current address
+      if (currentAddressRef.current) {
+        currentAddressAutocompleteRef.current =
           new window.google.maps.places.Autocomplete(
-            livingLocationRef.current,
-            { types: ["address"] }
+            currentAddressRef.current,
+            { types: ["(regions)"] }
           );
 
-        livingAutocompleteRef.current.addListener("place_changed", () => {
-          handlePlaceChanged("living_location", livingAutocompleteRef.current);
-        });
-      }
-
-      // Initialize autocomplete for current location
-      if (currentLocationRef.current) {
-        currentAutocompleteRef.current =
-          new window.google.maps.places.Autocomplete(
-            currentLocationRef.current,
-            { types: ["address"] }
-          );
-
-        currentAutocompleteRef.current.addListener("place_changed", () => {
-          handlePlaceChanged(
-            "current_location",
-            currentAutocompleteRef.current
-          );
-        });
+        currentAddressAutocompleteRef.current.addListener(
+          "place_changed",
+          () => {
+            handlePlaceChanged(
+              "current_address",
+              currentAddressAutocompleteRef.current
+            );
+          }
+        );
       }
     };
 
@@ -267,58 +184,18 @@ const UpdateUserInfo = ({
     // Cleanup function
     return () => {
       clearTimeout(timer);
-      if (hometownAutocompleteRef.current) {
+      if (birthPlaceAutocompleteRef.current) {
         window.google.maps.event.clearInstanceListeners(
-          hometownAutocompleteRef.current
+          birthPlaceAutocompleteRef.current
         );
       }
-      if (livingAutocompleteRef.current) {
+      if (currentAddressAutocompleteRef.current) {
         window.google.maps.event.clearInstanceListeners(
-          livingAutocompleteRef.current
-        );
-      }
-      if (currentAutocompleteRef.current) {
-        window.google.maps.event.clearInstanceListeners(
-          currentAutocompleteRef.current
+          currentAddressAutocompleteRef.current
         );
       }
     };
   }, [isOpen, googleMapsLoaded, handlePlaceChanged]);
-
-  // Define Language options from API data
-  useEffect(() => {
-    if (selectedData && languagesData?.data?.length) {
-      const options = languagesData.data.map((lang) => ({
-        value: lang.language,
-        label: lang.language,
-      }));
-
-      setLanguageOptions(options);
-
-      // Get current languages from formData (already parsed)
-      const currentLanguages = formData.languages || [];
-      const preselected = options.filter((option) =>
-        currentLanguages.some(
-          (lang) => lang.toLowerCase() === option.value.toLowerCase()
-        )
-      );
-
-      setSelectedLanguage(preselected);
-    }
-  }, [selectedData, languagesData, formData.languages]);
-
-  const handleMultiSelectChange = (name, selectedOptions) => {
-    const newLanguages = selectedOptions?.map((option) => option.value) || [];
-
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: newLanguages,
-    }));
-
-    if (name === "languages") {
-      setSelectedLanguage(selectedOptions);
-    }
-  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -328,26 +205,34 @@ const UpdateUserInfo = ({
     }));
   };
 
-  const handleAddressInputChange = (e) => {
-    const { name, value } = e.target;
-    // For manual input, create a simple object
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: { city: value, state: "", country: "" },
-    }));
+  // Format date from YYYY-MM-DD to DD/MM/YYYY for API
+  const formatDateForAPI = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
   };
 
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      // Gender mapping
+      // Gender mapping - convert to lowercase for API
       const genderMapping = {
-        Man: "male",
-        Women: "female",
+        Man: "man",
+        man: "man",
+        Women: "woman",
+        woman: "woman",
+        Woman: "woman",
         transgender: "transgender",
+        Transgender: "transgender",
         agender: "agender",
+        Agender: "agender",
         "non-binary": "non-binary",
+        "Non-binary": "non-binary",
         pangender: "pangender",
+        Pangender: "pangender",
       };
 
       // Filter out empty fields and prepare data
@@ -358,37 +243,11 @@ const UpdateUserInfo = ({
             // Handle gender mapping
             if (key === "gender" && genderMapping[value]) {
               acc[key] = genderMapping[value];
-            } else if (Array.isArray(value) && value.length > 0) {
-              // For arrays (like languages), check if they have elements
-              acc[key] = key === "languages" ? JSON.stringify(value) : value;
-            } else if (!Array.isArray(value)) {
-              // For location fields, ensure they are objects with city, state, country
-              if (
-                [
-                  "hometown_location",
-                  "living_location",
-                  "current_location",
-                ].includes(key)
-              ) {
-                if (typeof value === "string" && value) {
-                  // If it's a plain string (manually entered), create a simple object
-                  acc[key] = {
-                    city: value,
-                    state: "",
-                    country: "",
-                  };
-                } else if (typeof value === "object" && value.city) {
-                  // If it's already an object, ensure it has the right structure
-                  acc[key] = {
-                    city: value.city || "",
-                    state: value.state || "",
-                    country: value.country || "",
-                  };
-                }
-              } else if (key !== "gender") {
-                // For non-location fields (excluding gender which we already handled), include them as is
-                acc[key] = value;
-              }
+            } else if (key === "birth_date") {
+              // Convert date format for API
+              acc[key] = formatDateForAPI(value);
+            } else {
+              acc[key] = value;
             }
           }
           return acc;
@@ -396,11 +255,12 @@ const UpdateUserInfo = ({
         {}
       );
 
+      // Add is_update_dating_profile flag
+      filteredData.is_update_dating_profile = false;
+
       const response = await updateInfo({
         id: selectedData.id,
-        body: {
-          ...filteredData,
-        },
+        body: filteredData,
       });
 
       if (response.data.status) {
@@ -425,61 +285,25 @@ const UpdateUserInfo = ({
       onRequestClose={onClose}
     >
       <div style={{ width: "500px" }}>
-        <h2 className="top-main-heading">Update User Dating Info</h2>
+        <h2 className="top-main-heading">Update User Info</h2>
 
         <div className="simple-form" style={{ padding: "20px 0" }}>
+          {/* Name */}
           <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
             <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="first_name">First Name</label>
+              <label htmlFor="name">Name</label>
               <input
                 type="text"
-                id="first_name"
-                name="first_name"
-                value={formData.first_name}
-                onChange={handleChange}
-                className="info-input"
-              />
-            </div>
-
-            <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="last_name">Last Name</label>
-              <input
-                type="text"
-                id="last_name"
-                name="last_name"
-                value={formData.last_name}
+                id="name"
+                name="name"
+                value={formData.name}
                 onChange={handleChange}
                 className="info-input"
               />
             </div>
           </div>
 
-          <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
-            <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="bio">Bio</label>
-              <input
-                type="text"
-                id="bio"
-                name="bio"
-                value={formData.bio}
-                onChange={handleChange}
-                className="info-input"
-              />
-            </div>
-
-            <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="date_of_birth">Date of Birth</label>
-              <input
-                type="date"
-                id="date_of_birth"
-                name="date_of_birth"
-                value={formData.date_of_birth}
-                onChange={handleChange}
-                className="info-input"
-              />
-            </div>
-          </div>
-
+          {/* Gender and Birth Date */}
           <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
             <div className="input-container" style={{ flex: 1 }}>
               <label htmlFor="gender">Gender</label>
@@ -496,8 +320,8 @@ const UpdateUserInfo = ({
                 }}
               >
                 <option value="">Select Gender</option>
-                <option value="Man">Man</option>
-                <option value="Women">Women</option>
+                <option value="man">Man</option>
+                <option value="woman">Woman</option>
                 <option value="transgender">Transgender</option>
                 <option value="agender">Agender</option>
                 <option value="non-binary">Non-binary</option>
@@ -505,68 +329,44 @@ const UpdateUserInfo = ({
               </select>
             </div>
 
-            {/* <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="country">Country</label>
+            <div className="input-container" style={{ flex: 1 }}>
+              <label htmlFor="birth_date">Birth Date</label>
               <input
-                type="text"
-                id="country"
-                name="country"
-                value={formData.country}
+                type="date"
+                id="birth_date"
+                name="birth_date"
+                value={formData.birth_date}
                 onChange={handleChange}
                 className="info-input"
               />
-            </div> */}
-          </div>
-
-          <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
-            <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="languages">Languages</label>
-              <Select
-                id="languages"
-                name="languages"
-                isMulti
-                options={languageOptions}
-                value={selectedLanguages}
-                onChange={(options) =>
-                  handleMultiSelectChange("languages", options)
-                }
-                placeholder="Select languages..."
-              />
             </div>
           </div>
 
+          {/* Birth Time and Birth Place */}
           <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
             <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="hometown_location">Hometown Location</label>
+              <label htmlFor="birth_time">Birth Time</label>
               <input
-                ref={hometownLocationRef}
-                type="text"
-                id="hometown_location"
-                name="hometown_location"
-                defaultValue={parseAddressData(formData.hometown_location)}
-                onChange={handleAddressInputChange}
+                type="time"
+                id="birth_time"
+                name="birth_time"
+                value={formData.birth_time}
+                onChange={handleChange}
                 className="info-input"
-                placeholder="Enter hometown address"
               />
-              {!googleMapsLoaded && (
-                <small style={{ color: "#666", fontSize: "12px" }}>
-                  Autocomplete not available
-                </small>
-              )}
             </div>
-          </div>
-          <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
+
             <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="current_location">Current Location</label>
+              <label htmlFor="birth_place">Birth Place</label>
               <input
-                ref={currentLocationRef}
+                ref={birthPlaceRef}
                 type="text"
-                id="current_location"
-                name="current_location"
-                defaultValue={parseAddressData(formData.current_location)}
-                onChange={handleAddressInputChange}
+                id="birth_place"
+                name="birth_place"
+                value={formData.birth_place}
+                onChange={handleChange}
                 className="info-input"
-                placeholder="Enter current location"
+                placeholder="Enter birth place"
               />
               {!googleMapsLoaded && (
                 <small style={{ color: "#666", fontSize: "12px" }}>
@@ -576,18 +376,43 @@ const UpdateUserInfo = ({
             </div>
           </div>
 
+          {/* Currency Category */}
           <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
             <div className="input-container" style={{ flex: 1 }}>
-              <label htmlFor="living_location">Living Location</label>
-              <input
-                ref={livingLocationRef}
-                type="text"
-                id="living_location"
-                name="living_location"
-                defaultValue={parseAddressData(formData.living_location)}
-                onChange={handleAddressInputChange}
+              <label htmlFor="currency_category">Currency Category</label>
+              <select
+                id="currency_category"
+                name="currency_category"
+                value={formData.currency_category}
+                onChange={handleChange}
                 className="info-input"
-                placeholder="Enter living address"
+                style={{
+                  width: "100%",
+                  height: "56px",
+                  borderRadius: "inherit",
+                }}
+              >
+                <option value="">Select Category</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Current Address */}
+          <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>
+            <div className="input-container" style={{ flex: 1 }}>
+              <label htmlFor="current_address">Current Address</label>
+              <input
+                ref={currentAddressRef}
+                type="text"
+                id="current_address"
+                name="current_address"
+                value={formData.current_address}
+                onChange={handleChange}
+                className="info-input"
+                placeholder="Enter current address"
               />
               {!googleMapsLoaded && (
                 <small style={{ color: "#666", fontSize: "12px" }}>
@@ -597,6 +422,7 @@ const UpdateUserInfo = ({
             </div>
           </div>
 
+          {/* Action Buttons */}
           <div style={{ marginTop: "20px", textAlign: "center" }}>
             <button
               type="button"
