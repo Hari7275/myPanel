@@ -75,7 +75,7 @@ const UserDetailsComponent = () => {
     // navigate(-1);;
   };
   const age = userData?.date_of_birth
-    ? calculateAge(userData?.date_of_birth)
+    ? calculateAge(userData?.profileDetails?.birth_date)
     : "N/A";
 
   return (
@@ -98,10 +98,13 @@ const UserDetailsComponent = () => {
           {/* {userData.profile_images.length > 0 && ( */}
           <img
             className="profile-img"
-            src={userData?.profile_images[0]?.url || "avatar11.png"}
+            // src={userData?.profile_images[0]?.url || "avatar11.png"}
+            src={userData?.profileDetails?.profile_image_url || "avatar11.png"}
             alt="user Profile"
             onClick={() =>
-              openImageModal(userData?.profile_images[0]?.url || "avatar11.png")
+              openImageModal(
+                userData?.profileDetails?.profile_image_url || "avatar11.png"
+              )
             }
           />
         </div>
@@ -111,7 +114,7 @@ const UserDetailsComponent = () => {
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
           </div> */}
           <div className="userName">
-            {userData?.fullName} ({age})
+            {userData?.profileDetails?.name} ({age})
           </div>
           <InfoItem label="User ID " value={userData?.id || "N/A"} />
           <div className="active-status">

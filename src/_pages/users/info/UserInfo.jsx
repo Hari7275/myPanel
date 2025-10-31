@@ -48,7 +48,7 @@ const UserInfo = () => {
             }}
           >
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
-              User Info
+              User Profile Info
             </h3>
 
             <span className=" editIcon">
@@ -61,71 +61,63 @@ const UserInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>First Name : </strong> {formData?.full_first_name}
+              <strong>User Name : </strong> {formData?.profileDetails?.name}
             </p>
             <p className="info-item">
-              <strong>Last Name : </strong> {formData?.last_name}
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Date of Birth : </strong> {formData.date_of_birth}
-            </p>
-            <p className="info-item">
-              <strong>Bio : </strong> {formData.bio}
-            </p>
-          </div>
-
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Current Address : </strong>{" "}
-              {formData?.living_location?.city &&
-              formData.living_location.state &&
-              formData.living_location.country
-                ? `${formData.living_location.city}, ${formData.living_location.state}, ${formData.living_location.country}`
-                : "N/A"}
-            </p>
-            <p className="info-item">
-              <strong>Permanent Address : </strong>{" "}
-              {formData?.hometown_location?.city &&
-              formData.hometown_location.state &&
-              formData.hometown_location.country
-                ? `${formData.hometown_location.city}, ${formData.hometown_location.state}, ${formData.hometown_location.country}`
-                : "N/A"}
+              <strong>Gender : </strong> {formData?.profileDetails?.gender}
             </p>
           </div>
           <div className="dividerm"></div>
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Gender : </strong> {formData.gender}
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Country : </strong> {formData.country}
+              <strong>Date of Birth : </strong>{" "}
+              {formData?.profileDetails?.birth_date}
             </p>
             <p className="info-item">
-              <strong>Job : </strong> {formData.job || "N/A"}
-            </p>
-          </div>
-          <div className="dividerm"></div>
-
-          <div className="info-pair">
-            <p className="info-item">
-              <strong>Languages : </strong> {formData.languages.join(",") || []}
+              <strong>Birth time: </strong>{" "}
+              {formData?.profileDetails?.birth_time}
             </p>
             {/* <p className="info-item">
-              <strong>Languages : </strong>{" "}
-              {JSON.parse(formData?.languages)?.join(",") || []}
-            </p>, */}
+              <strong>Bio : </strong> {formData.bio}
+            </p> */}
           </div>
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Birth Place: </strong>{" "}
+              {formData?.profileDetails?.birth_place}
+            </p>
+            <p className="info-item">
+              <strong>Current Address : </strong>{" "}
+              {formData?.profileDetails?.current_address}
+            </p>
+            {/* <p className="info-item">
+              <strong>Bio : </strong> {formData.bio}
+            </p> */}
+          </div>
+
+          <div className="dividerm"></div>
+
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Dating Profile Id : </strong>{" "}
+              {formData?.profileDetails?.dating_profile_id}
+            </p>
+            <p className="info-item">
+              <strong>Currency Category: </strong>{" "}
+              {formData?.profileDetails?.currency_category}
+            </p>
+          </div>
+          <div className="dividerm"></div>
+
+          {/* <div className="info-pair">
+            <p className="info-item">
+              <strong>Gender : </strong> {formData?.profileDetails?.gender}
+            </p>
+          </div> */}
+          {/* <div className="dividerm"></div> */}
         </div>
       </div>
 

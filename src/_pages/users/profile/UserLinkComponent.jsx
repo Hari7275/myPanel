@@ -13,9 +13,15 @@ const UserLinkComponent = ({ onComponentChange, activeComponent }) => {
     },
     {
       component: "UserInfo",
-      label: "User Info",
+      label: "User Profile Info",
       permission: "view_user_profile_user_info",
     },
+    {
+      component: "UserDatingInfo",
+      label: "User Dating Info",
+      permission: "view_user_profile_user_info",
+    },
+
     {
       component: "UserData",
       label: "User Data",

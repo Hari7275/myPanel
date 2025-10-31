@@ -64,8 +64,20 @@ export const userListingSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    // updateUserType: builder.mutation({
+    //   query: ({ user_id, body }) => ({
+    //     url: `user/profile/admin/update-user-type/${user_id}`,
+    //     method: "PATCH",
+    //     body,
+    //     headers: {
+    //       // Authorization: getAdminToken(),
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //   }),
+    //   invalidatesTags: ["user"],
+    // }),
     //****************** */ update user refferal code
-    updateUserType: builder.mutation({
+    updateUserRefferalCode: builder.mutation({
       query: ({ user_id, body }) => ({
         url: `api/v1/user/auth/update-referral-code/${user_id}`,
         method: "PATCH",
@@ -85,4 +97,5 @@ export const {
   useUpdateUserStatusMutation,
   useUpdateUserDatingStatusMutation,
   useUpdateUserTypeMutation,
+  useUpdateUserRefferalCodeMutation
 } = userListingSlice;

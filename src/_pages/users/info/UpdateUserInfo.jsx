@@ -425,7 +425,7 @@ const UpdateUserInfo = ({
       onRequestClose={onClose}
     >
       <div style={{ width: "500px" }}>
-        <h2 className="top-main-heading">Update User Info</h2>
+        <h2 className="top-main-heading">Update User Dating Info</h2>
 
         <div className="simple-form" style={{ padding: "20px 0" }}>
           <div style={{ display: "flex", gap: "10px", marginBottom: "15px" }}>

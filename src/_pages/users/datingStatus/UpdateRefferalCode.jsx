@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
-import { useUpdateUserTypeMutation } from "../../../_store/api";
+import { useUpdateUserRefferalCodeMutation } from "../../../_store/api";
+
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
 
@@ -9,7 +10,7 @@ const UpdateRefferalCode = ({ isOpen, onClose, selectedRow }) => {
   const userId = useSelector((state) => state.user.userData);
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
-    useUpdateUserTypeMutation();
+    useUpdateUserRefferalCodeMutation();
 
   // Initialize referral code when modal opens
   useEffect(() => {
