@@ -35,7 +35,7 @@ export const COLUMNSUBSCRIPTION = [
     Cell: CustomIdCell,
   },
   {
-    Header: "Name",
+    Header: "User Name",
     accessor: "DatingProfile.first_name",
   },
   {
@@ -71,7 +71,11 @@ export const COLUMNSUBSCRIPTION = [
   {
     Header: "Status",
     accessor: "status",
-    Cell: ({ value }) => <span>{value === "1" ? "Successful" : "Failed"}</span>,
+    Cell: ({ value }) => (
+      <span style={{ color: value == 1 ? "green" : "red" }}>
+        {value === "1" ? "Successful" : "Failed"}
+      </span>
+    ),
   },
 ];
 

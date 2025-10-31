@@ -21,7 +21,7 @@ const UpdateRefferalCode = ({ isOpen, onClose, selectedRow }) => {
   const handleChange = (e) => {
     // Restrict to 6 characters max
     const value = e.target.value.slice(0, 6);
-    setFormData(value.toUpperCase());
+    setFormData(value);
   };
 
   const handleSave = async (e) => {
@@ -91,9 +91,9 @@ const UpdateRefferalCode = ({ isOpen, onClose, selectedRow }) => {
               value={formData}
               onChange={handleChange}
               className="info-input"
-              maxLength={6} 
+              maxLength={6}
               style={{
-                textTransform: "uppercase",
+                // textTransform: "uppercase",
                 fontSize: "16px",
                 letterSpacing: "2px",
                 width: "100%",

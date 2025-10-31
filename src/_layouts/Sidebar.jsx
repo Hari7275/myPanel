@@ -322,29 +322,36 @@ const Sidebar = () => {
                 <span>User Subscription List</span>
               </div>
             </Link>
-            <Link to="payable-History">
-              <div
-                className={`menu-item ${
-                  activeItem === "payable-History" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("payable-History")}
-              >
-                <CardGiftcardOutlinedIcon />
-                <span>Payable Log</span>
-              </div>
-            </Link>
 
-            <Link to="payout-History">
-              <div
-                className={`menu-item ${
-                  activeItem === "payout-History" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("payout-History")}
-              >
-                <CardGiftcardOutlinedIcon />
-                <span>Payout History</span>
-              </div>
-            </Link>
+            {permissions?.["user_recharge_list"]?.includes(
+              "view_recharge_list"
+            ) && (
+              <>
+                <Link to="payable-History">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "payable-History" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("payable-History")}
+                  >
+                    <CardGiftcardOutlinedIcon />
+                    <span>Payable Log</span>
+                  </div>
+                </Link>
+
+                <Link to="payout-History">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "payout-History" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("payout-History")}
+                  >
+                    <CardGiftcardOutlinedIcon />
+                    <span>Payout History</span>
+                  </div>
+                </Link>
+              </>
+            )}
 
             <Link to="/gift">
               <div

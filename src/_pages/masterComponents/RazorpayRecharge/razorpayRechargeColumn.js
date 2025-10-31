@@ -3,6 +3,8 @@ import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
+import AndroidIcon from "@mui/icons-material/Android";
+import AppleIcon from "@mui/icons-material/Apple";
 
 // Custom cell component for Order IDs
 const OrderIdCell = ({ value }) => {
@@ -46,6 +48,16 @@ export const RAZORPAYRECHARGECOLUMN = [
     Cell: CustomIdCell,
   },
   {
+    Header: "Device Info",
+    accessor: "platform",
+    Cell: ({ value }) =>
+      value == 1 ? (
+        <AndroidIcon sx={{ color: "#3DDC84" }} />
+      ) : (
+        <AppleIcon sx={{ color: "#7b7878ff" }} />
+      ),
+  },
+  {
     Header: "Phone Number",
     accessor: "phone_number",
     Cell: ({ value, row }) => (
@@ -68,13 +80,14 @@ export const RAZORPAYRECHARGECOLUMN = [
     ),
   },
 
-  {
-    Header: "Device Info",
-    accessor: "platform",
-    Cell: ({ value }) => (
-      <span style={{ color: "#6b7280" }}>{value == 1 ? "Android" : "iOS"}</span>
-    ),
-  },
+  // {
+  //   Header: "Device Info",
+  //   accessor: "platform",
+  //   Cell: ({ value }) => (
+  //     <span style={{ color: "#6b7280" }}>{value == 1 ? "Android" : "iOS"}</span>
+  //   ),
+  // },
+
   {
     Header: "Amount",
     accessor: "transaction_amount",
