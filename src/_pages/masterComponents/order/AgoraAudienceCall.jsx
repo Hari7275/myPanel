@@ -1,4 +1,4 @@
-// AgoraAudienceCall.jsx - Simplified version
+// AgoraAudienceCall.jsx - Redesigned Layout with 3 Rows
 import React, { useState, useEffect } from "react";
 import {
   RemoteUser,
@@ -7,7 +7,17 @@ import {
   useRemoteUsers,
   useRTCClient,
 } from "agora-rtc-react";
-import { Volume2, VolumeX, PhoneOff, Phone, AlertCircle } from "lucide-react";
+import {
+  Volume2,
+  VolumeX,
+  PhoneOff,
+  Phone,
+  AlertCircle,
+  Video,
+  VideoOff,
+  Users,
+  Radio,
+} from "lucide-react";
 import { toast } from "react-toastify";
 
 const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
@@ -30,7 +40,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
       appid: appId,
       channel: channel,
       token: token || null,
-      uid: uid,
+      uid: uid || 3,
     },
     calling
   );
@@ -43,10 +53,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
       return;
     }
 
-    // Clear any previous errors
     setError(null);
-
-    // Log credentials for debugging
     console.log("Attempting to join with:", {
       appId: appId.substring(0, 8) + "...",
       channel,
@@ -109,10 +116,11 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
   return (
     <div
       style={{
-        backgroundColor: "white",
-        borderRadius: "12px",
-        padding: "24px",
-        border: "1px solid #e5e7eb",
+        width: "100%",
+        padding: "0",
+        height: "100vh", // sets fixed viewport height
+        overflowY: "auto", // enables vertical scrolling
+        boxSizing: "border-box", // ensures padding doesn't break layout
       }}
     >
       {/* Error Display */}
@@ -123,7 +131,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             padding: "16px",
             backgroundColor: "#fee2e2",
             border: "1px solid #fca5a5",
-            borderRadius: "8px",
+            borderRadius: "12px",
             display: "flex",
             alignItems: "flex-start",
             gap: "12px",
@@ -145,150 +153,637 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
               Connection Error
             </div>
             <div style={{ fontSize: "14px", color: "#991b1b" }}>{error}</div>
-            {error.includes("token") && (
-              <div
-                style={{
-                  fontSize: "13px",
-                  color: "#7f1d1d",
-                  marginTop: "8px",
-                }}
-              >
-                💡 <strong>Possible solutions:</strong>
-                <ul style={{ marginTop: "4px", paddingLeft: "20px" }}>
-                  <li>Check if the token is valid and not expired</li>
-                  <li>Verify token was generated for this channel name</li>
-                  <li>Ensure token was generated with "audience" role</li>
-                  <li>If testing, disable App Certificate in Agora console</li>
-                </ul>
-              </div>
-            )}
           </div>
         </div>
       )}
 
-      {/* Connection Status */}
-      <div style={{ marginBottom: "24px" }}>
+      {/* ROW 1: Call Information */}
+      <div
+        style={{
+          backgroundColor: "#f9fafb",
+          padding: "20px",
+          borderRadius: "12px",
+          marginBottom: "20px",
+          border: "1px solid #e5e7eb",
+        }}
+      >
+        <h3
+          style={{
+            margin: "0 0 16px 0",
+            fontSize: "18px",
+            fontWeight: "600",
+            color: "#111827",
+          }}
+        >
+          Call Information
+        </h3>
         <div
           style={{
-            display: "flex",
-            alignItems: "center",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
             gap: "12px",
-            marginBottom: "12px",
           }}
         >
-          <div
-            style={{
-              width: "12px",
-              height: "12px",
-              borderRadius: "50%",
-              backgroundColor: isConnected ? "#10b981" : "#6b7280",
-              boxShadow: isConnected
-                ? "0 0 8px rgba(16, 185, 129, 0.6)"
-                : "none",
-            }}
-          />
-          <span style={{ fontSize: "18px", fontWeight: "600" }}>
-            {isConnected
-              ? "Connected as Audience"
-              : calling
-              ? "Connecting..."
-              : "Ready to Join"}
-          </span>
-        </div>
-        <p
-          style={{
-            margin: "0 0 0 24px",
-            fontSize: "14px",
-            color: "#6b7280",
-          }}
-        >
-          {isConnected
-            ? "🎧 Your microphone is muted. You can only listen to the call."
-            : "Click 'Join Channel' to listen to the ongoing call"}
-        </p>
-      </div>
-
-      {/* Remote Users Display */}
-      {isConnected && (
-        <div
-          style={{
-            marginBottom: "24px",
-            padding: "16px",
-            backgroundColor: "#f9fafb",
-            borderRadius: "8px",
-            border: "1px solid #e5e7eb",
-          }}
-        >
-          <h3
-            style={{
-              margin: "0 0 12px 0",
-              fontSize: "16px",
-              fontWeight: "600",
-            }}
-          >
-            Active Speakers ({remoteUsers.length})
-          </h3>
-          {remoteUsers.length > 0 ? (
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "12px" }}
-            >
-              {remoteUsers.map((user) => (
-                <div
-                  key={user.uid}
-                  style={{
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "12px",
-                    padding: "12px",
-                    backgroundColor: "white",
-                    borderRadius: "8px",
-                    border: "1px solid #e5e7eb",
-                  }}
-                >
-                  <Volume2 size={20} color="#10b981" />
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: "500", fontSize: "14px" }}>
-                      User {user.uid}
-                    </div>
-                    <div style={{ fontSize: "12px", color: "#6b7280" }}>
-                      {user.hasAudio ? "🔊 Speaking" : "🔇 Muted"}
-                    </div>
-                  </div>
-                  {/* This renders the audio track */}
-                  <RemoteUser user={user} playVideo={false} playAudio={true} />
-                </div>
-              ))}
-            </div>
-          ) : (
+          <div>
             <div
               style={{
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
+                fontSize: "13px",
                 color: "#6b7280",
-                fontSize: "14px",
-                padding: "12px",
-                backgroundColor: "white",
-                borderRadius: "8px",
+                marginBottom: "4px",
               }}
             >
-              <VolumeX size={18} />
-              <span>No active speakers in the channel</span>
+              Channel
             </div>
-          )}
+            <div
+              style={{ fontSize: "15px", color: "#111827", fontWeight: "500" }}
+            >
+              {channel}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginBottom: "4px",
+              }}
+            >
+              App ID
+            </div>
+            <div
+              style={{
+                fontSize: "14px",
+                color: "#111827",
+                fontFamily: "monospace",
+              }}
+            >
+              {appId ? `${appId.substring(0, 8)}...` : "N/A"}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginBottom: "4px",
+              }}
+            >
+              UID
+            </div>
+            <div
+              style={{
+                fontSize: "14px",
+                color: "#111827",
+                fontFamily: "monospace",
+              }}
+            >
+              {uid || "Auto-assign"}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginBottom: "4px",
+              }}
+            >
+              Token
+            </div>
+            <div
+              style={{
+                fontSize: "12px",
+                color: "#111827",
+                fontFamily: "monospace",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {token ? `${token.substring(0, 15)}...` : "No token"}
+            </div>
+          </div>
+          <div>
+            <div
+              style={{
+                fontSize: "13px",
+                color: "#6b7280",
+                marginBottom: "4px",
+              }}
+            >
+              Mode
+            </div>
+            <div
+              style={{ fontSize: "14px", color: "#111827", fontWeight: "500" }}
+            >
+              👁️ Audience (Watch & Listen Only)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ROW 2: Three Column Layout */}
+      {isConnected ? (
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "300px 1fr 1fr",
+            gap: "20px",
+            marginBottom: "20px",
+          }}
+          className="main-content-row"
+        >
+          {/* COLUMN 1: User Details & Channel Info */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "20px",
+            }}
+          >
+            {/* Connection Status */}
+            <div
+              style={{
+                backgroundColor: "white",
+                padding: "20px",
+                borderRadius: "12px",
+                border: "1px solid #e5e7eb",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "12px",
+                  marginBottom: "12px",
+                }}
+              >
+                <div
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                    borderRadius: "50%",
+                    backgroundColor: "#10b981",
+                    boxShadow: "0 0 8px rgba(16, 185, 129, 0.6)",
+                  }}
+                />
+                <span style={{ fontSize: "16px", fontWeight: "600" }}>
+                  Connected
+                </span>
+              </div>
+              <p
+                style={{
+                  margin: "0",
+                  fontSize: "13px",
+                  color: "#6b7280",
+                  lineHeight: "1.5",
+                }}
+              >
+                🎧 You can see and hear others, but they cannot see or hear you.
+              </p>
+            </div>
+
+            {/* Channel Details */}
+            <div
+              style={{
+                backgroundColor: "white",
+                padding: "20px",
+                borderRadius: "12px",
+                border: "1px solid #e5e7eb",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginBottom: "16px",
+                }}
+              >
+                <Radio size={18} color="#3b82f6" />
+                <h4
+                  style={{
+                    margin: "0",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#111827",
+                  }}
+                >
+                  Channel Details
+                </h4>
+              </div>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                <div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#6b7280",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    Channel Name
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      color: "#111827",
+                      fontWeight: "500",
+                    }}
+                  >
+                    {channel}
+                  </div>
+                </div>
+                <div>
+                  <div
+                    style={{
+                      fontSize: "12px",
+                      color: "#6b7280",
+                      marginBottom: "4px",
+                    }}
+                  >
+                    Your UID
+                  </div>
+                  <div
+                    style={{
+                      fontSize: "14px",
+                      color: "#111827",
+                      fontFamily: "monospace",
+                    }}
+                  >
+                    {uid || "Auto-assigned"}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Remote Users List */}
+            <div
+              style={{
+                backgroundColor: "white",
+                padding: "20px",
+                borderRadius: "12px",
+                border: "1px solid #e5e7eb",
+              }}
+            >
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  marginBottom: "16px",
+                }}
+              >
+                <Users size={18} color="#3b82f6" />
+                <h4
+                  style={{
+                    margin: "0",
+                    fontSize: "16px",
+                    fontWeight: "600",
+                    color: "#111827",
+                  }}
+                >
+                  Active Participants
+                </h4>
+                <span
+                  style={{
+                    marginLeft: "auto",
+                    fontSize: "14px",
+                    color: "#6b7280",
+                    backgroundColor: "#f3f4f6",
+                    padding: "2px 8px",
+                    borderRadius: "12px",
+                  }}
+                >
+                  {remoteUsers.length}
+                </span>
+              </div>
+              {remoteUsers.length > 0 ? (
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  {remoteUsers.map((user) => (
+                    <div
+                      key={user.uid}
+                      style={{
+                        padding: "12px",
+                        backgroundColor: "#f9fafb",
+                        borderRadius: "8px",
+                        border: "1px solid #e5e7eb",
+                      }}
+                    >
+                      <div
+                        style={{
+                          fontSize: "14px",
+                          fontWeight: "500",
+                          color: "#111827",
+                          marginBottom: "6px",
+                        }}
+                      >
+                        User {user.uid}
+                      </div>
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          gap: "8px",
+                          fontSize: "12px",
+                          color: "#6b7280",
+                        }}
+                      >
+                        {user.hasVideo ? (
+                          <Video size={14} color="#10b981" />
+                        ) : (
+                          <VideoOff size={14} color="#9ca3af" />
+                        )}
+                        <span>{user.hasVideo ? "Video On" : "Video Off"}</span>
+                        <span>•</span>
+                        {user.hasAudio ? (
+                          <Volume2 size={14} color="#10b981" />
+                        ) : (
+                          <VolumeX size={14} color="#9ca3af" />
+                        )}
+                        <span>{user.hasAudio ? "Audio On" : "Audio Off"}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <div
+                  style={{
+                    padding: "16px",
+                    textAlign: "center",
+                    color: "#9ca3af",
+                    fontSize: "13px",
+                  }}
+                >
+                  No participants yet
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* COLUMN 2: First Remote User Video */}
+          <div
+            style={{
+              backgroundColor: "#1f2937",
+              borderRadius: "12px",
+              overflow: "hidden",
+              border: "2px solid #374151",
+              position: "relative",
+              aspectRatio: "9/16",
+              maxHeight: "calc(100vh - 400px)",
+            }}
+          >
+            {remoteUsers[0] ? (
+              <>
+                <RemoteUser
+                  user={remoteUsers[0]}
+                  playVideo={true}
+                  playAudio={true}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    padding: "12px 16px",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      color: "white",
+                    }}
+                  >
+                    User {remoteUsers[0].uid}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    {remoteUsers[0].hasVideo ? (
+                      <Video size={18} color="#10b981" />
+                    ) : (
+                      <VideoOff size={18} color="#6b7280" />
+                    )}
+                    {remoteUsers[0].hasAudio ? (
+                      <Volume2 size={18} color="#10b981" />
+                    ) : (
+                      <VolumeX size={18} color="#6b7280" />
+                    )}
+                  </div>
+                </div>
+                {!remoteUsers[0].hasVideo && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      textAlign: "center",
+                      color: "#9ca3af",
+                    }}
+                  >
+                    <VideoOff size={48} style={{ marginBottom: "8px" }} />
+                    <div style={{ fontSize: "14px" }}>Camera Off</div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                  color: "#9ca3af",
+                }}
+              >
+                <Users size={48} style={{ marginBottom: "12px" }} />
+                <div style={{ fontSize: "14px" }}>
+                  Waiting for participant 1...
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* COLUMN 3: Second Remote User Video */}
+          <div
+            style={{
+              backgroundColor: "#1f2937",
+              borderRadius: "12px",
+              overflow: "hidden",
+              border: "2px solid #374151",
+              position: "relative",
+              aspectRatio: "9/16",
+              maxHeight: "calc(100vh - 400px)",
+            }}
+          >
+            {remoteUsers[1] ? (
+              <>
+                <RemoteUser
+                  user={remoteUsers[1]}
+                  playVideo={true}
+                  playAudio={true}
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "0",
+                    left: "0",
+                    right: "0",
+                    padding: "12px 16px",
+                    background:
+                      "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <div
+                    style={{
+                      fontWeight: "600",
+                      fontSize: "14px",
+                      color: "white",
+                    }}
+                  >
+                    User {remoteUsers[1].uid}
+                  </div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                    }}
+                  >
+                    {remoteUsers[1].hasVideo ? (
+                      <Video size={18} color="#10b981" />
+                    ) : (
+                      <VideoOff size={18} color="#6b7280" />
+                    )}
+                    {remoteUsers[1].hasAudio ? (
+                      <Volume2 size={18} color="#10b981" />
+                    ) : (
+                      <VolumeX size={18} color="#6b7280" />
+                    )}
+                  </div>
+                </div>
+                {!remoteUsers[1].hasVideo && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)",
+                      textAlign: "center",
+                      color: "#9ca3af",
+                    }}
+                  >
+                    <VideoOff size={48} style={{ marginBottom: "8px" }} />
+                    <div style={{ fontSize: "14px" }}>Camera Off</div>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  height: "100%",
+                  color: "#9ca3af",
+                }}
+              >
+                <Users size={48} style={{ marginBottom: "12px" }} />
+                <div style={{ fontSize: "14px" }}>
+                  Waiting for participant 2...
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        // Before Connection State
+        <div
+          style={{
+            backgroundColor: "white",
+            padding: "60px 20px",
+            borderRadius: "12px",
+            border: "2px dashed #e5e7eb",
+            textAlign: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <Radio size={64} color="#9ca3af" style={{ marginBottom: "16px" }} />
+          <h3
+            style={{
+              margin: "0 0 8px 0",
+              fontSize: "20px",
+              fontWeight: "600",
+              color: "#111827",
+            }}
+          >
+            {calling ? "Connecting to Channel..." : "Ready to Join"}
+          </h3>
+          <p
+            style={{
+              margin: "0",
+              fontSize: "14px",
+              color: "#6b7280",
+            }}
+          >
+            Click the button below to join as an audience member
+          </p>
         </div>
       )}
 
-      {/* Control Button */}
-      <div style={{ display: "flex", gap: "12px" }}>
+      {/* ROW 3: Control Buttons */}
+      <div
+        style={{
+          display: "flex",
+          gap: "12px",
+          flexWrap: "wrap",
+        }}
+      >
         {!isConnected ? (
           <button
             onClick={handleJoinChannel}
             disabled={!appId || !channel || calling}
             style={{
               flex: 1,
-              padding: "16px",
-              backgroundColor: calling ? "#9ca3af" : "#3b82f6",
+              minWidth: "200px",
+              padding: "16px 24px",
+              backgroundColor: calling ? "#9ca3af" : "#10b981",
               color: "white",
               border: "none",
               borderRadius: "8px",
@@ -303,14 +798,15 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             }}
           >
             <Phone size={20} />
-            {calling ? "Joining..." : "Join Channel as Audience"}
+            {calling ? "Joining Channel..." : "Join Channel"}
           </button>
         ) : (
           <button
             onClick={handleLeaveChannel}
             style={{
               flex: 1,
-              padding: "16px",
+              minWidth: "200px",
+              padding: "16px 24px",
               backgroundColor: "#ef4444",
               color: "white",
               border: "none",
@@ -330,66 +826,33 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
         )}
       </div>
 
-      {/* Info Note */}
-      <div
-        style={{
-          marginTop: "20px",
-          padding: "12px",
-          backgroundColor: "#eff6ff",
-          borderRadius: "6px",
-          border: "1px solid #bfdbfe",
-        }}
-      >
-        <p
-          style={{
-            margin: 0,
-            fontSize: "13px",
-            color: "#1e40af",
-            lineHeight: "1.5",
-          }}
-        >
-          💡 <strong>Note:</strong> You are joining as an audience member
-          (listen-only mode). Your microphone will remain muted throughout the
-          call.
-        </p>
-      </div>
+      {/* Responsive Styles */}
+      <style>{`
+        @media (max-width: 1200px) {
+          .main-content-row {
+            grid-template-columns: 280px 1fr 1fr !important;
+          }
+        }
 
-      {/* Debug Info */}
-      {process.env.NODE_ENV === "development" && (
-        <details
-          style={{ marginTop: "16px", fontSize: "12px", color: "#6b7280" }}
-        >
-          <summary style={{ cursor: "pointer", fontWeight: "500" }}>
-            Debug Information
-          </summary>
-          <pre
-            style={{
-              marginTop: "8px",
-              padding: "12px",
-              backgroundColor: "#f9fafb",
-              borderRadius: "4px",
-              overflow: "auto",
-            }}
-          >
-            {JSON.stringify(
-              {
-                appId: appId ? `${appId.substring(0, 8)}...` : "missing",
-                channel: channel || "missing",
-                hasToken: !!token,
-                tokenLength: token ? token.length : 0,
-                uid: uid || "auto",
-                isConnected,
-                calling,
-                remoteUsersCount: remoteUsers.length,
-                clientRole: "audience",
-                hasClient: !!client,
-              },
-              null,
-              2
-            )}
-          </pre>
-        </details>
-      )}
+        @media (max-width: 992px) {
+          .main-content-row {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .main-content-row > div:first-child {
+            grid-column: 1 / -1 !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .main-content-row {
+            grid-template-columns: 1fr !important;
+            gap: 16px !important;
+          }
+          .main-content-row > div {
+            grid-column: 1 / -1 !important;
+          }
+        }
+      `}</style>
     </div>
   );
 };
