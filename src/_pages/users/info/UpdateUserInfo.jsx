@@ -76,7 +76,9 @@ const UpdateUserInfo = ({
         return addressData;
       }
       if (typeof addressData === "object" && addressData.city) {
-        return addressData.city || addressData.state || addressData.country || "";
+        return (
+          addressData.city || addressData.state || addressData.country || ""
+        );
       }
       return addressData.city || addressData.state || addressData.country || "";
     } catch (e) {
@@ -395,7 +397,6 @@ const UpdateUserInfo = ({
                 <option value="">Select Category</option>
                 <option value="A">A</option>
                 <option value="B">B</option>
-                <option value="C">C</option>
               </select>
             </div>
           </div>
