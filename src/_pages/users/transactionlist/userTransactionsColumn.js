@@ -19,6 +19,7 @@ export const USERTRANSACTIONCOLUMN = [
           }}
         >
           {isCredit ? "+" : "-"}
+          {row.original.currency_category === "A" ? "" : "$"}
           {formatNumber(value)}
         </span>
       );
@@ -27,9 +28,19 @@ export const USERTRANSACTIONCOLUMN = [
   {
     Header: "Remaining Balance",
     accessor: "remaining_balance",
-    Cell: ({ value }) => <span>{formatNumber(value)}</span>,
+    Cell: ({ value, row }) => (
+      <span
+        style={{
+          color:
+            row.original.currency_category == "A" ? "#10b981" : "#810c0cff",
+          fontWeight: 600,
+        }}
+      >
+        {row.original.currency_category === "A" ? "" : "$"}
+        {formatNumber(value)}
+      </span>
+    ),
   },
-
   {
     Header: "Trans. Type",
     accessor: "transaction_type",

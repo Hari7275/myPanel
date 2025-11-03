@@ -218,7 +218,7 @@ const AstrologerListingTable = () => {
         className="inputBox"
         placeholder="Search by Id"
         style={{
-          marginLeft: "25px",
+          // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
@@ -304,6 +304,7 @@ const AstrologerListingTable = () => {
           setPageSize={setPageSize}
           showTableHeading={false}
           includeCheckbox={false}
+          showGlobalSearch={false}
         />
         {data?.length === 0 && (
           <div>

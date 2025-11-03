@@ -42,6 +42,20 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["user"],
     }),
 
+    // create user basic info photo
+    createUserBasicInfoImage: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/user/profile/admin/upload-user-image/${id}`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+        },
+      }),
+      invalidatesTags: ["user"],
+    }),
+
     updateUserGalleryStatus: builder.mutation({
       query: ({ id, body }) => ({
         url: `/user/profile/update-image-status/${id}`,
@@ -105,6 +119,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
 export const {
   useUpdateUserGalleryMutation,
   useCreateUserGalleryMutation,
+  useCreateUserBasicInfoImageMutation,
   useUpdateUserGalleryStatusMutation,
   useUpdateUserProfilePicMutation,
   useUpdateUserVerificationStatusMutation,

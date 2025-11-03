@@ -229,7 +229,7 @@ const CoachListingTable = () => {
         className="inputBox"
         placeholder="Search by Id"
         style={{
-          marginLeft: "25px",
+          // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
@@ -308,6 +308,7 @@ const CoachListingTable = () => {
           setPageSize={setPageSize}
           showTableHeading={false}
           includeCheckbox={false}
+          showGlobalSearch={false}
         />
         {data?.length == 0 && (
           <span className="no-data-new">No Coach Avaliable</span>

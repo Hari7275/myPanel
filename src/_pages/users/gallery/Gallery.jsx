@@ -3,6 +3,7 @@ import UserRequestPhoto from "./userVerificationPhoto/UserRequestPhoto";
 
 import UserGallery from "./UserGalllery";
 import UserProfilePhoto from "./profilePhoto/ProfilePhoto";
+import UserBasicProfilePhoto from "./UserBasicProfilePhoto";
 
 const Gallery = () => {
   const [activeComponent, setActiveComponent] = useState("UserGallery");
@@ -20,8 +21,9 @@ const Gallery = () => {
             style={{ margin: "-20px 0px 20px -35px" }}
           >
             <div
-              className={`profile-link ${activeComponent === "UserGallery" ? "subactive" : ""
-                }`}
+              className={`profile-link ${
+                activeComponent === "UserGallery" ? "subactive" : ""
+              }`}
               onClick={() => handleComponentChange("UserGallery")}
             >
               {/* use this component */}
@@ -30,19 +32,30 @@ const Gallery = () => {
             </div>
 
             <div
-              className={`profile-link ${activeComponent === "UserRequestPhoto" ? "subactive" : ""
-                }`}
+              className={`profile-link ${
+                activeComponent === "UserRequestPhoto" ? "subactive" : ""
+              }`}
               onClick={() => handleComponentChange("UserRequestPhoto")}
             >
               <span>Verification Photo</span>
             </div>
 
             <div
-              className={`profile-link ${activeComponent === "ProfilePhoto" ? "subactive" : ""
-                }`}
+              className={`profile-link ${
+                activeComponent === "ProfilePhoto" ? "subactive" : ""
+              }`}
               onClick={() => handleComponentChange("ProfilePhoto")}
             >
               <span>profile Photo</span>
+            </div>
+
+            <div
+              className={`profile-link ${
+                activeComponent === "UserBasicProfilePhoto" ? "subactive" : ""
+              }`}
+              onClick={() => handleComponentChange("UserBasicProfilePhoto")}
+            >
+              <span>Basic profile Photo</span>
             </div>
           </header>
 
@@ -51,6 +64,9 @@ const Gallery = () => {
 
             {activeComponent === "UserGallery" && <UserGallery />}
             {activeComponent === "ProfilePhoto" && <UserProfilePhoto />}
+            {activeComponent === "UserBasicProfilePhoto" && (
+              <UserBasicProfilePhoto />
+            )}
           </div>
         </div>
       </>
