@@ -113,6 +113,20 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["user"],
     }),
+
+    // create user basic info photo
+
+    deleteUserBasicPhoto: builder.mutation({
+      query: ({ id }) => ({
+        url: `/user/profile/admin/delete-image/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+        },
+      }),
+      invalidatesTags: ["user"],
+    }),
   }),
 });
 
@@ -125,4 +139,5 @@ export const {
   useUpdateUserVerificationStatusMutation,
   useDeleteUserGalleryMutation,
   useUpdateUserFaceAreaMutation,
+  useDeleteUserBasicPhotoMutation
 } = userGalleryApiSlice;

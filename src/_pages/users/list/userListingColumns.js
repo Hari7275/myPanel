@@ -34,15 +34,15 @@ export const COLUMNS = (toggleModal) => [
         <div className="card-img">
           <img
             src={
-              row?.original?.profile_image
-                ? row?.original?.profile_image
+              row?.original?.profile_image_url
+                ? row?.original?.profile_image_url
                 : "avatar11.png"
             }
             alt="Avatar"
             width="40"
             height="40"
             onClick={() =>
-              toggleModal(row.original.profile_image || "avatar11.png")
+              toggleModal(row.original.profile_image_url || "avatar11.png")
             }
             style={{ cursor: "pointer" }}
           />
