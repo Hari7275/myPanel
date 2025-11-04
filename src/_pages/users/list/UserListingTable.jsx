@@ -106,7 +106,8 @@ const UserListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             <Link
-              to="/users_Profile"
+              // to="/users_Profile"
+              to={`/user/${row.original.id}`}
               state={{
                 currentPage: page,
                 pageSize: pageSize,

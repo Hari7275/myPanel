@@ -7,6 +7,7 @@ import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { SUBSCRIPTIONCOLUMN } from "./subscriptionColumn";
 import Description from "./Description";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const UserSubscription = () => {
   const [data, setData] = useState([]);
@@ -15,7 +16,8 @@ const UserSubscription = () => {
   const [subscriptionId, setSubscriptionId] = useState(null);
 
   // ✅ userId is already the correct ID
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   // Fetch full user details
   const { data: userData, isLoading } = useGetUserListQuery(userId);

@@ -16,8 +16,9 @@ const CustomIdCell = ({ value }) => {
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
   };
+
   return (
-    <Link to="/users_profile" onClick={handleUserClick}>
+    <Link to={`/user/${value}`} onClick={handleUserClick}>
       <span className="orderId-color">{value}</span>
     </Link>
   );

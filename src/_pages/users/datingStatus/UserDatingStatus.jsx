@@ -5,9 +5,12 @@ import { useSelector } from "react-redux";
 import EditUserDatingProfileStatus from "./EditUserDatingProfileStatus";
 import EditUserType from "./EditUserType";
 import UpdateRefferalCode from "./UpdateRefferalCode";
+import { useParams } from "react-router-dom";
 
 const UserDatingStatus = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
   const { data: fetchData } = useGetUserListQuery(userId);
 
   const [userData, setUserData] = useState(null);

@@ -218,7 +218,8 @@ export const COLUMNS = [
   {
     Header: "Action",
     Cell: ({ row }) => (
-      <Link to="/users_Profile">
+      // <Link to="/users_Profile">
+      <Link to={`/user/${value}`}>
         <div className="secondIcon">
           <ArrowRight />
         </div>

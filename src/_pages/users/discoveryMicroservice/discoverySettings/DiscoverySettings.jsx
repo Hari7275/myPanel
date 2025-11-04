@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { TextSetting } from "../../../../_components/ui/inputForm";
 import { useGetUserdescoverysettingsListQuery } from "../../../../_store/api";
+import { useParams } from "react-router-dom";
 
 const DiscoverySettings = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const { data: fetchData } = useGetUserdescoverysettingsListQuery(userId);
   const [result, setResult] = useState(null);

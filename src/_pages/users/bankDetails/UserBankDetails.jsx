@@ -4,9 +4,11 @@ import { useGetUserBankListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Pencil } from "lucide-react";
 import UpdateAccountStatus from "./UpdateAccountStatus";
+import { useParams } from "react-router-dom";
 
 const UserBankDetails = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const [data, setData] = useState([]);
   const [showAccountStatus, setShowAccountStatus] = useState(false);

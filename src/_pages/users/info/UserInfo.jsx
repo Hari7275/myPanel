@@ -6,8 +6,12 @@ import UpdateUserInfo from "./UpdateUserInfo";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
+
 const UserInfo = () => {
-  const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
+  // const userId = useSelector((state) => state.user.userData);
 
   const { data: fetchData, isLoading } = useGetUserListQuery(userId);
 
@@ -33,8 +37,6 @@ const UserInfo = () => {
     setShowUpdateUserInfo(!showUpdateUserInfo);
     setSelectedData(data?.profileDetails);
   };
-
-  console.log("selectedData....", selectedData);
 
   return (
     <div className="main-container profile-right-sub-container">

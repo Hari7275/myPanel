@@ -4,10 +4,12 @@ import { useUpdateUserRefferalCodeMutation } from "../../../_store/api";
 
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const UpdateRefferalCode = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateUserRefferalCodeMutation();

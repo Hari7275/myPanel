@@ -3,10 +3,12 @@ import ReactModal from "react-modal";
 import { useUpdateUserTypeMutation } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const EditUserType = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateUserTypeMutation();
@@ -65,7 +67,7 @@ const EditUserType = ({ isOpen, onClose, selectedRow }) => {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: 'center'
+            alignItems: "center",
           }}
         >
           <div className="input-container">

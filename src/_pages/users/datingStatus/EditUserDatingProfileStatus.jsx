@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useUpdateUserDatingStatusMutation } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateUserDatingStatusMutation();
@@ -54,8 +56,7 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
           style={{
             display: "flex",
             justifyContent: "center",
-            alignItems: 'center'
-
+            alignItems: "center",
           }}
         >
           <div className="input-container">

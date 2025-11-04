@@ -8,13 +8,15 @@ import AddRechargePlan from "./AddRechargePlan";
 import { Atom } from "react-loading-indicators";
 import UserRechargeFilter from "./UserRechargeFilter";
 import Button from "@mui/material/Button";
+import { useParams } from "react-router-dom";
 
 const UserTransactionList = () => {
   const [addData, setAddData] = useState(false);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const [result, setResult] = useState([]);
   const columns = useMemo(() => USERTRANSACTIONCOLUMN, []);

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 
-
 import { useGetParticularUserDeviceTokenQuery } from "../../../_store/api";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -18,8 +18,10 @@ const InfoItem = ({ label, value }) => (
 );
 
 const ParticularUserDeviceInfo = () => {
-  const userId = useSelector((state) => state.user.userData);
-  
+  const { userId } = useParams();
+
+  // const userId = useSelector((state) => state.user.userData);
+
   const { data: fetchData, isLoading } =
     useGetParticularUserDeviceTokenQuery(userId);
   const [deviceInfo, setDeviceInfo] = useState(null);

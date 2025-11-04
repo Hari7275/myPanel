@@ -7,9 +7,11 @@ import { useGetUserVerificationListQuery } from "../../../../_store/api";
 import UserVerificationSettings from "./UserVerificationSettings";
 
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const UserRequestPhoto = () => {
-  const userId = useSelector((state) => state?.user?.userData);
+  // const userId = useSelector((state) => state?.user?.userData);
+  const { userId } = useParams();
 
   const { data: fetchData } = useGetUserVerificationListQuery(userId);
 

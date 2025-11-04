@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import moment from "moment-timezone";
+import { useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -25,7 +26,9 @@ export const formatDate = (date) => {
 };
 
 const UserOverview = () => {
-  const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
+  // const userId = useSelector((state) => state.user.userData);
 
   const { data: fetchData, isLoading } = useGetUserListQuery(userId);
 
@@ -164,10 +167,7 @@ const UserOverview = () => {
               value={userData?.is_in_spotlight ? "Yes" : "No"}
             />
             <div className="line"></div>
-            <InfoItem
-              label="Referral Code  "
-              value={userData?.referral_code }
-            />
+            <InfoItem label="Referral Code  " value={userData?.referral_code} />
             <div className="line"></div>
 
             {/* <InfoItem

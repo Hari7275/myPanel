@@ -8,6 +8,7 @@ import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -43,7 +44,10 @@ const calculateAge = (dob) => {
 };
 
 const UserDetailsComponent = () => {
-  const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+  // const userId = useSelector((state) => state.user.userData);
+
+  console.log("userId", userId);
 
   const { data: fetchData, isLoading } = useGetUserListQuery(userId);
   const [userData, setUserData] = useState(null);
@@ -98,8 +102,8 @@ const UserDetailsComponent = () => {
           {/* {userData.profile_images.length > 0 && ( */}
           <img
             className="profile-img"
-            // src={userData?.profile_images[0]?.url || "avatar11.png"}
-            src={userData?.profileDetails?.profile_image_url || "avatar11.png"}
+            src={userData?.profile_images[0]?.url || "avatar11.png"}
+            // src={userData?.profileDetails?.profile_image_url || "avatar11.png"}
             alt="user Profile"
             onClick={() =>
               openImageModal(

@@ -22,7 +22,7 @@ const Navbar = () => {
     "/user": "User List",
     "/untracked-user": "Guest User Device Info",
     "/user-device-info": "Register User Device Info",
-    "/users_Profile": "User Details",
+    "/user/:id": "User Details",
     "/coaches": "Coach List",
     "/auth-consultant": "Unregistered Consultant List",
     "/consultant-device-info": "Consultant Device Info",

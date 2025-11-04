@@ -42,7 +42,8 @@ const CustomIdCell = ({ value, row }) => {
   };
   return (
     <Link
-      to="/users_Profile"
+      // to="/users_Profile"
+      to={`/user/${value}`}
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleUserClick}
@@ -183,7 +184,6 @@ export const COLUMNORDER = [
   },
 
   {
-  
     Header: "Duration(min)",
     accessor: "actual_duration",
   },

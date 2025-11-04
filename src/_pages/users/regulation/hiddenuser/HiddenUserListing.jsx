@@ -9,12 +9,14 @@ import {
 } from "../../../../_store/api/user/blacklistedUser";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const HiddenUserListing = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [result, setResult] = useState([]);
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const {
     data: fetchData,

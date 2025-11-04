@@ -6,10 +6,12 @@ import EventsParticipantsModal from "./EventsParticipantsModal";
 import { useGetQDEventsListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const QuickDateEvents = () => {
   const [selectedRow, setSelectedRow] = useState(null);
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
 
   const {
     data: fetchData,

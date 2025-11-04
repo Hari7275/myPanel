@@ -15,9 +15,12 @@ import { useSelector } from "react-redux";
 
 import MyGallery from "../../../_constants/MyGallery";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const UserBasicProfilePhoto = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
   const { data: fetchData } = useGetUserListQuery(userId);
   const [addImage, { isLoading }] = useCreateUserBasicInfoImageMutation();
 
@@ -42,7 +45,9 @@ const UserBasicProfilePhoto = () => {
       const userId = fetchData?.data?.profileDetails?.id;
 
       // Ensure imageUrls is always an array
-      setImageUrls(Array.isArray(urls) ? urls : urls ? [{ url: urls, id: userId }] : []);
+      setImageUrls(
+        Array.isArray(urls) ? urls : urls ? [{ url: urls, id: userId }] : []
+      );
       setInfoUserId(userId);
     }
   }, [fetchData]);
@@ -82,13 +87,13 @@ const UserBasicProfilePhoto = () => {
 
         if (response?.status) {
           toast.success(response.message);
-          
+
           // Add the new image with proper structure
           const newImage = {
             url: response?.data?.url || URL.createObjectURL(file),
             id: response?.data?.id || Date.now(),
           };
-          
+
           setImageUrls((prevUrls) => [...prevUrls, newImage]);
         } else {
           toast.error(response.message);
@@ -148,7 +153,10 @@ const UserBasicProfilePhoto = () => {
     <>
       {showGallery && (
         <div className="gallery-modal" onClick={() => setShowGallery(false)}>
-          <div className="gallery-modal-content" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="gallery-modal-content"
+            onClick={(e) => e.stopPropagation()}
+          >
             <MyGallery images={imageUrls} initialIndex={currentImageIndex} />
           </div>
         </div>
@@ -176,7 +184,7 @@ const UserBasicProfilePhoto = () => {
                   <span style={{ fontSize: "35px", cursor: "pointer" }}>+</span>
                 </div>
               </div>
-              
+
               {imageUrls?.map((photo, index) => (
                 <div className="image-container" key={photo.id || index}>
                   <img
@@ -199,7 +207,7 @@ const UserBasicProfilePhoto = () => {
             </div>
           </div>
         </div>
-        
+
         {showImageCropper && selectedRow && (
           <ImageCropper
             isOpen={showImageCropper}
@@ -210,7 +218,7 @@ const UserBasicProfilePhoto = () => {
             onUpdate={handleImageUpdate}
           />
         )}
-        
+
         {showDeleteComponent && selectedRow && (
           <DeleteComponent
             isOpen={showDeleteComponent}

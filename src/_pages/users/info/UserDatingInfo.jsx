@@ -7,8 +7,12 @@ import UpdateDatingInfo from "./UpdateDatingInfo";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
+
 const UserDatingInfo = () => {
-  const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
+  // const userId = useSelector((state) => state.user.userData);
 
   const { data: fetchData, isLoading } = useGetUserListQuery(userId);
 

@@ -13,7 +13,8 @@ const CustomIdCell = ({ value }) => {
   };
   return (
     <Link
-      to="/users_Profile"
+      // to="/users_Profile"
+      to={`/user/${value}`}
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >

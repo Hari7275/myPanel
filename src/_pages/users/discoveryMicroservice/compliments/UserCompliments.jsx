@@ -4,9 +4,12 @@ import { COMPLIMENTSCOLUMN } from "./userComplimentsColumn";
 import { useSelector } from "react-redux";
 import { useGetUserComplimentListQuery } from "../../../../_store/api/user/discovery";
 import { Atom } from "react-loading-indicators";
+import { useParams } from "react-router-dom";
 
 const UserCompliments = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+    const { userId } = useParams();
+  
 
   const [data, setData] = useState([]);
   const {

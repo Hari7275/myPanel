@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 import ImageCropper from "../ImageCropper";
 import toast from "react-hot-toast";
 import DeleteComponent from "../../../payments/DeleteComponent";
+import { useParams } from "react-router-dom";
 
 // Component to display cropped face area
 const FaceAreaImage = ({ imageUrl, faceArea }) => {
@@ -75,7 +76,9 @@ const FaceAreaImage = ({ imageUrl, faceArea }) => {
 };
 
 const UserProfilePhoto = () => {
-  const userId = useSelector((state) => state?.user?.userData);
+  // const userId = useSelector((state) => state?.user?.userData);
+  const { userId } = useParams();
+
   const { data: fetchData } = useGetUserListQuery(userId);
   const [openSetting, setOpenSetting] = useState(false);
   const [imageUrls, setImageUrls] = useState([]);

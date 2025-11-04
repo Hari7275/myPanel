@@ -150,15 +150,22 @@ const Layout = () => (
 
           {/* <Route path="/user" element={<UserListingTable />} /> */}
 
-          <Route
+          {/* <Route
             path="/user"
             element={
               <PrivateRoute
                 element={<UserListingTable />}
-                requiredPermissions={["view_coaches"]}
+                // requiredPermissions={["view_coaches"]}
               />
             }
+          /> */}
+          <Route
+            path="/user"
+            element={<PrivateRoute element={<UserListingTable />} />}
           />
+          <Route path="/user/:userId" element={<UsersProfile />} />
+
+          {/* <Route path="users_Profile" element={<UsersProfile />} /> */}
           <Route path="untracked-user" element={<UntrackedUser />} />
           <Route path="user-device-info" element={<UserDeviceInfo />} />
           {/* <Route path="coaches" element={<CoachListingTable />} /> */}
@@ -190,7 +197,7 @@ const Layout = () => (
           <Route path="gift" element={<GiftLists />} />
 
           <Route path="coach-profile" element={<CoachProfile />} />
-          <Route path="users_Profile" element={<UsersProfile />} />
+
           <Route path="listener_Profile" element={<ListenersProfile />} />
           <Route path="astrologer_Profile" element={<AstrologerProfile />} />
           {/*    ********************************************************user interest **************************************************************************  */}

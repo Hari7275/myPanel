@@ -14,9 +14,12 @@ import { useSelector } from "react-redux";
 import { saveAs } from "file-saver";
 import MyGallery from "../../../_constants/MyGallery";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const UserGallery = () => {
-  const userId = useSelector((state) => state.user.userData);
+  // const userId = useSelector((state) => state.user.userData);
+  const { userId } = useParams();
+
   const { data: fetchData } = useGetUserListQuery(userId);
   const [addImage, { isLoading }] = useCreateUserGalleryMutation();
   const [deleteImage] = useDeleteUserGalleryMutation();

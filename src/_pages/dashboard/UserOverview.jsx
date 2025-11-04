@@ -40,14 +40,14 @@ const UserOverview = () => {
         >
           {overviewItems?.map((item) => (
             <div key={item.name} className="hover-card-category">
-              <Link to={`/user?pageSize=${item.value}`}>
-                <CategoryCard
-                  key={item.name}
-                  label={item.name}
-                  value={item.value}
-                  bgcolor={item.color}
-                />
-              </Link>
+              {/* <Link to={`/user?pageSize=${item.value}`}> */}
+              <CategoryCard
+                key={item.name}
+                label={item.name}
+                value={item.value}
+                bgcolor={item.color}
+              />
+              {/* </Link> */}
             </div>
           ))}
         </div>
