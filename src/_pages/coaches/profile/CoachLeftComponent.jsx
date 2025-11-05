@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
-import CoachStatus from "../status/CoachStatus";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
-import {
-  getGenderLabel,
-  getMaritalStatus,
-} from "../../../_constants/consultantConstant";
 import { Pencil } from "lucide-react";
 import { Atom } from "react-loading-indicators";
-
-import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
-
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 import { useLocation, useParams } from "react-router-dom";
 
@@ -51,7 +43,6 @@ const calculateAge = (dob) => {
 };
 
 const CoachLeftComponent = () => {
-  // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
 
   const [data, setData] = useState({});

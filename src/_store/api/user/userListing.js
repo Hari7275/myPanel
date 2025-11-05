@@ -76,7 +76,7 @@ export const userListingSlice = apiSlice.injectEndpoints({
     //   }),
     //   invalidatesTags: ["user"],
     // }),
-    //****************** */ update user refferal code
+    //****************** */ update user referral code
     updateUserRefferalCode: builder.mutation({
       query: ({ user_id, body }) => ({
         url: `api/v1/user/auth/update-referral-code/${user_id}`,

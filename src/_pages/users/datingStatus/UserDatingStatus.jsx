@@ -162,7 +162,7 @@ const UserDatingStatus = () => {
         </footer>
       </div>
 
-      {/* update promo refferal code */}
+      {/* update promo referral code */}
 
       <div className="profile-sub-container  profile-right-sub-container">
         <h2
@@ -175,7 +175,7 @@ const UserDatingStatus = () => {
             fontSize: "26px",
           }}
         >
-          User Refferal code:
+          User Referral code:
         </h2>
 
         {/* <Settings /> */}
@@ -188,7 +188,7 @@ const UserDatingStatus = () => {
             <div className="card-footer-content">
               <div className="info-pair">
                 <p className="info-item">
-                  <strong>Refferal code: </strong>
+                  <strong>Referral code: </strong>
                   <span>{userData?.referral_code}</span>
                 </p>
               </div>

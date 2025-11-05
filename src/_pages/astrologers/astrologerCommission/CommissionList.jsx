@@ -4,7 +4,7 @@ import { Pencil, NotebookPen } from "lucide-react";
 
 import { COMMISSIONCOLUMN } from "./commissionColumn";
 import { useGetCommissionListQuery } from "../../../_store/api";
-import { useSelector } from "react-redux";
+
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { useSearchParams } from "react-router-dom";
@@ -18,17 +18,11 @@ const CommissionList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
-  const [searchParams] = useSearchParams();
+ 
   const [addData, setAddData] = useState(false);
   const permissions = usePermissions();
 
-  // const url = window.location.href;
 
-  // console.log("window.location.href", url.split("?"));
-
-  // const consultantId = useSelector(
-  //   (state) => state?.consultant?.consultantData
-  // );
   const { consultantId } = useParams();
 
   const {
@@ -129,7 +123,7 @@ const CommissionList = () => {
         columns={columns}
         data={data}
         includeCheckbox={false}
-        tableTitle="Commission "
+        tableTitle="Commission"
         AddPackageButton={AddButton}
       />
       {showEditStatus && (

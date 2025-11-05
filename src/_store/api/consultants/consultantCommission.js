@@ -5,7 +5,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCommissionList: builder.query({
       query: (consultantId) => ({
-        // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,
+        // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,,
         url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/${consultantId}?page=1&limit=100`,
         method: "GET",
         headers: {
@@ -13,7 +13,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
           Authorization: getAdminToken(),
         },
       }),
-      providesTags: ["commission"],
+      providesTags: ["commission", "consultants"],
     }),
 
     createCommission: builder.mutation({
@@ -26,7 +26,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["commission"],
+      invalidatesTags: ['commission', 'consultants'],
     }),
 
     updateCommission: builder.mutation({
@@ -38,7 +38,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["commission"],
+      invalidatesTags: ['commission', 'consultants'],
     }),
 
     deleteCommission: builder.mutation({
@@ -49,7 +49,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      invalidatesTags: ["commission"],
+      invalidatesTags: ['commission', 'consultants']
     }),
   }),
 });

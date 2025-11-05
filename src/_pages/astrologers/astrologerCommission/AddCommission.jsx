@@ -98,7 +98,6 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
         },
       }).unwrap();
 
-      console.log("responsw", response);
 
       if (response.status) {
         toast.success(response?.message);
@@ -241,7 +240,7 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
             type="button"
             onClick={onClose}
             className="fifthButton"
-            style={{ padding: "8px 16px", backgroundColor: 'red' }}
+            style={{ padding: "8px 16px", backgroundColor: "red" }}
           >
             Cancel
           </button>

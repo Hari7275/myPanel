@@ -70,14 +70,17 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
               aria-describedby="status-desc"
             >
               <option value="">Select Status</option>
+
+              <option value="1">Uncreated</option>
               <option value="2">Active</option>
               <option value="3">Inactive</option>
               <option value="4">Blocked</option>
               <option value="5">Suspended</option>
               <option value="6">Terminated</option>
-              {/* <option value="9">Terminated</option> */}
+              <option value="7">Deleted</option>
+              <option value="8">Pause</option>
+              <option value="9">Under Review</option>
               <option value="10">Rejected</option>
-              {/* <option value="7">Deleted</option> */}
             </select>
             <p style={{ margin: "20px 20px" }}>Select a status for the User.</p>
           </div>
@@ -116,7 +119,7 @@ const EditUserDatingProfileStatus = ({ isOpen, onClose, selectedRow }) => {
         </form>
         {updateError && (
           <p style={{ color: "red" }}>
-            {updateError.data?.message || "Failed to update status."}
+            {updateError?.data?.message || "Failed to update status."}
           </p>
         )}
       </div>

@@ -173,7 +173,7 @@ input::-ms-input-placeholder {
 .tableHeadingDiv,
 table th {
   color: #080710b8;
-  background-color: #e6e6e6;
+  background-color: #cccccc;
 }
 
 /* FOR ORDER TABLE */
