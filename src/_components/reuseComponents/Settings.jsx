@@ -3,10 +3,12 @@ import { useSelector } from "react-redux";
 import { TextSetting } from "../ui/inputForm";
 import { useGetConsultantsSettingsQuery } from "../../_store/api";
 import { Atom } from "react-loading-indicators";
+import { useLocation, useParams } from "react-router-dom";
 
 const Settings = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData, isLoading } = useGetConsultantsSettingsQuery({
     consultantId,

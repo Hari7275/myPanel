@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import "../CategoriesList.css";
 import { useGetFluteMostActiveConsultantQuery } from "../../../_store/api";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 
 export const CategoryCard = ({ src, count, text }) => (
   <div>
@@ -22,27 +20,19 @@ export const CategoryCard = ({ src, count, text }) => (
 const TopActiveConsultants = () => {
   const [activeConsultant, setActiveConsultant] = useState([]);
   const { data: fetchData } = useGetFluteMostActiveConsultantQuery();
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (fetchData && fetchData?.data) {
-      setActiveConsultant(fetchData?.data);
+    if (fetchData?.data) {
+      setActiveConsultant(fetchData.data);
     } else {
       setActiveConsultant([]);
     }
   }, [fetchData]);
 
-  // Navigation route map
-  const navigationRoute = {
-    1: "/astrologer_Profile",
-    2: "/coach-profile",
-    3: "/listener_Profile",
-  };
-
   return (
     <div style={{ width: "100%", height: "auto" }}>
       <div className="top-active-consultant">
-        <h2> Top Active Consultants</h2>
+        <h2>Top Active Consultants</h2>
       </div>
 
       {/* Image Section...................................... */}
@@ -50,16 +40,20 @@ const TopActiveConsultants = () => {
         {activeConsultant?.map((item) => {
           const consultantType = item?.consultant?.consultant_type;
           const consultantId = item?.consultant_id;
-          const route =
-            consultantType && navigationRoute[consultantType]
-              ? `${navigationRoute[consultantType]}?${consultantId}`
-              : "/";
+
+          // ✅ Build dynamic route based on type
+          const navigationRoute = {
+            1: `/astrologer/${consultantId}`,
+            2: `/coaches/${consultantId}`,
+            3: `/listeners/${consultantId}`,
+          };
+
+          const route = consultantType && navigationRoute[consultantType];
 
           return (
             <Link
               key={item?.id}
               to={route}
-              onClick={() => dispatch(setCurrentConsultant(consultantId))}
               style={{
                 textDecoration: "none",
                 color: "inherit",

@@ -66,10 +66,16 @@ const ConsultantNavigationCell = ({ value, row }) => {
     dispatch(setCurrentConsultant(value));
   };
 
+  // const navigationRoute = {
+  //   1: "/astrologer_Profile",
+  //   2: "/coach-profile",
+  //   3: "/listener_Profile",
+  // };
+
   const navigationRoute = {
-    1: "/astrologer_Profile",
-    2: "/coach-profile",
-    3: "/listener_Profile",
+    1: `/astrologer/${value}`,
+    2: `/coaches/${value}`,
+    3: `/listeners/${value}`,
   };
 
   // Define type labels
@@ -81,16 +87,14 @@ const ConsultantNavigationCell = ({ value, row }) => {
 
   const displayType = typeLabel[consultantType] || "";
   // Get the route based on consultant type
-  const route =
-    consultantType && navigationRoute[consultantType]
-      ? `${navigationRoute[consultantType]}?${value}`
-      : "";
+  const route = consultantType && navigationRoute[consultantType];
+
   return (
     <Link
       to={route}
       target="_blank"
       rel="noopener noreferrer"
-      onClick={handleConsultantClick}
+      // onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
       <span style={{ cursor: "pointer", color: "#be5b18ff" }}>

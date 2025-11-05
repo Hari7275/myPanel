@@ -5,6 +5,7 @@ import { useGetParticularConsultantsDeviceTokenQuery } from "../../_store/api";
 import { format } from "date-fns";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -18,9 +19,11 @@ const InfoItem = ({ label, value }) => (
 );
 
 const ConsultantDeviceInfo = () => {
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
+
   console.log("consultantId", consultantId);
   const { data: fetchData, isLoading } =
     useGetParticularConsultantsDeviceTokenQuery(consultantId);

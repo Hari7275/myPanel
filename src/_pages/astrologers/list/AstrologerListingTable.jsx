@@ -94,7 +94,6 @@ const AstrologerListingTable = () => {
   };
 
   const handleActionClick = (data) => {
-    console.log("sdfffsdff", data);
     dispatch(setCurrentConsultant(data?.id));
     dispatch(setCurrentProfileStatus(data?.status));
     dispatch(setConsultantType(data?.phone_code));
@@ -119,29 +118,25 @@ const AstrologerListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {/* <Link to={`/astrologer_Profile?${row?.original?.id}`}> */}
             {permissions?.["astrologer"]?.includes(
               "view_astrologer_profile"
             ) && (
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
+              <Link
+                to={`/astrologer/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
               >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => {
-                    handleActionClick(row.original);
-                    setQueryParams(row.original.id);
+                <span
+                  title="View details"
+                  className="secondIcon"
+                  style={{
+                    display: "inline-block",
+                    height: "35px",
+                    width: "35px",
                   }}
-                />
-              </span>
+                >
+                  <ArrowRight className="iconSmall" />
+                </span>
+              </Link>
             )}
-            {/* </Link> */}
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["astrologer"]?.includes(
@@ -158,7 +153,7 @@ const AstrologerListingTable = () => {
         ),
       },
     ],
-    [handleActionClick, toggleEditStatus]
+    [ toggleEditStatus]
   );
 
   // Apply debounce to search handlers

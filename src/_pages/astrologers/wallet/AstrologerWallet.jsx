@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
+import { useParams } from "react-router-dom";
 
 const AstrologerWallet = () => {
   const [data, setData] = useState([]);
@@ -15,9 +16,10 @@ const AstrologerWallet = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
 
   const { data: fetchData, isLoading } = useGetConsultantsWalletQuery({
     consultantId,

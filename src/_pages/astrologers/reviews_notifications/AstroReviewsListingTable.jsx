@@ -15,6 +15,7 @@ import AstroNotificationsListingTable from "./AstroNotificationsListingTable";
 import { useSelector } from "react-redux";
 import Description from "./Description";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstroReviewsListingTable = () => {
   const [addReview, setAddReview] = useState(false);
@@ -23,7 +24,9 @@ const AstroReviewsListingTable = () => {
   const [description, setDescription] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);

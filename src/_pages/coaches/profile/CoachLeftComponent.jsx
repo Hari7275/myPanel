@@ -13,8 +13,9 @@ import { Atom } from "react-loading-indicators";
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -50,7 +51,8 @@ const calculateAge = (dob) => {
 };
 
 const CoachLeftComponent = () => {
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const [data, setData] = useState({});
   const { openImageModal, ImageModal } = UseImageModal();
@@ -61,7 +63,10 @@ const CoachLeftComponent = () => {
   const location = useLocation();
 
   console.log("location", location);
-  const profileStatus = useSelector((state) => state.consultant.profileStatus);
+  // const profileStatus = useSelector((state) => state.consultant.profileStatus);
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const profileStatus = params.get("status");
 
   const {
     data: fetchData,
@@ -135,9 +140,9 @@ const CoachLeftComponent = () => {
 
           <img
             className="profile-img"
-            src={urls || "avatar11.png"}
+            src={urls || "/avatar11.png"}
             alt="astrologer Profile"
-            onClick={() => openImageModal(urls || "avatar11.png")}
+            onClick={() => openImageModal(urls || "/avatar11.png")}
             style={{ cursor: "pointer" }}
           />
         </div>
@@ -224,19 +229,31 @@ const CoachLeftComponent = () => {
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
         {socialMediaLinks.facebook && (
-          <a href={socialMediaLinks.facebook} className="fa fa-facebook" target="blank">
+          <a
+            href={socialMediaLinks.facebook}
+            className="fa fa-facebook"
+            target="blank"
+          >
             <Facebook />
           </a>
         )}
 
         {socialMediaLinks.instagram && (
-          <a href={socialMediaLinks.instagram} className="fa fa-instagram" target="blank">
+          <a
+            href={socialMediaLinks.instagram}
+            className="fa fa-instagram"
+            target="blank"
+          >
             <Instagram />
           </a>
         )}
 
         {socialMediaLinks.linkedin && (
-          <a href={socialMediaLinks.linkedin} className="fa fa-linkedin" target="blank">
+          <a
+            href={socialMediaLinks.linkedin}
+            className="fa fa-linkedin"
+            target="blank"
+          >
             <Linkedin />
           </a>
         )}
@@ -248,7 +265,11 @@ const CoachLeftComponent = () => {
         )}
 
         {socialMediaLinks.youtube && (
-          <a href={socialMediaLinks.youtube} className="fa fa-youtube" target="blank">
+          <a
+            href={socialMediaLinks.youtube}
+            className="fa fa-youtube"
+            target="blank"
+          >
             <Youtube />
           </a>
         )}

@@ -11,6 +11,7 @@ import {
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);
@@ -18,7 +19,9 @@ const CoachAccountList = () => {
   const [paypalData, setPaypalData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
 
   const { data: fetchData } = useGetConsultantsBankDetailsQuery(consultantId);

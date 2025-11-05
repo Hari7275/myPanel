@@ -18,6 +18,7 @@ import MyGallery from "../../../_constants/MyGallery";
 import toast from "react-hot-toast";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import ProfilePhoto from "../../astrologers/gallery/ProfilePhoto";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -36,7 +37,8 @@ const CoachGallery = () => {
 
   const fileInputRef = useRef(null);
 
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
 

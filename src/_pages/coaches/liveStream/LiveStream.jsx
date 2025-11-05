@@ -10,6 +10,7 @@ import { useGetLiveStreamListQuery } from "../../../_store/api";
 import EditLiveStreamStatus from "../../../_components/reuseComponents/EditLiveStreamStatus";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { Atom } from "react-loading-indicators";
+import { useLocation, useParams } from "react-router-dom";
 
 const LiveStream = () => {
   const [data, setData] = useState([]);
@@ -19,7 +20,9 @@ const LiveStream = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const {
     data: fetchData,
     isLoading,

@@ -10,13 +10,16 @@ import {
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
   const [showUpdateInfo, setShowUpdateInfo] = useState(false);
   const [formData, setFormData] = useState(null);
   // const [category, setCategory] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
 
   const { data: fetchdata, isLoading } =
@@ -57,7 +60,9 @@ const ListenerInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
-            {permissions?.["listener"]?.includes("update_listener_profile_info") && (
+            {permissions?.["listener"]?.includes(
+              "update_listener_profile_info"
+            ) && (
               <span
                 className="editIcon"
                 onClick={() => toggleUpdateInfo(formData)}

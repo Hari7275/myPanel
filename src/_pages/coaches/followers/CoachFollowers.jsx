@@ -3,10 +3,13 @@ import CommonTable from "../../../_components/table/CommonTable";
 import { FOLLOWERSCOLUMN } from "./coachFollowersColumns";
 import { useGetConsultantsFollowerQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachFollowers = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const { data: fetchData } = useGetConsultantsFollowerQuery(consultantId);
 
   useEffect(() => {

@@ -3,11 +3,11 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { format } from "date-fns";
 import { formatDate } from "../../users/overview/UserOverview";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -22,7 +22,9 @@ const InfoItem = ({ label, value, color }) => (
 
 const ListenerOverview = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
 
   const {

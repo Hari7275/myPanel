@@ -228,6 +228,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 import { Switch } from "@mui/material";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const availableStatus = {
   0: "Offline",
@@ -239,7 +240,8 @@ const availableStatus = {
 const CoachServiceStatus = () => {
   const [data, setData] = useState([]);
   const [alignment, setAlignment] = useState({});
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
   const permissions = usePermissions();
   const [updateDisplayStatus] = useUpdateConsultantServiceStatusMutation();
   const [loading, setLoading] = useState(false);

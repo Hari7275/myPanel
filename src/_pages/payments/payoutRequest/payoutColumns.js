@@ -20,21 +20,19 @@ const ConsultantNavigationCell = ({ value, row }) => {
     dispatch(setCurrentConsultant(value));
   };
 
-  const navigationRoute = {
-    1: "/astrologer_Profile",
-    2: "/coach-profile",
-    3: "/listener_Profile",
+    const navigationRoute = {
+    1: `/astrologer/${value}`,
+    2: `/coaches/${value}`,
+    3: `/listeners/${value}`,
   };
   // Get the route based on consultant type
 
-  const route =
-    consultantType && navigationRoute[consultantType]
-      ? `${navigationRoute[consultantType]}?${value}`
-      : "";
+  const route = consultantType && navigationRoute[consultantType];
+
   return (
     <Link
       to={route}
-      onClick={handleConsultantClick}
+      // onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
       <span style={{ cursor: "pointer", color: "#be5b18ff" }}>

@@ -4,6 +4,7 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { CategoryCard } from "../../dashboard/DashboardSubPage";
 
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -18,7 +19,8 @@ const InfoItem = ({ label, value }) => (
 
 const WalletDetails = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const {
     data: fetchData,
@@ -47,7 +49,7 @@ const WalletDetails = () => {
     return colorMap[label] || "#F5F5F5"; // Default light gray
   };
 
- const cardData = [
+  const cardData = [
     {
       label: "Today Earning",
       value: data?.walletDetails?.today_earning || "0",
@@ -82,7 +84,7 @@ const WalletDetails = () => {
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <div
           className="dashboard-card-container-grid"
-          style={{ margin: "10px 0" , height:"60vh" , overflow:"scroll" }}
+          style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
         >
           {cardData.map((card, index) => (
             <CategoryCard

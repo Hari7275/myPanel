@@ -8,10 +8,13 @@ import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import AddListenerReview from "../reviews_notification/AddListenerReview";
 import { Pencil } from "lucide-react";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenerOrder = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);

@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import UpdateProgressLevel from "./UpdateProgressLevel";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const ConlstProfileProgressList = () => {
   const [data, setData] = useState([]);
@@ -15,9 +16,12 @@ const ConlstProfileProgressList = () => {
 
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+
+  const { consultantId } = useParams();
+
   const {
     data: fetchData,
     isLoading,
@@ -36,35 +40,43 @@ const ConlstProfileProgressList = () => {
     setShowConsultantPrice(!showConsultantEditPrice);
   };
 
-  const columns = useMemo(() => [
-    ...PROGRESSCOLUMN,
-    {
-      Header: () => <div className="actions-header">Actions</div>,
-      id: "actions",
-      Cell: ({ row }) => {
-        const canEdit = {
-          astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_onboarding_progress"),
-          coach: permissions?.["coach"]?.includes("update_coach_profile_onboarding_progress"),
-          listener: permissions?.["listener"]?.includes("update_listener_profile_onboarding_progress"),
-        };
-        const hashEditPermissions = Object.values(canEdit).some(Boolean);
+  const columns = useMemo(
+    () => [
+      ...PROGRESSCOLUMN,
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) => {
+          const canEdit = {
+            astrologer: permissions?.["astrologer"]?.includes(
+              "update_astrologer_profile_onboarding_progress"
+            ),
+            coach: permissions?.["coach"]?.includes(
+              "update_coach_profile_onboarding_progress"
+            ),
+            listener: permissions?.["listener"]?.includes(
+              "update_listener_profile_onboarding_progress"
+            ),
+          };
+          const hashEditPermissions = Object.values(canEdit).some(Boolean);
 
-        return (
-          <div className="actions-cell">
-            {row.original.status !== "completed" && hashEditPermissions && (
-              <span
-                className="editIcon"
-                onClick={() => toggleUpdateConsultantPrice(row?.original)}
-              >
-                <Pencil className="iconSmall" />
-              </span>
-            )
-            }
-          </div>
-        )
+          return (
+            <div className="actions-cell">
+              {row.original.status !== "completed" && hashEditPermissions && (
+                <span
+                  className="editIcon"
+                  onClick={() => toggleUpdateConsultantPrice(row?.original)}
+                >
+                  <Pencil className="iconSmall" />
+                </span>
+              )}
+            </div>
+          );
+        },
       },
-    },
-  ], [permissions]);
+    ],
+    [permissions]
+  );
 
   if (isLoading) {
     return (

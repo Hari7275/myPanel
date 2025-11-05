@@ -10,6 +10,7 @@ import {
   useGetConsultantsPayPalDetailsQuery,
 } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerAccountList = () => {
   const [showBankDetails, setShowBankDetails] = useState(false);
@@ -17,9 +18,11 @@ const AstrologerAccountList = () => {
   const [paypalData, setPaypalData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetConsultantsBankDetailsQuery(consultantId);
   const { data: payPalData } =
@@ -33,8 +36,7 @@ const AstrologerAccountList = () => {
     }
   }, [fetchData]);
 
-
-  console.log("data",data)
+  console.log("data", data);
 
   useEffect(() => {
     if (payPalData && payPalData?.data) {

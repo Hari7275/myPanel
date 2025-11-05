@@ -8,13 +8,16 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import Discriptions from "./Discriptions";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);

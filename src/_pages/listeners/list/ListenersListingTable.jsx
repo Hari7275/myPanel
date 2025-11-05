@@ -99,23 +99,23 @@ const ListenersListingTable = () => {
     setSelectedRow(row);
   };
 
-  const handleActionClick = (data) => {
-    dispatch(setCurrentConsultant(data?.id));
-    dispatch(setCurrentProfileStatus(data?.status));
-    dispatch(setConsultantType(data?.phone_code));
+  // const handleActionClick = (data) => {
+  //   dispatch(setCurrentConsultant(data?.id));
+  //   dispatch(setCurrentProfileStatus(data?.status));
+  //   dispatch(setConsultantType(data?.phone_code));
 
-    // Use setTimeout or batch it after dispatch
-    console.log("page in arrow.......", pageRef.current);
+  //   // Use setTimeout or batch it after dispatch
+  //   console.log("page in arrow.......", pageRef.current);
 
-    setTimeout(() => {
-      navigate(`/listener_Profile?${data?.id}`, {
-        state: {
-          currentPage: pageRef.current,
-          pageSize: pageSize,
-        },
-      });
-    }, 0);
-  };
+  //   setTimeout(() => {
+  //     navigate(`/listener_Profile?${data?.id}`, {
+  //       state: {
+  //         currentPage: pageRef.current,
+  //         pageSize: pageSize,
+  //       },
+  //     });
+  //   }, 0);
+  // };
 
   // const handleActionClick = (data) => {
   //   dispatch(setCurrentConsultant(data?.id));
@@ -130,7 +130,7 @@ const ListenersListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {/* <Link to="/listener_Profile"> */}
-            {permissions?.["listener"]?.includes("view_listener_profile") && (
+            {/* {permissions?.["listener"]?.includes("view_listener_profile") && (
               <span
                 title="view details"
                 className="secondIcon"
@@ -146,7 +146,29 @@ const ListenersListingTable = () => {
                   onClick={() => handleActionClick(row.original)}
                 />
               </span>
+            )} */}
+
+            {permissions?.["listener"]?.includes("view_listener_profile") && (
+              <Link
+                // to={`/listeners/${row.original.id}?page=${pageRef.current}&size=${pageSize}&status=${row.original.status}&type=${row.original.phone_code}`}
+                to={`/listeners/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
+                // target="_blank"
+                // rel="noopener noreferrer"
+              >
+                <span
+                  title="View details"
+                  className="secondIcon"
+                  style={{
+                    display: "inline-block",
+                    height: "35px",
+                    width: "35px",
+                  }}
+                >
+                  <ArrowRight className="iconSmall" />
+                </span>
+              </Link>
             )}
+
             {/* </Link> */}
             {/* <span className="editIcon">
               <Pencil

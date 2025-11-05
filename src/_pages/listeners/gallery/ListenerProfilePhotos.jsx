@@ -10,6 +10,7 @@ import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import toast from "react-hot-toast";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenerProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -17,7 +18,8 @@ const ListenerProfilePhotos = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
 
   const inputRef = useRef(null);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const [addImage, { isLoading }] = useCreateConsultantCoverPhotoMutation();
   const { data: fetchData } = useGetGalleryListQuery(consultantId);

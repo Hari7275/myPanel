@@ -12,20 +12,18 @@ const ConsultantNavigationCell = ({ value, row }) => {
   };
 
   const navigationRoute = {
-    1: "/astrologer_Profile",
-    2: "/coach-profile",
-    3: "/listener_Profile",
+    1: `/astrologer/${value}`,
+    2: `/coaches/${value}`,
+    3: `/listeners/${value}`,
   };
   // Get the route based on consultant type
   // Get the route based on consultant type
-  const route =
-    consultantType && navigationRoute[consultantType]
-      ? `${navigationRoute[consultantType]}?${value}`
-      : "/";
+  const route = consultantType && navigationRoute[consultantType];
+
   return (
     <Link
       to={route}
-      onClick={handleConsultantClick}
+      // onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
       <span style={{ cursor: "pointer", color: "#be5b18ff" }}>{value}</span>

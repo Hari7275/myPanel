@@ -26,6 +26,7 @@ import usePermissions from "../../../_components/reuseComponents/permission/EmpP
 import { statusNameToValue } from "../../../_constants/consultantConstant";
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -126,34 +127,71 @@ const CoachListingTable = () => {
       {
         Header: () => <div className="actions-header">Actions</div>,
         id: "actions",
+        // Cell: ({ row }) => (
+        //   <div className="actions-cell">
+        //     {/* <Link to="/coach-profile"> */}
+        //     {permissions?.["coach"]?.includes("view_coach_profile") && (
+        //       <span
+        //         title="view details"
+        //         className="secondIcon"
+        //         style={{
+        //           display: "inline-block",
+        //           height: "35px",
+        //           width: "35px",
+        //         }}
+        //       >
+        //         <ArrowRight
+        //           className="iconSmall"
+        //           onClick={() => handleActionClick(row?.original)}
+        //         />
+        //       </span>
+        //     )}
+        //     {/* </Link> */}
+        //     {/* <span className="editIcon">
+        //       <Pencil
+        //         className="iconSmall"
+        //         onClick={() => toggleEditStatus(row?.original?.id)}
+        //       />
+        //     </span> */}
+
+        //     {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+        //       permissions?.["coach"]?.includes(
+        //         "update_coach_profile_status"
+        //       ) && (
+        //         <span className="editIcon">
+        //           <Pencil
+        //             className="iconSmall"
+        //             onClick={() => toggleEditStatus(row.original)}
+        //           />
+        //         </span>
+        //       )}
+        //   </div>
+        // ),
+
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {/* <Link to="/coach-profile"> */}
             {permissions?.["coach"]?.includes("view_coach_profile") && (
-              <span
-                title="view details"
-                className="secondIcon"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
+              <Link
+                to={`/coaches/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
+                // Uncomment below lines if you want it to open in new tab:
+                // target="_blank"
+                // rel="noopener noreferrer"
               >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => handleActionClick(row?.original)}
-                />
-              </span>
+                <span
+                  title="View details"
+                  className="secondIcon"
+                  style={{
+                    display: "inline-block",
+                    height: "35px",
+                    width: "35px",
+                  }}
+                >
+                  <ArrowRight className="iconSmall" />
+                </span>
+              </Link>
             )}
-            {/* </Link> */}
-            {/* <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleEditStatus(row?.original?.id)}
-              />
-            </span> */}
 
-            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+            {[3, 4, 5, 2, 8].includes(row.original.status) &&
               permissions?.["coach"]?.includes(
                 "update_coach_profile_status"
               ) && (
@@ -168,7 +206,7 @@ const CoachListingTable = () => {
         ),
       },
     ],
-    [handleActionClick]
+    []
   );
 
   // Apply debounce to search handlers

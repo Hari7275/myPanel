@@ -11,6 +11,7 @@ import { ConsultantGalleryStatus } from "../../../../_constants/consultantConsta
 import { useGetGalleryListQuery } from "../../../../_store/api";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 import ImageCropper from "../../../listeners/gallery/ImageCropper";
+import { useLocation, useParams } from "react-router-dom";
 
 const ProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -20,7 +21,9 @@ const ProfilePhoto = () => {
   const [loadedImages, setLoadedImages] = useState({});
   const [imageUrls, setImageUrls] = useState([]);
   const permissions = usePermissions();
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const [openImageCropper, setOpenImageCropper] = useState(false);
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
@@ -44,7 +47,7 @@ const ProfilePhoto = () => {
     setOpenSetting(!openSetting);
   };
 
-    const toggleImageCropper = (url) => {
+  const toggleImageCropper = (url) => {
     setSelectedImage(url);
     setOpenImageCropper(!openImageCropper);
   };

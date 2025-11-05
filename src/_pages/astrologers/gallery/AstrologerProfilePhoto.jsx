@@ -9,6 +9,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
 import { useSelector } from "react-redux";
 import toast from "react-hot-toast";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerProfilePhotos = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -16,7 +17,8 @@ const AstrologerProfilePhotos = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
 
   const inputRef = useRef(null);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const [addImage, { isLoading }] = useCreateConsultantCoverPhotoMutation();
   const { data: fetchData } = useGetGalleryListQuery(consultantId);

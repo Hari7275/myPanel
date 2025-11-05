@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 import DyCommonTable from "../../table/DyCommonTable";
 import { Atom } from "react-loading-indicators";
+import { useLocation, useParams } from "react-router-dom";
 
 const SessionSlot = () => {
   const [data, setData] = useState([]);
@@ -21,9 +22,12 @@ const SessionSlot = () => {
 
   //   console.log("window.location.href", url.split("?"));
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+
+  const { consultantId } = useParams();
+
   const {
     data: fetchData,
     isLoading,
@@ -37,8 +41,6 @@ const SessionSlot = () => {
 
   const columns = useMemo(() => [...SESSIONSLOTCOLUMN]);
   const totalPage = fetchData?.meta?.totalPages;
-
-
 
   if (isLoading) {
     return (

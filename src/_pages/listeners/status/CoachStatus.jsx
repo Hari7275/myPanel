@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useGetConsultantsServiceStatusQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
+import { useLocation, useParams } from "react-router-dom";
 
 const availableStatus = {
   0: "Offline",
@@ -12,7 +13,8 @@ const availableStatus = {
 
 const CoachStatus = () => {
   const [data, setData] = useState();
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData, isLoading } = useGetConsultantsServiceStatusQuery({
     id: consultantId,

@@ -11,6 +11,7 @@ import { getGenderLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -18,7 +19,9 @@ const CoachInfo = () => {
   const [formData, setFormData] = useState(null);
   const [category, setCategory] = useState([]);
   const [skills, setSkills] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
 
   const { data: fetchdata, isLoading } =
@@ -103,7 +106,6 @@ const CoachInfo = () => {
               Update Info
             </h3>
             {permissions?.["coach"]?.includes("update_coach_profile_info") && (
-
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"

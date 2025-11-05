@@ -7,6 +7,7 @@ import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import ServiceStatusModal from "./ServiceStatusModal";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import CoachServiceStatus from "./coachServiceStatus/CoachServiceStatus";
+import { useLocation, useParams } from "react-router-dom";
 
 const availableStatus = {
   0: "Offline",
@@ -22,7 +23,9 @@ const CoachStatus = () => {
   const [isOpenCoachServiceStatus, setIsOpenCoachServiceStatus] =
     useState(false);
   const [activeView, setActiveView] = useState("status"); // New state for view toggle
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const permissions = usePermissions();
 
   const { data: fetchData } = useGetConsultantsServiceStatusQuery({

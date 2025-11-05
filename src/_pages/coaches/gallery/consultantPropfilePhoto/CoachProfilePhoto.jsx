@@ -12,6 +12,7 @@ import { ConsultantGalleryStatus } from "../../../../_constants/consultantConsta
 import { useGetGalleryListQuery } from "../../../../_store/api";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 import ImageCropper from "../../../listeners/gallery/ImageCropper";
+import { useLocation, useParams } from "react-router-dom";
 
 const CoachProfilePhoto = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -22,7 +23,8 @@ const CoachProfilePhoto = () => {
   const [imageUrls, setImageUrls] = useState([]);
   const [openImageCropper, setOpenImageCropper] = useState(false);
 
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
   const permissions = usePermissions();

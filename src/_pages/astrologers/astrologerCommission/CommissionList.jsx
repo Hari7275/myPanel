@@ -11,6 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import AddCommission from "./AddCommission";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const CommissionList = () => {
   const [data, setData] = useState([]);
@@ -25,9 +26,11 @@ const CommissionList = () => {
 
   // console.log("window.location.href", url.split("?"));
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
+
   const {
     data: fetchData,
     isLoading,
@@ -59,20 +62,23 @@ const CommissionList = () => {
   };
 
   const canEditCommission = {
-    astrologer: permissions?.["astrologer"]?.includes("update_astrologer_profile_flute_commission"),
-    coach: permissions?.["coach"]?.includes("update_coach_profile_flute_commission"),
-    listener: permissions?.["listener"]?.includes("update_listener_profile_flute_commission"),
-  }
+    astrologer: permissions?.["astrologer"]?.includes(
+      "update_astrologer_profile_flute_commission"
+    ),
+    coach: permissions?.["coach"]?.includes(
+      "update_coach_profile_flute_commission"
+    ),
+    listener: permissions?.["listener"]?.includes(
+      "update_listener_profile_flute_commission"
+    ),
+  };
 
   const hasEditPermission = Object.values(canEditCommission).some(Boolean);
 
   const AddButton = () => {
     return (
       hasEditPermission && (
-        <button
-          className="addButton right-addButton"
-          onClick={toggleAddData}
-        >
+        <button className="addButton right-addButton" onClick={toggleAddData}>
           Update Commission
         </button>
       )

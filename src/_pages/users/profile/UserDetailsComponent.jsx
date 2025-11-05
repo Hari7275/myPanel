@@ -102,12 +102,12 @@ const UserDetailsComponent = () => {
           {/* {userData.profile_images.length > 0 && ( */}
           <img
             className="profile-img"
-            src={userData?.profile_images[0]?.url || "avatar11.png"}
-            // src={userData?.profileDetails?.profile_image_url || "avatar11.png"}
+            // src={userData?.profile_images[0]?.url || "avatar11.png"}
+            src={userData?.profileDetails?.profile_image_url || "/avatar11.png"}
             alt="user Profile"
             onClick={() =>
               openImageModal(
-                userData?.profileDetails?.profile_image_url || "avatar11.png"
+                userData?.profileDetails?.profile_image_url || "/avatar11.png"
               )
             }
           />

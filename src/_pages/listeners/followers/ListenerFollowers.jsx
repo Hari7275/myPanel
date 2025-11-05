@@ -4,6 +4,7 @@ import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { FOLLOWERSCOLUMN } from "./listenersFollowersColumn";
 import { useGetListenerFavouriteListQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenerFollowers = () => {
   const [data, setData] = useState([]);
@@ -11,7 +12,8 @@ const ListenerFollowers = () => {
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetListenerFavouriteListQuery({
     consultantId,

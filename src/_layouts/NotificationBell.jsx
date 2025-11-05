@@ -31,7 +31,7 @@ const NotificationBell = () => {
     page,
     size: pageSize,
     sender_id,
-    notification_type_group: selectedGroup ,
+    notification_type_group: selectedGroup,
   });
 
   const { data: notificationGroups } = useGetNotificationGroupQuery();
@@ -81,39 +81,41 @@ const NotificationBell = () => {
   console.log("notificationGroup", notificationGroup);
   // console.log("notificationType", notificationType);
 
-  const keyToBaseUrl = {
-    coach: "/coach-profile",
-    astrologer: "/astrologer_Profile",
-    listener: "/listener_Profile",
-    order: "/orders",
-    user: "/user",
-    datingProduct: "/dating-products",
-  };
+  const handleNotificationClick = async (notification) => {
+    const key = notification?.key;
 
-  const handleNotificationClick = async (notification, sender_id) => {
-    // console.log("sender_id", notification.sender_id);
+    // ✅ Updated route mapping
+    const keyToBaseUrl = {
+      coach: "/coaches",
+      astrologer: "/astrologer",
+      listener: "/listeners",
+      order: "/orders",
+      user: "/user",
+      datingProduct: "/dating-products",
+    };
 
-    const baseUrl = keyToBaseUrl[notification?.key];
+    const baseUrl = keyToBaseUrl[key];
     if (!baseUrl) {
-      console.error(`No URL mapping found for key: ${notification.key}`);
+      console.error(`No URL mapping found for key: ${key}`);
       return;
     }
 
     try {
-      // Call the mutation to update the notification as seen
-      const response = { is_seen: true };
+      // Mark as seen
       await updateNotificationReadCount({
         id: notification?.sender_id,
-        body: response,
+        body: { is_seen: true },
       });
 
-      // Navigate to the appropriate route after marking as seen
-      let route = baseUrl;
-      const state = {};
+      // Keep active tab
+      if (notification?.tab) {
+        dispatch(setActiveTab(notification.tab));
+      }
 
-      if (notification.id) {
-        dispatch(setCurrentConsultant(notification?.id));
-        dispatch(setActiveTab(notification?.tab));
+      // ✅ Build dynamic route only for coach, astrologer, listener
+      let route = baseUrl;
+      if (["coach", "astrologer", "listener"].includes(key)) {
+        route += `/${notification?.id}`;
       } else if (notification?.orderId) {
         route += `/${notification?.orderId}`;
       } else if (notification?.userId) {
@@ -122,7 +124,7 @@ const NotificationBell = () => {
         route += `/${notification?.productId}`;
       }
 
-      navigate(route, { state });
+      navigate(route);
     } catch (error) {
       console.error("Error updating notification as seen:", error);
     }

@@ -8,6 +8,7 @@ import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatu
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { useSearchParams } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerPriceListingTable = () => {
   const [data, setData] = useState([]);
@@ -20,12 +21,14 @@ const AstrologerPriceListingTable = () => {
 
   console.log("window.location.href", url.split("?"));
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
-  const consultantCateg = useSelector(
-    (state) => state?.consultant?.consultantType
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
 
   const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
 

@@ -7,16 +7,18 @@ import Discriptions from "./Discriptions";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-  
 
   const [data, setData] = useState([]);
 
@@ -24,7 +26,7 @@ const AstrologerGifts = () => {
     consultantId,
     page,
     pageSize,
-    order_type:6,
+    order_type: 6,
   });
 
   useEffect(() => {

@@ -3,10 +3,12 @@ import CommonTable from "../../../_components/table/CommonTable";
 import { FOLLOWERSCOLUMN } from "./astrologerFollowersColumns";
 import { useGetConsultantsFollowerQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerFollowers = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetConsultantsFollowerQuery(consultantId);
 

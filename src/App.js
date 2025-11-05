@@ -150,15 +150,6 @@ const Layout = () => (
 
           {/* <Route path="/user" element={<UserListingTable />} /> */}
 
-          {/* <Route
-            path="/user"
-            element={
-              <PrivateRoute
-                element={<UserListingTable />}
-                // requiredPermissions={["view_coaches"]}
-              />
-            }
-          /> */}
           <Route
             path="/user"
             element={<PrivateRoute element={<UserListingTable />} />}
@@ -178,14 +169,27 @@ const Layout = () => (
               />
             }
           />
+          <Route path="/coaches/:consultantId" element={<CoachProfile />} />
+          {/* <Route path="coach-profile" element={<CoachProfile />} /> */}
 
           <Route
             path="/consultant-device-info"
             element={<ConsultantDeviceInfo />}
           />
           <Route path="auth-consultant" element={<AuthConsultantList />} />
-          <Route path="listeners" element={<ListenersListingTable />} />
+
           <Route path="astrologer" element={<AstrologerListingTable />} />
+          <Route
+            path="/astrologer/:consultantId"
+            element={<AstrologerProfile />}
+          />
+          {/* <Route path="astrologer_Profile" element={<AstrologerProfile />} /> */}
+          <Route path="listeners" element={<ListenersListingTable />} />
+          <Route
+            path="/listeners/:consultantId"
+            element={<ListenersProfile />}
+          />
+          {/* <Route path="listener_Profile" element={<ListenersProfile />} /> */}
 
           <Route path="subs-package" element={<SubscriptionComponent />} />
           <Route path="user-recharge" element={<UserRechargeLists />} />
@@ -196,10 +200,6 @@ const Layout = () => (
           <Route path="session" element={<SessionLists />} />
           <Route path="gift" element={<GiftLists />} />
 
-          <Route path="coach-profile" element={<CoachProfile />} />
-
-          <Route path="listener_Profile" element={<ListenersProfile />} />
-          <Route path="astrologer_Profile" element={<AstrologerProfile />} />
           {/*    ********************************************************user interest **************************************************************************  */}
           <Route path="user-profile-option" element={<UserProfileOptions />} />
           <Route path="prompt-question" element={<PromptQuestionTable />} />

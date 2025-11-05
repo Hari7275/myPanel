@@ -8,21 +8,31 @@ import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatu
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenersPriceListingTable = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  const { consultantId } = useParams();
 
-  const consultantCateg = useSelector(
-    (state) => state?.consultant?.consultantType
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
 
-  const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
+  // const consultantCateg = useSelector(
+  //   (state) => state?.consultant?.consultantType
+  // );
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  console.log("consultantCateg", consultantCateg);
+
+  const convertedConsultantCateg = consultantCateg == 91 ? "A" : "B";
+
   const {
     data: fetchData,
     isLoading,
@@ -34,16 +44,11 @@ const ListenersPriceListingTable = () => {
     return permissions?.["listener"]?.includes(permission);
   };
 
-   useEffect(() => {
-     if (fetchData && fetchData?.data) {
-       setData(
-         fetchData?.data?.filter(
-           (item) =>
-             item?.status !== 7 
-         ) || []
-       );
-     } else setData([]);
-   }, [fetchData]);
+  useEffect(() => {
+    if (fetchData && fetchData?.data) {
+      setData(fetchData?.data?.filter((item) => item?.status !== 7) || []);
+    } else setData([]);
+  }, [fetchData]);
 
   const toggleUpdateStatus = (row) => {
     setSelectedRow(row);
@@ -72,14 +77,15 @@ const ListenersPriceListingTable = () => {
               </span>
             )}
 
-          {row.original.status == 2 &&  row.original.category == convertedConsultantCateg && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateConsultantPrice(row?.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-          )}
+          {row.original.status == 2 &&
+            row.original.category == convertedConsultantCateg && (
+              <span
+                className="editIcon"
+                onClick={() => toggleUpdateConsultantPrice(row?.original)}
+              >
+                <Pencil className="iconSmall" />
+              </span>
+            )}
         </div>
       ),
     },

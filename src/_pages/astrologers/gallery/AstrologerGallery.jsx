@@ -20,6 +20,7 @@ import UseImageModal from "../../../_constants/UseImageModal";
 import MyGallery from "../../../_constants/MyGallery";
 import toast from "react-hot-toast";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerGallery = () => {
   const [openSetting, setOpenSetting] = useState(false);
@@ -39,7 +40,8 @@ const AstrologerGallery = () => {
 
   const fileInputRef = useRef(null);
 
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchData } = useGetGalleryListQuery(consultantId);
 
@@ -276,13 +278,17 @@ const AstrologerGallery = () => {
                       ) : (
                         ""
                       )} */}
-                      {permissions?.["astrologer"]?.includes("update_astrologer_profile_gallery") && (
+                      {permissions?.["astrologer"]?.includes(
+                        "update_astrologer_profile_gallery"
+                      ) && (
                         <div className="galleryIcons">
                           <span onClick={() => toggleImageCropper(image)}>
                             <img src="/cropAdmin.png" className="galleryIcon" />
                           </span>
                           <span>
-                            <Download onClick={() => downloadImage(image.url)} />
+                            <Download
+                              onClick={() => downloadImage(image.url)}
+                            />
                           </span>
                           <span onClick={() => toggleProfilePic(image)}>
                             <UserRound />

@@ -15,6 +15,7 @@ import { useSelector } from "react-redux";
 import { capitalizeFirstLetter } from "../overview/AstrologerOverview";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const AstrologerInfo = () => {
   const [selectedData, setSelectedData] = useState(null);
@@ -24,9 +25,11 @@ const AstrologerInfo = () => {
   const [category, setCategory] = useState([]);
   const [skills, setSkills] = useState([]);
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+
+  const { consultantId } = useParams();
 
   const { data: fetchdata } = useGetConsultantsDetailsQuery(consultantId);
   const { data: constantData } = useGetCoachCategoryListQuery();
@@ -103,7 +106,9 @@ const AstrologerInfo = () => {
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
               Update Info
             </h3>
-            {permissions?.["astrologer"]?.includes("update_astrologer_profile_info") && (
+            {permissions?.["astrologer"]?.includes(
+              "update_astrologer_profile_info"
+            ) && (
               <span
                 className="secondIcon editIcon"
                 onClick={() => toggleUpdateInfo(formData)}

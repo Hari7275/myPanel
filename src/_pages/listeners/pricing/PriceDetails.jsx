@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useGetConsultantsPriceQuery } from "../../../_store/api";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -72,7 +73,8 @@ export const CategoryPriceCard = ({
 
 const PriceDetails = () => {
   const [priceData, setPriceData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const { data: fetchPrice, isError } =
     useGetConsultantsPriceQuery(consultantId);

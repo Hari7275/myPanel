@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { format, subYears } from "date-fns";
 import Select from "react-select";
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
@@ -26,9 +27,10 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [error, setError] = useState("");
   const [selectedLanguages, setSelectedLanguage] = useState([]);
 
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
 
   const [updateInfo, { isLoading: isUpdating }] =
     useUpdateConsultantsDetailsMutation(consultantId);
@@ -135,11 +137,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         isOpen={isOpen}
         onRequestClose={onClose}
       >
-        <h2
-          className="top-main-heading"
-        >
-          Update Info
-        </h2>
+        <h2 className="top-main-heading">Update Info</h2>
 
         <form className="simple-form" noValidate autoComplete="off">
           <div style={{ display: "flex" }}>
@@ -277,7 +275,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             /> */}
           </div>
 
-          <div style={{ marginTop: "20px", textAlign: 'center' }}>
+          <div style={{ marginTop: "20px", textAlign: "center" }}>
             <button
               type="submit"
               className="fifthButton"
@@ -290,7 +288,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             <button
               type="button"
               className="fifthButton"
-              style={{ backgroundColor: 'red' }}
+              style={{ backgroundColor: "red" }}
               onClick={onClose}
             >
               Cancel

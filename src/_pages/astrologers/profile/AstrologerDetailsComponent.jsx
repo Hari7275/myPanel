@@ -14,7 +14,7 @@ import { Atom } from "react-loading-indicators";
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 
 const InfoItem = ({ label, value }) => (
@@ -51,11 +51,15 @@ const calculateAge = (dob) => {
 };
 
 const AstrologerDetailsComponent = () => {
-  const consultantId = useSelector(
-    (state) => state?.consultant?.consultantData
-  );
+  // const consultantId = useSelector(
+  //   (state) => state?.consultant?.consultantData
+  // );
+  const { consultantId } = useParams();
 
-  const profileStatus = useSelector((state) => state.consultant.profileStatus);
+  // const profileStatus = useSelector((state) => state.consultant.profileStatus);
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const profileStatus = params.get("status");
 
   const [showModal, setShowModal] = useState(false);
   const [showUpdateStatus, setShowUpdateStatus] = useState(false);
@@ -65,8 +69,6 @@ const AstrologerDetailsComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedData, setSelectedData] = useState(null);
-
-  console.log("location", location);
 
   const {
     data: fetchData,
@@ -140,9 +142,9 @@ const AstrologerDetailsComponent = () => {
         <div className="profile-img-section">
           <img
             className="profile-img"
-            src={urls || "avatar11.png"}
+            src={urls || "/avatar11.png"}
             alt="astrologer Profile"
-            onClick={() => openImageModal(urls || "avatar11.png")}
+            onClick={() => openImageModal(urls || "/avatar11.png")}
           />
           {/* <div className="edit-profile-img">     //  **************ye code background removal ka popup open karne ke liye hai 
             <button className="edit-profile-icon" onClick={openModal}>

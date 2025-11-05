@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
 import { formatDate } from "../../users/overview/UserOverview";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { useLocation, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -24,7 +25,9 @@ const CoachOverview = () => {
   const [skills, setSkills] = useState([]);
   const [data, setData] = useState([]);
 
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
+
   const { data: constantSkills } = useGetCoachSkillsListQuery();
   const permissions = usePermissions();
 
