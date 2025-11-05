@@ -6,6 +6,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
       query: ({
         page,
         size,
+        id,
         user_id,
         consultant_id,
         order_type,
@@ -19,6 +20,9 @@ export const orderApiSlice = apiSlice.injectEndpoints({
           size: size,
         });
 
+        if (id != null) {
+          params.append("id", id);
+        }
         if (user_id != null) {
           params.append("user_id", user_id);
         }

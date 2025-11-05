@@ -7,6 +7,7 @@ import { Info, Pencil, Trash } from "lucide-react";
 import { useGetPayoutListQuery } from "../../../_store/api";
 import EditPayoutRequest from "./EditPayoutRequest";
 import { Atom } from "react-loading-indicators";
+import { debounce } from "lodash";
 
 // import UpdateSubscriptionPlan from "./UpdateSubscriptionPlan";
 
@@ -18,11 +19,13 @@ const ConsultantPayoutHistory = () => {
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [userType, setUSerType] = useState(null);
+  const [consultantId, setConsultantId] = useState(null);
 
   const { data: fetchData, isLoading } = useGetPayoutListQuery({
     page,
     size: pageSize,
     status: userType,
+    consultant_id: consultantId,
   });
 
   useEffect(() => {
@@ -40,6 +43,16 @@ const ConsultantPayoutHistory = () => {
   const toggleEditStatus = (row) => {
     setSelectedRow(row);
     setShowEditStatus(!showEditStatus);
+  };
+
+  const debouncedSearchConsultantId = debounce(
+    (value) => setConsultantId(value),
+    500
+  );
+
+  const handleConsultantIdSearch = (e) => {
+    setPage(1);
+    debouncedSearchConsultantId(e?.target?.value);
   };
 
   const handleSetUserType = (e) => {
@@ -76,6 +89,17 @@ const ConsultantPayoutHistory = () => {
         alignItems: "center",
       }}
     >
+      <input
+        className="inputBox"
+        placeholder="Search by consultant id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+          marginLeft: "25px",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
       <select
         className="inputBox"
         style={{
@@ -105,15 +129,6 @@ const ConsultantPayoutHistory = () => {
 
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="Payout History"
-        // AddPackageButton={AddPackageButton}
-        showTableHeading={false}
-      /> */}
-
       <DyCommonTable
         columns={columns}
         data={data}

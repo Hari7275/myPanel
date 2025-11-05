@@ -33,6 +33,7 @@ const OrderLists = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [refundBalance, setRefundBalance] = useState(false);
   const [userId, setUserId] = useState(null);
+  const [orderId, setOrderId] = useState(null);
   const [consultantId, setConsultantId] = useState(null);
 
   // Filter states
@@ -49,6 +50,7 @@ const OrderLists = () => {
   const queryParams = {
     page,
     size: pageSize,
+    ...(orderId && orderId.trim() !== "" ? { id: orderId } : {}),
     ...(userId && userId.trim() !== "" ? { user_id: userId } : {}),
     ...(consultantId && consultantId.trim() !== ""
       ? { consultant_id: consultantId }
@@ -219,11 +221,17 @@ const OrderLists = () => {
     }
   }, [fetchData]);
 
+  const debouncedSearchOrderId = debounce((value) => setOrderId(value), 500);
   const debouncedSearchUserId = debounce((value) => setUserId(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
     500
   );
+
+  const handleOrdrIdSearch = (e) => {
+    setPage(1);
+    debouncedSearchOrderId(e?.target?.value);
+  };
 
   const handleUserIdSearch = (e) => {
     setPage(1);
@@ -261,11 +269,23 @@ const OrderLists = () => {
     >
       <input
         className="inputBox"
+        placeholder="Search by order id"
+        style={{
+          // marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleOrdrIdSearch}
+      />
+
+      <input
+        className="inputBox"
         placeholder="Search by consultant id"
         style={{
           marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
+          marginLeft: "25px",
         }}
         onChange={handleConsultantIdSearch}
       />
@@ -347,6 +367,7 @@ const OrderLists = () => {
         setPageSize={setPageSize}
         includeCheckbox={false}
         showTableHeading={false}
+        showGlobalSearch={false}
       />
 
       {/* Complete Order Modal */}
