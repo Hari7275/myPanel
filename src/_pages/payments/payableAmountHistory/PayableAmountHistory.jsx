@@ -8,6 +8,7 @@ import PayableAmountFilter from "./PayableAmountFilter";
 import { Atom } from "react-loading-indicators";
 import Button from "@mui/material/Button";
 import { debounce } from "lodash";
+import PayableTrack from "./PayableTrack";
 
 const PayableAmountHistory = () => {
   const [data, setData] = useState([]);
@@ -17,6 +18,7 @@ const PayableAmountHistory = () => {
   const [consultantId, setConsultantId] = useState("");
 
   const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [showPayablePopover, setShowPayablePopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
     startDate: "",
     endDate: "",
@@ -86,7 +88,7 @@ const PayableAmountHistory = () => {
         className="inputBox"
         placeholder="Search by consultant id"
         style={{
-          marginLeft: "25px",
+          // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
@@ -112,6 +114,23 @@ const PayableAmountHistory = () => {
           onClose={() => setShowFilterPopover(false)}
           onApplyFilter={handleApplyFilter}
           initialFilters={appliedFilters}
+        />
+      </div>
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowPayablePopover(!showPayablePopover)}
+        >
+          Payout Track
+        </Button>
+
+        <PayableTrack
+          isOpen={showPayablePopover}
+          onClose={() => setShowPayablePopover(false)}
         />
       </div>
 
@@ -176,6 +195,7 @@ const PayableAmountHistory = () => {
         setPageSize={setPageSize}
         includeCheckbox={false}
         showTableHeading={false}
+        showGlobalSearch={false}
       />
     </>
   );

@@ -57,33 +57,33 @@ const CoachGifts = () => {
   const columns = useMemo(
     () => [
       ...GIFTSCOLUMN,
-      {
-        Header: () => <div className="actions-header">Actions</div>,
-        id: "actions",
-        Cell: ({ row }) => (
-          <div className="actions-cell">
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{ height: "35px", width: "35px" }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={toggleDescriptionModal}
-              />
-            </span>
-            <span className="editIcon">
-              <Pencil className="iconSmall" />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
-          </div>
-        ),
-      },
+      // {
+      //   Header: () => <div className="actions-header">Actions</div>,
+      //   id: "actions",
+      //   Cell: ({ row }) => (
+      //     <div className="actions-cell">
+      //       <span
+      //         title="view details"
+      //         className="secondIcon"
+      //         style={{ height: "35px", width: "35px" }}
+      //       >
+      //         <ArrowRight
+      //           className="iconSmall"
+      //           onClick={toggleDescriptionModal}
+      //         />
+      //       </span>
+      //       <span className="editIcon">
+      //         <Pencil className="iconSmall" />
+      //       </span>
+      //       <span className="deleteIcon">
+      //         <Trash
+      //           className="iconSmall"
+      //           onClick={() => toggleDeleteComponent(row.original)}
+      //         />
+      //       </span>
+      //     </div>
+      //   ),
+      // },
     ],
     []
   );

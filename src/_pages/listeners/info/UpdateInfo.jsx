@@ -80,52 +80,54 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
+ const handleSave = async (e) => {
+  e.preventDefault();
+  setError(""); // clear any previous error
 
-    // Check if the selected date of birth is at least 18 years ago
-    if (new Date(formData.date_of_birth) > new Date(minValidDOB)) {
-      setError("User must be at least 18 years old.");
-      return;
-    }
+  // Check if the selected date of birth is at least 18 years ago
+  if (new Date(formData.date_of_birth) > new Date(minValidDOB)) {
+    setError("User must be at least 18 years old.");
+    return;
+  }
 
-    // Create a copy of formData to modify
-    const dataToSend = {
-      ...formData,
-      gender: Number(formData.gender), // Ensure gender is a number
-    };
-
-    // If language haven't changed, delete the skills key
-    if (
-      selectedLanguages?.length === preselectedLanguage?.length &&
-      selectedLanguages.every(
-        (lang, idx) => lang?.label === preselectedLanguage[idx]?.label
-      )
-    ) {
-      delete dataToSend?.lang;
-    }
-
-    try {
-      const response = await updateInfo({
-        id: selectedData.id,
-        body: dataToSend,
-      });
-
-      if (response.data.status === false) {
-        toast.error(
-          response.data.message || "Something went wrong. Please try again."
-        );
-        return;
-      }
-
-      toast.success(
-        response.data.message || " information updated successfully."
-      );
-      onClose();
-    } catch (error) {
-      console.log("API error", error);
-    }
+  // Prepare data
+  const dataToSend = {
+    ...formData,
+    gender: Number(formData.gender), // ensure number type
   };
+
+  // If languages haven't changed, remove languages key
+  if (
+    selectedLanguages?.length === preselectedLanguage?.length &&
+    selectedLanguages.every(
+      (lang, idx) => lang?.label === preselectedLanguage[idx]?.label
+    )
+  ) {
+    delete dataToSend.languages; // fixed: correct key name
+  }
+
+  // Exclude email (for show only)
+  const payload = { ...dataToSend };
+  delete payload.email;
+
+  try {
+    const response = await updateInfo({
+      id: selectedData.id,
+      body: payload,
+    }).unwrap(); // ✅ use unwrap() for cleaner error handling (RTK Query best practice)
+
+    // Success toast
+    toast.success(response?.message || "Information updated successfully.");
+    onClose();
+  } catch (error) {
+    // Error from RTK Query
+    console.error("API error:", error);
+    toast.error(
+      error?.data?.message || "Something went wrong. Please try again."
+    );
+  }
+};
+
 
   if (!isOpen) return null;
 

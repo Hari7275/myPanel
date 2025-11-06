@@ -79,6 +79,38 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
     }
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   const commissionPayload = Object.entries(commissions).map(
+  //     ([key, value]) => ({
+  //       service_type: Number(key),
+  //       commission_rate: Number(value),
+  //     })
+  //   );
+
+  //   try {
+  //     const response = await createCommission({
+  //       consultantId,
+  //       body: {
+  //         commissions: commissionPayload,
+  //         consultant_category: "A",
+  //       },
+  //     }).unwrap();
+
+  //     if (response?.status) {
+  //       toast.success(response?.message);
+  //     } else {
+  //       toast.error(response.error);
+  //     }
+  //     // toast.success("Commissions updated!");
+  //     onClose();
+  //   } catch (error) {
+  //     console.error("Update failed:", error);
+  //     toast.error(error, "Failed to update commissions.");
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -98,17 +130,18 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
         },
       }).unwrap();
 
-
-      if (response.status) {
-        toast.success(response?.message);
+      if (response?.status) {
+        toast.success(response?.message || "Commissions updated successfully!");
+        onClose();
       } else {
-        toast.error(response.error);
+        toast.error(response?.error || "Failed to update commissions.");
       }
-      // toast.success("Commissions updated!");
-      onClose();
     } catch (error) {
       console.error("Update failed:", error);
-      toast.error("Failed to update commissions.");
+      toast.error(
+        error?.data?.message ||
+          "Something went wrong while updating commissions."
+      );
     }
   };
 

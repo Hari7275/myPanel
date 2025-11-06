@@ -96,6 +96,7 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { CategoryCard } from "../../dashboard/DashboardSubPage";
 
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -110,7 +111,8 @@ const InfoItem = ({ label, value }) => (
 
 const WalletDetails = () => {
   const [data, setData] = useState([]);
-  const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  const { consultantId } = useParams();
 
   const {
     data: fetchData,
