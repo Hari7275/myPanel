@@ -56,7 +56,7 @@ export const getCategoryTypes = (value) => {
     case 5:
       return "Private Call";
     case 6:
-      return "Live";
+      return "Gift";
     case 7:
       return "Live Chat";
     case 8:

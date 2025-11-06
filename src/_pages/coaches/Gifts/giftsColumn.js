@@ -13,34 +13,35 @@ export const GIFTSCOLUMN = [
     accessor: "order_type",
     Cell: ({ value }) => OrderType(value),
   },
+  // {
+  //   Header: "Duration",
+  //   accessor: "actual_duration",
+  // },
   {
-    Header: "Duration",
-    accessor: "actual_duration",
-  },
-  {
-    Header: "Earning",
+    Header: "Coach Earning",
     accessor: "consultant_earning",
   },
   {
-    Header: "Revenue",
+    Header: "Order Revenue",
     accessor: "order_revenue",
   },
   {
     Header: "Flute Earning",
     accessor: "flute_earning",
   },
+  // {
+  //   Header: "Ls. Rate",
+  //   accessor: "consultant_rate",
+  // },
   {
-    Header: "Ls. Rate",
-    accessor: "consultant_rate",
-  },
-  {
-    Header: "Comm. Rate",
+    Header: "Flute Commission",
     accessor: "commission_rate",
+    Cell: ({ value }) => <span>{value != null ? `${value}%` : "-"}</span>,
   },
 
-  {
-    Header: "Status",
-    accessor: "status",
-    Cell: ({ value }) => OrderStatus(value),
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "status",
+  //   Cell: ({ value }) => OrderStatus(value),
+  // },
 ];

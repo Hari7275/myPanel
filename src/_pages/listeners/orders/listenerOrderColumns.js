@@ -51,15 +51,15 @@ export const ORDERCHARTCOLUMN = [
     ),
   },
   {
-    Header: "Duration(min)",
+    Header: "Duration (min)",
     accessor: "actual_duration",
   },
   {
-    Header: "Earning",
+    Header: "Listener Earning",
     accessor: "consultant_earning",
   },
   {
-    Header: "Revenue",
+    Header: "Order Revenue",
     accessor: "order_revenue",
   },
   {
@@ -67,12 +67,13 @@ export const ORDERCHARTCOLUMN = [
     accessor: "flute_earning",
   },
   {
-    Header: "LS. Rate",
+    Header: "Listener Rate",
     accessor: "consultant_rate",
   },
   {
-    Header: "Comm. Rate",
+    Header: "Flute Commission",
     accessor: "commission_rate",
+    Cell: ({ value }) => <span>{value != null ? `${value}%` : "-"}</span>,
   },
 
   {
@@ -122,7 +123,7 @@ export const OFFLINEORDERCHARTCOLUMN = [
   },
 
   {
-    Header: "Type",
+    Header: "Order Type",
     accessor: "order_type",
     Cell: ({ value }) => (
       <span style={{ color: value == 3 ? "#008000" : "" }}>

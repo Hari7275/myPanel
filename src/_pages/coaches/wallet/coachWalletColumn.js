@@ -1,4 +1,4 @@
-import { getCategoryTypes } from "../../../_constants/consultantConstant";
+import { OrderType } from "../../../_constants/consultantConstant";
 import { formatDateTime } from "../../../_constants/formatedDate";
 
 export const WALLETCHARTCOLUMN = [
@@ -18,7 +18,7 @@ export const WALLETCHARTCOLUMN = [
   {
     Header: "Order Type",
     accessor: "order_type",
-    Cell: ({ value }) => getCategoryTypes(value) || "N/A",
+    Cell: ({ value }) => OrderType(value) || "N/A",
   },
 
   {
