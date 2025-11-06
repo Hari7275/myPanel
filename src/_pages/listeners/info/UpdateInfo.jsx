@@ -21,6 +21,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     date_of_birth: format(new Date(selectedData?.date_of_birth), "yyyy-MM-dd"),
     address: selectedData?.address,
     description: selectedData?.description,
+    meta_description: selectedData?.meta_description,
     // country: selectedData.country,
     experience: selectedData?.experience,
   });
@@ -80,54 +81,53 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     }
   };
 
- const handleSave = async (e) => {
-  e.preventDefault();
-  setError(""); // clear any previous error
+  const handleSave = async (e) => {
+    e.preventDefault();
+    setError(""); // clear any previous error
 
-  // Check if the selected date of birth is at least 18 years ago
-  if (new Date(formData.date_of_birth) > new Date(minValidDOB)) {
-    setError("User must be at least 18 years old.");
-    return;
-  }
+    // Check if the selected date of birth is at least 18 years ago
+    if (new Date(formData.date_of_birth) > new Date(minValidDOB)) {
+      setError("User must be at least 18 years old.");
+      return;
+    }
 
-  // Prepare data
-  const dataToSend = {
-    ...formData,
-    gender: Number(formData.gender), // ensure number type
+    // Prepare data
+    const dataToSend = {
+      ...formData,
+      gender: Number(formData.gender), // ensure number type
+    };
+
+    // If languages haven't changed, remove languages key
+    if (
+      selectedLanguages?.length === preselectedLanguage?.length &&
+      selectedLanguages.every(
+        (lang, idx) => lang?.label === preselectedLanguage[idx]?.label
+      )
+    ) {
+      delete dataToSend.languages; // fixed: correct key name
+    }
+
+    // Exclude email (for show only)
+    const payload = { ...dataToSend };
+    delete payload.email;
+
+    try {
+      const response = await updateInfo({
+        id: selectedData.id,
+        body: payload,
+      }).unwrap(); // ✅ use unwrap() for cleaner error handling (RTK Query best practice)
+
+      // Success toast
+      toast.success(response?.message || "Information updated successfully.");
+      onClose();
+    } catch (error) {
+      // Error from RTK Query
+      console.error("API error:", error);
+      toast.error(
+        error?.data?.message || "Something went wrong. Please try again."
+      );
+    }
   };
-
-  // If languages haven't changed, remove languages key
-  if (
-    selectedLanguages?.length === preselectedLanguage?.length &&
-    selectedLanguages.every(
-      (lang, idx) => lang?.label === preselectedLanguage[idx]?.label
-    )
-  ) {
-    delete dataToSend.languages; // fixed: correct key name
-  }
-
-  // Exclude email (for show only)
-  const payload = { ...dataToSend };
-  delete payload.email;
-
-  try {
-    const response = await updateInfo({
-      id: selectedData.id,
-      body: payload,
-    }).unwrap(); // ✅ use unwrap() for cleaner error handling (RTK Query best practice)
-
-    // Success toast
-    toast.success(response?.message || "Information updated successfully.");
-    onClose();
-  } catch (error) {
-    // Error from RTK Query
-    console.error("API error:", error);
-    toast.error(
-      error?.data?.message || "Something went wrong. Please try again."
-    );
-  }
-};
-
 
   if (!isOpen) return null;
 
@@ -240,7 +240,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             />
           </div>
 
-          <div style={{ width: "100%", marginTop: "20px" }}>
+          <div style={{ width: "100%", marginTop: "15px" }}>
+            <label htmlFor="Description">Description</label>
             <textarea
               style={{
                 width: "100%",
@@ -257,6 +258,28 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
               id="description"
               name="description"
               value={formData?.description}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div style={{ width: "100%", marginTop: "15px" }}>
+            <label htmlFor="Meta Description">Meta Description</label>
+            <textarea
+              style={{
+                width: "100%",
+                height: "50px",
+                padding: "10px",
+                border: "1px solid #ccc",
+                borderRadius: "4px",
+                fontSize: "14px",
+                fontFamily: "'Arial', sans-serif",
+                resize: "vertical",
+              }}
+              label="Meta Description"
+              type="text"
+              id="meta_description"
+              name="meta_description"
+              value={formData?.meta_description}
               onChange={handleChange}
             />
           </div>

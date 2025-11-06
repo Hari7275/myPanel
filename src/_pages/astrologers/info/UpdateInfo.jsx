@@ -21,6 +21,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     address: selectedData?.address,
     services: selectedData?.services,
     description: selectedData?.description,
+    meta_description: selectedData?.meta_description,
     experience: selectedData?.experience,
   });
 
@@ -196,11 +197,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
     >
-      <h2
-        className="top-main-heading"
-      >
-        Update Info
-      </h2>
+      <h2 className="top-main-heading">Update Info</h2>
 
       <form className="simple-form" noValidate autoComplete="off">
         <div style={{ display: "flex" }}>
@@ -375,6 +372,31 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             placeholder="this is description field"
           />
         </div>
+
+        <label htmlFor="description" style={{ width: "100%" }}>
+          Meta Description:
+        </label>
+        <div style={{ width: "100%" }}>
+          <textarea
+            style={{
+              width: "100%",
+              height: "150px",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              fontFamily: "'Arial', sans-serif",
+              resize: "vertical",
+            }}
+            label="meta_description"
+            type="text"
+            id="meta_description"
+            name="meta_description"
+            value={formData?.meta_description}
+            onChange={handleChange}
+            placeholder="this is Meta Description field"
+          />
+        </div>
         <div
           style={{
             marginTop: "20px",
@@ -394,7 +416,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           <button
             type="button"
             className="fifthButton"
-            style={{ backgroundColor: 'red' }}
+            style={{ backgroundColor: "red" }}
             onClick={onClose}
           >
             Cancel

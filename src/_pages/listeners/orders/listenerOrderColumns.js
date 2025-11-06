@@ -151,10 +151,6 @@ export const OFFLINEORDERCHARTCOLUMN = [
   //   Header: "LS. Rate",
   //   accessor: "consultant_rate",
   // },
-  // {
-  //   Header: "Comm. Rate",
-  //   accessor: "commission_rate",
-  // },
 
   {
     Header: "Start Time",

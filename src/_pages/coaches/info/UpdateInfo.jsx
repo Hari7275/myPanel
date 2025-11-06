@@ -21,6 +21,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
     address: selectedData?.address,
     services: selectedData?.services,
     description: selectedData?.description,
+    meta_description: selectedData?.meta_description,
     experience: selectedData?.experience,
     categories: selectedData?.categories?.map((cat) => cat.id) || [],
     skills: selectedData?.skills?.map((skill) => skill.id) || [],
@@ -371,13 +372,10 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           />
         </div>
 
-        <label
-          htmlFor="description"
-          style={{ width: "100%", marginTop: "20px" }}
-        >
+        <label htmlFor="description" style={{ width: "100%" }}>
           Services:
         </label>
-        <div style={{ width: "100%", marginTop: "4px", marginBottom: "15px" }}>
+        <div style={{ width: "100%" }}>
           <textarea
             style={{
               width: "100%",
@@ -399,13 +397,10 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
           />
         </div>
 
-        <label
-          htmlFor="description"
-          style={{ width: "100%", marginTop: "20px" }}
-        >
+        <label htmlFor="description" style={{ width: "100%" }}>
           Description:
         </label>
-        <div style={{ width: "100%", marginTop: "4px", marginBottom: "15px" }}>
+        <div style={{ width: "100%" }}>
           <textarea
             style={{
               width: "100%",
@@ -424,6 +419,31 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             value={formData?.description}
             onChange={handleChange}
             placeholder="this is description field"
+          />
+        </div>
+
+        <label htmlFor="description" style={{ width: "100%" }}>
+          Meta Description:
+        </label>
+        <div style={{ width: "100%" }}>
+          <textarea
+            style={{
+              width: "100%",
+              height: "150px",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              fontSize: "14px",
+              fontFamily: "'Arial', sans-serif",
+              resize: "vertical",
+            }}
+            label="meta_description"
+            type="text"
+            id="meta_description"
+            name="meta_description"
+            value={formData?.meta_description}
+            onChange={handleChange}
+            placeholder="this is Meta Description field"
           />
         </div>
 

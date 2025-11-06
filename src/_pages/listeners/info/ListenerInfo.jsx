@@ -133,6 +133,12 @@ const ListenerInfo = () => {
             </p>
           </div>
           <div className="dividerm"></div>
+          <div className="info-pair">
+            <p className="info-item">
+              <strong>Meta Description : </strong>{" "}
+              {formData?.meta_description || "N/A"}
+            </p>
+          </div>
         </div>
       </div>
 
