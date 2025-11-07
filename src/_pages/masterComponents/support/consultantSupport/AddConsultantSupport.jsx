@@ -62,7 +62,7 @@ const AddConsultantSupport = ({ isOpen, onClose }) => {
             textAlign: "center",
           }}
         >
-          Add Consultant Support Excuative
+          Add Consultant Support Executive
         </h2>
 
         <div className="userProfile-grid-item">
@@ -85,21 +85,21 @@ const AddConsultantSupport = ({ isOpen, onClose }) => {
 
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
-            Excuative Phone Number
+            Executive Phone Number
           </label>
           <input
             type="text"
             name="phone"
             value={formData?.phone}
             onChange={handleChange}
-            placeholder="Excuative Phone Number"
+            placeholder="Executive Phone Number"
             className="userProfile-input-field"
           />
         </div>
 
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
-            Excuative name
+            Executive Name
           </label>
           <input
             type="text"

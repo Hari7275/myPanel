@@ -68,7 +68,7 @@ const ConsultantSupport = () => {
         }}
         onClick={toggleAddData}
       >
-        Add Support Excuative
+        Add Support Executive
       </button>
     );
   };
@@ -112,7 +112,7 @@ const ConsultantSupport = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Support Question"
+        tableTitle="Consultant Support"
         AddPackageButton={AddButton}
         showTableHeading={false}
       />

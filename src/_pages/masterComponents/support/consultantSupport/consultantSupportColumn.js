@@ -54,7 +54,7 @@ export const CONSULTANTSUPPORTCOLUMN = [
   },
 
   {
-    Header: "Excuative Name",
+    Header: "Executive Name",
     accessor: "name",
   },
   {

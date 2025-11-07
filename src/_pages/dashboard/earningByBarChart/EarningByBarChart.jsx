@@ -7,7 +7,7 @@ import RefundChart from "./RefundChart";
 import ProfitChart from "./ProfitChart";
 import BonusChart from "./BonusChart";
 import InAppPurchasesChart from "./InAppPurchasesChart";
-import CouponChart from "./CouponChart";
+// import CouponChart from "./CouponChart";
 const EarningByBarChart = () => {
   return (
     <>
@@ -18,19 +18,19 @@ const EarningByBarChart = () => {
         >
           <RevenueChart />
         </div>
-        <div
+        {/* <div
           className="sub-container"
           // style={{ width: "-webkit-fill-available" }}
         >
           <CouponChart />
-        </div>
-        <div
+        </div> */}
+        {/* <div
           className="sub-container"
           // style={{ width: "-webkit-fill-available" }}
         >
           <RefundChart />
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        </div> */}
+        {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
           <div
             className="sub-container"
             style={{ width: "-webkit-fill-available" }}
@@ -43,15 +43,15 @@ const EarningByBarChart = () => {
           >
             <RevenueChart />
           </div>
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between" }}>
+        </div> */}
+        {/* <div style={{ display: "flex", justifyContent: "space-between" }}>
           <RevenueChart />
           <EarningChart />
         </div>
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <RevenueChart />
           <EarningChart />
-        </div>
+        </div> */}
       </div>
     </>
   );
