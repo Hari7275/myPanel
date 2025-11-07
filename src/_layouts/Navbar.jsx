@@ -93,6 +93,7 @@ const Navbar = () => {
 
     "/user-support-request": "User Support Request",
     "/support-question": "Support Question",
+    "/consultant-support": "Consultant Support",
   };
 
   //

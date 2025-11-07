@@ -76,6 +76,7 @@ export * from "../api/consultantReviewList/ReviewList";
 
 export * from "../api/supportSection/supportQuestion";
 export * from "../api/supportSection/supportExecutive";
+export * from "../api/supportSection/consultantSupport";
 
 // data for admin permission
 

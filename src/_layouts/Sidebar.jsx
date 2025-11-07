@@ -27,6 +27,7 @@ const Sidebar = () => {
   const [isNotice, setIsNotice] = useState();
   const [isNotification, setIsNotifications] = useState();
   const [isQuickDate, setIsQuickDate] = useState();
+  const [isShowSupport, setIsShowSupport] = useState();
   const [activeItem, setActiveItem] = useState("");
   const menuRef = useRef(null);
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ const Sidebar = () => {
   };
   const quickDateDropdown = () => {
     setIsQuickDate(!isQuickDate);
+  };
+
+  const supportDropdown = () => {
+    setIsShowSupport(!isShowSupport);
   };
 
   // code for highlighted text
@@ -679,22 +684,57 @@ const Sidebar = () => {
               </div>
             )}
           </div>
-          <div className="menu-group">
-            <Link to="/user-support">
-              <div
-                className={`menu-item ${
-                  activeItem === "user-support" ? "active" : ""
-                }`}
-                onClick={() => handleItemClick("user-support")}
-              >
-                <img
-                  src="/adminPannel_icons/support.png"
-                  width="24"
-                  height="24"
-                />
-                <span>Support</span>
+
+          {/* support */}
+
+          <div className="menu-item-child">
+            <div className="child" onClick={supportDropdown}>
+              <img
+                src="/adminPannel_icons/support.png"
+                width="24"
+                height="24"
+              />
+              <span>Support</span>
+
+              <span>{isShowSupport ? "⬇️" : "⬅️"}</span>
+            </div>
+
+            {isShowSupport && (
+              <div className="menu-item-sub">
+                <Link to="/user-support">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "user-support" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("user-support")}
+                  >
+                    {/* <img
+                      src="/adminPannel_icons/QD trips.png"
+                      width="24"
+                      height="24"
+                    /> */}
+                    <div className="dropdown-item">User Support</div>
+                  </div>
+                </Link>
+                <Link to="/consultant-support">
+                  <div
+                    className={`menu-item ${
+                      activeItem === "consultant-support" ? "active" : ""
+                    }`}
+                    onClick={() => handleItemClick("consultant-support")}
+                  >
+                    {/* <img
+                      src="/adminPannel_icons/QD_location.png"
+                      width="24"
+                      height="24"
+                    /> */}
+                    <div className="dropdown-item">Consultant Support</div>
+                  </div>
+                </Link>
               </div>
-            </Link>
+            )}
+          </div>
+          <div className="menu-group">
             <Link to="/blog-count">
               <div
                 className={`menu-item ${

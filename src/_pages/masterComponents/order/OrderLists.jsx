@@ -172,13 +172,14 @@ const OrderLists = () => {
                     opacity: isJoining ? 0.5 : 1,
                   }}
                 >
-                  {permissions?.["orders"]?.includes("monitor_order") && (
-                    <Phone
-                      className="iconSmall"
-                      style={{ color: "#10b981" }}
-                      onClick={() => !isJoining && joinChannel(row.original)}
-                    />
-                  )}
+                  {permissions?.["orders"]?.includes("monitor_order") &&
+                    row.original.consultant_id !== 1 && (
+                      <Phone
+                        className="iconSmall"
+                        style={{ color: "#10b981" }}
+                        onClick={() => !isJoining && joinChannel(row.original)}
+                      />
+                    )}
                 </span>
               )}
 

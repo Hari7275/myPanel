@@ -100,6 +100,7 @@ import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/C
 // SupportSection
 import SupportSection from "./_pages/masterComponents/support/SupportSection";
 import SupportQuestion from "./_pages/masterComponents/support/supportQuestion/SupportQuestion";
+import ConsultantSupport from "./_pages/masterComponents/support/consultantSupport/ConsultantSupport";
 import ExecutiveList from "./_pages/masterComponents/support/executiveSection/ExecutiveList";
 import UserSupportRequest from "./_pages/masterComponents/support/userSupportRequest/UserSupportRequest";
 import BlogCount from "./_pages/masterComponents/blogCount/BlogCount";
@@ -284,6 +285,7 @@ const Layout = () => (
 
           <Route path="user-support" element={<SupportSection />} />
           <Route path="support-question" element={<SupportQuestion />} />
+          <Route path="consultant-support" element={<ConsultantSupport />} />
           <Route path="Support-executive" element={<ExecutiveList />} />
           <Route path="user-support-request" element={<UserSupportRequest />} />
           <Route path="blog-count" element={<BlogCount />} />
