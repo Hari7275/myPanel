@@ -1,50 +1,55 @@
-import React, {
-  useMemo,
-  useState,
-  useEffect,
-  useRef,
-  useCallback,
-} from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
 import { ArrowRight, Pencil } from "lucide-react";
-
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import {
-  setCurrentConsultant,
-  setCurrentProfileStatus,
-  setConsultantType,
-} from "../../../_store/slices/consultantSlice";
 import { resetActiveTab } from "../../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
-import { statusNameToValue } from "../../../_constants/consultantConstant";
+
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 
 const CoachListingTable = () => {
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // 🧠 Read URL Params
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get("page")) || 1;
+  const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
-  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
-  const [page, setPage] = useState(1);
-  const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(50);
+
+  // const pageRef = useRef(page);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-  const navigate = useNavigate();
-  const location = useLocation();
+
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
+
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, navigate]);
 
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -71,9 +76,9 @@ const CoachListingTable = () => {
     consultant_type: 2,
   });
 
-  useEffect(() => {
-    pageRef.current = page;
-  }, [page]);
+  // useEffect(() => {
+  //   pageRef.current = page;
+  // }, [page]);
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -103,79 +108,18 @@ const CoachListingTable = () => {
     setSelectedRow(row);
   };
 
-  const handleActionClick = useCallback(
-    (data) => {
-      dispatch(setCurrentConsultant(data?.id));
-      dispatch(setCurrentProfileStatus(data?.status));
-      dispatch(setConsultantType(data?.phone_code));
-
-      setTimeout(() => {
-        navigate(`/coach-profile?${data?.id}`, {
-          state: {
-            currentPage: pageRef.current,
-            pageSize: pageSize,
-          },
-        });
-      }, 0);
-    },
-    [pageRef, pageSize, dispatch, navigate]
-  );
-
   const columns = useMemo(
     () => [
       ...COACHES_COLUMNS,
       {
         Header: () => <div className="actions-header">Actions</div>,
         id: "actions",
-        // Cell: ({ row }) => (
-        //   <div className="actions-cell">
-        //     {/* <Link to="/coach-profile"> */}
-        //     {permissions?.["coach"]?.includes("view_coach_profile") && (
-        //       <span
-        //         title="view details"
-        //         className="secondIcon"
-        //         style={{
-        //           display: "inline-block",
-        //           height: "35px",
-        //           width: "35px",
-        //         }}
-        //       >
-        //         <ArrowRight
-        //           className="iconSmall"
-        //           onClick={() => handleActionClick(row?.original)}
-        //         />
-        //       </span>
-        //     )}
-        //     {/* </Link> */}
-        //     {/* <span className="editIcon">
-        //       <Pencil
-        //         className="iconSmall"
-        //         onClick={() => toggleEditStatus(row?.original?.id)}
-        //       />
-        //     </span> */}
-
-        //     {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
-        //       permissions?.["coach"]?.includes(
-        //         "update_coach_profile_status"
-        //       ) && (
-        //         <span className="editIcon">
-        //           <Pencil
-        //             className="iconSmall"
-        //             onClick={() => toggleEditStatus(row.original)}
-        //           />
-        //         </span>
-        //       )}
-        //   </div>
-        // ),
 
         Cell: ({ row }) => (
           <div className="actions-cell">
             {permissions?.["coach"]?.includes("view_coach_profile") && (
               <Link
                 to={`/coaches/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
-                // Uncomment below lines if you want it to open in new tab:
-                // target="_blank"
-                // rel="noopener noreferrer"
               >
                 <span
                   title="View details"
@@ -216,10 +160,6 @@ const CoachListingTable = () => {
     500
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
-  const debouncedSearchStatus = debounce(
-    (value) => setStatusSearch(value),
-    500
-  );
 
   const handleNameSearch = (e) => {
     setPage(1);
@@ -236,24 +176,10 @@ const CoachListingTable = () => {
     debouncedSearchPhone(e?.target?.value);
   };
 
-  const handleConsultantStatusSearch = (e) => {
-    setPage(1);
-    const inputValue = e?.target?.value?.trim();
-
-    // Convert input to title case (first letter capitalized) for matching
-    const formattedInput =
-      inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
-
-    // Try to find a matching status name, fall back to raw input if not found
-    const statusValue = statusNameToValue[formattedInput] || inputValue;
-    debouncedSearchStatus(statusValue);
-  };
-
   // Handle filter application
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1); // Reset to first page when applying filters
-    console.log("Applied filters:", filterData);
   };
 
   // Count applied filters (non-empty values)
