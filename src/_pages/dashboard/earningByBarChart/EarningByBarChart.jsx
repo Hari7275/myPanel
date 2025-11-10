@@ -1,5 +1,6 @@
 import React from "react";
 import RevenueChart from "./RevenueChart";
+import CouponChart from "./CouponChart";
 import EarningChart from "./EarningChart";
 import RechargeChart from "./RechargeChart";
 import SubscriptionChart from "./SubscriptionChart";
@@ -18,12 +19,12 @@ const EarningByBarChart = () => {
         >
           <RevenueChart />
         </div>
-        {/* <div
+        <div
           className="sub-container"
           // style={{ width: "-webkit-fill-available" }}
         >
           <CouponChart />
-        </div> */}
+        </div>
         {/* <div
           className="sub-container"
           // style={{ width: "-webkit-fill-available" }}

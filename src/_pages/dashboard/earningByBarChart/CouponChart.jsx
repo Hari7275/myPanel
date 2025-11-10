@@ -1,8 +1,89 @@
 import React, { useState, useEffect } from "react";
-import { BarChart } from "@mui/x-charts/BarChart";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer,
+} from "recharts";
 import Box from "@mui/material/Box";
 import { useGetCouponGraphListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+
+// ✅ Custom Tooltip (fixed)
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    const total = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
+
+    return (
+      <div
+        style={{
+          backgroundColor: "white",
+          border: "1px solid #ccc",
+          borderRadius: "4px",
+          padding: "12px",
+          boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        }}
+      >
+        <div
+          style={{ fontWeight: "bold", marginBottom: "8px", fontSize: "14px" }}
+        >
+          {label}
+        </div>
+        {payload.map((entry, index) => (
+          <div
+            key={index}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              marginBottom: "4px",
+            }}
+          >
+            <div
+              style={{
+                width: "12px",
+                height: "12px",
+                backgroundColor: entry.color,
+                marginRight: "8px",
+                borderRadius: "2px",
+              }}
+            />
+            <span style={{ fontSize: "13px" }}>{entry.name}: </span>
+            <span
+              style={{
+                fontWeight: "bold",
+                marginLeft: "4px",
+                fontSize: "13px",
+              }}
+            >
+              {entry.value.toFixed(2)}
+            </span>
+          </div>
+        ))}
+        <div
+          style={{
+            borderTop: "1px solid #ddd",
+            paddingTop: "8px",
+            marginTop: "4px",
+          }}
+        >
+          <div style={{ display: "flex", justifyContent: "space-between" }}>
+            <span style={{ fontWeight: "bold", fontSize: "13px" }}>Total:</span>
+            <span
+              style={{ fontWeight: "bold", fontSize: "13px", color: "#333" }}
+            >
+              {total.toFixed(2)}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+  return null;
+};
 
 export default function CouponChart() {
   const [data, setData] = useState([]);
@@ -15,7 +96,7 @@ export default function CouponChart() {
     platform: "",
   });
 
-  // Applied filter state (actual params sent to API)
+  // Applied filters (used in API)
   const [appliedFilters, setAppliedFilters] = useState({
     startDate: "",
     endDate: "",
@@ -23,7 +104,7 @@ export default function CouponChart() {
     platform: "",
   });
 
-  // Pass applied filters to the API query
+  // ✅ Fetch data from API
   const { data: fetchData, isLoading } = useGetCouponGraphListQuery({
     granularity: appliedFilters.granularity,
     startDate: appliedFilters.startDate,
@@ -31,72 +112,38 @@ export default function CouponChart() {
     platform: appliedFilters.platform,
   });
 
+  // ✅ Update chart data when API data changes
   useEffect(() => {
     if (fetchData?.data) {
-      setData(fetchData.data);
+      const transformed = fetchData.data.map((item) => ({
+        label: item.label,
+        Coupon: parseFloat(item?.coupon || 0),
+        Referral: parseFloat(item?.referral || 0),
+        Reference: parseFloat(item?.reference || 0),
+      }));
+      setData(transformed);
     }
   }, [fetchData]);
 
-  // Handle date change (only updates UI state)
+  // ✅ Handlers
   const handleDateChange = (dateType, value) => {
-    setFilters((prev) => ({
-      ...prev,
-      [dateType]: value,
-    }));
+    setFilters((prev) => ({ ...prev, [dateType]: value }));
   };
 
-  // Handle granularity change (only updates UI state)
   const handleGranularityChange = (e) => {
-    setFilters((prev) => ({
-      ...prev,
-      granularity: e.target.value,
-    }));
+    setFilters((prev) => ({ ...prev, granularity: e.target.value }));
   };
 
-  // Handle platform change (only updates UI state)
   const handlePlatformChange = (e) => {
-    setFilters((prev) => ({
-      ...prev,
-      platform: e.target.value,
-    }));
+    setFilters((prev) => ({ ...prev, platform: e.target.value }));
   };
 
-  // Apply filters - updates the API params
-  const handleApply = () => {
-    setAppliedFilters({
-      startDate: filters.startDate,
-      endDate: filters.endDate,
-      granularity: filters.granularity,
-      platform: filters.platform,
-    });
-  };
-
-  // Reset filters - clears both UI and API params
+  const handleApply = () => setAppliedFilters({ ...filters });
   const handleReset = () => {
-    const resetValues = {
-      startDate: "",
-      endDate: "",
-      granularity: "",
-      platform: "",
-    };
-    setFilters(resetValues);
-    setAppliedFilters(resetValues);
+    const reset = { startDate: "", endDate: "", granularity: "", platform: "" };
+    setFilters(reset);
+    setAppliedFilters(reset);
   };
-
-  // Transform data for the bar chart
-  const transformedData = data.map((item) => ({
-    coupon: parseFloat(item?.coupon || 0),
-    referral: parseFloat(item?.referral || 0),
-    reference: parseFloat(item?.reference || 0),
-  }));
-
-  // Extract data for each series
-  const couponData = transformedData.map((item) => item.coupon);
-  const referralData = transformedData.map((item) => item.referral);
-  const referenceData = transformedData.map((item) => item.reference);
-
-  // Use labels from API response
-  const xAxisLabels = data.map((item) => item.label);
 
   if (isLoading) {
     return (
@@ -105,8 +152,6 @@ export default function CouponChart() {
       </span>
     );
   }
-
-  const categoryGapRatio = xAxisLabels.length < 5 ? 0.98 : 0.6;
 
   return (
     <Box sx={{ padding: 2 }}>
@@ -120,6 +165,7 @@ export default function CouponChart() {
       >
         <h2 style={{ margin: 0 }}>Coupon</h2>
       </Box>
+
       <Box
         sx={{
           width: "100%",
@@ -128,89 +174,50 @@ export default function CouponChart() {
           gap: 2,
         }}
       >
+        {/* ✅ Chart Section */}
         <div style={{ width: "75%", overflowX: "auto" }}>
-          <Box
-            sx={{
-              width: "100%",
-              margin: "0 auto",
-            }}
-          >
+          <ResponsiveContainer width="100%" height={400}>
             <BarChart
-              height={400}
-              series={[
-                {
-                  data: couponData,
-                  label: "Coupon",
-                  stack: "total",
-                  color: "#5174c0ff",
-                },
-                {
-                  data: referralData,
-                  label: "Referral",
-                  stack: "total",
-                  color: "#ff9040ff",
-                },
-                {
-                  data: referenceData,
-                  label: "Reference",
-                  stack: "total",
-                  color: "#EC4899",
-                },
-              ]}
-              xAxis={[
-                {
-                  data: xAxisLabels,
-                  scaleType: "band",
-                  tickLabelStyle: {
-                    angle: 0,
-                    textAnchor: "middle",
-                  },
-                  categoryGapRatio: categoryGapRatio,
-                  barGapRatio: 0,
-                },
-              ]}
-              slotProps={{
-                legend: {
-                  direction: "row",
-                  position: { vertical: "top", horizontal: "middle" },
-                  padding: 0,
-                  itemMarkWidth: 20,
-                  itemMarkHeight: 10,
-                  markGap: 8,
-                  itemGap: 15,
-                  labelStyle: {
-                    fontSize: 12,
-                    fill: "#666",
-                  },
-                },
-                bar: {
-                  width: 20,
-                },
-              }}
-              sx={{
-                ".MuiChartsAxis-tickLabel": {
-                  strokeWidth: "0.2",
-                  fill: "#666",
-                },
-                ".MuiChartsAxis-line": {
-                  stroke: "#333",
-                  strokeWidth: 0.5,
-                },
-                ".MuiChartsAxis-tick": {
-                  stroke: "#333",
-                  strokeWidth: 1,
-                },
-                "& .MuiBarElement-root": {
-                  width: "25px !important",
-                },
-              }}
-              margin={{ left: 100, right: 100, top: 40, bottom: 80 }}
-              barLabel={false}
-              disableAxisListener
-            />
-          </Box>
+              data={data}
+              margin={{ left: 20, right: 20, top: 40, bottom: 80 }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <XAxis
+                dataKey="label"
+                tick={{ fill: "#666", fontSize: 12 }}
+                stroke="#333"
+              />
+              <YAxis tick={{ fill: "#666", fontSize: 12 }} stroke="#333" />
+              <Tooltip content={<CustomTooltip />} />
+              <Legend
+                wrapperStyle={{ paddingTop: "10px" }}
+                iconType="rect"
+                iconSize={20}
+              />
+              <Bar
+                dataKey="Coupon"
+                stackId="stack"
+                fill="#5174c0ff"
+                barSize={25}
+              />
+              <Bar
+                dataKey="Referral"
+                stackId="stack"
+                fill="#ff9040ff"
+                barSize={25}
+              />
+              <Bar
+                dataKey="Reference"
+                stackId="stack"
+                fill="#EC4899"
+                barSize={25}
+              />
+            </BarChart>
+          </ResponsiveContainer>
         </div>
-        <div className="filter-section" style={{ width: "25%" }}>
+
+        {/* ✅ Filters Section */}
+        <div className="filter-section" style={{ width: "auto" }}>
           <div className="filter-section-title">Date Range</div>
           <div className="date-inputs">
             <div className="date-input-group">
@@ -235,20 +242,12 @@ export default function CouponChart() {
               />
             </div>
           </div>
-          <div className="filter-row"></div>
+
           <div className="filter-section">
             <div className="filter-section-title">Granularity</div>
             <select
               value={filters.granularity}
               onChange={handleGranularityChange}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
               className="filter-dropdown"
             >
               <option value="">Current Month (Daily)</option>
@@ -258,20 +257,11 @@ export default function CouponChart() {
             </select>
           </div>
 
-          {/* <div className="filter-row"></div> */}
           <div className="filter-section">
             <div className="filter-section-title">Group By</div>
             <select
               value={filters.platform}
               onChange={handlePlatformChange}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
               className="filter-dropdown"
             >
               <option value="">Select Type</option>
@@ -280,7 +270,6 @@ export default function CouponChart() {
             </select>
           </div>
 
-          {/* Action Buttons */}
           <div className="filter-actions" style={{ width: "max-content" }}>
             <button className="apply-button" onClick={handleApply}>
               Apply Filters

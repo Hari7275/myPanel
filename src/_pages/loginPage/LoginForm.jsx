@@ -73,8 +73,7 @@ const LoginForm = () => {
         toast.error(response?.message || "Login failed");
       }
     } catch (error) {
-      console.error("Login error:", error);
-      toast.error("Something went wrong during login");
+      toast.error(error.data.message, "Something went wrong during login");
     }
   };
 

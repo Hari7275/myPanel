@@ -22,12 +22,11 @@ export const graphApiSlice = apiSlice.injectEndpoints({
       providesTags: ["graph"],
     }),
 
-
     getCouponGraphList: builder.query({
       query: ({ granularity, startDate, endDate, platform }) => {
         const params = new URLSearchParams();
 
-        if (granularity) params.append("filter", granularity);
+        if (granularity) params.append("group_by", granularity);
         if (startDate) params.append("start_date", startDate);
         if (endDate) params.append("end_date", endDate);
         if (platform) params.append("transaction_by", platform);
@@ -45,4 +44,5 @@ export const graphApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetRechargeGraphListQuery,useGetCouponGraphListQuery } = graphApiSlice;
+export const { useGetRechargeGraphListQuery, useGetCouponGraphListQuery } =
+  graphApiSlice;

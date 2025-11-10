@@ -35,6 +35,7 @@ const OrderLists = () => {
   const [userId, setUserId] = useState(null);
   const [orderId, setOrderId] = useState(null);
   const [consultantId, setConsultantId] = useState(null);
+  const [runningCallCount, setRunningCallCount] = useState(0);
 
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -219,6 +220,10 @@ const OrderLists = () => {
   useEffect(() => {
     if (fetchData) {
       setData(fetchData?.data || []);
+
+      // Calculate how many are "Running" (status = 3)
+      const runningCalls = fetchData?.data?.filter((item) => item.status === 3);
+      setRunningCallCount(runningCalls.length);
     }
   }, [fetchData]);
 
@@ -336,6 +341,11 @@ const OrderLists = () => {
           onClick={handleRunningFilter}
         >
           Running Call
+          {runningCallCount > 0 && (
+            <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+              {runningCallCount}
+            </span>
+          )}
         </Button>
       </div>
     </div>
