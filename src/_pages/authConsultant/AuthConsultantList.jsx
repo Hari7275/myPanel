@@ -3,10 +3,10 @@ import DyCommonTable from "../../_components/table/DyCommonTable";
 import { CONSULTANT_COLUMNS } from "./AuthConsultantListColumn";
 import { useGetUnregisteredConsultantsListQuery } from "../../_store/api";
 import { useDispatch } from "react-redux";
-
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
+import AssignOnboardingToAdmin from "../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { resetActiveTab } from "../../_store/slices/activeSlice";
 import { debounce } from "lodash";
-
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 
@@ -15,24 +15,17 @@ const AuthConsultantList = () => {
   const dispatch = useDispatch();
   const [email_address, setEmailAddress] = useState("");
   const [phone, setPhone] = useState("");
-
+  const [selectedRow, setSelectedRow] = useState(null);
   const [consultantId, setConsultantId] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
   const [pageSize, setPageSize] = useState(15);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
 
   const location = useLocation();
-
   const [count, setCount] = useState(0);
-
-  useEffect(() => {
-    console.log("effect running");
-
-    return () => {
-      console.log("cleanup called");
-    };
-  }, [count]);
 
   const {
     data: fetchData,
@@ -71,7 +64,33 @@ const AuthConsultantList = () => {
     }
   }, [location.state]);
 
-  const columns = useMemo(() => [...CONSULTANT_COLUMNS], []);
+  // const columns = useMemo(() => [...CONSULTANT_COLUMNS], []);
+
+  const toggleOnboardingStatus = (row) => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedRow(row);
+  };
+
+  const columns = useMemo(
+    () => [
+      ...CONSULTANT_COLUMNS,
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) => (
+          <div className="actions-cell">
+            <span className="editIcon" style={{ background: "#c65252ff" }}>
+              <KeyRound
+                className="iconSmall"
+                onClick={() => toggleOnboardingStatus(row.original)}
+              />
+            </span>
+          </div>
+        ),
+      },
+    ],
+    []
+  );
 
   // Apply debounce to search handlers
   const debouncedSearchEmailAddress = debounce(
@@ -168,6 +187,14 @@ const AuthConsultantList = () => {
       <button onClick={() => setCount(count + 1)}>INcrement</button> */}
       {data?.length == 0 && (
         <span className="no-data-new">No Consultant Avaliable</span>
+      )}
+
+      {showOnboardingAssignTask && (
+        <AssignOnboardingToAdmin
+          isOpen={showOnboardingAssignTask}
+          onClose={toggleOnboardingStatus}
+          selectedRow={selectedRow?.id}
+        />
       )}
     </div>
   );
