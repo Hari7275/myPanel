@@ -2,7 +2,8 @@
 .onboarding-main-container {
   padding: 1rem;
   background-color: #f8f9fa;
-  min-height: 100vh;
+  height: calc(100vh - 64px);
+  overflow: auto;
 }
 
 /* Header Section */

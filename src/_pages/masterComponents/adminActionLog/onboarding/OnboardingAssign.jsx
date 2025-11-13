@@ -5,13 +5,15 @@ import "./OnboardingAssign.css"; // Import the CSS file
 
 const CategoryCard = ({ link, item }) => {
   const cardContent = (
-    <div className="onboarding-specialist-card">
+    //  <div className="profile-section">
+    //     <div className="profileMainComponent"></div>
+    <div className="onboarding-specialist-card ">
       <div className="onboarding-card-header">
         <h3 className="onboarding-specialist-name">{item.name}</h3>
         <span className="onboarding-specialist-id">ID: {item.admin_id}</span>
       </div>
 
-      <div className="onboarding-card-body">
+      <div className="onboarding-card-body t">
         <div className="onboarding-stats-grid">
           <div className="onboarding-stat-item onboarding-stat-primary">
             <span className="onboarding-stat-label">Assigned</span>

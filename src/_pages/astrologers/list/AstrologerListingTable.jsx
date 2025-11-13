@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, use } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { ASTROLOGER_COLUMNS } from "./astrologerListingColumn";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
@@ -21,6 +21,7 @@ import usePermissions from "../../../_components/reuseComponents/permission/EmpP
 import { statusNameToValue } from "../../../_constants/consultantConstant";
 import AstrologerListFilter from "./AstrologerListFilter";
 import Button from "@mui/material/Button";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -38,6 +39,8 @@ const AstrologerListingTable = () => {
   const location = useLocation();
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
 
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -110,6 +113,11 @@ const AstrologerListingTable = () => {
     // localStorage.setItem("currentUserId", data?.id);
   };
 
+  const toggleOnboardingStatus = (row) => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedRow(row);
+  };
+
   const columns = useMemo(
     () => [
       ...ASTROLOGER_COLUMNS,
@@ -149,11 +157,23 @@ const AstrologerListingTable = () => {
                   />
                 </span>
               )}
+
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              permissions?.["listener"]?.includes(
+                "update_listener_profile_status"
+              ) && (
+                <span className="editIcon" style={{ background: "#c65252ff" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original)}
+                  />
+                </span>
+              )}
           </div>
         ),
       },
     ],
-    [ toggleEditStatus]
+    [toggleEditStatus]
   );
 
   // Apply debounce to search handlers
@@ -311,6 +331,15 @@ const AstrologerListingTable = () => {
           <EditStatus
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+
+        {showOnboardingAssignTask && (
+          <AssignOnboardingToAdmin
+            isOpen={showOnboardingAssignTask}
+            onClose={toggleOnboardingStatus}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
           />

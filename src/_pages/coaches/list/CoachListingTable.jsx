@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
@@ -36,6 +37,8 @@ const CoachListingTable = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
 
   // const pageRef = useRef(page);
   const [dynamicPagination, setDynamicPagination] = useState(true);
@@ -76,6 +79,10 @@ const CoachListingTable = () => {
     consultant_type: 2,
   });
 
+  const toggleOnboardingStatus = (row) => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedRow(row);
+  };
   // useEffect(() => {
   //   pageRef.current = page;
   // }, [page]);
@@ -143,6 +150,17 @@ const CoachListingTable = () => {
                   <Pencil
                     className="iconSmall"
                     onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )}
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              permissions?.["listener"]?.includes(
+                "update_listener_profile_status"
+              ) && (
+                <span className="editIcon" style={{ background: "#c65252ff" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original)}
                   />
                 </span>
               )}
@@ -281,6 +299,15 @@ const CoachListingTable = () => {
           <EditStatus
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+
+        {showOnboardingAssignTask && (
+          <AssignOnboardingToAdmin
+            isOpen={showOnboardingAssignTask}
+            onClose={toggleOnboardingStatus}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
           />

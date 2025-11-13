@@ -271,6 +271,8 @@ const ListenersListingTable = () => {
   // );
 
   // Apply debounce to search handlers
+ 
+ 
   const debouncedSearchName = debounce((value) => setName(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
