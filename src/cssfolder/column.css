@@ -1,4 +1,4 @@
-.column_container { 
+.column_container {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -6,15 +6,16 @@
 }
 
 .column_container_name {
-  margin-left: 2px; 
+  margin-left: 2px;
   font-weight: 500;
-  font-size: 14px; 
+  font-size: 14px;
   text-decoration: none;
   color: #8b8989;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  width: 150px;
 }
 
-.column_container_email { 
+.column_container_email {
   font-family: sans-serif;
   font-weight: 400;
   font-size: 14px;

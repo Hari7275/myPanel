@@ -83,6 +83,8 @@ const Navbar = () => {
     "/payable-History": "Payable Log",
     "/coupon": "Coupon List",
     "/blog-count": "Blog View Count",
+    "/action-log": "Admin Action Log",
+    "/onboarding-assign": "Onboarding Specialists",
 
     // prompt  , profile  options
 

@@ -104,6 +104,7 @@ import ConsultantSupport from "./_pages/masterComponents/support/consultantSuppo
 import ExecutiveList from "./_pages/masterComponents/support/executiveSection/ExecutiveList";
 import UserSupportRequest from "./_pages/masterComponents/support/userSupportRequest/UserSupportRequest";
 import BlogCount from "./_pages/masterComponents/blogCount/BlogCount";
+import AdminActionLog from "./_pages/masterComponents/adminActionLog/AdminActionLog";
 
 // SuperAdmin control
 import UnauthorizedPage from "./_pages/loginPage/UnauthorizedPage";
@@ -116,6 +117,9 @@ import AssignPermissionToRole from "./_pages/admin/adminRoles/AssignPermissionTo
 import PayableAmountHistory from "./_pages/payments/payableAmountHistory/PayableAmountHistory";
 
 import AudioCallPage from "./_pages/masterComponents/order/AudioCallPage";
+import ConsultantRegistrationDocs from "./_pages/coaches/ConsultantRegistrationDocs";
+import OnboardingAssign from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssign";
+import OnboardingAssignedConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedConsultantList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -158,6 +162,7 @@ const Layout = () => (
           <Route path="/user/:userId" element={<UsersProfile />} />
 
           {/* <Route path="users_Profile" element={<UsersProfile />} /> */}
+
           <Route path="untracked-user" element={<UntrackedUser />} />
           <Route path="user-device-info" element={<UserDeviceInfo />} />
           {/* <Route path="coaches" element={<CoachListingTable />} /> */}
@@ -289,6 +294,12 @@ const Layout = () => (
           <Route path="Support-executive" element={<ExecutiveList />} />
           <Route path="user-support-request" element={<UserSupportRequest />} />
           <Route path="blog-count" element={<BlogCount />} />
+          <Route path="action-log" element={<AdminActionLog />} />
+          <Route path="onboarding-assign" element={<OnboardingAssign />} />
+          <Route
+            path="/onboarding-assign/:adminId"
+            element={<OnboardingAssignedConsultantList />}
+          />
 
           {/* ****************************************SuperAdmin*************************** */}
 
@@ -327,6 +338,10 @@ function App() {
 
       <Route path="/" element={<LoginForm dispatch={dispatch} />} />
       <Route path="logout" element={<LogoutPopup />} />
+      <Route
+        path="registration-user"
+        element={<ConsultantRegistrationDocs />}
+      />
       {/* <Route path="*" element={<Layout />} /> */}
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 

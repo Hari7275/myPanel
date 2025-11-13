@@ -74,34 +74,32 @@ const UserDatingStatus = () => {
   //   }
   // };
 
-
   const UserVerificationStatus = (value) => {
-  switch (Number(value)) {
-    case 1:
-      return "Uncreated";
-    case 2:
-      return "Active";
-    case 3:
-      return "Inactive";
-    case 4:
-      return "Blocked";
-    case 5:
-      return "Suspended";
-    case 6:
-      return "Terminated";
-    case 7:
-      return "Deleted";
-    case 8:
-      return "Pause";
-    case 9:
-      return "Under Review";
-    case 10:
-      return "Rejected";
-    default:
-      return "N/A";
-  }
-};
-
+    switch (Number(value)) {
+      case 1:
+        return "Uncreated";
+      case 2:
+        return "Active";
+      case 3:
+        return "Inactive";
+      case 4:
+        return "Blocked";
+      case 5:
+        return "Suspended";
+      case 6:
+        return "Terminated";
+      case 7:
+        return "Deleted";
+      case 8:
+        return "Pause";
+      case 9:
+        return "Under Review";
+      case 10:
+        return "Rejected";
+      default:
+        return "N/A";
+    }
+  };
 
   return (
     <div>

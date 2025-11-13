@@ -13,6 +13,19 @@ export const getGenderLabel = (value) => {
   }
 };
 
+export const getGenderLabelInSort = (value) => {
+  switch (value) {
+    case 1:
+      return "M";
+    case 2:
+      return "F";
+    case 3:
+      return "O";
+    default:
+      return "Unknown";
+  }
+};
+
 export const getMaritalStatus = (value) => {
   switch (value) {
     case 1:

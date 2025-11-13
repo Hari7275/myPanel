@@ -134,16 +134,20 @@ const UserSupportRequest = () => {
         onChange={handleConsultantIdSearch}
       />
 
-      <input
+      <select
         className="inputBox"
-        placeholder="Search by Status"
         style={{
-          marginLeft: "25px",
+          marginLeft: "10px",
           height: "-webkit-fill-available",
-          width: "20%",
+          width: "10%",
         }}
         onChange={handleStatusSearch}
-      />
+      >
+        <option>Select Status</option>
+        <option value={1}>Open</option>
+        <option value={2}>Closed</option>
+        <option value={3}>Deleted</option>
+      </select>
     </div>
   );
 

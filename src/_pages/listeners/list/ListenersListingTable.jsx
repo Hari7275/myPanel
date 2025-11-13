@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { LISTENERSCOLUMNS } from "./listenersListingColumn";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
@@ -20,10 +20,13 @@ import { statusNameToValue } from "../../../_constants/consultantConstant";
 
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const ListenersListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -96,6 +99,11 @@ const ListenersListingTable = () => {
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
     SetProfileStatus(row.status);
+    setSelectedRow(row);
+  };
+
+  const toggleOnboardingStatus = (row) => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedRow(row);
   };
 
@@ -185,6 +193,17 @@ const ListenersListingTable = () => {
                   <Pencil
                     className="iconSmall"
                     onClick={() => toggleEditStatus(row.original)}
+                  />
+                </span>
+              )}
+            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              permissions?.["listener"]?.includes(
+                "update_listener_profile_status"
+              ) && (
+                <span className="editIcon" style={{ background: "#c65252ff" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original)}
                   />
                 </span>
               )}
@@ -410,6 +429,15 @@ const ListenersListingTable = () => {
           <EditStatus
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+          />
+        )}
+
+        {showOnboardingAssignTask && (
+          <AssignOnboardingToAdmin
+            isOpen={showOnboardingAssignTask}
+            onClose={toggleOnboardingStatus}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
           />

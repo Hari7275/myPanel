@@ -7,6 +7,7 @@ export * from "../api/masterComponentsApi/qdList";
 export * from "../api/masterComponentsApi/gifts";
 export * from "../api/masterComponentsApi/userInterest";
 export * from "../api/masterComponentsApi/qdLoaction";
+export * from "../api/masterComponentsApi/adminActionlog";
 
 // data for user
 export * from "../api/user/userListing";

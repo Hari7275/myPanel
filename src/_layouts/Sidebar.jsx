@@ -24,6 +24,7 @@ const Sidebar = () => {
   const [isDropdownOpen, setIsDropdownOpen] = useState("");
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
+  const [isOnboarding, setIsOnboarding] = useState("");
   const [isNotice, setIsNotice] = useState();
   const [isNotification, setIsNotifications] = useState();
   const [isQuickDate, setIsQuickDate] = useState();
@@ -46,6 +47,10 @@ const Sidebar = () => {
 
   const adminDropdown = () => {
     setIsAdmin(!isAdmin);
+  };
+
+  const onboardingDropdown = () => {
+    setIsOnboarding(!isOnboarding);
   };
   const noticeDropdown = () => {
     setIsNotice(!isNotice);
@@ -142,6 +147,48 @@ const Sidebar = () => {
                 )}
               </div>
             )}
+
+            {/* ****************************admin action log**********************************  */}
+
+            <div className="menu-item-child">
+              <div className="child" onClick={onboardingDropdown}>
+                <SupervisorAccountIcon />
+                <span>Onboarding</span>
+
+                <span>{isOnboarding ? "⬇️" : "⬅️"}</span>
+              </div>
+
+              {isOnboarding && (
+                <div className="menu-item-sub">
+                  {/* {permissions?.["admin"]?.includes("view_admin_role") && ( */}
+                  <Link to="onboarding-assign">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "onboarding-assign" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("onboarding-assign")}
+                    >
+                      <div className="dropdown-item"> Onboarding Assign</div>
+                    </div>
+                  </Link>
+                  {/* )} */}
+                  {/* {permissions?.["admin"]?.includes(
+                    "view_admin_permission_group_section"
+                  ) && ( */}
+                  <Link to="/action-log">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "action-log" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("action-log")}
+                    >
+                      <div className="dropdown-item">Action log</div>
+                    </div>
+                  </Link>
+                  {/* )} */}
+                </div>
+              )}
+            </div>
 
             <div>
               {permissions?.["Dashboard"]?.includes("view_dashboard") && (
@@ -748,6 +795,23 @@ const Sidebar = () => {
                   height="24"
                 />
                 <span>Blog View Count</span>
+              </div>
+            </Link>
+
+            <Link to="/action-log">
+              <div
+                className={`menu-item ${
+                  activeItem === "action-log" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("action-log")}
+              >
+                {/* <img
+                  src="/adminPannel_icons/support.png"
+                  width="24"
+                  height="24"
+                /> */}
+                <ManageHistoryOutlinedIcon />
+                <span>Action log</span>
               </div>
             </Link>
 

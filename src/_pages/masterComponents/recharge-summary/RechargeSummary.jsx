@@ -200,7 +200,7 @@ const RechargeSummary = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Users Recharge List"
+        tableTitle="Recharge Summary List"
         customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}

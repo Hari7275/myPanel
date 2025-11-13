@@ -3,7 +3,7 @@ import ReactModal from "react-modal";
 import { useState } from "react";
 
 import {
-  getGenderLabel,
+  getGenderLabelInSort,
   getStatusLabel,
 } from "../../../_constants/consultantConstant";
 
@@ -12,7 +12,7 @@ const CustomUserType = ({ value }) => {
 };
 
 const GenderCell = ({ value }) => {
-  return <span>{getGenderLabel(value)}</span>;
+  return <span>{getGenderLabelInSort(value)}</span>;
 };
 
 const StatusCell = ({ value }) => {
@@ -76,12 +76,12 @@ export const ASTROLOGER_COLUMNS = [
     Header: "Name",
     Cell: NameCell,
   },
+  // {
+  //   Header: "Email",
+  //   accessor: "email_address",
+  // },
   {
-    Header: "Email",
-    accessor: "email_address",
-  },
-  {
-    Header: "Gender",
+    Header: "GD",
     accessor: "gender",
     Cell: GenderCell,
   },
