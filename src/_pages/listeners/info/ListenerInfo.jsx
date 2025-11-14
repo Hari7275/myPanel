@@ -84,7 +84,7 @@ const ListenerInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
+              <strong>Display Name : </strong> {formData?.display_name}
             </p>
             <p className="info-item">
               <strong>Email : </strong> {formData?.email_address}
@@ -95,8 +95,7 @@ const ListenerInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Consultant Type : </strong>
-              {getConsultantTypes(formData?.consultant_type)}
+              <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
             </p>
             <p className="info-item">
               <strong>Experience : </strong> {formData?.experience || "0"}

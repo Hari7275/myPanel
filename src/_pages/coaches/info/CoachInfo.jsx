@@ -126,8 +126,11 @@ const CoachInfo = () => {
           <div className="dividerm"></div>
 
           <div className="info-pair">
-            <p className="info-item">
+            {/* <p className="info-item">
               <strong>Gender : </strong> {getGenderLabel(formData.gender)}
+            </p> */}
+            <p className="info-item">
+              <strong>Display Name : </strong> {formData?.display_name}
             </p>
             <p className="info-item">
               <strong>Email : </strong> {formData.email_address}
@@ -174,6 +177,9 @@ const CoachInfo = () => {
           <div className="info-pair">
             <p className="info-item">
               <strong>Experience : </strong> {formData?.experience || "0"}
+            </p>
+            <p className="info-item">
+              <strong>Gender : </strong> {getGenderLabel(formData.gender)}
             </p>
           </div>
           <div className="dividerm"></div>

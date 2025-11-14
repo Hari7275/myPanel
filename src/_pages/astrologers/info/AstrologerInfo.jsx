@@ -130,7 +130,7 @@ const AstrologerInfo = () => {
 
           <div className="info-pair">
             <p className="info-item">
-              <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
+              <strong>Display Name : </strong> {formData?.display_name}
             </p>
             <p className="info-item">
               <strong>Email : </strong> {formData?.email_address}
@@ -178,6 +178,9 @@ const AstrologerInfo = () => {
           <div className="info-pair">
             <p className="info-item">
               <strong>Experience : </strong> {formData?.experience || "0"}
+            </p>
+            <p className="info-item">
+              <strong>Gender : </strong> {getGenderLabel(formData?.gender)}
             </p>
           </div>
           <div className="dividerm"></div>
