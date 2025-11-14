@@ -84,6 +84,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
     2: "C",
     3: "L",
   };
+  const foreigner = row?.original?.description?.is_consultant_foreigner;
 
   const displayType = typeLabel[consultantType] || "";
   // Get the route based on consultant type
@@ -97,7 +98,13 @@ const ConsultantNavigationCell = ({ value, row }) => {
       // onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
-      <span style={{ cursor: "pointer", color: "#be5b18ff" }}>
+      <span
+        style={{
+          cursor: "pointer",
+          color: foreigner ? "#1889beff" : "#be5b18ff",
+          fontStyle: foreigner ? "italic" : "normal",
+        }}
+      >
         {consultantName} ({value})
         <span style={{ color: "#187cbeff" }}>({displayType})</span>
       </span>
