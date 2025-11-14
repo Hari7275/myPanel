@@ -14,6 +14,7 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
   const [formData, setFormData] = useState({
     first_name: selectedData?.first_name,
     last_name: selectedData?.last_name,
+    display_name: selectedData?.display_name,
     gender: Number(selectedData?.gender),
     email: selectedData?.email_address,
     languages: selectedData?.languages,
@@ -220,19 +221,14 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
         </div>
 
         <div style={{ display: "flex" }}>
-          <div>
-            <UpdateInputField
-              label="Email"
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              disabled={true}
-            />
-
-            <p style={{ color: "red", paddingLeft: "10px" }}>{errors.email}</p>
-          </div>
+          <UpdateInputField
+            label="Display Name"
+            type="text"
+            id="display_name"
+            name="display_name"
+            value={formData?.display_name}
+            onChange={handleChange}
+          />
 
           <div className="input-container">
             <label htmlFor="gender">Gender</label>
@@ -287,6 +283,19 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
             value={formData?.experience || ""}
             onChange={handleChange}
           />
+          <div>
+            <UpdateInputField
+              label="Email"
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              disabled={true}
+            />
+
+            <p style={{ color: "red", paddingLeft: "10px" }}>{errors.email}</p>
+          </div>
         </div>
 
         {error && <p style={{ color: "red", paddingLeft: "10px" }}>{error}</p>}
