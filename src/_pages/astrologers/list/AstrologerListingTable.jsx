@@ -342,6 +342,7 @@ const AstrologerListingTable = () => {
             onClose={toggleOnboardingStatus}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
+            created={true}
           />
         )}
       </div>

@@ -55,9 +55,7 @@ const OnboardingAssignedConsultantList = () => {
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
-      const consultantData = fetchData?.data?.records?.filter(
-        (record) => record?.consultant_type === 3
-      );
+      const consultantData = fetchData?.data?.records;
       setData(consultantData);
     } else {
       setData([]);

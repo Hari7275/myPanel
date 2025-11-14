@@ -194,6 +194,7 @@ const AuthConsultantList = () => {
           isOpen={showOnboardingAssignTask}
           onClose={toggleOnboardingStatus}
           selectedRow={selectedRow?.id}
+          created={false}
         />
       )}
     </div>
