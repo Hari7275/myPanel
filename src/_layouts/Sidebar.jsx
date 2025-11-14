@@ -14,6 +14,7 @@ import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import { useSelector, useDispatch } from "react-redux";
 import { setPageTitle } from "../_store/slices/pageTitleSlice";
 import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
+import { KeyRound } from "lucide-react";
 
 import "aos/dist/aos.css";
 
@@ -989,6 +990,13 @@ const Sidebar = () => {
                 </div>
               </Link>
             )}
+
+            <Link to="/onboarding-assign">
+              <div className="item">
+                <KeyRound />
+                <span>Onboarding</span>
+              </div>
+            </Link>
 
             <Link to="/session">
               <div className="item">

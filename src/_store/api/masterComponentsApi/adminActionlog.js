@@ -23,7 +23,7 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      providesTags: ["adminlog"],
+      providesTags: ["adminlog", "consultant"],
     }),
 
     getOnboardingAssignedConsultantList: builder.query({
@@ -34,7 +34,7 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
           Authorization: "Bearer admin_token",
         },
       }),
-      providesTags: ["adminlog"],
+      providesTags: ["adminlog", "consultant"],
     }),
 
     getAdminOnboardingSpecialistList: builder.query({
@@ -47,7 +47,7 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
           },
         };
       },
-      providesTags: ["adminlog"],
+      providesTags: ["adminlog", "consultant"],
     }),
 
     assignOnboardingToAdmin: builder.mutation({
@@ -59,7 +59,7 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["adminlog"],
+      invalidatesTags: ["adminlog", "consultant"],
     }),
   }),
 });

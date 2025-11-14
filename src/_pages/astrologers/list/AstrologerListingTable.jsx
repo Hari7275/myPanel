@@ -22,6 +22,7 @@ import { statusNameToValue } from "../../../_constants/consultantConstant";
 import AstrologerListFilter from "./AstrologerListFilter";
 import Button from "@mui/material/Button";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
+import { useSelector } from "react-redux";
 
 const AstrologerListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -41,6 +42,7 @@ const AstrologerListingTable = () => {
   const permissions = usePermissions();
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -159,6 +161,7 @@ const AstrologerListingTable = () => {
               )}
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              row.original.is_assign == 0 &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"
               ) && (
@@ -343,6 +346,7 @@ const AstrologerListingTable = () => {
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
+            adminId={user.id}
           />
         )}
       </div>

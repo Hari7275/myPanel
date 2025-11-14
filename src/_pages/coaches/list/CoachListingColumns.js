@@ -129,4 +129,12 @@ export const COACHES_COLUMNS = [
       });
     },
   },
+  {
+    Header: "Assigned To",
+    accessor: "assign_to_name",
+  },
+  {
+    Header: "Assigned By",
+    accessor: "assigned_by_name",
+  },
 ];

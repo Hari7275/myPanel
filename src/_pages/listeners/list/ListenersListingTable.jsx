@@ -17,7 +17,7 @@ import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { statusNameToValue } from "../../../_constants/consultantConstant";
-
+import { useSelector } from "react-redux";
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
@@ -38,7 +38,7 @@ const ListenersListingTable = () => {
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const location = useLocation();
-  console.log("page in arrow.......", pageRef.current);
+  const { user } = useSelector((state) => state.auth);
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
 
@@ -50,6 +50,8 @@ const ListenersListingTable = () => {
     orderType: "",
     status: "",
   });
+
+  console.log("user......", user.id);
 
   const {
     data: fetchData,
@@ -197,6 +199,7 @@ const ListenersListingTable = () => {
                 </span>
               )}
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              row.original.is_assign == 0 &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"
               ) && (
@@ -442,6 +445,7 @@ const ListenersListingTable = () => {
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
+            adminId={user.id}
           />
         )}
       </>

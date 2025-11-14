@@ -9,6 +9,7 @@ import { resetActiveTab } from "../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const AuthConsultantList = () => {
   const [data, setData] = useState([]);
@@ -23,6 +24,7 @@ const AuthConsultantList = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   const location = useLocation();
   const [count, setCount] = useState(0);
@@ -79,12 +81,14 @@ const AuthConsultantList = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span className="editIcon" style={{ background: "#c65252ff" }}>
-              <KeyRound
-                className="iconSmall"
-                onClick={() => toggleOnboardingStatus(row.original)}
-              />
-            </span>
+            {row.original.is_assign == 0 && (
+              <span className="editIcon" style={{ background: "#c65252ff" }}>
+                <KeyRound
+                  className="iconSmall"
+                  onClick={() => toggleOnboardingStatus(row.original)}
+                />
+              </span>
+            )}
           </div>
         ),
       },
@@ -195,6 +199,7 @@ const AuthConsultantList = () => {
           onClose={toggleOnboardingStatus}
           selectedRow={selectedRow?.id}
           created={false}
+          adminId={user.id}
         />
       )}
     </div>

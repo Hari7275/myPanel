@@ -16,11 +16,13 @@ import AssignOnboardingToAdmin from "../../../_components/reuseComponents/Assign
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const CoachListingTable = () => {
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.auth);
 
   // 🧠 Read URL Params
   const queryParams = new URLSearchParams(location.search);
@@ -154,6 +156,7 @@ const CoachListingTable = () => {
                 </span>
               )}
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+              row.original.is_assign == 0 &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"
               ) && (
@@ -311,6 +314,7 @@ const CoachListingTable = () => {
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
+            adminId={user.id}
           />
         )}
       </div>

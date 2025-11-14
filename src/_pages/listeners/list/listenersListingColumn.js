@@ -127,4 +127,12 @@ export const LISTENERSCOLUMNS = [
       });
     },
   },
+  {
+    Header: "Assigned To",
+    accessor: "assign_to_name",
+  },
+  {
+    Header: "Assigned By",
+    accessor: "assigned_by_name",
+  },
 ];

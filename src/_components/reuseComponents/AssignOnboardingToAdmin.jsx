@@ -4,7 +4,13 @@ import { useGetAdminUserListQuery } from "../../_store/api";
 import { useAssignOnboardingToAdminMutation } from "../../_store/api";
 import toast from "react-hot-toast";
 
-const AssignOnboardingToAdmin = ({ isOpen, onClose, selectedRow, created }) => {
+const AssignOnboardingToAdmin = ({
+  isOpen,
+  onClose,
+  selectedRow,
+  created,
+  adminId,
+}) => {
   const [formData, setFormData] = useState({
     admin_id: "",
     description: "",
@@ -54,6 +60,7 @@ const AssignOnboardingToAdmin = ({ isOpen, onClose, selectedRow, created }) => {
       admin_id: Number(formData.admin_id),
       description: formData.description.trim(),
       created: created,
+      assign_by_admin_id: adminId,
     };
     console.log("payload", payload);
 

@@ -21,7 +21,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         },
       }),
 
-      providesTags: ["consultants"],
+      providesTags: ["consultants", "adminlog"],
     }),
 
     // update consultant status
@@ -121,7 +121,7 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         },
       }),
 
-      providesTags: ["consultants"],
+      providesTags: ["consultants", "adminlog"],
     }),
 
     // ye uss consultant ki api hai consultant ke device token ko get karne ke liye
