@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetAdminOnboardingSpecialistListQuery } from "../../../../_store/api";
 import "./OnboardingAssign.css";
+import { useSelector } from "react-redux"; // Added
 
 const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
   return (
@@ -93,6 +94,9 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
 };
 
 const OnboardingAssign = () => {
+  const { user } = useSelector((state) => state.auth);
+
+  console.log("user....", user?.id);
   const [metadataItems, setMetadataItems] = useState([]);
   const {
     data: fetchData,
@@ -101,12 +105,21 @@ const OnboardingAssign = () => {
   } = useGetAdminOnboardingSpecialistListQuery({});
 
   useEffect(() => {
-    if (fetchData?.data) {
+    if (!fetchData?.data) {
+      setMetadataItems([]);
+      return;
+    }
+
+    const allAdmins = [2, 4, 20];
+
+    if (allAdmins.includes(user?.id)) {
       setMetadataItems(fetchData.data);
     } else {
-      setMetadataItems([]);
+      setMetadataItems(
+        fetchData.data.filter((item) => item.admin_id == user?.id)
+      );
     }
-  }, [fetchData]);
+  }, [fetchData, user?.id]);
 
   return (
     <div className="onboarding-main-container">
