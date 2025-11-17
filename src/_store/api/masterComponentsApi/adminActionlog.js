@@ -37,6 +37,18 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
       providesTags: ["adminlog", "consultant"],
     }),
 
+    //unregistered consultant assign list
+    getOnboardingAssignedUnregisteredConsultantList: builder.query({
+      query: ({ page = 1, size = 1000, id, name, phone, admin_id }) => ({
+        url: `/api/v1/consultant/profile/onboarding-assignee/admin/uncreated/assignee?&admin_id=${admin_id}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["adminlog", "consultant"],
+    }),
+
     getAdminOnboardingSpecialistList: builder.query({
       query: ({ page, size, start_date, end_date, title }) => {
         return {
@@ -70,4 +82,5 @@ export const {
   useGetOnboardingAssignedConsultantListQuery,
   useAssignOnboardingToAdminMutation,
   //   useUpdateAgoraCredentialsToJoinCallMutation,
+  useGetOnboardingAssignedUnregisteredConsultantListQuery,
 } = actionLogApiSlice;

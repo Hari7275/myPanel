@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactModal from "react-modal";
 import { useGetAdminUserListQuery } from "../../_store/api";
 import { useAssignOnboardingToAdminMutation } from "../../_store/api";
@@ -15,29 +15,39 @@ const AssignOnboardingToAdmin = ({
     admin_id: "",
     description: "",
   });
+
   const [adminList, setAdminList] = useState([]);
+
+  // Ref to prevent duplicate error toasts
+  const errorShownRef = useRef(false);
 
   const {
     data: fetchData,
     error: fetchError,
     isLoading: isFetching,
   } = useGetAdminUserListQuery();
+
   const [assignOnboarding, { isLoading: isAssigning, error: assignError }] =
     useAssignOnboardingToAdminMutation();
 
+  // Fetch Admin List + Error Handling
   useEffect(() => {
     if (fetchData?.data?.records) {
-      // Filter only active admin users with role_id 6
       const filteredData = fetchData.data.records.filter(
         (admin) => admin.status === "active" && admin.role_id === 6
       );
       setAdminList(filteredData);
-    } else if (fetchData) {
-      console.error("API response has an unexpected structure:", fetchData);
     }
-  }, [fetchData]);
 
-  console.log("createdTo.....", created);
+    if (fetchError && !errorShownRef.current) {
+      errorShownRef.current = true;
+      toast.error(
+        `${
+          fetchError?.data?.message || "Failed to load admin users"
+        }. Please log in again.`
+      );
+    }
+  }, [fetchData, fetchError]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -51,7 +61,7 @@ const AssignOnboardingToAdmin = ({
     e.preventDefault();
 
     if (!formData.admin_id) {
-      alert("Please select an admin user");
+      toast.error("Please select an admin user");
       return;
     }
 
@@ -62,35 +72,30 @@ const AssignOnboardingToAdmin = ({
       created: created,
       assign_by_admin_id: adminId,
     };
-    console.log("payload", payload);
 
-    // return;
     try {
       const response = await assignOnboarding(payload).unwrap();
 
       if (response.status) {
         toast.success(response.message);
-        onClose();
+        handleClose();
       } else {
         toast.error(response.message);
       }
-      // Reset form
-      setFormData({
-        admin_id: "",
-        description: "",
-      });
     } catch (error) {
-      // console.error("Failed to assign onboarding:", error);
-      toast.error(error.data.message);
+      toast.error(error?.data?.message || "Assignment failed. Try again.");
     }
   };
 
   const handleClose = () => {
-    // Reset form on close
     setFormData({
       admin_id: "",
       description: "",
     });
+
+    // Reset toast guard so next open can show new errors
+    errorShownRef.current = false;
+
     onClose();
   };
 
@@ -117,12 +122,8 @@ const AssignOnboardingToAdmin = ({
           Assign Onboarding to Admin
         </h2>
 
-        <form
-          className="simple-form"
-          noValidate
-          autoComplete="off"
-          onSubmit={handleSave}
-        >
+        <form className="simple-form" autoComplete="off" onSubmit={handleSave}>
+          {/* ADMIN SELECT */}
           <div className="input-container" style={{ marginBottom: "20px" }}>
             <label
               htmlFor="admin_id"
@@ -130,6 +131,7 @@ const AssignOnboardingToAdmin = ({
             >
               Select Admin <span style={{ color: "red" }}>*</span>
             </label>
+
             <select
               id="admin_id"
               name="admin_id"
@@ -143,19 +145,22 @@ const AssignOnboardingToAdmin = ({
               <option value="">
                 {isFetching ? "Loading..." : "-- Select Admin --"}
               </option>
+
               {adminList.map((admin) => (
                 <option key={admin.id} value={admin.id}>
                   {admin.name} ({admin.email})
                 </option>
               ))}
             </select>
+
             {fetchError && (
               <p style={{ color: "red", fontSize: "12px", marginTop: "5px" }}>
-                Failed to load admin users
+                Failed to load admin users. Please log in again.
               </p>
             )}
           </div>
 
+          {/* DESCRIPTION */}
           <div className="input-container" style={{ marginBottom: "20px" }}>
             <label
               htmlFor="description"
@@ -163,6 +168,7 @@ const AssignOnboardingToAdmin = ({
             >
               Description
             </label>
+
             <textarea
               id="description"
               name="description"
@@ -178,11 +184,9 @@ const AssignOnboardingToAdmin = ({
               }}
               placeholder="Enter assignment description (optional)..."
             />
-            <p style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
-              Provide details about this onboarding assignment (optional)
-            </p>
           </div>
 
+          {/* ASSIGN ERROR */}
           {assignError && (
             <div
               style={{
@@ -198,6 +202,7 @@ const AssignOnboardingToAdmin = ({
             </div>
           )}
 
+          {/* BUTTONS */}
           <div
             style={{
               display: "flex",
@@ -216,19 +221,15 @@ const AssignOnboardingToAdmin = ({
               }}
               onClick={handleClose}
               disabled={isAssigning}
-              aria-label="Cancel assignment"
             >
               Cancel
             </button>
+
             <button
               type="submit"
               className="fifthButton"
-              style={{
-                padding: "10px 20px",
-                cursor: "pointer",
-              }}
+              style={{ padding: "10px 20px", cursor: "pointer" }}
               disabled={isAssigning || isFetching}
-              aria-label="Assign onboarding"
             >
               {isAssigning ? "Assigning..." : "Assign"}
             </button>

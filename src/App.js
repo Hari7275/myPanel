@@ -120,6 +120,7 @@ import AudioCallPage from "./_pages/masterComponents/order/AudioCallPage";
 import ConsultantRegistrationDocs from "./_pages/coaches/ConsultantRegistrationDocs";
 import OnboardingAssign from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssign";
 import OnboardingAssignedConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedConsultantList";
+import OnboardingAssignedUnregisteredConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedUnregisteredConsultantList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -299,6 +300,10 @@ const Layout = () => (
           <Route
             path="/onboarding-assign/:adminId"
             element={<OnboardingAssignedConsultantList />}
+          />
+          <Route
+            path="/onboarding-assign/unregistered/:adminId"
+            element={<OnboardingAssignedUnregisteredConsultantList />}
           />
 
           {/* ****************************************SuperAdmin*************************** */}

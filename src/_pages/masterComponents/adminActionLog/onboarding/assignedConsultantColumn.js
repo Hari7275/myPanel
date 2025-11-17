@@ -94,11 +94,6 @@ export const ASSIGNEDCONSULTANTCOLUMNS = [
     Header: "Location",
     accessor: "country",
   },
-  // {
-  //   Header: "Status",
-  //   accessor: "profile_status",
-  //   Cell: ({ value }) => (value === 1 ? "Active" : "Inactive"),
-  // },
 
   {
     Header: "Status",
@@ -107,6 +102,46 @@ export const ASSIGNEDCONSULTANTCOLUMNS = [
   },
   {
     Header: "Assigned Date",
+    accessor: "assigned_at",
+    Cell: ({ value }) => {
+      const date = new Date(value) || "Aug 9, 2025, 2:12 AM";
+      return date.toLocaleString("en-US", {
+        dateStyle: "medium",
+        timeStyle: "short",
+      });
+    },
+  },
+];
+
+// *************** unregistred assign consultant ******************************************
+
+export const ASSIGNEDUnregistredCONSULTANTCOLUMNS = [
+  {
+    Header: "Id",
+    accessor: "id",
+  },
+
+  {
+    Header: "Email",
+    accessor: "email_address",
+  },
+  {
+    Header: "phone_code",
+    accessor: "phone_code",
+  },
+  {
+    Header: "Phone No.",
+    accessor: "phone_number",
+    Cell: CustomUserType,
+  },
+
+  {
+    Header: "country_code",
+    accessor: "country_code",
+  },
+
+  {
+    Header: "Date",
     accessor: "assigned_at",
     Cell: ({ value }) => {
       const date = new Date(value) || "Aug 9, 2025, 2:12 AM";
