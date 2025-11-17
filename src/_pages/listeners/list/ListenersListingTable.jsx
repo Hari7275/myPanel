@@ -198,11 +198,9 @@ const ListenersListingTable = () => {
                   />
                 </span>
               )}
-            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+            {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
-              permissions?.["listener"]?.includes(
-                "update_listener_profile_status"
-              ) && (
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#c65252ff" }}>
                   <KeyRound
                     className="iconSmall"
