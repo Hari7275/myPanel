@@ -218,7 +218,7 @@ const OrderLists = () => {
   );
 
   useEffect(() => {
-    if (fetchData) {
+    if (fetchData && fetchData?.data) {
       setData(fetchData?.data || []);
 
       // Calculate how many are "Running" (status = 3)
@@ -252,7 +252,7 @@ const OrderLists = () => {
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1);
-    console.log("Applied filters:", filterData);
+  
   };
 
   const appliedFilterCount = Object.values(appliedFilters).filter(
@@ -360,7 +360,6 @@ const OrderLists = () => {
       </span>
     );
   }
-  if (error) return <p>Error fetching data: {error?.data?.message}</p>;
 
   return (
     <div>

@@ -3,18 +3,21 @@
 import React, { useState, useEffect } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
-import { CategoryCard } from "../../dashboard/DashboardSubPage";
+// import { CategoryCard } from "../../dashboard/DashboardSubPage";
 
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
 
-const InfoItem = ({ label, value }) => (
-  <div className="card-footer-content">
-    <div className="info-pair">
-      <p className="info-item">
-        <strong>{label} : </strong>
-        <span>{value}</span>
-      </p>
+export const CategoryCardWallet = ({ symbol, label, price, bgcolor }) => (
+  <div>
+    <div
+      className="card dashboard-card"
+      style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "20px" }}
+    >
+      <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
+      <span style={{ fontSize: "24px", fontWeight: "700" }}>
+        {symbol} {price}
+      </span>
     </div>
   </div>
 );
@@ -23,6 +26,11 @@ const WalletDetails = () => {
   const [data, setData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
 
   const {
     data: fetchData,
@@ -90,10 +98,11 @@ const WalletDetails = () => {
           style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
         >
           {cardData.map((card, index) => (
-            <CategoryCard
+            <CategoryCardWallet
               key={`${card.label}-${index}`}
               label={card.label}
               price={card.value}
+              symbol={currencySymbol}
               bgcolor={getCardColor(card.label)}
             />
           ))}

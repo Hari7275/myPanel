@@ -1,6 +1,18 @@
 import { OrderType } from "../../../_constants/consultantConstant";
 import { formatDateTime } from "../../../_constants/formatedDate";
 
+import { useLocation } from "react-router-dom";
+
+const CurrencyLabel = ({ value }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+
+  return <span>{`${currencySymbol}${value}`}</span>;
+};
+
 export const WALLETCHARTCOLUMN = [
   {
     Header: " Id",
@@ -28,10 +40,12 @@ export const WALLETCHARTCOLUMN = [
   {
     Header: "Amount",
     accessor: "amount",
+    Cell: CurrencyLabel, // <-- FIXED
   },
   {
     Header: "Balance",
     accessor: "remaining_balance",
+    Cell: CurrencyLabel, // <-- FIXED
   },
   {
     Header: "Date",

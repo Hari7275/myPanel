@@ -4,6 +4,18 @@ import {
   getConsultantPriceCategory,
 } from "../../../_constants/consultantConstant";
 
+import { useLocation } from "react-router-dom";
+
+const CurrencyLabel = ({ value }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+
+  return <span>{`${currencySymbol}${value}`}</span>;
+};
+
 const StatusCell = ({ value }) => {
   return <span>{getPriceStatusLabel(value)}</span>;
 };
@@ -15,7 +27,6 @@ const FeatureCell = ({ value }) => {
 const CategoriesCell = ({ value }) => {
   // return <span>{getConsultantPriceCategory(value)}</span>;
 
-  console.log("value", value);
   return <span>{value == "A" ? "India" : "Foreign"}</span>;
 };
 
@@ -34,10 +45,12 @@ export const PRICECHARTCOLUMN = [
   {
     Header: "CP",
     accessor: "current_price",
+    Cell: CurrencyLabel,
   },
   {
     Header: "DP",
     accessor: "discount_price",
+    Cell: CurrencyLabel,
   },
   {
     Header: "Comm.",

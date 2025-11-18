@@ -96,7 +96,8 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 import { CategoryCard } from "../../dashboard/DashboardSubPage";
 
 import { useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
+import { CategoryCardWallet } from "../../listeners/wallet/WalletDetails";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -125,6 +126,12 @@ const WalletDetails = () => {
       setData(fetchData?.data);
     }
   }, [fetchData]);
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
 
   // Color mapping based on label
   const getCardColor = (label) => {
@@ -179,11 +186,12 @@ const WalletDetails = () => {
           className="dashboard-card-container-grid"
           style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
         >
-          {cardData.map((card, index) => (
-            <CategoryCard
+          {cardData?.map((card, index) => (
+            <CategoryCardWallet
               key={`${card.label}-${index}`}
               label={card.label}
               price={card.value}
+              symbol={currencySymbol}
               bgcolor={getCardColor(card.label)}
             />
           ))}

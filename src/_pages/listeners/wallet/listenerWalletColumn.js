@@ -1,5 +1,16 @@
 import { getCategoryTypes } from "../../../_constants/consultantConstant";
 import { formatDateTime } from "../../../_constants/formatedDate";
+import { useLocation } from "react-router-dom";
+
+const CurrencyLabel = ({ value }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+
+  return <span>{`${currencySymbol}${value}`}</span>;
+};
 
 export const WALLETCHARTCOLUMN = [
   {
@@ -20,7 +31,6 @@ export const WALLETCHARTCOLUMN = [
     accessor: "order_type",
     Cell: ({ value }) => getCategoryTypes(value) || "N/A",
   },
-
   {
     Header: "Transaction Type",
     accessor: "transaction_type",
@@ -28,10 +38,12 @@ export const WALLETCHARTCOLUMN = [
   {
     Header: "Amount",
     accessor: "amount",
+    Cell: CurrencyLabel, // <-- FIXED
   },
   {
     Header: " Balance",
     accessor: "remaining_balance",
+    Cell: CurrencyLabel, // <-- FIXED
   },
   {
     Header: "Date",

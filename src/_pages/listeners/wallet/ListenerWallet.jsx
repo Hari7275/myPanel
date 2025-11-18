@@ -9,7 +9,7 @@ import { Atom } from "react-loading-indicators";
 
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 
 const ListenerWallet = () => {
   const [data, setData] = useState([]);
@@ -24,6 +24,7 @@ const ListenerWallet = () => {
   // );
 
   const { consultantId } = useParams();
+ 
 
   const { data: fetchData, isLoading } = useGetConsultantsWalletQuery({
     consultantId,

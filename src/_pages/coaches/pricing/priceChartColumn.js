@@ -4,6 +4,18 @@ import {
   getFetaureLabel,
 } from "../../../_constants/consultantConstant";
 
+import { useLocation } from "react-router-dom";
+
+const CurrencyLabel = ({ value }) => {
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+
+  return <span>{`${currencySymbol}${value}`}</span>;
+};
+
 const PriceStatusCell = ({ value }) => {
   return <span>{getPriceStatusLabel(value)}</span>;
 };
@@ -35,10 +47,12 @@ export const PRICECHARTCOLUMN = [
   {
     Header: "CP",
     accessor: "current_price",
+    Cell: CurrencyLabel,
   },
   {
     Header: "DP",
     accessor: "discount_price",
+    Cell: CurrencyLabel,
   },
   {
     Header: "Comm.",

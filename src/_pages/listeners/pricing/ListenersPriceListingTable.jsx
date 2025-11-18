@@ -23,7 +23,7 @@ const ListenersPriceListingTable = () => {
 
   // const consultantCateg = useSelector(
   //   (state) => state?.consultant?.consultantType
-  // );
+  // );;
 
   const { search } = useLocation();
   const params = new URLSearchParams(search);

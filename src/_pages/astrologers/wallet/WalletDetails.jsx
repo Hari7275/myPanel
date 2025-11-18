@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
 import { CategoryCard } from "../../dashboard/DashboardSubPage";
+import { CategoryCardWallet } from "../../listeners/wallet/WalletDetails";
 
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
@@ -21,6 +22,12 @@ const WalletDetails = () => {
   const [data, setData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
+
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("type");
+
+  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
 
   const {
     data: fetchData,
@@ -87,10 +94,11 @@ const WalletDetails = () => {
           style={{ margin: "10px 0", height: "60vh", overflow: "scroll" }}
         >
           {cardData.map((card, index) => (
-            <CategoryCard
+            <CategoryCardWallet
               key={`${card.label}-${index}`}
               label={card.label}
               price={card.value}
+              symbol={currencySymbol}
               bgcolor={getCardColor(card.label)}
             />
           ))}
