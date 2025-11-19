@@ -92,7 +92,10 @@ const OrderLists = () => {
     data: fetchData,
     isLoading,
     error,
-  } = useGetOrderListQuery(queryParams);
+    refetch,
+  } = useGetOrderListQuery(queryParams, {
+    refetchOnMountOrArgChange: true, //
+  });
 
   const [updateAgoraCredentials, { isLoading: isJoining }] =
     useUpdateAgoraCredentialsToJoinCallMutation();
