@@ -252,7 +252,6 @@ const OrderLists = () => {
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1);
-  
   };
 
   const appliedFilterCount = Object.values(appliedFilters).filter(

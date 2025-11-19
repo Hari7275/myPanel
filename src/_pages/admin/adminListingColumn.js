@@ -1,3 +1,51 @@
+import React, { useState, useEffect } from "react";
+
+import { useGetAdminRoleListQuery } from "../../_store/api";
+
+export const RollName = () => {
+  const [data, setData] = useState([]);
+  const { data: fetchData } = useGetAdminRoleListQuery();
+
+  useEffect(() => {
+    if (fetchData) {
+      setData(fetchData?.data);
+    }
+  }, [fetchData]);
+
+  return data;
+};
+
+// ***************************************adminUserListColumn************************************************
+
+export const adminUserListColumn = [
+  {
+    Header: " Id",
+    accessor: "id",
+  },
+
+  {
+    Header: "User Name",
+    accessor: "name",
+  },
+  {
+    Header: "Email Name",
+    accessor: "email",
+  },
+  // {
+  //   Header: "Password",
+  //   accessor: "password",
+  // },
+  {
+    Header: "Roll Id",
+    accessor: "role_id",
+  },
+
+  {
+    Header: "Status",
+    accessor: "status",
+  },
+];
+
 export const adminRoleListColumn = [
   {
     Header: " Id",
@@ -114,36 +162,5 @@ export const adminPermissionGroupListColumn = [
         timeStyle: "short",
       });
     },
-  },
-];
-
-// ***************************************adminUserListColumn************************************************
-
-export const adminUserListColumn = [
-  {
-    Header: " Id",
-    accessor: "id",
-  },
-
-  {
-    Header: "User Name",
-    accessor: "name",
-  },
-  {
-    Header: "Email Name",
-    accessor: "email",
-  },
-  // {
-  //   Header: "Password",
-  //   accessor: "password",
-  // },
-  {
-    Header: "Roll Id",
-    accessor: "role_id",
-  },
-
-  {
-    Header: "Status",
-    accessor: "status",
   },
 ];

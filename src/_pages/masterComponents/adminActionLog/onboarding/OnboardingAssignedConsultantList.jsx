@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../../_components/table/DyCommonTable";
 import { ASSIGNEDCONSULTANTCOLUMNS } from "./assignedConsultantColumn";
-import { ArrowRight, Pencil } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../../_components/reuseComponents/EditStatus";
 import { useGetOnboardingAssignedConsultantListQuery } from "../../../../_store/api";
@@ -10,9 +10,12 @@ import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import { useParams } from "react-router-dom";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 import { statusNameToValue } from "../../../../_constants/consultantConstant";
+import AssignOnboardingToAdmin from "../../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const OnboardingAssignedConsultantList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -27,9 +30,12 @@ const OnboardingAssignedConsultantList = () => {
   const pageRef = useRef(page);
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
 
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
+  const { user } = useSelector((state) => state.auth);
 
   const { adminId } = useParams();
 
@@ -69,6 +75,11 @@ const OnboardingAssignedConsultantList = () => {
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
     SetProfileStatus(row.status);
+    setSelectedRow(row);
+  };
+
+  const toggleOnboardingStatus = (row) => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedRow(row);
   };
 
@@ -119,6 +130,19 @@ const OnboardingAssignedConsultantList = () => {
                     <Pencil
                       className="iconSmall"
                       onClick={() => toggleEditStatus(row.original)}
+                    />
+                  </span>
+                )}
+              {[2].includes(row?.original?.status) &&
+                // row.original.is_assign == 0 &&
+                permissions?.["onboarding"]?.includes("onboarding_assign") && (
+                  <span
+                    className="editIcon"
+                    style={{ background: "#c65252ff" }}
+                  >
+                    <KeyRound
+                      className="iconSmall"
+                      onClick={() => toggleOnboardingStatus(row.original)}
                     />
                   </span>
                 )}
@@ -229,6 +253,17 @@ const OnboardingAssignedConsultantList = () => {
             onClose={toggleEditStatus}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
+          />
+        )}
+
+        {showOnboardingAssignTask && (
+          <AssignOnboardingToAdmin
+            isOpen={showOnboardingAssignTask}
+            onClose={toggleOnboardingStatus}
+            selectedRow={selectedRow?.id}
+            profileStatus={profileStatus}
+            created={true}
+            adminId={user.id}
           />
         )}
       </>

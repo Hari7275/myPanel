@@ -63,7 +63,7 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
     try {
       console.log("name..........");
 
-      await updateStatus({ id: selectedRow, body: payload });
+     const response =  await updateStatus({ id: selectedRow, body: payload });
       // console.log("..........name",onClose());
 
       onClose();

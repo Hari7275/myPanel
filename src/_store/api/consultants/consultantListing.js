@@ -31,7 +31,8 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         url: `/api/v1/consultant/auth/update-status/${id}`,
         method: "PATCH",
         headers: {
-          Authorization: "Bearer admin_token",
+          // Authorization: "Bearer admin_token",
+          Authorization: getAdminToken(),
         },
         body,
       }),

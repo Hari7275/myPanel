@@ -78,11 +78,6 @@ export const ASSIGNEDCONSULTANTCOLUMNS = [
     Header: "Email",
     accessor: "email_address",
   },
-  {
-    Header: "Gender",
-    accessor: "gender",
-    Cell: GenderCell,
-  },
 
   {
     Header: "Phone No.",
@@ -110,6 +105,14 @@ export const ASSIGNEDCONSULTANTCOLUMNS = [
         timeStyle: "short",
       });
     },
+  },
+  {
+    Header: "Assigned To",
+    accessor: "assign_to_name",
+  },
+  {
+    Header: "Assigned By",
+    accessor: "assigned_by_name",
   },
 ];
 
