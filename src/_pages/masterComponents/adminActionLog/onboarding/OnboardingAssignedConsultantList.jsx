@@ -264,6 +264,7 @@ const OnboardingAssignedConsultantList = () => {
             profileStatus={profileStatus}
             created={true}
             adminId={user.id}
+            isReassign={true}
           />
         )}
       </>

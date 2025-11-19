@@ -73,6 +73,20 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["adminlog", "consultant"],
     }),
+
+    // reassign
+
+    reAssignOnboardingToAdmin: builder.mutation({
+      query: (body) => ({
+        url: `/api/v1/consultant/profile/onboarding-assignee/admin/reassign`,
+        method: "PUT",
+        headers: {
+          Authorization: getAdminToken(),
+        },
+        body,
+      }),
+      invalidatesTags: ["adminlog", "consultant"],
+    }),
   }),
 });
 
@@ -81,6 +95,7 @@ export const {
   useGetAdminOnboardingSpecialistListQuery,
   useGetOnboardingAssignedConsultantListQuery,
   useAssignOnboardingToAdminMutation,
+  useReAssignOnboardingToAdminMutation,
   //   useUpdateAgoraCredentialsToJoinCallMutation,
   useGetOnboardingAssignedUnregisteredConsultantListQuery,
 } = actionLogApiSlice;

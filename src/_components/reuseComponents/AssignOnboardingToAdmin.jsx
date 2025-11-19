@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactModal from "react-modal";
 import { useGetAdminUserListQuery } from "../../_store/api";
-import { useAssignOnboardingToAdminMutation } from "../../_store/api";
+import {
+  useAssignOnboardingToAdminMutation,
+  useReAssignOnboardingToAdminMutation,
+} from "../../_store/api";
 import toast from "react-hot-toast";
 
 const AssignOnboardingToAdmin = ({
@@ -10,6 +13,7 @@ const AssignOnboardingToAdmin = ({
   selectedRow,
   created,
   adminId,
+  isReassign,
 }) => {
   const [formData, setFormData] = useState({
     admin_id: "",
@@ -17,6 +21,8 @@ const AssignOnboardingToAdmin = ({
   });
 
   const [adminList, setAdminList] = useState([]);
+
+  console.log("isReassign", isReassign);
 
   // Ref to prevent duplicate error toasts
   const errorShownRef = useRef(false);
@@ -29,6 +35,9 @@ const AssignOnboardingToAdmin = ({
 
   const [assignOnboarding, { isLoading: isAssigning, error: assignError }] =
     useAssignOnboardingToAdminMutation();
+
+  const [reAssignOnboarding, { isLoading: isReAssigning }] =
+    useReAssignOnboardingToAdminMutation();
 
   // Fetch Admin List + Error Handling
   useEffect(() => {
@@ -74,7 +83,13 @@ const AssignOnboardingToAdmin = ({
     };
 
     try {
-      const response = await assignOnboarding(payload).unwrap();
+      let response;
+
+      if (isReassign) {
+        response = await reAssignOnboarding(payload).unwrap();
+      } else {
+        response = await assignOnboarding(payload).unwrap();
+      }
 
       if (response.status) {
         toast.success(response.message);
@@ -86,7 +101,6 @@ const AssignOnboardingToAdmin = ({
       toast.error(error?.data?.message || "Assignment failed. Try again.");
     }
   };
-
   const handleClose = () => {
     setFormData({
       admin_id: "",
