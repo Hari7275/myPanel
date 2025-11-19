@@ -52,24 +52,24 @@ const UpdateUserInfo = ({
   // Format time from HH:MM:SS to HH:MM for display in input
   const formatTimeForDisplay = (timeString) => {
     if (!timeString) return "";
-    
+
     // If already in HH:MM format, return as is
     if (timeString.match(/^\d{2}:\d{2}$/)) {
       return timeString;
     }
-    
+
     // If in HH:MM:SS format, remove seconds
     if (timeString.match(/^\d{2}:\d{2}:\d{2}$/)) {
       return timeString.substring(0, 5); // Get HH:MM
     }
-    
+
     return timeString;
   };
 
   // Format time from HH:MM to HH:MM:SS for API (24-hour format)
   const formatTimeForAPI = (timeString) => {
     if (!timeString) return "";
-    
+
     // timeString is in HH:MM format from the time input
     // Just add :00 for seconds
     return `${timeString}:00`;
@@ -78,19 +78,19 @@ const UpdateUserInfo = ({
   // Format date from MM-DD-YY to YYYY-MM-DD for display in input
   const formatDateForDisplay = (dateString) => {
     if (!dateString) return "";
-    
+
     // If already in YYYY-MM-DD format, return as is
     if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
       return dateString;
     }
-    
+
     // Parse MM-DD-YY format
     const match = dateString.match(/(\d{2})-(\d{2})-(\d{2})/);
     if (!match) return dateString;
-    
+
     const [, month, day, year] = match;
     const fullYear = parseInt(year, 10) < 50 ? `20${year}` : `19${year}`;
-    
+
     return `${fullYear}-${month}-${day}`;
   };
 

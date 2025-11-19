@@ -1,6 +1,6 @@
 // OrderLists.js - Updated to navigate instead of modal
 import React, { useMemo, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux"; // Added
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNORDER } from "./orderColumn";
@@ -19,15 +19,22 @@ import { toast } from "react-toastify";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const OrderLists = () => {
+  const location = useLocation();
   const navigate = useNavigate();
+
+  // 🧠 Read URL Params
+  const queryParam = new URLSearchParams(location.search);
+  const initialPage = Number(queryParam.get("page")) || 1;
+  const initialPageSize = Number(queryParam.get("pageSize")) || 50;
+  const initialStatus = queryParam.get("status") || "";
 
   // Added: Get user from Redux auth slice
   const { user } = useSelector((state) => state.auth);
   const permissions = usePermissions();
 
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [addOrder, setAddOrder] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -43,9 +50,23 @@ const OrderLists = () => {
     startDate: "",
     endDate: "",
     orderType: "",
-    status: "",
+    status: initialStatus,
     userMode: "",
   });
+
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    // Only sync status to URL
+    if (appliedFilters.status) {
+      params.set("status", appliedFilters.status);
+    } else {
+      params.delete("status"); // Remove status param if empty
+    }
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, appliedFilters.status, navigate]);
 
   // Build query params including filters
   const queryParams = {
@@ -149,6 +170,17 @@ const OrderLists = () => {
       console.error("Error fetching channel credentials:", err);
       toast.error(err?.data?.message || "Failed to fetch call credentials");
     }
+  };
+
+  const handleClearAllFilters = () => {
+    // Reset all filters to empty
+    setAppliedFilters({
+      status: "",
+    });
+    setPage(1);
+
+    // Optional: Show success message
+    toast.success("All filters cleared");
   };
 
   const columns = useMemo(
@@ -345,6 +377,27 @@ const OrderLists = () => {
               {runningCallCount}
             </span>
           )}
+        </Button>
+      </div>
+
+      {/* 🆕 Clear All Filters Button */}
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="outlined"
+          style={{
+            backgroundColor: appliedFilterCount > 0 ? "#ef4444" : "#6b7280",
+            color: "white",
+            borderColor: appliedFilterCount > 0 ? "#ef4444" : "#6b7280",
+          }}
+          onClick={handleClearAllFilters}
+          disabled={
+            appliedFilterCount === 0 && !orderId && !userId && !consultantId
+          }
+        >
+          Clear All Filters
         </Button>
       </div>
     </div>
