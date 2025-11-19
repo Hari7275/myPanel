@@ -14,10 +14,12 @@ import toast from "react-hot-toast";
 import {
   useGetAdminUserListQuery,
   useDeleteAdminUserMutation,
+  useGetAdminRoleListQuery,
 } from "../../../_store/api";
 
 const AdminUser = () => {
   const [addData, setAddData] = useState(false);
+  const [adminRole, setAdminRole] = useState([]);
   const [updateData, setUpdateData] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -31,6 +33,9 @@ const AdminUser = () => {
     isError,
     error,
   } = useGetAdminUserListQuery();
+
+  const { data: fetchAdminRole } = useGetAdminRoleListQuery();
+
   const [deleteData] = useDeleteAdminUserMutation();
 
   useEffect(() => {
@@ -45,6 +50,28 @@ const AdminUser = () => {
       toast.error(message);
     }
   }, [fetchData, isError, error]);
+
+  useEffect(() => {
+    if (fetchAdminRole) {
+      setAdminRole(fetchAdminRole?.data?.records || []);
+    } else {
+      setAdminRole([]);
+    }
+  }, [fetchAdminRole]);
+
+  // Enrich data with role names
+  const enrichedData = useMemo(() => {
+    return data.map((user) => ({
+      ...user,
+      roleName:
+        adminRole.find((role) => role.id === user.role_id)?.name ||
+        user.role_id,
+    }));
+  }, [data, adminRole]);
+
+  console.log("data", data);
+  console.log("adminrole", adminRole);
+  console.log("enrichedData", enrichedData); // Check the enriched data
 
   // Toggle function for adding a review
   const toggleAddData = () => {
@@ -90,33 +117,36 @@ const AdminUser = () => {
     );
   };
 
-  const columns = useMemo(() => [
-    ...adminUserListColumn,
-    {
-      Header: () => <div className="actions-header">Actions</div>,
-      id: "actions",
-      Cell: ({ row }) => (
-        <div className="actions-cell">
-          {permissions?.["admin"]?.includes("delete_admin_user") && (
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
-          )}
-          {permissions?.["admin"]?.includes("update_admin_user") && (
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-          )}
-        </div>
-      ),
-    },
-  ]);
+  const columns = useMemo(
+    () => [
+      ...adminUserListColumn,
+      {
+        Header: () => <div className="actions-header">Actions</div>,
+        id: "actions",
+        Cell: ({ row }) => (
+          <div className="actions-cell">
+            {permissions?.["admin"]?.includes("delete_admin_user") && (
+              <span className="deleteIcon">
+                <Trash
+                  className="iconSmall"
+                  onClick={() => toggleDeleteComponent(row.original)}
+                />
+              </span>
+            )}
+            {permissions?.["admin"]?.includes("update_admin_user") && (
+              <span className="editIcon">
+                <Pencil
+                  className="iconSmall"
+                  onClick={() => toggleUpdateData(row.original)}
+                />
+              </span>
+            )}
+          </div>
+        ),
+      },
+    ],
+    [permissions]
+  );
 
   if (isLoading) {
     return (
@@ -130,7 +160,7 @@ const AdminUser = () => {
     <>
       <CommonTable
         columns={columns}
-        data={data}
+        data={enrichedData} // Using enrichedData instead of data
         includeActions={false}
         tableTitle="Admin Users"
         AddPackageButton={AddButton}

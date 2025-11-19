@@ -37,8 +37,6 @@ const UpdateUserInfo = ({
     current_address: "",
   });
 
-  console.log("selectedData", selectedData);
-
   const [googleMapsLoaded, setGoogleMapsLoaded] = useState(false);
 
   // Refs for autocomplete inputs
@@ -50,6 +48,61 @@ const UpdateUserInfo = ({
   const currentAddressAutocompleteRef = useRef(null);
 
   const [updateInfo, { isLoading: isUpdating }] = useUpdateUserInfoMutation();
+
+  // Format time from HH:MM:SS to HH:MM for display in input
+  const formatTimeForDisplay = (timeString) => {
+    if (!timeString) return "";
+    
+    // If already in HH:MM format, return as is
+    if (timeString.match(/^\d{2}:\d{2}$/)) {
+      return timeString;
+    }
+    
+    // If in HH:MM:SS format, remove seconds
+    if (timeString.match(/^\d{2}:\d{2}:\d{2}$/)) {
+      return timeString.substring(0, 5); // Get HH:MM
+    }
+    
+    return timeString;
+  };
+
+  // Format time from HH:MM to HH:MM:SS for API (24-hour format)
+  const formatTimeForAPI = (timeString) => {
+    if (!timeString) return "";
+    
+    // timeString is in HH:MM format from the time input
+    // Just add :00 for seconds
+    return `${timeString}:00`;
+  };
+
+  // Format date from MM-DD-YY to YYYY-MM-DD for display in input
+  const formatDateForDisplay = (dateString) => {
+    if (!dateString) return "";
+    
+    // If already in YYYY-MM-DD format, return as is
+    if (dateString.match(/^\d{4}-\d{2}-\d{2}$/)) {
+      return dateString;
+    }
+    
+    // Parse MM-DD-YY format
+    const match = dateString.match(/(\d{2})-(\d{2})-(\d{2})/);
+    if (!match) return dateString;
+    
+    const [, month, day, year] = match;
+    const fullYear = parseInt(year, 10) < 50 ? `20${year}` : `19${year}`;
+    
+    return `${fullYear}-${month}-${day}`;
+  };
+
+  // Format date from YYYY-MM-DD to MM-DD-YY for API
+  const formatDateForAPI = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = String(date.getFullYear()).slice(-2); // Get last 2 digits of year
+    return `${month}-${day}-${year}`;
+  };
 
   // Load Google Maps script
   useEffect(() => {
@@ -67,41 +120,13 @@ const UpdateUserInfo = ({
     }
   }, [googleMapsApiKey, googleMapsLoaded]);
 
-  // Parse address data helper function
-  const parseAddressData = (addressData) => {
-    if (!addressData) return "";
-
-    try {
-      if (typeof addressData === "string") {
-        return addressData;
-      }
-      if (typeof addressData === "object" && addressData.city) {
-        return (
-          addressData.city || addressData.state || addressData.country || ""
-        );
-      }
-      return addressData.city || addressData.state || addressData.country || "";
-    } catch (e) {
-      return addressData;
-    }
-  };
-
-  // Format date from YYYY-MM-DD to DD/MM/YYYY
-  const formatDateForDisplay = (dateString) => {
-    if (!dateString) return "";
-    // If already in YYYY-MM-DD format (for date input), return as is
-    if (dateString.includes("-") && dateString.split("-")[0].length === 4) {
-      return dateString;
-    }
-    return dateString;
-  };
-
+  // Set form data from selectedData
   useEffect(() => {
     if (selectedData) {
       setFormData({
         name: selectedData.name || "",
         gender: selectedData.gender || "",
-        birth_time: selectedData.birth_time || "",
+        birth_time: formatTimeForDisplay(selectedData.birth_time) || "",
         birth_place: selectedData.birth_place || "",
         birth_date: formatDateForDisplay(selectedData.birth_date) || "",
         currency_category: selectedData.currency_category || "",
@@ -119,10 +144,8 @@ const UpdateUserInfo = ({
       return;
     }
 
-    // Use formatted_address as the full address
     const fullAddress = place.formatted_address || place.name || "";
 
-    // Update form data with the full address string
     setFormData((prevData) => ({
       ...prevData,
       [fieldName]: fullAddress,
@@ -180,10 +203,8 @@ const UpdateUserInfo = ({
       }
     };
 
-    // Small delay to ensure DOM is ready
     const timer = setTimeout(initializeAutocomplete, 100);
 
-    // Cleanup function
     return () => {
       clearTimeout(timer);
       if (birthPlaceAutocompleteRef.current) {
@@ -207,20 +228,9 @@ const UpdateUserInfo = ({
     }));
   };
 
-  // Format date from YYYY-MM-DD to DD/MM/YYYY for API
-  const formatDateForAPI = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    const day = String(date.getDate()).padStart(2, "0");
-    const month = String(date.getMonth() + 1).padStart(2, "0");
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      // Gender mapping - convert to lowercase for API
       const genderMapping = {
         Man: "man",
         man: "man",
@@ -240,14 +250,15 @@ const UpdateUserInfo = ({
       // Filter out empty fields and prepare data
       const filteredData = Object.entries(formData).reduce(
         (acc, [key, value]) => {
-          // Check if value has data
           if (value !== "" && value !== null && value !== undefined) {
-            // Handle gender mapping
             if (key === "gender" && genderMapping[value]) {
               acc[key] = genderMapping[value];
             } else if (key === "birth_date") {
-              // Convert date format for API
+              // Convert date format to MM-DD-YY
               acc[key] = formatDateForAPI(value);
+            } else if (key === "birth_time") {
+              // Convert time format to HH:MM:SS (24-hour)
+              acc[key] = formatTimeForAPI(value);
             } else {
               acc[key] = value;
             }
@@ -259,6 +270,8 @@ const UpdateUserInfo = ({
 
       // Add is_update_dating_profile flag
       filteredData.is_update_dating_profile = false;
+
+      console.log("Sending data to API:", filteredData);
 
       const response = await updateInfo({
         id: selectedData.id,

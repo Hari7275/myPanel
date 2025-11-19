@@ -1,20 +1,3 @@
-import React, { useState, useEffect } from "react";
-
-import { useGetAdminRoleListQuery } from "../../_store/api";
-
-export const RollName = () => {
-  const [data, setData] = useState([]);
-  const { data: fetchData } = useGetAdminRoleListQuery();
-
-  useEffect(() => {
-    if (fetchData) {
-      setData(fetchData?.data);
-    }
-  }, [fetchData]);
-
-  return data;
-};
-
 // ***************************************adminUserListColumn************************************************
 
 export const adminUserListColumn = [
@@ -35,6 +18,10 @@ export const adminUserListColumn = [
   //   Header: "Password",
   //   accessor: "password",
   // },
+  {
+    Header: "Role",
+    accessor: "roleName",
+  },
   {
     Header: "Roll Id",
     accessor: "role_id",
