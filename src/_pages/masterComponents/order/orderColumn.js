@@ -57,20 +57,9 @@ const CustomIdCell = ({ value, row }) => {
 };
 
 const ConsultantNavigationCell = ({ value, row }) => {
-  // Get consultant_type from the row data.
   const consultantName = row?.original?.description?.consultant_first_name;
-
   const consultantType = row?.original?.description?.consultant_type;
-  const dispatch = useDispatch();
-  const handleConsultantClick = () => {
-    dispatch(setCurrentConsultant(value));
-  };
-
-  // const navigationRoute = {
-  //   1: "/astrologer_Profile",
-  //   2: "/coach-profile",
-  //   3: "/listener_Profile",
-  // };
+  const foreigner = row?.original?.description?.is_consultant_foreigner;
 
   const navigationRoute = {
     1: `/astrologer/${value}`,
@@ -78,24 +67,16 @@ const ConsultantNavigationCell = ({ value, row }) => {
     3: `/listeners/${value}`,
   };
 
-  // Define type labels
-  const typeLabel = {
-    1: "A",
-    2: "C",
-    3: "L",
-  };
-  const foreigner = row?.original?.description?.is_consultant_foreigner;
+  const baseRoute = navigationRoute[consultantType] || "";
 
-  const displayType = typeLabel[consultantType] || "";
-  // Get the route based on consultant type
-  const route = consultantType && navigationRoute[consultantType];
+  // Add ?type=91 only if NOT foreigner
+  const route = !foreigner ? `${baseRoute}?type=91` : baseRoute;
 
   return (
     <Link
       to={route}
       target="_blank"
       rel="noopener noreferrer"
-      // onClick={handleConsultantClick}
       style={{ textDecoration: "none" }}
     >
       <span
@@ -106,7 +87,9 @@ const ConsultantNavigationCell = ({ value, row }) => {
         }}
       >
         {consultantName} ({value})
-        <span style={{ color: "#187cbeff" }}>({displayType})</span>
+        <span style={{ color: "#187cbeff" }}>
+          ({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
+        </span>
       </span>
     </Link>
   );
