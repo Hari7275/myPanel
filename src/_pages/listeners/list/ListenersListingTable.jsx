@@ -23,6 +23,16 @@ import Button from "@mui/material/Button";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const ListenersListingTable = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // 🧠 Read URL Params
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get("page")) || 1;
+  const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
+
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
@@ -33,11 +43,7 @@ const ListenersListingTable = () => {
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [statusSearch, setStatusSearch] = useState("");
-  const [page, setPage] = useState(1);
-  const pageRef = useRef(page);
-  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-  const location = useLocation();
   const { user } = useSelector((state) => state.auth);
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
@@ -51,7 +57,13 @@ const ListenersListingTable = () => {
     status: "",
   });
 
-  console.log("user......", user.id);
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, navigate]);
 
   const {
     data: fetchData,
@@ -67,12 +79,6 @@ const ListenersListingTable = () => {
     phone,
     consultant_type: 3,
   });
-  const navigate = useNavigate();
-
-  //HANDLING THE CURRENT PAGE STATE
-  useEffect(() => {
-    pageRef.current = page;
-  }, [page]);
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {

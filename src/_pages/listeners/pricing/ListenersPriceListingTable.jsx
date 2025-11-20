@@ -29,7 +29,7 @@ const ListenersPriceListingTable = () => {
   const params = new URLSearchParams(search);
   const consultantCateg = params.get("type");
 
-  console.log("consultantCateg", consultantCateg);
+ 
 
   const convertedConsultantCateg = consultantCateg == 91 ? "A" : "B";
 

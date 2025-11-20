@@ -44,8 +44,8 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
         url: `user/profile/admin/user-wallet-transactions`,
         method: "POST",
         headers: {
-          Authorization: getAdminToken(),
-          // Authorization: "Bearer admin_token",
+          // Authorization: getAdminToken(),
+          Authorization: "Bearer admin_token",
         },
         body,
       }),

@@ -25,6 +25,15 @@ import AssignOnboardingToAdmin from "../../../_components/reuseComponents/Assign
 import { useSelector } from "react-redux";
 
 const AstrologerListingTable = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  // 🧠 Read URL Params
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get("page")) || 1;
+  const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
@@ -33,11 +42,10 @@ const AstrologerListingTable = () => {
   const [phone, setPhone] = useState("");
   const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(50);
+
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-  const location = useLocation();
+
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
@@ -53,6 +61,14 @@ const AstrologerListingTable = () => {
     status: "",
   });
 
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, navigate]);
+
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
     size: pageSize,
@@ -67,8 +83,6 @@ const AstrologerListingTable = () => {
   const setQueryParams = (id) => {
     setSearchParams({ userId: id });
   };
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
@@ -160,7 +174,7 @@ const AstrologerListingTable = () => {
                 </span>
               )}
 
-            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+            {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"

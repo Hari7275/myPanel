@@ -55,7 +55,7 @@ const CoachOrder = () => {
   }
 
   return (
-    <div className="ProfileData-container profile-right-sub-container">
+    <div className="">
       {data.length > 0 ? (
         <DyCommonTable
           columns={columns}

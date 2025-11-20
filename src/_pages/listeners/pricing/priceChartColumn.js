@@ -45,12 +45,12 @@ export const PRICECHARTCOLUMN = [
   {
     Header: "CP",
     accessor: "current_price",
-    Cell: CurrencyLabel,
+    // Cell: CurrencyLabel,
   },
   {
     Header: "DP",
     accessor: "discount_price",
-    Cell: CurrencyLabel,
+    // Cell: CurrencyLabel,
   },
   {
     Header: "Comm.",

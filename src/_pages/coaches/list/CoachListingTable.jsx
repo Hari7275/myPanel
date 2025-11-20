@@ -18,6 +18,7 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
+
 const CoachListingTable = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -155,7 +156,7 @@ const CoachListingTable = () => {
                   />
                 </span>
               )}
-            {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
+            {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"

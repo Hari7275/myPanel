@@ -81,7 +81,7 @@ const ListenerOrder = () => {
   return (
     <>
       {fetchData ? (
-        <div className="ProfileData-container profile-right-sub-container">
+        <div className="">
           <DyCommonTable
             columns={columns}
             data={data}

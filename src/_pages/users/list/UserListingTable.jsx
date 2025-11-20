@@ -2,7 +2,12 @@ import React, { useState, useEffect, useMemo, useCallback } from "react";
 import { ArrowRight, Loader, Pencil } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
-import { Link, useLocation, useSearchParams } from "react-router-dom";
+import {
+  Link,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import EditStatus from "./EditStatus";
 import { useGetUsersListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
@@ -18,13 +23,16 @@ Modal.setAppElement("#root");
 
 const UserListingTable = () => {
   const dispatch = useDispatch();
-  const location = useLocation();
   const [searchParams] = useSearchParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  // 🧠 Read URL Params
+  const queryParams = new URLSearchParams(location.search);
+  const initialPage = Number(queryParams.get("page")) || 1;
+  const initialPageSize = Number(queryParams.get("pageSize")) || 50;
 
-  // Get pageSize from URL params, default to 10 if not present
-  const urlPageSize = searchParams.get("pageSize");
-
-  const initialPageSize = urlPageSize ? parseInt(urlPageSize) : 50;
+  const [page, setPage] = useState(initialPage);
+  const [pageSize, setPageSize] = useState(initialPageSize);
 
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -34,9 +42,8 @@ const UserListingTable = () => {
   const [name, setName] = useState("");
   const [phone_number, setPhone_number] = useState("");
   const [userId, setUserId] = useState("");
-  const [page, setPage] = useState(1);
   const [platformType, setPlatformType] = useState("");
-  const [pageSize, setPageSize] = useState(initialPageSize); // Adjusted default page size
+
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
   // Filter states
@@ -45,6 +52,14 @@ const UserListingTable = () => {
     startDate: "",
     endDate: "",
   });
+
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, navigate]);
 
   // Dynamic query with name and phoneNumber
   const { data: fetchData, isLoading } = useGetUsersListQuery({
@@ -57,15 +72,6 @@ const UserListingTable = () => {
     start_date: appliedFilters.startDate,
     end_date: appliedFilters.endDate,
   });
-  // Clean up URL after reading pageSize
-  useEffect(() => {
-    if (urlPageSize) {
-      // Remove pageSize from URL after using it
-      const newUrl = window.location.pathname;
-
-      window.history.replaceState({}, "", newUrl);
-    }
-  }, []); // Run only once on mount
 
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
