@@ -26,6 +26,7 @@ const Sidebar = () => {
   const [isPayment, setIsPayment] = useState("");
   const [isAdmin, setIsAdmin] = useState("");
   const [isOnboarding, setIsOnboarding] = useState("");
+  const [isMarketingLeads, setIsMarketingLeads] = useState("");
   const [isNotice, setIsNotice] = useState();
   const [isNotification, setIsNotifications] = useState();
   const [isQuickDate, setIsQuickDate] = useState();
@@ -52,6 +53,10 @@ const Sidebar = () => {
 
   const onboardingDropdown = () => {
     setIsOnboarding(!isOnboarding);
+  };
+
+  const marketingLeadsDropdown = () => {
+    setIsMarketingLeads(!isMarketingLeads);
   };
   const noticeDropdown = () => {
     setIsNotice(!isNotice);
@@ -187,6 +192,54 @@ const Sidebar = () => {
                     </div>
                   </Link>
                   {/* )} */}
+                </div>
+              )}
+            </div>
+
+            {/* **************************** marketing leads ***************************** */}
+            <div className="menu-item-child">
+              <div className="child" onClick={marketingLeadsDropdown}>
+                <SupervisorAccountIcon />
+                <span>Marketing Leads</span>
+
+                <span>{isMarketingLeads ? "⬇️" : "⬅️"}</span>
+              </div>
+
+              {isMarketingLeads && (
+                <div className="menu-item-sub">
+                  {/* {permissions?.["admin"]?.includes("view_admin_role") && ( */}
+                  <Link to="leads-list">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "leads-list" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("leads-list")}
+                    >
+                      <div className="dropdown-item">Leads List</div>
+                    </div>
+                  </Link>
+
+                  <Link to="marketing-assignee">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "marketing-assignee" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("marketing-assignee")}
+                    >
+                      <div className="dropdown-item">Assignee List</div>
+                    </div>
+                  </Link>
+
+                  {/* <Link to="/action-log">
+                    <div
+                      className={`menu-item ${
+                        activeItem === "action-log" ? "active" : ""
+                      }`}
+                      onClick={() => handleItemClick("action-log")}
+                    >
+                      <div className="dropdown-item">Action log</div>
+                    </div>
+                  </Link> */}
                 </div>
               )}
             </div>

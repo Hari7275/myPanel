@@ -144,7 +144,7 @@ const UserGallery = () => {
           prevUrls.filter((photo) => photo.id !== selectedRow.id)
         );
       } catch (error) {
-        console.error("Failed to delete the image:", error);
+        toast.error(`${error?.data?.message}. Please log in again.`);
       }
     }
   };

@@ -122,6 +122,9 @@ import OnboardingAssign from "./_pages/masterComponents/adminActionLog/onboardin
 import OnboardingAssignedConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedConsultantList";
 import OnboardingAssignedUnregisteredConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedUnregisteredConsultantList";
 
+import LeadsLists from "./_pages/masterComponents/marketingLeads/leads/LeadsLists";
+import OnboardingAssigneeList from "./_pages/masterComponents/marketingLeads/leads/OnboardingAssigneeList";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -304,6 +307,12 @@ const Layout = () => (
           <Route
             path="/onboarding-assign/unregistered/:adminId"
             element={<OnboardingAssignedUnregisteredConsultantList />}
+          />
+
+          <Route path="/leads-list" element={<LeadsLists />} />
+          <Route
+            path="/marketing-assignee"
+            element={<OnboardingAssigneeList />}
           />
 
           {/* ****************************************SuperAdmin*************************** */}

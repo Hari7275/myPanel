@@ -85,6 +85,7 @@ const Navbar = () => {
     "/blog-count": "Blog View Count",
     "/action-log": "Admin Action Log",
     "/onboarding-assign": "Onboarding Specialists",
+    "/leads-list": "Marketing Lead List",
 
     // prompt  , profile  options
 

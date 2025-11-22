@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
 import CoachStatus from "../../coaches/status/CoachStatus";
-import { Pencil } from "lucide-react";
+import { KeyRound, Pencil } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
@@ -246,7 +246,17 @@ const ListenerLeftComponent = () => {
           </footer> */}
       </div>
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
+
       <div className="social-icons-section">
+        <span
+          className="editIcon"
+          style={{ background: "#c65252ff"}}
+        >
+          <KeyRound
+            className="iconSmall"
+            // onClick={() => toggleOnboardingStatus(row.original)}
+          />
+        </span>
         {socialMediaLinks?.facebook && (
           <a
             href={socialMediaLinks.facebook}
