@@ -104,7 +104,7 @@ export const userGalleryApiSlice = apiSlice.injectEndpoints({
 
     deleteUserGallery: builder.mutation({
       query: ({ id }) => ({
-        url: `/user/profile/delete-profile-image/${id}`,
+        url: `/user/profile/admin/delete-profile-image/${id}`,
         method: "DELETE",
         headers: {
           // Authorization: "Bearer admin_token",
@@ -139,5 +139,5 @@ export const {
   useUpdateUserVerificationStatusMutation,
   useDeleteUserGalleryMutation,
   useUpdateUserFaceAreaMutation,
-  useDeleteUserBasicPhotoMutation
+  useDeleteUserBasicPhotoMutation,
 } = userGalleryApiSlice;
