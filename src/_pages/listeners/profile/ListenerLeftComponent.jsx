@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 import { Atom } from "react-loading-indicators";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -58,6 +59,10 @@ const ListenerLeftComponent = () => {
   const [showUpdateStatus, setShowUpdateStatus] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
 
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
+  const { user } = useSelector((state) => state.auth);
+
   const location = useLocation();
   const navigate = useNavigate();
   // const consultantId = useSelector((state) => state.consultant.consultantData);
@@ -75,7 +80,7 @@ const ListenerLeftComponent = () => {
 
   useEffect(() => {
     if (fetchData) {
-      setData(fetchData.data || {});
+      setData(fetchData?.data || {});
       // Update the phone code in localStorage
       const newPhoneCode = fetchData?.data?.phone_code;
       if (newPhoneCode) {
@@ -115,6 +120,10 @@ const ListenerLeftComponent = () => {
     setSelectedData(data.profile_status);
   };
 
+  const toggleOnboardingStatus = () => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedData(data);
+  };
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -250,11 +259,13 @@ const ListenerLeftComponent = () => {
       <div className="social-icons-section">
         <span
           className="editIcon"
-          style={{ background: "#c65252ff"}}
+          style={{
+            background: "#c65252ff",
+          }}
         >
           <KeyRound
             className="iconSmall"
-            // onClick={() => toggleOnboardingStatus(row.original)}
+            onClick={() => toggleOnboardingStatus()}
           />
         </span>
         {socialMediaLinks?.facebook && (
@@ -321,6 +332,17 @@ const ListenerLeftComponent = () => {
           onClose={handleShowUpdateStatus}
           selectedData={selectedData}
           consultantId={consultantId}
+        />
+      )}
+
+      {showOnboardingAssignTask && (
+        <AssignOnboardingToAdmin
+          isOpen={showOnboardingAssignTask}
+          onClose={toggleOnboardingStatus}
+          selectedRow={selectedData?.id}
+          profileStatus={profileStatus}
+          created={true}
+          adminId={user.id}
         />
       )}
     </div>
