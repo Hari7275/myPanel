@@ -96,7 +96,7 @@ const ListenerOverview = () => {
                 <>
                   <InfoItem
                     label="Lifetime Earning"
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
                       data?.walletDetails?.lifetime_earning || 0
                     }`}
                     color="#4CAF50" // Green - represents available funds/positive balance,
@@ -105,14 +105,18 @@ const ListenerOverview = () => {
 
                   <InfoItem
                     label="Current Balance "
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${data?.walletDetails?.wallet_balance || 0}`}
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
+                      data?.walletDetails?.wallet_balance || 0
+                    }`}
                     color="#2196F3"
                   />
                   <div className="line"></div>
 
                   <InfoItem
                     label="Payable Balance "
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${data?.walletDetails?.payable_amount || 0}`}
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
+                      data?.walletDetails?.payable_amount || 0
+                    }`}
                     color="#9C27B0"
                   />
                   <div className="line"></div>

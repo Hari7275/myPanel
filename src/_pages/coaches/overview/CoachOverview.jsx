@@ -114,7 +114,7 @@ const CoachOverview = () => {
                 <>
                   <InfoItem
                     label="Lifetime Earning"
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
                       data?.walletDetails?.lifetime_earning || 0
                     }`}
                     color="#4CAF50"
@@ -123,7 +123,7 @@ const CoachOverview = () => {
 
                   <InfoItem
                     label="Current Balance "
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
                       data?.walletDetails?.wallet_balance || 0
                     }`}
                     color="#2196F3"
@@ -131,7 +131,7 @@ const CoachOverview = () => {
                   <div className="line"></div>
                   <InfoItem
                     label="Payable Balance "
-                    value={`${data?.currency_category == "B" ? "$" : "₹"} ${
+                    value={`${data?.currency_category == "A" ? "₹" : "$"} ${
                       data?.walletDetails?.payable_amount || 0
                     }`}
                     color="#9C27B0"
