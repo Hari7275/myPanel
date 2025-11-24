@@ -2,12 +2,14 @@ import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
-import { Pencil } from "lucide-react";
+import { KeyRound, Pencil } from "lucide-react";
 import { Atom } from "react-loading-indicators";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 import { useLocation, useParams } from "react-router-dom";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
+import { useSelector } from "react-redux";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -49,6 +51,8 @@ const CoachLeftComponent = () => {
   const { openImageModal, ImageModal } = UseImageModal();
   const [selectedData, setSelectedData] = useState(null);
   const [showUpdateStatus, setShowUpdateStatus] = useState(false);
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -58,6 +62,7 @@ const CoachLeftComponent = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const profileStatus = params.get("status");
+  const { user } = useSelector((state) => state.auth);
 
   const {
     data: fetchData,
@@ -94,6 +99,11 @@ const CoachLeftComponent = () => {
   const handleShowUpdateStatus = () => {
     setShowUpdateStatus(!showUpdateStatus);
     setSelectedData(data.profile_status);
+  };
+
+  const toggleOnboardingStatus = () => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedData(data);
   };
 
   if (isLoading) {
@@ -219,6 +229,17 @@ const CoachLeftComponent = () => {
 
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
+        <span
+          className="editIcon"
+          style={{
+            background: "#c65252ff",
+          }}
+        >
+          <KeyRound
+            className="iconSmall"
+            onClick={() => toggleOnboardingStatus()}
+          />
+        </span>
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}
@@ -276,6 +297,17 @@ const CoachLeftComponent = () => {
           onClose={handleShowUpdateStatus}
           selectedData={selectedData}
           consultantId={consultantId}
+        />
+      )}
+
+      {showOnboardingAssignTask && (
+        <AssignOnboardingToAdmin
+          isOpen={showOnboardingAssignTask}
+          onClose={toggleOnboardingStatus}
+          selectedRow={selectedData?.id}
+          profileStatus={profileStatus}
+          created={true}
+          adminId={user.id}
         />
       )}
     </div>

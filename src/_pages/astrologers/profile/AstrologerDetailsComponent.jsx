@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pencil } from "lucide-react";
+import { Pencil, KeyRound } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import AstrologerStatus from "../status/AstrologerStatus";
 import CoachStatus from "../../coaches/status/CoachStatus";
@@ -16,6 +16,7 @@ import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
 import { useLocation, useParams } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
+import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -61,6 +62,8 @@ const AstrologerDetailsComponent = () => {
   const params = new URLSearchParams(search);
   const profileStatus = params.get("status");
 
+  const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
+    useState(false);
   const [showModal, setShowModal] = useState(false);
   const [showUpdateStatus, setShowUpdateStatus] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
@@ -69,6 +72,8 @@ const AstrologerDetailsComponent = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedData, setSelectedData] = useState(null);
+
+  const { user } = useSelector((state) => state.auth);
 
   const {
     data: fetchData,
@@ -114,6 +119,11 @@ const AstrologerDetailsComponent = () => {
       },
     });
     // navigate(-1);
+  };
+
+  const toggleOnboardingStatus = () => {
+    setShowOnboardingAssignTask(!showOnboardingAssignTask);
+    setSelectedData(data);
   };
 
   if (isLoading) {
@@ -231,6 +241,17 @@ const AstrologerDetailsComponent = () => {
       </div>
       {/* SECOND COLUMN ASTROLOGER DETAILS ROW */}
       <div className="social-icons-section">
+        <span
+          className="editIcon"
+          style={{
+            background: "#c65252ff",
+          }}
+        >
+          <KeyRound
+            className="iconSmall"
+            onClick={() => toggleOnboardingStatus()}
+          />
+        </span>
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}
@@ -295,6 +316,17 @@ const AstrologerDetailsComponent = () => {
           onClose={handleShowUpdateStatus}
           selectedData={selectedData}
           consultantId={consultantId}
+        />
+      )}
+
+      {showOnboardingAssignTask && (
+        <AssignOnboardingToAdmin
+          isOpen={showOnboardingAssignTask}
+          onClose={toggleOnboardingStatus}
+          selectedRow={selectedData?.id}
+          profileStatus={profileStatus}
+          created={true}
+          adminId={user.id}
         />
       )}
     </div>
