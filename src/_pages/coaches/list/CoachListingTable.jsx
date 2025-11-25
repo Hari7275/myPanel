@@ -12,7 +12,6 @@ import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
-
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
@@ -36,8 +35,8 @@ const CoachListingTable = () => {
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
   const [isReassign, setIsReassign] = useState(false); // New state for reassign
-
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
@@ -76,7 +75,7 @@ const CoachListingTable = () => {
     name: name,
     // auth_status: statusSearch,
     auth_status: appliedFilters?.status,
-
+    email,
     id: consultantId,
     phone,
     consultant_type: 2,
@@ -190,6 +189,8 @@ const CoachListingTable = () => {
 
   // Apply debounce to search handlers
   const debouncedSearchName = debounce((value) => setName(value), 500);
+  const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
+
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
     500
@@ -199,6 +200,11 @@ const CoachListingTable = () => {
   const handleNameSearch = (e) => {
     setPage(1);
     debouncedSearchName(e?.target?.value);
+  };
+
+  const handleEmailSearch = (e) => {
+    setPage(1);
+    debouncedSearchEmail(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
@@ -254,6 +260,17 @@ const CoachListingTable = () => {
           width: "15%",
         }}
         onChange={handleConsultantPhoneSearch}
+      />
+
+      <input
+        className="inputBox"
+        placeholder="Search by Email"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleEmailSearch}
       />
 
       <div

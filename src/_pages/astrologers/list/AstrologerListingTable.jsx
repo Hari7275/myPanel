@@ -38,6 +38,7 @@ const AstrologerListingTable = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
@@ -70,6 +71,7 @@ const AstrologerListingTable = () => {
     page,
     size: pageSize,
     name: name,
+    email,
     id: consultantId,
     phone,
     // auth_status: statusSearch,
@@ -204,6 +206,8 @@ const AstrologerListingTable = () => {
 
   // Apply debounce to search handlers
   const debouncedSearchName = debounce((value) => setName(value), 500);
+  const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
+
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
     500
@@ -217,6 +221,10 @@ const AstrologerListingTable = () => {
   const handleNameSearch = (e) => {
     setPage(1);
     debouncedSearchName(e?.target?.value);
+  };
+  const handleEmailSearch = (e) => {
+    setPage(1);
+    debouncedSearchEmail(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
@@ -285,6 +293,16 @@ const AstrologerListingTable = () => {
           width: "15%",
         }}
         onChange={handleConsultantPhoneSearch}
+      />
+      <input
+        className="inputBox"
+        placeholder="Search by Email"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleEmailSearch}
       />
       {/* <input
         className="inputBox"

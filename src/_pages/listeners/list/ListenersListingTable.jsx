@@ -41,6 +41,7 @@ const ListenersListingTable = () => {
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
   const [statusSearch, setStatusSearch] = useState("");
@@ -74,6 +75,7 @@ const ListenersListingTable = () => {
     page,
     size: pageSize,
     name: name,
+    email,
     auth_status: appliedFilters?.status,
     id: consultantId,
     phone,
@@ -95,7 +97,6 @@ const ListenersListingTable = () => {
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
 
-  console.log("totalPage", totalPage);
 
   useEffect(() => {
     if (location.state) {
@@ -187,6 +188,7 @@ const ListenersListingTable = () => {
 
   // Apply debounce to search handlers
   const debouncedSearchName = debounce((value) => setName(value), 500);
+  const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
     500
@@ -200,6 +202,11 @@ const ListenersListingTable = () => {
   const handleNameSearch = (e) => {
     setPage(1);
     debouncedSearchName(e?.target?.value);
+  };
+
+  const handleEmailSearch = (e) => {
+    setPage(1);
+    debouncedSearchEmail(e?.target?.value);
   };
 
   const handleConsultantIdSearch = (e) => {
@@ -258,6 +265,17 @@ const ListenersListingTable = () => {
           width: "15%",
         }}
         onChange={handleNameSearch}
+      />
+
+      <input
+        className="inputBox"
+        placeholder="Search by Email"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleEmailSearch}
       />
       <input
         className="inputBox"

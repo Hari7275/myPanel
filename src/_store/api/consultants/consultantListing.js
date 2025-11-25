@@ -12,8 +12,9 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
         phone,
         consultant_type,
         auth_status,
+        email,
       }) => ({
-        url: `/api/v1/consultant/profile/admin/consultant-list?&consultant_type=${consultant_type}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}&auth_status=${auth_status}`,
+        url: `/api/v1/consultant/profile/admin/consultant-list?&consultant_type=${consultant_type}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}&auth_status=${auth_status}&email=${email}`,
         method: "GET",
         headers: {
           // Authorization: "Bearer admin_token",
