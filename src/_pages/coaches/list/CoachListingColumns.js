@@ -45,7 +45,9 @@ const NameCell = ({ row }) => {
       <span className="column_container_name">
         {/* {row.original.first_name} {` `}
         {row.original.last_name} */}
-        {`${row.original.first_name} ${row.original.last_name || ""}`}
+        {/* {`${row.original.first_name} ${row.original.last_name || ""}`} */}
+
+        {`${row?.original?.display_name}`}
       </span>
 
       <ReactModal
@@ -75,10 +77,10 @@ export const COACHES_COLUMNS = [
     Header: "Name",
     Cell: NameCell,
   },
-  // {
-  //   Header: "Email",
-  //   accessor: "email_address",
-  // },
+  {
+    Header: "Email",
+    accessor: "email_address",
+  },
   {
     Header: "GD",
     accessor: "gender",
@@ -130,11 +132,11 @@ export const COACHES_COLUMNS = [
     },
   },
   {
-    Header: "Assigned To",
+    Header: "Assg To",
     accessor: "assign_to_name",
   },
   {
-    Header: "Assigned By",
+    Header: "Assg By",
     accessor: "assigned_by_name",
   },
 ];

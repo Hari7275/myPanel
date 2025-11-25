@@ -43,7 +43,8 @@ const NameCell = ({ row }) => {
       </div>
       <span className="column_container_name">
         {/* {row.original.first_name} {` `} {row.original.last_name} */}
-        {`${row.original.first_name} ${row.original.last_name || ""}`}
+        {/* {`${row.original.first_name} ${row.original.last_name || ""}`} praveen and ghanshyam */}
+        {`${row?.original?.display_name}`}
       </span>
 
       <ReactModal
@@ -74,10 +75,10 @@ export const LISTENERSCOLUMNS = [
     Header: "Name",
     Cell: NameCell,
   },
-  // {
-  //   Header: "Email",
-  //   accessor: "email_address",
-  // },
+  {
+    Header: "Email",
+    accessor: "email_address",
+  },
   {
     Header: "GD",
     accessor: "gender",
@@ -128,11 +129,11 @@ export const LISTENERSCOLUMNS = [
     },
   },
   {
-    Header: "Assigned To",
+    Header: "Assg To",
     accessor: "assign_to_name",
   },
   {
-    Header: "Assigned By",
+    Header: "Assg By",
     accessor: "assigned_by_name",
   },
 ];

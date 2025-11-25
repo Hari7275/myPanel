@@ -28,9 +28,15 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
               <span className="onboarding-stat-label">Pending</span>
               <span className="onboarding-stat-value">{item.pending}</span>
             </div>
+            <div className="onboarding-stat-item onboarding-stat-warning">
+              <span className="onboarding-stat-label">not interested</span>
+              <span className="onboarding-stat-value">
+                {item.not_interested}
+              </span>
+            </div>
           </div>
 
-          <div className="onboarding-timeline-stats">
+          {/* <div className="onboarding-timeline-stats">
             <h4 className="onboarding-timeline-title">Total Verified</h4>
             <div className="onboarding-timeline-grid">
               <div className="onboarding-timeline-item">
@@ -63,22 +69,12 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
 
         <Link to={registeredLink} className="onboarding-card-link">
           <div className="onboarding-card-footer">
-            <span className="onboarding-view-details">
-              Registered Consultant →
-            </span>
-          </div>
-        </Link>
-
-        <Link to={unregisteredLink} className="onboarding-card-link">
-          <div className="onboarding-card-footer">
-            <span className="onboarding-view-details">
-              Unregistered Consultant →
-            </span>
+            <span className="onboarding-view-details">Veiw Details →</span>
           </div>
         </Link>
       </div>
