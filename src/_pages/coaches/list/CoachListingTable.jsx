@@ -18,7 +18,6 @@ import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-
 const CoachListingTable = () => {
   const dispatch = useDispatch();
   const location = useLocation();
@@ -36,6 +35,7 @@ const CoachListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
+  const [isReassign, setIsReassign] = useState(false); // New state for reassign
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -82,9 +82,11 @@ const CoachListingTable = () => {
     consultant_type: 2,
   });
 
-  const toggleOnboardingStatus = (row) => {
+  // Updated function to accept reassign parameter
+  const toggleOnboardingStatus = (row, reassign = false) => {
     setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedRow(row);
+    setIsReassign(reassign);
   };
   // useEffect(() => {
   //   pageRef.current = page;
@@ -156,15 +158,26 @@ const CoachListingTable = () => {
                   />
                 </span>
               )}
+            {/* New Assignment - is_assign == 0 */}
             {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
-              permissions?.["listener"]?.includes(
-                "update_listener_profile_status"
-              ) && (
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#c65252ff" }}>
                   <KeyRound
                     className="iconSmall"
-                    onClick={() => toggleOnboardingStatus(row.original)}
+                    onClick={() => toggleOnboardingStatus(row.original, false)}
+                  />
+                </span>
+              )}
+
+            {/* Reassignment - is_assign == 1 */}
+            {[2].includes(row?.original?.status) &&
+              row.original.is_assign == 1 &&
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
+                <span className="editIcon" style={{ background: "#543376fa" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original, true)}
                   />
                 </span>
               )}
@@ -307,15 +320,15 @@ const CoachListingTable = () => {
             profileStatus={profileStatus}
           />
         )}
-
         {showOnboardingAssignTask && (
           <AssignOnboardingToAdmin
             isOpen={showOnboardingAssignTask}
-            onClose={toggleOnboardingStatus}
+            onClose={() => toggleOnboardingStatus(null, false)}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
             adminId={user.id}
+            isReassign={isReassign}
           />
         )}
       </div>

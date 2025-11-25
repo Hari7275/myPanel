@@ -37,6 +37,7 @@ const ListenersListingTable = () => {
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
+  const [isReassign, setIsReassign] = useState(false); // New state for reassign
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [name, setName] = useState("");
@@ -73,7 +74,6 @@ const ListenersListingTable = () => {
     page,
     size: pageSize,
     name: name,
-    // auth_status: statusSearch,
     auth_status: appliedFilters?.status,
     id: consultantId,
     phone,
@@ -110,32 +110,12 @@ const ListenersListingTable = () => {
     setSelectedRow(row);
   };
 
-  const toggleOnboardingStatus = (row) => {
+  // Updated function to accept reassign parameter
+  const toggleOnboardingStatus = (row, reassign = false) => {
     setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedRow(row);
+    setIsReassign(reassign);
   };
-
-  // const handleActionClick = (data) => {
-  //   dispatch(setCurrentConsultant(data?.id));
-  //   dispatch(setCurrentProfileStatus(data?.status));
-  //   dispatch(setConsultantType(data?.phone_code));
-
-  //   // Use setTimeout or batch it after dispatch
-  //   console.log("page in arrow.......", pageRef.current);
-
-  //   setTimeout(() => {
-  //     navigate(`/listener_Profile?${data?.id}`, {
-  //       state: {
-  //         currentPage: pageRef.current,
-  //         pageSize: pageSize,
-  //       },
-  //     });
-  //   }, 0);
-  // };
-
-  // const handleActionClick = (data) => {
-  //   dispatch(setCurrentConsultant(data?.id));
-  // };
 
   const columns = useMemo(
     () => [
@@ -145,31 +125,9 @@ const ListenersListingTable = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {/* <Link to="/listener_Profile"> */}
-            {/* {permissions?.["listener"]?.includes("view_listener_profile") && (
-              <span
-                title="view details"
-                className="secondIcon"
-                // target="blank"
-                style={{
-                  display: "inline-block",
-                  height: "35px",
-                  width: "35px",
-                }}
-              >
-                <ArrowRight
-                  className="iconSmall"
-                  onClick={() => handleActionClick(row.original)}
-                />
-              </span>
-            )} */}
-
             {permissions?.["listener"]?.includes("view_listener_profile") && (
               <Link
-                // to={`/listeners/${row.original.id}?page=${pageRef.current}&size=${pageSize}&status=${row.original.status}&type=${row.original.phone_code}`}
                 to={`/listeners/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
-                // target="_blank"
-                // rel="noopener noreferrer"
               >
                 <span
                   title="View details"
@@ -185,14 +143,6 @@ const ListenersListingTable = () => {
               </Link>
             )}
 
-            {/* </Link> */}
-            {/* <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleEditStatus(row.original.id)}
-              />
-            </span> */}
-
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["listener"]?.includes(
                 "update_listener_profile_status"
@@ -204,13 +154,27 @@ const ListenersListingTable = () => {
                   />
                 </span>
               )}
+
+            {/* New Assignment - is_assign == 0 */}
             {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
               permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#c65252ff" }}>
                   <KeyRound
                     className="iconSmall"
-                    onClick={() => toggleOnboardingStatus(row.original)}
+                    onClick={() => toggleOnboardingStatus(row.original, false)}
+                  />
+                </span>
+              )}
+
+            {/* Reassignment - is_assign == 1 */}
+            {[2].includes(row?.original?.status) &&
+              row.original.is_assign == 1 &&
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
+                <span className="editIcon" style={{ background: "#543376fa" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original, true)}
                   />
                 </span>
               )}
@@ -218,67 +182,10 @@ const ListenersListingTable = () => {
         ),
       },
     ],
-    []
+    [permissions]
   );
 
-  // const columns = useMemo(
-  //   () => [
-  //     ...LISTENERSCOLUMNS,
-  //     {
-  //       Header: () => <div className="actions-header">Actions</div>,
-  //       id: "actions",
-  //       Cell: ({ row }) => (
-  //         <div className="actions-cell">
-  //           {permissions?.["listener"]?.includes("view_listener_profile") && (
-  //             <Link
-  //               to={`/listener_Profile?${row.original.id}`}
-  //               target="_blank"
-  //               rel="noopener noreferrer"
-  //               state={{
-  //                 currentPage: pageRef.current,
-  //                 pageSize: pageSize,
-  //               }}
-  //               onClick={(e) => {
-  //                 // Dispatch Redux actions
-  //                 dispatch(setCurrentConsultant(row.original.id));
-  //                 dispatch(setCurrentProfileStatus(row.original.status));
-  //                 dispatch(setConsultantType(row.original.phone_code));
-  //               }}
-  //             >
-  //               <span
-  //                 title="view details"
-  //                 className="secondIcon"
-  //                 style={{
-  //                   display: "inline-block",
-  //                   height: "35px",
-  //                   width: "35px",
-  //                 }}
-  //               >
-  //                 <ArrowRight className="iconSmall" />
-  //               </span>
-  //             </Link>
-  //           )}
-
-  //           {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
-  //             permissions?.["listener"]?.includes(
-  //               "update_listener_profile_status"
-  //             ) && (
-  //               <span className="editIcon">
-  //                 <Pencil
-  //                   className="iconSmall"
-  //                   onClick={() => toggleEditStatus(row.original)}
-  //                 />
-  //               </span>
-  //             )}
-  //         </div>
-  //       ),
-  //     },
-  //   ],
-  //   [pageRef.current, pageSize] // Add dependencies to useMemo
-  // );
-
   // Apply debounce to search handlers
-
   const debouncedSearchName = debounce((value) => setName(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
@@ -336,7 +243,6 @@ const ListenersListingTable = () => {
         className="inputBox"
         placeholder="Search by Id"
         style={{
-          // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
@@ -363,16 +269,6 @@ const ListenersListingTable = () => {
         }}
         onChange={handleConsultantPhoneSearch}
       />
-      {/* <input
-        className="inputBox"
-        placeholder="Search by status"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }}
-        onChange={handleConsultantStatusSearch}
-      /> */}
 
       <div
         style={{ marginLeft: "20px", position: "relative" }}
@@ -445,11 +341,12 @@ const ListenersListingTable = () => {
         {showOnboardingAssignTask && (
           <AssignOnboardingToAdmin
             isOpen={showOnboardingAssignTask}
-            onClose={toggleOnboardingStatus}
+            onClose={() => toggleOnboardingStatus(null, false)}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
             adminId={user.id}
+            isReassign={isReassign}
           />
         )}
       </>

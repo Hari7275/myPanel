@@ -31,7 +31,6 @@ const AstrologerListingTable = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = Number(queryParams.get("page")) || 1;
   const initialPageSize = Number(queryParams.get("pageSize")) || 50;
-
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -42,16 +41,14 @@ const AstrologerListingTable = () => {
   const [phone, setPhone] = useState("");
   const [statusSearch, setStatusSearch] = useState("");
   const [consultantId, setConsultantId] = useState("");
-
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [searchParams, setSearchParams] = useSearchParams();
-
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
+  const [isReassign, setIsReassign] = useState(false); // New state for reassign
   const { user } = useSelector((state) => state.auth);
-
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -129,9 +126,11 @@ const AstrologerListingTable = () => {
     // localStorage.setItem("currentUserId", data?.id);
   };
 
-  const toggleOnboardingStatus = (row) => {
+  // Updated function to accept reassign parameter
+  const toggleOnboardingStatus = (row, reassign = false) => {
     setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedRow(row);
+    setIsReassign(reassign);
   };
 
   const columns = useMemo(
@@ -176,13 +175,23 @@ const AstrologerListingTable = () => {
 
             {[2].includes(row?.original?.status) &&
               row.original.is_assign == 0 &&
-              permissions?.["listener"]?.includes(
-                "update_listener_profile_status"
-              ) && (
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#c65252ff" }}>
                   <KeyRound
                     className="iconSmall"
-                    onClick={() => toggleOnboardingStatus(row.original)}
+                    onClick={() => toggleOnboardingStatus(row.original, false)}
+                  />
+                </span>
+              )}
+
+            {/* Reassignment - is_assign == 1 */}
+            {[2].includes(row?.original?.status) &&
+              row.original.is_assign == 1 &&
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
+                <span className="editIcon" style={{ background: "#543376fa" }}>
+                  <KeyRound
+                    className="iconSmall"
+                    onClick={() => toggleOnboardingStatus(row.original, true)}
                   />
                 </span>
               )}
@@ -356,11 +365,12 @@ const AstrologerListingTable = () => {
         {showOnboardingAssignTask && (
           <AssignOnboardingToAdmin
             isOpen={showOnboardingAssignTask}
-            onClose={toggleOnboardingStatus}
+            onClose={() => toggleOnboardingStatus(null, false)}
             selectedRow={selectedRow?.id}
             profileStatus={profileStatus}
             created={true}
             adminId={user.id}
+            isReassign={isReassign}
           />
         )}
       </div>
