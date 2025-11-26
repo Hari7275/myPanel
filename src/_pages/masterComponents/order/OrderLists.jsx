@@ -9,7 +9,7 @@ import {
   useUpdateAgoraCredentialsToJoinCallMutation,
 } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
-import { ArrowRight, Pencil, Phone } from "lucide-react";
+import { ArrowRight, Pencil, Phone, Plus, ArrowLeft } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
@@ -198,21 +198,21 @@ const OrderLists = () => {
               {/* Join Call Button - Show for running calls (status == 3) */}
               {row.original.status == 3 && (
                 <span
-                  title="Join Call"
-                  className="joinIcon"
+                  // title="Join Call"
+                  className="joinIcon secondIcon"
                   style={{
                     height: "35px",
                     width: "35px",
                     marginRight: "8px",
-                    cursor: isJoining ? "not-allowed" : "pointer",
+                    cursor: isJoining ? "not-azllowed" : "pointer",
                     opacity: isJoining ? 0.5 : 1,
                   }}
                 >
                   {permissions?.["orders"]?.includes("monitor_order") &&
                     row.original.consultant_id !== 1 && (
-                      <Phone
+                      <ArrowLeft
                         className="iconSmall"
-                        style={{ color: "#10b981" }}
+                        style={{ color: "#e9eeedff" }}
                         onClick={() => !isJoining && joinChannel(row.original)}
                       />
                     )}

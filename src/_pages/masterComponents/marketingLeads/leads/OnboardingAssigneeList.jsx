@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 import { useGetMarketingLeadsLOnboardingAssigneeQuery } from "../../../../_store/api";
 import { useSelector } from "react-redux"; // Added
 
-const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
+const CategoryCard = ({ registeredLink, item }) => {
   return (
     <div className="onboarding-card-wrapper">
       <div className="onboarding-specialist-card">
         <div className="onboarding-card-header">
           <h3 className="onboarding-specialist-name">{item.assign_to}</h3>
-          <span className="onboarding-specialist-id">ID: {item.admin_id}</span>
+          <span className="onboarding-specialist-id">ID: {item.id}</span>
         </div>
 
         <div className="onboarding-card-body">
@@ -125,8 +125,7 @@ const OnboardingAssigneeList = () => {
           <CategoryCard
             key={item.admin_id}
             item={item}
-            registeredLink={`/onboarding-assign/${item.admin_id}`}
-            unregisteredLink={`/onboarding-assign/unregistered/${item.admin_id}`}
+            registeredLink={`/marketing-leads/onboarding/${item.id}`}
           />
         ))}
       </div>
