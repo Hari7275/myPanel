@@ -87,6 +87,21 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["adminlog", "consultant"],
     }),
+
+    // get assigned leads to admin
+
+    getAdminAssigneedLeadsList: builder.query({
+      query: ({admin_id}) => {
+        return {
+          url: `/api/v1/consultant/profile/onboarding-assignee/admin/marketing-leads/my-leads/${admin_id}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["adminlog", "consultant"],
+    }),
   }),
 });
 
@@ -98,4 +113,6 @@ export const {
   useReAssignOnboardingToAdminMutation,
   //   useUpdateAgoraCredentialsToJoinCallMutation,
   useGetOnboardingAssignedUnregisteredConsultantListQuery,
+
+  useGetAdminAssigneedLeadsListQuery,
 } = actionLogApiSlice;

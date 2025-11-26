@@ -124,6 +124,7 @@ import OnboardingAssignedUnregisteredConsultantList from "./_pages/masterCompone
 
 import LeadsLists from "./_pages/masterComponents/marketingLeads/leads/LeadsLists";
 import OnboardingAssigneeList from "./_pages/masterComponents/marketingLeads/leads/OnboardingAssigneeList";
+import AssignedLeadsToAdminList from "./_pages/masterComponents/marketingLeads/leads/AssignedLeadsToAdminList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -303,6 +304,10 @@ const Layout = () => (
           <Route
             path="/onboarding-assign/:adminId"
             element={<OnboardingAssignedConsultantList />}
+          />
+          <Route
+            path="/marketing-leads/onboarding/:adminId"
+            element={<AssignedLeadsToAdminList />}
           />
           <Route
             path="/onboarding-assign/unregistered/:adminId"
