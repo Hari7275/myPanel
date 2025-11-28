@@ -5,6 +5,7 @@ import { useState } from "react";
 import {
   getGenderLabelInSort,
   getStatusLabel,
+  getStatusColorConsultant,
 } from "../../../_constants/consultantConstant";
 
 const CustomUserType = ({ value }) => {
@@ -16,7 +17,11 @@ const GenderCell = ({ value }) => {
 };
 
 const StatusCell = ({ value }) => {
-  return <span>{getStatusLabel(value)}</span>;
+  return (
+    <span style={{ color: getStatusColorConsultant(value) }}>
+      {getStatusLabel(value)}
+    </span>
+  );
 };
 
 // ******************************************************* open image by using react modal   (and fetch data image and name)

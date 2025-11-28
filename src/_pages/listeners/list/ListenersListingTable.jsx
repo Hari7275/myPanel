@@ -6,11 +6,7 @@ import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
-import {
-  setCurrentConsultant,
-  setCurrentProfileStatus,
-  setConsultantType,
-} from "../../../_store/slices/consultantSlice";
+
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";

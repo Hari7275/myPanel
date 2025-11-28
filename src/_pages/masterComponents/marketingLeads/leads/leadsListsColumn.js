@@ -23,6 +23,24 @@ export const LEADLISTCOLUMN = [
     accessor: "platform",
   },
   {
+    Header: "Url",
+    accessor: "inbox_url",
+    Cell: ({ value }) => {
+      if (!value) return "N/A";
+      return (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "blue", textDecoration: "underline" }}
+        >
+          Open Link
+        </a>
+      );
+    },
+  },
+
+  {
     Header: "Status",
     accessor: "status",
     Cell: ({ value }) => {
@@ -60,11 +78,6 @@ export const LEADLISTCOLUMN = [
   },
 ];
 
-
-
-
-
-
 // ASSIGMNED MARKETING LEADS TO  PARTICULAR ADMIN
 
 export const ASSIGNEDMARKETINGLEADSTOADMINCOLUMNS = [
@@ -85,7 +98,6 @@ export const ASSIGNEDMARKETINGLEADSTOADMINCOLUMNS = [
   {
     Header: "Phone No.",
     accessor: "phone",
-   
   },
 
   {

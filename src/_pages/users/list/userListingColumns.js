@@ -2,6 +2,8 @@ import React from "react";
 import { UserVerificationStatus } from "../../../_constants/consultantConstant";
 
 // import Status from "../../../_components/table/Status";
+import AndroidIcon from "@mui/icons-material/Android";
+import AppleIcon from "@mui/icons-material/Apple";
 import { format } from "date-fns";
 
 const StatusCell = ({ value }) => {
@@ -48,9 +50,7 @@ export const COLUMNS = (toggleModal) => [
           />
         </div>
 
-        <span className="column_container_name">
-          {row?.original?.name}
-        </span>
+        <span className="column_container_name">{row?.original?.name}</span>
       </div>
     ),
   },
@@ -76,10 +76,16 @@ export const COLUMNS = (toggleModal) => [
     accessor: "user_type",
     Cell: ({ value }) => (value == 0 ? "External" : "Internal"),
   },
+
   {
     Header: "Device Info",
     accessor: "platform",
-    Cell: ({ value }) => (value == 1 ? "Andriod" : "iOS"),
+    Cell: ({ value }) =>
+      value == 1 ? (
+        <AndroidIcon sx={{ color: "#3DDC84" }} />
+      ) : (
+        <AppleIcon sx={{ color: "#7b7878ff" }} />
+      ),
   },
 
   {
@@ -92,6 +98,7 @@ export const COLUMNS = (toggleModal) => [
     accessor: "profile_status",
     Cell: StatusCell,
   },
+
   {
     Header: "Created Date",
     accessor: "created_date",

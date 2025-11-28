@@ -334,6 +334,37 @@ export const getStatusColor = (value) => {
   }
 };
 
+export const getStatusColorConsultant = (value) => {
+  switch (Number(value)) {
+    case 1: // Registered
+      return "#1976D2"; // Blue (registered/new account)
+
+    case 2: // Pending
+      return "#cd9a01ff"; // Amber / Yellow (pending / in-progress)
+
+    case 3: // Verified
+      return "#4CAF50"; // Green (verified / success)
+
+    case 4: // Suspended
+      return "#FF9800"; // Orange (suspended — warning)
+
+    case 5: // Blocked
+      return "#D32F2F"; // Red (blocked — severe)
+
+    case 6: // Rejected
+      return "#B71C1C"; // Darker red (rejected — final negative)
+
+    case 7: // Deleted
+      return "#9E9E9E"; // Grey (deleted / removed)
+
+    case 8: // Inactive
+      return "#BDBDBD"; // Light grey (inactive / idle)
+
+    default:
+      return "#808080"; // Unknown → fallback grey
+  }
+};
+
 export const statusNameToValue = {
   Registered: 1,
   Pending: 2,
