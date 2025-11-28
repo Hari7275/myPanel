@@ -19,6 +19,8 @@ const LeadsLists = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
+  const [showPayablePopover, setShowPayablePopover] = useState(false);
+  const permissions = usePermissions();
   const [selectedData, setSelectedData] = useState(null);
   const [isOnboardingAssign, setIsOnboardingAssign] = useState(false);
 
@@ -93,7 +95,14 @@ const LeadsLists = () => {
   };
 
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px", display: "flex" }}>
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
       <input
         className="inputBox"
         placeholder="Search by Email"
@@ -125,6 +134,23 @@ const LeadsLists = () => {
         }}
         onChange={handleConsultantPhoneSearch}
       />
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowPayablePopover(!showPayablePopover)}
+        >
+          Upload Leads
+        </Button>
+
+        <UploadsLeadsData
+          isOpen={showPayablePopover}
+          onClose={() => setShowPayablePopover(false)}
+        />
+      </div>
     </div>
   );
 
