@@ -1,41 +1,26 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../../_components/table/DyCommonTable";
 import { ASSIGNEDMARKETINGLEADSTOADMINCOLUMNS } from "./leadsListsColumn";
-import { ArrowRight, Pencil, KeyRound } from "lucide-react";
-import { Link } from "react-router-dom";
-import EditStatus from "../../../../_components/reuseComponents/EditStatus";
-
+import { Pencil } from "lucide-react";
 import { useGetAdminAssigneedLeadsListQuery } from "../../../../_store/api";
-import { useDispatch } from "react-redux";
 import { debounce } from "lodash";
-import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "react-redux";
-
 import { useParams } from "react-router-dom";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
-
-import AssignOnboardingToAdmin from "../../../../_components/reuseComponents/AssignOnboardingToAdmin";
-
+import UpdateStatusMarketingLeads from "./UpdateStatusMarketingLeads";
 const AssignedLeadsToAdminList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [data, setData] = useState([]);
-  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
-  const [consultantId, setConsultantId] = useState("");
-  const [statusSearch, setStatusSearch] = useState("");
+
+  const [email, setEmail] = useState("");
   const [page, setPage] = useState(1);
   const pageRef = useRef(page);
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-
-  let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
-  const { user } = useSelector((state) => state.auth);
-
   const { adminId } = useParams();
 
   const {
@@ -46,12 +31,10 @@ const AssignedLeadsToAdminList = () => {
     page,
     size: pageSize,
     name: name,
-    id: consultantId,
+    email,
     phone,
     admin_id: adminId,
   });
-
-  const navigate = useNavigate();
 
   //HANDLING THE CURRENT PAGE STATE
   useEffect(() => {
@@ -73,7 +56,6 @@ const AssignedLeadsToAdminList = () => {
 
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
-    SetProfileStatus(row.status);
     setSelectedRow(row);
   };
 
@@ -101,10 +83,7 @@ const AssignedLeadsToAdminList = () => {
   );
 
   const debouncedSearchName = debounce((value) => setName(value), 500);
-  const debouncedSearchConsultantId = debounce(
-    (value) => setConsultantId(value),
-    500
-  );
+  const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
   const handleNameSearch = (e) => {
@@ -112,9 +91,9 @@ const AssignedLeadsToAdminList = () => {
     debouncedSearchName(e?.target?.value);
   };
 
-  const handleConsultantIdSearch = (e) => {
+  const handleEmailSearch = (e) => {
     setPage(1);
-    debouncedSearchConsultantId(e?.target?.value);
+    debouncedSearchEmail(e?.target?.value);
   };
 
   const handleConsultantPhoneSearch = (e) => {
@@ -126,13 +105,13 @@ const AssignedLeadsToAdminList = () => {
     <div style={{ width: "100%", height: "35px", display: "flex" }}>
       <input
         className="inputBox"
-        placeholder="Search by Id"
+        placeholder="Search by Email"
         style={{
           // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
-        onChange={handleConsultantIdSearch}
+        onChange={handleEmailSearch}
       />
 
       <input
@@ -175,7 +154,7 @@ const AssignedLeadsToAdminList = () => {
         <DyCommonTable
           columns={columns}
           data={data}
-          tableTitle="Assigned marketing leads to partiular admin"
+          tableTitle="Marketing Leads Status"
           includeActions={false}
           customFilterComponent={customFilterComponent}
           dynamicPagination={dynamicPagination}
@@ -194,11 +173,10 @@ const AssignedLeadsToAdminList = () => {
         )}
 
         {showEditStatus && (
-          <EditStatus
+          <UpdateStatusMarketingLeads
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
             selectedRow={selectedRow?.id}
-            profileStatus={profileStatus}
           />
         )}
       </>

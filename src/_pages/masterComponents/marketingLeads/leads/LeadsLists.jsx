@@ -16,9 +16,9 @@ const LeadsLists = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-  const [consultantId, setConsultantId] = useState("");
-  const [showPayablePopover, setShowPayablePopover] = useState(false);
-  const permissions = usePermissions();
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [selectedData, setSelectedData] = useState(null);
   const [isOnboardingAssign, setIsOnboardingAssign] = useState(false);
 
@@ -31,6 +31,9 @@ const LeadsLists = () => {
   } = useGetMarketingLeadsListQuery({
     page,
     size: pageSize,
+    name: name,
+    email,
+    phone,
   });
 
   useEffect(() => {
@@ -70,52 +73,58 @@ const LeadsLists = () => {
   );
   // const totalPage = fetchData?.meta?.total_page || 1;
 
-  const debouncedSearchConsltantId = debounce(
-    (value) => setConsultantId(value),
-    500
-  );
+  const debouncedSearchName = debounce((value) => setName(value), 500);
+  const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
+  const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
-  const handleConsultantIdSearch = (e) => {
+  const handleNameSearch = (e) => {
     setPage(1);
-    debouncedSearchConsltantId(e?.target?.value);
+    debouncedSearchName(e?.target?.value);
+  };
+
+  const handleEmailSearch = (e) => {
+    setPage(1);
+    debouncedSearchEmail(e?.target?.value);
+  };
+
+  const handleConsultantPhoneSearch = (e) => {
+    setPage(1);
+    debouncedSearchPhone(e?.target?.value);
   };
 
   const customFilterComponent = () => (
-    <div
-      style={{
-        width: "100%",
-        height: "35px",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
+    <div style={{ width: "100%", height: "35px", display: "flex" }}>
       <input
         className="inputBox"
-        placeholder="Search by consultant id"
+        placeholder="Search by Email"
         style={{
           // marginLeft: "25px",
           height: "-webkit-fill-available",
           width: "15%",
         }}
-        onChange={handleConsultantIdSearch}
+        onChange={handleEmailSearch}
       />
 
-      <div
-        style={{ marginLeft: "20px", position: "relative" }}
-        className="filter-button-wrapper"
-      >
-        <Button
-          variant="contained"
-          onClick={() => setShowPayablePopover(!showPayablePopover)}
-        >
-          Upload Leads
-        </Button>
-
-        <UploadsLeadsData
-          isOpen={showPayablePopover}
-          onClose={() => setShowPayablePopover(false)}
-        />
-      </div>
+      {/* <input
+        className="inputBox"
+        placeholder="Search by Name"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleNameSearch}
+      /> */}
+      <input
+        className="inputBox"
+        placeholder="Search by Phone No."
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleConsultantPhoneSearch}
+      />
     </div>
   );
 
@@ -133,19 +142,11 @@ const LeadsLists = () => {
 
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="Payable Amount History"
-        // AddPackageButton={AddPackageButton}
-        showTableHeading={false}
-      /> */}
       <DyCommonTable
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Payable Log"
+        tableTitle="Marketing Lead List"
         dynamicPagination={dynamicPagination}
         customFilterComponent={customFilterComponent}
         totalPage={totalPage}

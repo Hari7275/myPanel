@@ -4,15 +4,15 @@ import { getAdminToken } from "../tokenHelper";
 export const marketingleadsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getMarketingLeadsList: builder.query({
-      query: ({ page, size, start_date, end_date, title }) => {
+      query: ({ page, size, name, email, phone }) => {
         const params = new URLSearchParams({
           page: page,
           size: size,
         });
 
-        // if (title) params.append("title", title);
-        // if (start_date) params.append("start_date", start_date);
-        // if (end_date) params.append("end_date", end_date);
+        if (name) params.append("name", name);
+        if (email) params.append("email", email);
+        if (phone) params.append("phone", phone);
 
         return {
           url: `/api/v1/consultant/profile/onboarding-assignee/admin/marketing-leads?${params.toString()}`,
