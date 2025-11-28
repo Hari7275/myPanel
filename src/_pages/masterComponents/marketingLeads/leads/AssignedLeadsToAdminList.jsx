@@ -114,7 +114,7 @@ const AssignedLeadsToAdminList = () => {
         onChange={handleEmailSearch}
       />
 
-      <input
+      {/* <input
         className="inputBox"
         placeholder="Search by Name"
         style={{
@@ -123,7 +123,7 @@ const AssignedLeadsToAdminList = () => {
           width: "15%",
         }}
         onChange={handleNameSearch}
-      />
+      /> */}
       <input
         className="inputBox"
         placeholder="Search by Phone No."

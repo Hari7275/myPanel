@@ -91,9 +91,9 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
     // get assigned leads to admin
 
     getAdminAssigneedLeadsList: builder.query({
-      query: ({ page = 1, size , email, name, phone, admin_id }) => {
+      query: ({ page = 1, size, email, phone, admin_id }) => {
         return {
-          url: `/api/v1/consultant/profile/onboarding-assignee/admin/marketing-leads/my-leads/${admin_id}&page=${page}&size=${size}&email=${email}&name=${name}&phone=${phone}`,
+          url: `/api/v1/consultant/profile/onboarding-assignee/admin/marketing-leads/my-leads/${admin_id}?&page=${page}&size=${size}&email=${email}&phone=${phone}`,
           method: "GET",
           headers: {
             Authorization: "Bearer admin_token",
