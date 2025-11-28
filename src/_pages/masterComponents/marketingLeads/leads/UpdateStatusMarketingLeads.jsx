@@ -10,11 +10,9 @@ const UpdateStatusMarketingLeads = ({ isOpen, onClose, selectedRow }) => {
     description: "",
   });
 
-  console.log("selectedRow", selectedRow);
-
   const statusOptions = [
     { value: 1, label: "Pending" },
-    { value: 2, label: "Verified" },
+    { value: 2, label: "Registered" },
     { value: 3, label: "Not Interested" },
   ];
 

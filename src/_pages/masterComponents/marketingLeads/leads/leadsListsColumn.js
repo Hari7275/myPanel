@@ -27,9 +27,9 @@ export const LEADLISTCOLUMN = [
     accessor: "status",
     Cell: ({ value }) => {
       const statusMap = {
-        0: { text: "Unassigned", color: "#ad2727ff" },
+        0: { text: "Unassigned", color: "#876363ff" },
         1: { text: "Pending", color: "orange" },
-        2: { text: "Verified", color: "green" },
+        2: { text: "Registered", color: "green" },
         3: { text: "Not Interested", color: "red" },
         4: { text: "Already Contacted", color: "blue" },
       };
@@ -99,7 +99,7 @@ export const ASSIGNEDMARKETINGLEADSTOADMINCOLUMNS = [
       const statusMap = {
         0: { text: "Unassigned", color: "#ad2727ff" },
         1: { text: "Pending", color: "orange" },
-        2: { text: "Verified", color: "green" },
+        2: { text: "Registered", color: "green" },
         3: { text: "Not Interested", color: "red" },
         4: { text: "Already Contacted", color: "blue" },
       };
