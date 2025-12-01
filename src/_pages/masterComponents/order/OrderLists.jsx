@@ -196,28 +196,27 @@ const OrderLists = () => {
           <>
             <div className="actions-cell">
               {/* Join Call Button - Show for running calls (status == 3) */}
-              {row.original.status == 3 && (
-                <span
-                  // title="Join Call"
-                  className="joinIcon secondIcon"
-                  style={{
-                    height: "35px",
-                    width: "35px",
-                    marginRight: "8px",
-                    cursor: isJoining ? "not-azllowed" : "pointer",
-                    opacity: isJoining ? 0.5 : 1,
-                  }}
-                >
-                  {permissions?.["orders"]?.includes("monitor_order") &&
-                    row.original.consultant_id !== 1 && (
-                      <ArrowLeft
-                        className="iconSmall"
-                        style={{ color: "#e9eeedff" }}
-                        onClick={() => !isJoining && joinChannel(row.original)}
-                      />
-                    )}
-                </span>
-              )}
+              {row.original.status == 3 &&
+                permissions?.["orders"]?.includes("monitor_order") &&
+                row.original.consultant_id !== 1 && (
+                  <span
+                    // title="Join Call"
+                    className="joinIcon secondIcon"
+                    style={{
+                      height: "35px",
+                      width: "35px",
+                      marginRight: "8px",
+                      cursor: isJoining ? "not-azllowed" : "pointer",
+                      opacity: isJoining ? 0.5 : 1,
+                    }}
+                  >
+                    <ArrowLeft
+                      className="iconSmall"
+                      style={{ color: "#e9eeedff" }}
+                      onClick={() => !isJoining && joinChannel(row.original)}
+                    />
+                  </span>
+                )}
 
               {/* Edit Button */}
               {row.original.status == 3 && (

@@ -1,17 +1,10 @@
 import ReactModal from "react-modal";
 import { useState } from "react";
 
-import {
-  getGenderLabel,
-  getStatusLabel,
-} from "../../../../_constants/consultantConstant";
+import { getStatusLabel } from "../../../../_constants/consultantConstant";
 
 const CustomUserType = ({ value }) => {
   return <span className="orderId-color">{value}</span>;
-};
-
-const GenderCell = ({ value }) => {
-  return <span>{getGenderLabel(value)}</span>;
 };
 
 const StatusCell = ({ value }) => {
@@ -155,4 +148,3 @@ export const ASSIGNEDUnregistredCONSULTANTCOLUMNS = [
     },
   },
 ];
-

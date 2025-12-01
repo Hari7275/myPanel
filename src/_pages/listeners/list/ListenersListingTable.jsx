@@ -1,18 +1,17 @@
-import React, { useMemo, useState, useEffect, useRef } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { LISTENERSCOLUMNS } from "./listenersListingColumn";
 import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
-import { useDispatch } from "react-redux";
 
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
-import { statusNameToValue } from "../../../_constants/consultantConstant";
+
 import { useSelector } from "react-redux";
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
@@ -35,13 +34,12 @@ const ListenersListingTable = () => {
     useState(false);
   const [isReassign, setIsReassign] = useState(false); // New state for reassign
   const [data, setData] = useState([]);
-  const dispatch = useDispatch();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [consultantId, setConsultantId] = useState("");
-  const [statusSearch, setStatusSearch] = useState("");
-  const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [dynamicPagination] = useState(true);
   const { user } = useSelector((state) => state.auth);
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
@@ -92,7 +90,6 @@ const ListenersListingTable = () => {
   const totalPage = fetchData?.data?.total_records
     ? Math.ceil(fetchData.data.total_records / pageSize)
     : 1;
-
 
   useEffect(() => {
     if (location.state) {
@@ -154,7 +151,7 @@ const ListenersListingTable = () => {
 
             {/* New Assignment - is_assign == 0 */}
             {[2].includes(row?.original?.status) &&
-              row.original.is_assign == 0 &&
+              row.original.is_assign === 0 &&
               permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#c65252ff" }}>
                   <KeyRound
@@ -166,7 +163,7 @@ const ListenersListingTable = () => {
 
             {/* Reassignment - is_assign == 1 */}
             {[2].includes(row?.original?.status) &&
-              row.original.is_assign == 1 &&
+              row.original.is_assign === 1 &&
               permissions?.["onboarding"]?.includes("onboarding_assign") && (
                 <span className="editIcon" style={{ background: "#543376fa" }}>
                   <KeyRound
@@ -190,11 +187,6 @@ const ListenersListingTable = () => {
     500
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
-  const debouncedSearchStatus = debounce(
-    (value) => setStatusSearch(value),
-    500
-  );
-
   const handleNameSearch = (e) => {
     setPage(1);
     debouncedSearchName(e?.target?.value);
@@ -213,19 +205,6 @@ const ListenersListingTable = () => {
   const handleConsultantPhoneSearch = (e) => {
     setPage(1);
     debouncedSearchPhone(e?.target?.value);
-  };
-
-  const handleConsultantStatusSearch = (e) => {
-    setPage(1);
-    const inputValue = e?.target?.value?.trim();
-
-    // Convert input to title case (first letter capitalized) for matching
-    const formattedInput =
-      inputValue.charAt(0).toUpperCase() + inputValue.slice(1).toLowerCase();
-
-    // Try to find a matching status name, fall back to raw input if not found
-    const statusValue = statusNameToValue[formattedInput] || inputValue;
-    debouncedSearchStatus(statusValue);
   };
 
   // Handle filter application
@@ -294,7 +273,7 @@ const ListenersListingTable = () => {
         >
           Filter
           <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
-            {appliedFilterCount == 0 ? null : appliedFilterCount}
+            {appliedFilterCount === 0 ? null : appliedFilterCount}
           </span>
         </Button>
 
@@ -339,7 +318,7 @@ const ListenersListingTable = () => {
           showGlobalSearch={false}
         />
 
-        {data?.length == 0 && (
+        {data?.length === 0 && (
           <span className="no-data-new">No Listener Avaliable</span>
         )}
 

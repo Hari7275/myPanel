@@ -20,7 +20,7 @@ const DatingProducts = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(30); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching Dating products  data using RTK Query.
@@ -124,18 +124,15 @@ const DatingProducts = () => {
     ],
     []
   );
-
   const totalPage = fetchData?.meta?.total_page || 1;
 
   return (
     <>
-      
-
       <DyCommonTable
         columns={columns}
         data={result}
         includeActions={false}
-        tableTitle=" Dating Products"
+        tableTitle="Dating Products"
         AddPackageButton={AddPackageButton}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
