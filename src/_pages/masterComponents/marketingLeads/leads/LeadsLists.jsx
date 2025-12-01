@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import DyCommonTable from "../../../../_components/table/DyCommonTable";
 import { LEADLISTCOLUMN } from "./leadsListsColumn";
-import { Info, Pencil, Trash, KeyRound } from "lucide-react";
+import { KeyRound } from "lucide-react";
 import { useGetMarketingLeadsListQuery } from "../../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import Button from "@mui/material/Button";
@@ -15,7 +15,7 @@ const LeadsLists = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
-  const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [dynamicPagination] = useState(true);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -23,9 +23,7 @@ const LeadsLists = () => {
   const permissions = usePermissions();
   const [selectedData, setSelectedData] = useState(null);
   const [isOnboardingAssign, setIsOnboardingAssign] = useState(false);
-
   const { user } = useSelector((state) => state.auth);
-
   const {
     data: fetchData,
     isLoading,

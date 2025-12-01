@@ -81,7 +81,6 @@ export const LEADLISTCOLUMN = [
       });
     },
   },
-
   {
     Header: "Assg To",
     accessor: "assign_to_name",
