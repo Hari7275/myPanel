@@ -13,32 +13,46 @@ export const LEADLISTCOLUMN = [
     Header: "Email",
     accessor: "email",
   },
-
   {
     Header: "Name",
     accessor: "full_name",
   },
   {
-    Header: "Platform",
+    Header: "Gender",
+    accessor: "gender",
+  },
+  {
+    Header: "Country",
+    accessor: "country",
+  },
+  {
+    Header: "PT.",
     accessor: "platform",
   },
   {
-    Header: "Url",
-    accessor: "inbox_url",
-    Cell: ({ value }) => {
-      if (!value) return "N/A";
-      return (
-        <a
-          href={value}
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: "blue", textDecoration: "underline" }}
-        >
-          Open Link
-        </a>
-      );
-    },
+    Header: "Contact Method",
+    accessor: "how_to_connect",
+    Cell: ({ value }) => (
+      <span style={{ width: "200px", display: "inline-block" }}>{value}</span>
+    ),
   },
+  // {
+  //   Header: "Url",
+  //   accessor: "inbox_url",
+  //   Cell: ({ value }) => {
+  //     if (!value) return "N/A";
+  //     return (
+  //       <a
+  //         href={value}
+  //         target="_blank"
+  //         rel="noopener noreferrer"
+  //         style={{ color: "blue", textDecoration: "underline" }}
+  //       >
+  //         Open Link
+  //       </a>
+  //     );
+  //   },
+  // },
 
   {
     Header: "Status",
@@ -69,11 +83,11 @@ export const LEADLISTCOLUMN = [
   },
 
   {
-    Header: "Assigned To",
+    Header: "Assg To",
     accessor: "assign_to_name",
   },
   {
-    Header: "Assigned By",
+    Header: "Assg By",
     accessor: "assigned_by_name",
   },
 ];
