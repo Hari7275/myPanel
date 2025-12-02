@@ -22,10 +22,22 @@ const InfoItem = ({ label, value, color }) => (
 
 const ListenerOverview = () => {
   const [data, setData] = useState([]);
-  // const consultantId = useSelector((state) => state.consultant.consultantData);
+  // const consultantId = useSelector((state) => state.consultant.consultantData);;
   const { consultantId } = useParams();
 
   const permissions = usePermissions();
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const [currencyCategory, setCurrencyCategory] = useState(null);
+  // 🧭 Keep URL params synced when currency category changes
+  useEffect(() => {
+    if (currencyCategory !== null) {
+      const params = new URLSearchParams(location.search);
+      params.set("currency_category", currencyCategory);
+      navigate(`?${params.toString()}`, { replace: true });
+    }
+  }, [currencyCategory, location.search, navigate]);
 
   const {
     data: fetchData,
@@ -36,6 +48,7 @@ const ListenerOverview = () => {
   useEffect(() => {
     if (fetchData) {
       setData(fetchData.data);
+      setCurrencyCategory(fetchData?.data?.currency_category);
     }
   }, [fetchData]);
 

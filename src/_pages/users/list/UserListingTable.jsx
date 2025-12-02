@@ -18,9 +18,7 @@ import { debounce } from "lodash";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import UserFilter from "./UserFilter";
 import Button from "@mui/material/Button";
-
 Modal.setAppElement("#root");
-
 const UserListingTable = () => {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();

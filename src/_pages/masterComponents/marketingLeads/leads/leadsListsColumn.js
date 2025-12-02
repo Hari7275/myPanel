@@ -114,8 +114,23 @@ export const ASSIGNEDMARKETINGLEADSTOADMINCOLUMNS = [
   },
 
   {
-    Header: "Platform",
+    Header: "Gender",
+    accessor: "gender",
+  },
+  {
+    Header: "Country",
+    accessor: "country",
+  },
+  {
+    Header: "PT.",
     accessor: "platform",
+  },
+  {
+    Header: "Contact Method",
+    accessor: "how_to_connect",
+    Cell: ({ value }) => (
+      <span style={{ width: "200px", display: "inline-block" }}>{value}</span>
+    ),
   },
   {
     Header: "Status",

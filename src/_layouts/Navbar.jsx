@@ -74,6 +74,7 @@ const Navbar = () => {
 
     // master component payment section
     "/dating-products": "Dating Products",
+    "/qd-products": "QD Products List",
     "/payment-transactions": "Payment Transaction",
     "/feature-list": "Features List",
     "/recharge-plans": "Recharge Plans",

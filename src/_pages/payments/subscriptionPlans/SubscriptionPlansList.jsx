@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo, useState } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
+import React, { useMemo, useState } from "react";
+
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { SUBSCRIPTIONPLANCOLUMN } from "./subscriptionPlansColumn";
 import { Info, Pencil, Trash } from "lucide-react";
@@ -20,8 +20,8 @@ const SubscriptionPlanList = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
-  const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
+  const [pageSize, setPageSize] = useState(30); // Adjusted default page size
+  const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching subscription plans data using RTK Query.
   const { data: fetchData } = useGetSubscriptionListQuery({
@@ -122,20 +122,9 @@ const SubscriptionPlanList = () => {
   );
 
   const totalPage = fetchData?.meta?.total_page || 1;
-  // ? Math.ceil(fetchData.data.totalRecords / pageSize)
-  // : 1;
 
   return (
     <>
-      {/* <CommonTable
-        columns={columns}
-        data={result}
-        includeActions={false}
-        tableTitle="Subscription Plan"
-        AddPackageButton={AddPackageButton}
-        showTableHeading={false}
-      /> */}
-
       <DyCommonTable
         columns={columns}
         data={result}

@@ -225,6 +225,21 @@ export const UserVerificationStatus = (value) => {
   }
 };
 
+export const getUserVerificationColor = (value) => {
+  switch (Number(value)) {
+    case 1: // Active
+      return "#4CAF50"; // Green
+    case 2: // Inactive
+      return "#FF9800"; // Orange
+    case 3: // Blocked
+      return "#F44336"; // Red
+    case 4: // Deleted
+      return "#F44336"; // Grey
+    default:
+      return "#000000"; // Black
+  }
+};
+
 // consultant gallery section
 
 export const ConsultantGalleryType = (value) => {

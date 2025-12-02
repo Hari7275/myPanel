@@ -1,5 +1,8 @@
 import React from "react";
-import { UserVerificationStatus } from "../../../_constants/consultantConstant";
+import {
+  UserVerificationStatus,
+  getUserVerificationColor,
+} from "../../../_constants/consultantConstant";
 
 // import Status from "../../../_components/table/Status";
 import AndroidIcon from "@mui/icons-material/Android";
@@ -7,7 +10,11 @@ import AppleIcon from "@mui/icons-material/Apple";
 import { format } from "date-fns";
 
 const StatusCell = ({ value }) => {
-  return <span>{UserVerificationStatus(value)}</span>;
+  return (
+    <span style={{ color: getUserVerificationColor(value), fontWeight: 600 }}>
+      {UserVerificationStatus(value)}
+    </span>
+  );
 };
 
 const CustomUserType = ({ value, row }) => {

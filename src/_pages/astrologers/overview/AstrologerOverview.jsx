@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { useGetCoachSkillsListQuery } from "../../../_store/api";
 import { formatDate } from "../../users/overview/UserOverview";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -29,9 +29,20 @@ const AstrologerOverview = () => {
 
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const { data: constantSkills } = useGetCoachSkillsListQuery();
   const permissions = usePermissions();
+  const [currencyCategory, setCurrencyCategory] = useState(null);
+
+  useEffect(() => {
+    if (currencyCategory !== null) {
+      const params = new URLSearchParams(location.search);
+      params.set("currency_category", currencyCategory);
+      navigate(`?${params.toString()}`, { replace: true });
+    }
+  }, [currencyCategory, location.search, navigate]);
 
   const {
     data: fetchData,
@@ -42,6 +53,7 @@ const AstrologerOverview = () => {
   useEffect(() => {
     if (fetchData) {
       setData(fetchData.data);
+      setCurrencyCategory(fetchData?.data?.currency_category);
     }
   }, [fetchData]);
 

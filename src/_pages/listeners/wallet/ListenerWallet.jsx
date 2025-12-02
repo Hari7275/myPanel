@@ -1,12 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
-
 import { WALLETCHARTCOLUMN } from "./listenerWalletColumn";
 import { useGetConsultantsWalletQuery } from "../../../_store/api";
-import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
-
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
 import { useLocation, useParams } from "react-router-dom";
@@ -24,7 +20,6 @@ const ListenerWallet = () => {
   // );
 
   const { consultantId } = useParams();
- 
 
   const { data: fetchData, isLoading } = useGetConsultantsWalletQuery({
     consultantId,
@@ -36,8 +31,6 @@ const ListenerWallet = () => {
       setData(fetchData?.data?.rows || []);
     }
   }, [fetchData]);
-
-  // const columns = useMemo(() => WALLETCHARTCOLUMN, []);
 
   const toggleDescription = (row) => {
     setDescription(!description);
@@ -91,7 +84,6 @@ const ListenerWallet = () => {
           pageSize={pageSize}
           setPage={setPage}
           setPageSize={setPageSize}
-          // showTableHeading={false}
         />
       </div>
 

@@ -20,7 +20,7 @@ const QdProducts = () => {
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(30); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching Dating products  data using RTK Query.
@@ -133,7 +133,7 @@ const QdProducts = () => {
         columns={columns}
         data={result}
         includeActions={false}
-        tableTitle=" QD Products List"
+        tableTitle="QD Products List"
         AddPackageButton={AddPackageButton}
         dynamicPagination={dynamicPagination}
         totalPage={totalPage}
@@ -141,6 +141,7 @@ const QdProducts = () => {
         pageSize={pageSize}
         setPage={setPage}
         setPageSize={setPageSize}
+        showTableHeading={false}
       />
 
       {showDescriptionModal && (

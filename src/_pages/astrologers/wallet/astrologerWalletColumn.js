@@ -8,7 +8,9 @@ const CurrencyLabel = ({ value }) => {
   const params = new URLSearchParams(search);
   const consultantCateg = params.get("type");
 
-  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  // const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  const currencyCateg = params.get("currency_category");
+  const currencySymbol = currencyCateg == "A" ? "₹" : "$";
 
   return <span>{`${currencySymbol}${value}`}</span>;
 };

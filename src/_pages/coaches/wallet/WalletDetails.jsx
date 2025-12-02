@@ -130,8 +130,10 @@ const WalletDetails = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const consultantCateg = params.get("type");
+  const currencyCateg = params.get("currency_category");
 
-  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  // const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  const currencySymbol = currencyCateg == "A" ? "₹" : "$";
 
   // Color mapping based on label
   const getCardColor = (label) => {
