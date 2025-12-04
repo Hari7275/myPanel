@@ -99,3 +99,4 @@ export * from "../api/graphApi/graphApi";
 // data for cms data
 
 export * from "../api/cms-data/cmsDashboardBanner";
+export * from "../api/cms-data/cmsSocialIcon";
