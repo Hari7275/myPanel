@@ -63,6 +63,10 @@ import ProfileProgress from "./_pages/meta-data/consultantProfileProgress/profil
 import DashboardOrderList from "./_pages/meta-data/dashboardOrder/DashboardOrderList";
 import AppVersion from "./_pages/meta-data/appVersion/AppVersion";
 
+// cms data section
+import CmsData from "./_pages/cms-data/CmsData";
+import CmsDashboardBanner from "./_pages/cms-data/cms-dashboard-banner/CmsDashboardBanner";
+
 // QD TRIPS
 import QdList from "./_pages/masterComponents/QDTrips/QdList";
 
@@ -96,6 +100,7 @@ import EarningByBarChart from "./_pages/dashboard/earningByBarChart/EarningByBar
 
 import ProfileReview from "./_pages/profile-review/ProfileReview";
 import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/ConsultantReviewList";
+import CmsSocialIcons from "./_pages/cms-data/cms-social-icon/CmsSocialIcons";
 
 // SupportSection
 import SupportSection from "./_pages/masterComponents/support/SupportSection";
@@ -256,6 +261,14 @@ const Layout = () => (
           <Route path="/consultant-commission" element={<CommissionList />} />
           <Route path="/dashboard-order" element={<DashboardOrderList />} />
           <Route path="/app-version" element={<AppVersion />} />
+
+          {/* ****************************************** Cms Data ************************************** */}
+          <Route path="/cms-data" element={<CmsData />} />
+          <Route
+            path="/cms-dashboard-banner"
+            element={<CmsDashboardBanner />}
+          />
+          <Route path="/cms-social-icons" element={<CmsSocialIcons />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="qd-products" element={<QdProducts />} />

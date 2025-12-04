@@ -54,6 +54,13 @@ const Navbar = () => {
     "/profile-progress": "Consultant Profile Progress",
     "/dashboard-order": "Dashboard Order List",
     "/app-version": "App Version",
+
+    // cms data section
+
+    "/cms-data": "CMS-Data",
+    "/cms-dashboard-banner": "CMS Dashboard Web Banner ",
+    "/cms-social-icons": "CMS Social Icons",
+
     // Admin User
     "/admin-permission": "Permission Group",
     "/admin-permission/:id": "Permission List",

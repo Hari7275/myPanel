@@ -1057,6 +1057,14 @@ const Sidebar = () => {
                 <span>Session</span>
               </div>
             </Link>
+            {permissions?.["meta_data_section"] && (
+              <Link to="/cms-data">
+                <div className="item">
+                  <CategoryOutlinedIcon />
+                  <span>Cms Data</span>
+                </div>
+              </Link>
+            )}
           </div>
         </aside>
       )}

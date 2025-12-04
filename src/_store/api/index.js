@@ -95,3 +95,7 @@ export * from "../api/masterComponentsApi/userNotification";
 // data for user Graph list
 
 export * from "../api/graphApi/graphApi";
+
+// data for cms data
+
+export * from "../api/cms-data/cmsDashboardBanner";
