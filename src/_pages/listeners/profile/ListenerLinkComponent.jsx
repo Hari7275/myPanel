@@ -75,6 +75,11 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
       label: "Service Status",
       permission: "view_listener_profile_service_status",
     },
+    {
+      component: "ConsultantBlockedUser",
+      label: "Blocked User",
+      permission: "view_listener_profile_service_status",
+    },
   ];
 
   return (

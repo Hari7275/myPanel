@@ -82,6 +82,8 @@ export const getCategoryTypes = (value) => {
       return "Session Audio Call";
     case 12:
       return "Session Video Call";
+    case 13:
+      return "Payout";
     default:
       return "unknown";
   }

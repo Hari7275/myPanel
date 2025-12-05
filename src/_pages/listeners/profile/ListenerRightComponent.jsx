@@ -18,6 +18,7 @@ import ListenersPriceListingTable from "../pricing/ListenersPriceListingTable";
 import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 import OfflineOrder from "../orders/OfflineOrder";
+import ConsultantBlockedUser from "../../../_components/reuseComponents/ConsultantBlockedUser";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -39,7 +40,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ListenerReviewsListingTable />
           )}
           {activeComponent === "ListenerOrder" && <ListenerOrder />}
-          {activeComponent === "OfflineOrder" && <OfflineOrder/>}
+          {activeComponent === "OfflineOrder" && <OfflineOrder />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "ListenerSetting" && <ListenerSetting />}
           {activeComponent === "Profile-Progress" && (
@@ -51,6 +52,10 @@ const ListenerRightComponent = ({ activeComponent }) => {
           {/* {activeComponent === "session-slot" && <SessionSlot />} */}
           {activeComponent === "CoachStatus" && (
             <CoachStatus listenerType={listenerType} />
+          )}
+
+          {activeComponent === "ConsultantBlockedUser" && (
+            <ConsultantBlockedUser />
           )}
         </div>
       </div>

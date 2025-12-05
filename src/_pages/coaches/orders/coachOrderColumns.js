@@ -89,14 +89,18 @@ export const ORDERCHARTCOLUMN = [
     Cell: ({ value, row }) => {
       const rejectedCall =
         row.original.mode_type === 2 && row.original.status === 6;
+      const isRefunded = value === 4 && row.original.is_refunded;
 
       if (rejectedCall) {
         return <span style={{ color: "red" }}>Consultant Cancelled</span>;
       }
 
+      // 💙 If refunded → show blue color
+      const textColor = isRefunded ? "blue" : getStatusColor(value);
+
       return (
-        <span style={{ color: getStatusColor(value) }}>
-          {OrderStatus(value)}
+        <span style={{ color: textColor }}>
+          {isRefunded ? "Refunded" : OrderStatus(value)}
         </span>
       );
     },

@@ -19,6 +19,7 @@ import AstrologerPriceListingTable from "../pricing/AstrologerPriceListingTable"
 import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 import OfflineOrder from "../../listeners/orders/OfflineOrder";
+import ConsultantBlockedUser from "../../../_components/reuseComponents/ConsultantBlockedUser";
 
 const AstrologerRightComponent = ({ activeComponent }) => {
   return (
@@ -51,6 +52,9 @@ const AstrologerRightComponent = ({ activeComponent }) => {
           {activeComponent === "session-slot" && <SessionSlot />}
           {activeComponent === "CoachStatus" && <CoachStatus />}
           {activeComponent === "consultant-commission" && <CommissionList />}
+          {activeComponent === "ConsultantBlockedUser" && (
+            <ConsultantBlockedUser/>
+          )}
         </div>
       </div>
     </>

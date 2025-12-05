@@ -51,3 +51,30 @@ export const FOLLOWERSCOLUMN = [
     Cell: ({ value }) => formatDateTime(value),
   },
 ];
+
+// blocked user by consultant
+
+export const BLOCKEDUSERCOLUMN = [
+  {
+    Header: "Id",
+    accessor: "id",
+    Cell: OrderIdCell,
+  },
+  {
+    Header: "User Id",
+    accessor: "user_id",
+    Cell: CustomIdCell,
+  },
+  {
+    Header: "User Name",
+    accessor: "first_name",
+  },
+  {
+    Header: "Reason",
+    accessor: "reason",
+  },
+  {
+    Header: "Date",
+    accessor: "createdAt",
+  },
+];

@@ -24,10 +24,23 @@ export const consultantsFollowersApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+
+    // get faviourts for listeners
+    getConsultantBlockedList: builder.query({
+      query: ({ consultantId, page, size }) => ({
+        url: `/user/profile/consultant/admin/black-list?consultant_id=${consultantId}&page=${page}&size=${size}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
 export const {
   useGetConsultantsFollowerQuery,
   useGetListenerFavouriteListQuery,
+  useGetConsultantBlockedListQuery,
 } = consultantsFollowersApiSlice;

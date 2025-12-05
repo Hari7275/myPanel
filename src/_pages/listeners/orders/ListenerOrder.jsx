@@ -1,5 +1,5 @@
 import React, { useMemo, useEffect, useState } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
+
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 
 import { ORDERCHARTCOLUMN } from "./listenerOrderColumns";

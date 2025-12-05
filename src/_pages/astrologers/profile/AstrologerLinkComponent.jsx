@@ -91,6 +91,12 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
       label: "Service Status",
       permission: "view_astrologer_profile_service_status",
     },
+
+    {
+      component: "ConsultantBlockedUser",
+      label: "Blocked User",
+      permission: "view_astrologer_profile_service_status",
+    },
   ];
 
   return (
