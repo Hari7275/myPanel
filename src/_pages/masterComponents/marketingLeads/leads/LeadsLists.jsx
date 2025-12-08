@@ -59,12 +59,14 @@ const LeadsLists = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            <span className="editIcon" style={{ background: "#c65252ff" }}>
-              <KeyRound
-                className="iconSmall"
-                onClick={() => toggleOnboardingAssign(row.original)}
-              />
-            </span>
+            {permissions?.["onboarding"]?.includes("onboarding_assign") && (
+              <span className="editIcon" style={{ background: "#c65252ff" }}>
+                <KeyRound
+                  className="iconSmall"
+                  onClick={() => toggleOnboardingAssign(row.original)}
+                />
+              </span>
+            )}
           </div>
         ),
       },

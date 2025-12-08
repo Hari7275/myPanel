@@ -1050,6 +1050,12 @@ const Sidebar = () => {
                 <span>Onboarding</span>
               </div>
             </Link>
+            <Link to="/marketing-assignee">
+              <div className="item">
+                <KeyRound />
+                <span>Assignee List</span>
+              </div>
+            </Link>
 
             <Link to="/session">
               <div className="item">

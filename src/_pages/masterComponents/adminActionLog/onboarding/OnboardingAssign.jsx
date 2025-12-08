@@ -98,11 +98,7 @@ const OnboardingAssign = () => {
 
   console.log("user....", user?.id);
   const [metadataItems, setMetadataItems] = useState([]);
-  const {
-    data: fetchData,
-    isLoading,
-    error,
-  } = useGetAdminOnboardingSpecialistListQuery({});
+  const { data: fetchData } = useGetAdminOnboardingSpecialistListQuery({});
 
   useEffect(() => {
     if (!fetchData?.data) {
@@ -110,7 +106,7 @@ const OnboardingAssign = () => {
       return;
     }
 
-    const allAdmins = [2, 4, 20];
+    const allAdmins = [2, 4, 20, 29];
 
     if (allAdmins.includes(user?.id)) {
       setMetadataItems(fetchData.data);

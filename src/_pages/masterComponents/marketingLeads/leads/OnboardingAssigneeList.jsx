@@ -101,15 +101,15 @@ const OnboardingAssigneeList = () => {
 
     setMetadataItems(fetchData.data);
 
-    const allAdmins = [2, 4, 20];
+    const allAdmins = [2, 4, 20, 29];
 
-    // if (allAdmins.includes(user?.id)) {
-    //   setMetadataItems(fetchData.data);
-    // } else {
-    //   setMetadataItems(
-    //     fetchData.data.filter((item) => item.admin_id == user?.id)
-    //   );
-    // }
+    if (allAdmins.includes(user?.id)) {
+      setMetadataItems(fetchData.data);
+    } else {
+      setMetadataItems(
+        fetchData.data.filter((item) => item.admin_id == user?.id)
+      );
+    }
   }, [fetchData, user?.id]);
 
   return (
