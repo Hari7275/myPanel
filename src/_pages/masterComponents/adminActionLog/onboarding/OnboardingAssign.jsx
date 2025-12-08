@@ -35,6 +35,12 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
                 {item.total_pending}
               </span>
             </div>
+            <div className="onboarding-stat-item onboarding-stat-warning">
+              <span className="onboarding-stat-label">Others</span>
+              <span className="onboarding-stat-value">
+                {item.total_other}
+              </span>
+            </div>
           </div>
 
           <div className="onboarding-timeline-stats">
