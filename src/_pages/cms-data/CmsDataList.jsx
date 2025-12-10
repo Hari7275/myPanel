@@ -34,11 +34,21 @@ const CmsDataList = () => {
       link: "/cms-social-icons",
       permissions: "view_app_languages_list",
     },
-    // {
-    //   name: "Promotional Cards",
-    //   link: "/promotional-card-metadata",
-    //   permissions: "view_promotional_cards_list",
-    // },
+    {
+      name: "Blog List",
+      link: "/cms-blog-list",
+      permissions: "view_promotional_cards_list",
+    },
+    {
+      name: "Blog Categories List",
+      link: "/cms-categories-list",
+      permissions: "view_promotional_cards_list",
+    },
+    {
+      name: "Author List",
+      link: "/cms-author-list",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "Dashboard banner",
     //   link: "/dashboard-banner-metadata",

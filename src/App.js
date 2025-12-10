@@ -63,10 +63,6 @@ import ProfileProgress from "./_pages/meta-data/consultantProfileProgress/profil
 import DashboardOrderList from "./_pages/meta-data/dashboardOrder/DashboardOrderList";
 import AppVersion from "./_pages/meta-data/appVersion/AppVersion";
 
-// cms data section
-import CmsData from "./_pages/cms-data/CmsData";
-import CmsDashboardBanner from "./_pages/cms-data/cms-dashboard-banner/CmsDashboardBanner";
-
 // QD TRIPS
 import QdList from "./_pages/masterComponents/QDTrips/QdList";
 
@@ -101,6 +97,7 @@ import EarningByBarChart from "./_pages/dashboard/earningByBarChart/EarningByBar
 import ProfileReview from "./_pages/profile-review/ProfileReview";
 import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/ConsultantReviewList";
 import CmsSocialIcons from "./_pages/cms-data/cms-social-icon/CmsSocialIcons";
+import CmsBlogAuthor from "./_pages/cms-data/cms-blog-author/CmsBlogAuthor";
 
 // SupportSection
 import SupportSection from "./_pages/masterComponents/support/SupportSection";
@@ -130,6 +127,11 @@ import OnboardingAssignedUnregisteredConsultantList from "./_pages/masterCompone
 import LeadsLists from "./_pages/masterComponents/marketingLeads/leads/LeadsLists";
 import OnboardingAssigneeList from "./_pages/masterComponents/marketingLeads/leads/OnboardingAssigneeList";
 import AssignedLeadsToAdminList from "./_pages/masterComponents/marketingLeads/leads/AssignedLeadsToAdminList";
+
+// cms data section
+import CmsData from "./_pages/cms-data/CmsData";
+import CmsDashboardBanner from "./_pages/cms-data/cms-dashboard-banner/CmsDashboardBanner";
+import CmsBlogCategories from "./_pages/cms-data/cms-blog-categories/CmsBlogCategories";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -268,8 +270,10 @@ const Layout = () => (
             path="/cms-dashboard-banner"
             element={<CmsDashboardBanner />}
           />
+          <Route path="/cms-categories-list" element={<CmsBlogCategories />} />
 
           <Route path="/cms-social-icons" element={<CmsSocialIcons />} />
+          <Route path="/cms-author-list" element={<CmsBlogAuthor />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="qd-products" element={<QdProducts />} />

@@ -37,9 +37,7 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
             </div>
             <div className="onboarding-stat-item onboarding-stat-warning">
               <span className="onboarding-stat-label">Others</span>
-              <span className="onboarding-stat-value">
-                {item.total_other}
-              </span>
+              <span className="onboarding-stat-value">{item.total_other}</span>
             </div>
           </div>
 

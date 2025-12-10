@@ -60,6 +60,8 @@ const Navbar = () => {
     "/cms-data": "CMS-Data",
     "/cms-dashboard-banner": "CMS Dashboard Web Banner ",
     "/cms-social-icons": "CMS Social Icons",
+    "/cms-categories-list": "CMS Category List",
+    "/cms-author-list": "CMS Blog Author List",
 
     // Admin User
     "/admin-permission": "Permission Group",
