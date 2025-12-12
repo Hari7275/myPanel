@@ -3,14 +3,30 @@ import { getAdminToken } from "../tokenHelper";
 
 export const cmsBlogAuthorApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // getCmsBlogAuthorList: builder.query({
+    //   query: ({ page, pageSize }) => ({
+    //     url: `/api/v2/content-management/authors?page=${page}&limit=${pageSize}`,
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //   }),
+    //   providesTags: ["banner"],
+    // }),
+
     getCmsBlogAuthorList: builder.query({
-      query: ({ page, pageSize }) => ({
-        url: `/api/v2/content-management/authors?page=${page}&limit=${pageSize}`,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-      }),
+      query: ({ page, pageSize }) => {
+        const params = new URLSearchParams({});
+        if (page) params.append("page", page);
+        if (pageSize) params.append("limit", pageSize);
+        return {
+          url: `/api/v2/content-management/authors?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
       providesTags: ["banner"],
     }),
 

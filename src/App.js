@@ -98,6 +98,7 @@ import ProfileReview from "./_pages/profile-review/ProfileReview";
 import ConsultantReviewList from "./_pages/profile-review/ConsultantReviewList/ConsultantReviewList";
 import CmsSocialIcons from "./_pages/cms-data/cms-social-icon/CmsSocialIcons";
 import CmsBlogAuthor from "./_pages/cms-data/cms-blog-author/CmsBlogAuthor";
+import CmsBlogList from "./_pages/cms-data/cms-blog/CmsBlogList";
 
 // SupportSection
 import SupportSection from "./_pages/masterComponents/support/SupportSection";
@@ -274,6 +275,7 @@ const Layout = () => (
 
           <Route path="/cms-social-icons" element={<CmsSocialIcons />} />
           <Route path="/cms-author-list" element={<CmsBlogAuthor />} />
+          <Route path="/cms-blog-list" element={<CmsBlogList />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="qd-products" element={<QdProducts />} />

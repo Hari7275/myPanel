@@ -62,6 +62,7 @@ const Navbar = () => {
     "/cms-social-icons": "CMS Social Icons",
     "/cms-categories-list": "CMS Category List",
     "/cms-author-list": "CMS Blog Author List",
+    "/cms-blog-list": "CMS Blog List",
 
     // Admin User
     "/admin-permission": "Permission Group",

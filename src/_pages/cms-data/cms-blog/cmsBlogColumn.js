@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Switch } from "@mui/material";
-import { useUpdateCmsDashboardBannerMutation } from "../../../_store/api";
+import { useUpdateCmsBlogListMutation } from "../../../_store/api";
 import UseImageModal from "../../../_components/table/CommonImageModal";
 import ReactModal from "react-modal";
 import TruncateText from "../../../_components/table/TruncateText";
 
 const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.is_published);
-  const [updateStatus, { isLoading }] = useUpdateCmsDashboardBannerMutation();
+  const [updateStatus, { isLoading }] = useUpdateCmsBlogListMutation();
 
   const handleToggle = async () => {
-    const newStatus = status == true ? false : true;
+    const newStatus = status == 1 ? 0 : 1;
     setStatus(newStatus);
 
     try {
@@ -25,7 +25,7 @@ const StatusSwitch = ({ row }) => {
   };
   return (
     <Switch
-      checked={status == true}
+      checked={status == 1}
       onChange={handleToggle}
       disabled={isLoading}
     />
@@ -43,11 +43,11 @@ const NameCell = ({ row }) => {
 
   return (
     <div className="column_container">
-      <div className="card-img" style={{width:"100px"}}>
+      <div className="card-img" style={{ width: "100px" }}>
         <img
-          src={row?.original.web_view_image.url || "avatar11.png"}
-          alt={row?.original.web_view_image.alt}
-          title={row?.original.web_view_image.title}
+          src={row?.original?.web_featured_image?.url || "avatar11.png"}
+          alt={row?.original?.web_featured_image?.alt}
+          title={row?.original?.web_featured_image?.title}
           width="80"
           height="40"
           onClick={handleImageClick}
@@ -63,8 +63,8 @@ const NameCell = ({ row }) => {
         overlayClassName="overlay"
       >
         <img
-          src={row?.original.web_view_image.url || "avatar11.png"}
-          alt={row?.original.web_view_image.alt}
+          src={row?.original?.web_featured_image?.url || "avatar11.png"}
+          alt={row?.original?.web_featured_image?.alt}
           width="100%"
           height="600px"
         />
@@ -87,37 +87,14 @@ export const CMSBLOGCOLUMN = [
     Cell: NameCell,
   },
   {
-    Header: "Web Description",
-    accessor: "web_view_image.description",
+    Header: "Slug",
+    accessor: "slug",
     Cell: ({ value }) => <TruncateText text={value} wordLimit={5} />,
   },
-  {
-    Header: "Mobile Image",
-    Cell: ({ row }) => {
-      const { openImageModal, ImageModal } = UseImageModal();
-
-      return (
-        <>
-          <img
-            src={row?.original?.mobile_view_image?.url}
-            alt={row?.original?.mobile_view_image?.url}
-            title={row?.original.mobile_view_image.title}
-            width="40"
-            height="40"
-            style={{ cursor: "pointer" }}
-            onClick={() =>
-              openImageModal(row?.original?.mobile_view_image?.url)
-            }
-          />
-          <ImageModal />
-        </>
-      );
-    },
-  },
 
   {
-    Header: "Mobile Description",
-    accessor: "mobile_view_image.description",
+    Header: "Author",
+    accessor: "author.name",
     Cell: ({ value }) => <TruncateText text={value} wordLimit={5} />,
   },
 

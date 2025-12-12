@@ -36,6 +36,10 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const permissions = usePermissions();
 
+  const { user } = useSelector((state) => state.auth);
+
+  console.log("(user?.id === 4)", user?.id === 4);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -1063,14 +1067,15 @@ const Sidebar = () => {
                 <span>Session</span>
               </div>
             </Link>
-            {permissions?.["meta_data_section"] && (
-              <Link to="/cms-data">
-                <div className="item">
-                  <CategoryOutlinedIcon />
-                  <span>Cms Data</span>
-                </div>
-              </Link>
-            )}
+            {permissions?.["meta_data_section"] &&
+              [1, 3, 4].includes(user?.id) && (
+                <Link to="/cms-data">
+                  <div className="item">
+                    <CategoryOutlinedIcon />
+                    <span>Cms Data</span>
+                  </div>
+                </Link>
+              )}
           </div>
         </aside>
       )}
