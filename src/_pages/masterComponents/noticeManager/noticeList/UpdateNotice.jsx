@@ -2,10 +2,8 @@ import React, { useState } from "react";
 import ReactModal from "react-modal";
 import { useUpdateNoticeMutation } from "../../../../_store/api";
 import { UpdateInputField } from "../../../../_components/ui/inputForm";
-
-// Import ReactQuill and its CSS
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css"; // You can choose 'quill.bubble.css' for a different theme
+import RichTextEditor from "../../../../_components/table/RichTextEditor";
+import toast from "react-hot-toast";
 
 const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
@@ -15,7 +13,6 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     description: selectedRow.description || "",
     image_url: selectedRow?.image_url,
   });
-  console.log("selectedRow", selectedRow);
 
   const [updateData, { isLoading: isUpdating, error }] =
     useUpdateNoticeMutation();
@@ -56,52 +53,20 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
     }
 
     try {
-      await updateData({
+      const response = await updateData({
         body: formDataToSend,
-      });
-      onClose();
+      }).unwrap();
+      if (response.status) {
+        toast.success(response.message);
+        onClose();
+      } else {
+        toast.error(response.message);
+      }
     } catch (error) {
       console.error("API Error", error);
     }
   };
 
-  // Quill modules and formats configuration
-  const quillModules = {
-    toolbar: [
-      [{ header: [1, 2, 3, false] }],
-      ["bold", "italic", "underline", "strike"],
-      [{ list: "ordered" }, { list: "bullet" }],
-      [{ script: "sub" }, { script: "super" }],
-      [{ indent: "-1" }, { indent: "+1" }],
-      [{ direction: "rtl" }],
-      [{ color: [] }, { background: [] }],
-      [{ font: [] }],
-      [{ align: [] }],
-      ["link", "image", "video"], // Added video for more rich content options
-      ["clean"], // Remove formatting button
-    ],
-  };
-
-  const quillFormats = [
-    "header",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "script",
-    "indent",
-    "direction",
-    "color",
-    "background",
-    "font",
-    "align",
-    "link",
-    "image",
-    "video",
-  ];
   return (
     <ReactModal
       className="modal"
@@ -150,14 +115,11 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
         >
           <label>Gift Description</label>
 
-          <ReactQuill
-            theme="snow"
+          <RichTextEditor
             value={formData.description}
-            onChange={handleDescriptionChange} // Use the specific handler for Quill
-            modules={quillModules}
-            formats={quillFormats}
-            style={{ height: "200px", marginBottom: "50px" }} // Adjust height as needed, add marginBottom for toolbar
-            placeholder=" Enter Notice Description here..."
+            onChange={handleDescriptionChange}
+            placeholder="Enter Notice Description here..."
+            height="200px"
           />
         </div>
 
@@ -180,11 +142,7 @@ const UpdateNotice = ({ isOpen, onClose, selectedRow }) => {
           >
             {isUpdating ? "Saving..." : "Save"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
         </div>

@@ -95,7 +95,10 @@ const ListenerInfo = () => {
           <div className="info-pair">
             <p className="info-item">
               <strong>Meta Description : </strong>{" "}
-              {formData?.meta_description || "N/A"}
+              <span style={{ color: "red" }}>
+                {" "}
+                {formData?.meta_description || "N/A"}
+              </span>
             </p>
           </div>
 
