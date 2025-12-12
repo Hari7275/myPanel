@@ -1,7 +1,8 @@
 // export default WalletDetails;
 
 import React, { useState, useEffect } from "react";
-import { useGetConsultantsPriceQuery } from "../../../_store/api";
+// import { useGetConsultantsPriceQuery } from "../../../_store/api";
+import { useGetConsultantsNewPriceQuery } from "../../../_store/api";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
@@ -20,6 +21,7 @@ const InfoItem = ({ label, value }) => (
 export const CategoryPriceCard = ({
   label,
   price,
+  CategoryDetails,
   bgcolor,
   discountPrice,
   currentPrice,
@@ -43,16 +45,19 @@ export const CategoryPriceCard = ({
           margin: "0 auto 20px",
         }}
       >
-        {label}
+        {label}({CategoryDetails})
       </span>
+
       <div className="info-pair">
         <p className="info-item">
           <strong>Current Price : </strong>
+          {console.log("randommmmmmmmmmmm", currency)}
           <span>
             {currency == "INR" ? "₹" : "$"} {currentPrice}
           </span>
         </p>
       </div>
+
       <div className="info-pair">
         <p className="info-item">
           <strong>Discount Price : </strong>
@@ -77,18 +82,31 @@ const PriceDetails = () => {
   const { consultantId } = useParams();
 
   const { data: fetchPrice, isError } =
-    useGetConsultantsPriceQuery(consultantId);
+    useGetConsultantsNewPriceQuery(consultantId);
+
+  // useEffect(() => {
+  //   if (fetchPrice && fetchPrice?.data) {
+  //     setPriceData(
+  //       fetchPrice?.data
+  //       // ?.filter((item) => item?.status !== 7 && item?.status == 2)
+  //       // .reverse() || []
+  //     );
+  //   } else setPriceData([]);
+  // }, [fetchPrice]);
 
   useEffect(() => {
     if (fetchPrice && fetchPrice?.data) {
-      setPriceData(
-        fetchPrice?.data
-          ?.filter((item) => item?.status !== 7 && item?.status == 2)
-          .reverse() || []
+      const sortedData = [...fetchPrice.data].sort((a, b) =>
+        a.user_category.localeCompare(b.user_category)
       );
-    } else setPriceData([]);
+
+      setPriceData(sortedData);
+    } else {
+      setPriceData([]);
+    }
   }, [fetchPrice]);
 
+  console.log("priceData", priceData);
   // Color mapping based on label
   const getCardColor = (label) => {
     const colorMap = {
@@ -116,7 +134,7 @@ const PriceDetails = () => {
             alignContent: "start",
           }}
         >
-          {priceData?.map((card, index) => (
+          {/* {priceData?.map((card, index) => (
             <CategoryPriceCard
               key={`${card.label}-${index}`}
               label={getFetaureLabel(card.feature)}
@@ -126,6 +144,20 @@ const PriceDetails = () => {
               currency={card.currency}
               //   bgcolor={getCardColor(getFetaureLabel(card.feature))}
               bgcolor={getCardColor(card.currency)}
+            />
+          ))} */}
+
+          {priceData?.map((card, index) => (
+            <CategoryPriceCard
+              key={`${card.label}-${index}`}
+              CategoryDetails={card.user_category}
+              label={getFetaureLabel(card.service_type)}
+              currentPrice={card.price_per_minute}
+              discountPrice={card.discount_price}
+              commission={card.flute_commission}
+              currency={card.user_currency}
+              //   bgcolor={getCardColor(getFetaureLabel(card.feature))}
+              bgcolor={getCardColor(card.user_currency)}
             />
           ))}
         </div>

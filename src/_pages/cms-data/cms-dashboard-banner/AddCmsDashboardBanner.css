@@ -50,7 +50,7 @@
   padding: 20px;
   background-color: #f9f9f9;
   border-radius: 6px;
-  border-left: 4px solid #4CAF50;
+  border-left: 4px solid #4caf50;
 }
 
 .cms-section-title {
@@ -89,7 +89,7 @@
 
 .cms-input-field:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: #4caf50;
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
@@ -108,7 +108,7 @@
 
 .cms-textarea:focus {
   outline: none;
-  border-color: #4CAF50;
+  border-color: #4caf50;
   box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
@@ -125,7 +125,7 @@
 }
 
 .cms-file-input:hover {
-  border-color: #4CAF50;
+  border-color: #4caf50;
   background-color: #f1f8f4;
 }
 
@@ -150,7 +150,7 @@
   height: 20px;
   margin-right: 10px;
   cursor: pointer;
-  accent-color: #4CAF50;
+  accent-color: #4caf50;
 }
 
 .cms-checkbox-label span {
@@ -185,7 +185,7 @@
 }
 
 .cms-btn-submit {
-  background-color: #4CAF50;
+  background-color: #4caf50;
   color: white;
 }
 
@@ -259,12 +259,7 @@
   }
 }
 
-
-
-
-
 /* for update  */
-
 
 /* Image Preview Styles */
 .cms-current-image-preview {
@@ -289,7 +284,7 @@
 .cms-current-file {
   display: inline-block;
   font-size: 14px;
-  color: #4CAF50;
+  color: #4caf50;
   font-weight: 500;
   padding: 4px 8px;
   background-color: #e8f5e9;
@@ -308,7 +303,7 @@
   display: inline-block;
   margin-top: 8px;
   font-size: 14px;
-  color: #2196F3;
+  color: #2196f3;
   font-weight: 500;
   padding: 4px 8px;
   background-color: #e3f2fd;

@@ -807,7 +807,7 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
         <div className="cms-button-group">
           <button
             className="cms-btn cms-btn-submit"
-            onClick={handleSubmit}
+            onClick={handleSubmit} 
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
