@@ -28,6 +28,7 @@ import RechargeSummary from "./_pages/masterComponents/recharge-summary/Recharge
 import RazorpayRechargeLists from "./_pages/masterComponents/RazorpayRecharge/RazorpayRechargeLists";
 import UserSubscriptionLists from "./_pages/masterComponents/userSubscriptionList/UserSubscriptionLists";
 import GiftLists from "./_pages/masterComponents/gifts/GiftLists";
+import GiftOrderHistory from "./_pages/masterComponents/gifts/GiftOrderHistory";
 import CoachProfile from "./_pages/coaches/profile/CoachProfile";
 import UsersProfile from "./_pages/users/profile/UsersProfile";
 import UntrackedUser from "./_pages/users/untracked-user/UntrackedUser";
@@ -218,6 +219,7 @@ const Layout = () => (
           <Route path="order" element={<OrderLists />} />
           <Route path="session" element={<SessionLists />} />
           <Route path="gift" element={<GiftLists />} />
+          <Route path="gift-history" element={<GiftOrderHistory />} />
 
           {/*    ********************************************************user interest **************************************************************************  */}
           <Route path="user-profile-option" element={<UserProfileOptions />} />

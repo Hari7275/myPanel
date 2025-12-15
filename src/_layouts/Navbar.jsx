@@ -73,6 +73,7 @@ const Navbar = () => {
 
     // master component
     "/order": "Order List",
+    "/gift-history": "Gift History",
     "/gift": "Gifts List",
     "/user-subscription": "Users Subscription List",
     "/user-recharge": "Users Recharge List",

@@ -1029,6 +1029,13 @@ const Sidebar = () => {
               </div>
             </Link>
 
+            <Link to="/gift-history">
+              <div className="item">
+                <CardGiftcardOutlinedIcon />
+                <span>Gifts</span>
+              </div>
+            </Link>
+
             {permissions?.["user_recharge_list"]?.includes(
               "view_recharge_list"
             ) && (

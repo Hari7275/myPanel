@@ -47,6 +47,31 @@ export const giftsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["gift"],
     }),
+
+    getGiftOrderHistoryList: builder.query({
+      query: ({ page, size, user_id, consultant_id }) => {
+        const params = new URLSearchParams({
+          page: page,
+          size: size,
+        });
+
+        if (user_id != null) {
+          params.append("user_id", user_id);
+        }
+        if (consultant_id != null) {
+          params.append("consultant_id", consultant_id);
+        }
+
+        return {
+          url: `/api/v1/consultant/management/gift/admin-gift-order?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["gift"],
+    }),
   }),
 });
 
@@ -55,4 +80,5 @@ export const {
   useCreateGiftMutation,
   useUpdateGiftMutation,
   useDeleteGiftMutation,
+  useGetGiftOrderHistoryListQuery,
 } = giftsApiSlice;
