@@ -204,7 +204,7 @@ const UserRechargeLists = () => {
     </div>
   );
 
-  // const totalPage = fetchData?.data?.totalPages || 1;
+  // const totalPage = fetchData?.data?.totalPages || 1;;
   const totalPage = fetchData?.data?.totalRecords
     ? Math.ceil(fetchData.data.totalRecords / pageSize)
     : 1;

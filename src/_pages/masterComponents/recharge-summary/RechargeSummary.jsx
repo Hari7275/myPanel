@@ -156,6 +156,19 @@ const RechargeSummary = () => {
         <option value={2}>iOS</option>
       </select>
 
+      <div
+        style={{ marginLeft: "10px", position: "relative", display: "flex" }}
+      >
+        <div>
+          <span style={{ color: "#4CAF50", fontWeight: "700" }}>
+            No of User's
+          </span>
+          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+            {` = ${fetchData?.data?.pagination?.total || 0}`}
+          </span>
+        </div>
+      </div>
+
       {/* <div
         style={{ marginLeft: "10px", position: "relative" }}
         className="filter-button-wrapper"

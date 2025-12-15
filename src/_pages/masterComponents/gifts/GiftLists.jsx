@@ -4,6 +4,7 @@ import { GIFTCOLUMN } from "./giftColumn";
 import { Trash, ArrowRight, Pencil } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import GiftDescription from "./GiftDescription";
+import GiftPrice from "./GiftPrice";
 import AddGift from "./AddGift";
 import UpdateGifts from "./UpdateGifts";
 import {
@@ -12,7 +13,7 @@ import {
 } from "../../../_store/api";
 
 const GiftLists = () => {
-  const [showDescription, setShowDescription] = useState(false);
+  const [showGiftPrice, setshowGiftPrice] = useState(false);
   const [addData, setAddData] = useState(false);
   const [updateData, setUpdteData] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -41,9 +42,9 @@ const GiftLists = () => {
 
   // function for description
 
-  const toggleDescription = (row) => {
-    setSelectedRow(row.original);
-    setShowDescription(!showDescription);
+  const toggleGiftPrice = (row) => {
+    setSelectedRow(row?.original?.gift_prices);
+    setshowGiftPrice(!showGiftPrice);
   };
 
   //  toggle function for adding new data
@@ -105,7 +106,7 @@ const GiftLists = () => {
             >
               <ArrowRight
                 className="iconSmall"
-                onClick={() => toggleDescription(row)}
+                onClick={() => toggleGiftPrice(row)}
               />
             </span>
             <span className="editIcon">
@@ -145,11 +146,11 @@ const GiftLists = () => {
         showTableHeading={false}
       />
 
-      {showDescription && (
-        <GiftDescription
-          isOpen={showDescription}
-          onClose={toggleDescription}
-          Description={selectedRow?.description}
+      {showGiftPrice && (
+        <GiftPrice
+          isOpen={showGiftPrice}
+          onClose={toggleGiftPrice}
+          selectedData={selectedRow}
         />
       )}
 

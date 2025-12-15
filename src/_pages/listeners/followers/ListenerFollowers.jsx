@@ -30,7 +30,7 @@ const ListenerFollowers = () => {
   }, [fetchData]);
 
   const columns = useMemo(() => FOLLOWERSCOLUMN, []);
-  const totalPage = fetchData?.meta?.total_page || 1;
+  const totalPage = fetchData?.meta?.totalPages || 1;
 
   return (
     <div className="ProfileData-container profile-right-sub-container">
