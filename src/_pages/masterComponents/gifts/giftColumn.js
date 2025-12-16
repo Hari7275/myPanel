@@ -166,7 +166,7 @@ export const GIFTORDERHISTORYCOLUMN = [
   },
 
   {
-    Header: "Gift Id",
+    Header: "Gift Name",
     accessor: "gift.name",
   },
 

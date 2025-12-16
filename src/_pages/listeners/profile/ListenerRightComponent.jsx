@@ -19,6 +19,7 @@ import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 import OfflineOrder from "../orders/OfflineOrder";
 import ConsultantBlockedUser from "../../../_components/reuseComponents/ConsultantBlockedUser";
+import CoachGifts from "../../coaches/Gifts/CoachGifts";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -40,6 +41,8 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <ListenerReviewsListingTable />
           )}
           {activeComponent === "ListenerOrder" && <ListenerOrder />}
+          {activeComponent === "CoachGifts" && <CoachGifts />}
+
           {activeComponent === "OfflineOrder" && <OfflineOrder />}
           {activeComponent === "Wallet" && <Wallet />}
           {activeComponent === "ListenerSetting" && <ListenerSetting />}

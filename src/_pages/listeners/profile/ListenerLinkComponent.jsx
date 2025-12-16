@@ -36,6 +36,11 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "view_listener_profile_orders",
     },
     {
+      component: "CoachGifts",
+      label: "Gifts",
+      permission: "view_listener_profile_orders",
+    },
+    {
       component: "OfflineOrder",
       label: "Offline Order",
       permission: "view_listener_profile_orders",

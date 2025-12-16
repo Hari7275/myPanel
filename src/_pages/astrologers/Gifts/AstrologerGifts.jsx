@@ -8,6 +8,8 @@ import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { useLocation, useParams } from "react-router-dom";
+import { GIFTORDERHISTORYCOLUMN } from "../../masterComponents/gifts/giftColumn";
+import { useGetGiftOrderHistoryListQuery } from "../../../_store/api";
 
 const AstrologerGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
@@ -22,19 +24,14 @@ const AstrologerGifts = () => {
 
   const [data, setData] = useState([]);
 
-  const { data: fetchData } = useGetConsultantsOrderQuery({
-    consultantId,
+  const { data: fetchData } = useGetGiftOrderHistoryListQuery({
+    consultant_id: consultantId,
     page,
-    pageSize,
-    order_type: 6,
+    size: pageSize,
   });
-
   useEffect(() => {
-    if (fetchData && fetchData.data) {
-      const response = fetchData?.data?.filter(
-        (result) => result.order_type == 6
-      );
-      setData(response);
+    if (fetchData && fetchData?.data && fetchData?.data?.order) {
+      setData(fetchData?.data?.order);
     } else {
       setData([]);
     }
@@ -54,39 +51,7 @@ const AstrologerGifts = () => {
     console.log("record deleted", selectedRow);
   };
 
-  const columns = useMemo(
-    () => [
-      ...GIFTSCOLUMN,
-      // {
-      //   Header: () => <div className="actions-header">Actions</div>,
-      //   id: "actions",
-      //   Cell: ({ row }) => (
-      //     <div className="actions-cell">
-      //       <span
-      //         title="view details"
-      //         className="secondIcon"
-      //         style={{ height: "35px", width: "35px" }}
-      //       >
-      //         <ArrowRight
-      //           className="iconSmall"
-      //           onClick={toggleDescriptionModal}
-      //         />
-      //       </span>
-      //       <span className="editIcon">
-      //         <Pencil className="iconSmall" />
-      //       </span>
-      //       <span className="deleteIcon">
-      //         <Trash
-      //           className="iconSmall"
-      //           onClick={() => toggleDeleteComponent(row.original)}
-      //         />
-      //       </span>
-      //     </div>
-      //   ),
-      // },
-    ],
-    []
-  );
+  const columns = useMemo(() => [...GIFTORDERHISTORYCOLUMN], []);
 
   const totalPage = fetchData?.meta?.total_page;
 

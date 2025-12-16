@@ -1,4 +1,4 @@
-// OrderLists.js - Updated to navigate instead of modal
+// OrderLists.js - Updated to navigate instead of modal.
 import React, { useMemo, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -58,8 +58,10 @@ const GiftOrderHistory = () => {
   const columns = useMemo(() => [...GIFTORDERHISTORYCOLUMN], []);
 
   useEffect(() => {
-    if (fetchData && fetchData?.data) {
-      setData(fetchData?.data?.order || []);
+    if (fetchData && fetchData?.data && fetchData?.data?.order) {
+      setData(fetchData?.data?.order);
+    } else {
+      setData([]);
     }
   }, [fetchData]);
 
