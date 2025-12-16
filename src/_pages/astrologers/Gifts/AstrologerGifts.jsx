@@ -8,7 +8,7 @@ import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { useLocation, useParams } from "react-router-dom";
-import { GIFTORDERHISTORYCOLUMN } from "../../masterComponents/gifts/giftColumn";
+import { PARTICULARGIFTORDERHISTORYCOLUMN } from "./giftsColumn";
 import { useGetGiftOrderHistoryListQuery } from "../../../_store/api";
 
 const AstrologerGifts = () => {
@@ -51,12 +51,12 @@ const AstrologerGifts = () => {
     console.log("record deleted", selectedRow);
   };
 
-  const columns = useMemo(() => [...GIFTORDERHISTORYCOLUMN], []);
+  const columns = useMemo(() => [...PARTICULARGIFTORDERHISTORYCOLUMN], []);
 
   const totalPage = fetchData?.meta?.total_page;
 
   return (
-    <div className="ProfileData-container profile-right-sub-container">
+    <div className="">
       <DyCommonTable
         columns={columns}
         data={data}

@@ -1,16 +1,15 @@
 import React, { useMemo, useState, useEffect } from "react";
-import CommonTable from "../../../_components/table/CommonTable";
+
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 
-import { GIFTSCOLUMN } from "./giftsColumn";
-import { Trash, ArrowRight, Pencil } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import Discriptions from "./Discriptions";
 
 import { useGetGiftOrderHistoryListQuery } from "../../../_store/api";
-import { useSelector } from "react-redux";
+
 import { useLocation, useParams } from "react-router-dom";
-import { GIFTORDERHISTORYCOLUMN } from "../../masterComponents/gifts/giftColumn";
+
+import { PARTICULARGIFTORDERHISTORYCOLUMN } from "../../astrologers/Gifts/giftsColumn";
 
 const CoachGifts = () => {
   const [showDescriptionModal, setShowDescriptionModal] = useState(false);
@@ -49,15 +48,14 @@ const CoachGifts = () => {
 
   const handleDelete = () => {
     const updateReasult = data.filter((record) => record.id !== selectedRow.id);
-    console.log("record deleted", selectedRow);
   };
 
-  const columns = useMemo(() => [...GIFTORDERHISTORYCOLUMN], []);
+  const columns = useMemo(() => [...PARTICULARGIFTORDERHISTORYCOLUMN], []);
 
   const totalPage = fetchData?.meta?.total_page;
 
   return (
-    <div className="ProfileData-container profile-right-sub-container">
+    <div className="">
       <DyCommonTable
         columns={columns}
         data={data}
