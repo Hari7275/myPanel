@@ -11,6 +11,7 @@ import {
   useGetGiftListQuery,
   useDeleteGiftMutation,
 } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const GiftLists = () => {
   const [showGiftPrice, setshowGiftPrice] = useState(false);
@@ -18,28 +19,34 @@ const GiftLists = () => {
   const [updateData, setUpdteData] = useState(false);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic paginations
 
   // handeling api  fetching data and deleting data
-  const { data: fetchData } = useGetGiftListQuery({
-    page,
-    size: pageSize,
-  });
+  const { data: fetchData, refetch } = useGetGiftListQuery(
+    {
+      page,
+      size: pageSize,
+    },
+    {
+      refetchOnMountOrArgChange: true, // Force refetch when component mounts or args change
+    }
+  );
   const [deleteData] = useDeleteGiftMutation();
 
   const totalPage = fetchData?.meta?.total_page || 1;
 
   // store data
-  useEffect(() => {
-    // console.log("fetchData gifts", fetchData?.data.rows);
-    if (fetchData) {
-      setData(fetchData?.data?.rows);
-    }
-  }, [fetchData]);
+  // Store data with proper dependency
+  // useEffect(() => {
+  //   if (fetchData?.data?.rows) {
+  //     setData(fetchData.data.rows);
+  //   }
+  // }, [fetchData?.data?.rows]); // Changed dependency to be more specific
 
+  const data = fetchData?.data?.rows || [];
   // function for description
 
   const toggleGiftPrice = (row) => {
@@ -66,11 +73,18 @@ const GiftLists = () => {
     setShowDeleteComponent(!showDeleteComponent);
   };
 
-  const handleDelete = () => {
-    if (selectedRow && selectedRow.id) {
-      deleteData({ id: selectedRow.id }).then(() => {
-        setShowDeleteComponent(false);
-      });
+  const handleDelete = async () => {
+    if (!selectedRow?.id) return;
+
+    try {
+      const response = await deleteData({ id: selectedRow.id }).unwrap();
+
+      toast.success(response?.message || "Deleted successfully");
+      setShowDeleteComponent(false);
+      setSelectedRow(null); // Clear selected row
+      refetch();
+    } catch (error) {
+      toast.error(error?.data?.message || "Delete failed");
     }
   };
 

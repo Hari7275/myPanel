@@ -32,10 +32,8 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
     name: selectedRow.name || "",
     description: selectedRow.description || "",
     image_url: selectedRow?.image_url,
-    currency: selectedRow.currency || "INR",
-    price: selectedRow.price || "",
-    is_active: selectedRow.is_active || "true",
-    commission: selectedRow.commission || "",
+    is_active: String(selectedRow.is_active ?? "true"),
+    consultant_type: String(selectedRow.consultant_type || "1"),
   });
 
   const [initialData, setInitialData] = useState({});
@@ -46,12 +44,11 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
       name: selectedRow.name || "",
       description: selectedRow.description || "",
       image_url: selectedRow?.image_url,
-      currency: selectedRow.currency || "INR",
-      price: selectedRow.price || "",
-      is_active: selectedRow.is_active || "true",
-      commission: selectedRow.commission || "",
+      is_active: String(selectedRow.is_active ?? "true"),
+      consultant_type: String(selectedRow.consultant_type || "1"),
     };
     setInitialData(initial);
+    setFormData((prev) => ({ ...prev, ...initial, id: selectedRow.id || "" }));
   }, [selectedRow]);
 
   const [updateData, { isLoading: isUpdating, error }] =
@@ -73,7 +70,7 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
       }));
 
       // Track if the value has actually changed
-      if (initialData[name] !== value) {
+      if (String(initialData[name]) !== String(value)) {
         setChangedFields((prev) => ({ ...prev, [name]: true }));
       } else {
         setChangedFields((prev) => {
@@ -103,20 +100,14 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
     if (changedFields.description) {
       formDataToSend.append("description", formData.description);
     }
-    if (changedFields.currency) {
-      formDataToSend.append("currency", formData.currency);
-    }
     if (changedFields.image && formData.image) {
       formDataToSend.append("image", formData.image);
-    }
-    if (changedFields.price) {
-      formDataToSend.append("price", formData.price);
     }
     if (changedFields.is_active) {
       formDataToSend.append("is_active", formData.is_active);
     }
-    if (changedFields.commission) {
-      formDataToSend.append("commission", formData.commission);
+    if (changedFields.consultant_type) {
+      formDataToSend.append("consultant_type", formData.consultant_type);
     }
 
     try {
@@ -134,6 +125,7 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
       }
     } catch (error) {
       console.error("API Error", error);
+      toast.error("Failed to update gift");
     }
   };
 
@@ -177,23 +169,22 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
           placeholder="Gift Description"
         />
 
-        <InputField
-          label="Price"
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          placeholder="Gift Price"
-        />
+        <div className="userProfile-grid-item">
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+            Consultant Type *
+          </label>
+          <select
+            name="consultant_type"
+            value={formData.consultant_type}
+            onChange={handleChange}
+            className="userProfile-input-field"
+          >
+            <option value="1">Astrologer</option>
+            <option value="2">Coach</option>
+            <option value="3">Listener</option>
+          </select>
+        </div>
 
-        <InputField
-          label="Commission"
-          type="number"
-          name="commission"
-          value={formData.commission}
-          onChange={handleChange}
-          placeholder="Gift Commission"
-        />
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>Image</label>
           <input
@@ -202,10 +193,17 @@ const UpdateGifts = ({ isOpen, onClose, selectedRow }) => {
             onChange={handleChange}
             className="userProfile-input-field"
           />
+          {formData.image_url && (
+            <img
+              src={formData.image_url}
+              alt="Preview"
+              style={{ width: "100px", marginTop: "10px" }}
+            />
+          )}
         </div>
 
         <div className="userProfile-grid-item">
-          <label style={{ fontSize: "16px", marginTop: "20px" }}>
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
             Status *
           </label>
           <select

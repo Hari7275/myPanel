@@ -21,11 +21,9 @@ const AddGift = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    currency: "INR",
-    price: "",
     image: null,
     is_active: "true",
-    commission: "",
+    consultant_type: "1",
   });
 
   const [createData, { isLoading }] = useCreateGiftMutation();
@@ -43,11 +41,9 @@ const AddGift = ({ isOpen, onClose }) => {
     const newData = new FormData();
     newData.append("name", formData.name);
     newData.append("description", formData.description);
-    newData.append("currency", formData.currency);
-    newData.append("price", formData.price);
-    newData.append("image", formData.image || "snake.jpg");
+    newData.append("image", formData.image || "");
     newData.append("is_active", formData.is_active);
-    newData.append("commission", formData.commission);
+    newData.append("consultant_type", formData.consultant_type);
 
     try {
       const response = await createData({ body: newData }).unwrap();
@@ -58,7 +54,8 @@ const AddGift = ({ isOpen, onClose }) => {
         toast.error(response.message);
       }
     } catch (error) {
-      console.log("Failed to add new category", error);
+      console.log("Failed to add new gift", error);
+      toast.error("Failed to add new gift");
     }
   };
 
@@ -79,7 +76,7 @@ const AddGift = ({ isOpen, onClose }) => {
             textAlign: "center",
           }}
         >
-          Add Gift
+          Add Gift 
         </h2>
 
         <InputField
@@ -99,23 +96,22 @@ const AddGift = ({ isOpen, onClose }) => {
           placeholder=" Gift description"
         />
 
-        <InputField
-          label="Price"
-          type="number"
-          name="price"
-          value={formData.price}
-          onChange={handleChange}
-          placeholder=" Gift price"
-        />
+        <div className="userProfile-grid-item">
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+            Consultant Type *
+          </label>
+          <select
+            name="consultant_type"
+            value={formData.consultant_type}
+            onChange={handleChange}
+            className="userProfile-input-field"
+          >
+            <option value="1">Astrologer</option>
+            <option value="2">Coach</option>
+            <option value="3">Listener</option>
+          </select>
+        </div>
 
-        <InputField
-          label="Commission"
-          type="number"
-          name="commission"
-          value={formData.commission}
-          onChange={handleChange}
-          placeholder=" Gift Commission"
-        />
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>Image</label>
           <input
@@ -127,7 +123,7 @@ const AddGift = ({ isOpen, onClose }) => {
         </div>
 
         <div className="userProfile-grid-item">
-          <label style={{ fontSize: "16px", marginTop: "20px" }}>
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
             Status *
           </label>
           <select
