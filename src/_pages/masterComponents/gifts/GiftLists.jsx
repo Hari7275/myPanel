@@ -23,6 +23,7 @@ const GiftLists = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(20); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic paginations
+  const [giftId, setGiftId] = useState(null);
 
   // handeling api  fetching data and deleting data
   const { data: fetchData, refetch } = useGetGiftListQuery(
@@ -50,6 +51,8 @@ const GiftLists = () => {
   // function for description
 
   const toggleGiftPrice = (row) => {
+    console.log("selectedData////////", row?.original?.id);
+    setGiftId(row?.original?.id);
     setSelectedRow(row?.original?.gift_prices);
     setshowGiftPrice(!showGiftPrice);
   };
@@ -144,27 +147,21 @@ const GiftLists = () => {
 
   return (
     <>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="Gifts List"
-        AddPackageButton={AddButton}
-        dynamicPagination={dynamicPagination}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        includeCheckbox={false}
-        showTableHeading={false}
-      />
-
-      {showGiftPrice && (
-        <GiftPrice
-          isOpen={showGiftPrice}
-          onClose={toggleGiftPrice}
-          selectedData={selectedRow}
+      {!showGiftPrice && (
+        <DyCommonTable
+          columns={columns}
+          data={data}
+          includeActions={false}
+          tableTitle="Gifts List"
+          AddPackageButton={AddButton}
+          dynamicPagination={dynamicPagination}
+          totalPage={totalPage}
+          currentPage={page}
+          pageSize={pageSize}
+          setPage={setPage}
+          setPageSize={setPageSize}
+          includeCheckbox={false}
+          showTableHeading={false}
         />
       )}
 
@@ -183,6 +180,15 @@ const GiftLists = () => {
           isOpen={showDeleteComponent}
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
+        />
+      )}
+
+      {showGiftPrice && (
+        <GiftPrice
+          isOpen={showGiftPrice}
+          onClose={toggleGiftPrice}
+          selectedData={selectedRow}
+          giftId={giftId}
         />
       )}
     </>

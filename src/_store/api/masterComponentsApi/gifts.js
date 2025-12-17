@@ -72,6 +72,43 @@ export const giftsApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["gift"],
     }),
+
+    // for gift price update section
+
+    createGiftPrice: builder.mutation({
+      query: ({ body }) => ({
+        url: `/api/v1/consultant/management/gift/admin/gift-price`,
+        method: "POST",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["gift"],
+    }),
+
+    updateGiftPrice: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/management/gift/admin/gift-price/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["gift"],
+    }),
+
+    deleteGiftPrice: builder.mutation({
+      query: ({ id }) => ({
+        url: `/api/v1/consultant/management/gift/admin/gift-price/${id}`,
+        method: "DELETE",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["gift"],
+    }),
   }),
 });
 
@@ -81,4 +118,7 @@ export const {
   useUpdateGiftMutation,
   useDeleteGiftMutation,
   useGetGiftOrderHistoryListQuery,
+  useCreateGiftPriceMutation,
+  useUpdateGiftPriceMutation,
+  useDeleteGiftPriceMutation,
 } = giftsApiSlice;
