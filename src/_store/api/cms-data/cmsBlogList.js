@@ -44,7 +44,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
 
     updateCmsBlogList: builder.mutation({
       query: ({ body, id }) => ({
-        url: `/api/v2/content-management/authors/${id}`,
+        url: `/api/v2/content-management/blogs/${id}`,
         method: "PUT",
         body,
         headers: {

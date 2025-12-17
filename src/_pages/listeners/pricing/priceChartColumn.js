@@ -13,7 +13,6 @@ const CurrencyLabel = ({ value, row }) => {
 
   const currencySymbol = row?.original?.user_currency == "INR" ? "₹ " : "$ ";
   // const currencySymbol = consultantCateg == 91 ? "₹" : "$";
-
   return <span>{`${currencySymbol}${value}`}</span>;
 };
 
@@ -28,7 +27,11 @@ const FeatureCell = ({ value }) => {
 const CategoriesCell = ({ value }) => {
   // return <span>{getConsultantPriceCategory(value)}</span>;
 
-  return <span>{value == "A" ? "India" : "Foreign"}</span>;
+  return (
+    <span>
+      {value == "A" ? "India" : "Foreign"} ({value})
+    </span>
+  );
 };
 
 export const PRICECHARTCOLUMN = [
