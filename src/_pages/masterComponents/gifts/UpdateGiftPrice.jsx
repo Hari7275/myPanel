@@ -198,7 +198,7 @@ const UpdateGiftPrice = ({ isOpen, onClose, selectedRow }) => {
           >
             {isUpdating ? "Saving..." : "Save"}
           </button>
-          <button className="fifthButton" style={{}} onClick={onClose}>
+          <button className="fifthButton">
             Back
           </button>
         </div>

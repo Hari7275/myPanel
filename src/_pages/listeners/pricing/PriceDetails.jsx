@@ -51,7 +51,7 @@ export const CategoryPriceCard = ({
       <div className="info-pair">
         <p className="info-item">
           <strong>Current Price : </strong>
-          {console.log("randommmmmmmmmmmm", currency)}
+
           <span>
             {currency == "INR" ? "₹" : "$"} {currentPrice}
           </span>

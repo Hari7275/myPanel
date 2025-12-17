@@ -6,12 +6,13 @@ import {
 
 import { useLocation } from "react-router-dom";
 
-const CurrencyLabel = ({ value }) => {
+const CurrencyLabel = ({ value, row }) => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const consultantCateg = params.get("type");
 
-  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  const currencySymbol = row?.original?.user_currency == "INR" ? "₹ " : "$ ";
+  // const currencySymbol = consultantCateg == 91 ? "₹" : "$";
 
   return <span>{`${currencySymbol}${value}`}</span>;
 };
@@ -34,31 +35,31 @@ export const PRICECHARTCOLUMN = [
   // { Header: "id", accessor: "id" },
   {
     Header: "Feature",
-    accessor: "feature",
+    accessor: "service_type",
     Cell: FeatureCell,
   },
   {
     Header: "User Catg.",
-    accessor: "category",
+    accessor: "user_category",
     Cell: CategoriesCell,
   },
   {
     Header: "CP",
-    accessor: "current_price",
+    accessor: "price_per_minute",
     // Cell: CurrencyLabel,
   },
   {
     Header: "DP",
     accessor: "discount_price",
-    // Cell: CurrencyLabel,
+    Cell: CurrencyLabel,
   },
   {
-    Header: "Comm.",
-    accessor: "commission",
+    Header: "Comm.(%)",
+    accessor: "flute_commission",
   },
-  {
-    Header: "Status",
-    accessor: "status",
-    Cell: StatusCell,
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "status",
+  //   Cell: StatusCell,
+  // },
 ];

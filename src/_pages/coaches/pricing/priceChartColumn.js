@@ -1,66 +1,65 @@
 import {
   getPriceStatusLabel,
-  getConsultantPriceCategory,
   getFetaureLabel,
+  getConsultantPriceCategory,
 } from "../../../_constants/consultantConstant";
 
 import { useLocation } from "react-router-dom";
 
-const CurrencyLabel = ({ value }) => {
+const CurrencyLabel = ({ value, row }) => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const consultantCateg = params.get("type");
 
-  const currencySymbol = consultantCateg == 91 ? "₹" : "$";
+  const currencySymbol = row?.original?.user_currency == "INR" ? "₹ " : "$ ";
+  // const currencySymbol = consultantCateg == 91 ? "₹" : "$";
 
   return <span>{`${currencySymbol}${value}`}</span>;
 };
 
-const PriceStatusCell = ({ value }) => {
+const StatusCell = ({ value }) => {
   return <span>{getPriceStatusLabel(value)}</span>;
 };
 
-const PriceCategoryCell = ({ value }) => {
-  // return <span>{getConsultantPriceCategory(value)}</span>;
-  return <span>{value == "A" ? "India" : "Foreign"}</span>;
+const FeatureCell = ({ value }) => {
+  return <span>{getFetaureLabel(value)}</span>;
 };
-const FeatureLabelCell = ({ value }) => {
-  return (
-    <span style={{ display: "block", width: "100px" }}>
-      {getFetaureLabel(value)}
-    </span>
-  );
+
+const CategoriesCell = ({ value }) => {
+  // return <span>{getConsultantPriceCategory(value)}</span>;
+
+  return <span>{value == "A" ? "India" : "Foreign"}</span>;
 };
 
 export const PRICECHARTCOLUMN = [
-  { Header: "Id", accessor: "id" },
+  // { Header: "id", accessor: "id" },
   {
     Header: "Feature",
-    accessor: "feature",
-    Cell: FeatureLabelCell,
+    accessor: "service_type",
+    Cell: FeatureCell,
   },
   {
     Header: "User Catg.",
-    accessor: "category",
-    Cell: PriceCategoryCell,
+    accessor: "user_category",
+    Cell: CategoriesCell,
   },
   {
     Header: "CP",
-    accessor: "current_price",
+    accessor: "price_per_minute",
     // Cell: CurrencyLabel,
   },
   {
     Header: "DP",
     accessor: "discount_price",
-    // Cell: CurrencyLabel,
+    Cell: CurrencyLabel,
   },
   {
-    Header: "Comm.",
-    accessor: "commission",
+    Header: "Comm.(%)",
+    accessor: "flute_commission",
   },
-  {
-    Header: "Status",
-    accessor: "status",
-    Cell: PriceStatusCell,
-  },
+  // {
+  //   Header: "Status",
+  //   accessor: "status",
+  //   Cell: StatusCell,
+  // },
 ];

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Pencil, NotebookPen } from "lucide-react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { PRICECHARTCOLUMN } from "./priceChartColumn";
-import { useGetConsultantsPriceQuery } from "../../../_store/api";
+import { useGetConsultantsPriceQuery ,useGetConsultantsNewPriceQuery} from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
@@ -37,7 +37,7 @@ const ListenersPriceListingTable = () => {
     data: fetchData,
     isLoading,
     isError,
-  } = useGetConsultantsPriceQuery(consultantId);
+  } = useGetConsultantsNewPriceQuery(consultantId);
   const permissions = usePermissions();
 
   const hasPermission = (permission) => {

@@ -2,7 +2,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { Pencil, NotebookPen } from "lucide-react";
 import { PRICECHARTCOLUMN } from "./priceChartColumn";
-import { useGetConsultantsPriceQuery } from "../../../_store/api";
+import { useGetConsultantsPriceQuery ,useGetConsultantsNewPriceQuery} from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
@@ -37,7 +37,7 @@ const AstrologerPriceListingTable = () => {
     data: fetchData,
     isLoading,
     isError,
-  } = useGetConsultantsPriceQuery(consultantId);
+  } = useGetConsultantsNewPriceQuery(consultantId);
   useEffect(() => {
     if (fetchData && fetchData?.data) {
       setData(fetchData?.data?.filter((item) => item?.status !== 7) || []);
