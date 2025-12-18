@@ -61,8 +61,6 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
     web_title_image_description: "",
   });
 
-  console.log("selectedRow", selectedRow);
-
   const [blogData, setBlogData] = useState([]);
   const [categoryData, setCategoryData] = useState([]);
   const [authorData, setAuthorData] = useState([]);
@@ -96,7 +94,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
         description: selectedRow.description || "",
         meta_description: selectedRow.meta_description || "",
         meta_keywords: selectedRow.meta_keywords || "",
-        author_id: selectedRow.author_id || (selectedRow.author?.id || ""),
+        author_id: selectedRow.author_id || selectedRow.author?.id || "",
         written_by: selectedRow.written_by || "",
         category_ids: selectedRow.category_ids || [],
         recommended_blog_ids: selectedRow.recommended_blog_ids || [],
@@ -104,37 +102,47 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
         likes_count: selectedRow.likes_count || "",
         mobile_views: selectedRow.mobile_views || "",
         web_views: selectedRow.web_views || "",
-        is_featured: selectedRow.is_featured === 1 || selectedRow.is_featured === true,
-        is_published: selectedRow.is_published === 1 || selectedRow.is_published === true,
+        is_featured:
+          selectedRow.is_featured === 1 || selectedRow.is_featured === true,
+        is_published:
+          selectedRow.is_published === 1 || selectedRow.is_published === true,
         publish_date: formatDateTime(selectedRow.publish_date),
 
         // Mobile Featured Image
         mobile_featured_image: null, // Keep null, will only update if new file is selected
         mobile_featured_image_alt: selectedRow.mobile_featured_image_alt || "",
-        mobile_featured_image_title: selectedRow.mobile_featured_image_title || "",
-        mobile_featured_image_caption: selectedRow.mobile_featured_image_caption || "",
-        mobile_featured_image_description: selectedRow.mobile_featured_image_description || "",
+        mobile_featured_image_title:
+          selectedRow.mobile_featured_image_title || "",
+        mobile_featured_image_caption:
+          selectedRow.mobile_featured_image_caption || "",
+        mobile_featured_image_description:
+          selectedRow.mobile_featured_image_description || "",
 
         // Mobile Title Image
         mobile_title_image: null,
         mobile_title_image_alt: selectedRow.mobile_title_image_alt || "",
         mobile_title_image_title: selectedRow.mobile_title_image_title || "",
-        mobile_title_image_caption: selectedRow.mobile_title_image_caption || "",
-        mobile_title_image_description: selectedRow.mobile_title_image_description || "",
+        mobile_title_image_caption:
+          selectedRow.mobile_title_image_caption || "",
+        mobile_title_image_description:
+          selectedRow.mobile_title_image_description || "",
 
         // Web Featured Image
         web_featured_image: null,
         web_featured_image_alt: selectedRow.web_featured_image_alt || "",
         web_featured_image_title: selectedRow.web_featured_image_title || "",
-        web_featured_image_caption: selectedRow.web_featured_image_caption || "",
-        web_featured_image_description: selectedRow.web_featured_image_description || "",
+        web_featured_image_caption:
+          selectedRow.web_featured_image_caption || "",
+        web_featured_image_description:
+          selectedRow.web_featured_image_description || "",
 
         // Web Title Image
         web_title_image: null,
         web_title_image_alt: selectedRow.web_title_image_alt || "",
         web_title_image_title: selectedRow.web_title_image_title || "",
         web_title_image_caption: selectedRow.web_title_image_caption || "",
-        web_title_image_description: selectedRow.web_title_image_description || "",
+        web_title_image_description:
+          selectedRow.web_title_image_description || "",
       });
     }
   }, [selectedRow, isOpen]);
@@ -330,9 +338,9 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
 
     try {
       // Pass the blog ID along with the form data
-      const response = await UpdateData({ 
-        id: selectedRow.id, 
-        body: newData 
+      const response = await UpdateData({
+        id: selectedRow.id,
+        body: newData,
       }).unwrap();
 
       if (response.status) {
@@ -678,11 +686,12 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.mobile_featured_image.name}
                 </span>
               )}
-              {selectedRow?.mobile_featured_image && !formData.mobile_featured_image && (
-                <span className="cms-file-info">
-                  Current image exists (upload new to replace)
-                </span>
-              )}
+              {selectedRow?.mobile_featured_image &&
+                !formData.mobile_featured_image && (
+                  <span className="cms-file-info">
+                    Current image exists (upload new to replace)
+                  </span>
+                )}
             </div>
 
             <div className="cms-form-group">
@@ -752,11 +761,12 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.mobile_title_image.name}
                 </span>
               )}
-              {selectedRow?.mobile_title_image && !formData.mobile_title_image && (
-                <span className="cms-file-info">
-                  Current image exists (upload new to replace)
-                </span>
-              )}
+              {selectedRow?.mobile_title_image &&
+                !formData.mobile_title_image && (
+                  <span className="cms-file-info">
+                    Current image exists (upload new to replace)
+                  </span>
+                )}
             </div>
 
             <div className="cms-form-group">
@@ -826,11 +836,12 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.web_featured_image.name}
                 </span>
               )}
-              {selectedRow?.web_featured_image && !formData.web_featured_image && (
-                <span className="cms-file-info">
-                  Current image exists (upload new to replace)
-                </span>
-              )}
+              {selectedRow?.web_featured_image &&
+                !formData.web_featured_image && (
+                  <span className="cms-file-info">
+                    Current image exists (upload new to replace)
+                  </span>
+                )}
             </div>
 
             <div className="cms-form-group">

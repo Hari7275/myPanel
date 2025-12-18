@@ -4,7 +4,7 @@ export const cmsBlogCategoriesApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCmsBlogCategoriesList: builder.query({
       query: () => ({
-        url: `/api/v2/content-management/categories`,
+        url: `/api/v1/content-management/categories`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -15,7 +15,7 @@ export const cmsBlogCategoriesApiSlice = apiSlice.injectEndpoints({
 
     createCmsBlogCategories: builder.mutation({
       query: ({ body }) => ({
-        url: `/api/v2/content-management/categories`,
+        url: `/api/v1/content-management/categories`,
         method: "POST",
         body,
         headers: {
@@ -27,7 +27,7 @@ export const cmsBlogCategoriesApiSlice = apiSlice.injectEndpoints({
 
     updateCmsBlogCategories: builder.mutation({
       query: ({ body, id }) => ({
-        url: `/api/v2/content-management/categories/${id}`,
+        url: `/api/v1/content-management/categories/${id}`,
         method: "PUT",
         body,
         headers: {
@@ -39,7 +39,7 @@ export const cmsBlogCategoriesApiSlice = apiSlice.injectEndpoints({
 
     deleteCmsBlogCategories: builder.mutation({
       query: ({ id }) => ({
-        url: `/api/v2/content-management/categories/${id}`,
+        url: `/api/v1/content-management/categories/${id}`,
         method: "DELETE",
         headers: {
           Authorization: "Bearer admin_token",

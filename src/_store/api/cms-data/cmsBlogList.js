@@ -20,7 +20,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
         if (page) params.append("page", page);
         if (pageSize) params.append("limit", pageSize);
         return {
-          url: `/api/v2/content-management/blogs?${params.toString()}`,
+          url: `/api/v1/content-management/blogs?${params.toString()}`,
           method: "GET",
           headers: {
             Authorization: "Bearer admin_token",
@@ -32,7 +32,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
 
     createCmsBlogList: builder.mutation({
       query: ({ body }) => ({
-        url: `/api/v2/content-management/blog`,
+        url: `/api/v1/content-management/blog`,
         method: "POST",
         body,
         headers: {
@@ -44,7 +44,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
 
     updateCmsBlogList: builder.mutation({
       query: ({ body, id }) => ({
-        url: `/api/v2/content-management/blogs/${id}`,
+        url: `/api/v1/content-management/blogs/${id}`,
         method: "PUT",
         body,
         headers: {
@@ -56,7 +56,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
 
     deleteCmsBlogList: builder.mutation({
       query: ({ id }) => ({
-        url: `/api/v2/content-management/authors/${id}`,
+        url: `/api/v1/content-management/authors/${id}`,
         method: "DELETE",
         headers: {
           Authorization: "Bearer admin_token",
