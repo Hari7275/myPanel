@@ -49,6 +49,11 @@ const CmsDataList = () => {
       link: "/cms-author-list",
       permissions: "view_promotional_cards_list",
     },
+    {
+      name: "FAQs List",
+      link: "/cms-faq-list",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "Dashboard banner",
     //   link: "/dashboard-banner-metadata",

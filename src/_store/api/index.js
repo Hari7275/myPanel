@@ -103,3 +103,4 @@ export * from "../api/cms-data/cmsSocialIcon";
 export * from "../api/cms-data/cmsBlogCategories";
 export * from "../api/cms-data/cmsBlogAuthor";
 export * from "../api/cms-data/cmsBlogList";
+export * from "../api/cms-data/faqsList";
