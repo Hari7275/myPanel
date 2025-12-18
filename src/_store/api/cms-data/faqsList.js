@@ -3,10 +3,12 @@ import { getAdminToken } from "../tokenHelper";
 export const cmsFAQsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getCmsFAQsList: builder.query({
-      query: ({ page, pageSize }) => {
+      query: ({ page, pageSize, platformType, name }) => {
         const params = new URLSearchParams({});
         if (page) params.append("page", page);
         if (pageSize) params.append("limit", pageSize);
+        if (name) params.append("search", name);
+        if (platformType) params.append("type", platformType);
         return {
           url: `/api/v1/content-management/faqs?${params.toString()}`,
           method: "GET",

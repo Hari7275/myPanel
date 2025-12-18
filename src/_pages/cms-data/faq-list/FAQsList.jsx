@@ -1,8 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
-
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { CMSFAQsCOLUMN } from "./faqsColumn";
-import { Trash, Pencil } from "lucide-react";
+import { Trash, Pencil, Eye } from "lucide-react";
 import DeleteComponent from "../../payments/DeleteComponent";
 import CreateFAQs from "./CreateFAQs";
 import UpdateFAQs from "./UpdateFAQs";
@@ -11,6 +10,8 @@ import {
   useGetCmsFAQsListQuery,
   useDeleteCmsFAQsMutation,
 } from "../../../_store/api";
+import NoticeDescription from "../../masterComponents/noticeManager/noticeList/NoticeDescription";
+import { debounce } from "lodash";
 
 const FAQsList = () => {
   const [addData, setAddData] = useState(false);
@@ -19,21 +20,24 @@ const FAQsList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [pageSize, setPageSize] = useState(25);
   const [dynamicPagination, setDynamicPagination] = useState(true);
-
+  const [showDescription, setShowDescription] = useState(false);
+  const [name, setName] = useState("");
+  const [platformType, setPlatformType] = useState("");
   const permissions = usePermissions();
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetCmsFAQsListQuery({
     page,
     pageSize,
+    platformType,
+    name,
   });
   const [deleteData] = useDeleteCmsFAQsMutation();
 
   // store data
   useEffect(() => {
-    // console.log("fetchData gifts", fetchData?.data.rows);
     if (fetchData) {
       setData(fetchData?.data);
     } else {
@@ -41,12 +45,15 @@ const FAQsList = () => {
     }
   }, [fetchData]);
 
-  // function for description
-
   //  toggle function for adding new data
 
   const toggleAddData = () => {
     setAddData(!addData);
+  };
+
+  const toggleDescription = (row) => {
+    setSelectedRow(row.original);
+    setShowDescription(!showDescription);
   };
 
   //  toggle function for updating data
@@ -101,6 +108,16 @@ const FAQsList = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
+            <span
+              title="view details"
+              className="secondIcon"
+              style={{ height: "35px", width: "35px" }}
+            >
+              <Eye
+                className="iconSmall"
+                onClick={() => toggleDescription(row)}
+              />
+            </span>
             {permissions?.["meta_data_section"]?.includes(
               "update_dashboard_banner"
             ) && (
@@ -127,6 +144,52 @@ const FAQsList = () => {
     ],
     [data]
   );
+  const debouncedSearchUserName = debounce((value) => setName(value), 500);
+
+  const handleUserNameSearch = (e) => {
+    setPage(1);
+    debouncedSearchUserName(e?.target?.value);
+  };
+
+  const handleSetPlatformType = (e) => {
+    setPage(1);
+    setPlatformType(e.target.value);
+  };
+  const customFilterComponent = () => (
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <select
+        className="inputBox"
+        style={{
+          marginLeft: "10px",
+          height: "-webkit-fill-available",
+          width: "10%",
+        }}
+        onChange={handleSetPlatformType}
+      >
+        <option>Select Type</option>
+        <option value={0}>collaborator</option>
+        <option value={1}>Consultant</option>
+        <option value={2}>User</option>
+      </select>
+      <input
+        className="inputBox"
+        placeholder="Search by Title"
+        style={{
+          marginLeft: "10px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleUserNameSearch}
+      />
+    </div>
+  );
 
   const totalPage = fetchData?.meta?.total_pages || 1;
 
@@ -137,9 +200,9 @@ const FAQsList = () => {
         data={data}
         includeActions={false}
         tableTitle="CMS Blog Author List"
-        dynamicPagination={dynamicPagination}
         AddPackageButton={AddButton}
-        // customFilterComponent={customFilterComponent}
+        customFilterComponent={customFilterComponent}
+        dynamicPagination={dynamicPagination}
         totalPage={totalPage}
         currentPage={page}
         pageSize={pageSize}
@@ -148,9 +211,7 @@ const FAQsList = () => {
         includeCheckbox={false}
         showTableHeading={false}
       />
-
       {addData && <CreateFAQs isOpen={addData} onClose={toggleAddData} />}
-
       {updateData && (
         <UpdateFAQs
           isOpen={updateData}
@@ -158,12 +219,19 @@ const FAQsList = () => {
           selectedRow={selectedRow}
         />
       )}
-
       {showDeleteComponent && (
         <DeleteComponent
           isOpen={showDeleteComponent}
           onClose={toggleDeleteComponent}
           onDelete={handleDelete}
+        />
+      )}
+
+      {showDescription && (
+        <NoticeDescription
+          isOpen={showDescription}
+          onClose={toggleDescription}
+          Description={selectedRow?.description}
         />
       )}
     </>

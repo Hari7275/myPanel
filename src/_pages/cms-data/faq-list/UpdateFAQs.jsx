@@ -82,7 +82,7 @@ const UpdateFAQs = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
     >
       <div className="cms-modal-container">
-        <h2 className="cms-modal-heading">Update Blog Category</h2>
+        <h2 className="cms-modal-heading">Update FAQs</h2>
 
         <div className="cms-form-wrapper">
           {/* General Information */}

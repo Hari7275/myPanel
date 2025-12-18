@@ -15,9 +15,8 @@ const UserRechargeLists = () => {
   const [pageSize, setPageSize] = useState(50); // Adjusted default page size
   const [dynamicPagination, setDynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const [userType, setUSerType] = useState(0);
-
-  const [name, setName] = useState("");
   const [userId, setUserId] = useState("");
+  const [name, setName] = useState("");
   const [platformType, setPlatformType] = useState("");
 
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -97,16 +96,6 @@ const UserRechargeLists = () => {
         alignItems: "center",
       }}
     >
-      {/* <input
-        className="inputBox"
-        placeholder="Search by id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "20%",
-        }} */}
-      {/* // onChange={handleUserIdSearch}/ */}
-      {/* /> .*/}
       <input
         className="inputBox"
         placeholder="Search by user id"
