@@ -59,7 +59,7 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         headers: {
           // Authorization: getAdminToken(),
-          Authorization: "Bearer internal_token",
+          Authorization: "Bearer admin_token",
         },
         body,
       }),
