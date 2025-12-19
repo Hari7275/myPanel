@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-import { useCreateUserRechargeMutation } from "../../../_store/api";
+import {
+  useCreateUserRechargeMutation,
+  useCreateUserRefundCallAmountMutation,
+} from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import toast from "react-hot-toast";
 
@@ -9,12 +12,14 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
     userId: selectedRow.user_id,
     amount: selectedRow?.order_revenue || "",
+    duration: selectedRow?.actual_duration || 0,
     description: "",
     is_forgin: selectedRow.description.userData.is_foreigner || null,
     conversion_rate: selectedRow.conversion_rate || "",
   });
 
-  const [createData, { isLoading }] = useCreateUserRechargeMutation();
+  console.log("selectedRow", selectedRow?.actual_duration);
+  const [createData, { isLoading }] = useCreateUserRefundCallAmountMutation();
 
   // Dropdown options for description
   const descriptionOptions = [
@@ -51,13 +56,20 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   const handleChange = (event) => {
     const { name, value } = event.target;
 
-    // Validate amount based on order_revenue
-    if (name === "amount") {
+    // Validate duration
+    if (name === "duration") {
       const numValue = parseFloat(value);
-      const maxAmount = parseFloat(selectedRow?.order_revenue || 0);
+      const maxDuration = parseFloat(selectedRow?.actual_duration || 0);
 
-      if (numValue > maxAmount) {
-        toast.error(`Amount cannot exceed flute earning of ${maxAmount}`);
+      // Check if duration is negative
+      if (numValue < 0) {
+        toast.error("Duration cannot be negative");
+        return;
+      }
+
+      // Check if duration exceeds max
+      if (numValue > maxDuration) {
+        toast.error(`Duration cannot exceed ${maxDuration} minutes`);
         return;
       }
     }
@@ -72,33 +84,34 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       return;
     }
 
-    if (!formData.amount || parseFloat(formData.amount) <= 0) {
-      toast.error("Please enter a valid amount");
+    // Validate duration
+    if (!formData.duration || parseFloat(formData.duration) <= 0) {
+      toast.error("Please enter a valid duration");
       return;
     }
 
-    // Calculate the final amount based on is_forgin flag
-    let finalAmount = parseFloat(formData.amount);
+    const durationValue = parseFloat(formData.duration);
+    const maxDuration = parseFloat(selectedRow?.actual_duration || 0);
 
-    // If is_forgin is true, multiply by conversion_rate
-    if (formData.is_forgin && formData.conversion_rate) {
-      finalAmount = finalAmount * parseFloat(formData.conversion_rate);
+    if (durationValue > maxDuration) {
+      toast.error(`Duration cannot exceed ${maxDuration} minutes`);
+      return;
     }
 
-    // User Refund API payload
+    if (durationValue < 0) {
+      toast.error("Duration cannot be negative");
+      return;
+    }
+
+    // API payload matching the curl request
     const apiPayload = {
-      user_id: formData.userId,
-      transaction_type: "credit",
-      type: "refund",
-      amount: finalAmount, // Use the calculated final amount
+      id: selectedRow?.id,
       activity_type: "order",
-      status: "successful",
-      description: formData.description || "User Refund",
-      reference_id: selectedRow?.id,
+      description: formData.description,
+      duration: parseFloat(formData.duration),
     };
 
     console.log("apiPayload", apiPayload);
-    // return;
 
     try {
       const response = await createData({ body: apiPayload });
@@ -106,27 +119,14 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       if (response?.data?.status) {
         toast.success(response?.data?.message);
         onClose();
-        // Reset form
-        setFormData({
-          userId: selectedRow.user_id,
-          amount: selectedRow?.order_revenue || "",
-          description: "",
-          is_forgin: selectedRow.description.userData.is_foreigner || null,
-          conversion_rate: selectedRow.conversion_rate || "",
-        });
       } else {
-        toast.error(response?.data?.message);
+        toast.error(response?.data?.message || "Failed to process refund");
         return;
       }
     } catch (error) {
-      toast.error("Failed to process transaction", error);
+      toast.error("Failed to process transaction");
+      console.error(error);
     }
-  };
-
-  // Helper function to format amount display
-  const formatAmountDisplay = (amount) => {
-    const num = parseFloat(amount);
-    return isNaN(num) ? "0" : Math.floor(num).toString();
   };
 
   if (isLoading) {
@@ -157,39 +157,27 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           User Refund
         </h2>
 
-        {/* Amount Field */}
+        {/* Duration Field */}
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
-            Amount
+            Duration (minutes)
             <span
               style={{ fontSize: "14px", color: "#666", marginLeft: "10px" }}
             >
-              (Max: {formatAmountDisplay(selectedRow?.order_revenue)})
+              (Max: {selectedRow?.actual_duration || 0})
             </span>
           </label>
           <input
             type="number"
-            name="amount"
-            value={formData.amount}
+            name="duration"
+            value={formData.duration}
             onChange={handleChange}
-            placeholder="Enter amount"
+            placeholder="Enter Order Duration"
             className="userProfile-input-field"
             min={0}
-            max={selectedRow?.order_revenue || 0}
-            step="1"
-            readOnly
+            max={selectedRow?.actual_duration || 0}
+            step="0.01"
           />
-
-          {formData.is_forgin && formData.conversion_rate && (
-            <div style={{ fontSize: "12px", color: "#666", marginTop: "5px" }}>
-              Conversion rate: {formData.conversion_rate} (Final amount:{" "}
-              {formatAmountDisplay(
-                parseFloat(formData.amount || 0) *
-                  parseFloat(formData.conversion_rate)
-              )}
-              )
-            </div>
-          )}
         </div>
 
         {/* Description Dropdown Field */}
@@ -222,8 +210,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             style={{ marginRight: "10px", backgroundColor: "green" }}
             onClick={handleSubmit}
             disabled={
-              !formData.amount ||
-              parseFloat(formData.amount) <= 0 ||
+              !formData.duration ||
+              parseFloat(formData.duration) <= 0 ||
               !formData.description.trim()
             }
           >

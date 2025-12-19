@@ -237,5 +237,4 @@ const FAQsList = () => {
     </>
   );
 };
-
 export default FAQsList;

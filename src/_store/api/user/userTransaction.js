@@ -49,7 +49,21 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
         },
         body,
       }),
-      invalidatesTags: ["transactions"],
+      invalidatesTags: ["transactions", "order"],
+    }),
+
+    // ********************** order list refund amout *********************************
+    createUserRefundCallAmount: builder.mutation({
+      query: ({ body }) => ({
+        url: `api/v1/consultant/management/order/order-partials-refund`,
+        method: "POST",
+        headers: {
+          // Authorization: getAdminToken(),
+          Authorization: "Bearer internal_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["transactions", "order"],
     }),
 
     // ********************** get user transaction list *********************************
@@ -68,5 +82,6 @@ export const userTransactionsApiSlice = apiSlice.injectEndpoints({
 export const {
   useGetUserTransactionsListQuery,
   useCreateUserRechargeMutation,
+  useCreateUserRefundCallAmountMutation,
   useGetUserSubscriptionListQuery,
 } = userTransactionsApiSlice;
