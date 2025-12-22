@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import toast from "react-hot-toast";
 import { useGetConsultantsPriceQuery } from "../../../_store/api";
-import { useCreateCommissionMutation } from "../../../_store/api";
+import { useCreateCommissionMutation,useCreateNewCommissionMutation } from "../../../_store/api";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
 
 const AddCommission = ({ isOpen, onClose, consultantId }) => {
@@ -18,7 +18,7 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
   } = useGetConsultantsPriceQuery(consultantId);
 
   const [createCommission, { isLoading: isUpdating, error: updateError }] =
-    useCreateCommissionMutation();
+    useCreateNewCommissionMutation();
 
   useEffect(() => {
     console.log("fetchData?.data", fetchData?.data);
@@ -45,24 +45,6 @@ const AddCommission = ({ isOpen, onClose, consultantId }) => {
   const handleRadioInputChange = (e) => {
     setSelectRadio(e.target.value);
   };
-
-  console.log("data", data[0]);
-
-  // if(selectRadio=="single")
-  // const handleInputChange = (id, value) => {
-  //   setCommissions((prev) => ({
-  //     ...prev,
-  //     [id]: value,
-  //   }));
-  // };
-
-  // const handleInputChange = (id, value) => {
-  //   const updatedCommissions = {};
-  //   data.forEach((item) => {
-  //     updatedCommissions[item.id] = value;
-  //   });
-  //   setCommissions(updatedCommissions);
-  // };
 
   const handleInputChange = (id, value) => {
     if (selectRadio === "single") {

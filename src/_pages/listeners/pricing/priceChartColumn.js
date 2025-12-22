@@ -57,7 +57,7 @@ export const PRICECHARTCOLUMN = [
     Cell: CurrencyLabel,
   },
   {
-    Header: "Comm.(%)",
+    Header: "Flute Comm.(%)",
     accessor: "flute_commission",
   },
   // {

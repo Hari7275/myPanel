@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { Pencil, NotebookPen } from "lucide-react";
-
+import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COMMISSIONCOLUMN } from "./commissionColumn";
-import { useGetCommissionListQuery } from "../../../_store/api";
+import { useGetNewCommissionListQuery } from "../../../_store/api";
 
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
@@ -18,10 +18,13 @@ const CommissionList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
- 
+
   const [addData, setAddData] = useState(false);
   const permissions = usePermissions();
 
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [dynamicPagination, setDynamicPagination] = useState(true);
 
   const { consultantId } = useParams();
 
@@ -29,7 +32,7 @@ const CommissionList = () => {
     data: fetchData,
     isLoading,
     isError,
-  } = useGetCommissionListQuery(consultantId);
+  } = useGetNewCommissionListQuery({ consultantId, page, size: pageSize });
   useEffect(() => {
     console.log("fetchData?.data", fetchData?.data);
     if (fetchData && fetchData?.data) {
@@ -117,14 +120,24 @@ const CommissionList = () => {
   }
   if (isError) return <div>Error loading data.</div>;
 
+  const totalPage = fetchData?.meta?.totalPages;
+
   return (
     <div>
-      <CommonTable
+      <DyCommonTable
         columns={columns}
         data={data}
-        includeCheckbox={false}
         tableTitle="Commission"
+        includeActions={false}
         AddPackageButton={AddButton}
+        includeCheckbox={false}
+        dynamicPagination={dynamicPagination}
+        totalPage={totalPage}
+        currentPage={page}
+        pageSize={pageSize}
+        setPage={setPage}
+        setPageSize={setPageSize}
+        // showTableHeading={false}
       />
       {showEditStatus && (
         <EditPriceStatus

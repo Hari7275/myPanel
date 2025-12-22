@@ -38,7 +38,7 @@ export const COMMISSIONCOLUMN = [
   },
   {
     Header: "Date",
-    accessor: "updated_at",
+    accessor: "updatedAt",
     Cell: ({ value }) => {
       const date = new Date(value);
       return date.toLocaleString("en-US", {
