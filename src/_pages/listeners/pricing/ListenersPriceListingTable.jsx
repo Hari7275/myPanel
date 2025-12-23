@@ -2,7 +2,10 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Pencil, NotebookPen } from "lucide-react";
 import CommonTable from "../../../_components/table/CommonTable";
 import { PRICECHARTCOLUMN } from "./priceChartColumn";
-import { useGetConsultantsPriceQuery ,useGetConsultantsNewPriceQuery} from "../../../_store/api";
+import {
+  useGetConsultantsPriceQuery,
+  useGetConsultantsNewPriceQuery,
+} from "../../../_store/api";
 import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
@@ -27,11 +30,9 @@ const ListenersPriceListingTable = () => {
 
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const consultantCateg = params.get("type");
+  const consultantCateg = params.get("currency_category");
 
- 
-
-  const convertedConsultantCateg = consultantCateg == 91 ? "A" : "B";
+  // const convertedConsultantCateg = consultantCateg == 91 ? "A" : "B";
 
   const {
     data: fetchData,
@@ -77,15 +78,15 @@ const ListenersPriceListingTable = () => {
               </span>
             )}
 
-          {row.original.status == 2 &&
-            row.original.category == convertedConsultantCateg && (
-              <span
-                className="editIcon"
-                onClick={() => toggleUpdateConsultantPrice(row?.original)}
-              >
-                <Pencil className="iconSmall" />
-              </span>
-            )}
+          {/* {row.original.status == 5 && */}
+          {row.original.user_category == consultantCateg && (
+            <span
+              className="editIcon"
+              onClick={() => toggleUpdateConsultantPrice(row?.original)}
+            >
+              <Pencil className="iconSmall" />
+            </span>
+          )}
         </div>
       ),
     },

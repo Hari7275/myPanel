@@ -54,11 +54,11 @@ const CmsDataList = () => {
       link: "/cms-faq-list",
       permissions: "view_promotional_cards_list",
     },
-    // {
-    //   name: "Dashboard banner",
-    //   link: "/dashboard-banner-metadata",
-    //   permissions: "view_dashboard_banner_list",
-    // },
+    {
+      name: "Buzz List",
+      link: "/cms-buzz-list",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "coach skillls",
     //   link: "/coach-skills-metadata",

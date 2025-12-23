@@ -53,6 +53,20 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["consultants"],
     }),
 
+    // **************************************** update consultant new  price  ****************************************
+
+    updateConsultantNewPriceChart: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `/api/v1/consultant/payment/price-list/admin/update-price/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["consultants"],
+    }),
+
     getConsultantsWallet: builder.query({
       query: ({ consultantId, page, limit }) => ({
         url: `/api/v1/consultant/payment/admin/${consultantId}?page=${page}&limit=${limit}`,
@@ -85,6 +99,7 @@ export const {
   useGetConsultantsNewPriceQuery,
   useUpdateConsultantPriceStatusMutation,
   useUpdateConsultantPriceChartMutation,
+  useUpdateConsultantNewPriceChartMutation,
   useGetConsultantsWalletQuery,
   useGetSessionSlotQuery,
 } = consultantsPriceApiSlice;

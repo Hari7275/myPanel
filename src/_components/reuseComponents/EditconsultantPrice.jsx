@@ -1,48 +1,180 @@
 import React, { useState, useEffect } from "react";
-
+import { useLocation, useParams } from "react-router-dom";
 import ReactModal from "react-modal";
 import { UpdateInputField } from "../../_components/ui/inputForm";
+import {
+  useUpdateConsultantPriceChartMutation,
+  useGetConsultantsNewPriceQuery,
+} from "../../_store/api";
 
-import { useUpdateConsultantPriceChartMutation } from "../../_store/api";
+import { useUpdateConsultantNewPriceChartMutation } from "../../_store/api";
 import toast from "react-hot-toast";
 
 const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
+  const { consultantId } = useParams();
+  const { search } = useLocation();
+  const params = new URLSearchParams(search);
+  const consultantCateg = params.get("currency_category");
+
+  // Fetch all price data to get all category prices
+  const { data: allPricesData } = useGetConsultantsNewPriceQuery(consultantId);
+
   const [formData, setFormData] = useState({
-    current_price: null,
-    discount_price: null,
-    commission: null,
-    consultant_id: null,
+    price_category_a: "",
+    price_category_b: "",
+    price_category_c: "",
+    price_category_d: "",
+    price_category_e: "",
+    price_category_f: "",
+    consultant_category: "",
     id: null,
   });
 
-  // Prefill formData with selectedRow values when modal opens
+  // Category order for comparison
+  const categoryOrder = ["A", "B", "C", "D", "E", "F"];
+
+  // Prefill formData with all category prices
   useEffect(() => {
-    if (selectedRow) {
-      setFormData({
-        current_price: Number(selectedRow.current_price) || "",
-        discount_price: Number(selectedRow.discount_price) || "",
-        commission: Number(selectedRow.commission) || "",
-        consultant_id: selectedRow.consultant_id || "",
-        id: selectedRow?.id,
+    if (allPricesData?.data && consultantCateg && selectedRow) {
+      const currentCategoryIndex = categoryOrder.indexOf(
+        consultantCateg.toUpperCase()
+      );
+
+      // Extract prices for each category from the data array
+      const categoryPrices = {};
+      allPricesData.data.forEach((item) => {
+        if (item.service_type === selectedRow.service_type) {
+          const categoryKey = `price_category_${item.user_category.toLowerCase()}`;
+          categoryPrices[categoryKey] =
+            Number(item.discount_price) || Number(item.price_per_minute) || "";
+        }
       });
+
+      // Get the current category price
+      const currentCategoryKey = `price_category_${consultantCateg.toLowerCase()}`;
+      const currentCategoryPrice = categoryPrices[currentCategoryKey] || "";
+
+      // Initialize form data with existing prices
+      const initialData = {
+        price_category_a: categoryPrices.price_category_a || "",
+        price_category_b: categoryPrices.price_category_b || "",
+        price_category_c: categoryPrices.price_category_c || "",
+        price_category_d: categoryPrices.price_category_d || "",
+        price_category_e: categoryPrices.price_category_e || "",
+        price_category_f: categoryPrices.price_category_f || "",
+        consultant_category: consultantCateg.toUpperCase(),
+        id: selectedRow?.id,
+      };
+
+      // Set previous categories equal to current category price (only within same currency)
+      for (let i = 0; i < currentCategoryIndex; i++) {
+        const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
+        initialData[categoryKey] = currentCategoryPrice;
+      }
+
+      setFormData(initialData);
     }
-  }, [selectedRow]);
+  }, [allPricesData, selectedRow, consultantCateg]);
 
   const [UpdatePricePlan, { isLoading }] =
-    useUpdateConsultantPriceChartMutation();
+    useUpdateConsultantNewPriceChartMutation();
 
   const handleChange = (event) => {
     const { name, value } = event?.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
+
+    // If changing the current category, auto-update previous categories
+    const currentCategoryKey = `price_category_${consultantCateg.toLowerCase()}`;
+    if (name === currentCategoryKey) {
+      const currentCategoryIndex = categoryOrder.indexOf(
+        consultantCateg.toUpperCase()
+      );
+      const updatedData = { ...formData, [name]: value };
+
+      // Auto-update all previous categories to match current category
+      // But only if they're in the same currency (skip A if current is B-F)
+      for (let i = 0; i < currentCategoryIndex; i++) {
+        const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
+        // Skip Category A if we're in B-F (different currency)
+        if (consultantCateg.toUpperCase() !== "A" && categoryOrder[i] === "A") {
+          continue;
+        }
+        updatedData[categoryKey] = value;
+      }
+
+      setFormData(updatedData);
+    } else {
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
+  };
+
+  // Validate prices within the same currency zone
+  const validatePrices = () => {
+    const currentCategoryIndex = categoryOrder.indexOf(
+      consultantCateg.toUpperCase()
+    );
+    const currentCategoryPrice = Number(
+      formData[`price_category_${consultantCateg.toLowerCase()}`]
+    );
+
+    // If consultant is Category A (INR), only validate Category A
+    // Categories B-F are in different currency (USD), so no cross-validation
+    if (consultantCateg.toUpperCase() === "A") {
+      // No validation needed for A since there's nothing before it
+      // And B-F are in different currency
+      return true;
+    }
+
+    // For Categories B-F (all in USD), validate against each other
+    // Start from B (index 1) to skip A (different currency)
+    const startIndex = 1; // Start from Category B
+
+    // Validate previous categories (B onwards, not A)
+    for (let i = startIndex; i < currentCategoryIndex; i++) {
+      const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
+      const categoryPrice = Number(formData[categoryKey]);
+
+      if (categoryPrice < currentCategoryPrice) {
+        toast.error(
+          `Category ${
+            categoryOrder[i]
+          } price ($${categoryPrice}) cannot be less than current category ${consultantCateg.toUpperCase()} price ($${currentCategoryPrice})`
+        );
+        return false;
+      }
+    }
+
+    // Validate next categories (should be greater or equal)
+    for (let i = currentCategoryIndex + 1; i < categoryOrder.length; i++) {
+      const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
+      const categoryPrice = Number(formData[categoryKey]);
+
+      if (categoryPrice && categoryPrice < currentCategoryPrice) {
+        toast.error(
+          `Category ${
+            categoryOrder[i]
+          } price ($${categoryPrice}) cannot be less than current category ${consultantCateg.toUpperCase()} price ($${currentCategoryPrice})`
+        );
+        return false;
+      }
+    }
+
+    return true;
   };
 
   const handleSubmit = async () => {
+    // Validate prices before submission
+    if (!validatePrices()) {
+      return;
+    }
+
     const payload = {
-      // id: formData?.id,
-      current_price: Number(formData?.current_price),
-      discount_price: Number(formData?.discount_price),
-      commission: Number(formData?.commission),
-      consultant_id: Number(formData?.consultant_id),
+      price_category_a: Number(formData?.price_category_a) || 0,
+      price_category_b: Number(formData?.price_category_b) || 0,
+      price_category_c: Number(formData?.price_category_c) || 0,
+      price_category_d: Number(formData?.price_category_d) || 0,
+      price_category_e: Number(formData?.price_category_e) || 0,
+      price_category_f: Number(formData?.price_category_f) || 0,
+      consultant_category: formData?.consultant_category,
     };
 
     try {
@@ -63,10 +195,41 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
       }
 
       console.log("Response from API:", response);
-      onClose();
     } catch (error) {
       console.error("Error updating price plan:", error);
+      toast.error("Error updating price plan");
     }
+  };
+
+  // Helper function to get currency symbol
+  const getCurrencySymbol = (category) => {
+    return category === "A" ? "₹" : "$";
+  };
+
+  // Helper function to check if field should be editable
+  const isFieldEditable = (category) => {
+    const currentCategoryIndex = categoryOrder.indexOf(
+      consultantCateg?.toUpperCase()
+    );
+    const fieldCategoryIndex = categoryOrder.indexOf(category);
+
+    // Current category and categories after it are editable
+    return fieldCategoryIndex >= currentCategoryIndex;
+  };
+
+  // Helper function to check if field should be read-only (auto-synced)
+  const isFieldAutoSynced = (category) => {
+    const currentCategoryIndex = categoryOrder.indexOf(
+      consultantCateg?.toUpperCase()
+    );
+    const fieldCategoryIndex = categoryOrder.indexOf(category);
+
+    // Previous categories are auto-synced (but skip A if current is B-F due to different currency)
+    if (consultantCateg.toUpperCase() !== "A" && category === "A") {
+      return false; // A is editable when consultant is B-F (different currency)
+    }
+
+    return fieldCategoryIndex < currentCategoryIndex;
   };
 
   return (
@@ -84,36 +247,112 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
             display: "block",
             backgroundColor: "#f0f0f0",
             textAlign: "center",
+            padding: "10px",
           }}
         >
           Update Price Plan
+          <div
+            style={{ fontSize: "14px", marginTop: "5px", fontWeight: "normal" }}
+          >
+            Current Consultant Category:{" "}
+            <strong>{consultantCateg?.toUpperCase()}</strong>
+          </div>
+          <div
+            style={{
+              fontSize: "12px",
+              marginTop: "3px",
+              fontWeight: "normal",
+              color: "#666",
+            }}
+          >
+            {consultantCateg?.toUpperCase() === "A"
+              ? "Category A in INR (₹), Categories B-F in USD ($)"
+              : `Categories before ${consultantCateg?.toUpperCase()} (except A) will auto-sync`}
+          </div>
         </h2>
 
         <UpdateInputField
-          label="Current Price"
+          label={`Category A Price (${getCurrencySymbol("A")}) ${
+            isFieldAutoSynced("A") ? "(Auto-synced)" : ""
+          }`}
           type="number"
-          name="current_price"
-          value={formData?.current_price}
+          name="price_category_a"
+          value={formData?.price_category_a}
           onChange={handleChange}
-          placeholder="Current Price"
+          placeholder="Category A Price"
+          disabled={isFieldAutoSynced("A")}
         />
 
         <UpdateInputField
-          label="Discount Price"
+          label={`Category B Price (${getCurrencySymbol("B")}) ${
+            isFieldAutoSynced("B") ? "(Auto-synced)" : ""
+          }`}
           type="number"
-          name="discount_price"
-          value={formData?.discount_price}
+          name="price_category_b"
+          value={formData?.price_category_b}
           onChange={handleChange}
-          placeholder="Discount Price"
+          placeholder="Category B Price"
+          disabled={isFieldAutoSynced("B")}
         />
 
         <UpdateInputField
-          label=" Commission"
+          label={`Category C Price (${getCurrencySymbol("C")}) ${
+            isFieldAutoSynced("C") ? "(Auto-synced)" : ""
+          }`}
           type="number"
-          name="commission"
-          value={formData?.commission}
+          name="price_category_c"
+          value={formData?.price_category_c}
           onChange={handleChange}
-          placeholder="Commission"
+          placeholder="Category C Price"
+          disabled={isFieldAutoSynced("C")}
+        />
+
+        <UpdateInputField
+          label={`Category D Price (${getCurrencySymbol("D")}) ${
+            consultantCateg?.toUpperCase() === "D"
+              ? "(Current)"
+              : isFieldAutoSynced("D")
+              ? "(Auto-synced)"
+              : ""
+          }`}
+          type="number"
+          name="price_category_d"
+          value={formData?.price_category_d}
+          onChange={handleChange}
+          placeholder="Category D Price"
+          disabled={isFieldAutoSynced("D")}
+        />
+
+        <UpdateInputField
+          label={`Category E Price (${getCurrencySymbol("E")}) ${
+            consultantCateg?.toUpperCase() === "E"
+              ? "(Current)"
+              : isFieldAutoSynced("E")
+              ? "(Auto-synced)"
+              : ""
+          }`}
+          type="number"
+          name="price_category_e"
+          value={formData?.price_category_e}
+          onChange={handleChange}
+          placeholder="Category E Price"
+          disabled={isFieldAutoSynced("E")}
+        />
+
+        <UpdateInputField
+          label={`Category F Price (${getCurrencySymbol("F")}) ${
+            consultantCateg?.toUpperCase() === "F"
+              ? "(Current)"
+              : isFieldAutoSynced("F")
+              ? "(Auto-synced)"
+              : ""
+          }`}
+          type="number"
+          name="price_category_f"
+          value={formData?.price_category_f}
+          onChange={handleChange}
+          placeholder="Category F Price"
+          disabled={isFieldAutoSynced("F")}
         />
 
         <div style={{ marginTop: "30px" }}>

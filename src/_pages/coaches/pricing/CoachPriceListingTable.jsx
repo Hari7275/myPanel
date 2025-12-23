@@ -105,7 +105,7 @@ const CoachPriceListingTable = () => {
         columns={columns}
         data={data}
         includeCheckbox={false}
-        tableTitle=" Price Chart"
+        tableTitle="Price Chart"
       />
       {showEditStatus && (
         <EditPriceStatus

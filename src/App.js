@@ -135,6 +135,7 @@ import CmsData from "./_pages/cms-data/CmsData";
 import CmsDashboardBanner from "./_pages/cms-data/cms-dashboard-banner/CmsDashboardBanner";
 import CmsBlogCategories from "./_pages/cms-data/cms-blog-categories/CmsBlogCategories";
 import FAQsList from "./_pages/cms-data/faq-list/FAQsList";
+import CmsBuzzList from "./_pages/cms-data/cms-buzz/CmsBuzzList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -280,6 +281,7 @@ const Layout = () => (
           <Route path="/cms-author-list" element={<CmsBlogAuthor />} />
           <Route path="/cms-blog-list" element={<CmsBlogList />} />
           <Route path="/cms-faq-list" element={<FAQsList />} />
+          <Route path="/cms-buzz-list" element={<CmsBuzzList />} />
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
           <Route path="qd-products" element={<QdProducts />} />
