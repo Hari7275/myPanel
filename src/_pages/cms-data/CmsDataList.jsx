@@ -105,13 +105,13 @@ const CmsDataList = () => {
       <div className="meta-card-container-grid">
         {metadataItems.map(
           (item) =>
-            hasPermission(item?.permissions) && (
+            // hasPermission(item?.permissions) && (
               <CategoryCard
                 key={item.name}
                 link={item.link}
                 label={item.name}
               />
-            )
+            // )
         )}
       </div>
     </>
