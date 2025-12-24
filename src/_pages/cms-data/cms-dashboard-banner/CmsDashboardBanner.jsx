@@ -72,22 +72,22 @@ const CmsDashboardBanner = () => {
   const AddButton = () => {
     return (
       <>
-        {permissions?.["meta_data_section"]?.includes(
+        {/* {permissions?.["meta_data_section"]?.includes(
           "create_dashboard_banner"
-        ) && (
-          <button
-            className="addButton"
-            style={{
-              position: "absolute",
-              right: "20px",
-              backgroundColor: "#18B164",
-              padding: "6px",
-            }}
-            onClick={toggleAddData}
-          >
-            Add Banner
-          </button>
-        )}
+        ) && ( */}
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Banner
+        </button>
+        {/* )} */}
         {/* {permissions?.["meta_data_section"]?.includes(
           "update_dashboard_banner"
         ) && (
@@ -133,26 +133,26 @@ const CmsDashboardBanner = () => {
                 onClick={() => toggleAssignNotice(row.original)}
               />
             </span>
-            {permissions?.["meta_data_section"]?.includes(
+            {/* {permissions?.["meta_data_section"]?.includes(
               "update_dashboard_banner"
-            ) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleUpdateData(row.original)}
-                />
-              </span>
-            )}
-            {permissions?.["meta_data_section"]?.includes(
+            ) && ( */}
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+            {/* )} */}
+            {/* {permissions?.["meta_data_section"]?.includes(
               "delete_dashboard_banner"
-            ) && (
-              <span className="deleteIcon">
-                <Trash
-                  className="iconSmall"
-                  onClick={() => toggleDeleteComponent(row.original)}
-                />
-              </span>
-            )}
+            ) && ( */}
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+            {/* )} */}
           </div>
         ),
       },

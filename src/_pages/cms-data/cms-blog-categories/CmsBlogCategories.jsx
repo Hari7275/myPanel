@@ -68,9 +68,9 @@ const CmsBlogCategories = () => {
   const AddButton = () => {
     return (
       <>
-        {permissions?.["meta_data_section"]?.includes(
+        {/* {permissions?.["meta_data_section"]?.includes(
           "create_dashboard_banner"
-        ) && (
+        ) && ( */}
           <button
             className="addButton"
             style={{
@@ -83,7 +83,7 @@ const CmsBlogCategories = () => {
           >
             Add Blog Category
           </button>
-        )}
+        {/* )} */}
       </>
     );
   };
@@ -96,26 +96,26 @@ const CmsBlogCategories = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {permissions?.["meta_data_section"]?.includes(
+            {/* {permissions?.["meta_data_section"]?.includes(
               "update_dashboard_banner"
-            ) && (
+            ) && ( */}
               <span className="editIcon">
                 <Pencil
                   className="iconSmall"
                   onClick={() => toggleUpdateData(row.original)}
                 />
               </span>
-            )}
-            {permissions?.["meta_data_section"]?.includes(
+            {/* )} */}
+            {/* {permissions?.["meta_data_section"]?.includes(
               "delete_dashboard_banner"
-            ) && (
+            ) && ( */}
               <span className="deleteIcon">
                 <Trash
                   className="iconSmall"
                   onClick={() => toggleDeleteComponent(row.original)}
                 />
               </span>
-            )}
+            {/* )} */}
           </div>
         ),
       },

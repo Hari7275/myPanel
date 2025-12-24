@@ -71,22 +71,22 @@ const CmsBuzzList = () => {
   const AddButton = () => {
     return (
       <>
-        {permissions?.["meta_data_section"]?.includes(
+        {/* {permissions?.["meta_data_section"]?.includes(
           "create_dashboard_banner"
-        ) && (
-          <button
-            className="addButton"
-            style={{
-              position: "absolute",
-              right: "20px",
-              backgroundColor: "#18B164",
-              padding: "6px",
-            }}
-            onClick={toggleAddData}
-          >
-            Add Buzz
-          </button>
-        )}
+        ) && ( */}
+        <button
+          className="addButton"
+          style={{
+            position: "absolute",
+            right: "20px",
+            backgroundColor: "#18B164",
+            padding: "6px",
+          }}
+          onClick={toggleAddData}
+        >
+          Add Buzz
+        </button>
+        {/* )} */}
       </>
     );
   };
@@ -99,26 +99,26 @@ const CmsBuzzList = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {permissions?.["meta_data_section"]?.includes(
+            {/* {permissions?.["meta_data_section"]?.includes(
               "update_dashboard_banner"
-            ) && (
-              <span className="editIcon">
-                <Pencil
-                  className="iconSmall"
-                  onClick={() => toggleUpdateData(row.original)}
-                />
-              </span>
-            )}
-            {permissions?.["meta_data_section"]?.includes(
+            ) && ( */}
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleUpdateData(row.original)}
+              />
+            </span>
+            {/* )} */}
+            {/* {permissions?.["meta_data_section"]?.includes(
               "delete_dashboard_banner"
-            ) && (
-              <span className="deleteIcon">
-                <Trash
-                  className="iconSmall"
-                  onClick={() => toggleDeleteComponent(row.original)}
-                />
-              </span>
-            )}
+            ) && ( */}
+            <span className="deleteIcon">
+              <Trash
+                className="iconSmall"
+                onClick={() => toggleDeleteComponent(row.original)}
+              />
+            </span>
+            {/* )} */}
           </div>
         ),
       },
@@ -134,7 +134,7 @@ const CmsBuzzList = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="CMS Blog List"
+        tableTitle="CMS Buzz List"
         dynamicPagination={dynamicPagination}
         AddPackageButton={AddButton}
         // customFilterComponent={customFilterComponent}

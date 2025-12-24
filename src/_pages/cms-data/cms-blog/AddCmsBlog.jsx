@@ -125,16 +125,18 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
   // Handle react-select changes
   const handleSelectChange = (selectedOptions, actionMeta) => {
     const { name } = actionMeta;
-    
+
     if (name === "category_ids" || name === "recommended_blog_ids") {
       // For multi-select, store array of IDs
-      const ids = selectedOptions ? selectedOptions.map((option) => option.value) : [];
+      const ids = selectedOptions
+        ? selectedOptions.map((option) => option.value)
+        : [];
       setFormData((prevData) => ({ ...prevData, [name]: ids }));
     } else if (name === "author_id") {
       // For single select, store single ID
-      setFormData((prevData) => ({ 
-        ...prevData, 
-        [name]: selectedOptions ? selectedOptions.value : "" 
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: selectedOptions ? selectedOptions.value : "",
       }));
     }
   };
@@ -165,7 +167,10 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
 
     // Categories and Recommendations - format as JSON array string
     newData.append("category_ids", JSON.stringify(formData.category_ids));
-    newData.append("recommended_blog_ids", JSON.stringify(formData.recommended_blog_ids));
+    newData.append(
+      "recommended_blog_ids",
+      JSON.stringify(formData.recommended_blog_ids)
+    );
 
     // Statistics
     newData.append("view_counts", formData.view_counts);
@@ -182,28 +187,58 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
     if (formData.mobile_featured_image) {
       newData.append("mobile_featured_image", formData.mobile_featured_image);
     }
-    newData.append("mobile_featured_image_alt", formData.mobile_featured_image_alt);
-    newData.append("mobile_featured_image_title", formData.mobile_featured_image_title);
-    newData.append("mobile_featured_image_caption", formData.mobile_featured_image_caption);
-    newData.append("mobile_featured_image_description", formData.mobile_featured_image_description);
+    newData.append(
+      "mobile_featured_image_alt",
+      formData.mobile_featured_image_alt
+    );
+    newData.append(
+      "mobile_featured_image_title",
+      formData.mobile_featured_image_title
+    );
+    newData.append(
+      "mobile_featured_image_caption",
+      formData.mobile_featured_image_caption
+    );
+    newData.append(
+      "mobile_featured_image_description",
+      formData.mobile_featured_image_description
+    );
 
     // Mobile Title Image
     if (formData.mobile_title_image) {
       newData.append("mobile_title_image", formData.mobile_title_image);
     }
     newData.append("mobile_title_image_alt", formData.mobile_title_image_alt);
-    newData.append("mobile_title_image_title", formData.mobile_title_image_title);
-    newData.append("mobile_title_image_caption", formData.mobile_title_image_caption);
-    newData.append("mobile_title_image_description", formData.mobile_title_image_description);
+    newData.append(
+      "mobile_title_image_title",
+      formData.mobile_title_image_title
+    );
+    newData.append(
+      "mobile_title_image_caption",
+      formData.mobile_title_image_caption
+    );
+    newData.append(
+      "mobile_title_image_description",
+      formData.mobile_title_image_description
+    );
 
     // Web Featured Image
     if (formData.web_featured_image) {
       newData.append("web_featured_image", formData.web_featured_image);
     }
     newData.append("web_featured_image_alt", formData.web_featured_image_alt);
-    newData.append("web_featured_image_title", formData.web_featured_image_title);
-    newData.append("web_featured_image_caption", formData.web_featured_image_caption);
-    newData.append("web_featured_image_description", formData.web_featured_image_description);
+    newData.append(
+      "web_featured_image_title",
+      formData.web_featured_image_title
+    );
+    newData.append(
+      "web_featured_image_caption",
+      formData.web_featured_image_caption
+    );
+    newData.append(
+      "web_featured_image_description",
+      formData.web_featured_image_description
+    );
 
     // Web Title Image
     if (formData.web_title_image) {
@@ -212,7 +247,10 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
     newData.append("web_title_image_alt", formData.web_title_image_alt);
     newData.append("web_title_image_title", formData.web_title_image_title);
     newData.append("web_title_image_caption", formData.web_title_image_caption);
-    newData.append("web_title_image_description", formData.web_title_image_description);
+    newData.append(
+      "web_title_image_description",
+      formData.web_title_image_description
+    );
 
     try {
       const response = await createData({ body: newData }).unwrap();
@@ -310,18 +348,6 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
             </div>
 
             <div className="cms-form-group">
-              <label className="cms-label">Tag Line</label>
-              <textarea
-                name="tag_line"
-                value={formData.tag_line}
-                onChange={handleChange}
-                placeholder="Enter tag line"
-                className="cms-textarea"
-                rows="3"
-              />
-            </div>
-
-            <div className="cms-form-group">
               <label className="cms-label">Description *</label>
               <RichTextEditor
                 value={formData.description}
@@ -378,7 +404,17 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
                 classNamePrefix="cms-select"
               />
             </div>
-
+            <div className="cms-form-group">
+              <label className="cms-label">Tag Line</label>
+              <textarea
+                name="tag_line"
+                value={formData.tag_line}
+                onChange={handleChange}
+                placeholder="Enter tag line"
+                className="cms-textarea"
+                rows="3"
+              />
+            </div>
             <div className="cms-form-group">
               <label className="cms-label">Written By</label>
               <input
@@ -807,7 +843,7 @@ const AddCmsBlog = ({ isOpen, onClose }) => {
         <div className="cms-button-group">
           <button
             className="cms-btn cms-btn-submit"
-            onClick={handleSubmit} 
+            onClick={handleSubmit}
             disabled={isLoading}
           >
             {isLoading ? "Submitting..." : "Submit"}
