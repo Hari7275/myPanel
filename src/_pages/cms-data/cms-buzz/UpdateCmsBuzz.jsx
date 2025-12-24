@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 const UpdateCmsBuzz = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
     title: "",
-    sub_title: "",
+    subTitle: "",
     slug: "",
     reference_url: "",
     description: "",
@@ -43,7 +43,7 @@ const UpdateCmsBuzz = ({ isOpen, onClose, selectedRow }) => {
     if (selectedRow && isOpen) {
       setFormData({
         title: selectedRow.title || "",
-        sub_title: selectedRow.sub_title || "",
+        subTitle: selectedRow.subTitle || "",
         // Handle slug object structure
         slug: selectedRow.slug?.current || selectedRow.slug || "",
         reference_url: selectedRow.reference_url || "",
@@ -114,7 +114,7 @@ const UpdateCmsBuzz = ({ isOpen, onClose, selectedRow }) => {
 
     // Basic Information
     newData.append("title", formData.title);
-    newData.append("sub_title", formData.sub_title);
+    newData.append("sub_title", formData.subTitle);
     newData.append("slug", formData.slug);
     newData.append("reference_url", formData.reference_url);
     newData.append("description", formData.description);
@@ -205,8 +205,8 @@ const UpdateCmsBuzz = ({ isOpen, onClose, selectedRow }) => {
               <label className="cms-label">Sub Title</label>
               <input
                 type="text"
-                name="sub_title"
-                value={formData.sub_title}
+                name="subTitle"
+                value={formData.subTitle}
                 onChange={handleChange}
                 placeholder="Enter subtitle"
                 className="cms-input-field"
