@@ -19,7 +19,7 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
     getNewCommissionList: builder.query({
       query: ({ consultantId, page, size }) => ({
         // url: `api/v1/consultant/profile/consultant-price-list/admin/consultant-commission/1518?page=1&limit=10`,,
-        url: `/api/v1/consultant/payment/price-list/admin/consultant-commission/${consultantId}?page=${page}&limit=${size}`,
+        url: `/api/v1/consultant/payment/price-list/admin/consultant-commission/${consultantId}?page=${page}&size=${size}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",
@@ -41,8 +41,6 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["commission", "consultants"],
     }),
-
-
 
     createNewCommission: builder.mutation({
       query: ({ body, consultantId }) => ({

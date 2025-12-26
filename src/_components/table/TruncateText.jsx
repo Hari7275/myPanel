@@ -5,12 +5,12 @@ const TruncateText = ({ text, wordLimit = 5 }) => {
 
   if (!text) return null;
 
-  const words = text.split(" ");
-  const isLong = words.length > wordLimit;
+  const words = text?.split(" ");
+  const isLong = words?.length > wordLimit;
 
   const visibleText = expanded
     ? text
-    : words.slice(0, wordLimit).join(" ") + (isLong ? "..." : "");
+    : words?.slice(0, wordLimit).join(" ") + (isLong ? "..." : "");
 
   return (
     <span>

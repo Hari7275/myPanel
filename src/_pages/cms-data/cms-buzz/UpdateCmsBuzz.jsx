@@ -33,7 +33,7 @@ const UpdateCmsBuzz = ({ isOpen, onClose, selectedRow }) => {
     mobile_image_alt: "",
     mobile_image_title: "",
     mobile_image_caption: "",
-    mobile_image_description: "",
+    mobile_image_description: "", 
   });
 
   const [UpdateData, { isLoading }] = useUpdateCmsBuzzListMutation();

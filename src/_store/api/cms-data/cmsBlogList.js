@@ -20,7 +20,7 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
         if (page) params.append("page", page);
         if (pageSize) params.append("limit", pageSize);
         return {
-          url: `/api/v1/content-management/blogs?${params.toString()}`,
+          url: `/api/v1/content-management/admin/blogs?${params.toString()}`,
           method: "GET",
           headers: {
             Authorization: "Bearer admin_token",

@@ -75,7 +75,7 @@ const NameCell = ({ row }) => {
 export const CMSBLOGCOLUMN = [
   {
     Header: "Id",
-    accessor: "id",
+    accessor: "_id",
   },
   {
     Header: "Title",
@@ -88,7 +88,7 @@ export const CMSBLOGCOLUMN = [
   },
   {
     Header: "Slug",
-    accessor: "slug",
+    accessor: "slug.current",
     Cell: ({ value }) => <TruncateText text={value} wordLimit={5} />,
   },
 
