@@ -20,7 +20,7 @@ const CmsBuzzList = () => {
   const [data, setData] = useState([]);
   const permissions = usePermissions();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // handeling api  fetching data and deleting data

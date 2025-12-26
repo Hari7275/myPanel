@@ -20,7 +20,7 @@ const CmsBlogList = () => {
   const [data, setData] = useState([]);
   const permissions = usePermissions();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(30);
+  const [pageSize, setPageSize] = useState(25);
   const [dynamicPagination, setDynamicPagination] = useState(true);
 
   // handeling api  fetching data and deleting data
@@ -126,7 +126,7 @@ const CmsBlogList = () => {
     [data]
   );
 
-  const totalPage = fetchData?.meta?.total_pages || 1;
+  const totalPage = fetchData?.pagination?.totalPages || 1;
 
   return (
     <>

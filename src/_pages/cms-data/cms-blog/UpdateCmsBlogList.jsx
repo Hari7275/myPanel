@@ -225,7 +225,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
   };
 
   const handleSubmit = async () => {
-    if (!selectedRow?.id) {
+    if (!selectedRow?._id) {
       toast.error("Blog ID is missing");
       return;
     }
@@ -338,7 +338,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
     try {
       // Pass the blog ID along with the form data
       const response = await UpdateData({
-        id: selectedRow.id,
+        id: selectedRow._id,
         body: newData,
       }).unwrap();
 
