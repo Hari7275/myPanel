@@ -45,9 +45,9 @@ const NameCell = ({ row }) => {
     <div className="column_container">
       <div className="card-img" style={{ width: "100px" }}>
         <img
-          src={row?.original?.web_featured_image?.url || "avatar11.png"}
-          alt={row?.original?.web_featured_image?.alt}
-          title={row?.original?.web_featured_image?.title}
+          src={row?.original?.webFeaturedImage?.url || "avatar11.png"}
+          alt={row?.original?.webFeaturedImage?.alt}
+          title={row?.original?.webFeaturedImage?.title}
           width="80"
           height="40"
           onClick={handleImageClick}
@@ -63,8 +63,8 @@ const NameCell = ({ row }) => {
         overlayClassName="overlay"
       >
         <img
-          src={row?.original?.web_featured_image?.url || "avatar11.png"}
-          alt={row?.original?.web_featured_image?.alt}
+          src={row?.original?.webFeaturedImage?.url || "avatar11.png"}
+          alt={row?.original?.webFeaturedImage?.alt}
           width="100%"
           height="600px"
         />

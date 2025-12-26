@@ -11,6 +11,7 @@ import RichTextEditor from "../../../_components/table/RichTextEditor";
 import toast from "react-hot-toast";
 
 const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
+  console.log("selectedRow", selectedRow);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",
@@ -87,62 +88,60 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
 
       setFormData({
         title: selectedRow.title || "",
-        slug: selectedRow.slug || "",
-        heading_line_2: selectedRow.heading_line_2 || "",
-        sub_title: selectedRow.sub_title || "",
-        tag_line: selectedRow.tag_line || "",
+        slug: selectedRow.slug?.current || "",
+        heading_line_2: selectedRow.headingLine2 || "", // CHANGED: headingLine2 (camelCase)
+        sub_title: selectedRow.subTitle || "",
+        tag_line: selectedRow.tagLine || "",
         description: selectedRow.description || "",
-        meta_description: selectedRow.meta_description || "",
-        meta_keywords: selectedRow.meta_keywords || "",
-        author_id: selectedRow.author_id || selectedRow.author?.id || "",
-        written_by: selectedRow.written_by || "",
+        meta_description: selectedRow.metaDescription || "",
+        meta_keywords: selectedRow.metaKeywords || "",
+        author_id: selectedRow.authorId || selectedRow.author?._id || "", // CHANGED: authorId and author._id
+        written_by: selectedRow.writtenBy || "", // CHANGED: writtenBy (camelCase)
         category_ids: selectedRow.category_ids || [],
         recommended_blog_ids: selectedRow.recommended_blog_ids || [],
-        view_counts: selectedRow.view_counts || "",
-        likes_count: selectedRow.likes_count || "",
-        mobile_views: selectedRow.mobile_views || "",
-        web_views: selectedRow.web_views || "",
+        view_counts: selectedRow.viewCounts || "",
+        likes_count: selectedRow.likesCount || "",
+        mobile_views: selectedRow.mobileViews || "",
+        web_views: selectedRow.webViews || "",
         is_featured:
           selectedRow.is_featured === 1 || selectedRow.is_featured === true,
         is_published:
           selectedRow.is_published === 1 || selectedRow.is_published === true,
         publish_date: formatDateTime(selectedRow.publish_date),
 
-        // Mobile Featured Image
-        mobile_featured_image: null, // Keep null, will only update if new file is selected
-        mobile_featured_image_alt: selectedRow.mobile_featured_image_alt || "",
+        // Mobile Featured Image - keep null for file input, load metadata
+        mobile_featured_image: null, // CHANGED: null instead of URL
+        mobile_featured_image_alt: selectedRow.mobileFeaturedImage?.alt || "",
         mobile_featured_image_title:
-          selectedRow.mobile_featured_image_title || "",
+          selectedRow.mobileFeaturedImage?.title || "",
         mobile_featured_image_caption:
-          selectedRow.mobile_featured_image_caption || "",
+          selectedRow.mobileFeaturedImage?.caption || "",
         mobile_featured_image_description:
-          selectedRow.mobile_featured_image_description || "",
+          selectedRow.mobileFeaturedImage?.description || "",
 
         // Mobile Title Image
         mobile_title_image: null,
-        mobile_title_image_alt: selectedRow.mobile_title_image_alt || "",
-        mobile_title_image_title: selectedRow.mobile_title_image_title || "",
-        mobile_title_image_caption:
-          selectedRow.mobile_title_image_caption || "",
+        mobile_title_image_alt: selectedRow.mobileTitleImage?.alt || "", // CHANGED: mobileTitleImage (camelCase)
+        mobile_title_image_title: selectedRow.mobileTitleImage?.title || "",
+        mobile_title_image_caption: selectedRow.mobileTitleImage?.caption || "",
         mobile_title_image_description:
-          selectedRow.mobile_title_image_description || "",
+          selectedRow.mobileTitleImage?.description || "",
 
         // Web Featured Image
         web_featured_image: null,
-        web_featured_image_alt: selectedRow.web_featured_image_alt || "",
-        web_featured_image_title: selectedRow.web_featured_image_title || "",
-        web_featured_image_caption:
-          selectedRow.web_featured_image_caption || "",
+        web_featured_image_alt: selectedRow.webFeaturedImage?.alt || "", // CHANGED: webFeaturedImage (camelCase)
+        web_featured_image_title: selectedRow.webFeaturedImage?.title || "",
+        web_featured_image_caption: selectedRow.webFeaturedImage?.caption || "",
         web_featured_image_description:
-          selectedRow.web_featured_image_description || "",
+          selectedRow.webFeaturedImage?.description || "",
 
         // Web Title Image
         web_title_image: null,
-        web_title_image_alt: selectedRow.web_title_image_alt || "",
-        web_title_image_title: selectedRow.web_title_image_title || "",
-        web_title_image_caption: selectedRow.web_title_image_caption || "",
+        web_title_image_alt: selectedRow.webTitleImage?.alt || "", // CHANGED: webTitleImage (camelCase)
+        web_title_image_title: selectedRow.webTitleImage?.title || "",
+        web_title_image_caption: selectedRow.webTitleImage?.caption || "",
         web_title_image_description:
-          selectedRow.web_title_image_description || "",
+          selectedRow.webTitleImage?.description || "",
       });
     }
   }, [selectedRow, isOpen]);
@@ -686,7 +685,8 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.mobile_featured_image.name}
                 </span>
               )}
-              {selectedRow?.mobile_featured_image &&
+
+              {selectedRow?.mobileFeaturedImage &&
                 !formData.mobile_featured_image && (
                   <span className="cms-file-info">
                     Current image exists (upload new to replace)
@@ -761,7 +761,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.mobile_title_image.name}
                 </span>
               )}
-              {selectedRow?.mobile_title_image &&
+              {selectedRow?.mobileTitleImage &&
                 !formData.mobile_title_image && (
                   <span className="cms-file-info">
                     Current image exists (upload new to replace)
@@ -836,7 +836,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.web_featured_image.name}
                 </span>
               )}
-              {selectedRow?.web_featured_image &&
+              {selectedRow?.webFeaturedImage &&
                 !formData.web_featured_image && (
                   <span className="cms-file-info">
                     Current image exists (upload new to replace)
@@ -911,7 +911,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                   {formData.web_title_image.name}
                 </span>
               )}
-              {selectedRow?.web_title_image && !formData.web_title_image && (
+              {selectedRow?.webTitleImage && !formData.web_title_image && (
                 <span className="cms-file-info">
                   Current image exists (upload new to replace)
                 </span>
