@@ -15,10 +15,11 @@ export const cmsBlogListApiSlice = apiSlice.injectEndpoints({
     // }),
 
     getCmsBlogList: builder.query({
-      query: ({ page, pageSize }) => {
+      query: ({ page, pageSize, blogSlug }) => {
         const params = new URLSearchParams({});
         if (page) params.append("page", page);
         if (pageSize) params.append("limit", pageSize);
+        if (blogSlug) params.append("search", blogSlug);
         return {
           url: `/api/v1/content-management/admin/blogs?${params.toString()}`,
           method: "GET",

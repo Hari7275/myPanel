@@ -60,6 +60,7 @@
 
 // export default RichTextEditor;
 
+
 import React, { useRef, useMemo, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -189,6 +190,32 @@ const RichTextEditor = ({
           content: "A";
           font-size: 18px;
           font-weight: bold;
+        }
+
+        /* Active state for drop cap button */
+        .ql-dropcap.ql-active {
+          background-color: #06c !important;
+          color: white !important;
+        }
+
+        .ql-dropcap.ql-active:after {
+          color: white !important;
+        }
+
+        /* Drop cap styling - EXACT match to Sanity */
+        .ql-editor .drop-cap {
+          float: left !important;
+          font-size: 66px !important;
+          padding-top: 5px !important;
+          line-height: 0.83 !important;
+          margin-right: 5px !important;
+          display: block !important;
+          position: relative !important;
+        }
+
+        /* Remove background in editor for cleaner look */
+        .ql-editor .drop-cap {
+          background-color: transparent;
         }
       `}</style>
       <ReactQuill

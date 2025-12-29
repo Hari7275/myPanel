@@ -6,6 +6,7 @@ import DeleteComponent from "../../payments/DeleteComponent";
 import AddCmsBlog from "./AddCmsBlog";
 import UpdateCmsBlogList from "./UpdateCmsBlogList";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import { debounce } from "lodash";
 
 import {
   useGetCmsBlogListQuery,
@@ -20,13 +21,17 @@ const CmsBlogList = () => {
   const [data, setData] = useState([]);
   const permissions = usePermissions();
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(25);
+  const [pageSize, setPageSize] = useState(50);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+
+  const [blogSlug, setBlogSlug] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   // handeling api  fetching data and deleting data
   const { data: fetchData } = useGetCmsBlogListQuery({
     page,
     pageSize,
+    blogSlug,
   });
   const [deleteData] = useDeleteCmsBlogAuthorMutation();
 
@@ -126,6 +131,42 @@ const CmsBlogList = () => {
     [data]
   );
 
+  // ✅ Create debounced function only once
+  const debouncedSearchBlogSlug = useMemo(
+    () => debounce((value) => setBlogSlug(value), 1500),
+    []
+  );
+
+  const handleBlogSlugSearch = (e) => {
+    const value = e?.target?.value || "";
+    setSearchInput(value); // Update input immediately
+    setPage(1);
+    debouncedSearchBlogSlug(value);
+  };
+  const customFilterComponent = () => (
+    <div
+      style={{
+        width: "100%",
+        height: "35px",
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <input
+        className="inputBox"
+        placeholder="Search Any Blog"
+        // value={blogSlug}
+        value={searchInput}
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "20%",
+        }}
+        onChange={handleBlogSlugSearch}
+      />
+    </div>
+  );
+
   const totalPage = fetchData?.pagination?.totalPages || 1;
 
   return (
@@ -137,7 +178,7 @@ const CmsBlogList = () => {
         tableTitle="CMS Blog List"
         dynamicPagination={dynamicPagination}
         AddPackageButton={AddButton}
-        // customFilterComponent={customFilterComponent}
+        customFilterComponent={customFilterComponent}
         totalPage={totalPage}
         currentPage={page}
         pageSize={pageSize}
