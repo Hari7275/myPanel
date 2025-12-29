@@ -448,18 +448,6 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
             </div>
 
             <div className="cms-form-group">
-              <label className="cms-label">Tag Line</label>
-              <textarea
-                name="tag_line"
-                value={formData.tag_line}
-                onChange={handleChange}
-                placeholder="Enter tag line"
-                className="cms-textarea"
-                rows="3"
-              />
-            </div>
-
-            <div className="cms-form-group">
               <label className="cms-label">Description *</label>
               <RichTextEditor
                 value={formData.description}
@@ -527,6 +515,18 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
                 onChange={handleChange}
                 placeholder="Enter author name"
                 className="cms-input-field"
+              />
+            </div>
+
+            <div className="cms-form-group">
+              <label className="cms-label">Tag Line</label>
+              <textarea
+                name="tag_line"
+                value={formData.tag_line}
+                onChange={handleChange}
+                placeholder="Enter tag line"
+                className="cms-textarea"
+                rows="3"
               />
             </div>
           </div>

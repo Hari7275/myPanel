@@ -60,21 +60,33 @@
 
 // export default RichTextEditor;
 
-
 import React, { useRef, useMemo, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
-// Create custom Drop Cap format
+// Register custom Drop Cap format BEFORE component definition
 const Inline = Quill.import('blots/inline');
 
 class DropCapBlot extends Inline {
   static blotName = 'dropcap';
   static tagName = 'span';
   static className = 'drop-cap';
+  
+  static create(value) {
+    let node = super.create();
+    node.setAttribute('data-dropcap', 'true');
+    return node;
+  }
+  
+  static formats(node) {
+    return node.getAttribute('data-dropcap') === 'true';
+  }
 }
 
-Quill.register(DropCapBlot);
+// Register only once
+if (!Quill.imports['formats/dropcap']) {
+  Quill.register(DropCapBlot, true);
+}
 
 const RichTextEditor = ({
   value,
@@ -177,33 +189,6 @@ const RichTextEditor = ({
           content: "A";
           font-size: 18px;
           font-weight: bold;
-        }
-
-        /* Active state for drop cap button */
-        .ql-dropcap.ql-active {
-          background-color: #06c !important;
-          color: white !important;
-        }
-
-        .ql-dropcap.ql-active:after {
-          color: white !important;
-        }
-
-        /* Drop cap styling - EXACT match to Sanity */
-        .drop-cap {
-          float: left !important;
-          font-size: 66px !important;
-          padding-top: 5px !important;
-          line-height: 0.83 !important;
-          margin-right: 5px !important;
-          display: block !important;
-          position: relative !important;
-        }
-
-        /* Optional: Add visual indicator in editor */
-        .ql-editor .drop-cap {
-          background-color: rgba(6, 204, 204, 0.1);
-          border-radius: 4px;
         }
       `}</style>
       <ReactQuill
