@@ -15,7 +15,7 @@ const StatusSwitch = ({ row }) => {
 
     try {
       await updateStatus({
-        id: row.original.id,
+        id: row.original._id,
         body: { is_published: newStatus },
       });
     } catch (error) {

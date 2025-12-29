@@ -10,7 +10,7 @@ const RichTextEditor = ({
 }) => {
   const modules = {
     toolbar: [
-      [{ header: [1, 2, 3, false] }],
+      [{ header: [1, 2, 3, 5, false] }],
       ["bold", "italic", "underline", "strike"],
       [{ list: "ordered" }, { list: "bullet" }],
       [{ script: "sub" }, { script: "super" }],
