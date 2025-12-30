@@ -31,7 +31,7 @@ export const WALLETCHARTCOLUMN = [
   },
   {
     Header: "Order Type",
-    accessor: "order_type",
+    accessor: "service_type",
     Cell: ({ value }) => OrderType(value) || "N/A",
   },
 
@@ -41,12 +41,12 @@ export const WALLETCHARTCOLUMN = [
   },
   {
     Header: "Amount",
-    accessor: "amount",
+    accessor: "amount_in_consultant_currency",
     Cell: CurrencyLabel, // <-- FIXED
   },
   {
-    Header: "Balance",
-    accessor: "remaining_balance",
+    Header: " Balance",
+    accessor: "remaining_balance_in_consultant_currency",
     Cell: CurrencyLabel, // <-- FIXED
   },
   {
