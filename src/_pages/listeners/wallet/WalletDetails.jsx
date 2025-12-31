@@ -66,10 +66,10 @@ const WalletDetails = () => {
       label: "Today Earning",
       value: data?.walletDetails?.today_earning || "0",
     },
-    {
-      label: "This Week Earning",
-      value: data?.walletDetails?.last_week_earning || "0",
-    },
+    // {
+    //   label: "This Week Earning",
+    //   value: data?.walletDetails?.last_week_earning || "0",
+    // },
     {
       label: "This Month Earning",
       value: data?.walletDetails?.last_month_earning || "0",
