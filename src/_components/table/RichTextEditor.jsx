@@ -46,7 +46,7 @@ const RichTextEditor = ({
     }
   };
 
-  // Update button state when selection changesssf
+  // Update button state when selection changesmm
   useEffect(() => {
     const editor = quillRef.current?.getEditor();
     if (!editor) return;
