@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { Switch } from "@mui/material";
 import { useUpdateCmsBlogListMutation } from "../../../_store/api";
 import UseImageModal from "../../../_components/table/CommonImageModal";
@@ -8,6 +8,11 @@ import TruncateText from "../../../_components/table/TruncateText";
 const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.is_published);
   const [updateStatus, { isLoading }] = useUpdateCmsBlogListMutation();
+
+  // Add this useEffect to sync state when row changes
+  useEffect(() => {
+    setStatus(row.original.is_published);
+  }, [row.original.is_published]);
 
   const handleToggle = async () => {
     const newStatus = status == 1 ? 0 : 1;
