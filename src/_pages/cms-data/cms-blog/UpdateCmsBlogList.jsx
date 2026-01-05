@@ -394,7 +394,7 @@ const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
       <div className="cms-modal-container">
         <h2 className="cms-modal-heading">Update Blog Post</h2>
 
-        <div className="cms-form-wrapper">
+        <div className="cms-form-wrapper cms-scrollable-content">
           {/* Basic Information */}
           <div className="cms-section">
             <h3 className="cms-section-title">Basic Information</h3>

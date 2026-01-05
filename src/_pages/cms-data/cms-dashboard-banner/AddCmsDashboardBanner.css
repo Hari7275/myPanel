@@ -309,3 +309,17 @@
   background-color: #e3f2fd;
   border-radius: 3px;
 }
+
+/* ************************************************ Modal scrollable content ************************************************ */
+.cms-scrollable-content {
+  max-height: calc(80vh - 150px); /* Adjust based on header and button height */
+  overflow-y: scroll;
+  padding-right: 10px;
+  margin-bottom: 20px;
+}
+
+/* For Firefox */
+.cms-scrollable-content {
+  scrollbar-width: auto;
+  scrollbar-color: #888 #f1f1f1;
+}
