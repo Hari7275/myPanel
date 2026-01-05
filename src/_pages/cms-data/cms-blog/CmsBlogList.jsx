@@ -7,6 +7,7 @@ import AddCmsBlog from "./AddCmsBlog";
 import UpdateCmsBlogList from "./UpdateCmsBlogList";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { debounce } from "lodash";
+import { Atom } from "react-loading-indicators";
 
 import {
   useGetCmsBlogListQuery,
@@ -28,7 +29,7 @@ const CmsBlogList = () => {
   const [searchInput, setSearchInput] = useState("");
 
   // handeling api  fetching data and deleting data
-  const { data: fetchData } = useGetCmsBlogListQuery({
+  const { data: fetchData, isLoading } = useGetCmsBlogListQuery({
     page,
     pageSize,
     blogSlug,
@@ -168,6 +169,14 @@ const CmsBlogList = () => {
   );
 
   const totalPage = fetchData?.pagination?.totalPages || 1;
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>

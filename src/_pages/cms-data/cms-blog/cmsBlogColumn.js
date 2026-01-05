@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
 import { useUpdateCmsBlogListMutation } from "../../../_store/api";
 import UseImageModal from "../../../_components/table/CommonImageModal";
