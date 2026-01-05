@@ -20,7 +20,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
     dispatch(setCurrentConsultant(value));
   };
 
-    const navigationRoute = {
+  const navigationRoute = {
     1: `/astrologer/${value}`,
     2: `/coaches/${value}`,
     3: `/listeners/${value}`,
@@ -55,17 +55,27 @@ export const PAYABLECOLUMN = [
   },
 
   {
-    Header: "Total Earning (₹)",
-    accessor: "total_credit",
+    Header: "Total Earning",
+    accessor: "lifetime_earning_in_consultant_currency",
+    Cell: ({ value, row }) => {
+      let currency = row.original.consultant_currency == "INR" ? "₹" : "$";
+
+      return `${currency} ${value}`;
+    },
   },
 
+  // {
+  //   Header: " Total Debit Amount (₹)",
+  //   accessor: "total_debit",
+  // },
   {
-    Header: " Total Debit Amount (₹)",
-    accessor: "total_debit",
-  },
-  {
-    Header: "Payable Amount (₹)",
-    accessor: "remaining_amount",
+    Header: "Payable Amount",
+    accessor: "payable_amount_in_consultant_currency",
+    Cell: ({ value, row }) => {
+      let currency = row.original.consultant_currency == "INR" ? "₹" : "$";
+
+      return `${currency} ${value}`;
+    },
   },
 ];
 

@@ -33,7 +33,6 @@ const PayableAmountHistory = () => {
   } = useGetPayableListQuery({
     page,
     size: pageSize,
-
     consultant_id: consultantId,
     orderType: appliedFilters.orderType,
     status: appliedFilters.status,
@@ -42,8 +41,9 @@ const PayableAmountHistory = () => {
   });
 
   useEffect(() => {
-    if (fetchData && fetchData?.data && fetchData?.data?.data) {
-      const result = fetchData?.data?.data?.filter((item) => item.status !== 1);
+    if (fetchData && fetchData?.data && fetchData?.data?.records) {
+      // const result = fetchData?.data?.data?.filter((item) => item.status !== 1);
+      const result = fetchData?.data?.records;
       setData(result);
     } else {
       setData([]);
@@ -117,7 +117,7 @@ const PayableAmountHistory = () => {
         />
       </div>
 
-      <div
+      {/* <div
         style={{ marginLeft: "20px", position: "relative" }}
         className="filter-button-wrapper"
       >
@@ -132,7 +132,7 @@ const PayableAmountHistory = () => {
           isOpen={showPayablePopover}
           onClose={() => setShowPayablePopover(false)}
         />
-      </div>
+      </div> */}
 
       <div
         style={{ marginLeft: "20px", position: "relative", display: "flex" }}
@@ -158,9 +158,11 @@ const PayableAmountHistory = () => {
   );
 
   // const totalPage = fetchData?.meta?.total_page || 1;
-  const totalPage = fetchData?.data?.total
-    ? Math.ceil(fetchData.data.total / pageSize)
-    : 1;
+  // const totalPage = fetchData?.data?.total
+  //   ? Math.ceil(fetchData.data.total / pageSize)
+  //   : 1;
+  const totalPage = fetchData?.meta?.total_page || 1;
+  // ? Math.ceil(fetchData.data.total / pageSize)
 
   if (isLoading) {
     return (

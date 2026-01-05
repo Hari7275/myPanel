@@ -1,91 +1,28 @@
-// import React from "react";
-// import ReactQuill from "react-quill";
-// import "react-quill/dist/quill.snow.css";
-
-// const RichTextEditor = ({
-//   value,
-//   onChange,
-//   placeholder = "Write something...",
-//   height = "200px",
-// }) => {
-//   const modules = {
-//     toolbar: [
-//       [{ header: [1, 2, 3, 5, false] }],
-//       ["bold", "italic", "underline", "strike"],
-//       [{ list: "ordered" }, { list: "bullet" }],
-//       [{ script: "sub" }, { script: "super" }],
-//       [{ indent: "-1" }, { indent: "+1" }],
-//       [{ direction: "rtl" }],
-//       [{ color: [] }, { background: [] }],
-//       [{ font: [] }],
-//       [{ align: [] }],
-//       ["link", "image", "video"],
-//       ["clean"],
-//     ],
-//   };
-
-//   const formats = [
-//     "header",
-//     "bold",
-//     "italic",
-//     "underline",
-//     "strike",
-//     "blockquote",
-//     "list",
-//     "bullet",
-//     "script",
-//     "indent",
-//     "direction",
-//     "color",
-//     "background",
-//     "font",
-//     "align",
-//     "link",
-//     "image",
-//     "video",
-//   ];
-
-//   return (
-//     <ReactQuill
-//       theme="snow"
-//       value={value}
-//       onChange={onChange}
-//       modules={modules}
-//       formats={formats}
-//       placeholder={placeholder}
-//       style={{ height, marginBottom: "50px" }}
-//     />
-//   );
-// };
-
-// export default RichTextEditor;
-
-
 import React, { useRef, useMemo, useEffect } from "react";
 import ReactQuill, { Quill } from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 // Register custom Drop Cap format BEFORE component definition
-const Inline = Quill.import('blots/inline');
+const Inline = Quill.import("blots/inline");
 
 class DropCapBlot extends Inline {
-  static blotName = 'dropcap';
-  static tagName = 'span';
-  static className = 'drop-cap';
-  
+  static blotName = "dropcap";
+  static tagName = "span";
+  static className = "drop-cap";
+
   static create(value) {
     let node = super.create();
-    node.setAttribute('data-dropcap', 'true');
+    node.setAttribute("data-dropcap", "true");
     return node;
   }
-  
+
   static formats(node) {
-    return node.getAttribute('data-dropcap') === 'true';
+    return node.getAttribute("data-dropcap") === "true";
   }
 }
 
 // Register only once
-if (!Quill.imports['formats/dropcap']) {
+if (!Quill.imports["formats/dropcap"]) {
   Quill.register(DropCapBlot, true);
 }
 
@@ -105,7 +42,7 @@ const RichTextEditor = ({
     const range = editor.getSelection();
     if (range && range.length > 0) {
       const format = editor.getFormat(range);
-      editor.formatText(range.index, range.length, 'dropcap', !format.dropcap);
+      editor.formatText(range.index, range.length, "dropcap", !format.dropcap);
     }
   };
 
@@ -118,47 +55,50 @@ const RichTextEditor = ({
       const range = editor.getSelection();
       if (range) {
         const format = editor.getFormat(range);
-        const button = document.querySelector('.ql-dropcap');
+        const button = document.querySelector(".ql-dropcap");
         if (button) {
           if (format.dropcap) {
-            button.classList.add('ql-active');
+            button.classList.add("ql-active");
           } else {
-            button.classList.remove('ql-active');
+            button.classList.remove("ql-active");
           }
         }
       }
     };
 
-    editor.on('selection-change', updateButtonState);
-    editor.on('text-change', updateButtonState);
+    editor.on("selection-change", updateButtonState);
+    editor.on("text-change", updateButtonState);
 
     return () => {
-      editor.off('selection-change', updateButtonState);
-      editor.off('text-change', updateButtonState);
+      editor.off("selection-change", updateButtonState);
+      editor.off("text-change", updateButtonState);
     };
   }, []);
 
-  const modules = useMemo(() => ({
-    toolbar: {
-      container: [
-        [{ header: [1, 2, 3, 5, false] }],
-        ["bold", "italic", "underline", "strike"],
-        [{ list: "ordered" }, { list: "bullet" }],
-        [{ script: "sub" }, { script: "super" }],
-        [{ indent: "-1" }, { indent: "+1" }],
-        [{ direction: "rtl" }],
-        [{ color: [] }, { background: [] }],
-        [{ font: [] }],
-        [{ align: [] }],
-        ["link", "image", "video"],
-        ["dropcap"], // Add drop cap button
-        ["clean"],
-      ],
-      handlers: {
-        dropcap: toggleDropCap,
+  const modules = useMemo(
+    () => ({
+      toolbar: {
+        container: [
+          [{ header: [1, 2, 3, 5, false] }],
+          ["bold", "italic", "underline", "strike"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          [{ script: "sub" }, { script: "super" }],
+          [{ indent: "-1" }, { indent: "+1" }],
+          [{ direction: "rtl" }],
+          [{ color: [] }, { background: [] }],
+          [{ font: [] }],
+          [{ align: [] }],
+          ["link", "image", "video"],
+          ["dropcap"], // Add drop cap button
+          ["clean"],
+        ],
+        handlers: {
+          dropcap: toggleDropCap,
+        },
       },
-    },
-  }), []);
+    }),
+    []
+  );
 
   const formats = [
     "header",
@@ -216,6 +156,14 @@ const RichTextEditor = ({
         /* Remove background in editor for cleaner look */
         .ql-editor .drop-cap {
           background-color: transparent;
+        }
+
+    
+
+        /* For Firefox */
+       .ql-container {
+          scrollbar-width: auto;
+          scrollbar-color: #888 #f1f1f1;
         }
       `}</style>
       <ReactQuill

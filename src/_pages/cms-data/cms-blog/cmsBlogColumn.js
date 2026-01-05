@@ -9,7 +9,6 @@ const StatusSwitch = ({ row }) => {
   const [status, setStatus] = useState(row.original.is_published);
   const [updateStatus, { isLoading }] = useUpdateCmsBlogListMutation();
 
-  // Add this useEffect to sync state when row changes
   useEffect(() => {
     setStatus(row.original.is_published);
   }, [row.original.is_published]);
@@ -17,17 +16,17 @@ const StatusSwitch = ({ row }) => {
   const handleToggle = async () => {
     const newStatus = status == 1 ? 0 : 1;
     setStatus(newStatus);
-
     try {
       await updateStatus({
         id: row.original._id,
         body: { is_published: newStatus },
       });
     } catch (error) {
-      console.log("failed to upload status", error);
+      console.log("failed to update status", error);
       setStatus(status);
     }
   };
+
   return (
     <Switch
       checked={status == 1}
@@ -36,12 +35,45 @@ const StatusSwitch = ({ row }) => {
     />
   );
 };
+
+const FeaturedSwitch = ({ row }) => {
+  const [isFeatured, setIsFeatured] = useState(row.original.is_featured);
+  const [updateStatus, { isLoading }] = useUpdateCmsBlogListMutation();
+
+  useEffect(() => {
+    setIsFeatured(row.original.is_featured);
+  }, [row.original.is_featured]);
+
+  const handleToggle = async () => {
+    const newStatus = isFeatured == 1 ? 0 : 1;
+    setIsFeatured(newStatus);
+    try {
+      await updateStatus({
+        id: row.original._id,
+        body: { is_featured: newStatus },
+      });
+    } catch (error) {
+      console.log("failed to update featured status", error);
+      setIsFeatured(isFeatured);
+    }
+  };
+
+  return (
+    <Switch
+      checked={isFeatured == 1}
+      onChange={handleToggle}
+      disabled={isLoading}
+    />
+  );
+};
+
 const NameCell = ({ row }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleImageClick = () => {
     setIsOpen(true);
   };
+
   const closeModal = () => {
     setIsOpen(false);
   };
@@ -59,7 +91,6 @@ const NameCell = ({ row }) => {
         />
       </div>
       <span className="column_container_name"></span>
-
       <ReactModal
         isOpen={isOpen}
         onRequestClose={closeModal}
@@ -77,6 +108,7 @@ const NameCell = ({ row }) => {
     </div>
   );
 };
+
 export const CMSBLOGCOLUMN = [
   {
     Header: "Id",
@@ -86,7 +118,6 @@ export const CMSBLOGCOLUMN = [
     Header: "Title",
     accessor: "title",
   },
-
   {
     Header: "Web Image",
     Cell: NameCell,
@@ -96,16 +127,19 @@ export const CMSBLOGCOLUMN = [
     accessor: "slug.current",
     Cell: ({ value }) => <TruncateText text={value} wordLimit={5} />,
   },
-
   {
     Header: "Author",
     accessor: "author.name",
     Cell: ({ value }) => <TruncateText text={value} wordLimit={5} />,
   },
-
   {
     Header: "Published",
     accessor: "is_published",
     Cell: ({ row }) => <StatusSwitch row={row} />,
+  },
+  {
+    Header: "Featured",
+    accessor: "is_featured",
+    Cell: ({ row }) => <FeaturedSwitch row={row} />,
   },
 ];
