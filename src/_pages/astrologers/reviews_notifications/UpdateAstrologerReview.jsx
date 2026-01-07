@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useUpdateReviewMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const UpdateAstrologerReview = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
@@ -33,11 +34,17 @@ const UpdateAstrologerReview = ({ isOpen, onClose, selectedRow }) => {
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      await updateReviews({
+      const response = await updateReviews({
         id: selectedRow.id,
         body: formData,
       });
-      onClose();
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       console.log("API Error", error);
     }

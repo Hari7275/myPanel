@@ -26,10 +26,24 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       providesTags: ["consultants"],
     }),
 
+    // **************************************** get consultant price change  ****************************************
+
+    getConsultantsPriceForChange: builder.query({
+      query: (consultantId) => ({
+        url: `api/v1/consultant/payment/price-list/admin/get-service-price-list/${consultantId}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants"],
+    }),
+
     updateConsultantPriceStatus: builder.mutation({
       query: ({ status, id }) => ({
         url: `/api/v1/consultant/profile/consultant-price-list/admin/update-status/${status}/${id}`,
         method: "PUT",
+
         headers: {
           // Authorization: "Bearer admin_token",
           Authorization: getAdminToken(),
@@ -91,15 +105,30 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["consultants"],
     }),
+    // ***********************************Update  Consultant new Price request   **********************************
+
+    updateConsultantNewPriceChangeRequest: builder.mutation({
+      query: ({ status, id, body }) => ({
+        url: `/api/v1/consultant/payment/price-list/admin/update-status/${status}/${id}`,
+        method: "PUT",
+        body,
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      invalidatesTags: ["consultants"],
+    }),
   }),
 });
 
 export const {
   useGetConsultantsPriceQuery,
   useGetConsultantsNewPriceQuery,
+  useGetConsultantsPriceForChangeQuery,
   useUpdateConsultantPriceStatusMutation,
   useUpdateConsultantPriceChartMutation,
   useUpdateConsultantNewPriceChartMutation,
   useGetConsultantsWalletQuery,
   useGetSessionSlotQuery,
+  useUpdateConsultantNewPriceChangeRequestMutation,
 } = consultantsPriceApiSlice;

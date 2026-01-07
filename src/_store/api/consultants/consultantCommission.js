@@ -55,17 +55,17 @@ export const consultantCommissionApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["commission", "consultants"],
     }),
 
-    updateCommission: builder.mutation({
-      query: ({ id, body }) => ({
-        url: `/coach-rating/admin/update/${id}`,
-        method: "PUT",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-        body,
-      }),
-      invalidatesTags: ["commission", "consultants"],
-    }),
+    // updateCommission: builder.mutation({
+    //   query: ({ id, body }) => ({
+    //     url: `/coach-rating/admin/update/${id}`,
+    //     method: "PUT",
+    //     headers: {
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //     body,
+    //   }),
+    //   invalidatesTags: ["commission", "consultants"],
+    // }),
 
     deleteCommission: builder.mutation({
       query: ({ id }) => ({
@@ -85,6 +85,6 @@ export const {
   useGetNewCommissionListQuery,
   useCreateCommissionMutation,
   useCreateNewCommissionMutation,
-  useUpdateCommissionMutation,
+  // useUpdateCommissionMutation,
   useDeleteCommissionMutation,
 } = consultantCommissionApiSlice;

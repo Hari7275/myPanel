@@ -48,7 +48,7 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
           categoryPrices[categoryKey] =
             Number(item.discount_price) || Number(item.price_per_minute) || "";
         }
-      });
+      }); 
 
       // Get the current category price
       const currentCategoryKey = `price_category_${consultantCateg.toLowerCase()}`;
@@ -90,19 +90,15 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
       );
       const updatedData = { ...formData, [name]: value };
 
-      // Auto-update all previous categories to match current category
-      // But only if they're in the same currency (skip A if current is B-F)
+      // Auto-update all previous categories (including A to current) to match current category
       for (let i = 0; i < currentCategoryIndex; i++) {
         const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
-        // Skip Category A if we're in B-F (different currency)
-        if (consultantCateg.toUpperCase() !== "A" && categoryOrder[i] === "A") {
-          continue;
-        }
         updatedData[categoryKey] = value;
       }
 
       setFormData(updatedData);
     } else {
+      // For other categories (after current), allow manual editing
       setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
   };
@@ -116,43 +112,14 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
       formData[`price_category_${consultantCateg.toLowerCase()}`]
     );
 
-    // If consultant is Category A (INR), only validate Category A
-    // Categories B-F are in different currency (USD), so no cross-validation
-    if (consultantCateg.toUpperCase() === "A") {
-      // No validation needed for A since there's nothing before it
-      // And B-F are in different currency
-      return true;
-    }
-
-    // For Categories B-F (all in USD), validate against each other
-    // Start from B (index 1) to skip A (different currency)
-    const startIndex = 1; // Start from Category B
-
-    // Validate previous categories (B onwards, not A)
-    for (let i = startIndex; i < currentCategoryIndex; i++) {
-      const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
-      const categoryPrice = Number(formData[categoryKey]);
-
-      if (categoryPrice < currentCategoryPrice) {
-        toast.error(
-          `Category ${
-            categoryOrder[i]
-          } price ($${categoryPrice}) cannot be less than current category ${consultantCateg.toUpperCase()} price ($${currentCategoryPrice})`
-        );
-        return false;
-      }
-    }
-
-    // Validate next categories (should be greater or equal)
+    // Validate that categories after the current category are greater or equal
     for (let i = currentCategoryIndex + 1; i < categoryOrder.length; i++) {
       const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
       const categoryPrice = Number(formData[categoryKey]);
 
       if (categoryPrice && categoryPrice < currentCategoryPrice) {
         toast.error(
-          `Category ${
-            categoryOrder[i]
-          } price ($${categoryPrice}) cannot be less than current category ${consultantCateg.toUpperCase()} price ($${currentCategoryPrice})`
+          `Category ${categoryOrder[i]} price cannot be less than current category ${consultantCateg.toUpperCase()} price`
         );
         return false;
       }
@@ -224,11 +191,7 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
     );
     const fieldCategoryIndex = categoryOrder.indexOf(category);
 
-    // Previous categories are auto-synced (but skip A if current is B-F due to different currency)
-    if (consultantCateg.toUpperCase() !== "A" && category === "A") {
-      return false; // A is editable when consultant is B-F (different currency)
-    }
-
+    // All categories before the consultant's current category are auto-synced (disabled)
     return fieldCategoryIndex < currentCategoryIndex;
   };
 

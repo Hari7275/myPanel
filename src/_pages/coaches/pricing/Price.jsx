@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import CoachPriceListingTable from "./CoachPriceListingTable";
 import PriceDetails from "../../listeners/pricing/PriceDetails";
+import PriceChange from "../../listeners/pricing/priceChange/PriceChange";
 
 const Price = () => {
   const [activeComponent, setActiveComponent] = useState(
@@ -36,6 +37,15 @@ const Price = () => {
           >
             <span>Price Chart</span>
           </div>
+
+          <div
+            className={`profile-link ${
+              activeComponent === "PriceChange" ? "subactive" : ""
+            }`}
+            onClick={() => handleComponentChange("PriceChange")}
+          >
+            <span>Price Change</span>
+          </div>
         </header>
 
         <div>
@@ -43,6 +53,7 @@ const Price = () => {
             <CoachPriceListingTable />
           )}
           {activeComponent === "PriceDetails" && <PriceDetails />}
+          {activeComponent === "PriceChange" && <PriceChange />}
         </div>
       </div>
     </>

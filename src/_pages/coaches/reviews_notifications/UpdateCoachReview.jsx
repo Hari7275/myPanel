@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useUpdateReviewMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
 
 const UpdateCoachReview = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
@@ -30,14 +31,33 @@ const UpdateCoachReview = ({ isOpen, onClose, selectedRow }) => {
     }));
   };
 
+  // const handleSave = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     await updateReviews({
+  //       id: selectedRow.id,
+  //       body: formData,
+  //     });
+  //     onClose();
+  //   } catch (error) {
+  //     console.log("API Error", error);
+  //   }
+  // };
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
-      await updateReviews({
+      const response = await updateReviews({
         id: selectedRow.id,
         body: formData,
       });
-      onClose();
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+        onClose();
+      } else {
+        toast.error(response.data.message);
+      }
     } catch (error) {
       console.log("API Error", error);
     }
@@ -104,15 +124,11 @@ const UpdateCoachReview = ({ isOpen, onClose, selectedRow }) => {
             className="fifthButton"
             style={{ backgroundColor: "green", marginRight: "10px" }}
             onClick={handleSave}
-          // disabled={isUpdating}
+            // disabled={isUpdating}
           >
             {"Save"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
         </div>
