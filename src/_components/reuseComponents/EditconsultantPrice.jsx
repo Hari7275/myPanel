@@ -48,7 +48,7 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
           categoryPrices[categoryKey] =
             Number(item.discount_price) || Number(item.price_per_minute) || "";
         }
-      }); 
+      });
 
       // Get the current category price
       const currentCategoryKey = `price_category_${consultantCateg.toLowerCase()}`;
@@ -119,7 +119,9 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
 
       if (categoryPrice && categoryPrice < currentCategoryPrice) {
         toast.error(
-          `Category ${categoryOrder[i]} price cannot be less than current category ${consultantCateg.toUpperCase()} price`
+          `Category ${
+            categoryOrder[i]
+          } price cannot be less than current category ${consultantCateg.toUpperCase()} price`
         );
         return false;
       }

@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import ReactModal from "react-modal";
 
-import {
-  useCreateUserRechargeMutation,
-  useCreateUserRefundCallAmountMutation,
-} from "../../../_store/api";
+import { useCreateUserRefundCallAmountMutation } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import toast from "react-hot-toast";
 
@@ -18,7 +15,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
     conversion_rate: selectedRow.conversion_rate || "",
   });
 
-  console.log("selectedRow", selectedRow?.actual_duration);
   const [createData, { isLoading }] = useCreateUserRefundCallAmountMutation();
 
   // Dropdown options for description
@@ -111,11 +107,9 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       duration: parseFloat(formData.duration),
     };
 
-    console.log("apiPayload", apiPayload);
-
     try {
       const response = await createData({ body: apiPayload });
-      console.log("response", response);
+
       if (response?.data?.status) {
         toast.success(response?.data?.message);
         onClose();

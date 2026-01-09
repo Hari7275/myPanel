@@ -7,7 +7,6 @@ import {
 } from "../../../_store/api";
 import DeleteComponent from "../../payments/DeleteComponent";
 import { Trash } from "lucide-react";
-import { useSelector } from "react-redux";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import toast from "react-hot-toast";
 import { useLocation, useParams } from "react-router-dom";
@@ -44,7 +43,6 @@ const ListenerProfilePhotos = () => {
           body: formData,
         }).unwrap();
 
-        // console.log("response");
         if (response.status) {
           toast.success(response.message);
         } else {

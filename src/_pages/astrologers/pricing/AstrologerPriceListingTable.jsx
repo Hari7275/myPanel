@@ -1,9 +1,9 @@
 import React, { useMemo, useState, useEffect } from "react";
 import CommonTable from "../../../_components/table/CommonTable";
-import { Pencil, NotebookPen } from "lucide-react";
+
 import { PRICECHARTCOLUMN } from "./priceChartColumn";
-import { useGetConsultantsPriceQuery ,useGetConsultantsNewPriceQuery} from "../../../_store/api";
-import { useSelector } from "react-redux";
+import { useGetConsultantsNewPriceQuery } from "../../../_store/api";
+
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { useSearchParams } from "react-router-dom";
@@ -15,7 +15,6 @@ const AstrologerPriceListingTable = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [showConsultantEditPrice, setShowConsultantPrice] = useState(false);
-  const [searchParams] = useSearchParams();
 
   const url = window.location.href;
 
@@ -32,7 +31,6 @@ const AstrologerPriceListingTable = () => {
 
   const convertedConsultantCateg = consultantCateg == +91 ? "A" : "B";
 
-  console.log("consultantType", consultantCateg);
   const {
     data: fetchData,
     isLoading,
@@ -56,32 +54,32 @@ const AstrologerPriceListingTable = () => {
 
   const columns = useMemo(() => [
     ...PRICECHARTCOLUMN,
-    {
-      Header: () => <div className="actions-header">Actions</div>,
-      id: "actions",
-      Cell: ({ row }) => (
-        <div className="actions-cell">
-          {row.original.status === 1 && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateStatus(row?.original)}
-            >
-              <NotebookPen className="iconSmall" />
-            </span>
-          )}
+    // {
+    //   Header: () => <div className="actions-header">Actions</div>,
+    //   id: "actions",
+    //   Cell: ({ row }) => (
+    //     <div className="actions-cell">
+    //       {row.original.status === 1 && (
+    //         <span
+    //           className="editIcon"
+    //           onClick={() => toggleUpdateStatus(row?.original)}
+    //         >
+    //           <NotebookPen className="iconSmall" />
+    //         </span>
+    //       )}
 
-          {row.original.status == 2 &&
-            row.original.category == convertedConsultantCateg && (
-              <span
-                className="editIcon"
-                onClick={() => toggleUpdateConsultantPrice(row?.original)}
-              >
-                <Pencil className="iconSmall" />
-              </span>
-            )}
-        </div>
-      ),
-    },
+    //       {row.original.status == 2 &&
+    //         row.original.category == convertedConsultantCateg && (
+    //           <span
+    //             className="editIcon"
+    //             onClick={() => toggleUpdateConsultantPrice(row?.original)}
+    //           >
+    //             <Pencil className="iconSmall" />
+    //           </span>
+    //         )}
+    //     </div>
+    //   ),
+    // },
   ]);
 
   if (isLoading) {

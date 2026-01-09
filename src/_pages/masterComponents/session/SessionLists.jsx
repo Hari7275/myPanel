@@ -56,7 +56,7 @@ const SessionLists = () => {
   } = useGetSessionListQuery(queryParams);
 
   const toggleCompleteOrder = (value) => {
-    console.log("first...", value);
+   
     setSelectedRow(value);
     setAddOrder(!addOrder);
   };
@@ -132,7 +132,7 @@ const SessionLists = () => {
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1); // Reset to first page when applying filters
-    console.log("Applied filters:", filterData);
+    
   };
 
   // Count applied filters (non-empty values)

@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
 
-  console.log("selectedRow", selectedRow);
-
   const [updateRunningStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateqRunningOrderMutation();
 
@@ -21,7 +19,7 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
     e.preventDefault();
 
     if (!selectedRow) {
-      console.error("Selected row is not valid.");
+      toast.error("Selected row is not valid.");
       return;
     }
 
@@ -44,7 +42,6 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
       }
 
       onClose();
-      console.log("name");
     } catch (error) {
       console.error("Failed to update status:", error);
       if (error.data) {

@@ -32,13 +32,11 @@ const UserNotification = () => {
   const toggleDescriptionModal = (row) => {
     setSelectedRow(row?.message);
     setShowDescriptionModal(!showDescriptionModal);
-    console.log("row", row);
   };
 
   const handleViewDetails = (Id) => {
     setSelectedRow(Id?.id);
     setShowUserNotificationModal(!showUserNotificationModal);
-    console.log("id", Id?.id);
   };
 
   // Memoized columns definition for the table

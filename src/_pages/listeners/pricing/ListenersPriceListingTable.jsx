@@ -63,33 +63,33 @@ const ListenersPriceListingTable = () => {
 
   const columns = useMemo(() => [
     ...PRICECHARTCOLUMN,
-    {
-      Header: () => <div className="actions-header">Actions</div>,
-      id: "actions",
-      Cell: ({ row }) => (
-        <div className="actions-cell">
-          {row.original.status === 1 &&
-            hasPermission("update_listener_profile_price_chart") && (
-              <span
-                className="editIcon"
-                onClick={() => toggleUpdateStatus(row?.original)}
-              >
-                <NotebookPen className="iconSmall" />
-              </span>
-            )}
+    // {
+    //   Header: () => <div className="actions-header">Actions</div>,
+    //   id: "actions",
+    //   Cell: ({ row }) => (
+    //     <div className="actions-cell">
+    //       {row.original.status === 1 &&
+    //         hasPermission("update_listener_profile_price_chart") && (
+    //           <span
+    //             className="editIcon"
+    //             onClick={() => toggleUpdateStatus(row?.original)}
+    //           >
+    //             <NotebookPen className="iconSmall" />
+    //           </span>
+    //         )}
 
-          {/* {row.original.status == 5 && */}
-          {row.original.user_category == consultantCateg && (
-            <span
-              className="editIcon"
-              onClick={() => toggleUpdateConsultantPrice(row?.original)}
-            >
-              <Pencil className="iconSmall" />
-            </span>
-          )}
-        </div>
-      ),
-    },
+    //       {/* {row.original.status == 5 && */}
+    //       {row.original.user_category == consultantCateg && (
+    //         <span
+    //           className="editIcon"
+    //           onClick={() => toggleUpdateConsultantPrice(row?.original)}
+    //         >
+    //           <Pencil className="iconSmall" />
+    //         </span>
+    //       )}
+    //     </div>
+    //   ),
+    // },
   ]);
 
   if (isLoading) {

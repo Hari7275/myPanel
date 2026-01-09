@@ -29,7 +29,6 @@ const UserDatingStatus = () => {
     return <div></div>;
   }
 
-  // console.log(" dating status ", userData?.referral_code);
 
   const toggleEditUserType = (row) => {
     setSelectedRow(row);
@@ -41,7 +40,7 @@ const UserDatingStatus = () => {
     setShowEditStatus(!showEditStatus);
   };
   const toggleEditRefferalCode = (row) => {
-    // console.log("row", row);
+
     setSelectedRow(userData?.referral_code);
     setRefferalCode(!refferalCode);
   };

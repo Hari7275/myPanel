@@ -32,7 +32,6 @@ const NotificationTamplateList = () => {
 
   // store data
   useEffect(() => {
-    // console.log("fetchData gifts", fetchData?.data.rows);
     if (fetchData) {
       setData(fetchData?.data?.records);
     }

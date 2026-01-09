@@ -9,8 +9,6 @@ const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
 
   const request_id = selectedRow;
 
-  console.log("response", request_id);
-  console.log("selectedRow", selectedRow);
 
   const [updateStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdatePayoutMutation();
@@ -28,8 +26,6 @@ const EditPayoutRequest = ({ isOpen, onClose, selectedRow }) => {
       status: Number(formData),
     };
 
-    // console.log("body", body);
-    // return;
     try {
       const response = await updateStatus({ body }).unwrap();
 

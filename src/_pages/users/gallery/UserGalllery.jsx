@@ -89,7 +89,7 @@ const UserGallery = () => {
       const formData = new FormData();
       formData?.append("image", file);
 
-      console.log("image", file);
+     
 
       try {
         const response = await addImage({
@@ -181,7 +181,7 @@ const UserGallery = () => {
   // function for download image
 
   const downloadImage = (url) => {
-    console.log("url", url);
+   
     saveAs(url, "image.jpg");
   };
 

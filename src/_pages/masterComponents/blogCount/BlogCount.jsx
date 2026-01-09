@@ -15,12 +15,6 @@ const BlogCount = () => {
   const [blogSlug, setBlogSlug] = useState("");
   const [searchInput, setSearchInput] = useState("");
 
-  const formatDate = (date) => {
-    return date.toISOString().split("T")[0]; // "YYYY-MM-DD"
-  };
-
-  const today = new Date();
-
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -38,11 +32,7 @@ const BlogCount = () => {
     ...(appliedFilters.endDate && { end_date: appliedFilters.endDate }),
   };
 
-  const {
-    data: fetchData,
-    isLoading,
-    error,
-  } = useGetBlogCountListQuery(queryParams);
+  const { data: fetchData, isLoading } = useGetBlogCountListQuery(queryParams);
 
   const columns = useMemo(
     () =>
@@ -80,7 +70,6 @@ const BlogCount = () => {
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
     setPage(1); // Reset to first page when applying filters
-    console.log("Applied filters:", filterData);
   };
 
   // Count applied filters (non-empty values)

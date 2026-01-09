@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import ReactModal from "react-modal";
 
 import { useUpdateqRunningOrderMutation } from "../../../_store/api";
@@ -7,8 +7,6 @@ import toast from "react-hot-toast";
 
 const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
-
-  console.log("selectedRow", selectedRow);
 
   const [updateRunningStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateqRunningOrderMutation();
@@ -44,7 +42,6 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
       }
 
       onClose();
-      console.log("name");
     } catch (error) {
       console.error("Failed to update status:", error);
       if (error.data) {

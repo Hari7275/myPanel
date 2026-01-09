@@ -35,9 +35,6 @@ const DragAndDropOrder = ({
       setDragItems([]);
     }
   }, [selectedRow]);
-
-  console.log("selectedRow", selectedRow);
-
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 

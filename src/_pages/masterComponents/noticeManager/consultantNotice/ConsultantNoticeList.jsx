@@ -25,9 +25,7 @@ const ConsultantNoticeList = () => {
 
   // store data
 
-  console.log("fetchData", fetchData);
   useEffect(() => {
-    // console.log("fetchData gifts", fetchData?.data.rows);
     if (fetchData && fetchData?.data) {
       setData(fetchData?.data);
     } else {

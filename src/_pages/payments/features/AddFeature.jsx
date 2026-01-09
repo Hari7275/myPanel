@@ -42,7 +42,6 @@ const AddFeature = ({ isOpen, onClose }) => {
       see_who_likes_you: formData?.see_who_likes_you === "true",
     };
 
-    console.log("New feature", newFeature);
     try {
       await createFeature({ body: newFeature });
 

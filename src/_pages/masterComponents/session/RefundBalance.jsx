@@ -15,8 +15,6 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   });
   const [wordCount, setWordCount] = useState(0);
 
-  console.log("selectedRow", selectedRow);
-
   const [createData, { isLoading }] = useCreateUserRechargeMutation();
 
   const countWords = (text) => {
@@ -89,11 +87,9 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       reference_id: selectedRow?.id,
     };
 
-    console.log("apiPayload", apiPayload);
-
     try {
       const response = await createData({ body: apiPayload });
-      console.log("response", response);
+
       if (response?.data?.status) {
         toast.success(response?.data?.message);
         onClose();

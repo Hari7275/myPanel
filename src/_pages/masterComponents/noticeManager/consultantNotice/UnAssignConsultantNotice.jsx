@@ -131,7 +131,6 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
     }
   };
 
-  console.log("selectedConsultants", selectedConsultants);
 
   const handleSubmit = async () => {
     // Extract assign_id values from selected consultants
@@ -155,11 +154,9 @@ const UnAssignConsultantNotice = ({ isOpen, onClose }) => {
       id: deselectedIds, // 👈 ab ye unselected/deselected IDs jayengi
     };
 
-    console.log("payload", payload);
-
     try {
       const response = await deleteData(payload).unwrap();
-      console.log("resposne", response);
+  
       if (response.status) {
         toast.success(response.message);
         onClose();

@@ -34,7 +34,7 @@ const DashboardOrderList = () => {
 
   // store data
   useEffect(() => {
-    // console.log("fetchData gifts", fetchData?.data.rows);
+    
     if (fetchData) {
       setData(fetchData?.data?.dashboardOrders);
     }
@@ -80,7 +80,7 @@ const DashboardOrderList = () => {
   };
 
   const handleOrderUpdate = async (newOrder) => {
-    console.log("newOrder", newOrder);
+   
     try {
       const payload = {
         preferred_ids: newOrder, // Assuming newOrder is already an array of IDs

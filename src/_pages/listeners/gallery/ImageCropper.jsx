@@ -41,11 +41,7 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
       // Convert canvas to blob with JPEG format for better compression
       canvas.toBlob(
         (blob) => {
-          console.log(
-            "Original image size:",
-            (blob.size / 1024).toFixed(2),
-            "KB"
-          );
+        
 
           new Compressor(blob, {
             quality: 0.8,

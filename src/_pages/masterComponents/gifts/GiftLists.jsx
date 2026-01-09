@@ -51,7 +51,7 @@ const GiftLists = () => {
   // function for description
 
   const toggleGiftPrice = (row) => {
-    console.log("selectedData////////", row?.original?.id);
+   
     setGiftId(row?.original?.id);
     setSelectedRow(row?.original?.gift_prices);
     setshowGiftPrice(!showGiftPrice);

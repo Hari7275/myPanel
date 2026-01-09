@@ -52,7 +52,6 @@ const UpdateExecutive = ({ isOpen, onClose, selectedRow }) => {
         onClose();
       }
 
-      console.log("response..", response);
 
       if (response?.data?.status === false) {
         toast.error(response?.data?.message);

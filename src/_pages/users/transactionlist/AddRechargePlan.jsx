@@ -33,7 +33,7 @@ const AddRechargePlan = ({ isOpen, onClose, userId }) => {
 
     try {
       const response = await createData({ body: newData });
-      console.log("response", response);
+  
       if (response?.data?.status) {
         toast.success(response?.data?.message);
         onClose();

@@ -45,7 +45,6 @@ const AddUserPassion = ({ isOpen, onClose }) => {
     form.append("image", formData.image);
 
     try {
-      console.log("form...", form);
       await createData({ body: form });
       onClose();
     } catch (error) {
@@ -102,14 +101,9 @@ const AddUserPassion = ({ isOpen, onClose }) => {
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
-          <button
-            className="fifthButton"
-            style={{}}
-            onClick={onClose}
-          >
+          <button className="fifthButton" style={{}} onClick={onClose}>
             Back
           </button>
-
         </div>
       </div>
     </ReactModal>

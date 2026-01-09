@@ -36,8 +36,6 @@ const PromptQuestionComponent = ({
       });
     }
 
-    console.log("Initialized prompts:", initialPrompts);
-    console.log("Number of prompts:", initialPrompts.length);
 
     return initialPrompts;
   });

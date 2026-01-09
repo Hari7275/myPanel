@@ -129,7 +129,6 @@ const PayableTrack = ({ isOpen, onClose }) => {
   }, [noticeList]);
 
   useEffect(() => {
-    console.log("fetchData?.data", fetchData?.data);
     if (fetchData?.data) {
       const filtered = fetchData.data.map((item) => ({
         value: item.id,
@@ -137,7 +136,6 @@ const PayableTrack = ({ isOpen, onClose }) => {
       }));
       setOptions(filtered);
 
-      console.log("filtered", filtered);
     }
   }, [fetchData, assignedNotice, selectedType]);
 

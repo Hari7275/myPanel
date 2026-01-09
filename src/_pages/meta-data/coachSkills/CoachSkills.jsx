@@ -36,7 +36,6 @@ const CoachSkills = () => {
     }
   }, [fetchData]);
 
-  // console.log("............../////////", data);
 
   // Toggle function for adding a review
   const toggleAddCard = () => {
@@ -44,7 +43,7 @@ const CoachSkills = () => {
   };
   // Toggle function for set order for  skills
   const toggleSetOrderData = (row) => {
-    console.log("row", row);
+  
     setSelectedRow(row);
     setUpdateOrder(!updateOrder);
   };

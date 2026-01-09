@@ -14,8 +14,6 @@ const ReactCropper = ({ closeImageDelete_Modal }) => {
   const cropperRef = useRef(null);
 
   const selectedImage = useSelector((state) => state.image.coverPhoto);
-  console.log("selectedImg", selectedImage);
-
   const getCropData = () => {
     if (cropperRef.current && cropperRef.current.cropper) {
       const canvas = cropperRef.current.cropper.getCroppedCanvas();
