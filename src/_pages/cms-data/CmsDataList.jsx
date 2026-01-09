@@ -59,6 +59,12 @@ const CmsDataList = () => {
       link: "/cms-buzz-list",
       permissions: "view_promotional_cards_list",
     },
+
+    {
+      name: "Page Manager",
+      link: "/cms-page-manager",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "coach skillls",
     //   link: "/coach-skills-metadata",
@@ -104,14 +110,11 @@ const CmsDataList = () => {
     <>
       <div className="meta-card-container-grid">
         {metadataItems.map(
-          (item) =>
+          (item) => (
             // hasPermission(item?.permissions) && (
-              <CategoryCard
-                key={item.name}
-                link={item.link}
-                label={item.name}
-              />
-            // )
+            <CategoryCard key={item.name} link={item.link} label={item.name} />
+          )
+          // )
         )}
       </div>
     </>

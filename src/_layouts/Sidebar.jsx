@@ -38,8 +38,6 @@ const Sidebar = () => {
 
   const { user } = useSelector((state) => state.auth);
 
-  console.log("(user?.id === 4)", user?.id === 4);
-
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };

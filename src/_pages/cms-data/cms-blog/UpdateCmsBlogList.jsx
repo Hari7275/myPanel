@@ -11,7 +11,6 @@ import RichTextEditor from "../../../_components/table/RichTextEditor";
 import toast from "react-hot-toast";
 
 const UpdateCmsBlogList = ({ isOpen, onClose, selectedRow }) => {
-  console.log("selectedRow", selectedRow);
   const [formData, setFormData] = useState({
     title: "",
     slug: "",

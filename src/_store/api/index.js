@@ -105,3 +105,4 @@ export * from "../api/cms-data/cmsBlogAuthor";
 export * from "../api/cms-data/cmsBlogList";
 export * from "../api/cms-data/faqsList";
 export * from "../api/cms-data/cmsBuzzList";
+export * from "../api/cms-data/cmsPageManger";
