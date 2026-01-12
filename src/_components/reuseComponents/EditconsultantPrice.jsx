@@ -113,19 +113,22 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
     );
 
     // Validate that categories after the current category are greater or equal
-    for (let i = currentCategoryIndex + 1; i < categoryOrder.length; i++) {
-      const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
-      const categoryPrice = Number(formData[categoryKey]);
+    // for (let i = currentCategoryIndex + 1; i < categoryOrder.length; i++) {
+    //   const categoryKey = `price_category_${categoryOrder[i].toLowerCase()}`;
+    //   const categoryPrice = Number(formData[categoryKey]);
 
-      if (categoryPrice && categoryPrice < currentCategoryPrice) {
-        toast.error(
-          `Category ${
-            categoryOrder[i]
-          } price cannot be less than current category ${consultantCateg.toUpperCase()} price`
-        );
-        return false;
-      }
-    }
+    //   console.log("currentCategoryPrice", currentCategoryPrice);
+    //   console.log("categoryPrice", categoryPrice);
+
+    //   if (categoryPrice && categoryPrice < currentCategoryPrice) {
+    //     toast.error(
+    //       `Category ${
+    //         categoryOrder[i]
+    //       } price cannot be less than current category ${consultantCateg.toUpperCase()} price`
+    //     );
+    //     return false;
+    //   }
+    // }
 
     return true;
   };
@@ -145,7 +148,8 @@ const EditconsultantPrice = ({ isOpen, onClose, selectedRow }) => {
       price_category_f: Number(formData?.price_category_f) || 0,
       consultant_category: formData?.consultant_category,
     };
-
+    // console.log("payload...", payload);
+    // return;
     try {
       const response = await UpdatePricePlan({
         id: formData?.id,
