@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import { formatDateTime } from "../../../_constants/formatedDate";
+import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
 
 const statusMap = {
   1: "Pending",
@@ -100,6 +101,18 @@ export const PAYOUTCOLUMN = [
   {
     Header: "Amount",
     accessor: "amount",
+    Cell: ({ value, row }) => (
+      <span
+        style={{
+          color:
+            row.original.consultant_currency == "INR" ? "#10b981" : "#810c0cff",
+          fontWeight: 600,
+        }}
+      >
+        {row.original.consultant_currency == "INR" ? "" : "$ "}
+        {formatNumber(value)}
+      </span>
+    ),
   },
   // {
   //   Header: "Payment Method",
@@ -108,6 +121,18 @@ export const PAYOUTCOLUMN = [
   {
     Header: "Amount After Tax",
     accessor: "amount_after_tax",
+    Cell: ({ value, row }) => (
+      <span
+        style={{
+          color:
+            row.original.consultant_currency == "INR" ? "#10b981" : "#810c0cff",
+          fontWeight: 600,
+        }}
+      >
+        {row.original.consultant_currency == "INR" ? "" : "$ "}
+        {formatNumber(value)}
+      </span>
+    ),
   },
 
   {

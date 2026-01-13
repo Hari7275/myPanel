@@ -49,7 +49,7 @@ const WalletDetails = () => {
       "This Month Earning": "#E3F2FD", // Light Blue
       "This Week Earning": "#F3E5F5", // Light Purple
       "Today Earning": "#E8F5E9", // Light Green
-      "Total Debit": "#FFF3E0", // Light Orange
+      "Total Payout": "#FFF3E0", // Light Orange
       "Life Time Earning": "#E0F2F1", // Light Teal
       "Current Wallet Balance": "#D9F7E7", // Original Green
       "Payable Amount": "#FCE4EC", // Light Pink
@@ -76,7 +76,7 @@ const WalletDetails = () => {
       value: data?.walletDetails?.lifetime_earning || 0,
     },
     {
-      label: "Total Debit",
+      label: "Total Payout",
       value: data?.walletDetails?.total_debit || "0",
     },
     {

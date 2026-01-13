@@ -81,7 +81,7 @@ const UserOverview = () => {
 
             <InfoItem
               label="Total Recharge Amount"
-              value={`${userData?.currency_category == "B" ? "$" : "₹"} ${
+              value={`${userData?.currency_category == "A" ? "₹" : "$"} ${
                 userRechargeData?.total_amount || "0"
               }`}
               color="#2196F3" // Blue - represents cumulative/total value currency_category
@@ -89,7 +89,7 @@ const UserOverview = () => {
             <div className="line"></div>
             <InfoItem
               label="Remaining Balance"
-              value={`${userData?.currency_category == "B" ? "$" : "₹"} ${
+              value={`${userData?.currency_category == "A" ? "₹" : "$"} ${
                 userRechargeData?.last_remaining_balance || "0"
               } `}
               color="#4CAF50" // Green - represents available funds/positive balance

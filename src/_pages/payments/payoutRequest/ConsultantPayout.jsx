@@ -55,7 +55,7 @@ const ConsultantPayout = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="Payout Request"
+        tableTitle="Payout History"
         // AddPackageButton={AddPackageButton}
         showTableHeading={false}
       />
