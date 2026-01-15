@@ -66,6 +66,7 @@ const Navbar = () => {
     "/cms-faq-list": "CMS FAQs List",
     "/cms-buzz-list": "CMS Buzz List",
     "/cms-page-manager": "CMS Page Manager List",
+    "/cms-consultant-photo-guidelines": "CMS Photo Guidelines (Consultant)",
 
     // Admin User
     "/admin-permission": "Permission Group",
