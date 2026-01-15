@@ -13,6 +13,7 @@ import {
 import NoticeDescription from "../../masterComponents/noticeManager/noticeList/NoticeDescription";
 import { debounce } from "lodash";
 import toast from "react-hot-toast";
+import { Atom } from "react-loading-indicators";
 
 const TheAppPage = () => {
   const [addData, setAddData] = useState(false);
@@ -29,7 +30,7 @@ const TheAppPage = () => {
   const permissions = usePermissions();
 
   // handeling api  fetching data and deleting data
-  const { data: fetchData } = useGetCmsTheAppPageListQuery({
+  const { data: fetchData, isLoading } = useGetCmsTheAppPageListQuery({
     page,
     pageSize,
     platformType,
@@ -84,8 +85,6 @@ const TheAppPage = () => {
         const responseDeleteData = await deleteData({
           id: selectedRow.id,
         }).unwrap();
-
-        console.log("responseDeleteData", responseDeleteData);
 
         if (responseDeleteData?.status) {
           toast.success(
@@ -217,6 +216,14 @@ const TheAppPage = () => {
   );
 
   const totalPage = fetchData?.meta?.total_pages || 1;
+
+  if (isLoading) {
+    return (
+      <span className="loadPage">
+        <Atom color="#1c2434" size="medium" text="" textColor="" />
+      </span>
+    );
+  }
 
   return (
     <>

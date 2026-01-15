@@ -283,7 +283,7 @@ const UserListingTable = () => {
         <Atom color="#1c2434" size="medium" text="" textColor="" />
       </span>
     );
-    // return <Atom color="#32cd32" size="medium" text="" textColor="" />;
+   
   }
 
   return (
