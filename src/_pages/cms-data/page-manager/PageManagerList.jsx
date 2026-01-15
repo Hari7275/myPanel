@@ -199,7 +199,7 @@ const PageManagerList = () => {
         columns={columns}
         data={data}
         includeActions={false}
-        tableTitle="CMS FAQs List"
+        tableTitle="CMS Page Manager List"
         AddPackageButton={AddButton}
         // customFilterComponent={customFilterComponent}
         dynamicPagination={dynamicPagination}

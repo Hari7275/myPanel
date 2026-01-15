@@ -138,6 +138,7 @@ import FAQsList from "./_pages/cms-data/faq-list/FAQsList";
 import CmsBuzzList from "./_pages/cms-data/cms-buzz/CmsBuzzList";
 import PageManagerList from "./_pages/cms-data/page-manager/PageManagerList";
 import PhotoGuidelines from "./_pages/cms-data/cms-photo-guidelines/PhotoGuidelines";
+import TheAppPage from "./_pages/cms-data/cms-the-page/TheAppPage";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -289,6 +290,7 @@ const Layout = () => (
             path="/cms-consultant-photo-guidelines"
             element={<PhotoGuidelines />}
           />
+          <Route path="/cms-the-app-page" element={<TheAppPage />} />
 
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />

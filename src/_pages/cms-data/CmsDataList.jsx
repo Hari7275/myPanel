@@ -71,6 +71,12 @@ const CmsDataList = () => {
       link: "/cms-consultant-photo-guidelines",
       permissions: "view_promotional_cards_list",
     },
+
+    {
+      name: "The App Page",
+      link: "/cms-the-app-page",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "coach skillls",
     //   link: "/coach-skills-metadata",
