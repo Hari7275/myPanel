@@ -28,7 +28,7 @@ const OrderLists = () => {
   const initialPageSize = Number(queryParam.get("pageSize")) || 50;
   const initialStatus = queryParam.get("status") || "";
 
-  // Added: Get user from Redux auth slice
+  // Added: Get user from Redux auth slice,
   const { user } = useSelector((state) => state.auth);
   const permissions = usePermissions();
 
@@ -248,7 +248,7 @@ const OrderLists = () => {
         ),
       },
     ],
-    [isJoining, navigate]
+    [isJoining, navigate],
   );
 
   useEffect(() => {
@@ -265,7 +265,7 @@ const OrderLists = () => {
   const debouncedSearchUserId = debounce((value) => setUserId(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
-    500
+    500,
   );
 
   const handleOrdrIdSearch = (e) => {
@@ -289,7 +289,7 @@ const OrderLists = () => {
   };
 
   const appliedFilterCount = Object.values(appliedFilters).filter(
-    (val) => val !== "" && val !== null && val !== undefined
+    (val) => val !== "" && val !== null && val !== undefined,
   ).length;
 
   const handleRunningFilter = () => {

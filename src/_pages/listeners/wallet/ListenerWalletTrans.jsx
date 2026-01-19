@@ -10,7 +10,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
     order_id: "",
     duration: "",
     amount: "",
-    transaction_type: "credit",
+    transaction_type: "debit",
     description: "",
   });
 
@@ -30,7 +30,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
 
     const newData = {
       consultant_id: consultantId,
-      duration: parseInt(formData.duration) || 0,
+      duration: formData.duration || 0,
       amount: parseFloat(formData.amount),
       transaction_type: formData.transaction_type,
       description: formData.description || "",
@@ -56,7 +56,12 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
         });
         onClose();
       } else {
-        toast.error(response?.data?.error || "Failed to create transaction");
+        console.log("firresponsest", response.error.data.message);
+        toast.error(
+          response?.data?.message ||
+            response.error.data.message ||
+            "Failed to create transaction",
+        );
       }
     } catch (error) {
       console.log("Failed to add wallet transaction", error);
@@ -106,7 +111,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
           />
         </div>
 
-        <div className="userProfile-grid-item">
+        {/* <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>
             Duration
           </label>
@@ -118,7 +123,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
             placeholder="Enter duration (default: 0)"
             className="userProfile-input-field"
           />
-        </div>
+        </div> */}
 
         <div className="userProfile-grid-item">
           <label style={{ fontSize: "20px", marginTop: "20px" }}>

@@ -7,6 +7,7 @@ import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
 import { useLocation, useParams } from "react-router-dom";
 import ListenerWalletTrans from "./ListenerWalletTrans";
+import { useSelector } from "react-redux";
 
 const ListenerWallet = () => {
   const [data, setData] = useState([]);
@@ -16,6 +17,8 @@ const ListenerWallet = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
   const [addData, setAddData] = useState(false);
+
+  const { user } = useSelector((state) => state.auth);
 
   // const consultantId = useSelector(
   //   (state) => state?.consultant?.consultantData
@@ -45,6 +48,7 @@ const ListenerWallet = () => {
   };
 
   const AddButton = () => {
+    if (user?.id !== 20) return null;
     return (
       <button
         className="addButton"
@@ -56,7 +60,7 @@ const ListenerWallet = () => {
         }}
         onClick={toggleAddData}
       >
-        Add Wallet
+        Update Wallet
       </button>
     );
   };

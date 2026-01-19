@@ -18,6 +18,7 @@ const AstrologerWallet = () => {
   const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
   const [addData, setAddData] = useState(false);
+  const { user } = useSelector((state) => state.auth);
 
   // const consultantId = useSelector(
   //   (state) => state?.consultant?.consultantData
@@ -45,6 +46,8 @@ const AstrologerWallet = () => {
   };
 
   const AddButton = () => {
+    if (user?.id !== 20) return null;
+
     return (
       <button
         className="addButton"
