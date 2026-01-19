@@ -118,6 +118,20 @@ export const consultantsPriceApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["consultants"],
     }),
+
+    // **************************************** end  ****************************************
+
+    createConsultantWalletTrans: builder.mutation({
+      query: ({ body }) => ({
+        url: `api/v1/consultant/payment/admin/tran`,
+        method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultants", "transactions", "order"],
+    }),
   }),
 });
 
@@ -131,4 +145,5 @@ export const {
   useGetConsultantsWalletQuery,
   useGetSessionSlotQuery,
   useUpdateConsultantNewPriceChangeRequestMutation,
+  useCreateConsultantWalletTransMutation,
 } = consultantsPriceApiSlice;

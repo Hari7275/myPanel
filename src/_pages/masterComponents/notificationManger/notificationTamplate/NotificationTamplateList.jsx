@@ -122,7 +122,7 @@ const NotificationTamplateList = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   return (

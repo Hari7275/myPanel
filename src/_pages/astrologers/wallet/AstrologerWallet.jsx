@@ -8,6 +8,7 @@ import { Atom } from "react-loading-indicators";
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
 import { useParams } from "react-router-dom";
+import ListenerWalletTrans from "../../listeners/wallet/ListenerWalletTrans";
 
 const AstrologerWallet = () => {
   const [data, setData] = useState([]);
@@ -16,6 +17,8 @@ const AstrologerWallet = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
+  const [addData, setAddData] = useState(false);
+
   // const consultantId = useSelector(
   //   (state) => state?.consultant?.consultantData
   // );
@@ -37,6 +40,26 @@ const AstrologerWallet = () => {
     setSelectedRow(row);
   };
 
+  const toggleAddData = () => {
+    setAddData(!addData);
+  };
+
+  const AddButton = () => {
+    return (
+      <button
+        className="addButton"
+        style={{
+          position: "absolute",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+        }}
+        onClick={toggleAddData}
+      >
+        Add Wallet
+      </button>
+    );
+  };
   const columns = useMemo(() => [
     ...WALLETCHARTCOLUMN,
     {
@@ -76,6 +99,7 @@ const AstrologerWallet = () => {
           columns={columns}
           data={data}
           tableTitle=" Wallet Chart"
+          AddPackageButton={AddButton}
           includeActions={false}
           includeCheckbox={false}
           dynamicPagination={dynamicPagination}
@@ -92,6 +116,14 @@ const AstrologerWallet = () => {
           isOpen={description}
           onClose={toggleDescription}
           Descriptions={selectedRow?.description || ""}
+        />
+      )}
+
+      {addData && (
+        <ListenerWalletTrans
+          isOpen={addData}
+          onClose={toggleAddData}
+          consultantId={consultantId}
         />
       )}
     </>

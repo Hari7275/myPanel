@@ -6,6 +6,7 @@ import { Atom } from "react-loading-indicators";
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
 import { useLocation, useParams } from "react-router-dom";
+import ListenerWalletTrans from "./ListenerWalletTrans";
 
 const ListenerWallet = () => {
   const [data, setData] = useState([]);
@@ -14,10 +15,11 @@ const ListenerWallet = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [selectedRow, setSelectedRow] = useState(null);
   const [description, setDescription] = useState(false);
+  const [addData, setAddData] = useState(false);
 
   // const consultantId = useSelector(
   //   (state) => state?.consultant?.consultantData
-  // );
+  // );;
 
   const { consultantId } = useParams();
 
@@ -26,6 +28,7 @@ const ListenerWallet = () => {
     page,
     limit: pageSize,
   });
+
   useEffect(() => {
     if (fetchData) {
       setData(fetchData?.data?.rows || []);
@@ -35,6 +38,27 @@ const ListenerWallet = () => {
   const toggleDescription = (row) => {
     setDescription(!description);
     setSelectedRow(row);
+  };
+
+  const toggleAddData = () => {
+    setAddData(!addData);
+  };
+
+  const AddButton = () => {
+    return (
+      <button
+        className="addButton"
+        style={{
+          position: "absolute",
+          right: "20px",
+          backgroundColor: "#18B164",
+          padding: "6px",
+        }}
+        onClick={toggleAddData}
+      >
+        Add Wallet
+      </button>
+    );
   };
 
   const columns = useMemo(() => [
@@ -78,6 +102,7 @@ const ListenerWallet = () => {
           tableTitle=" Wallet Chart"
           includeActions={false}
           includeCheckbox={false}
+          AddPackageButton={AddButton}
           dynamicPagination={dynamicPagination}
           totalPage={totalPage}
           currentPage={page}
@@ -92,6 +117,14 @@ const ListenerWallet = () => {
           isOpen={description}
           onClose={toggleDescription}
           Descriptions={selectedRow?.description || ""}
+        />
+      )}
+
+      {addData && (
+        <ListenerWalletTrans
+          isOpen={addData}
+          onClose={toggleAddData}
+          consultantId={consultantId}
         />
       )}
     </>
