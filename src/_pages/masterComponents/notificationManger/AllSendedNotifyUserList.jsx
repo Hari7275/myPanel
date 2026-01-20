@@ -12,7 +12,7 @@ const AllSendedNotifyUserList = ({ isOpen, onClose, data }) => {
     useState(false);
   const [selectedRow, setSelectedRow] = useState(null);
   const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(15); // Adjusted default page size
+  const [pageSize, setPageSize] = useState(50); // Adjusted default page size
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
 
   // Fetching Dating products  data using RTK Query.
