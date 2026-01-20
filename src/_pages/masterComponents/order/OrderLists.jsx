@@ -198,7 +198,7 @@ const OrderLists = () => {
               {/* Join Call Button - Show for running calls (status == 3) */}
               {row.original.status == 3 &&
                 permissions?.["orders"]?.includes("monitor_order") &&
-                row.original.consultant_id !== 1 && (
+                row.original.consultant_id !== 2 && (
                   <span
                     // title="Join Call"
                     className="joinIcon secondIcon"
@@ -254,7 +254,6 @@ const OrderLists = () => {
   useEffect(() => {
     if (fetchData && fetchData?.data) {
       setData(fetchData?.data || []);
-
       // Calculate how many are "Running" (status = 3)
       const runningCalls = fetchData?.data?.filter((item) => item.status === 3);
       setRunningCallCount(runningCalls.length);

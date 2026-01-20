@@ -5,7 +5,6 @@ import {
   useUpdateStatusMutation,
 } from "../../_store/api";
 
-
 const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
   const [formData, setFormData] = useState("");
   const [data, setData] = useState([]);
@@ -59,7 +58,7 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
     const payload = {
       status: Number(formData),
     };
-
+    
     try {
       const response = await updateStatus({ id: selectedRow, body: payload });
 

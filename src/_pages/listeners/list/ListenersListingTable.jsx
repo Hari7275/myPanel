@@ -77,7 +77,7 @@ const ListenersListingTable = () => {
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records?.filter(
-        (record) => record?.consultant_type === 3
+        (record) => record?.consultant_type === 3,
       );
       setData(consultantData);
     } else {
@@ -137,7 +137,7 @@ const ListenersListingTable = () => {
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["listener"]?.includes(
-                "update_listener_profile_status"
+                "update_listener_profile_status",
               ) && (
                 <span className="editIcon">
                   <Pencil
@@ -174,7 +174,7 @@ const ListenersListingTable = () => {
         ),
       },
     ],
-    [permissions]
+    [permissions],
   );
 
   // Apply debounce to search handlers
@@ -182,7 +182,7 @@ const ListenersListingTable = () => {
   const debouncedSearchEmail = debounce((value) => setEmail(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
-    500
+    500,
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
   const handleNameSearch = (e) => {
@@ -214,7 +214,7 @@ const ListenersListingTable = () => {
 
   // Count applied filters (non-empty values)
   const appliedFilterCount = Object.values(appliedFilters).filter(
-    (val) => val !== "" && val !== null && val !== undefined
+    (val) => val !== "" && val !== null && val !== undefined,
   ).length;
 
   const customFilterComponent = () => (

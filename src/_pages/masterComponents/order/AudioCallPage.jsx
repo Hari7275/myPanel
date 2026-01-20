@@ -4,11 +4,20 @@ import { useLocation, useNavigate } from "react-router-dom";
 import AgoraRTC, { AgoraRTCProvider } from "agora-rtc-react";
 import AgoraAudienceCall from "./AgoraAudienceCall";
 import { ArrowLeft } from "lucide-react";
+import Button from "@mui/material/Button";
+import { useUpdateqRunningOrderMutation } from "../../../_store/api";
+import toast from "react-hot-toast";
+import { useUpdateStatusMutation } from "../../../_store/api";
 
 const AudioCallPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const credentials = location.state?.credentials;
+  const [updateRunningStatus, { isLoading: isUpdating, error: updateError }] =
+    useUpdateqRunningOrderMutation();
+
+  const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
+    useUpdateStatusMutation();
 
   // Create client using useMemo to ensure it's stable and only created once
   const client = useMemo(() => {
@@ -20,9 +29,25 @@ const AudioCallPage = () => {
 
   if (!credentials) {
     return (
-      <div style={{ padding: "40px", textAlign: "center", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <h2 style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}>No call credentials found</h2>
-        <p style={{ margin: "0 0 24px 0", color: "#6b7280" }}>Please navigate to this page from a valid call session.</p>
+      <div
+        style={{
+          padding: "40px",
+          textAlign: "center",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2
+          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}
+        >
+          No call credentials found
+        </h2>
+        <p style={{ margin: "0 0 24px 0", color: "#6b7280" }}>
+          Please navigate to this page from a valid call session.
+        </p>
         <button
           onClick={() => navigate(-1)}
           style={{
@@ -44,11 +69,28 @@ const AudioCallPage = () => {
 
   const { appId, channel, token, uid, assignedUserId, orderData } = credentials;
 
+  console.log("consultant id", orderData?.consultant_id);
+  console.log("orderData", orderData?.id);
+
   // Validate credentials
   if (!appId || !channel) {
     return (
-      <div style={{ padding: "40px", textAlign: "center", minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <h2 style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}>Invalid credentials</h2>
+      <div
+        style={{
+          padding: "40px",
+          textAlign: "center",
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h2
+          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}
+        >
+          Invalid credentials
+        </h2>
         <p style={{ color: "#ef4444", margin: "0 0 24px 0" }}>
           Missing App ID or Channel Name
         </p>
@@ -71,16 +113,71 @@ const AudioCallPage = () => {
     );
   }
 
+  const handleSaveCompleteOrder = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      order_id: orderData?.id,
+      consultant_id: orderData?.consultant_id,
+      status: 4,
+      completed_by: 5,
+    };
+    console.log("payload", payload);
+    // return;
+    try {
+      const response = await updateRunningStatus({
+        body: payload,
+      });
+
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      if (error.data) {
+        console.error("API Error Data:", error.data);
+      }
+    }
+  };
+
+  const handleSaveInactiveConsultant = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      status: 8,
+    };
+
+    try {
+      const response = await updateStatus({
+        id: orderData?.consultant_id,
+        body: payload,
+      });
+
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      if (error.data) {
+        console.error("API Error Data:", error.data);
+      }
+    }
+  };
   return (
-    <div style={{ 
-      height: "100vh",
-      overflowY: "auto",
-      padding: "24px",
-      maxWidth: "1600px", 
-      margin: "0 auto",
-      backgroundColor: "#f3f4f6",
-      boxSizing: "border-box",
-    }}
+    <div
+      style={{
+        height: "100vh",
+        overflowY: "auto",
+        padding: "24px",
+        maxWidth: "1600px",
+        margin: "0 auto",
+        backgroundColor: "#f3f4f6",
+        boxSizing: "border-box",
+      }}
     >
       {/* Header */}
       <div
@@ -118,7 +215,14 @@ const AudioCallPage = () => {
           <ArrowLeft size={20} />
         </button>
         <div style={{ flex: 1 }}>
-          <h1 style={{ margin: 0, fontSize: "28px", fontWeight: "700", color: "#111827" }}>
+          <h1
+            style={{
+              margin: 0,
+              fontSize: "28px",
+              fontWeight: "700",
+              color: "#111827",
+            }}
+          >
             Call Monitor
           </h1>
           {orderData && (
@@ -129,13 +233,53 @@ const AudioCallPage = () => {
                 color: "#6b7280",
               }}
             >
-              Order ID: <span style={{ fontWeight: "500", color: "#374151" }}>{orderData.id || orderData.order_id}</span> | 
-              User ID: <span style={{ fontWeight: "500", color: "#374151" }}>{orderData.user_id}</span>
+              Order ID:{" "}
+              <span style={{ fontWeight: "500", color: "#374151" }}>
+                {orderData.id || orderData.order_id}
+              </span>{" "}
+              | User ID:{" "}
+              <span style={{ fontWeight: "500", color: "#374151" }}>
+                {orderData.user_id}
+              </span>
               {assignedUserId && (
-                <> | Assigned User: <span style={{ fontWeight: "500", color: "#374151" }}>{assignedUserId}</span></>
+                <>
+                  {" "}
+                  | Assigned User:{" "}
+                  <span style={{ fontWeight: "500", color: "#374151" }}>
+                    {assignedUserId}
+                  </span>
+                </>
               )}
             </p>
           )}
+        </div>
+
+        <div
+          style={{ marginLeft: "20px", position: "relative" }}
+          className="filter-button-wrapper"
+        >
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#c01313ff",
+              color: "white",
+            }}
+            onClick={handleSaveCompleteOrder}
+          >
+            Complete Order
+          </Button>
+
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#6165d0ff",
+              color: "white",
+              marginLeft: "20px",
+            }}
+            onClick={handleSaveInactiveConsultant}
+          >
+            Inactive Consultant
+          </Button>
         </div>
       </div>
 
