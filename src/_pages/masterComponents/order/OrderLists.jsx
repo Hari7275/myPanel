@@ -198,7 +198,7 @@ const OrderLists = () => {
               {/* Join Call Button - Show for running calls (status == 3) */}
               {row.original.status == 3 &&
                 permissions?.["orders"]?.includes("monitor_order") &&
-                row.original.consultant_id !== 2 && (
+                row.original.consultant_id !== 1 && (
                   <span
                     // title="Join Call"
                     className="joinIcon secondIcon"
