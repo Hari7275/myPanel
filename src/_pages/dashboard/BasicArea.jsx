@@ -21,8 +21,6 @@ export default function BasicArea() {
     setDateFilter(e.target.value);
   };
 
-  console.log("data", data);
-
   return (
     <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
@@ -46,6 +44,7 @@ export default function BasicArea() {
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
                   <option value="yearly">Yearly</option>
+                  <option value="total">Total</option>
                 </select>
               </div>
             </form>

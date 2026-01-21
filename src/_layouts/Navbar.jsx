@@ -13,7 +13,7 @@ const Navbar = () => {
   const [count, setCount] = useState(2);
   const { data: fetchData } = useGetNotificationUnreadCountQuery();
   const currentTitle = useSelector(
-    (state) => state.pageTitle?.title || "Flute Admin Panel"
+    (state) => state.pageTitle?.title || "Flute Admin Panel",
   );
 
   const location = useLocation();
@@ -130,7 +130,7 @@ const Navbar = () => {
     for (const pattern in pathTitleMap) {
       // Convert pattern to regex: '/admin-permission/:id' -> /^\/admin-permission\/[^/]+$/
       const regexPattern = new RegExp(
-        "^" + pattern.replace(/:[^/]+/g, "[^/]+") + "$"
+        "^" + pattern.replace(/:[^/]+/g, "[^/]+") + "$",
       );
       if (regexPattern.test(path)) {
         return pathTitleMap[pattern];
