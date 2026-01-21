@@ -108,3 +108,4 @@ export * from "../api/cms-data/cmsBuzzList";
 export * from "../api/cms-data/cmsPageManger";
 export * from "../api/cms-data/photoGuidelines";
 export * from "../api/cms-data/theAppPage";
+export * from "../api/cms-data/cmsTestimonial";

@@ -88,7 +88,7 @@ const TheAppPage = () => {
 
         if (responseDeleteData?.status) {
           toast.success(
-            responseDeleteData?.message || "Page deleted successfully"
+            responseDeleteData?.message || "Page deleted successfully",
           );
           setShowDeleteComponent(false);
         } else {
@@ -166,7 +166,7 @@ const TheAppPage = () => {
         ),
       },
     ],
-    [data]
+    [data],
   );
   const debouncedSearchUserName = debounce((value) => setName(value), 500);
 

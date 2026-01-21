@@ -468,7 +468,7 @@ export default function RevenueChart() {
   };
 
   // Transform data for Recharts format
-  const chartData = data.map((item) => ({
+  const chartData = data?.map((item) => ({
     label: item.label,
     Android: parseFloat(item?.platforms?.["1"] || 0),
     iOS: parseFloat(item?.platforms?.["2"] || 0),

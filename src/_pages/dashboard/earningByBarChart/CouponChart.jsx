@@ -15,8 +15,8 @@ import { Atom } from "react-loading-indicators";
 
 // ✅ Custom Tooltip (fixed)
 const CustomTooltip = ({ active, payload, label }) => {
-  if (active && payload && payload.length) {
-    const total = payload.reduce((sum, entry) => sum + (entry.value || 0), 0);
+  if (active && payload && payload?.length) {
+    const total = payload?.reduce((sum, entry) => sum + (entry.value || 0), 0);
 
     return (
       <div
@@ -115,7 +115,7 @@ export default function CouponChart() {
   // ✅ Update chart data when API data changes
   useEffect(() => {
     if (fetchData?.data) {
-      const transformed = fetchData.data.map((item) => ({
+      const transformed = fetchData?.data?.records?.map((item) => ({
         label: item.label,
         Coupon: parseFloat(item?.coupon || 0),
         Referral: parseFloat(item?.referral || 0),

@@ -77,6 +77,12 @@ const CmsDataList = () => {
       link: "/cms-the-app-page",
       permissions: "view_promotional_cards_list",
     },
+
+    {
+      name: "Testimonial",
+      link: "/cms-testimonial",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "coach skillls",
     //   link: "/coach-skills-metadata",
@@ -125,7 +131,7 @@ const CmsDataList = () => {
           (item) => (
             // hasPermission(item?.permissions) && (
             <CategoryCard key={item.name} link={item.link} label={item.name} />
-          )
+          ),
           // )
         )}
       </div>
