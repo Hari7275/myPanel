@@ -10,6 +10,9 @@ import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/
 import { useLocation, useParams } from "react-router-dom";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { useSelector } from "react-redux";
+import Button from "@mui/material/Button";
+import toast from "react-hot-toast";
+import { useUpdateStatusMutation } from "../../../_store/api";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -64,6 +67,9 @@ const CoachLeftComponent = () => {
   const profileStatus = params.get("status");
   const { user } = useSelector((state) => state.auth);
 
+  const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
+    useUpdateStatusMutation();
+
   const {
     data: fetchData,
     isLoading,
@@ -104,6 +110,32 @@ const CoachLeftComponent = () => {
   const toggleOnboardingStatus = () => {
     setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedData(data);
+  };
+
+  const handleSaveInactiveConsultant = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      status: 8,
+    };
+
+    try {
+      const response = await updateStatus({
+        id: consultantId,
+        body: payload,
+      });
+
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      if (error.data) {
+        console.error("API Error Data:", error.data);
+      }
+    }
   };
 
   if (isLoading) {
@@ -229,6 +261,19 @@ const CoachLeftComponent = () => {
 
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
+        {profileStatus == 3 && (
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#6165d0ff",
+              color: "white",
+              marginLeft: "20px",
+            }}
+            onClick={handleSaveInactiveConsultant}
+          >
+            Inactive Consultant
+          </Button>
+        )}
         <span
           className="editIcon"
           style={{

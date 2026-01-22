@@ -16,6 +16,9 @@ import { useLocation, useParams } from "react-router-dom";
 import UpdateConsultantProfileStatus from "../../../_components/reuseComponents/UpdateConsultantProfileStatus";
 import { Atom } from "react-loading-indicators";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
+import Button from "@mui/material/Button";
+import toast from "react-hot-toast";
+import { useUpdateStatusMutation } from "../../../_store/api";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -72,6 +75,9 @@ const ListenerLeftComponent = () => {
   const params = new URLSearchParams(search);
   const profileStatus = params.get("status");
 
+  const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
+    useUpdateStatusMutation();
+
   const {
     data: fetchData,
     isLoading,
@@ -123,6 +129,32 @@ const ListenerLeftComponent = () => {
   const toggleOnboardingStatus = () => {
     setShowOnboardingAssignTask(!showOnboardingAssignTask);
     setSelectedData(data);
+  };
+
+  const handleSaveInactiveConsultant = async (e) => {
+    e.preventDefault();
+
+    const payload = {
+      status: 8,
+    };
+
+    try {
+      const response = await updateStatus({
+        id: consultantId,
+        body: payload,
+      });
+
+      if (response?.data?.status) {
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.data?.message);
+      }
+    } catch (error) {
+      console.error("Failed to update status:", error);
+      if (error.data) {
+        console.error("API Error Data:", error.data);
+      }
+    }
   };
   if (isLoading) {
     return (
@@ -257,6 +289,20 @@ const ListenerLeftComponent = () => {
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
 
       <div className="social-icons-section">
+        {profileStatus == 3 && (
+          <Button
+            variant="contained"
+            style={{
+              backgroundColor: "#6165d0ff",
+              color: "white",
+              marginLeft: "20px",
+            }}
+            onClick={handleSaveInactiveConsultant}
+          >
+            Inactive Consultant
+          </Button>
+        )}
+
         <span
           className="editIcon"
           style={{
