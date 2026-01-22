@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
 import CoachStatus from "../../coaches/status/CoachStatus";
-import { KeyRound, Pencil } from "lucide-react";
+import { CirclePlus, KeyRound, Pencil } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
@@ -19,17 +19,7 @@ import AssignOnboardingToAdmin from "../../../_components/reuseComponents/Assign
 import Button from "@mui/material/Button";
 import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
-
-const InfoItem = ({ label, value }) => (
-  <div className="card-footer-content">
-    <div className="info-pair">
-      <p className="info-item">
-        <strong>{label}: </strong>
-        <span style={{ wordBreak: "break-all" }}>{value}</span>
-      </p>
-    </div>
-  </div>
-);
+import { Switch } from "@mui/material";
 
 // function for calculate date of birth
 
@@ -74,6 +64,8 @@ const ListenerLeftComponent = () => {
   const { search } = useLocation();
   const params = new URLSearchParams(search);
   const profileStatus = params.get("status");
+
+  console.log("profileStatus", profileStatus);
 
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
     useUpdateStatusMutation();
@@ -156,6 +148,11 @@ const ListenerLeftComponent = () => {
       }
     }
   };
+
+  const addNotification = () => {
+    toast.success("Feature coming soon!");
+  };
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -182,14 +179,6 @@ const ListenerLeftComponent = () => {
         {/* FIRST COLUMN OF LISTNER DETAILS(IMAGE SECTION) */}
         <div className="profile-img-section">
           <div className="">
-            {/* <img
-              className="profile-img"
-              src={urls || "girl-avtar.png"}
-              alt="Listener Profile"
-              onClick={() => openImageModal(urls || "girl-avtar.png")}
-              style={{ cursor: "pointer" }}
-            /> */}
-
             <img
               className="profile-img"
               src={urls || "/avatar11.png"}
@@ -210,7 +199,11 @@ const ListenerLeftComponent = () => {
         <div className="user-info-section">
           <div className="userName">
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
+            <span onClick={addNotification} style={{ cursor: "pointer" }}>
+              <CirclePlus />
+            </span>
           </div>
+
           <div className="info-pair">
             <p className="info-item">
               <strong>Listener ID : </strong> {data.id}
@@ -253,38 +246,6 @@ const ListenerLeftComponent = () => {
             )}
           </div>
         </div>
-        {/* <footer className="card-footer">
-            <div className="info-pair">
-              <p className="info-item">
-                <strong>Listener ID : </strong> {data.id}
-              </p>
-            </div>
-            <div className="line"></div>
-
-            <InfoItem label="Email " value={data?.email} />
-            <div className="line"></div>
-
-            <InfoItem label="Mobile No. " value={data?.phoneNumber} />
-            <div className="line"></div>
-
-            <InfoItem label="Gender " value={getGenderLabel(data?.gender)} />
-            <div className="line"></div>
-
-            <InfoItem
-              label="Marital Status"
-              value={getMaritalStatus(data?.marital_status)}
-            />
-            <div className="line"></div>
-
-            <InfoItem label="Age " value={age} />
-            <div className="line"></div>
-
-            <InfoItem label="Referral code " value={data.referral_code} />
-            <div className="line"></div>
-
-            <InfoItem label="Referred by " value={data.referred_by} />
-            <div className="line"></div>
-          </footer> */}
       </div>
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
 
@@ -293,13 +254,16 @@ const ListenerLeftComponent = () => {
           <Button
             variant="contained"
             style={{
-              backgroundColor: "#6165d0ff",
+              backgroundColor: data?.status === 1 ? "#6165d0ff" : "#9e9e9e",
               color: "white",
               marginLeft: "20px",
+              cursor: data?.status === 1 ? "pointer" : "not-allowed",
+              opacity: data?.status === 1 ? 1 : 0.7,
             }}
-            onClick={handleSaveInactiveConsultant}
+            onClick={data?.status === 1 ? handleSaveInactiveConsultant : null}
+            disabled={data?.status !== 1}
           >
-            Inactive Consultant
+            {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
 

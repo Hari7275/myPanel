@@ -265,13 +265,16 @@ const CoachLeftComponent = () => {
           <Button
             variant="contained"
             style={{
-              backgroundColor: "#6165d0ff",
+              backgroundColor: data?.status === 1 ? "#6165d0ff" : "#9e9e9e",
               color: "white",
               marginLeft: "20px",
+              cursor: data?.status === 1 ? "pointer" : "not-allowed",
+              opacity: data?.status === 1 ? 1 : 0.7,
             }}
-            onClick={handleSaveInactiveConsultant}
+            onClick={data?.status === 1 ? handleSaveInactiveConsultant : null}
+            disabled={data?.status !== 1}
           >
-            Inactive Consultant
+            {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
         <span

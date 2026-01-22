@@ -70,7 +70,9 @@ const ConsultantNavigationCell = ({ value, row }) => {
   const baseRoute = navigationRoute[consultantType] || "";
 
   // Add ?type=91 only if NOT foreigner
-  const route = !foreigner ? `${baseRoute}?type=91` : baseRoute;
+  const route = !foreigner
+    ? `${baseRoute}?status=3&type=91`
+    : `${baseRoute}?status=3`;
 
   return (
     <Link
