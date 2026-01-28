@@ -94,7 +94,7 @@ export const ORDERCHARTCOLUMN = [
     accessor: "status",
     Cell: ({ value, row }) => {
       const rejectedCall =
-        row.original.mode_type === 2 && row.original.status === 6;
+        row.original.mode_type === 1 && row.original.status === 6; //check for rejected call
       const isRefunded = value === 4 && row.original.is_refunded;
 
       if (rejectedCall) {

@@ -146,7 +146,7 @@ export const consultantsIncome = apiSlice.injectEndpoints({
     // total blog and buzz count
     getFluteMagzineAndBuzzCount: builder.query({
       query: () => ({
-        url: `https://api.fluteconnect.com/api/v1/cms/get-counts`,
+        url: `https://api.fluteconnect.com/api/v1/content-management/get-counts`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

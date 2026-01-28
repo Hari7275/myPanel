@@ -193,7 +193,7 @@ export const COLUMNORDER = [
     accessor: "status",
     Cell: ({ value, row }) => {
       const rejectedCall =
-        row.original.mode_type === 1 && row.original.status === 6;
+        row.original.mode_type === 1 && row.original.status === 6; //check for rejected call
 
       if (rejectedCall) {
         return <span style={{ color: "red" }}>Consultant Cancelled</span>;
