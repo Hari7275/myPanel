@@ -48,7 +48,8 @@ const NotificationBell = () => {
       const formatednotification = notificationData?.data?.records?.map(
         (item) => {
           try {
-            const parsedData = JSON.parse(item?.data);
+            // const parsedData = JSON.parse(item?.data);
+            const parsedData = item?.data;
             return {
               ...parsedData,
               sender_id: item?.id,
@@ -60,10 +61,12 @@ const NotificationBell = () => {
             console.error("Error parsing notification data:", error);
             return null;
           }
-        }
+        },
       );
 
+      console.log("formatednotification", formatednotification);
       const formatedData = formatednotification.filter(Boolean);
+
       setNotificationData(formatedData);
     }
   }, [notificationData]);
@@ -195,7 +198,7 @@ const NotificationBell = () => {
 
   const debouncedSearchConsultantId = debounce(
     (value) => setSender_id(value),
-    500
+    500,
   );
 
   const handleConsultantIdSearch = (e) => {

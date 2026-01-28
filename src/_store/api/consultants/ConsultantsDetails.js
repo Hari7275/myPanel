@@ -27,10 +27,23 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["consultants"],
     }),
+
+    createConsultantOrderNotification: builder.mutation({
+      query: ({ body }) => ({
+        url: `api/v1/consultant/management/order/observing-consultant`,
+        method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultants"],
+    }),
   }),
 });
 
 export const {
   useGetConsultantsDetailsQuery,
   useUpdateConsultantsDetailsMutation,
+  useCreateConsultantOrderNotificationMutation,
 } = consultantsDetailsApiSlice;

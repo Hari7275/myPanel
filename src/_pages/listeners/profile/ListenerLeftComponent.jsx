@@ -4,7 +4,10 @@ import CoachStatus from "../../coaches/status/CoachStatus";
 import { CirclePlus, KeyRound, Pencil } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
-import { useGetConsultantsDetailsQuery } from "../../../_store/api";
+import {
+  useGetConsultantsDetailsQuery,
+  useCreateConsultantOrderNotificationMutation,
+} from "../../../_store/api";
 import {
   getGenderLabel,
   getMaritalStatus,
@@ -20,6 +23,7 @@ import Button from "@mui/material/Button";
 import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
 import { Switch } from "@mui/material";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 // function for calculate date of birth
 
@@ -39,7 +43,6 @@ const calculateAge = (dob) => {
   ) {
     age--;
   }
-
   return age;
 };
 
@@ -69,6 +72,10 @@ const ListenerLeftComponent = () => {
 
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
     useUpdateStatusMutation();
+
+  const [createOrderNotification] =
+    useCreateConsultantOrderNotificationMutation();
+  const permissions = usePermissions();
 
   const {
     data: fetchData,
@@ -149,8 +156,24 @@ const ListenerLeftComponent = () => {
     }
   };
 
-  const addNotification = () => {
-    toast.success("Feature coming soon!");
+  const addNotification = async () => {
+    const payload = {
+      consultant_id: consultantId,
+      status: true,
+    };
+
+    try {
+      const response = await createOrderNotification({ body: payload });
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
+    } catch (error) {
+      console.log("Failed to add notification", error);
+    }
   };
 
   if (isLoading) {
@@ -199,9 +222,11 @@ const ListenerLeftComponent = () => {
         <div className="user-info-section">
           <div className="userName">
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
-            <span onClick={addNotification} style={{ cursor: "pointer" }}>
-              <CirclePlus />
-            </span>
+            {permissions?.["orders"]?.includes("order_notifications") && (
+              <span onClick={addNotification} style={{ cursor: "pointer" }}>
+                <CirclePlus />
+              </span>
+            )}
           </div>
 
           <div className="info-pair">

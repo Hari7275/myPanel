@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Pencil, KeyRound } from "lucide-react";
+import { Pencil, KeyRound, CirclePlus } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import AstrologerStatus from "../status/AstrologerStatus";
 import CoachStatus from "../../coaches/status/CoachStatus";
@@ -20,7 +20,11 @@ import AssignOnboardingToAdmin from "../../../_components/reuseComponents/Assign
 
 import Button from "@mui/material/Button";
 import toast from "react-hot-toast";
-import { useUpdateStatusMutation } from "../../../_store/api";
+import {
+  useUpdateStatusMutation,
+  useCreateConsultantOrderNotificationMutation,
+} from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -87,6 +91,10 @@ const AstrologerDetailsComponent = () => {
     isLoading,
     error,
   } = useGetConsultantsDetailsQuery(consultantId);
+
+  const [createOrderNotification] =
+    useCreateConsultantOrderNotificationMutation();
+  const permissions = usePermissions();
 
   useEffect(() => {
     if (fetchData) {
@@ -159,6 +167,26 @@ const AstrologerDetailsComponent = () => {
     }
   };
 
+  const addNotification = async () => {
+    const payload = {
+      consultant_id: consultantId,
+      status: true,
+    };
+
+    try {
+      const response = await createOrderNotification({ body: payload });
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
+    } catch (error) {
+      console.log("Failed to add notification", error);
+    }
+  };
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -201,6 +229,11 @@ const AstrologerDetailsComponent = () => {
         <div className="user-info-section">
           <div className="userName">
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
+            {permissions?.["orders"]?.includes("order_notifications") && (
+              <span onClick={addNotification} style={{ cursor: "pointer" }}>
+                <CirclePlus />
+              </span>
+            )}
           </div>
           <div className="info-pair">
             <p className="info-item">

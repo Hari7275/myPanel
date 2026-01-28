@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
-import { useGetConsultantsDetailsQuery } from "../../../_store/api";
-import { KeyRound, Pencil } from "lucide-react";
+import {
+  useCreateConsultantOrderNotificationMutation,
+  useGetConsultantsDetailsQuery,
+} from "../../../_store/api";
+import { KeyRound, Pencil, CirclePlus } from "lucide-react";
 import { Atom } from "react-loading-indicators";
 import UseImageModal from "../../../_constants/UseImageModal";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +16,7 @@ import { useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -69,6 +73,10 @@ const CoachLeftComponent = () => {
 
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
     useUpdateStatusMutation();
+
+  const [createOrderNotification] =
+    useCreateConsultantOrderNotificationMutation();
+  const permissions = usePermissions();
 
   const {
     data: fetchData,
@@ -138,6 +146,26 @@ const CoachLeftComponent = () => {
     }
   };
 
+  const addNotification = async () => {
+    const payload = {
+      consultant_id: consultantId,
+      status: true,
+    };
+
+    try {
+      const response = await createOrderNotification({ body: payload });
+
+      if (response.data.status) {
+        toast.success(response.data.message);
+      } else {
+        toast.error(response.data.message);
+        return;
+      }
+    } catch (error) {
+      console.log("Failed to add notification", error);
+    }
+  };
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -183,6 +211,11 @@ const CoachLeftComponent = () => {
         <div className="user-info-section">
           <div className="userName">
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
+            {permissions?.["orders"]?.includes("order_notifications") && (
+              <span onClick={addNotification} style={{ cursor: "pointer" }}>
+                <CirclePlus />
+              </span>
+            )}
           </div>
           <InfoItem label="Coach ID " value={data.id} />
 
