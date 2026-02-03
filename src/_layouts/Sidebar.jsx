@@ -123,7 +123,7 @@ const Sidebar = () => {
                       </Link>
                     )}
                     {permissions?.["admin"]?.includes(
-                      "view_admin_permission_group_section"
+                      "view_admin_permission_group_section",
                     ) && (
                       <Link to="/admin-permission">
                         <div
@@ -138,7 +138,7 @@ const Sidebar = () => {
                     )}
 
                     {permissions?.["admin"]?.includes(
-                      "view_admin_users_section"
+                      "view_admin_users_section",
                     ) && (
                       <Link to="/admin-user">
                         <div
@@ -387,7 +387,7 @@ const Sidebar = () => {
           <div className="menu-group">
             {/* user recaharge list */}
             {permissions?.["user_recharge_list"]?.includes(
-              "view_recharge_list"
+              "view_recharge_list",
             ) && (
               <Link to="/user-recharge">
                 <div
@@ -403,7 +403,7 @@ const Sidebar = () => {
             )}
 
             {permissions?.["user_recharge_list"]?.includes(
-              "view_recharge_list"
+              "view_recharge_list",
             ) && (
               <Link to="/user-recharge-summary">
                 <div
@@ -432,7 +432,7 @@ const Sidebar = () => {
             </Link>
 
             {permissions?.["user_recharge_list"]?.includes(
-              "view_recharge_list"
+              "view_recharge_list",
             ) && (
               <>
                 <Link to="payable-History">
@@ -1035,7 +1035,7 @@ const Sidebar = () => {
             </Link>
 
             {permissions?.["user_recharge_list"]?.includes(
-              "view_recharge_list"
+              "view_recharge_list",
             ) && (
               <Link to="/user-recharge">
                 <div className="item">

@@ -79,7 +79,7 @@ export const orderApiSlice = apiSlice.injectEndpoints({
         if (end_date) params.append("end_date", end_date);
 
         return {
-          url: `meta/admin/get-blog-view?${params.toString()}`,
+          url: `api/v1/content-management/admin/get-blog-view?${params.toString()}`,
           method: "GET",
           headers: {
             Authorization: "Bearer admin_token",

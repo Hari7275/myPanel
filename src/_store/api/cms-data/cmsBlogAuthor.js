@@ -1,18 +1,9 @@
 import apiSlice from "../api";
-import { getAdminToken } from "../tokenHelper";
+
 
 export const cmsBlogAuthorApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // getCmsBlogAuthorList: builder.query({
-    //   query: ({ page, pageSize }) => ({
-    //     url: `/api/v2/content-management/authors?page=${page}&limit=${pageSize}`,
-    //     method: "GET",
-    //     headers: {
-    //       Authorization: "Bearer admin_token",
-    //     },
-    //   }),
-    //   providesTags: ["banner"],
-    // }),
+   
 
     getCmsBlogAuthorList: builder.query({
       query: ({ page, pageSize }) => {
@@ -29,7 +20,6 @@ export const cmsBlogAuthorApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["banner"],
     }),
-
     createCmsBlogAuthor: builder.mutation({
       query: ({ body }) => ({
         url: `/api/v1/content-management/authors`,

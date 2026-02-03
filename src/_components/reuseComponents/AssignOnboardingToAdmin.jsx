@@ -43,7 +43,10 @@ const AssignOnboardingToAdmin = ({
   useEffect(() => {
     if (fetchData?.data?.records) {
       const filteredData = fetchData.data.records.filter(
-        (admin) => admin.status === "active" && admin.role_id === 6
+        (admin) =>
+          admin.status === "active" &&
+          // admin.role_id === 6
+          (admin.role_id === 6 || admin.role_id === 8),
       );
       setAdminList(filteredData);
     }
@@ -53,7 +56,7 @@ const AssignOnboardingToAdmin = ({
       toast.error(
         `${
           fetchError?.data?.message || "Failed to load admin users"
-        }. Please log in again.`
+        }. Please log in again.`,
       );
     }
   }, [fetchData, fetchError]);
