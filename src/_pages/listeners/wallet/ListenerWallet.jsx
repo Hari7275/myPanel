@@ -48,7 +48,8 @@ const ListenerWallet = () => {
   };
 
   const AddButton = () => {
-    if (user?.id !== 20 && user?.id !== 2 && user?.id !== 3) return null;
+    if (user?.id !== 20 && user?.id !== 2 && user?.id !== 3 && user?.id !== 4)
+      return null;
     return (
       <button
         className="addButton"

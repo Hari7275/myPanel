@@ -12,7 +12,17 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
     amount: "",
     transaction_type: "debit",
     description: "",
+    display_text: "",
   });
+
+  // Dropdown options for description
+  const displayOptions = [
+    { value: "", label: "Select a Text" },
+    {
+      value: "Deduction ",
+      label: "Deduction ",
+    },
+  ];
 
   const [createData, { isLoading }] = useCreateConsultantWalletTransMutation();
 
@@ -34,6 +44,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
       amount: parseFloat(formData.amount),
       transaction_type: formData.transaction_type,
       description: formData.description || "",
+      display_text: formData.display_text,
     };
 
     // Add order_id only if provided
@@ -152,6 +163,29 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
           >
             <option value="credit">Credit</option>
             <option value="debit">Debit</option>
+          </select>
+        </div>
+
+        {/* Description Dropdown Field */}
+        <div className="userProfile-grid-item">
+          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+            Display Text{" "}
+            <span style={{ fontSize: "14px", color: "#666" }}>
+              <span style={{ color: "red" }}>*</span>
+            </span>
+          </label>
+          <select
+            name="display_text"
+            value={formData?.display_text}
+            onChange={handleChange}
+            className="userProfile-input-field"
+            required
+          >
+            {displayOptions.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
           </select>
         </div>
 
