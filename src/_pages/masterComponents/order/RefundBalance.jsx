@@ -25,12 +25,12 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       label: "Flute mock call",
     },
     {
-      value: "Call/Chat/Video failed to connect",
-      label: "Call/Chat/Video failed to connect",
+      value: "Call failed to connect",
+      label: "Call failed to connect",
     },
     {
-      value: "Call dropped / technical issue",
-      label: "Call dropped / technical issue",
+      value: "Call dropped due to technical issue",
+      label: "Call dropped due to technical issue",
     },
     {
       value: "Consultant did not answer",
@@ -40,8 +40,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
     { value: "Consultant unprofessional", label: "Consultant unprofessional" },
     { value: "Wrong service selected", label: "Wrong service selected" },
     {
-      value: "Duplicate/accidental payment",
-      label: "Duplicate/accidental payment",
+      value: "Duplicate or accidental payment",
+      label: "Duplicate or accidental payment",
     },
     {
       value: "Admin-approved goodwill refund",
