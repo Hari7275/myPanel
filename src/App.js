@@ -141,6 +141,10 @@ import PhotoGuidelines from "./_pages/cms-data/cms-photo-guidelines/PhotoGuideli
 import TheAppPage from "./_pages/cms-data/cms-the-page/TheAppPage";
 import TestimonialList from "./_pages/cms-data/cms-testimonial/TestimonialList";
 
+
+
+import ConsultantUserNotification from "./_pages/masterComponents/consultantUserNotification/ConsultantUserNotification";
+
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
     <Sidebar />
@@ -372,6 +376,9 @@ const Layout = () => (
             path="role-permission/:id"
             element={<AssignPermissionToRole />}
           />
+
+
+          <Route path="consultant-user-notification" element={<ConsultantUserNotification />} />
         </Routes>
       </section>
     </div>

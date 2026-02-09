@@ -4,9 +4,13 @@ import NotificationBell from "./NotificationBell";
 import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
 import { AppBar, IconButton, Toolbar, Typography, Stack } from "@mui/material";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+
+import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
+
 const Navbar = () => {
   const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
@@ -17,6 +21,7 @@ const Navbar = () => {
   );
 
   const location = useLocation();
+  const permissions = usePermissions();
 
   const pathTitleMap = {
     "/user": "User List",
@@ -183,7 +188,22 @@ const Navbar = () => {
             {/* Flute Admin Panel  */}
             {/* {currentTitle} */}
           </Typography>
+
           <Stack direction={"row"} spacing={2}>
+            {permissions?.["orders"]?.includes("order_notifications") && (
+              <Link to="/consultant-user-notification">
+                <div
+                  className="navbar-img"
+                  style={{
+                    marginTop: "2px",
+                    padding: "8px",
+                    background: "#7d798c57",
+                  }}
+                >
+                  <RemoveRedEyeIcon />
+                </div>
+              </Link>
+            )}
             <div
               className="navbar-img"
               style={{

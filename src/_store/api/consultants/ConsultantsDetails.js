@@ -30,8 +30,31 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
 
     createConsultantOrderNotification: builder.mutation({
       query: ({ body }) => ({
-        url: `api/v1/consultant/management/order/observing-consultant`,
+        url: `api/v1/consultant/management/order/admin/observing-consultant`,
         method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["consultants"],
+    }),
+
+    getConsultantOrderNotification: builder.query({
+      query: ({ consultant_id, user_id, status }) => ({
+        url: `api/v1/consultant/management/order/admin/observing-consultant?consultant_id=${consultant_id}&user_id=${user_id}&status=${status}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["consultants", "gallery"],
+    }),
+
+    updateConsultantOrderNotification: builder.mutation({
+      query: ({ consultant_id, body }) => ({
+        url: `api/v1/consultant/management/order/observing-consultant/${consultant_id}`,
+        method: "PUT",
         headers: {
           Authorization: "Bearer admin_token",
         },
@@ -46,4 +69,6 @@ export const {
   useGetConsultantsDetailsQuery,
   useUpdateConsultantsDetailsMutation,
   useCreateConsultantOrderNotificationMutation,
+  useGetConsultantOrderNotificationQuery,
+  useUpdateConsultantOrderNotificationMutation,
 } = consultantsDetailsApiSlice;

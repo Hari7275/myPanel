@@ -69,7 +69,7 @@ const CategoryCard = ({ registeredLink, item }) => {
                 </div>
               </div>
             </div>
-          </div> */}
+          </div> f */}
         </div>
 
         <Link to={registeredLink} className="onboarding-card-link">
@@ -107,10 +107,12 @@ const OnboardingAssigneeList = () => {
       setMetadataItems(fetchData.data);
     } else {
       setMetadataItems(
-        fetchData.data.filter((item) => item.admin_id == user?.id)
+        fetchData.data.filter((item) => item.id == user?.id),
       );
     }
   }, [fetchData, user?.id]);
+
+  console.log("metadataItems", metadataItems);
 
   return (
     <div className="onboarding-main-container">

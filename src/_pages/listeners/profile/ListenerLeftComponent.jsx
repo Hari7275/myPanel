@@ -157,9 +157,23 @@ const ListenerLeftComponent = () => {
   };
 
   const addNotification = async () => {
+    let assignedUserId;
+
+    if (user?.id === 20) {
+      assignedUserId = 104;
+    } else if (user?.id === 2) {
+      assignedUserId = 1;
+    } else if (user?.id === 4) {
+      assignedUserId = 184;
+    } else {
+      // Default fallback - use orderData.user_id for other cases
+      assignedUserId = null;
+    }
+
     const payload = {
       consultant_id: consultantId,
-      status: true,
+      // status: true,
+      user_id: assignedUserId,
     };
 
     try {
@@ -218,7 +232,7 @@ const ListenerLeftComponent = () => {
             </div> */}
           </div>
         </div>
-        {/* SECOND COLUMN LISTNER INFO SECTION */}
+        {/* SECOND COLUMN LISTNER INFO SECTION .*/}
         <div className="user-info-section">
           <div className="userName">
             {`${data.first_name || ""} ${data.last_name || ""}`}({age})
