@@ -40,20 +40,39 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ["consultants"],
     }),
 
+    // getConsultantOrderNotification: builder.query({
+    //   query: ({ consultant_id, user_id, status }) => ({
+    //     url: `api/v1/consultant/management/order/admin/observing-consultant?consultant_id=${consultant_id}&user_id=${user_id}&status=${status}`,
+    //     method: "GET",
+    //     headers: {
+    //       Authorization: "Bearer admin_token",
+    //     },
+    //   }),
+    //   providesTags: ["consultants", "gallery"],
+    // }),
+
     getConsultantOrderNotification: builder.query({
-      query: ({ consultant_id, user_id, status }) => ({
-        url: `api/v1/consultant/management/order/admin/observing-consultant?consultant_id=${consultant_id}&user_id=${user_id}&status=${status}`,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-      }),
+      query: ({ consultant_id, user_id, status, page, limit }) => {
+        const params = new URLSearchParams({});
+        if (page) params.append("page", page);
+        if (limit) params.append("size", limit);
+        if (consultant_id) params.append("consultant_id", consultant_id);
+        if (user_id) params.append("user_id", user_id);
+        if (status) params.append("status", status);
+        return {
+          url: `/api/v1/consultant/management/order/admin/observing-consultant?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
       providesTags: ["consultants", "gallery"],
     }),
 
     updateConsultantOrderNotification: builder.mutation({
       query: ({ consultant_id, body }) => ({
-        url: `api/v1/consultant/management/order/observing-consultant/${consultant_id}`,
+        url: `api/v1/consultant/management/order/admin/observing-consultant/${consultant_id}`,
         method: "PUT",
         headers: {
           Authorization: "Bearer admin_token",

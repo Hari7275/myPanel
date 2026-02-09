@@ -30,6 +30,7 @@ const ConsultantUserNotification = () => {
     assignedUserId = null;
   }
   // handeling api  fetching data and deleting data
+
   const { data: fetchData, isLoading } = useGetConsultantOrderNotificationQuery(
     {
       consultant_id: consultantId,
@@ -41,9 +42,11 @@ const ConsultantUserNotification = () => {
   );
 
   // store data
+
+  console.log("data....", fetchData);
   useEffect(() => {
-    if (fetchData && fetchData?.data) {
-      setData(fetchData?.data);
+    if (fetchData && fetchData?.data && fetchData?.data?.records) {
+      setData(fetchData?.data?.records);
     } else {
       setData([]);
     }
@@ -89,7 +92,7 @@ const ConsultantUserNotification = () => {
     </div>
   );
 
-  const totalPage = fetchData?.pagination?.totalPages || 1;
+  const totalPage = fetchData?.meta?.total_page || 1;
 
   if (isLoading) {
     return (
