@@ -22,6 +22,7 @@ const ListenersListingTable = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = Number(queryParams.get("page")) || 1;
   const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+  const initialStatusFilter = queryParams.get("status") || ""; // Read initial status filter from URL
 
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -48,7 +49,7 @@ const ListenersListingTable = () => {
     startDate: "",
     endDate: "",
     orderType: "",
-    status: "",
+    status: initialStatusFilter,
   });
 
   // 🧭 Keep URL params synced when page or pageSize changes
@@ -56,8 +57,9 @@ const ListenersListingTable = () => {
     const params = new URLSearchParams(location.search);
     params.set("page", page);
     params.set("pageSize", pageSize);
+    params.set("status", appliedFilters.status); // Include status filter in URL
     navigate(`?${params.toString()}`, { replace: true });
-  }, [page, pageSize, navigate]);
+  }, [page, pageSize, navigate, appliedFilters.status]);
 
   const {
     data: fetchData,
@@ -98,7 +100,10 @@ const ListenersListingTable = () => {
 
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
+
+    console.log("row........", row);
     SetProfileStatus(row.status);
+    console.log("profileStatus........", row.status);
     setSelectedRow(row);
   };
 
@@ -208,7 +213,7 @@ const ListenersListingTable = () => {
   // Handle filter application
   const handleApplyFilter = (filterData) => {
     setAppliedFilters(filterData);
-    setPage(1); // Reset to first page when applying filters
+    setPage(1); // Reset to first page when applying filters.
     console.log("Applied filters:", filterData);
   };
 

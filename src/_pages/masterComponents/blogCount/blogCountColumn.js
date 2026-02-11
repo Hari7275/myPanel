@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const handleViewBlog = ({ value, row }) => {
   console.log(".....", row.original.blog_id);
-  const navigationRoute = `https://fluteconnect.com/magazine/${row.original.blog_id}`;
+  const navigationRoute = `https://fluteconnect.com/magazine/${row.original.slug}`;
 
   return (
     <a href={navigationRoute} target="blank" style={{ color: "#a84444ff" }}>

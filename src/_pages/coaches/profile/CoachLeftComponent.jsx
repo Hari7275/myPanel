@@ -4,6 +4,7 @@ import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import {
   useCreateConsultantOrderNotificationMutation,
   useGetConsultantsDetailsQuery,
+  useGetConsultantsListQuery,
 } from "../../../_store/api";
 import { KeyRound, Pencil, CirclePlus } from "lucide-react";
 import { Atom } from "react-loading-indicators";
@@ -17,6 +18,7 @@ import Button from "@mui/material/Button";
 import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import EditStatus from "../../../_components/reuseComponents/EditStatus";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -61,6 +63,11 @@ const CoachLeftComponent = () => {
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
 
+  const [showEditStatus, setShowEditStatus] = useState(false);
+  const [profileStatusValue, setProfileStatusValue] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [consultantListData, setConsultantListData] = useState([]);
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -83,6 +90,27 @@ const CoachLeftComponent = () => {
     isLoading,
     error,
   } = useGetConsultantsDetailsQuery(consultantId);
+
+  // fetching consultant list data to get the  profile status update component
+  const { data: fetchListData } = useGetConsultantsListQuery({
+    id: consultantId,
+    consultant_type: 2,
+  });
+
+  useEffect(() => {
+    if (fetchListData) {
+      setConsultantListData(fetchListData?.data?.records || []);
+      // Update the phone code in localStorage
+    }
+  }, [fetchListData]);
+
+  const toggleEditStatus = (row) => {
+    setShowEditStatus(!showEditStatus);
+
+    setProfileStatusValue(row[0]?.status);
+
+    setSelectedRow(row[0]);
+  };
 
   useEffect(() => {
     if (fetchData) {
@@ -294,6 +322,19 @@ const CoachLeftComponent = () => {
 
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
+
+        {[3, 4, 5, 2, 8].includes(consultantListData[0]?.status) &&
+          permissions?.["listener"]?.includes(
+            "update_listener_profile_status",
+          ) && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus(consultantListData)}
+              />
+            </span>
+          )}
+
         {profileStatus == 3 && (
           <Button
             variant="contained"
@@ -389,6 +430,15 @@ const CoachLeftComponent = () => {
           profileStatus={profileStatus}
           created={true}
           adminId={user.id}
+        />
+      )}
+
+      {showEditStatus && (
+        <EditStatus
+          isOpen={showEditStatus}
+          onClose={toggleEditStatus}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatusValue}
         />
       )}
     </div>

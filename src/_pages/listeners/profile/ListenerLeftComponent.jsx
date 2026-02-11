@@ -7,6 +7,7 @@ import Modal from "../../../_components/modals/Modal";
 import {
   useGetConsultantsDetailsQuery,
   useCreateConsultantOrderNotificationMutation,
+  useGetConsultantsListQuery,
 } from "../../../_store/api";
 import {
   getGenderLabel,
@@ -24,6 +25,7 @@ import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
 import { Switch } from "@mui/material";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import EditStatus from "../../../_components/reuseComponents/EditStatus";
 
 // function for calculate date of birth
 
@@ -54,6 +56,10 @@ const ListenerLeftComponent = () => {
   const { openImageModal, ImageModal } = UseImageModal();
   const [showUpdateStatus, setShowUpdateStatus] = useState(false);
   const [selectedData, setSelectedData] = useState(null);
+  const [showEditStatus, setShowEditStatus] = useState(false);
+  const [profileStatusValue, setProfileStatusValue] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [consultantListData, setConsultantListData] = useState([]);
 
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
@@ -68,8 +74,6 @@ const ListenerLeftComponent = () => {
   const params = new URLSearchParams(search);
   const profileStatus = params.get("status");
 
-  console.log("profileStatus", profileStatus);
-
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
     useUpdateStatusMutation();
 
@@ -83,6 +87,20 @@ const ListenerLeftComponent = () => {
     error,
   } = useGetConsultantsDetailsQuery(consultantId);
 
+  // fetching consultant list data to get the  profile status update component
+  const { data: fetchListData } = useGetConsultantsListQuery({
+    id: consultantId,
+    consultant_type: 3,
+  });
+
+  const toggleEditStatus = (row) => {
+    setShowEditStatus(!showEditStatus);
+   
+    setProfileStatusValue(row[0]?.status);
+   
+    setSelectedRow(row[0]);
+  };
+
   useEffect(() => {
     if (fetchData) {
       setData(fetchData?.data || {});
@@ -93,6 +111,13 @@ const ListenerLeftComponent = () => {
       }
     }
   }, [fetchData]);
+
+  useEffect(() => {
+    if (fetchListData) {
+      setConsultantListData(fetchListData?.data?.records || []);
+      // Update the phone code in localStorage
+    }
+  }, [fetchListData]);
 
   const urls = data?.profile_pic?.url;
 
@@ -289,6 +314,18 @@ const ListenerLeftComponent = () => {
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
 
       <div className="social-icons-section">
+        {[3, 4, 5, 2, 8].includes(consultantListData[0]?.status) &&
+          permissions?.["listener"]?.includes(
+            "update_listener_profile_status",
+          ) && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus(consultantListData)}
+              />
+            </span>
+          )}
+
         {profileStatus == 3 && (
           <Button
             variant="contained"
@@ -392,6 +429,15 @@ const ListenerLeftComponent = () => {
           profileStatus={profileStatus}
           created={true}
           adminId={user.id}
+        />
+      )}
+
+      {showEditStatus && (
+        <EditStatus
+          isOpen={showEditStatus}
+          onClose={toggleEditStatus}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatusValue}
         />
       )}
     </div>

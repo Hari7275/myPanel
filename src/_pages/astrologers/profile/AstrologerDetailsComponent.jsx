@@ -4,7 +4,10 @@ import Modal from "../../../_components/modals/Modal";
 import AstrologerStatus from "../status/AstrologerStatus";
 import CoachStatus from "../../coaches/status/CoachStatus";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
-import { useGetConsultantsDetailsQuery } from "../../../_store/api";
+import {
+  useGetConsultantsDetailsQuery,
+  useGetConsultantsListQuery,
+} from "../../../_store/api";
 import {
   getGenderLabel,
   getMaritalStatus,
@@ -25,6 +28,7 @@ import {
   useCreateConsultantOrderNotificationMutation,
 } from "../../../_store/api";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import EditStatus from "../../../_components/reuseComponents/EditStatus";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -77,6 +81,11 @@ const AstrologerDetailsComponent = () => {
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
   const { openImageModal, ImageModal } = UseImageModal();
+
+  const [showEditStatus, setShowEditStatus] = useState(false);
+  const [profileStatusValue, setProfileStatusValue] = useState(null);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [consultantListData, setConsultantListData] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
   const [selectedData, setSelectedData] = useState(null);
@@ -106,6 +115,27 @@ const AstrologerDetailsComponent = () => {
       }
     }
   }, [fetchData]);
+
+  // fetching consultant list data to get the  profile status update component
+  const { data: fetchListData } = useGetConsultantsListQuery({
+    id: consultantId,
+    consultant_type: 1,
+  });
+
+  useEffect(() => {
+    if (fetchListData) {
+      setConsultantListData(fetchListData?.data?.records || []);
+      // Update the phone code in localStorage
+    }
+  }, [fetchListData]);
+
+  const toggleEditStatus = (row) => {
+    setShowEditStatus(!showEditStatus);
+
+    setProfileStatusValue(row[0]?.status);
+
+    setSelectedRow(row[0]);
+  };
 
   const urls = data?.profile_pic?.url;
   const socialMediaLinks = data.social_media || {};
@@ -307,6 +337,17 @@ const AstrologerDetailsComponent = () => {
       </div>
       {/* SECOND COLUMN ASTROLOGER DETAILS ROW */}
       <div className="social-icons-section">
+        {[3, 4, 5, 2, 8].includes(consultantListData[0]?.status) &&
+          permissions?.["listener"]?.includes(
+            "update_listener_profile_status",
+          ) && (
+            <span className="editIcon">
+              <Pencil
+                className="iconSmall"
+                onClick={() => toggleEditStatus(consultantListData)}
+              />
+            </span>
+          )}
         {profileStatus == 3 && (
           <Button
             variant="contained"
@@ -409,6 +450,15 @@ const AstrologerDetailsComponent = () => {
           profileStatus={profileStatus}
           created={true}
           adminId={user.id}
+        />
+      )}
+
+      {showEditStatus && (
+        <EditStatus
+          isOpen={showEditStatus}
+          onClose={toggleEditStatus}
+          selectedRow={selectedRow?.id}
+          profileStatus={profileStatusValue}
         />
       )}
     </div>

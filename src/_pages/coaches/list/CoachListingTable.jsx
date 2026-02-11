@@ -27,6 +27,7 @@ const CoachListingTable = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = Number(queryParams.get("page")) || 1;
   const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+  const initialStatusFilter = queryParams.get("status") || ""; // Read initial status filter from URL
 
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
@@ -48,22 +49,23 @@ const CoachListingTable = () => {
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
 
-  // 🧭 Keep URL params synced when page or pageSize changes
-  useEffect(() => {
-    const params = new URLSearchParams(location.search);
-    params.set("page", page);
-    params.set("pageSize", pageSize);
-    navigate(`?${params.toString()}`, { replace: true });
-  }, [page, pageSize, navigate]);
-
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
     startDate: "",
     endDate: "",
     orderType: "",
-    status: "",
+    status: initialStatusFilter,
   });
+
+  // 🧭 Keep URL params synced when page or pageSize changes
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    params.set("page", page);
+    params.set("pageSize", pageSize);
+    params.set("status", appliedFilters.status); // Include status filter in URL
+    navigate(`?${params.toString()}`, { replace: true });
+  }, [page, pageSize, navigate, appliedFilters.status]);
 
   const {
     data: fetchData,
@@ -94,7 +96,7 @@ const CoachListingTable = () => {
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records.filter(
-        (record) => record?.consultant_type === 2
+        (record) => record?.consultant_type === 2,
       );
       setData(consultantData);
     } else {
@@ -148,7 +150,7 @@ const CoachListingTable = () => {
 
             {[3, 4, 5, 2, 8].includes(row.original.status) &&
               permissions?.["coach"]?.includes(
-                "update_coach_profile_status"
+                "update_coach_profile_status",
               ) && (
                 <span className="editIcon">
                   <Pencil
@@ -184,7 +186,7 @@ const CoachListingTable = () => {
         ),
       },
     ],
-    []
+    [],
   );
 
   // Apply debounce to search handlers
@@ -193,7 +195,7 @@ const CoachListingTable = () => {
 
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
-    500
+    500,
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
@@ -225,7 +227,7 @@ const CoachListingTable = () => {
 
   // Count applied filters (non-empty values)
   const appliedFilterCount = Object.values(appliedFilters).filter(
-    (val) => val !== "" && val !== null && val !== undefined
+    (val) => val !== "" && val !== null && val !== undefined,
   ).length;
 
   const customFilterComponent = () => (

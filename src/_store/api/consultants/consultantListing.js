@@ -3,24 +3,61 @@ import { getAdminToken } from "../tokenHelper";
 
 export const consultantsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // getConsultantsList: builder.query({
+    //   query: ({
+    //     page = 1,
+    //     size = 1000,
+    //     id,
+    //     name,
+    //     phone,
+    //     consultant_type,
+    //     auth_status,
+    //     email,
+    //   }) => ({
+    //     url: `/api/v1/consultant/profile/admin/consultant-list?&consultant_type=${consultant_type}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}&auth_status=${auth_status}&email=${email}`,
+    //     method: "GET",
+    //     headers: {
+    //       // Authorization: "Bearer admin_token",
+    //       Authorization: getAdminToken(),
+    //     },
+    //   }),
+
+    //   providesTags: ["consultants", "adminlog"],
+    // }),
+
     getConsultantsList: builder.query({
       query: ({
         page = 1,
-        size = 1000,
+        size = 10,
         id,
         name,
         phone,
         consultant_type,
         auth_status,
         email,
-      }) => ({
-        url: `/api/v1/consultant/profile/admin/consultant-list?&consultant_type=${consultant_type}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}&auth_status=${auth_status}&email=${email}`,
-        method: "GET",
-        headers: {
-          // Authorization: "Bearer admin_token",
-          Authorization: getAdminToken(),
-        },
-      }),
+      }) => {
+        const params = new URLSearchParams();
+
+        // required params
+        params.append("page", page);
+        params.append("size", size);
+
+        // optional params
+        if (id) params.append("id", id);
+        if (name) params.append("name", name);
+        if (phone) params.append("phone", phone);
+        if (consultant_type) params.append("consultant_type", consultant_type);
+        if (auth_status) params.append("auth_status", auth_status);
+        if (email) params.append("email", email);
+
+        return {
+          url: `/api/v1/consultant/profile/admin/consultant-list?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: getAdminToken(),
+          },
+        };
+      },
 
       providesTags: ["consultants", "adminlog"],
     }),

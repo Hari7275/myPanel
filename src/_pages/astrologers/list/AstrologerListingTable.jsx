@@ -31,6 +31,8 @@ const AstrologerListingTable = () => {
   const queryParams = new URLSearchParams(location.search);
   const initialPage = Number(queryParams.get("page")) || 1;
   const initialPageSize = Number(queryParams.get("pageSize")) || 50;
+  const initialStatusFilter = queryParams.get("status") || ""; // Read initial status filter from URL
+
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -56,7 +58,7 @@ const AstrologerListingTable = () => {
     startDate: "",
     endDate: "",
     orderType: "",
-    status: "",
+    status: initialStatusFilter,
   });
 
   // 🧭 Keep URL params synced when page or pageSize changes
@@ -64,8 +66,9 @@ const AstrologerListingTable = () => {
     const params = new URLSearchParams(location.search);
     params.set("page", page);
     params.set("pageSize", pageSize);
+    params.set("status", appliedFilters.status); // Include status filter in URL
     navigate(`?${params.toString()}`, { replace: true });
-  }, [page, pageSize, navigate]);
+  }, [page, pageSize, navigate, appliedFilters.status]);
 
   const { data: fetchData, isLoading } = useGetConsultantsListQuery({
     page,
@@ -86,7 +89,7 @@ const AstrologerListingTable = () => {
   useEffect(() => {
     if (fetchData && fetchData?.data && fetchData?.data?.records) {
       const consultantData = fetchData?.data?.records.filter(
-        (record) => record.consultant_type === 1
+        (record) => record.consultant_type === 1,
       );
       setData(consultantData);
     } else {
@@ -144,7 +147,7 @@ const AstrologerListingTable = () => {
         Cell: ({ row }) => (
           <div className="actions-cell">
             {permissions?.["astrologer"]?.includes(
-              "view_astrologer_profile"
+              "view_astrologer_profile",
             ) && (
               <Link
                 to={`/astrologer/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
@@ -165,7 +168,7 @@ const AstrologerListingTable = () => {
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["astrologer"]?.includes(
-                "update_astrologer_profile_status"
+                "update_astrologer_profile_status",
               ) && (
                 <span className="editIcon">
                   <Pencil
@@ -201,7 +204,7 @@ const AstrologerListingTable = () => {
         ),
       },
     ],
-    [toggleEditStatus]
+    [toggleEditStatus],
   );
 
   // Apply debounce to search handlers
@@ -210,12 +213,12 @@ const AstrologerListingTable = () => {
 
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
-    500
+    500,
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
   const debouncedSearchStatus = debounce(
     (value) => setStatusSearch(value),
-    500
+    500,
   );
 
   const handleNameSearch = (e) => {
@@ -258,7 +261,7 @@ const AstrologerListingTable = () => {
 
   // Count applied filters (non-empty values)
   const appliedFilterCount = Object.values(appliedFilters).filter(
-    (val) => val !== "" && val !== null && val !== undefined
+    (val) => val !== "" && val !== null && val !== undefined,
   ).length;
 
   const customFilterComponent = () => (
