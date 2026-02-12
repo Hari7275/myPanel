@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
-import { getStatusColor } from "../../../_constants/consultantConstant";
+import {
+  getStatusColor,
+  COMPLETED_BY_MAP,
+} from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
+import AndroidIcon from "@mui/icons-material/Android";
+import AppleIcon from "@mui/icons-material/Apple";
 
 // Helper function to calculate end time
 const calculateEndTime = (startTime, durationInMinutes) => {
@@ -97,7 +102,13 @@ const ConsultantNavigationCell = ({ value, row }) => {
   );
 };
 
-const OrderIdCell = ({ value }) => {
+const OrderIdCell = ({ value, row }) => {
+  const rejectedCall = row.original.mode_type === 1;
+  if (rejectedCall) {
+    return (
+      <span style={{ color: "#4e8536", fontWeight: "bolder" }}>{value}</span>
+    );
+  }
   return <span className="custumerId-color">{value}</span>;
 };
 
@@ -208,11 +219,25 @@ export const COLUMNORDER = [
   },
 
   {
-    Header: "Device Type",
+    Header: "Dv Type",
     accessor: "description", // accessor should be a direct key
     Cell: ({ row }) => {
       const platform = row?.original?.description?.userData?.platform;
-      return <span>{platform == 1 ? "Android" : "iOS"}</span>;
+      return (
+        <span>
+          {platform == 1 ? (
+            <AndroidIcon sx={{ color: "#3DDC84" }} />
+          ) : (
+            <AppleIcon sx={{ color: "#7b7878ff" }} />
+          )}
+        </span>
+      );
     },
+  },
+
+  {
+    Header: "Comp By",
+    accessor: "completed_by", // accessor should be a direct key
+    Cell: ({ value }) => COMPLETED_BY_MAP[value] || "N/A",
   },
 ];

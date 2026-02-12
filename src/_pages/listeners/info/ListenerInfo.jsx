@@ -58,7 +58,7 @@ const ListenerInfo = () => {
             }}
           >
             <h3 className="main-heading " style={{ marginBottom: "0px" }}>
-              Update Info
+              Update Info 
             </h3>
             {permissions?.["listener"]?.includes(
               "update_listener_profile_info"

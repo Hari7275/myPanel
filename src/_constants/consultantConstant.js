@@ -391,3 +391,16 @@ export const statusNameToValue = {
   Rejected: 6,
   Deleted: 7,
 };
+
+export const COMPLETED_BY_MAP = {
+  1: "User",
+  2: "User (Consultant Left)",
+  3: "Consultant",
+  4: "Consultant (User Left)",
+  5: "Admin",
+  6: "System",
+  7: "User (Token Expired)",
+  8: "Consultant (Token Expired)",
+  9: "Event (User Left)",
+  10: "Event (Consultant Left)",
+};
