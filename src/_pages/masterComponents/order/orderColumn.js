@@ -5,6 +5,7 @@ import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import {
   getStatusColor,
   COMPLETED_BY_MAP,
+  COMPLETED_BY_COLOR_MAP,
 } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
@@ -106,7 +107,7 @@ const OrderIdCell = ({ value, row }) => {
   const rejectedCall = row.original.mode_type === 1;
   if (rejectedCall) {
     return (
-      <span style={{ color: "#4e8536", fontWeight: "bolder" }}>{value}</span>
+      <span style={{ color: "#DB2777", fontWeight: "bolder" }}>{value}</span>
     );
   }
   return <span className="custumerId-color">{value}</span>;
@@ -237,7 +238,17 @@ export const COLUMNORDER = [
 
   {
     Header: "Comp By",
-    accessor: "completed_by", // accessor should be a direct key
-    Cell: ({ value }) => COMPLETED_BY_MAP[value] || "N/A",
+    accessor: "completed_by",
+    Cell: ({ value }) => (
+      // <span className={COMPLETED_BY_COLOR_MAP[value] || "text-gray-700"}>
+      <span
+        style={{
+          color: COMPLETED_BY_COLOR_MAP[value] || "#000000",
+          fontWeight: 500,
+        }}
+      >
+        {COMPLETED_BY_MAP[value] || ""}
+      </span>
+    ),
   },
 ];

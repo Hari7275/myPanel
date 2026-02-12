@@ -404,3 +404,16 @@ export const COMPLETED_BY_MAP = {
   9: "Event (User Left)",
   10: "Event (Consultant Left)",
 };
+
+export const COMPLETED_BY_COLOR_MAP = {
+  1: "#2563eb",
+  2: "#60a5fa",
+  3: "#a31616",
+  4: "#4ade80",
+  5: "#9333ea",
+  6: "#6b7280",
+  7: "#ef4444",
+  8: "#ef4444",
+  9: "#f97316",
+  10: "#f97316",
+};
