@@ -16,6 +16,8 @@ import { useParams } from "react-router-dom";
 import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
 import { statusNameToValue } from "../../../../_constants/consultantConstant";
 import AssignOnboardingToAdmin from "../../../../_components/reuseComponents/AssignOnboardingToAdmin";
+import AstrologerListFilter from "../../../astrologers/list/AstrologerListFilter";
+import Button from "@mui/material/Button";
 
 const OnboardingAssignedConsultantList = () => {
   const [selectedRow, setSelectedRow] = useState(null);
@@ -32,6 +34,15 @@ const OnboardingAssignedConsultantList = () => {
   const [dynamicPagination, setDynamicPagination] = useState(true);
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
+
+  // Filter states
+  const [showFilterPopover, setShowFilterPopover] = useState(false);
+  const [appliedFilters, setAppliedFilters] = useState({
+    startDate: "",
+    endDate: "",
+    orderType: "",
+    status: "",
+  });
 
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
@@ -50,6 +61,7 @@ const OnboardingAssignedConsultantList = () => {
     id: consultantId,
     phone,
     admin_id: adminId,
+    auth_status: appliedFilters?.status,
   });
 
   const navigate = useNavigate();
@@ -97,10 +109,10 @@ const OnboardingAssignedConsultantList = () => {
             consultant_type === 1
               ? "astrologer"
               : consultant_type === 2
-              ? "coaches"
-              : consultant_type === 3
-              ? "listeners"
-              : "listeners"; // default fallback
+                ? "coaches"
+                : consultant_type === 3
+                  ? "listeners"
+                  : "listeners"; // default fallback
 
           const profileLink = `/${basePath}/${id}?status=${status}&type=${phone_code}`;
 
@@ -124,7 +136,7 @@ const OnboardingAssignedConsultantList = () => {
 
               {[3, 4, 5, 2, 8].includes(status) &&
                 permissions?.["listener"]?.includes(
-                  "update_listener_profile_status"
+                  "update_listener_profile_status",
                 ) && (
                   <span className="editIcon">
                     <Pencil
@@ -151,13 +163,13 @@ const OnboardingAssignedConsultantList = () => {
         },
       },
     ],
-    [permissions]
+    [permissions],
   );
 
   const debouncedSearchName = debounce((value) => setName(value), 500);
   const debouncedSearchConsultantId = debounce(
     (value) => setConsultantId(value),
-    500
+    500,
   );
   const debouncedSearchPhone = debounce((value) => setPhone(value), 500);
 
@@ -175,6 +187,18 @@ const OnboardingAssignedConsultantList = () => {
     setPage(1);
     debouncedSearchPhone(e?.target?.value);
   };
+
+  // Handle filter application
+  const handleApplyFilter = (filterData) => {
+    setAppliedFilters(filterData);
+    setPage(1); // Reset to first page when applying filters.
+    console.log("Applied filters:", filterData);
+  };
+
+  // Count applied filters (non-empty values)
+  const appliedFilterCount = Object.values(appliedFilters).filter(
+    (val) => val !== "" && val !== null && val !== undefined,
+  ).length;
 
   const customFilterComponent = () => (
     <div style={{ width: "100%", height: "35px", display: "flex" }}>
@@ -209,6 +233,28 @@ const OnboardingAssignedConsultantList = () => {
         }}
         onChange={handleConsultantPhoneSearch}
       />
+
+      <div
+        style={{ marginLeft: "20px", position: "relative" }}
+        className="filter-button-wrapper"
+      >
+        <Button
+          variant="contained"
+          onClick={() => setShowFilterPopover(!showFilterPopover)}
+        >
+          Filter
+          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+            {appliedFilterCount === 0 ? null : appliedFilterCount}
+          </span>
+        </Button>
+
+        <AstrologerListFilter
+          isOpen={showFilterPopover}
+          onClose={() => setShowFilterPopover(false)}
+          onApplyFilter={handleApplyFilter}
+          initialFilters={appliedFilters}
+        />
+      </div>
     </div>
   );
 

@@ -10,6 +10,7 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
+import { useGetFluteRevenueOnGraphQuery } from "../_store/api";
 
 const Navbar = () => {
   const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
@@ -22,6 +23,23 @@ const Navbar = () => {
 
   const location = useLocation();
   const permissions = usePermissions();
+
+  const [dateFilter, setDateFilter] = useState("weekly");
+  const [revenueData, setRevenueData] = useState([]);
+  const { data: fetchRevenueData } = useGetFluteRevenueOnGraphQuery(
+    {
+      dateFilter,
+    },
+    {
+      pollingInterval: 5 * 60 * 1000, // 5 minutes = 120000 ms
+    },
+  );
+
+  useEffect(() => {
+    if (fetchRevenueData && fetchRevenueData.data) {
+      setRevenueData(fetchRevenueData?.data?.at(-1));
+    }
+  }, [fetchRevenueData]);
 
   const pathTitleMap = {
     "/user": "User List",
@@ -60,7 +78,7 @@ const Navbar = () => {
     "/dashboard-order": "Dashboard Order List",
     "/app-version": "App Version",
 
-    // cms data section
+    // cms data section.
 
     "/cms-data": "CMS-Data",
     "/cms-dashboard-banner": "CMS Dashboard Web Banner ",
@@ -193,6 +211,18 @@ const Navbar = () => {
 
           <Stack direction={"row"} spacing={2}>
             {permissions?.["orders"]?.includes("order_notifications") && (
+              <div
+                style={{
+                  marginTop: "2px",
+                  padding: "8px",
+                  color: "#4cb237",
+                  fontWeight: "bold",
+                }}
+              >
+                ₹ {revenueData?.total}
+              </div>
+            )}
+            {permissions?.["orders"]?.includes("order_notifications") && (
               <Link to="/consultant-user-notification">
                 <div
                   className="navbar-img"
@@ -206,6 +236,7 @@ const Navbar = () => {
                 </div>
               </Link>
             )}
+
             <div
               className="navbar-img"
               style={{

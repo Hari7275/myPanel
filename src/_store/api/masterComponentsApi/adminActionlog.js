@@ -27,8 +27,16 @@ export const actionLogApiSlice = apiSlice.injectEndpoints({
     }),
 
     getOnboardingAssignedConsultantList: builder.query({
-      query: ({ page = 1, size = 1000, id, name, phone, admin_id }) => ({
-        url: `/api/v1/consultant/profile/onboarding-assignee/admin/assigned-consultants?&admin_id=${admin_id}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}`,
+      query: ({
+        page = 1,
+        size = 1000,
+        id,
+        name,
+        phone,
+        admin_id,
+        auth_status,
+      }) => ({
+        url: `/api/v1/consultant/profile/onboarding-assignee/admin/assigned-consultants?&admin_id=${admin_id}&page=${page}&size=${size}&id=${id}&name=${name}&phone=${phone}&auth_status=${auth_status}`,
         method: "GET",
         headers: {
           Authorization: "Bearer admin_token",

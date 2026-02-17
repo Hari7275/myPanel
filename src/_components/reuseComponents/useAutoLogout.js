@@ -11,35 +11,38 @@ const useAutoLogout = () => {
   const maxSessionTimer = useRef(null);
 
   // Configuration
-  const INACTIVITY_TIMEOUT = 120 * 60 * 1000; // 120 minutes
+  const INACTIVITY_TIMEOUT = 12 * 60 * 60 * 1000; // 12 hours
   const MAX_SESSION_DURATION = 24 * 60 * 60 * 1000; // 24 hours
   // Handle logout
-  const handleLogout = useCallback((reason = "inactivity") => {
-    // Clear timers
-    if (inactivityTimer.current) {
-      clearTimeout(inactivityTimer.current);
-    }
-    if (maxSessionTimer.current) {
-      clearTimeout(maxSessionTimer.current);
-    }
+  const handleLogout = useCallback(
+    (reason = "inactivity") => {
+      // Clear timers
+      if (inactivityTimer.current) {
+        clearTimeout(inactivityTimer.current);
+      }
+      if (maxSessionTimer.current) {
+        clearTimeout(maxSessionTimer.current);
+      }
 
-    // Show appropriate message
-    if (reason === "max_session") {
-      toast.error("Your session has expired. Please login again.");
-    } else {
-      toast.error("You have been logged out due to inactivity");
-    }
+      // Show appropriate message
+      if (reason === "max_session") {
+        toast.error("Your session has expired. Please login again.");
+      } else {
+        toast.error("You have been logged out due to inactivity");
+      }
 
-    // Clear storage
-    sessionStorage.clear();
-    localStorage.removeItem("sessionStartTime");
+      // Clear storage
+      sessionStorage.clear();
+      localStorage.removeItem("sessionStartTime");
 
-    // Dispatch logout
-    dispatch(logout());
+      // Dispatch logout
+      dispatch(logout());
 
-    // Redirect to login
-    navigate("/", { replace: true });
-  }, [dispatch, navigate]);
+      // Redirect to login
+      navigate("/", { replace: true });
+    },
+    [dispatch, navigate],
+  );
 
   // Reset inactivity timer
   const resetInactivityTimer = useCallback(() => {
@@ -58,7 +61,7 @@ const useAutoLogout = () => {
   useEffect(() => {
     // Get or set session start time
     let sessionStartTime = localStorage.getItem("sessionStartTime");
-    
+
     if (!sessionStartTime) {
       // First time - set the start time
       sessionStartTime = Date.now().toString();
