@@ -26,12 +26,18 @@ const Navbar = () => {
 
   const [dateFilter, setDateFilter] = useState("weekly");
   const [revenueData, setRevenueData] = useState([]);
+
+  const hasRevenuePermission =
+    permissions?.["Dashboard"]?.includes("view_recharge");
+
   const { data: fetchRevenueData } = useGetFluteRevenueOnGraphQuery(
     {
       dateFilter,
     },
     {
-      pollingInterval: 2 * 60 * 1000, // 2 minutes = 120000 ms
+      // pollingInterval: hasRevenuePermission ? 2 * 60 * 1000 : 0,
+      pollingInterval: hasRevenuePermission ? 2 * 60 * 1000 : 0,
+      skip: !hasRevenuePermission,
     },
   );
 
@@ -210,7 +216,7 @@ const Navbar = () => {
           </Typography>
 
           <Stack direction={"row"} spacing={2}>
-            {permissions?.["orders"]?.includes("order_notifications") && (
+            {permissions?.["Dashboard"]?.includes("view_recharge") && (
               <div
                 style={{
                   marginTop: "2px",
