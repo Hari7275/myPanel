@@ -12,6 +12,8 @@ import {
 import {
   getGenderLabel,
   getMaritalStatus,
+  getStatusColorConsultant,
+  getStatusLabel,
 } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
@@ -95,9 +97,9 @@ const ListenerLeftComponent = () => {
 
   const toggleEditStatus = (row) => {
     setShowEditStatus(!showEditStatus);
-   
+
     setProfileStatusValue(row[0]?.status);
-   
+
     setSelectedRow(row[0]);
   };
 
@@ -284,7 +286,10 @@ const ListenerLeftComponent = () => {
                   alt=""
                 />
                 <span>Active</span>
-
+                {/* <span>{profileStatus==}</span> */}
+                <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+                  {getStatusLabel(profileStatus)}
+                </span>
                 {/* <div className="edit-profile-img"> */}
 
                 {/* </div> */}
@@ -292,7 +297,11 @@ const ListenerLeftComponent = () => {
             ) : (
               <div className="inActive-status">
                 ❌<span>Inactive</span>
+                <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+                  {getStatusLabel(profileStatus)}
+                </span>
               </div>
+
             )}
             {profileStatus == 3 && (
               <button
