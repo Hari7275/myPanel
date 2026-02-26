@@ -162,6 +162,16 @@
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
+/* Message Template Modal Form */
+.message-template-modal .input-container {
+  margin: 0;
+  width: 100%;
+}
+
+.message-template-modal .input-container label {
+  z-index: 1;
+}
+
 /* Coach Status Availability */
 .status-availability {
   display: flex;

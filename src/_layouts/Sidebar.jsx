@@ -1080,6 +1080,13 @@ const Sidebar = () => {
                 <span>Cms Data</span>
               </div>
             </Link>
+
+            <Link to="/message-template">
+              <div className="item">
+                <ManageHistoryOutlinedIcon />
+                <span>MessageTemplate</span>
+              </div>
+            </Link>
             {/* )} */}
           </div>
         </aside>
