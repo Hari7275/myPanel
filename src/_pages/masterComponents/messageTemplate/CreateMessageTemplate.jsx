@@ -102,19 +102,19 @@ const CreateMessageTemplate = ({
       if (response.success || response.status) {
         toast.success(
           response.message ||
-            `Template ${isEditMode ? "updated" : "created"} successfully`
+          `Template ${isEditMode ? "updated" : "created"} successfully`
         );
         onClose();
       } else {
         toast.error(
           response.message ||
-            `Failed to ${isEditMode ? "update" : "create"} template`
+          `Failed to ${isEditMode ? "update" : "create"} template`
         );
       }
     } catch (error) {
       toast.error(
         error?.data?.message ||
-          `Failed to ${isEditMode ? "update" : "create"} template`
+        `Failed to ${isEditMode ? "update" : "create"} template`
       );
     }
   };
@@ -173,7 +173,7 @@ const CreateMessageTemplate = ({
           </div>
         </div>
 
-        {/* Text */}
+        {/* Text1 */}
         <div style={{ marginBottom: "15px" }}>
           <div className="input-container">
             <label htmlFor="text">Text * (max 500 chars)</label>
@@ -276,8 +276,8 @@ const CreateMessageTemplate = ({
             {isLoading
               ? "Submitting..."
               : isEditMode
-              ? "Update"
-              : "Submit"}
+                ? "Update"
+                : "Submit"}
           </button>
           <button className="fifthButton" onClick={onClose}>
             Back
