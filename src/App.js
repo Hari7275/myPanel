@@ -144,6 +144,7 @@ import TestimonialList from "./_pages/cms-data/cms-testimonial/TestimonialList";
 
 
 import ConsultantUserNotification from "./_pages/masterComponents/consultantUserNotification/ConsultantUserNotification";
+import MessageTemplatePage from "./_pages/masterComponents/messageTemplate/MessageTemplatePage";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -379,6 +380,7 @@ const Layout = () => (
 
 
           <Route path="consultant-user-notification" element={<ConsultantUserNotification />} />
+          <Route path="message-template" element={<MessageTemplatePage />} />
         </Routes>
       </section>
     </div>
