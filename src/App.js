@@ -141,10 +141,11 @@ import PhotoGuidelines from "./_pages/cms-data/cms-photo-guidelines/PhotoGuideli
 import TheAppPage from "./_pages/cms-data/cms-the-page/TheAppPage";
 import TestimonialList from "./_pages/cms-data/cms-testimonial/TestimonialList";
 
-
+// chat message
+import ChatCategory from "./_pages/masterComponents/chatMessage/ChatCategory";
 
 import ConsultantUserNotification from "./_pages/masterComponents/consultantUserNotification/ConsultantUserNotification";
-import MessageTemplatePage from "./_pages/masterComponents/messageTemplate/MessageTemplatePage";
+import ChatSubcategoryList from "./_pages/masterComponents/chatMessage/chatSubCategory/ChatSubcategoryList";
 
 const Layout = () => (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
@@ -378,9 +379,14 @@ const Layout = () => (
             element={<AssignPermissionToRole />}
           />
 
+          <Route
+            path="consultant-user-notification"
+            element={<ConsultantUserNotification />}
+          />
 
-          <Route path="consultant-user-notification" element={<ConsultantUserNotification />} />
-          <Route path="message-template" element={<MessageTemplatePage />} />
+          {/* chat message template */}
+          <Route path="chat-message" element={<ChatCategory />} />
+          <Route path="/chat-message/:id" element={<ChatSubcategoryList />} />
         </Routes>
       </section>
     </div>

@@ -871,6 +871,23 @@ const Sidebar = () => {
               </div>
             </Link>
 
+            <Link to="/chat-message">
+              <div
+                className={`menu-item ${
+                  activeItem === "chat-message" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("chat-message")}
+              >
+                {/* <img
+                  src="/adminPannel_icons/support.png"
+                  width="24"
+                  height="24"
+                /> */}
+                <ManageHistoryOutlinedIcon />
+                <span>Chat Message</span>
+              </div>
+            </Link>
+
             {/* <div
               className={`menu-item ${
                 activeItem === "package Update" ? "active" : ""

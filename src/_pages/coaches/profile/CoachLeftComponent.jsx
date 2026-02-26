@@ -322,7 +322,6 @@ const CoachLeftComponent = () => {
 
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
-
         {[3, 4, 5, 2, 8].includes(consultantListData[0]?.status) &&
           permissions?.["listener"]?.includes(
             "update_listener_profile_status",
@@ -351,17 +350,20 @@ const CoachLeftComponent = () => {
             {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
-        <span
-          className="editIcon"
-          style={{
-            background: "#c65252ff",
-          }}
-        >
-          <KeyRound
-            className="iconSmall"
-            onClick={() => toggleOnboardingStatus()}
-          />
-        </span>
+
+        {permissions?.["onboarding"]?.includes("onboarding_assign") && (
+          <span
+            className="editIcon"
+            style={{
+              background: "#c65252ff",
+            }}
+          >
+            <KeyRound
+              className="iconSmall"
+              onClick={() => toggleOnboardingStatus()}
+            />
+          </span>
+        )}
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}

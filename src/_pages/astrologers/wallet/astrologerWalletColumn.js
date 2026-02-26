@@ -29,10 +29,14 @@ export const WALLETCHARTCOLUMN = [
     Header: "Duration (min)",
     accessor: "duration",
   },
+  // {
+  //   Header: "Order Type",
+  //   accessor: "service_type",
+  //   Cell: ({ value }) => OrderType(value) || "N/A",
+  // },
   {
     Header: "Order Type",
-    accessor: "service_type",
-    Cell: ({ value }) => OrderType(value) || "N/A",
+    accessor: "display_text",
   },
 
   {

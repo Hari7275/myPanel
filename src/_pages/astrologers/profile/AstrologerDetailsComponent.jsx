@@ -364,17 +364,20 @@ const AstrologerDetailsComponent = () => {
             {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
-        <span
-          className="editIcon"
-          style={{
-            background: "#c65252ff",
-          }}
-        >
-          <KeyRound
-            className="iconSmall"
-            onClick={() => toggleOnboardingStatus()}
-          />
-        </span>
+
+        {permissions?.["onboarding"]?.includes("onboarding_assign") && (
+          <span
+            className="editIcon"
+            style={{
+              background: "#c65252ff",
+            }}
+          >
+            <KeyRound
+              className="iconSmall"
+              onClick={() => toggleOnboardingStatus()}
+            />
+          </span>
+        )}
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}
