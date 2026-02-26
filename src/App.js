@@ -145,6 +145,7 @@ import TestimonialList from "./_pages/cms-data/cms-testimonial/TestimonialList";
 import ChatCategory from "./_pages/masterComponents/chatMessage/ChatCategory";
 
 import ConsultantUserNotification from "./_pages/masterComponents/consultantUserNotification/ConsultantUserNotification";
+import MessageTemplatePage from "./_pages/masterComponents/messageTemplate/MessageTemplatePage";
 import ChatSubcategoryList from "./_pages/masterComponents/chatMessage/chatSubCategory/ChatSubcategoryList";
 
 const Layout = () => (
@@ -384,6 +385,8 @@ const Layout = () => (
             element={<ConsultantUserNotification />}
           />
 
+          <Route path="consultant-user-notification" element={<ConsultantUserNotification />} />
+          <Route path="message-template" element={<MessageTemplatePage />} />
           {/* chat message template */}
           <Route path="chat-message" element={<ChatCategory />} />
           <Route path="/chat-message/:id" element={<ChatSubcategoryList />} />

@@ -867,7 +867,7 @@ const Sidebar = () => {
                   height="24"
                 /> */}
                 <ManageHistoryOutlinedIcon />
-                <span>Action log</span>
+                <span>Action log hhh</span>
               </div>
             </Link>
 

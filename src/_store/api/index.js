@@ -110,6 +110,8 @@ export * from "../api/cms-data/photoGuidelines";
 export * from "../api/cms-data/theAppPage";
 export * from "../api/cms-data/cmsTestimonial";
 
+// data for message templates
+export * from "../api/masterComponentsApi/messageTemplate";
 // data for chat messages
 
 export * from "../api/chatMessages/chatCategory";
