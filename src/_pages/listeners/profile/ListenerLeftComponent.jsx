@@ -74,7 +74,9 @@ const ListenerLeftComponent = () => {
   // const profileStatus = useSelector((state) => state.consultant.profileStatus);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const profileStatus = params.get("status");
+  const profileStatus = +params.get("status");
+
+  console.log("profileStatus...", profileStatus);
 
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
     useUpdateStatusMutation();
@@ -225,6 +227,8 @@ const ListenerLeftComponent = () => {
     );
   }
 
+  console.log("profile status", profileStatus);
+
   return (
     //MAIN ROW OF LISTNER CONTAINER
     <div className="user-details-container" style={{ position: "relative" }}>
@@ -286,10 +290,12 @@ const ListenerLeftComponent = () => {
                   alt=""
                 />
                 <span>Active</span>
+
+                {/* yanha check karna hai  */}
                 {/* <span>{profileStatus==}</span> */}
-                <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+                {/* <span style={{ color: getStatusColorConsultant(profileStatus) }}>
                   {getStatusLabel(profileStatus)}
-                </span>
+                </span> */}
                 {/* <div className="edit-profile-img"> */}
 
                 {/* </div> */}
@@ -297,11 +303,10 @@ const ListenerLeftComponent = () => {
             ) : (
               <div className="inActive-status">
                 ❌<span>Inactive</span>
-                <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+                {/* <span style={{ color: getStatusColorConsultant(profileStatus) }}>
                   {getStatusLabel(profileStatus)}
-                </span>
+                </span> */}
               </div>
-
             )}
             {profileStatus == 3 && (
               <button
@@ -318,6 +323,11 @@ const ListenerLeftComponent = () => {
               </button>
             )}
           </div>
+        </div>
+        <div className="inActive-status">
+          <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+            {getStatusLabel(profileStatus)}
+          </span>
         </div>
       </div>
       {/* SECOND COLUMN OF MAIN CONTAINER ROW */}
