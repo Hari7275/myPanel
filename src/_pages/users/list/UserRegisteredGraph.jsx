@@ -268,7 +268,8 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
                 {
                   data: userCounts,
                   label: "Users Registered",
-                  color: "#495afb",
+                  // color: "#495afb",
+                  color: "#5174c0ff",
                 },
               ]}
               xAxis={[
@@ -284,11 +285,7 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
                   barCategoryGapRatio: 0.5,
                 },
               ]}
-              yAxis={[
-                {
-                  label: "Number of Users",
-                },
-              ]}
+              yAxis={[{}]}
               slotProps={{
                 legend: {
                   direction: "row",
@@ -317,9 +314,6 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
                 ".MuiChartsAxis-tick": {
                   stroke: "#666",
                   strokeWidth: 1,
-                },
-                ".MuiChartsAxis-left .MuiChartsAxis-label": {
-                  transform: "translateX(-25px)",
                 },
               }}
               margin={{

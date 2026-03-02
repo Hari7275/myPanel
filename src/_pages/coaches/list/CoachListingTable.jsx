@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, useRef } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COACHES_COLUMNS } from "./CoachListingColumns";
-import { ArrowRight, Pencil, KeyRound } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3 } from "lucide-react";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
 import { useDispatch } from "react-redux";
@@ -16,6 +16,7 @@ import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import CoachRegisteredGraph from "./CoachRegisteredGraph";
 
 const CoachListingTable = () => {
   const dispatch = useDispatch();
@@ -45,6 +46,8 @@ const CoachListingTable = () => {
 
   // const pageRef = useRef(page);
   const [dynamicPagination, setDynamicPagination] = useState(true);
+  // Graph modal state
+  const [showGraph, setShowGraph] = useState(false);
 
   let [profileStatus, SetProfileStatus] = useState(null);
   const permissions = usePermissions();
@@ -296,6 +299,15 @@ const CoachListingTable = () => {
           initialFilters={appliedFilters}
         />
       </div>
+
+      <div style={{ marginLeft: "20px" }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowGraph(true)}
+        >
+          <BarChart3 size={20} style={{ marginRight: "6px" }} />
+        </Button>
+      </div>
     </div>
   );
 
@@ -348,6 +360,12 @@ const CoachListingTable = () => {
             created={true}
             adminId={user.id}
             isReassign={isReassign}
+          />
+        )}
+        {showGraph && (
+          <CoachRegisteredGraph
+            isOpen={showGraph}
+            onClose={() => setShowGraph(false)}
           />
         )}
       </div>

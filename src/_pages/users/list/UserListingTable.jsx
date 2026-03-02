@@ -283,8 +283,8 @@ const UserListingTable = () => {
             variant="contained"
             onClick={() => setShowGraph(true)}
           >
-            <BarChart3 size={16} style={{ marginRight: "6px" }} />
-            User Registered Graph
+            <BarChart3 size={20} style={{ marginRight: "6px" }} />
+            {/* User Registered Graph */}
           </Button>
         </div>
       </div>
@@ -297,7 +297,7 @@ const UserListingTable = () => {
         <Atom color="#1c2434" size="medium" text="" textColor="" />
       </span>
     );
-   
+
   }
 
   return (
