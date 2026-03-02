@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { ArrowRight, Loader, Pencil } from "lucide-react";
+import { ArrowRight, Loader, Pencil, BarChart3 } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
 import {
@@ -18,6 +18,7 @@ import { debounce } from "lodash";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import UserFilter from "./UserFilter";
 import Button from "@mui/material/Button";
+import UserRegisteredGraph from "./UserRegisteredGraph";
 Modal.setAppElement("#root");
 const UserListingTable = () => {
   const dispatch = useDispatch();
@@ -44,6 +45,9 @@ const UserListingTable = () => {
 
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
+  // Graph modal state
+  const [showGraph, setShowGraph] = useState(false);
+
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
@@ -273,6 +277,16 @@ const UserListingTable = () => {
             {` ${fetchData?.data?.pagination?.overview?.ios_users || 0}`}
           </span>
         </div>
+
+        <div style={{ marginLeft: "20px" }}>
+          <Button
+            variant="contained"
+            onClick={() => setShowGraph(true)}
+          >
+            <BarChart3 size={16} style={{ marginRight: "6px" }} />
+            User Registered Graph
+          </Button>
+        </div>
       </div>
     </div>
   );
@@ -333,6 +347,13 @@ const UserListingTable = () => {
             isOpen={showEditStatus}
             onClose={toggleEditStatus}
             selectedRow={selectedRow}
+          />
+        )}
+
+        {showGraph && (
+          <UserRegisteredGraph
+            isOpen={showGraph}
+            onClose={() => setShowGraph(false)}
           />
         )}
       </>

@@ -41,8 +41,30 @@ export const graphApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["graph"],
     }),
+
+    getUserRegisteredGraph: builder.query({
+      query: ({ type, startDate, endDate }) => {
+        const params = new URLSearchParams();
+
+        if (type) params.append("type", type);
+        if (startDate) params.append("start_date", startDate);
+        if (endDate) params.append("end_date", endDate);
+
+        return {
+          url: `/api/v1/user/auth/admin/user-registered-graph?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["graph"],
+    }),
   }),
 });
 
-export const { useGetRechargeGraphListQuery, useGetCouponGraphListQuery } =
-  graphApiSlice;
+export const {
+  useGetRechargeGraphListQuery,
+  useGetCouponGraphListQuery,
+  useLazyGetUserRegisteredGraphQuery,
+} = graphApiSlice;
