@@ -20,6 +20,11 @@ import { useUpdateStatusMutation } from "../../../_store/api";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 
+import {
+  getStatusColorConsultant,
+  getStatusLabel,
+} from "../../../_constants/consultantConstant";
+
 const InfoItem = ({ label, value }) => (
   <div className="">
     <div className="info-pair">
@@ -75,7 +80,7 @@ const CoachLeftComponent = () => {
   // const profileStatus = useSelector((state) => state.consultant.profileStatus);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const profileStatus = params.get("status");
+  const profileStatus = +params.get("status");
   const { user } = useSelector((state) => state.auth);
 
   const [updateStatus, { isLoading: isUpdatingStatus, error: isUpdateError }] =
@@ -318,11 +323,16 @@ const CoachLeftComponent = () => {
           <InfoItem label="Referred by" value={data.referred_by || "N/A"} />
           <div className="line"></div>
         </footer> */}
+
+        <div className="inActive-status">
+          <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+            {getStatusLabel(profileStatus)}
+          </span>
+        </div>
       </div>
 
       {/* SECOND COLUMN OF COACH DETAILS ROW */}
       <div className="social-icons-section">
-
         {[3, 4, 5, 2, 8].includes(consultantListData[0]?.status) &&
           permissions?.["listener"]?.includes(
             "update_listener_profile_status",
@@ -351,17 +361,20 @@ const CoachLeftComponent = () => {
             {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
-        <span
-          className="editIcon"
-          style={{
-            background: "#c65252ff",
-          }}
-        >
-          <KeyRound
-            className="iconSmall"
-            onClick={() => toggleOnboardingStatus()}
-          />
-        </span>
+
+        {permissions?.["onboarding"]?.includes("onboarding_assign") && (
+          <span
+            className="editIcon"
+            style={{
+              background: "#c65252ff",
+            }}
+          >
+            <KeyRound
+              className="iconSmall"
+              onClick={() => toggleOnboardingStatus()}
+            />
+          </span>
+        )}
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}

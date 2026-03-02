@@ -8,9 +8,12 @@ import {
   useGetConsultantsDetailsQuery,
   useGetConsultantsListQuery,
 } from "../../../_store/api";
+
 import {
   getGenderLabel,
   getMaritalStatus,
+  getStatusColorConsultant,
+  getStatusLabel,
 } from "../../../_constants/consultantConstant";
 import { Atom } from "react-loading-indicators";
 
@@ -72,7 +75,7 @@ const AstrologerDetailsComponent = () => {
   // const profileStatus = useSelector((state) => state.consultant.profileStatus);
   const { search } = useLocation();
   const params = new URLSearchParams(search);
-  const profileStatus = params.get("status");
+  const profileStatus = +params.get("status");
 
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
@@ -307,6 +310,12 @@ const AstrologerDetailsComponent = () => {
             )}
           </div>
         </div>
+
+        <div className="inActive-status">
+          <span style={{ color: getStatusColorConsultant(profileStatus) }}>
+            {getStatusLabel(profileStatus)}
+          </span>
+        </div>
         {/* <footer className="card-footer">
           <div className="info-pair">
             <p className="info-item">
@@ -364,17 +373,20 @@ const AstrologerDetailsComponent = () => {
             {data?.status === 1 ? "Deactivate" : "Deactivated"}
           </Button>
         )}
-        <span
-          className="editIcon"
-          style={{
-            background: "#c65252ff",
-          }}
-        >
-          <KeyRound
-            className="iconSmall"
-            onClick={() => toggleOnboardingStatus()}
-          />
-        </span>
+
+        {permissions?.["onboarding"]?.includes("onboarding_assign") && (
+          <span
+            className="editIcon"
+            style={{
+              background: "#c65252ff",
+            }}
+          >
+            <KeyRound
+              className="iconSmall"
+              onClick={() => toggleOnboardingStatus()}
+            />
+          </span>
+        )}
         {socialMediaLinks.facebook && (
           <a
             href={socialMediaLinks.facebook}
