@@ -44,7 +44,8 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
 
   // Transform data for bar chart
   const xAxisLabels = graphData.map((item) => getLabel(item));
-  const userCounts = graphData.map((item) => parseInt(item.count || 0, 10));
+  const iosCounts = graphData.map((item) => parseInt(item.ios_count || 0, 10));
+  const androidCounts = graphData.map((item) => parseInt(item.android_count || 0, 10));
 
   const handleTypeChange = (selectedType) => {
     setType(selectedType);
@@ -266,10 +267,16 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
               height={400}
               series={[
                 {
-                  data: userCounts,
-                  label: "Users Registered",
-                  // color: "#495afb",
+                  data: iosCounts,
+                  label: "iOS",
                   color: "#5174c0ff",
+                  stack: "total",
+                },
+                {
+                  data: androidCounts,
+                  label: "Android",
+                  color: "#ff9040ff",
+                  stack: "total",
                 },
               ]}
               xAxis={[
