@@ -7,6 +7,77 @@ import { X } from "lucide-react";
 import { Atom } from "react-loading-indicators";
 import { useLazyGetUserRegisteredGraphQuery } from "../../../_store/api";
 
+const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
+  if (dataIndex == null) return null;
+  const android = series.find((s) => s.label === "Android");
+  const ios = series.find((s) => s.label === "iOS");
+  const androidVal = android?.data[dataIndex] ?? 0;
+  const iosVal = ios?.data[dataIndex] ?? 0;
+  const total = androidVal + iosVal;
+
+  const rows = [
+    { label: "Android", color: "#ff9040ff", value: androidVal },
+    { label: "iOS", color: "#5174c0ff", value: iosVal },
+  ];
+
+  return (
+    <div
+      style={{
+        background: "#fff",
+        border: "1px solid #e0e0e0",
+        borderRadius: 8,
+        padding: "10px 14px",
+        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        fontSize: 13,
+      }}
+    >
+      <div style={{ fontWeight: 600, marginBottom: 6, color: "#333" }}>
+        {axisValue}
+      </div>
+      {rows.map((row) => (
+        <div
+          key={row.label}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 16,
+            marginBottom: 4,
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+            <span
+              style={{
+                width: 10,
+                height: 10,
+                borderRadius: 2,
+                backgroundColor: row.color,
+                display: "inline-block",
+              }}
+            />
+            <span style={{ color: "#555" }}>{row.label}</span>
+          </div>
+          <span style={{ fontWeight: 500 }}>{row.value}</span>
+        </div>
+      ))}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          borderTop: "1px solid #e0e0e0",
+          marginTop: 4,
+          paddingTop: 6,
+          fontWeight: 600,
+          color: "#333",
+        }}
+      >
+        <span>Total</span>
+        <span>{total}</span>
+      </div>
+    </div>
+  );
+};
+
 const UserRegisteredGraph = ({ isOpen, onClose }) => {
   const [type, setType] = useState("daily");
   const [startDate, setStartDate] = useState("");
@@ -44,7 +115,8 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
 
   // Transform data for bar chart
   const xAxisLabels = graphData.map((item) => getLabel(item));
-  const userCounts = graphData.map((item) => parseInt(item.count || 0, 10));
+  const iosCounts = graphData.map((item) => parseInt(item.ios_count || 0, 10));
+  const androidCounts = graphData.map((item) => parseInt(item.android_count || 0, 10));
 
   const handleTypeChange = (selectedType) => {
     setType(selectedType);
@@ -266,10 +338,16 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
               height={400}
               series={[
                 {
-                  data: userCounts,
-                  label: "Users Registered",
-                  // color: "#495afb",
+                  data: iosCounts,
+                  label: "iOS",
                   color: "#5174c0ff",
+                  stack: "total",
+                },
+                {
+                  data: androidCounts,
+                  label: "Android",
+                  color: "#ff9040ff",
+                  stack: "total",
                 },
               ]}
               xAxis={[
@@ -286,6 +364,15 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
                 },
               ]}
               yAxis={[{}]}
+              slots={{
+                axisContent: ({ axisValue, dataIndex, series }) => (
+                  <CustomAxisTooltip
+                    axisValue={axisValue}
+                    dataIndex={dataIndex}
+                    series={Object.values(series)}
+                  />
+                ),
+              }}
               slotProps={{
                 legend: {
                   direction: "row",
