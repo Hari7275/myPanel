@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect, use } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { ASTROLOGER_COLUMNS } from "./astrologerListingColumn";
-import { ArrowRight, Pencil, KeyRound } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
@@ -23,6 +23,7 @@ import AstrologerListFilter from "./AstrologerListFilter";
 import Button from "@mui/material/Button";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { useSelector } from "react-redux";
+import AstrologerRegisteredGraph from "./AstrologerRegisteredGraph";
 
 const AstrologerListingTable = () => {
   const location = useLocation();
@@ -51,6 +52,7 @@ const AstrologerListingTable = () => {
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
   const [isReassign, setIsReassign] = useState(false); // New state for reassign
+  const [showGraph, setShowGraph] = useState(false);
   const { user } = useSelector((state) => state.auth);
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -149,22 +151,22 @@ const AstrologerListingTable = () => {
             {permissions?.["astrologer"]?.includes(
               "view_astrologer_profile",
             ) && (
-              <Link
-                to={`/astrologer/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
-              >
-                <span
-                  title="View details"
-                  className="secondIcon"
-                  style={{
-                    display: "inline-block",
-                    height: "35px",
-                    width: "35px",
-                  }}
+                <Link
+                  to={`/astrologer/${row.original.id}?status=${row.original.status}&type=${row.original.phone_code}`}
                 >
-                  <ArrowRight className="iconSmall" />
-                </span>
-              </Link>
-            )}
+                  <span
+                    title="View details"
+                    className="secondIcon"
+                    style={{
+                      display: "inline-block",
+                      height: "35px",
+                      width: "35px",
+                    }}
+                  >
+                    <ArrowRight className="iconSmall" />
+                  </span>
+                </Link>
+              )}
 
             {[3, 4, 5, 2, 8].includes(row?.original?.status) &&
               permissions?.["astrologer"]?.includes(
@@ -339,6 +341,15 @@ const AstrologerListingTable = () => {
           initialFilters={appliedFilters}
         />
       </div>
+
+      <div style={{ marginLeft: "20px" }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowGraph(true)}
+        >
+          <BarChart3 style={{ marginRight: "6px" }} />
+        </Button>
+      </div>
     </div>
   );
 
@@ -392,6 +403,13 @@ const AstrologerListingTable = () => {
             created={true}
             adminId={user.id}
             isReassign={isReassign}
+          />
+        )}
+
+        {showGraph && (
+          <AstrologerRegisteredGraph
+            isOpen={showGraph}
+            onClose={() => setShowGraph(false)}
           />
         )}
       </div>

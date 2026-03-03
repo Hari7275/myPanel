@@ -89,7 +89,7 @@ const CoachRegisteredGraph = ({ isOpen, onClose }) => {
   // Fetch on mount and when filters change
   useEffect(() => {
     if (isOpen) {
-      fetchGraph({ type, startDate, endDate });
+      fetchGraph({ type, startDate, endDate, consultant_type: 2 });
     }
   }, [isOpen, type, startDate, endDate, fetchGraph]);
 

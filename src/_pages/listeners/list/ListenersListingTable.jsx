@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from "react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { LISTENERSCOLUMNS } from "./listenersListingColumn";
-import { ArrowRight, Pencil, KeyRound } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3 } from "lucide-react";
 import { Link } from "react-router-dom";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
 import { useGetConsultantsListQuery } from "../../../_store/api";
@@ -14,6 +14,8 @@ import { useSelector } from "react-redux";
 import AstrologerListFilter from "../../astrologers/list/AstrologerListFilter";
 import Button from "@mui/material/Button";
 import AssignOnboardingToAdmin from "../../../_components/reuseComponents/AssignOnboardingToAdmin";
+import ListenerRegisteredGraph from "./ListenerRegisteredGraph";
+import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 const ListenersListingTable = () => {
   const location = useLocation();
@@ -32,6 +34,7 @@ const ListenersListingTable = () => {
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
   const [isReassign, setIsReassign] = useState(false); // New state for reassign
+  const [showGraph, setShowGraph] = useState(false);
   const [data, setData] = useState([]);
 
   const [name, setName] = useState("");
@@ -287,6 +290,15 @@ const ListenersListingTable = () => {
           initialFilters={appliedFilters}
         />
       </div>
+
+      <div style={{ marginLeft: "20px" }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowGraph(true)}
+        >
+          <BarChart3 style={{ marginRight: "6px" }} />
+        </Button>
+      </div>
     </div>
   );
 
@@ -343,6 +355,13 @@ const ListenersListingTable = () => {
             created={true}
             adminId={user.id}
             isReassign={isReassign}
+          />
+        )}
+
+        {showGraph && (
+          <ListenerRegisteredGraph
+            isOpen={showGraph}
+            onClose={() => setShowGraph(false)}
           />
         )}
       </>

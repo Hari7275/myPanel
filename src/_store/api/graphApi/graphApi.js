@@ -62,12 +62,13 @@ export const graphApiSlice = apiSlice.injectEndpoints({
     }),
 
     getConsultantRegisteredGraph: builder.query({
-      query: ({ type, startDate, endDate }) => {
+      query: ({ type, startDate, endDate, consultant_type }) => {
         const params = new URLSearchParams();
 
         if (type) params.append("type", type);
         if (startDate) params.append("start_date", startDate);
         if (endDate) params.append("end_date", endDate);
+        if (consultant_type) params.append("consultant_type", consultant_type);
 
         return {
           url: `/api/v1/consultant/auth/admin/consultant-registered-graph?${params.toString()}`,

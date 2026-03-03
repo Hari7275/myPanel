@@ -283,7 +283,7 @@ const UserListingTable = () => {
             variant="contained"
             onClick={() => setShowGraph(true)}
           >
-            <BarChart3 size={20} style={{ marginRight: "6px" }} />
+            <BarChart3 style={{ marginRight: "6px" }} />
             {/* User Registered Graph */}
           </Button>
         </div>

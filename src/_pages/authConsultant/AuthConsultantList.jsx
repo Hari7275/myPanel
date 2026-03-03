@@ -3,7 +3,9 @@ import DyCommonTable from "../../_components/table/DyCommonTable";
 import { CONSULTANT_COLUMNS } from "./AuthConsultantListColumn";
 import { useGetUnregisteredConsultantsListQuery } from "../../_store/api";
 import { useDispatch } from "react-redux";
-import { ArrowRight, Pencil, KeyRound } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3 } from "lucide-react";
+import Button from "@mui/material/Button";
+import AuthConsultantRegisteredGraph from "./AuthConsultantRegisteredGraph";
 import AssignOnboardingToAdmin from "../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { resetActiveTab } from "../../_store/slices/activeSlice";
 import { debounce } from "lodash";
@@ -25,6 +27,7 @@ const AuthConsultantList = () => {
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
   const { user } = useSelector((state) => state.auth);
+  const [showGraph, setShowGraph] = useState(false);
 
   const location = useLocation();
   const [count, setCount] = useState(0);
@@ -123,7 +126,7 @@ const AuthConsultantList = () => {
   };
 
   const customFilterComponent = () => (
-    <div style={{ width: "100%", height: "35px" }}>
+    <div style={{ width: "100%", height: "35px", display: "flex" }}>
       <input
         className="inputBox"
         placeholder="Search by Id"
@@ -155,6 +158,15 @@ const AuthConsultantList = () => {
         }}
         onChange={handleConsultantPhoneSearch}
       />
+
+      <div style={{ marginLeft: "20px" }}>
+        <Button
+          variant="contained"
+          onClick={() => setShowGraph(true)}
+        >
+          <BarChart3 style={{ marginRight: "6px" }} />
+        </Button>
+      </div>
     </div>
   );
 
@@ -200,6 +212,12 @@ const AuthConsultantList = () => {
           selectedRow={selectedRow?.id}
           created={false}
           adminId={user.id}
+        />
+      )}
+      {showGraph && (
+        <AuthConsultantRegisteredGraph
+          isOpen={showGraph}
+          onClose={() => setShowGraph(false)}
         />
       )}
     </div>
