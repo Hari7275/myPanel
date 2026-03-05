@@ -33,13 +33,13 @@ const NotificationForm = () => {
     notification_type_id: 9,
     message: "",
     image_url: "",
-    target_type: "ALL_USERS",
+    target_type: "RECHARGED_ATLEAST_ONCE",
     target_filter: {
       user_ids: [],
     },
     scheduled_time: "",
     is_instant: true,
-    status: "PENDING",
+    // status: "PENDING",
     created_by: 1006,
   });
 
@@ -61,7 +61,7 @@ const NotificationForm = () => {
         notification_type_id: 9,
         message: "",
         image_url: "",
-        target_type: "ALL_USERS",
+        target_type: "RECHARGED_ATLEAST_ONCE",
         target_filter: {
           user_ids: [],
         },
@@ -134,12 +134,17 @@ const NotificationForm = () => {
   const handleSubmit = async () => {
     // Create a copy of formData to manipulate before sending
     const dataToSend = { ...formData };
-    
+
     // If is_instant is true, remove scheduled_time from the request
     if (dataToSend.is_instant) {
       delete dataToSend.scheduled_time;
     }
-    
+
+    // target_filter sirf USER_IDS ke liye relevant hai
+    if (dataToSend.target_type !== "USER_IDS") {
+      delete dataToSend.target_filter;
+    }
+
     console.log("Form Data:", dataToSend);
 
     try {
@@ -245,7 +250,9 @@ const NotificationForm = () => {
             value={formData.target_type}
             onChange={handleTargetTypeChange}
           >
-            <option value="ALL_USERS">All Users</option>
+            <option value="RECHARGED_ATLEAST_ONCE">Recharge Atleast Once</option>
+            <option value="NEVER_RECHARGED">Never Recharged</option>
+            <option value="USERS_WITH_VALID_FCM_TOKENS">All Users</option>
             <option value="USER_IDS">Specific Users</option>
           </select>
         </div>
