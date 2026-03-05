@@ -78,10 +78,21 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
   );
 };
 
+const getDefaultDates = (t) => {
+  const today = new Date();
+  const end = today.toISOString().split("T")[0];
+  const start = new Date();
+  if (t === "monthly") { start.setMonth(0); start.setDate(1); }
+  else if (t === "yearly") start.setFullYear(start.getFullYear() - 5);
+  else start.setDate(start.getDate() - 30);
+  return { start: start.toISOString().split("T")[0], end };
+};
+
 const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
   const [type, setType] = useState("daily");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [defaultDates] = useState(() => getDefaultDates("daily"));
+  const [startDate, setStartDate] = useState(defaultDates.start);
+  const [endDate, setEndDate] = useState(defaultDates.end);
 
   const [fetchGraph, { data: fetchData, isLoading, isFetching }] =
     useLazyGetConsultantRegisteredGraphQuery();
@@ -120,12 +131,16 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
 
   const handleTypeChange = (selectedType) => {
     setType(selectedType);
+    const { start, end } = getDefaultDates(selectedType);
+    setStartDate(start);
+    setEndDate(end);
   };
 
   const handleReset = () => {
-    setStartDate("");
-    setEndDate("");
     setType("daily");
+    const { start, end } = getDefaultDates("daily");
+    setStartDate(start);
+    setEndDate(end);
   };
 
   const loading = isLoading || isFetching;
