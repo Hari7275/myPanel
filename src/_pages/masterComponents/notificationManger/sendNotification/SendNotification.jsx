@@ -131,6 +131,15 @@ const NotificationForm = () => {
     });
   };
 
+  const hasAnyValue = formData.title.trim() || formData.message.trim() || formData.image_url.trim();
+
+  const isFormValid = () => {
+    if (!formData.title.trim() || !formData.message.trim() || !formData.image_url.trim()) return false;
+    if (formData.target_type === "USER_IDS" && formData.target_filter.user_ids.length === 0) return false;
+    if (!formData.is_instant && !formData.scheduled_time) return false;
+    return true;
+  };
+
   const handleSubmit = async () => {
     // Create a copy of formData to manipulate before sending
     const dataToSend = { ...formData };
@@ -331,6 +340,7 @@ const NotificationForm = () => {
             type="submit"
             className="nf-btn nf-btn-primary"
             onClick={handleSubmit}
+            disabled={!isFormValid()}
           >
             Send Notification
           </button>
@@ -338,6 +348,7 @@ const NotificationForm = () => {
             type="button"
             className="nf-btn nf-btn-secondary"
             onClick={() => window.location.reload()}
+            disabled={!hasAnyValue}
           >
             Reset Form
           </button>
