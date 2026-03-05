@@ -3,14 +3,14 @@ import DyCommonTable from "../../_components/table/DyCommonTable";
 import { CONSULTANT_COLUMNS } from "./AuthConsultantListColumn";
 import { useGetUnregisteredConsultantsListQuery } from "../../_store/api";
 import { useDispatch } from "react-redux";
-import { ArrowRight, Pencil, KeyRound, BarChart3 } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3, PieChart } from "lucide-react";
 import Button from "@mui/material/Button";
 import AuthConsultantRegisteredGraph from "./AuthConsultantRegisteredGraph";
 import AssignOnboardingToAdmin from "../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { resetActiveTab } from "../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { Atom } from "react-loading-indicators";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const AuthConsultantList = () => {
@@ -28,6 +28,7 @@ const AuthConsultantList = () => {
     useState(false);
   const { user } = useSelector((state) => state.auth);
   const [showGraph, setShowGraph] = useState(false);
+  const navigate = useNavigate();
 
   const location = useLocation();
   const [count, setCount] = useState(0);
@@ -159,12 +160,19 @@ const AuthConsultantList = () => {
         onChange={handleConsultantPhoneSearch}
       />
 
-      <div style={{ marginLeft: "20px" }}>
+      <div style={{ marginLeft: "20px", display: "flex", gap: "10px" }}>
         <Button
           variant="contained"
           onClick={() => setShowGraph(true)}
         >
           <BarChart3 style={{ marginRight: "6px" }} />
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/consultant-stats")}
+        >
+          <PieChart style={{ marginRight: "6px" }} />
+          Stats
         </Button>
       </div>
     </div>
