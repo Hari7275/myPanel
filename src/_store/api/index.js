@@ -66,6 +66,7 @@ export * from "../api/meta-data/appVersion";
 // data for dashboard
 
 export * from "../api/dashboard/consultantIncome";
+export * from "../api/dashboard/consultantStats";
 // data for dashboard
 
 export * from "../api/consultantNotice/consultantNotice";
