@@ -164,7 +164,7 @@
   min-width: 150px;
 }
 
-.nf-btn:hover {
+.nf-btn:hover:not(:disabled) {
   transform: translateY(-1px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
@@ -179,8 +179,16 @@
   color: white;
 }
 
-.nf-btn-primary:hover {
+.nf-btn-primary:hover:not(:disabled) {
   background-color: #2563eb;
+}
+
+.nf-btn-primary:disabled {
+  background-color: #9ca3af;
+  color: #d1d5db;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .nf-btn-secondary {
@@ -188,8 +196,16 @@
   color: #374151;
 }
 
-.nf-btn-secondary:hover {
+.nf-btn-secondary:hover:not(:disabled) {
   background-color: #d1d5db;
+}
+
+.nf-btn-secondary:disabled {
+  background-color: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 /* Responsive Design */
