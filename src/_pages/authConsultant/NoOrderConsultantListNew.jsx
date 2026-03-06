@@ -8,9 +8,6 @@ import {
   ArrowLeft,
   Search,
   Users,
-  Star,
-  Briefcase,
-  Headphones,
   AlertCircle,
   UserX,
 } from "lucide-react";
@@ -85,44 +82,6 @@ const NoOrderConsultantListNew = () => {
     setConsultantType(e.target.value);
   };
 
-  // Count consultants by type from current data
-  const typeCounts = useMemo(() => {
-    const counts = { astrologer: 0, coach: 0, listener: 0 };
-    data.forEach((item) => {
-      if (item.consultant_type === 1) counts.astrologer++;
-      else if (item.consultant_type === 2) counts.coach++;
-      else if (item.consultant_type === 3) counts.listener++;
-    });
-    return counts;
-  }, [data]);
-
-  const statsCards = [
-    {
-      label: "Total Consultants",
-      value: totalRecords,
-      icon: <Users size={22} />,
-      iconClass: "total",
-    },
-    {
-      label: "Astrologers",
-      value: typeCounts.astrologer,
-      icon: <Star size={22} />,
-      iconClass: "astrologer",
-    },
-    {
-      label: "Coaches",
-      value: typeCounts.coach,
-      icon: <Briefcase size={22} />,
-      iconClass: "coach",
-    },
-    {
-      label: "Listeners",
-      value: typeCounts.listener,
-      icon: <Headphones size={22} />,
-      iconClass: "listener",
-    },
-  ];
-
   // Custom filter - empty since we handle filters externally
   const customFilterComponent = () => <div style={{ display: "none" }} />;
 
@@ -154,20 +113,7 @@ const NoOrderConsultantListNew = () => {
 
   return (
     <div className="noc-page">
-      {/* Stats Cards */}
-      <div className="noc-stats">
-        {statsCards.map((stat) => (
-          <div className="noc-stat-card" key={stat.label}>
-            <div className={`noc-stat-icon ${stat.iconClass}`}>{stat.icon}</div>
-            <div className="noc-stat-info">
-              <span className="noc-stat-value">{stat.value}</span>
-              <span className="noc-stat-label">{stat.label}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Filters */}
+      {/* Filters + Stats */}
       <div className="noc-filters">
         <button
           className="noc-back-btn"
@@ -209,6 +155,14 @@ const NoOrderConsultantListNew = () => {
             </option>
           ))}
         </select>
+
+        <div className="noc-stat-inline">
+          <div className="noc-stat-icon total">
+            <Users size={18} />
+          </div>
+          <span className="noc-stat-value">{totalRecords}</span>
+          <span className="noc-stat-label-inline">Total</span>
+        </div>
       </div>
 
       {/* Table */}

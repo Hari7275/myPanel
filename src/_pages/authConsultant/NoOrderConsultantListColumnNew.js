@@ -38,29 +38,9 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
         3: `/listeners/${id}`,
       };
       const route = routeMap[type];
-      const initials = `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
-      const typeInfo = consultantTypeMap[type] || {};
 
       return (
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div
-            style={{
-              width: "38px",
-              height: "38px",
-              borderRadius: "10px",
-              background: typeInfo.bg || "#f3f4f6",
-              color: typeInfo.color || "#6b7280",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              fontWeight: 700,
-              fontSize: "13px",
-              flexShrink: 0,
-            }}
-          >
-            {initials || "?"}
-          </div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
             {route ? (
               <Link
                 to={`${route}?status=3`}
@@ -86,7 +66,6 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
               </span>
             )}
             <span style={{ fontSize: "12px", color: "#64748b" }}>ID: {id}</span>
-          </div>
         </div>
       );
     },

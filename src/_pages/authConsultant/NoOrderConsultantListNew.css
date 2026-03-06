@@ -31,37 +31,23 @@
   border-color: #1c2434;
 }
 
-/* --- Stats Cards --- */
-.noc-stats {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 14px;
-}
-
-.noc-stat-card {
-  background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-radius: 14px;
-  padding: 14px 16px;
+/* --- Inline Stat (inside filters row) --- */
+.noc-stat-inline {
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
-  transition: all 0.25s ease;
-  cursor: default;
-}
-
-.noc-stat-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+  gap: 10px;
+  margin-left: auto;
+  background: white;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 6px 16px 6px 8px;
+  flex-shrink: 0;
 }
 
 .noc-stat-icon {
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -73,37 +59,16 @@
   color: white;
 }
 
-.noc-stat-icon.astrologer {
-  background: linear-gradient(135deg, #7c3aed 0%, #a78bfa 100%);
-  color: white;
-}
-
-.noc-stat-icon.coach {
-  background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
-  color: white;
-}
-
-.noc-stat-icon.listener {
-  background: linear-gradient(135deg, #059669 0%, #34d399 100%);
-  color: white;
-}
-
-.noc-stat-info {
-  display: flex;
-  flex-direction: column;
-}
-
 .noc-stat-value {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 700;
   color: #1e293b;
   line-height: 1;
 }
 
-.noc-stat-label {
+.noc-stat-label-inline {
   font-size: 12.5px;
   color: #64748b;
-  margin-top: 4px;
   font-weight: 500;
 }
 
