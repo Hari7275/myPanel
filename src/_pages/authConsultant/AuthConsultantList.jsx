@@ -3,7 +3,7 @@ import DyCommonTable from "../../_components/table/DyCommonTable";
 import { CONSULTANT_COLUMNS } from "./AuthConsultantListColumn";
 import { useGetUnregisteredConsultantsListQuery } from "../../_store/api";
 import { useDispatch } from "react-redux";
-import { ArrowRight, Pencil, KeyRound, BarChart3, PieChart } from "lucide-react";
+import { ArrowRight, Pencil, KeyRound, BarChart3, PieChart, UserX } from "lucide-react";
 import Button from "@mui/material/Button";
 import AuthConsultantRegisteredGraph from "./AuthConsultantRegisteredGraph";
 import AssignOnboardingToAdmin from "../../_components/reuseComponents/AssignOnboardingToAdmin";
@@ -173,6 +173,13 @@ const AuthConsultantList = () => {
         >
           <PieChart style={{ marginRight: "6px" }} />
           Stats
+        </Button>
+        <Button
+          variant="contained"
+          onClick={() => navigate("/no-order-consultants")}
+        >
+          <UserX style={{ marginRight: "6px" }} />
+          No Orders
         </Button>
       </div>
     </div>
