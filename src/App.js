@@ -18,7 +18,7 @@ import UserListingTable from "./_pages/users/list/UserListingTable";
 import ConsultantDeviceInfo from "./_pages/authConsultant/consultant-device-info/ConsultantDeviceInfo";
 import AuthConsultantList from "./_pages/authConsultant/AuthConsultantList";
 import ConsultantStats from "./_pages/authConsultant/ConsultantStats";
-import NoOrderConsultantList from "./_pages/authConsultant/NoOrderConsultantList";
+import NoOrderConsultantList from "./_pages/authConsultant/NoOrderConsultantListNew";
 import CoachListingTable from "./_pages/coaches/list/CoachListingTable";
 import ListenersListingTable from "./_pages/listeners/list/ListenersListingTable";
 import AstrologerListingTable from "./_pages/astrologers/list/AstrologerListingTable";
