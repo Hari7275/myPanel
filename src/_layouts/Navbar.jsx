@@ -151,6 +151,8 @@ const Navbar = () => {
 
     // chat message
     "/chat-message": "Chat Category List",
+
+    "/no-order-consultants": "No Order Consultants",
   };
 
   //

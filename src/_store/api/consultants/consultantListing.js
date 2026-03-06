@@ -288,6 +288,27 @@ export const consultantsApiSlice = apiSlice.injectEndpoints({
 
     //   providesTags: ["consultants"],
     // }),
+
+    // No order consultants list
+    getNoOrderConsultantsList: builder.query({
+      query: ({ page = 1, size = 10, last_days = 7, consultant_type = "1,2,3", name }) => {
+        const params = new URLSearchParams();
+        params.append("page", page);
+        params.append("size", size);
+        params.append("last_days", last_days);
+        params.append("consultant_type", consultant_type);
+        if (name) params.append("name", name);
+
+        return {
+          url: `/api/v1/consultant/profile/admin/no-order-consultants?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: getAdminToken(),
+          },
+        };
+      },
+      providesTags: ["consultants"],
+    }),
   }),
 });
 
@@ -305,4 +326,5 @@ export const {
   useGetParticularConsultantsDeviceTokenQuery,
   useGetUserDeviceTokenListQuery,
   useGetParticularUserDeviceTokenQuery,
+  useGetNoOrderConsultantsListQuery,
 } = consultantsApiSlice;
