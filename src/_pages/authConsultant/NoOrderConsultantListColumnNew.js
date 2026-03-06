@@ -85,7 +85,7 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
                 {value || `${firstName} ${lastName}`}
               </span>
             )}
-            <span style={{ fontSize: "12px", color: "#94a3b8" }}>ID: {id}</span>
+            <span style={{ fontSize: "12px", color: "#64748b" }}>ID: {id}</span>
           </div>
         </div>
       );
@@ -138,7 +138,7 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
           <span
             style={{
               fontSize: "12px",
-              color: "#94a3b8",
+              color: "#64748b",
               maxWidth: "180px",
               overflow: "hidden",
               textOverflow: "ellipsis",
@@ -204,7 +204,7 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
           <span style={{ fontSize: "13px", color: "#1e293b", fontWeight: 500 }}>
             {date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
           </span>
-          <span style={{ fontSize: "12px", color: "#94a3b8" }}>
+          <span style={{ fontSize: "12px", color: "#64748b" }}>
             {date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
           </span>
         </div>

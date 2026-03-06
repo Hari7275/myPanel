@@ -102,7 +102,7 @@
 
 .noc-stat-label {
   font-size: 12.5px;
-  color: #94a3b8;
+  color: #64748b;
   margin-top: 4px;
   font-weight: 500;
 }
@@ -127,7 +127,7 @@
   left: 14px;
   top: 50%;
   transform: translateY(-50%);
-  color: #94a3b8;
+  color: #64748b;
   pointer-events: none;
 }
 
@@ -147,7 +147,7 @@
 }
 
 .noc-search-input::placeholder {
-  color: #cbd5e1;
+  color: #94a3b8;
 }
 
 .noc-search-input:focus {
@@ -297,7 +297,7 @@
 
 .noc-loading-text {
   font-size: 14px;
-  color: #94a3b8;
+  color: #64748b;
   font-weight: 500;
 }
 
@@ -346,20 +346,20 @@
   height: 64px;
   border-radius: 50%;
   background: #f1f5f9;
-  color: #94a3b8;
+  color: #64748b;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .noc-empty-text {
-  color: #64748b;
+  color: #475569;
   font-size: 15px;
   font-weight: 500;
 }
 
 .noc-empty-sub {
-  color: #94a3b8;
+  color: #64748b;
   font-size: 13px;
 }
 
