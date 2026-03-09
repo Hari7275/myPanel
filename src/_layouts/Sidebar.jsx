@@ -272,6 +272,13 @@ const Sidebar = () => {
                 <span>Gifts</span>
               </div>
             </Link>
+
+            <Link to="/refund-list">
+              <div className={`menu-item ${isActive("/refund-list") ? "active" : ""}`}>
+                <CardGiftcardOutlinedIcon />
+                <span>Refund List</span>
+              </div>
+            </Link>
           </div>
 
           {/* Payments */}
@@ -554,6 +561,13 @@ const Sidebar = () => {
               <div className={`item ${isActive("/gift-history") ? "active" : ""}`}>
                 <CardGiftcardOutlinedIcon />
                 <span>Gifts</span>
+              </div>
+            </Link>
+
+            <Link to="/refund-list">
+              <div className="item">
+                <CardGiftcardOutlinedIcon />
+                <span>Refund List</span>
               </div>
             </Link>
 
