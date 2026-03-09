@@ -267,13 +267,13 @@ const UserListingTable = () => {
       >
         <div>
           <span style={{ color: "#4CAF50", fontWeight: "700" }}>Android =</span>
-          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+          <span style={{ color: "var(--table-text)", fontWeight: "600" }}>
             {` ${fetchData?.data?.pagination?.overview?.android_users || 0}`}
           </span>
         </div>
         <div style={{ marginLeft: "20px" }}>
           <span style={{ color: "#2196F3", fontWeight: "700" }}>iOS =</span>
-          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+          <span style={{ color: "var(--table-text)", fontWeight: "600" }}>
             {` ${fetchData?.data?.pagination?.overview?.ios_users || 0}`}
           </span>
         </div>

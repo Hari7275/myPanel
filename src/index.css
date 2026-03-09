@@ -37,6 +37,34 @@ body {
   --sidebar-active-text: #000000;
   --sidebar-border: #3f3f3f;
 
+  /* table */
+  --table-bg: #ffffff;
+  --table-wrapper-border: rgb(183, 182, 182);
+  --table-header-bg: #cccccc;
+  --table-header-text: rgba(8, 7, 16, 0.7);
+  --table-header-border: #000000;
+  --table-cell-border: rgba(206, 202, 202, 0.797);
+  --table-row-even: rgba(173, 173, 173, 0.17);
+  --table-row-hover: rgba(255, 244, 0, 0.07);
+  --table-text: #1a1a2e;
+
+  /* inputs (search boxes, pagination) */
+  --input-bg: #ffffff;
+  --input-border: rgb(179, 179, 179);
+  --input-text: #000000;
+  --input-placeholder: #555555;
+  --pagination-btn-bg: #f0f0f0;
+  --pagination-btn-text: #333333;
+  --pagination-border: #cccccc;
+
+  /* filter popover */
+  --filter-bg: #ffffff;
+  --filter-border: #e5e7eb;
+  --filter-input-bg: #f9fafb;
+  --filter-input-text: #1f2937;
+  --filter-label-text: #6b7280;
+  --filter-arrow-bg: #6b7280;
+
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -62,4 +90,32 @@ body.dark-mode {
   --sidebar-active-bg: #2a3f6f;
   --sidebar-active-text: #ffffff;
   --sidebar-border: #1e2d45;
+
+  /* table */
+  --table-bg: #16162a;
+  --table-wrapper-border: rgba(80, 80, 130, 0.4);
+  --table-header-bg: #1f1f38;
+  --table-header-text: #c8cce0;
+  --table-header-border: #3a3a5c;
+  --table-cell-border: rgba(80, 80, 130, 0.35);
+  --table-row-even: rgba(255, 255, 255, 0.03);
+  --table-row-hover: rgba(100, 120, 255, 0.07);
+  --table-text: #d0d0e0;
+
+  /* inputs (search boxes, pagination) */
+  --input-bg: #1e1e2e;
+  --input-border: #3a3a5c;
+  --input-text: #d0d0e0;
+  --input-placeholder: #7878a0;
+  --pagination-btn-bg: #1f1f38;
+  --pagination-btn-text: #c8cce0;
+  --pagination-border: #3a3a5c;
+
+  /* filter popover */
+  --filter-bg: #1e1e2e;
+  --filter-border: #2e2e50;
+  --filter-input-bg: #252540;
+  --filter-input-text: #d0d0e0;
+  --filter-label-text: #9090b8;
+  --filter-arrow-bg: #9090b8;
 }
