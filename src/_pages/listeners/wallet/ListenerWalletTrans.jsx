@@ -3,9 +3,11 @@ import ReactModal from "react-modal";
 
 import { useCreateConsultantWalletTransMutation } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 import toast from "react-hot-toast";
 
 const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
+  const { isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     order_id: "",
     duration: "",
@@ -83,7 +85,7 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
@@ -101,7 +103,8 @@ const ListenerWalletTrans = ({ isOpen, onClose, consultantId }) => {
           style={{
             marginBottom: "20px",
             display: "block",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "var(--bg-secondary)",
+            color: "var(--text-primary)",
             textAlign: "center",
           }}
         >

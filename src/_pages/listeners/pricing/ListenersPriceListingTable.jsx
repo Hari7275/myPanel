@@ -10,10 +10,12 @@ import { useSelector } from "react-redux";
 import EditPriceStatus from "../../../_components/reuseComponents/EditPriceStatus";
 import EditconsultantPrice from "../../../_components/reuseComponents/EditconsultantPrice";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { useLocation, useParams } from "react-router-dom";
 
 const ListenersPriceListingTable = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showEditStatus, setShowEditStatus] = useState(false);
@@ -95,7 +97,7 @@ const ListenersPriceListingTable = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

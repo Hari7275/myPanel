@@ -11,8 +11,10 @@ import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const ListenerInfo = () => {
+  const { isDarkMode } = useTheme();
   const [selectedData, setSelectedData] = useState(null);
   const [showUpdateInfo, setShowUpdateInfo] = useState(false);
   const [formData, setFormData] = useState(null);
@@ -34,7 +36,7 @@ const ListenerInfo = () => {
   if (isLoading || !formData) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
@@ -53,7 +55,7 @@ const ListenerInfo = () => {
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              backgroundColor: "#f0f0f0",
+              backgroundColor: "var(--card-bg)",
               marginBottom: "20px",
             }}
           >

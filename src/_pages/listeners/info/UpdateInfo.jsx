@@ -10,8 +10,10 @@ import { format, subYears } from "date-fns";
 import Select from "react-select";
 import toast from "react-hot-toast";
 import { useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
+  const { isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     first_name: selectedData?.first_name,
     last_name: selectedData?.last_name,
@@ -183,6 +185,8 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
                   width: "100%",
                   height: "56px",
                   borderRadius: "inherit",
+                  backgroundColor: "var(--input-bg)",
+                  color: "var(--input-text)",
                 }}
               >
                 <option value="1">Male</option>
@@ -256,11 +260,13 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
                 width: "100%",
                 height: "150px",
                 padding: "10px",
-                border: "1px solid #ccc",
+                border: "1px solid var(--input-border)",
                 borderRadius: "4px",
                 fontSize: "14px",
                 fontFamily: "'Arial', sans-serif",
                 resize: "vertical",
+                backgroundColor: "var(--input-bg)",
+                color: "var(--text-primary)",
               }}
               label="Description"
               type="text"
@@ -278,11 +284,13 @@ const UpdateInfo = ({ isOpen, onClose, selectedData }) => {
                 width: "100%",
                 height: "50px",
                 padding: "10px",
-                border: "1px solid #ccc",
+                border: "1px solid var(--input-border)",
                 borderRadius: "4px",
                 fontSize: "14px",
                 fontFamily: "'Arial', sans-serif",
                 resize: "vertical",
+                backgroundColor: "var(--input-bg)",
+                color: "var(--text-primary)",
               }}
               label="Meta Description"
               type="text"

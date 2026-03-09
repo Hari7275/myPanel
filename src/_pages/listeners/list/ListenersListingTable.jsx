@@ -8,6 +8,7 @@ import { useGetConsultantsListQuery } from "../../../_store/api";
 import { debounce } from "lodash";
 import { useNavigate } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 import { useLocation } from "react-router-dom";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { useSelector } from "react-redux";
@@ -18,6 +19,7 @@ import ListenerRegisteredGraph from "./ListenerRegisteredGraph";
 import { autoBatchEnhancer } from "@reduxjs/toolkit";
 
 const ListenersListingTable = () => {
+  const { isDarkMode } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   // 🧠 Read URL Params
@@ -305,7 +307,7 @@ const ListenersListingTable = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

@@ -121,11 +121,13 @@ const EditStatus = ({ isOpen, onClose, currentStatus, phoneCode }) => {
                   width: "100%",
                   height: "150px",
                   padding: "10px",
-                  border: "1px solid #ccc",
+                  border: "1px solid var(--input-border)",
                   borderRadius: "4px",
                   fontSize: "14px",
                   fontFamily: "'Arial', sans-serif",
                   resize: "vertical",
+                  backgroundColor: "var(--input-bg)",
+                  color: "var(--text-primary)",
                 }}
                 label="Description"
                 type="text"

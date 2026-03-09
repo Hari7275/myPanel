@@ -6,6 +6,7 @@ import Button from "@mui/material/Button";
 import { X } from "lucide-react";
 import { Atom } from "react-loading-indicators";
 import { useLazyGetConsultantRegisteredGraphQuery } from "../../../_store/api";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
   if (dataIndex == null) return null;
@@ -23,15 +24,16 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
   return (
     <div
       style={{
-        background: "#fff",
-        border: "1px solid #e0e0e0",
+        background: "var(--dashboard-card-bg)",
+        border: "1px solid var(--dashboard-card-border)",
         borderRadius: 8,
         padding: "10px 14px",
         boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
         fontSize: 13,
+        color: "var(--text-primary)",
       }}
     >
-      <div style={{ fontWeight: 600, marginBottom: 6, color: "#333" }}>
+      <div style={{ fontWeight: 600, marginBottom: 6 }}>
         {axisValue}
       </div>
       {rows.map((row) => (
@@ -55,7 +57,7 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
                 display: "inline-block",
               }}
             />
-            <span style={{ color: "#555" }}>{row.label}</span>
+            <span style={{ color: "var(--text-secondary)" }}>{row.label}</span>
           </div>
           <span style={{ fontWeight: 500 }}>{row.value}</span>
         </div>
@@ -64,11 +66,10 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          borderTop: "1px solid #e0e0e0",
+          borderTop: "1px solid var(--dashboard-card-border)",
           marginTop: 4,
           paddingTop: 6,
           fontWeight: 600,
-          color: "#333",
         }}
       >
         <span>Total</span>
@@ -89,6 +90,10 @@ const getDefaultDates = (t) => {
 };
 
 const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
+  const { isDarkMode } = useTheme();
+  const axisColor = isDarkMode ? "#a0a0b0" : "#666";
+  const axisLineColor = isDarkMode ? "#3a3a5c" : "#E5E7EB";
+  const emptyStateBg = isDarkMode ? "#1a1a2e" : "#f9fafb";
   const [type, setType] = useState("daily");
   const [defaultDates] = useState(() => getDefaultDates("daily"));
   const [startDate, setStartDate] = useState(defaultDates.start);
@@ -157,8 +162,8 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
           maxHeight: "90vh",
           padding: "24px",
           borderRadius: "12px",
-          backgroundColor: "#fff",
-          border: "none",
+          backgroundColor: "var(--card-bg)",
+          border: "1px solid var(--border-color)",
           boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
           overflow: "auto",
           position: "absolute",
@@ -187,10 +192,10 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
           alignItems: "center",
           mb: 2,
           pb: 2,
-          borderBottom: "1px solid #E5E7EB",
+          borderBottom: "1px solid var(--border-color)",
         }}
       >
-        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>
+        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600, color: "var(--text-primary)" }}>
           Listener Registered Graph
         </h2>
         <span
@@ -233,15 +238,15 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
                 px: 2,
                 ...(type === t
                   ? {
-                    backgroundColor: "#1c2434",
-                    "&:hover": { backgroundColor: "#2d3748" },
+                    backgroundColor: isDarkMode ? "#4f52d1" : "#1c2434",
+                    "&:hover": { backgroundColor: isDarkMode ? "#6366f1" : "#2d3748" },
                   }
                   : {
-                    color: "#1c2434",
-                    borderColor: "#cbd5e0",
+                    color: "var(--text-primary)",
+                    borderColor: "var(--border-color)",
                     "&:hover": {
-                      borderColor: "#1c2434",
-                      backgroundColor: "#f7fafc",
+                      borderColor: "var(--text-secondary)",
+                      backgroundColor: "var(--card-bg)",
                     },
                   }),
               }}
@@ -260,12 +265,14 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid #cbd5e0",
+              border: "1px solid var(--input-border)",
+              backgroundColor: "var(--input-bg)",
+              color: "var(--input-text)",
               fontSize: "13px",
               outline: "none",
             }}
           />
-          <span style={{ color: "#666", fontSize: "13px" }}>to</span>
+          <span style={{ color: "var(--text-secondary)", fontSize: "13px" }}>to</span>
           <input
             type="date"
             value={endDate}
@@ -273,7 +280,9 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid #cbd5e0",
+              border: "1px solid var(--input-border)",
+              backgroundColor: "var(--input-bg)",
+              color: "var(--input-text)",
               fontSize: "13px",
               outline: "none",
             }}
@@ -305,11 +314,11 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f9fafb",
+            backgroundColor: emptyStateBg,
             borderRadius: "8px",
           }}
         >
-          <Atom color="#1c2434" size="medium" text="" textColor="" />
+          <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
         </Box>
       ) : graphData.length === 0 ? (
         <Box
@@ -318,9 +327,9 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f9fafb",
+            backgroundColor: emptyStateBg,
             borderRadius: "8px",
-            color: "#999",
+            color: "var(--text-secondary)",
             fontSize: "15px",
           }}
         >
@@ -399,7 +408,7 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
                   itemGap: 10,
                   labelStyle: {
                     fontSize: 13,
-                    fill: "#333",
+                    fill: axisColor,
                     fontWeight: 500,
                   },
                 },
@@ -407,14 +416,14 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
               sx={{
                 ".MuiChartsAxis-tickLabel": {
                   strokeWidth: "0.4",
-                  fill: "#666",
+                  fill: axisColor,
                 },
                 ".MuiChartsAxis-line": {
-                  stroke: "#666",
+                  stroke: axisLineColor,
                   strokeWidth: 1,
                 },
                 ".MuiChartsAxis-tick": {
-                  stroke: "#666",
+                  stroke: axisLineColor,
                   strokeWidth: 1,
                 },
               }}

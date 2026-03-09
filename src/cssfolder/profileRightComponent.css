@@ -191,3 +191,50 @@
   /* border: 1px solid #130781; */
   margin-top: 1em;
 }
+
+/* ===================== DARK MODE OVERRIDES ===================== */
+body.dark-mode .sub-container {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .profile-right-sub-container {
+  background-color: var(--card-bg);
+}
+
+body.dark-mode .profile-right-container {
+  background: var(--bg-secondary);
+}
+
+body.dark-mode .profile-mainContainer {
+  background: var(--card-bg);
+}
+
+body.dark-mode .profile-link {
+  color: var(--text-primary);
+}
+
+body.dark-mode .profile-link:hover {
+  color: #a855f7;
+}
+
+body.dark-mode .input-container label {
+  background: var(--card-bg);
+  color: var(--text-secondary);
+}
+
+body.dark-mode .input-container input {
+  border-color: var(--border-color);
+  background-color: var(--input-bg);
+  color: var(--input-text);
+}
+
+body.dark-mode .info-input {
+  background-color: var(--input-bg);
+  color: var(--input-text);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .status-availability {
+  background-color: var(--card-bg);
+}

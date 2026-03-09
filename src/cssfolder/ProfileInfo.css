@@ -274,3 +274,31 @@
 }
 
 /* ............................................................................................................ */
+
+/* ===================== DARK MODE OVERRIDES ===================== */
+body.dark-mode .profile-top-container {
+  background-color: var(--card-bg);
+  box-shadow: 0 4px 26px 0 rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .user-details-container {
+  background-color: var(--card-bg);
+}
+
+body.dark-mode .profile-img {
+  border-color: var(--border-color);
+}
+
+body.dark-mode .backButton {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+  background-color: var(--card-bg);
+}
+
+body.dark-mode .profile-rightPart {
+  background: var(--card-bg);
+}
+
+body.dark-mode .main-link-container {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
