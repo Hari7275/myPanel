@@ -6,11 +6,13 @@ import { ORDERCHARTCOLUMN } from "./listenerOrderColumns";
 import { useGetConsultantsOrderQuery } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 import AddListenerReview from "../reviews_notification/AddListenerReview";
 import { Pencil } from "lucide-react";
 import { useLocation, useParams } from "react-router-dom";
 
 const ListenerOrder = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
@@ -74,7 +76,7 @@ const ListenerOrder = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

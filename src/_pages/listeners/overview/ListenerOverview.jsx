@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { formatDate } from "../../users/overview/UserOverview";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const InfoItem = ({ label, value, color }) => (
   <div className="card-footer-content">
@@ -21,6 +22,7 @@ const InfoItem = ({ label, value, color }) => (
 );
 
 const ListenerOverview = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);;
   const { consultantId } = useParams();
@@ -71,7 +73,7 @@ const ListenerOverview = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

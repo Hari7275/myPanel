@@ -11,8 +11,8 @@ export const CategoryCard = ({ link, label, value, bgcolor }) => (
       className="dashboard-sub-card"
       style={{ backgroundColor: bgcolor, boxShadow: "none" }}
     >
-      <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
-      <span style={{ fontSize: "24px", fontWeight: "700" }}>{value}</span>
+      <span style={{ fontSize: "14px", fontWeight: "500", color: "#5a5a72", letterSpacing: "0.3px" }}>{label}</span>
+      <span style={{ fontSize: "24px", fontWeight: "700", color: "#1a1a2e" }}>{value}</span>
     </div>
   </div>
 );
@@ -32,7 +32,7 @@ const UserOverview = () => {
     <>
       <div className="useroverview" style={{ paddingLeft: "25px" }}>
         <span>
-          <h2 style={{ padding: "10px 5px 0px" }}>User Overview</h2>
+          <h2 style={{ padding: "10px 5px 0px", color: "var(--dashboard-heading-color)", fontWeight: 700 }}>User Overview</h2>
         </span>
         <div
           className="dashboard-card-container-grid"

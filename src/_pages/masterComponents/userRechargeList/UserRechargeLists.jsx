@@ -170,20 +170,20 @@ const UserRechargeLists = () => {
         style={{ marginLeft: "10px", position: "relative", display: "flex" }}
       >
         <div>
-          <span style={{ color: "#4CAF50", fontWeight: "700" }}>
+          <span style={{ color: "#4CAF50", fontWeight: "700", fontSize: "13px" }}>
             Android Recharge =
           </span>
-          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+          <span style={{ color: "var(--table-text)", fontWeight: "600", fontSize: "13px" }}>
             {` ₹ ${fetchData?.data?.device_data_info?.android_amount || 0}/${
               fetchData?.data?.device_data_info?.total_android_count || 0
             }`}
           </span>
         </div>
         <div style={{ marginLeft: "10px" }}>
-          <span style={{ color: "#2196F3", fontWeight: "700" }}>
+          <span style={{ color: "#2196F3", fontWeight: "700", fontSize: "13px" }}>
             iOS Recharge =
           </span>
-          <span style={{ color: "#151212ff", fontWeight: "600" }}>
+          <span style={{ color: "var(--table-text)", fontWeight: "600", fontSize: "13px" }}>
             {` ₹ ${fetchData?.data?.device_data_info?.ios_amount || 0}/${
               fetchData?.data?.device_data_info?.total_ios_count || 0
             }`}

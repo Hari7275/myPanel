@@ -230,15 +230,15 @@ export const UserVerificationStatus = (value) => {
 export const getUserVerificationColor = (value) => {
   switch (Number(value)) {
     case 1: // Active
-      return "#4CAF50"; // Green
+      return "#5ca85c"; // Soft green
     case 2: // Inactive
-      return "#FF9800"; // Orange
+      return "#cc8833"; // Soft amber
     case 3: // Blocked
-      return "#F44336"; // Red
+      return "#cc5555"; // Soft red
     case 4: // Deleted
-      return "#F44336"; // Grey
+      return "#cc5555"; // Soft red
     default:
-      return "#000000"; // Black
+      return "#888888"; // Muted gray
   }
 };
 

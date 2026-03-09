@@ -28,6 +28,7 @@ import { useUpdateStatusMutation } from "../../../_store/api";
 import { Switch } from "@mui/material";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import EditStatus from "../../../_components/reuseComponents/EditStatus";
+import { useTheme } from "../../../_context/ThemeContext";
 
 // function for calculate date of birth
 
@@ -51,6 +52,7 @@ const calculateAge = (dob) => {
 };
 
 const ListenerLeftComponent = () => {
+  const { isDarkMode } = useTheme();
   const [showModal, setShowModal] = useState(false);
   const [imageToEdit, setImageToEdit] = useState(null);
   const [data, setData] = useState({});
@@ -222,7 +224,7 @@ const ListenerLeftComponent = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

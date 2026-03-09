@@ -17,7 +17,7 @@ const ReferralTracking = () => {
    return (
       <div className="dashboard-card-style" style={{ height: '300px', margin: '40px 0px' }}>
          <div className='heading' style={{ marginLeft: '40px' }}>
-            <h2>Referral Tracking </h2>
+            <h2 style={{ color: 'var(--dashboard-heading-color)', fontWeight: 700 }}>Referral Tracking</h2>
          </div>
          {/* Card information.................................................... */}
          <div className='card-info'>
@@ -34,9 +34,9 @@ const ReferralTracking = () => {
                <svg width="200" height="200" viewBox="0 0 120 120">
                   <defs>
                      <linearGradient id="strokeGradient" x1="100%" y1="100%" x2="0%" y2="0%">
-                        <stop offset="0%" stop-color="#00B69B" stop-opacity="0.2" />
-                        <stop offset="60%" stop-color="#00B69B" stop-opacity="0.7" />
-                        <stop offset="100%" stop-color="#00B69B" stop-opacity="1" />
+                        <stop offset="0%" stopColor="#00B69B" stopOpacity="0.2" />
+                        <stop offset="60%" stopColor="#00B69B" stopOpacity="0.7" />
+                        <stop offset="100%" stopColor="#00B69B" stopOpacity="1" />
                      </linearGradient>
                   </defs>
                   <circle
@@ -51,9 +51,9 @@ const ReferralTracking = () => {
                      strokeLinecap='round'
                   />
                   {/* Centered text */}
-                  <text x="60" y="40" class="label-top">Acceptance</text>
-                  <text x="60" y="60" class="main-score">{totalScore}</text>
-                  <text x="60" y="85" class="label-bottom">Total score</text>
+                  <text x="60" y="40" className="label-top">Acceptance</text>
+                  <text x="60" y="60" className="main-score">{totalScore}</text>
+                  <text x="60" y="85" className="label-bottom">Total score</text>
                </svg>
             </div>
          </div>

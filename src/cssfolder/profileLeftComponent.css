@@ -364,3 +364,45 @@
   background-color: black;
   color: white;
 }
+
+/* ===================== DARK MODE OVERRIDES ===================== */
+body.dark-mode .card {
+  background-color: var(--card-bg);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .line {
+  background-color: var(--border-color);
+}
+
+body.dark-mode .card-footer {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .vertical-nav {
+  background: #1c1c1c;
+  border-right-color: #3a3a3a;
+}
+
+body.dark-mode .nav-link {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .nav-link:hover {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .nav-link.active {
+  background: #1a2840;
+  color: #5b9bd5;
+}
+
+body.dark-mode .nav-link.active::before {
+  background: #5b9bd5;
+}
+
+body.dark-mode .secondButton {
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}

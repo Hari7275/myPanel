@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
-import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
 import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
 import AndroidIcon from "@mui/icons-material/Android";
 import AppleIcon from "@mui/icons-material/Apple";
@@ -62,7 +61,7 @@ export const RAZORPAYRECHARGECOLUMN = [
     Header: "Phone Number",
     accessor: "phone_number",
     Cell: ({ value, row }) => (
-      <span style={{ color: "#1f2937" }}>
+      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
         {row?.original?.country_code}-{value}
       </span>
     ),
@@ -71,13 +70,17 @@ export const RAZORPAYRECHARGECOLUMN = [
   {
     Header: "Transaction Type",
     accessor: "transaction_type",
-    Cell: ({ value }) => <span style={{ color: "#1f2937" }}>{value}</span>,
+    Cell: ({ value }) => (
+      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>{value}</span>
+    ),
   },
   {
     Header: "Plan Id",
     accessor: "plan_id",
     Cell: ({ value }) => (
-      <span style={{ color: "#6b7280" }}>{value ? value : "Null"}</span>
+      <span style={{ color: "var(--table-id-muted)", fontSize: "13px" }}>
+        {value ? value : "—"}
+      </span>
     ),
   },
 
@@ -95,8 +98,9 @@ export const RAZORPAYRECHARGECOLUMN = [
     Cell: ({ value, row }) => (
       <span
         style={{
-          color: row.original.country_code == "IN" ? "#10b981" : "#810c0cff",
+          color: row.original.country_code == "IN" ? "#10b981" : "#f87171",
           fontWeight: 600,
+          fontSize: "13px",
         }}
       >
         {row.original.country_code == "IN" ? "" : "$"}
@@ -108,7 +112,7 @@ export const RAZORPAYRECHARGECOLUMN = [
     Header: "Total Balance",
     accessor: "wallet_amount",
     Cell: ({ value, row }) => (
-      <span style={{ color: "#1f2937" }}>
+      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
         {row.original.country_code == "IN" ? "" : "$"}
         {formatNumber(value)}
       </span>
@@ -137,10 +141,10 @@ export const RAZORPAYRECHARGECOLUMN = [
     Header: "Transaction Time",
     accessor: "created_at",
     Cell: ({ value }) => {
-      if (!value) return <span style={{ color: "#9ca3af" }}>null</span>;
+      if (!value) return <span style={{ color: "var(--table-id-muted)", fontSize: "13px" }}>—</span>;
       const date = new Date(value);
       return (
-        <span style={{ color: "#6b7280" }}>
+        <span style={{ color: "var(--table-id-muted)", fontSize: "13px" }}>
           {date.toLocaleString("en-US", {
             dateStyle: "medium",
             timeStyle: "short",
@@ -154,13 +158,13 @@ export const RAZORPAYRECHARGECOLUMN = [
     accessor: "status",
     Cell: ({ value }) => {
       const statusColors = {
-        SUCCESS: "#10b981", // green
-        PENDING: "#855858ff", // yellow
-        FAILED: "#ef4444", // red
-        AUTHORIZED: "#0b17f5ff", // brown
+        SUCCESS: "#10b981",   // green — works in both modes
+        PENDING: "#f59e0b",   // amber — readable in both modes
+        FAILED: "#ef4444",    // red — works in both modes
+        AUTHORIZED: "#818cf8", // indigo-400 — visible in both modes
       };
 
-      const color = statusColors[value] || "#545f75ff";
+      const color = statusColors[value] || "var(--table-id-muted)";
 
       let displayValue = value;
       // if (value === "PENDING") {
@@ -169,7 +173,11 @@ export const RAZORPAYRECHARGECOLUMN = [
       //   displayValue = "AUTHORIZED";
       // }
 
-      return <span style={{ color }}>{displayValue}</span>;
+      return (
+        <span style={{ color, fontWeight: 600, fontSize: "12px", letterSpacing: "0.3px" }}>
+          {displayValue}
+        </span>
+      );
     },
   },
 ];

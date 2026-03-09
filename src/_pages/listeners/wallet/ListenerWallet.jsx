@@ -3,6 +3,7 @@ import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { WALLETCHARTCOLUMN } from "./listenerWalletColumn";
 import { useGetConsultantsWalletQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 import { Info } from "lucide-react";
 import Description from "../../users/subscription/Description";
 import { useLocation, useParams } from "react-router-dom";
@@ -10,6 +11,7 @@ import ListenerWalletTrans from "./ListenerWalletTrans";
 import { useSelector } from "react-redux";
 
 const ListenerWallet = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
@@ -93,7 +95,7 @@ const ListenerWallet = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

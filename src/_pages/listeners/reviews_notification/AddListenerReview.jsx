@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import ReactModal from "react-modal";
 import { useCreateReviewMutation } from "../../../_store/api";
 import toast from "react-hot-toast";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const AddListenerReview = ({ isOpen, onClose, coachId, listenerOrderData }) => {
+  const { isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     order_id: "",
     user_id: "",
@@ -106,7 +108,8 @@ const AddListenerReview = ({ isOpen, onClose, coachId, listenerOrderData }) => {
           style={{
             marginBottom: "20px",
             display: "block",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: "var(--bg-secondary)",
+            color: "var(--text-primary)",
             textAlign: "center",
           }}
         >

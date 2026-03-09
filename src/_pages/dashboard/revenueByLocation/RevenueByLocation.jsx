@@ -62,7 +62,7 @@ const RevenueByLocation = () => {
           <div>
             <div
               className="active-consultant-card"
-              style={{ backgroundColor: "#e0c3c3ff" }}
+              style={{ backgroundColor: "var(--dashboard-blog-bg)", color: "var(--text-primary)" }}
             >
               <span style={{ fontSize: "22px", fontWeight: "500" }}>
                 Total Blogs:
@@ -75,7 +75,7 @@ const RevenueByLocation = () => {
           <div>
             <div
               className="active-consultant-card"
-              style={{ backgroundColor: "#93bcae97" }}
+              style={{ backgroundColor: "var(--dashboard-buzz-bg)", color: "var(--text-primary)" }}
             >
               <span style={{ fontSize: "22px", fontWeight: "500" }}>
                 Total Buzz:

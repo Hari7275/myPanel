@@ -6,6 +6,7 @@ import { useGetConsultantsNewPriceQuery } from "../../../_store/api";
 import { getFetaureLabel } from "../../../_constants/consultantConstant";
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const InfoItem = ({ label, value }) => (
   <div className="card-footer-content">
@@ -34,8 +35,8 @@ export const CategoryPriceCard = ({
       style={{
         backgroundColor: bgcolor,
         boxShadow: "none",
-
         margin: "0px",
+        color: "var(--text-primary)",
       }}
     >
       <span
@@ -77,6 +78,7 @@ export const CategoryPriceCard = ({
 );
 
 const PriceDetails = () => {
+  const { isDarkMode } = useTheme();
   const [priceData, setPriceData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
@@ -109,17 +111,24 @@ const PriceDetails = () => {
   console.log("priceData", priceData);
   // Color mapping based on label
   const getCardColor = (label) => {
-    const colorMap = {
-      "Audio Call": "#E3F2FD", // Light Blue
-      "Video Call": "#F3E5F5", // Light Purple
-      Chat: "#E8F5E9", // Light Green
-      //   INR: "#E0F2F1", // Light Orange
-      USD: "#FFF3E0", // Light Teal
-      INR: "#D9F7E7", // Original Green
-      "Payable Amount": "#FCE4EC", // Light Pink
+    const lightColorMap = {
+      "Audio Call": "#E3F2FD",
+      "Video Call": "#F3E5F5",
+      Chat: "#E8F5E9",
+      USD: "#FFF3E0",
+      INR: "#D9F7E7",
+      "Payable Amount": "#FCE4EC",
     };
-
-    return colorMap[label] || "#F5F5F5"; // Default light gray
+    const darkColorMap = {
+      "Audio Call": "#1a2a3a",
+      "Video Call": "#2a1a3a",
+      Chat: "#1a2e1a",
+      USD: "#2e2010",
+      INR: "#0f2820",
+      "Payable Amount": "#2e0f1a",
+    };
+    const colorMap = isDarkMode ? darkColorMap : lightColorMap;
+    return colorMap[label] || (isDarkMode ? "#1a1a2e" : "#F5F5F5");
   };
 
   return (

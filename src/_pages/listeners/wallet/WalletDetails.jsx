@@ -7,12 +7,13 @@ import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
 import { useSelector } from "react-redux";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 export const CategoryCardWallet = ({ symbol, label, price, bgcolor }) => (
   <div>
     <div
       className="card dashboard-card"
-      style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "20px" }}
+      style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "20px", color: "var(--text-primary)" }}
     >
       <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
       <span style={{ fontSize: "24px", fontWeight: "700" }}>
@@ -23,6 +24,7 @@ export const CategoryCardWallet = ({ symbol, label, price, bgcolor }) => (
 );
 
 const WalletDetails = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   // const consultantId = useSelector((state) => state.consultant.consultantData);
   const { consultantId } = useParams();
@@ -48,17 +50,26 @@ const WalletDetails = () => {
 
   // Color mapping based on label
   const getCardColor = (label) => {
-    const colorMap = {
-      "This Month Earning": "#E3F2FD", // Light Blue
-      "This Week Earning": "#F3E5F5", // Light Purple
-      "Today Earning": "#E8F5E9", // Light Green
-      "Total Payout": "#FFF3E0", // Light Orange
-      "Life Time Earning": "#E0F2F1", // Light Teal
-      "Current Wallet Balance": "#D9F7E7", // Original Green
-      "Payable Amount": "#FCE4EC", // Light Pink
+    const lightColorMap = {
+      "This Month Earning": "#E3F2FD",
+      "This Week Earning": "#F3E5F5",
+      "Today Earning": "#E8F5E9",
+      "Total Payout": "#FFF3E0",
+      "Life Time Earning": "#E0F2F1",
+      "Current Wallet Balance": "#D9F7E7",
+      "Payable Amount": "#FCE4EC",
     };
-
-    return colorMap[label] || "#F5F5F5"; // Default light gray
+    const darkColorMap = {
+      "This Month Earning": "#1a2a3a",
+      "This Week Earning": "#2a1a3a",
+      "Today Earning": "#1a2e1a",
+      "Total Payout": "#2e2010",
+      "Life Time Earning": "#0f2a28",
+      "Current Wallet Balance": "#0f2820",
+      "Payable Amount": "#2e0f1a",
+    };
+    const colorMap = isDarkMode ? darkColorMap : lightColorMap;
+    return colorMap[label] || (isDarkMode ? "#1a1a2e" : "#F5F5F5");
   };
 
   const cardData = [
