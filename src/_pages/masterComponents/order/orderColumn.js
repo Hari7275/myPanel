@@ -48,14 +48,16 @@ const CustomIdCell = ({ value, row }) => {
   };
   return (
     <Link
-      // to="/users_Profile"
       to={`/user/${value}`}
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >
-      <span className="orderId-color" style={{ cursor: "pointer" }}>
+      <span
+        className="clickable-id-link"
+        style={{ color: "var(--table-link-user)", cursor: "pointer" }}
+      >
         {userName} ({value})
       </span>
     </Link>
@@ -88,15 +90,18 @@ const ConsultantNavigationCell = ({ value, row }) => {
       style={{ textDecoration: "none" }}
     >
       <span
+        className="clickable-id-link"
         style={{
           cursor: "pointer",
-          color: foreigner ? "#1889beff" : "#be5b18ff",
+          color: foreigner
+            ? "var(--table-link-consultant-foreign)"
+            : "var(--table-link-consultant-local)",
           fontStyle: foreigner ? "italic" : "normal",
         }}
       >
         {consultantName} ({value})
-        <span style={{ color: "#187cbeff" }}>
-          ({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
+        <span style={{ color: "var(--table-link-consultant-foreign)", opacity: 0.85 }}>
+          {" "}({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
         </span>
       </span>
     </Link>
@@ -205,14 +210,33 @@ export const COLUMNORDER = [
     accessor: "status",
     Cell: ({ value, row }) => {
       const rejectedCall =
-        row.original.mode_type === 1 && row.original.status === 6; //check for rejected call
+        row.original.mode_type === 1 && row.original.status === 6;
 
       if (rejectedCall) {
-        return <span style={{ color: "red" }}>Consultant Cancelled</span>;
+        return (
+          <span
+            className="order-status-badge"
+            style={{
+              color: "#F87171",
+              backgroundColor: "#F871711a",
+              border: "1px solid #F8717133",
+            }}
+          >
+            Consultant Cancelled
+          </span>
+        );
       }
 
+      const color = getStatusColor(value);
       return (
-        <span style={{ color: getStatusColor(value) }}>
+        <span
+          className="order-status-badge"
+          style={{
+            color,
+            backgroundColor: `${color}1a`,
+            border: `1px solid ${color}33`,
+          }}
+        >
           {OrderStatus(value)}
         </span>
       );
@@ -243,7 +267,7 @@ export const COLUMNORDER = [
       // <span className={COMPLETED_BY_COLOR_MAP[value] || "text-gray-700"}>
       <span
         style={{
-          color: COMPLETED_BY_COLOR_MAP[value] || "#000000",
+          color: COMPLETED_BY_COLOR_MAP[value] || "var(--table-text)",
           fontWeight: 500,
         }}
       >
