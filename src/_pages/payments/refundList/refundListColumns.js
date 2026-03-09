@@ -1,5 +1,11 @@
 import { formatDateTime } from "../../../_constants/formatedDate";
 
+const transactionMap = {
+  1: { label: "Empty", color: "gray" },
+  2: { label: "Credit", color: "green" },
+  3: { label: "Debit", color: "red" },
+};
+
 export const REFUND_LIST_COLUMNS = [
   {
     Header: "ID",
@@ -44,10 +50,18 @@ export const REFUND_LIST_COLUMNS = [
   {
     Header: "User Txn",
     accessor: "user_transaction",
+    Cell: ({ value }) => {
+      const txn = transactionMap[value] || { label: "Unknown", color: "gray" };
+      return <span style={{ color: txn.color, fontWeight: 600 }}>{txn.label}</span>;
+    },
   },
   {
     Header: "Consultant Txn",
     accessor: "consultant_transaction",
+    Cell: ({ value }) => {
+      const txn = transactionMap[value] || { label: "Unknown", color: "gray" };
+      return <span style={{ color: txn.color, fontWeight: 600 }}>{txn.label}</span>;
+    },
   },
   {
     Header: "Description",
