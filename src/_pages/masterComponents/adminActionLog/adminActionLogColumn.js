@@ -16,6 +16,10 @@ export const ACTIONLOGCOLUMNS = [
   },
 
   {
+    Header: "Consultant Id",
+    accessor: "consultant_id",
+  },
+  {
     Header: "Action",
     accessor: "description",
   },
