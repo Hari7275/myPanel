@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
-import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
-
 import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
 
 import AndroidIcon from "@mui/icons-material/Android";
@@ -77,7 +75,9 @@ export const COLUMNRECHARGE = [
   {
     Header: "Phone Number",
     accessor: "phone_number",
-    Cell: ({ value }) => <span style={{ color: "#6b7280" }}>{value}</span>,
+    Cell: ({ value }) => (
+      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>{value}</span>
+    ),
   },
   {
     Header: "Amount",
@@ -85,8 +85,9 @@ export const COLUMNRECHARGE = [
     Cell: ({ value, row }) => (
       <span
         style={{
-          color: row.original.country_code == "IN" ? "#10b981" : "#810c0cff",
+          color: row.original.country_code == "IN" ? "#10b981" : "#f87171",
           fontWeight: 600,
+          fontSize: "13px",
         }}
       >
         {row.original.country_code == "IN" ? "" : "$"}
@@ -98,9 +99,8 @@ export const COLUMNRECHARGE = [
     Header: "Total Balance",
     accessor: "remaining_balance",
     Cell: ({ value, row }) => (
-      <span style={{ color: "#1f2937" }}>
+      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
         {row.original.country_code == "IN" ? "" : "$"}
-
         {formatNumber(value)}
       </span>
     ),
@@ -111,7 +111,7 @@ export const COLUMNRECHARGE = [
     Cell: ({ value }) => {
       const isAdmin = value == true;
       return (
-        <span style={{ color: isAdmin ? "#f59e0b" : "#8b5cf6" }}>
+        <span style={{ color: isAdmin ? "#f59e0b" : "#8b5cf6", fontWeight: 600, fontSize: "12px" }}>
           {isAdmin ? "Admin" : "User"}
         </span>
       );
@@ -123,23 +123,27 @@ export const COLUMNRECHARGE = [
     Cell: ({ value }) => {
       const activityColors = {
         recharge: "#3b82f6",
-        consultant_activity: "#36648eff",
+        consultant_activity: "#60a5fa",
         refund: "#f59e0b",
       };
 
-      const color = activityColors[value] || "#f59e0b";
+      const color = activityColors[value] || "var(--table-id-muted)";
 
-      return <span style={{ color: color }}>{value.replace(/_/g, " ")}</span>;
+      return (
+        <span style={{ color, fontSize: "13px", fontWeight: 500 }}>
+          {value.replace(/_/g, " ")}
+        </span>
+      );
     },
   },
   {
     Header: "Transaction Time",
     accessor: "transaction_time",
     Cell: ({ value }) => {
-      if (!value) return <span style={{ color: "#9ca3af" }}>null</span>;
+      if (!value) return <span style={{ color: "var(--table-id-muted)", fontSize: "13px" }}>—</span>;
       const date = new Date(value);
       return (
-        <span style={{ color: "#6b7280" }}>
+        <span style={{ color: "var(--table-id-muted)", fontSize: "13px" }}>
           {date.toLocaleString("en-US", {
             dateStyle: "medium",
             timeStyle: "short",
@@ -158,9 +162,13 @@ export const COLUMNRECHARGE = [
         failed: "#ef4444",
       };
 
-      const color = statusColors[value?.toLowerCase()] || "#6b7280";
+      const color = statusColors[value?.toLowerCase()] || "var(--table-id-muted)";
 
-      return <span style={{ color: color }}>{value}</span>;
+      return (
+        <span style={{ color, fontWeight: 600, fontSize: "12px", letterSpacing: "0.3px" }}>
+          {value}
+        </span>
+      );
     },
   },
 ];

@@ -380,8 +380,8 @@ body.dark-mode .card-footer {
 }
 
 body.dark-mode .vertical-nav {
-  background: var(--bg-secondary);
-  border-right-color: var(--border-color);
+  background: #1c1c1c;
+  border-right-color: #3a3a3a;
 }
 
 body.dark-mode .nav-link {

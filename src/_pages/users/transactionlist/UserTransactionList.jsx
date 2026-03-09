@@ -120,7 +120,7 @@ const UserTransactionList = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color="#3a3a3a" size="medium" text="" textColor="" />
       </span>
     );
   }

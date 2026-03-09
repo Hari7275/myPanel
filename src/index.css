@@ -107,36 +107,36 @@ body.dark-mode {
   --sidebar-border: #1e2d45;
 
   /* table */
-  --table-bg: #16162a;
-  --table-wrapper-border: rgba(80, 80, 130, 0.4);
-  --table-header-bg: #1f1f38;
-  --table-header-text: #c8cce0;
-  --table-header-border: #3a3a5c;
-  --table-cell-border: rgba(80, 80, 130, 0.35);
+  --table-bg: #1c1c1c;
+  --table-wrapper-border: rgba(90, 90, 90, 0.45);
+  --table-header-bg: #252525;
+  --table-header-text: #cccccc;
+  --table-header-border: #3c3c3c;
+  --table-cell-border: rgba(90, 90, 90, 0.35);
   --table-row-even: rgba(255, 255, 255, 0.03);
-  --table-row-hover: rgba(100, 120, 255, 0.07);
-  --table-text: #d0d0e0;
-  --table-id-muted: #8888aa;
+  --table-row-hover: rgba(200, 200, 200, 0.06);
+  --table-text: #d4d4d4;
+  --table-id-muted: #888888;
   --table-link-user: #7eb3f7;
   --table-link-consultant-local: #f09450;
   --table-link-consultant-foreign: #4db8f0;
 
   /* inputs (search boxes, pagination) */
-  --input-bg: #1e1e2e;
-  --input-border: #3a3a5c;
-  --input-text: #d0d0e0;
-  --input-placeholder: #7878a0;
-  --pagination-btn-bg: #1f1f38;
-  --pagination-btn-text: #c8cce0;
-  --pagination-border: #3a3a5c;
+  --input-bg: #1c1c1c;
+  --input-border: #3c3c3c;
+  --input-text: #d4d4d4;
+  --input-placeholder: #787878;
+  --pagination-btn-bg: #252525;
+  --pagination-btn-text: #cccccc;
+  --pagination-border: #3c3c3c;
 
   /* filter popover */
-  --filter-bg: #1e1e2e;
-  --filter-border: #2e2e50;
-  --filter-input-bg: #252540;
-  --filter-input-text: #d0d0e0;
-  --filter-label-text: #9090b8;
-  --filter-arrow-bg: #9090b8;
+  --filter-bg: #1c1c1c;
+  --filter-border: #333333;
+  --filter-input-bg: #252525;
+  --filter-input-text: #d4d4d4;
+  --filter-label-text: #909090;
+  --filter-arrow-bg: #909090;
 
   /* dashboard */
   --dashboard-card-bg: rgba(22, 22, 45, 0.85);

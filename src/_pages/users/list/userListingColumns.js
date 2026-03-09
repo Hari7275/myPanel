@@ -20,17 +20,17 @@ const StatusCell = ({ value }) => {
 const CustomUserType = ({ value, row }) => {
   const color =
     row.original.country_code === "IN"
-      ? "rgba(38, 38, 204, 0.596)"
-      : "#810c0cff";
+      ? "#8890cc"
+      : "#cc8888";
 
-  return <span style={{ color, fontWeight: 600 }}>{value}</span>;
+  return <span style={{ color, fontWeight: 500, fontSize: "13px" }}>{value}</span>;
 };
 
 export const COLUMNS = (toggleModal) => [
   {
     Header: "User Id",
     accessor: "id",
-    Cell: ({ value }) => <span style={{ color: "#8c57ff" }}>{value}</span>,
+    Cell: ({ value }) => <span style={{ color: "#888888", fontSize: "13px" }}>{value}</span>,
   },
 
   {
@@ -57,14 +57,21 @@ export const COLUMNS = (toggleModal) => [
           />
         </div>
 
-        <span className="column_container_name">{row?.original?.name}</span>
+        <span className="column_container_name">
+          {row?.original?.name}
+          {row?.original?.gender && (
+            <span style={{
+              color: row.original.gender?.toLowerCase() === "man" ? "#7eb3f7" : "#f090b0",
+              fontWeight: 600,
+              fontSize: "15px",
+              marginLeft: "5px",
+            }}>
+              {row.original.gender?.toLowerCase() === "man" ? "♂" : "♀"}
+            </span>
+          )}
+        </span>
       </div>
     ),
-  },
-
-  {
-    Header: "Gender",
-    accessor: "gender",
   },
 
   {

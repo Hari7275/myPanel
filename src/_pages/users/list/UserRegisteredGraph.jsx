@@ -233,14 +233,14 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
                 px: 2,
                 ...(type === t
                   ? {
-                    backgroundColor: "#1c2434",
-                    "&:hover": { backgroundColor: "#2d3748" },
+                    backgroundColor: "#3a3a3a",
+                    "&:hover": { backgroundColor: "#404040" },
                   }
                   : {
-                    color: "#1c2434",
+                    color: "#3a3a3a",
                     borderColor: "#cbd5e0",
                     "&:hover": {
-                      borderColor: "#1c2434",
+                      borderColor: "#3a3a3a",
                       backgroundColor: "#f7fafc",
                     },
                   }),
@@ -309,7 +309,7 @@ const UserRegisteredGraph = ({ isOpen, onClose }) => {
             borderRadius: "8px",
           }}
         >
-          <Atom color="#1c2434" size="medium" text="" textColor="" />
+          <Atom color="#3a3a3a" size="medium" text="" textColor="" />
         </Box>
       ) : graphData.length === 0 ? (
         <Box

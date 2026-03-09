@@ -64,7 +64,7 @@ const UserListingTable = () => {
   }, [page, pageSize, navigate]);
 
   // Dynamic query with name and phoneNumber
-  const { data: fetchData, isLoading } = useGetUsersListQuery({
+  const { data: fetchData, isLoading, isFetching } = useGetUsersListQuery({
     page: page,
     limit: pageSize,
     name,
@@ -249,7 +249,7 @@ const UserListingTable = () => {
           onClick={() => setShowFilterPopover(!showFilterPopover)}
         >
           Filter
-          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
+          <span style={{ marginLeft: "10px", color: "#f0c040", fontWeight: 600, fontSize: "13px" }}>
             {appliedFilterCount == 0 ? "" : appliedFilterCount}
           </span>
         </Button>
@@ -266,14 +266,14 @@ const UserListingTable = () => {
         style={{ marginLeft: "20px", position: "relative", display: "flex" }}
       >
         <div>
-          <span style={{ color: "#4CAF50", fontWeight: "700" }}>Android =</span>
-          <span style={{ color: "var(--table-text)", fontWeight: "600" }}>
+          <span style={{ color: "#5ca85c", fontWeight: "600", fontSize: "13px" }}>Android =</span>
+          <span style={{ color: "var(--table-text)", fontWeight: "500", fontSize: "13px" }}>
             {` ${fetchData?.data?.pagination?.overview?.android_users || 0}`}
           </span>
         </div>
         <div style={{ marginLeft: "20px" }}>
-          <span style={{ color: "#2196F3", fontWeight: "700" }}>iOS =</span>
-          <span style={{ color: "var(--table-text)", fontWeight: "600" }}>
+          <span style={{ color: "#7eb3f7", fontWeight: "600", fontSize: "13px" }}>iOS =</span>
+          <span style={{ color: "var(--table-text)", fontWeight: "500", fontSize: "13px" }}>
             {` ${fetchData?.data?.pagination?.overview?.ios_users || 0}`}
           </span>
         </div>
@@ -294,7 +294,7 @@ const UserListingTable = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color="#3a3a3a" size="medium" text="" textColor="" />
       </span>
     );
 
@@ -317,6 +317,7 @@ const UserListingTable = () => {
           setPageSize={setPageSize}
           showTableHeading={false}
           showGlobalSearch={false}
+          isLoading={isFetching}
         />
 
         {data?.length === 0 && (

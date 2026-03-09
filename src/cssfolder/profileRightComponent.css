@@ -131,12 +131,12 @@
 }
 
 .input-container input:focus {
-  border-color: #3f51b5;
+  border-color: #5a5a5a;
   outline: none;
 }
 
 .input-container input:focus + label {
-  color: #3f51b5;
+  color: #5a5a5a;
 }
 
 .input-container input[required]:valid + label {
@@ -158,8 +158,8 @@
 }
 
 .info-input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+  border-color: #5a5a5a;
+  box-shadow: 0 0 5px rgba(100, 100, 100, 0.3);
 }
 
 /* Message Template Modal Form */
@@ -194,20 +194,20 @@
 
 /* ===================== DARK MODE OVERRIDES ===================== */
 body.dark-mode .sub-container {
-  background-color: var(--card-bg);
-  border-color: var(--border-color);
+  background-color: #222222;
+  border-color: #3a3a3a;
 }
 
 body.dark-mode .profile-right-sub-container {
-  background-color: var(--card-bg);
+  background-color: #222222;
 }
 
 body.dark-mode .profile-right-container {
-  background: var(--bg-secondary);
+  background: #1c1c1c;
 }
 
 body.dark-mode .profile-mainContainer {
-  background: var(--card-bg);
+  background: #222222;
 }
 
 body.dark-mode .profile-link {
@@ -215,16 +215,16 @@ body.dark-mode .profile-link {
 }
 
 body.dark-mode .profile-link:hover {
-  color: #a855f7;
+  color: #aaaaaa;
 }
 
 body.dark-mode .input-container label {
-  background: var(--card-bg);
+  background: #222222;
   color: var(--text-secondary);
 }
 
 body.dark-mode .input-container input {
-  border-color: var(--border-color);
+  border-color: #3a3a3a;
   background-color: var(--input-bg);
   color: var(--input-text);
 }
@@ -232,9 +232,9 @@ body.dark-mode .input-container input {
 body.dark-mode .info-input {
   background-color: var(--input-bg);
   color: var(--input-text);
-  border-color: var(--border-color);
+  border-color: #3a3a3a;
 }
 
 body.dark-mode .status-availability {
-  background-color: var(--card-bg);
+  background-color: #222222;
 }
