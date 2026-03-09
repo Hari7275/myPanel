@@ -91,6 +91,7 @@ const OrderLists = () => {
   const {
     data: fetchData,
     isLoading,
+    isFetching,
     error,
     refetch,
   } = useGetOrderListQuery(queryParams, {
@@ -431,6 +432,7 @@ const OrderLists = () => {
         includeCheckbox={false}
         showTableHeading={false}
         showGlobalSearch={false}
+        isLoading={isFetching}
       />
 
       {/* Complete Order Modal */}

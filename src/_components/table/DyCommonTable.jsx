@@ -32,6 +32,7 @@ const DyCommonTable = ({
   setPageSize,
   setShowMoreCloumn,
   showGlobalSearch = true,
+  isLoading = false,
 }) => {
   const dispatch = useDispatch();
 
@@ -121,6 +122,18 @@ const DyCommonTable = ({
       </div>
       <div className="container">
         <div className="tableDiv">
+          {isLoading && (
+            <div className="table-loading-overlay">
+              <div style={{
+                width: "36px",
+                height: "36px",
+                border: "3px solid rgba(99,102,241,0.2)",
+                borderTop: "3px solid #6366f1",
+                borderRadius: "50%",
+                animation: "spin 0.7s linear infinite",
+              }} />
+            </div>
+          )}
           <table className="tableContainer" {...getTableProps()}>
             <thead style={{ position: "relative", zIndex: "9" }}>
               {headerGroups.map((headerGroup, index) => {

@@ -47,6 +47,10 @@ body {
   --table-row-even: rgba(173, 173, 173, 0.17);
   --table-row-hover: rgba(255, 244, 0, 0.07);
   --table-text: #1a1a2e;
+  --table-id-muted: rgb(110, 108, 108);
+  --table-link-user: #2326cc;
+  --table-link-consultant-local: #c4611a;
+  --table-link-consultant-foreign: #1575b5;
 
   /* inputs (search boxes, pagination) */
   --input-bg: #ffffff;
@@ -101,6 +105,10 @@ body.dark-mode {
   --table-row-even: rgba(255, 255, 255, 0.03);
   --table-row-hover: rgba(100, 120, 255, 0.07);
   --table-text: #d0d0e0;
+  --table-id-muted: #8888aa;
+  --table-link-user: #7eb3f7;
+  --table-link-consultant-local: #f09450;
+  --table-link-consultant-foreign: #4db8f0;
 
   /* inputs (search boxes, pagination) */
   --input-bg: #1e1e2e;

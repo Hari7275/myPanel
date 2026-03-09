@@ -329,25 +329,25 @@ export const OrderStatus = (value) => {
 export const getStatusColor = (value) => {
   switch (Number(value)) {
     case 1:
-      return "#FFA500"; // Orange - Pending
+      return "#F59E0B"; // Amber - Pending
     case 2:
-      return "#4CAF50"; // Green - Confirmed
+      return "#22c55e"; // Green - Confirmed
     case 3:
-      return "#8A8CD9"; // Blue - Running
+      return "#818CF8"; // Indigo - Running
     case 4:
-      return "#008000"; // Dark Green - Completed
+      return "#34D399"; // Emerald - Completed (was #008000, brighter for dark mode)
     case 5:
-      return "#ED0C0C"; // Crimson - Cancelled
+      return "#F87171"; // Red - User Cancelled
     case 6:
-      return "#DC143C"; //  - Rejected
+      return "#FB7185"; // Rose - Consultant Rejected
     case 7:
-      return "#FFD700"; // Gold - Waiting
+      return "#FCD34D"; // Yellow - Waiting
     case 8:
-      return "#FF6347"; // Tomato - User Not Responded
+      return "#FB923C"; // Orange - User Not Responded
     case 9:
-      return "#964020ff"; // Orange Red - Consultant Not Responded
+      return "#F97316"; // Deep Orange - Consultant Not Responded
     default:
-      return "#808080"; // Gray - Unknown
+      return "#94A3B8"; // Slate - Unknown
   }
 };
 
