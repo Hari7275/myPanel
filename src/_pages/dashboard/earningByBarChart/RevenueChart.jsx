@@ -99,7 +99,7 @@
 //   if (isLoading) {
 //     return (
 //       <span className="loadPage">
-//         <Atom color="#1c2434" size="medium" text="" textColor="" />
+//         <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
 //       </span>
 //     );
 //   }
@@ -116,7 +116,7 @@
 //           mb: 3,
 //         }}
 //       >
-//         <h2 style={{ margin: 0 }}>Recharge</h2>
+//         <h2 style={{ margin: 0, color: "var(--dashboard-heading-color)", fontWeight: 700 }}>Recharge</h2>
 //       </Box>
 //       <Box
 //         sx={{
@@ -303,6 +303,7 @@ import {
 import Box from "@mui/material/Box";
 import { useGetRechargeGraphListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../../_context/ThemeContext";
 
 // Custom Tooltip Component
 const CustomTooltip = ({ active, payload, label }) => {
@@ -314,11 +315,12 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div
         style={{
-          backgroundColor: "white",
-          border: "1px solid #ccc",
+          backgroundColor: "var(--dashboard-card-bg)",
+          border: "1px solid var(--dashboard-card-border)",
           borderRadius: "4px",
           padding: "12px",
           boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+          color: "var(--text-primary)",
         }}
       >
         <div
@@ -366,7 +368,7 @@ const CustomTooltip = ({ active, payload, label }) => {
         </div>
         <div
           style={{
-            borderTop: "1px solid #ddd",
+            borderTop: "1px solid var(--dashboard-card-border)",
             paddingTop: "8px",
             marginTop: "4px",
           }}
@@ -376,7 +378,7 @@ const CustomTooltip = ({ active, payload, label }) => {
               Total:{" "}
             </span>
             <span
-              style={{ fontWeight: "bold", fontSize: "13px", color: "#333" }}
+              style={{ fontWeight: "bold", fontSize: "13px" }}
             >
               {total.toFixed(2)}
             </span>
@@ -389,6 +391,20 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function RevenueChart() {
+  const { isDarkMode } = useTheme();
+  const axisColor = isDarkMode ? "#a0a0b0" : "#666";
+  const axisStroke = isDarkMode ? "#4a4a6a" : "#333";
+  const gridColor = isDarkMode ? "#2e2e50" : "#f0f0f0";
+  const selectStyle = {
+    padding: "8px 12px",
+    borderRadius: "4px",
+    border: `1px solid ${isDarkMode ? "var(--input-border)" : "#ccc"}`,
+    backgroundColor: isDarkMode ? "var(--input-bg)" : "white",
+    color: isDarkMode ? "var(--input-text)" : "inherit",
+    fontSize: "14px",
+    cursor: "pointer",
+  };
+
   const [data, setData] = useState([]);
 
   // UI filter state (temporary values before applying)
@@ -477,7 +493,7 @@ export default function RevenueChart() {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
@@ -492,7 +508,7 @@ export default function RevenueChart() {
           mb: 3,
         }}
       >
-        <h2 style={{ margin: 0 }}>Recharge</h2>
+        <h2 style={{ margin: 0, color: "var(--dashboard-heading-color)", fontWeight: 700 }}>Recharge</h2>
       </Box>
       <Box
         sx={{
@@ -508,17 +524,17 @@ export default function RevenueChart() {
               data={chartData}
               margin={{ left: 20, right: 20, top: 40, bottom: 80 }}
             >
-              <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
               <XAxis
                 dataKey="label"
-                tick={{ fill: "#666", fontSize: 12 }}
-                stroke="#333"
-                tickLine={{ stroke: "#333" }}
+                tick={{ fill: axisColor, fontSize: 12 }}
+                stroke={axisStroke}
+                tickLine={{ stroke: axisStroke }}
               />
               <YAxis
-                tick={{ fill: "#666", fontSize: 12 }}
-                stroke="#333"
-                tickLine={{ stroke: "#333" }}
+                tick={{ fill: axisColor, fontSize: 12 }}
+                stroke={axisStroke}
+                tickLine={{ stroke: axisStroke }}
               />
               <Tooltip
                 content={<CustomTooltip />}
@@ -577,14 +593,7 @@ export default function RevenueChart() {
             <select
               value={filters.granularity}
               onChange={handleGranularityChange}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
+              style={selectStyle}
               className="filter-dropdown"
             >
               <option value="">Current Month (Daily)</option>
@@ -599,14 +608,7 @@ export default function RevenueChart() {
             <select
               value={filters.platform}
               onChange={handlePlatformChange}
-              style={{
-                padding: "8px 12px",
-                borderRadius: "4px",
-                border: "1px solid #ccc",
-                backgroundColor: "white",
-                fontSize: "14px",
-                cursor: "pointer",
-              }}
+              style={selectStyle}
               className="filter-dropdown"
             >
               <option value="">Select Type</option>

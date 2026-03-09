@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import Box from "@mui/material/Box";
+import { useTheme } from "../../../_context/ThemeContext";
 // import { useGetFluteEarningsQuery } from "../../_store/api"; // Uncomment in your actual code
 
 // Example JSON structures for different filters
@@ -368,6 +369,20 @@ const exampleAPIResponses = {
 };
 
 export default function ProfitChart() {
+  const { isDarkMode } = useTheme();
+  const axisColor = isDarkMode ? "#a0a0b0" : "#666";
+  const axisLineColor = isDarkMode ? "#3a3a5c" : "#E5E7EB";
+  const emptyStateBg = isDarkMode ? "#1a1a2e" : "#f5f5f5";
+  const selectStyle = {
+    padding: "8px 12px",
+    borderRadius: "4px",
+    border: `1px solid ${isDarkMode ? "var(--input-border)" : "#ccc"}`,
+    backgroundColor: isDarkMode ? "var(--input-bg)" : "white",
+    color: isDarkMode ? "var(--input-text)" : "inherit",
+    fontSize: "14px",
+    cursor: "pointer",
+  };
+
   const [data, setData] = useState([]);
   const [dateFilter, setDateFilter] = useState(""); // Empty string for default
 
@@ -426,18 +441,11 @@ export default function ProfitChart() {
           mb: 3,
         }}
       >
-        <h2 style={{ margin: 0 }}>Recharge</h2>
+        <h2 style={{ margin: 0, color: "var(--dashboard-heading-color)", fontWeight: 700 }}>Recharge</h2>
         <select
           value={dateFilter}
           onChange={handleDateFilterChange}
-          style={{
-            padding: "8px 12px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-            backgroundColor: "white",
-            fontSize: "14px",
-            cursor: "pointer",
-          }}
+          style={selectStyle}
         >
           <option value="">Current Month (Daily)</option>
           <option value="weekly">Weekly</option>
@@ -453,8 +461,9 @@ export default function ProfitChart() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f5f5f5",
+            backgroundColor: emptyStateBg,
             borderRadius: "8px",
+            color: axisColor,
           }}
         >
           Loading...
@@ -466,9 +475,9 @@ export default function ProfitChart() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f5f5f5",
+            backgroundColor: emptyStateBg,
             borderRadius: "8px",
-            color: "#666",
+            color: axisColor,
           }}
         >
           No data available
@@ -554,7 +563,7 @@ export default function ProfitChart() {
                   itemGap: 15,
                   labelStyle: {
                     fontSize: 12,
-                    fill: "#666",
+                    fill: axisColor,
                   },
                 },
                 bar: {
@@ -564,14 +573,14 @@ export default function ProfitChart() {
               sx={{
                 ".MuiChartsAxis-tickLabel": {
                   strokeWidth: "0.4",
-                  fill: "#666",
+                  fill: axisColor,
                 },
                 ".MuiChartsAxis-line": {
-                  stroke: "#E5E7EB",
+                  stroke: axisLineColor,
                   strokeWidth: 0.4,
                 },
                 ".MuiChartsAxis-tick": {
-                  stroke: "#E5E7EB",
+                  stroke: axisLineColor,
                   strokeWidth: 0.4,
                 },
                 // Override bar width using CSS

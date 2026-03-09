@@ -1,4 +1,5 @@
 import React from "react";
+import "./earningByBarChart.css";
 import RevenueChart from "./RevenueChart";
 import CouponChart from "./CouponChart";
 import EarningChart from "./EarningChart";

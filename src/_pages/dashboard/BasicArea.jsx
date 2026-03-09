@@ -24,7 +24,7 @@ export default function BasicArea() {
   return (
     <div style={{ padding: "0 0px", margin: "0px" }}>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h2>Recharge</h2>
+        <h2 style={{ color: "var(--dashboard-heading-color)", fontWeight: 700 }}>Recharge</h2>
         <div>
           <div style={{ width: "auto" }}>
             <form
@@ -40,6 +40,13 @@ export default function BasicArea() {
                   className="userProfile-input-field"
                   aria-describedby="status-desc"
                   onClick={handleClickDateFilter}
+                  style={{
+                    background: "var(--input-bg)",
+                    color: "var(--input-text)",
+                    border: "1px solid var(--input-border)",
+                    borderRadius: "4px",
+                    padding: "4px 8px",
+                  }}
                 >
                   <option value="weekly">Weekly</option>
                   <option value="monthly">Monthly</option>
