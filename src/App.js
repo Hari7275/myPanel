@@ -90,6 +90,7 @@ import ConsultantNotice from "./_pages/masterComponents/noticeManager/noticeList
 import ConsultantNoticeList from "./_pages/masterComponents/noticeManager/consultantNotice/ConsultantNoticeList";
 import DashboardBannerList from "./_pages/meta-data/dashboardBanner/DashboardBannerList";
 import CouponListing from "./_pages/payments/coupons/CouponListing";
+import RefundList from "./_pages/payments/refundList/RefundList";
 
 import { Navigate } from "react-router-dom";
 import FluteEarning from "./_pages/dashboard/fluteEarning/FluteEarning";
@@ -322,6 +323,7 @@ const Layout = () => (
           <Route path="payout-History" element={<ConsultantPayoutHistory />} />
           <Route path="payable-History" element={<PayableAmountHistory />} />
           <Route path="coupon" element={<CouponListing />} />
+          <Route path="refund-list" element={<RefundList />} />
           {/* *************************************************QdList */}
 
           <Route path="qd-trips" element={<QdList />} />

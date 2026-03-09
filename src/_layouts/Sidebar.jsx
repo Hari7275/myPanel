@@ -472,6 +472,18 @@ const Sidebar = () => {
                 <span>Gifts</span>
               </div>
             </Link>
+
+            <Link to="/refund-list">
+              <div
+                className={`menu-item ${
+                  activeItem === "refund-list" ? "active" : ""
+                }`}
+                onClick={() => handleItemClick("refund-list")}
+              >
+                <CardGiftcardOutlinedIcon />
+                <span>Refund List</span>
+              </div>
+            </Link>
           </div>
 
           {/* ********************************************* payment services ********************************************************************* */}
@@ -1048,6 +1060,13 @@ const Sidebar = () => {
               <div className="item">
                 <CardGiftcardOutlinedIcon />
                 <span>Gifts</span>
+              </div>
+            </Link>
+
+            <Link to="/refund-list">
+              <div className="item">
+                <CardGiftcardOutlinedIcon />
+                <span>Refund List</span>
               </div>
             </Link>
 
