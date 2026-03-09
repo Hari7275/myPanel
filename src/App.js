@@ -162,7 +162,7 @@ const Layout = () => (
           height: "calc(100vh - 64px)",
           overflow: "hidden",
           width: "100%",
-          backgroundColor: "#f1f1f9",
+          backgroundColor: "var(--section-bg)",
         }}
       >
         <Routes>

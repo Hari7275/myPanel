@@ -3,8 +3,11 @@ import LogoutPopup from "../_pages/loginPage/LogoutPopup";
 import NotificationBell from "./NotificationBell";
 import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
-import { AppBar, IconButton, Toolbar, Typography, Stack } from "@mui/material";
+import { AppBar, IconButton, Toolbar, Typography, Stack, Tooltip } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { useTheme } from "../_context/ThemeContext";
 
 import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -13,6 +16,7 @@ import usePermissions from "../_components/reuseComponents/permission/EmpPermiss
 import { useGetFluteRevenueOnGraphQuery } from "../_store/api";
 
 const Navbar = () => {
+  const { isDarkMode, toggleTheme } = useTheme();
   const [logoutPopupOpen, setLogoutPopupOpen] = useState(false);
   const [openNotification, setOpenNotification] = useState(false);
   const [count, setCount] = useState(2);
@@ -220,7 +224,13 @@ const Navbar = () => {
             {/* {currentTitle} */}
           </Typography>
 
-          <Stack direction={"row"} spacing={2}>
+          <Stack direction={"row"} spacing={2} alignItems="center">
+            <Tooltip title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
+              <IconButton onClick={toggleTheme} color="inherit">
+                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
+              </IconButton>
+            </Tooltip>
+
             {permissions?.["Dashboard"]?.includes("view_recharge") && (
               <div
                 style={{
