@@ -67,6 +67,7 @@ export const COLUMNS = (toggleModal) => [
               marginLeft: "5px",
             }}>
               {row.original.gender?.toLowerCase() === "man" ? "♂" : "♀"}
+              
             </span>
           )}
         </span>
