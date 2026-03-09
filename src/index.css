@@ -12,3 +12,54 @@ code {
   font-family: "Poppins" ;
   /* background-color: #f1f5f9; */
 }
+
+/* ===== Light / Dark Mode CSS Variables ===== */
+body {
+  /* general */
+  --bg-primary: #f1f1f9;
+  --bg-secondary: #ffffff;
+  --text-primary: #000000;
+  --text-secondary: #595c62;
+  --border-color: #e0e0e0;
+  --card-bg: #ffffff;
+  --section-bg: #f1f1f9;
+
+  /* navbar */
+  --navbar-bg: #ffffff;
+  --navbar-text: #000000;
+  --navbar-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+
+  /* sidebar */
+  --sidebar-bg: #1c2434;
+  --sidebar-text: #dee4ee;
+  --sidebar-hover: #2a3547;
+  --sidebar-active-bg: #d3d3d3;
+  --sidebar-active-text: #000000;
+  --sidebar-border: #3f3f3f;
+
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  /* general */
+  --bg-primary: #0f0f1a;
+  --bg-secondary: #1e1e2e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0b0;
+  --border-color: #333350;
+  --card-bg: #1e1e2e;
+  --section-bg: #0f0f1a;
+
+  /* navbar */
+  --navbar-bg: #12121f;
+  --navbar-text: #e0e0e0;
+  --navbar-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+
+  /* sidebar */
+  --sidebar-bg: #090d18;
+  --sidebar-text: #a8b8d0;
+  --sidebar-hover: #1a2540;
+  --sidebar-active-bg: #2a3f6f;
+  --sidebar-active-text: #ffffff;
+  --sidebar-border: #1e2d45;
+}
