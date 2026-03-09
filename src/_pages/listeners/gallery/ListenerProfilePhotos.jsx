@@ -10,8 +10,10 @@ import { Trash } from "lucide-react";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import toast from "react-hot-toast";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const ListenerProfilePhotos = () => {
+  const { isDarkMode } = useTheme();
   const [selectedImage, setSelectedImage] = useState(null);
   const [data, setData] = useState([]);
   const [showDeleteComponent, setShowDeleteComponent] = useState(false);
@@ -88,7 +90,7 @@ const ListenerProfilePhotos = () => {
               <div className="addImageContainer" style={{ height: "320px" }}>
                 <div
                   style={{
-                    background: "#fff",
+                    background: "var(--card-bg)",
                     borderRadius: "50%",
                     textAlign: "center",
                     width: "50px",

@@ -129,15 +129,16 @@ const UserRechargeListFilter = ({
 
      
 
-          {/* Action Buttons */}
-          <div className="filter-actions">
-            <button className="apply-button" onClick={handleApply}>
-              Apply Filters
-            </button>
-            <button className="reset-button" onClick={handleReset}>
-              Reset
-            </button>
-          </div>
+        </div>
+
+        {/* Action Buttons — outside scroll area, always visible */}
+        <div className="filter-actions">
+          <button className="apply-button" onClick={handleApply}>
+            Apply Filters
+          </button>
+          <button className="reset-button" onClick={handleReset}>
+            Reset
+          </button>
         </div>
       </div>
     </>

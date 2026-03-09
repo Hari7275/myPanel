@@ -21,8 +21,10 @@ import toast from "react-hot-toast";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import ProfilePhoto from "../../astrologers/gallery/ProfilePhoto";
 import { useLocation, useParams } from "react-router-dom";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const ListenerGallery = () => {
+  const { isDarkMode } = useTheme();
   const [openSetting, setOpenSetting] = useState(false);
   const [openImageCropper, setOpenImageCropper] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -190,7 +192,7 @@ const ListenerGallery = () => {
             <div className="addImageContainer common-height">
               <div
                 style={{
-                  background: "#fff",
+                  background: "var(--card-bg)",
                   borderRadius: "50%",
                   textAlign: "center",
                   width: "50px",

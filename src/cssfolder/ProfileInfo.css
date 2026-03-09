@@ -74,7 +74,7 @@
   right: 2%;
   top: 10%;
   cursor: pointer;
-  background: #1c2434;
+  background: #3a3a3a;
   color: white !important;
   padding: 7px;
   border-radius: 50%;
@@ -180,7 +180,7 @@
   font-weight: 600;
   line-height: 1;
   color: black;
-  border: 1px solid #1d2432;
+  border: 1px solid #3a3a3a;
   border-radius: 12px;
   box-shadow: inset 0px 2px 4px rgba(0, 0, 0, 0.1);
 
@@ -274,3 +274,31 @@
 }
 
 /* ............................................................................................................ */
+
+/* ===================== DARK MODE OVERRIDES ===================== */
+body.dark-mode .profile-top-container {
+  background-color: #222222;
+  box-shadow: 0 4px 26px 0 rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .user-details-container {
+  background-color: #222222;
+}
+
+body.dark-mode .profile-img {
+  border-color: #3a3a3a;
+}
+
+body.dark-mode .backButton {
+  color: var(--text-primary);
+  border-color: #3a3a3a;
+  background-color: #222222;
+}
+
+body.dark-mode .profile-rightPart {
+  background: #222222;
+}
+
+body.dark-mode .main-link-container {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}

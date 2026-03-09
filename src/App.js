@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "./_layouts/Navbar";
 import Sidebar from "./_layouts/Sidebar";
 import { login } from "./_store/slices/authSlice";
@@ -151,8 +151,19 @@ import ConsultantUserNotification from "./_pages/masterComponents/consultantUser
 import MessageTemplatePage from "./_pages/masterComponents/messageTemplate/MessageTemplatePage";
 import ChatSubcategoryList from "./_pages/masterComponents/chatMessage/chatSubCategory/ChatSubcategoryList";
 
-const Layout = () => (
+const Layout = () => {
+  const location = useLocation();
+  const [isNavigating, setIsNavigating] = useState(false);
+
+  useEffect(() => {
+    setIsNavigating(true);
+    const timer = setTimeout(() => setIsNavigating(false), 400);
+    return () => clearTimeout(timer);
+  }, [location.pathname]);
+
+  return (
   <div className="App" style={{ display: "flex", height: "100vh" }}>
+    {isNavigating && <div className="route-loading-bar" />}
     <Sidebar />
 
     <div style={{ width: "100%" }} id="main-container">
@@ -163,7 +174,7 @@ const Layout = () => (
           height: "calc(100vh - 64px)",
           overflow: "hidden",
           width: "100%",
-          backgroundColor: "#f1f1f9",
+          backgroundColor: "var(--section-bg)",
         }}
       >
         <Routes>
@@ -400,7 +411,8 @@ const Layout = () => (
       </section>
     </div>
   </div>
-);
+  );
+};
 
 // const PrivateRoute = ({ element, isAuthenticated, ...rest }) => {
 //   return isAuthenticated ? element : <Navigate to="/" />;

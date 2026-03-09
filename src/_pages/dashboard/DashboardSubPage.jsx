@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useTheme } from "../../_context/ThemeContext";
 import {
   // useGetConsultantIncomeQuery,
   useGetFluteIncomeQuery,
@@ -33,6 +34,7 @@ export const CategoryCard = ({ link, label, price, bgcolor }) => (
 );
 
 const DashboardSubPage = () => {
+  const { isDarkMode } = useTheme();
   const [fluteEarning, setFluteEarning] = useState([]);
   // const [consultantEarning, setConsultantEarning] = useState([]);
   // const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
@@ -87,7 +89,7 @@ const DashboardSubPage = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
@@ -126,6 +128,7 @@ const DashboardSubPage = () => {
                 fontSize: "25px",
                 cursor: "pointer",
                 fontWeight: "600",
+                color: "var(--dashboard-heading-color)",
               }}
               onClick={handleClick}
             >
