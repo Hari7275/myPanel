@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { GIFTORDERHISTORYCOLUMN } from "./giftColumn";
-import { useGetGiftOrderHistoryListQuery } from "../../../_store/api";
+import { useGetGiftOrderHistoryListQuery, useGetFluteEarningQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 
 import { debounce } from "lodash";
@@ -26,6 +26,8 @@ const GiftOrderHistory = () => {
   const [userId, setUserId] = useState(null);
 
   const [consultantId, setConsultantId] = useState(null);
+
+  const { data: earningData } = useGetFluteEarningQuery();
 
   // 🧭 Keep URL params synced when page or pageSize changes
   useEffect(() => {
@@ -109,6 +111,26 @@ const GiftOrderHistory = () => {
         }}
         onChange={handleUserIdSearch}
       />
+      <div style={{ display: "flex", alignItems: "center", gap: "20px", marginLeft: "25px" }}>
+        <span style={{ fontSize: "15px", fontWeight: "600" }}>
+          Total Revenue:{" "}
+          <span style={{ color: "#3b82f6" }}>
+            ₹{earningData?.data?.total_order_revenue || "0"}
+          </span>
+        </span>
+        <span style={{ fontSize: "15px", fontWeight: "600" }}>
+          Flute Earning:{" "}
+          <span style={{ color: "#10b981" }}>
+            ₹{earningData?.data?.total_flute_earning || "0"}
+          </span>
+        </span>
+        <span style={{ fontSize: "13px", fontWeight: "600" }}>
+          Consultant Earning:{" "}
+          <span style={{ color: "#f59e0b" }}>
+            ₹{earningData?.data?.total_consultant_earning || "0"}
+          </span>
+        </span>
+      </div>
     </div>
   );
 

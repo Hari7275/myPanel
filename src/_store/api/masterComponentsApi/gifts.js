@@ -109,6 +109,17 @@ export const giftsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["gift"],
     }),
+
+    getFluteEarning: builder.query({
+      query: () => ({
+        url: `/api/v1/consultant/management/gift/admin/flute-earning`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+      providesTags: ["gift"],
+    }),
   }),
 });
 
@@ -121,4 +132,5 @@ export const {
   useCreateGiftPriceMutation,
   useUpdateGiftPriceMutation,
   useDeleteGiftPriceMutation,
+  useGetFluteEarningQuery,
 } = giftsApiSlice;
