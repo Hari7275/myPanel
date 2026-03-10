@@ -90,41 +90,38 @@ const GiftOrderHistory = () => {
         height: "35px",
         display: "flex",
         alignItems: "center",
-        justifyContent: "space-between",
       }}
     >
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <input
-          className="inputBox"
-          placeholder="Search by consultant id"
-          style={{
-            height: "-webkit-fill-available",
-            width: "200px",
-          }}
-          onChange={handleConsultantIdSearch}
-        />
-        <input
-          className="inputBox"
-          placeholder="Search by user id"
-          style={{
-            marginLeft: "25px",
-            height: "-webkit-fill-available",
-            width: "200px",
-          }}
-          onChange={handleUserIdSearch}
-        />
-      </div>
-      <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
-        <span style={{ fontSize: "13px", fontWeight: "600" }}>
-          Flute Earning:{" "}
-          <span style={{ color: "#10b981" }}>
-            ₹{earningData?.data?.total_flute_earning || "0"}
-          </span>
-        </span>
-        <span style={{ fontSize: "13px", fontWeight: "600" }}>
+      <input
+        className="inputBox"
+        placeholder="Search by consultant id"
+        style={{
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleConsultantIdSearch}
+      />
+      <input
+        className="inputBox"
+        placeholder="Search by user id"
+        style={{
+          marginLeft: "25px",
+          height: "-webkit-fill-available",
+          width: "15%",
+        }}
+        onChange={handleUserIdSearch}
+      />
+      <div style={{ display: "flex", alignItems: "center", gap: "20px", marginLeft: "25px" }}>
+        <span style={{ fontSize: "15px", fontWeight: "600" }}>
           Total Revenue:{" "}
           <span style={{ color: "#3b82f6" }}>
             ₹{earningData?.data?.total_order_revenue || "0"}
+          </span>
+        </span>
+        <span style={{ fontSize: "15px", fontWeight: "600" }}>
+          Flute Earning:{" "}
+          <span style={{ color: "#10b981" }}>
+            ₹{earningData?.data?.total_flute_earning || "0"}
           </span>
         </span>
         <span style={{ fontSize: "13px", fontWeight: "600" }}>
