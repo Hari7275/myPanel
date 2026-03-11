@@ -143,6 +143,7 @@ import PageManagerList from "./_pages/cms-data/page-manager/PageManagerList";
 import PhotoGuidelines from "./_pages/cms-data/cms-photo-guidelines/PhotoGuidelines";
 import TheAppPage from "./_pages/cms-data/cms-the-page/TheAppPage";
 import TestimonialList from "./_pages/cms-data/cms-testimonial/TestimonialList";
+import CmsListenerBanner from "./_pages/cms-data/cms-listener-banner/CmsListenerBanner";
 
 // chat message
 import ChatCategory from "./_pages/masterComponents/chatMessage/ChatCategory";
@@ -316,6 +317,7 @@ const Layout = () => {
           />
           <Route path="/cms-the-app-page" element={<TheAppPage />} />
           <Route path="/cms-testimonial" element={<TestimonialList />} />
+          <Route path="/cms-listener-banner" element={<CmsListenerBanner />} />
 
           {/* ****************************************** payment services ************************************** */}
           <Route path="dating-products" element={<DatingProducts />} />
