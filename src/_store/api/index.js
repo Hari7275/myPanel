@@ -111,6 +111,7 @@ export * from "../api/cms-data/cmsPageManger";
 export * from "../api/cms-data/photoGuidelines";
 export * from "../api/cms-data/theAppPage";
 export * from "../api/cms-data/cmsTestimonial";
+export * from "../api/cms-data/cmsListenerBanner";
 
 // data for message templates
 export * from "../api/masterComponentsApi/messageTemplate";

@@ -83,6 +83,11 @@ const CmsDataList = () => {
       link: "/cms-testimonial",
       permissions: "view_promotional_cards_list",
     },
+    {
+      name: "Listener Banner",
+      link: "/cms-listener-banner",
+      permissions: "view_promotional_cards_list",
+    },
     // {
     //   name: "coach skillls",
     //   link: "/coach-skills-metadata",
