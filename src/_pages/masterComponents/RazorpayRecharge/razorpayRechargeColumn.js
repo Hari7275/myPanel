@@ -109,7 +109,7 @@ export const RAZORPAYRECHARGECOLUMN = [
     ),
   },
   {
-    Header: "Total Balance",
+    Header: "Previous Balance",
     accessor: "wallet_amount",
     Cell: ({ value, row }) => (
       <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
