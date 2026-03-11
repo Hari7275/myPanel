@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 const AddCmsListenerBanner = ({ isOpen, onClose }) => {
   const [formData, setFormData] = useState({
     title: "",
-    is_published: true,
+    is_published: false,
     image: null,
     image_alt: "",
     image_title: "",
@@ -86,7 +86,7 @@ const AddCmsListenerBanner = ({ isOpen, onClose }) => {
             </div>
 
             <div className="cms-form-group">
-              <label className="cms-label cms-checkbox-label">
+              <div className="cms-label cms-checkbox-label">
                 <input
                   type="checkbox"
                   name="is_published"
@@ -95,7 +95,7 @@ const AddCmsListenerBanner = ({ isOpen, onClose }) => {
                   className="cms-checkbox"
                 />
                 <span>Published</span>
-              </label>
+              </div>
             </div>
           </div>
 
@@ -172,7 +172,7 @@ const AddCmsListenerBanner = ({ isOpen, onClose }) => {
           <button
             className="cms-btn cms-btn-submit"
             onClick={handleSubmit}
-            disabled={isLoading}
+            disabled={isLoading || !formData.title || !formData.image}
           >
             {isLoading ? "Submitting..." : "Submit"}
           </button>
