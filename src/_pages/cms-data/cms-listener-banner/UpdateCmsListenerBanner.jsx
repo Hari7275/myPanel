@@ -7,7 +7,6 @@ import toast from "react-hot-toast";
 const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState({
     title: "",
-    is_published: true,
     image: null,
     image_alt: "",
     image_title: "",
@@ -22,10 +21,6 @@ const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
     if (selectedRow) {
       setFormData({
         title: selectedRow.title || "",
-        is_published:
-          selectedRow.is_published !== undefined
-            ? selectedRow.is_published
-            : true,
         image: null, // Don't pre-populate file inputs
         image_alt: selectedRow.image?.alt || "",
         image_title: selectedRow.image?.title || "",
@@ -34,6 +29,14 @@ const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
       });
     }
   }, [selectedRow]);
+
+  const isChanged =
+    formData.title !== (selectedRow?.title || "") ||
+    formData.image !== null ||
+    formData.image_alt !== (selectedRow?.image?.alt || "") ||
+    formData.image_title !== (selectedRow?.image?.title || "") ||
+    formData.image_caption !== (selectedRow?.image?.caption || "") ||
+    formData.image_description !== (selectedRow?.image?.description || "");
 
   const handleChange = (event) => {
     const { name, value, type, files, checked } = event.target;
@@ -56,7 +59,6 @@ const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
     const newData = new FormData();
 
     newData.append("title", formData.title);
-    newData.append("is_published", formData.is_published ? 1 : 0);
 
     // Only append image if it was changed
     if (formData.image) {
@@ -113,18 +115,6 @@ const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
               />
             </div>
 
-            <div className="cms-form-group">
-              <label className="cms-label cms-checkbox-label">
-                <input
-                  type="checkbox"
-                  name="is_published"
-                  checked={formData.is_published}
-                  onChange={handleChange}
-                  className="cms-checkbox"
-                />
-                <span>Published</span>
-              </label>
-            </div>
           </div>
 
           {/* Image Section */}
@@ -216,7 +206,7 @@ const UpdateCmsListenerBanner = ({ isOpen, onClose, selectedRow }) => {
           <button
             className="cms-btn cms-btn-submit"
             onClick={handleSubmit}
-            disabled={isLoading}
+            disabled={isLoading || !isChanged}
           >
             {isLoading ? "Updating..." : "Update"}
           </button>
