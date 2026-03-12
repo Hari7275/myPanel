@@ -23,8 +23,8 @@ import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useUpdateAgoraCredentialsToJoinCallMutation } from "../../../_store/api";
 
-// const AGORA_APP_ID = "0bbb5db82c6b440f95944b3fda1f9bd1";
-const AGORA_APP_ID = "ae97c0fbc8694bfdaca062b4ec86b5f8";
+const AGORA_APP_ID = "0bbb5db82c6b440f95944b3fda1f9bd1"; // production
+// const AGORA_APP_ID = "ae97c0fbc8694bfdaca062b4ec86b5f8"; // dev
 
 // ─── Inner component (must be inside AgoraRTCProvider) ────────────────────────
 const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids }) => {
@@ -401,19 +401,19 @@ const ErrorBanner = ({ error }) => (
 
 // Mapping from admin user.id → the user_id used to join the channel
 //for production
-// const ADMIN_USER_ID_MAP = {
-//   2: 1,
-//   3: 2,
-//   16: 152,
-//   20: 104,
-// }; 
+const ADMIN_USER_ID_MAP = {
+  2: 1,
+  3: 2,
+  16: 152,
+  20: 104,
+}; 
 
 // for dev 
-const ADMIN_USER_ID_MAP = {
-  1: 1, 
-  3: 2,
-  16:1552,
-};
+// const ADMIN_USER_ID_MAP = {
+//   1: 1, 
+//   3: 2,
+//   16:1552,
+// };
 
 // ─── Outer page ────────────────────────────────────────────────────────────────
 const ChannelMonitorPage = () => {
