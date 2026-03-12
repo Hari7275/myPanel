@@ -5,6 +5,7 @@ import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
 import { AppBar, IconButton, Toolbar, Typography, Stack, Tooltip } from "@mui/material";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import SensorsIcon from "@mui/icons-material/Sensors";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import { useTheme } from "../_context/ThemeContext";
@@ -159,6 +160,7 @@ const Navbar = () => {
     "/chat-message": "Chat Category List",
 
     "/no-order-consultants": "No Order Consultants",
+    "/channel-monitor": "Channel Info",
   };
 
   //
@@ -245,6 +247,23 @@ const Navbar = () => {
                 ₹ {revenueData?.total}
               </div>
             )}
+            {permissions?.["channel-info"]?.includes("view_channel_info") && (
+              <Tooltip title="Channel Monitor">
+                <Link to="/channel-monitor">
+                  <div
+                    className="navbar-img"
+                    style={{
+                      marginTop: "2px",
+                      padding: "8px",
+                      background: "#3b82f620",
+                    }}
+                  >
+                    <SensorsIcon />
+                  </div>
+                </Link>
+              </Tooltip>
+            )}
+
             {permissions?.["orders"]?.includes("order_notifications") && (
               <Link to="/consultant-user-notification">
                 <div
