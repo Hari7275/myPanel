@@ -124,6 +124,7 @@ import AssignPermissionToRole from "./_pages/admin/adminRoles/AssignPermissionTo
 import PayableAmountHistory from "./_pages/payments/payableAmountHistory/PayableAmountHistory";
 
 import AudioCallPage from "./_pages/masterComponents/order/AudioCallPage";
+import ChannelMonitorPage from "./_pages/masterComponents/order/ChannelMonitorPage";
 import ConsultantRegistrationDocs from "./_pages/coaches/ConsultantRegistrationDocs";
 import OnboardingAssign from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssign";
 import OnboardingAssignedConsultantList from "./_pages/masterComponents/adminActionLog/onboarding/OnboardingAssignedConsultantList";
@@ -393,6 +394,7 @@ const Layout = () => {
 
           {/* listent order call */}
           <Route path="/audio-call" element={<AudioCallPage />} />
+          <Route path="/channel-monitor" element={<ChannelMonitorPage />} />
 
           <Route
             path="role-permission/:id"
