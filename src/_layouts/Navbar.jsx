@@ -102,6 +102,7 @@ const Navbar = () => {
     "/cms-consultant-photo-guidelines": "CMS Photo Guidelines (Consultant)",
     "/cms-the-app-page": "CMS The App Page",
     "/cms-testimonial": "CMS Testimonial List",
+    "/cms-listener-banner": "CMS Listener Banner",
 
     // Admin User
     "/admin-permission": "Permission Group",
@@ -133,6 +134,7 @@ const Navbar = () => {
     "/payout-History": "Payout History",
     "/payable-History": "Payable Log",
     "/coupon": "Coupon List",
+    "/refund-list": "Refund List",
     "/blog-count": "Blog View Count",
     "/action-log": "Admin Action Log",
     "/onboarding-assign": "Onboarding Specialists",
