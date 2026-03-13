@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import ReactModal from "react-modal";
 
 import { useCreateUserRefundCallAmountMutation } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import toast from "react-hot-toast";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
+  const { isDarkMode } = useTheme();
   const [formData, setFormData] = useState({
     userId: selectedRow.user_id,
     amount: selectedRow?.order_revenue || "",
@@ -126,7 +128,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
@@ -137,6 +139,16 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       overlayClassName="overlay"
       isOpen={isOpen}
       onRequestClose={onClose}
+      style={{
+        content: {
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
+          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+          color: isDarkMode ? "#e0e0e0" : undefined,
+        },
+        overlay: {
+          backgroundColor: isDarkMode ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.5)",
+        },
+      }}
     >
       <div style={{ width: "500px" }}>
         <h2
@@ -144,7 +156,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           style={{
             marginBottom: "20px",
             display: "block",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: isDarkMode ? "#13131f" : "#f0f0f0",
+            color: isDarkMode ? "#e0e0e0" : undefined,
             textAlign: "center",
           }}
         >
@@ -153,10 +166,10 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
 
         {/* Duration Field */}
         <div className="userProfile-grid-item">
-          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+          <label style={{ fontSize: "20px", marginTop: "20px", color: isDarkMode ? "#e0e0e0" : undefined }}>
             Duration (minutes)
             <span
-              style={{ fontSize: "14px", color: "#666", marginLeft: "10px" }}
+              style={{ fontSize: "14px", color: isDarkMode ? "#9ca3af" : "#666", marginLeft: "10px" }}
             >
               (Max: {selectedRow?.actual_duration || 0})
             </span>
@@ -171,14 +184,19 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             min={0}
             max={selectedRow?.actual_duration || 0}
             step="0.01"
+            style={{
+              backgroundColor: isDarkMode ? "#13131f" : undefined,
+              color: isDarkMode ? "#e0e0e0" : undefined,
+              borderColor: isDarkMode ? "#3a3a5c" : undefined,
+            }}
           />
         </div>
 
         {/* Description Dropdown Field */}
         <div className="userProfile-grid-item">
-          <label style={{ fontSize: "20px", marginTop: "20px" }}>
+          <label style={{ fontSize: "20px", marginTop: "20px", color: isDarkMode ? "#e0e0e0" : undefined }}>
             Refund Reason{" "}
-            <span style={{ fontSize: "14px", color: "#666" }}>
+            <span style={{ fontSize: "14px", color: isDarkMode ? "#9ca3af" : "#666" }}>
               <span style={{ color: "red" }}>*</span>
             </span>
           </label>
@@ -188,6 +206,11 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             onChange={handleChange}
             className="userProfile-input-field"
             required
+            style={{
+              backgroundColor: isDarkMode ? "#13131f" : undefined,
+              color: isDarkMode ? "#e0e0e0" : undefined,
+              borderColor: isDarkMode ? "#3a3a5c" : undefined,
+            }}
           >
             {descriptionOptions.map((option) => (
               <option key={option.value} value={option.value}>
