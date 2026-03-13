@@ -19,10 +19,12 @@ import {
   Radio,
 } from "lucide-react";
 import { toast } from "react-toastify";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
   const [calling, setCalling] = useState(false);
   const [error, setError] = useState(null);
+  const { isDarkMode } = useTheme();
   const isConnected = useIsConnected();
   const remoteUsers = useRemoteUsers();
   const client = useRTCClient();
@@ -118,9 +120,9 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
       style={{
         width: "100%",
         padding: "0",
-        height: "100vh", // sets fixed viewport height
-        overflowY: "auto", // enables vertical scrolling
-        boxSizing: "border-box", // ensures padding doesn't break layout
+        height: "100vh",
+        overflowY: "auto",
+        boxSizing: "border-box",
       }}
     >
       {/* Error Display */}
@@ -129,8 +131,8 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
           style={{
             marginBottom: "20px",
             padding: "16px",
-            backgroundColor: "#fee2e2",
-            border: "1px solid #fca5a5",
+            backgroundColor: isDarkMode ? "#3b0f0f" : "#fee2e2",
+            border: `1px solid ${isDarkMode ? "#7f1d1d" : "#fca5a5"}`,
             borderRadius: "12px",
             display: "flex",
             alignItems: "flex-start",
@@ -139,20 +141,20 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
         >
           <AlertCircle
             size={20}
-            color="#dc2626"
+            color={isDarkMode ? "#f87171" : "#dc2626"}
             style={{ flexShrink: 0, marginTop: "2px" }}
           />
           <div>
             <div
               style={{
                 fontWeight: "600",
-                color: "#dc2626",
+                color: isDarkMode ? "#f87171" : "#dc2626",
                 marginBottom: "4px",
               }}
             >
               Connection Error
             </div>
-            <div style={{ fontSize: "14px", color: "#991b1b" }}>{error}</div>
+            <div style={{ fontSize: "14px", color: isDarkMode ? "#fca5a5" : "#991b1b" }}>{error}</div>
           </div>
         </div>
       )}
@@ -160,11 +162,11 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
       {/* ROW 1: Call Information */}
       <div
         style={{
-          backgroundColor: "#f9fafb",
+          backgroundColor: isDarkMode ? "#13131f" : "#f9fafb",
           padding: "20px",
           borderRadius: "12px",
           marginBottom: "20px",
-          border: "1px solid #e5e7eb",
+          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
         }}
       >
         <h3
@@ -172,7 +174,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             margin: "0 0 16px 0",
             fontSize: "18px",
             fontWeight: "600",
-            color: "#111827",
+            color: isDarkMode ? "#e0e0e0" : "#111827",
           }}
         >
           Call Information
@@ -184,101 +186,32 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             gap: "12px",
           }}
         >
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "4px",
-              }}
-            >
-              Channel
+          {[
+            { label: "Channel", value: channel, mono: false },
+            { label: "App ID", value: appId ? `${appId.substring(0, 8)}...` : "N/A", mono: true, small: true },
+            { label: "UID", value: uid || "Auto-assign", mono: true, small: true },
+            { label: "Token", value: token ? `${token.substring(0, 15)}...` : "No token", mono: true, small: true, overflow: true },
+            { label: "Mode", value: "👁️ Audience (Watch & Listen Only)", mono: false },
+          ].map(({ label, value, mono, small, overflow }) => (
+            <div key={label}>
+              <div style={{ fontSize: "13px", color: isDarkMode ? "#9ca3af" : "#6b7280", marginBottom: "4px" }}>
+                {label}
+              </div>
+              <div
+                style={{
+                  fontSize: small ? (label === "Token" ? "12px" : "14px") : "15px",
+                  color: isDarkMode ? "#e0e0e0" : "#111827",
+                  fontWeight: label === "Channel" || label === "Mode" ? "500" : undefined,
+                  fontFamily: mono ? "monospace" : undefined,
+                  overflow: overflow ? "hidden" : undefined,
+                  textOverflow: overflow ? "ellipsis" : undefined,
+                  whiteSpace: overflow ? "nowrap" : undefined,
+                }}
+              >
+                {value}
+              </div>
             </div>
-            <div
-              style={{ fontSize: "15px", color: "#111827", fontWeight: "500" }}
-            >
-              {channel}
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "4px",
-              }}
-            >
-              App ID
-            </div>
-            <div
-              style={{
-                fontSize: "14px",
-                color: "#111827",
-                fontFamily: "monospace",
-              }}
-            >
-              {appId ? `${appId.substring(0, 8)}...` : "N/A"}
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "4px",
-              }}
-            >
-              UID
-            </div>
-            <div
-              style={{
-                fontSize: "14px",
-                color: "#111827",
-                fontFamily: "monospace",
-              }}
-            >
-              {uid || "Auto-assign"}
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "4px",
-              }}
-            >
-              Token
-            </div>
-            <div
-              style={{
-                fontSize: "12px",
-                color: "#111827",
-                fontFamily: "monospace",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                whiteSpace: "nowrap",
-              }}
-            >
-              {token ? `${token.substring(0, 15)}...` : "No token"}
-            </div>
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: "13px",
-                color: "#6b7280",
-                marginBottom: "4px",
-              }}
-            >
-              Mode
-            </div>
-            <div
-              style={{ fontSize: "14px", color: "#111827", fontWeight: "500" }}
-            >
-              👁️ Audience (Watch & Listen Only)
-            </div>
-          </div>
+          ))}
         </div>
       </div>
 
@@ -294,30 +227,17 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
           className="main-content-row"
         >
           {/* COLUMN 1: User Details & Channel Info */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "20px",
-            }}
-          >
+          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
             {/* Connection Status */}
             <div
               style={{
-                backgroundColor: "white",
+                backgroundColor: isDarkMode ? "#1e1e2e" : "white",
                 padding: "20px",
                 borderRadius: "12px",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  marginBottom: "12px",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
                 <div
                   style={{
                     width: "12px",
@@ -327,7 +247,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                     boxShadow: "0 0 8px rgba(16, 185, 129, 0.6)",
                   }}
                 />
-                <span style={{ fontSize: "16px", fontWeight: "600" }}>
+                <span style={{ fontSize: "16px", fontWeight: "600", color: isDarkMode ? "#e0e0e0" : undefined }}>
                   Connected
                 </span>
               </div>
@@ -335,7 +255,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                 style={{
                   margin: "0",
                   fontSize: "13px",
-                  color: "#6b7280",
+                  color: isDarkMode ? "#9ca3af" : "#6b7280",
                   lineHeight: "1.5",
                 }}
               >
@@ -346,76 +266,32 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             {/* Channel Details */}
             <div
               style={{
-                backgroundColor: "white",
+                backgroundColor: isDarkMode ? "#1e1e2e" : "white",
                 padding: "20px",
                 borderRadius: "12px",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "16px",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
                 <Radio size={18} color="#3b82f6" />
-                <h4
-                  style={{
-                    margin: "0",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#111827",
-                  }}
-                >
+                <h4 style={{ margin: "0", fontSize: "16px", fontWeight: "600", color: isDarkMode ? "#e0e0e0" : "#111827" }}>
                   Channel Details
                 </h4>
               </div>
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "12px",
-                }}
-              >
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
                 <div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#6b7280",
-                      marginBottom: "4px",
-                    }}
-                  >
+                  <div style={{ fontSize: "12px", color: isDarkMode ? "#9ca3af" : "#6b7280", marginBottom: "4px" }}>
                     Channel Name
                   </div>
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      color: "#111827",
-                      fontWeight: "500",
-                    }}
-                  >
+                  <div style={{ fontSize: "14px", color: isDarkMode ? "#e0e0e0" : "#111827", fontWeight: "500" }}>
                     {channel}
                   </div>
                 </div>
                 <div>
-                  <div
-                    style={{
-                      fontSize: "12px",
-                      color: "#6b7280",
-                      marginBottom: "4px",
-                    }}
-                  >
+                  <div style={{ fontSize: "12px", color: isDarkMode ? "#9ca3af" : "#6b7280", marginBottom: "4px" }}>
                     Your UID
                   </div>
-                  <div
-                    style={{
-                      fontSize: "14px",
-                      color: "#111827",
-                      fontFamily: "monospace",
-                    }}
-                  >
+                  <div style={{ fontSize: "14px", color: isDarkMode ? "#e0e0e0" : "#111827", fontFamily: "monospace" }}>
                     {uid || "Auto-assigned"}
                   </div>
                 </div>
@@ -425,37 +301,23 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
             {/* Remote Users List */}
             <div
               style={{
-                backgroundColor: "white",
+                backgroundColor: isDarkMode ? "#1e1e2e" : "white",
                 padding: "20px",
                 borderRadius: "12px",
-                border: "1px solid #e5e7eb",
+                border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
               }}
             >
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  marginBottom: "16px",
-                }}
-              >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px" }}>
                 <Users size={18} color="#3b82f6" />
-                <h4
-                  style={{
-                    margin: "0",
-                    fontSize: "16px",
-                    fontWeight: "600",
-                    color: "#111827",
-                  }}
-                >
+                <h4 style={{ margin: "0", fontSize: "16px", fontWeight: "600", color: isDarkMode ? "#e0e0e0" : "#111827" }}>
                   Active Participants
                 </h4>
                 <span
                   style={{
                     marginLeft: "auto",
                     fontSize: "14px",
-                    color: "#6b7280",
-                    backgroundColor: "#f3f4f6",
+                    color: isDarkMode ? "#9ca3af" : "#6b7280",
+                    backgroundColor: isDarkMode ? "#13131f" : "#f3f4f6",
                     padding: "2px 8px",
                     borderRadius: "12px",
                   }}
@@ -464,28 +326,22 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                 </span>
               </div>
               {remoteUsers.length > 0 ? (
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "10px",
-                  }}
-                >
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                   {remoteUsers.map((user) => (
                     <div
                       key={user.uid}
                       style={{
                         padding: "12px",
-                        backgroundColor: "#f9fafb",
+                        backgroundColor: isDarkMode ? "#13131f" : "#f9fafb",
                         borderRadius: "8px",
-                        border: "1px solid #e5e7eb",
+                        border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
                       }}
                     >
                       <div
                         style={{
                           fontSize: "14px",
                           fontWeight: "500",
-                          color: "#111827",
+                          color: isDarkMode ? "#e0e0e0" : "#111827",
                           marginBottom: "6px",
                         }}
                       >
@@ -497,20 +353,20 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                           alignItems: "center",
                           gap: "8px",
                           fontSize: "12px",
-                          color: "#6b7280",
+                          color: isDarkMode ? "#9ca3af" : "#6b7280",
                         }}
                       >
                         {user.hasVideo ? (
                           <Video size={14} color="#10b981" />
                         ) : (
-                          <VideoOff size={14} color="#9ca3af" />
+                          <VideoOff size={14} color={isDarkMode ? "#4b5563" : "#9ca3af"} />
                         )}
                         <span>{user.hasVideo ? "Video On" : "Video Off"}</span>
                         <span>•</span>
                         {user.hasAudio ? (
                           <Volume2 size={14} color="#10b981" />
                         ) : (
-                          <VolumeX size={14} color="#9ca3af" />
+                          <VolumeX size={14} color={isDarkMode ? "#4b5563" : "#9ca3af"} />
                         )}
                         <span>{user.hasAudio ? "Audio On" : "Audio Off"}</span>
                       </div>
@@ -522,7 +378,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   style={{
                     padding: "16px",
                     textAlign: "center",
-                    color: "#9ca3af",
+                    color: isDarkMode ? "#4b5563" : "#9ca3af",
                     fontSize: "13px",
                   }}
                 >
@@ -550,10 +406,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   user={remoteUsers[0]}
                   playVideo={true}
                   playAudio={true}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
+                  style={{ width: "100%", height: "100%" }}
                 />
                 <div
                   style={{
@@ -562,29 +415,16 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                     left: "0",
                     right: "0",
                     padding: "12px 16px",
-                    background:
-                      "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                    background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
                 >
-                  <div
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      color: "white",
-                    }}
-                  >
+                  <div style={{ fontWeight: "600", fontSize: "14px", color: "white" }}>
                     User {remoteUsers[0].uid}
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     {remoteUsers[0].hasVideo ? (
                       <Video size={18} color="#10b981" />
                     ) : (
@@ -625,9 +465,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                 }}
               >
                 <Users size={48} style={{ marginBottom: "12px" }} />
-                <div style={{ fontSize: "14px" }}>
-                  Waiting for participant 1...
-                </div>
+                <div style={{ fontSize: "14px" }}>Waiting for participant 1...</div>
               </div>
             )}
           </div>
@@ -650,10 +488,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   user={remoteUsers[1]}
                   playVideo={true}
                   playAudio={true}
-                  style={{
-                    width: "100%",
-                    height: "100%",
-                  }}
+                  style={{ width: "100%", height: "100%" }}
                 />
                 <div
                   style={{
@@ -662,29 +497,16 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                     left: "0",
                     right: "0",
                     padding: "12px 16px",
-                    background:
-                      "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                    background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "space-between",
                   }}
                 >
-                  <div
-                    style={{
-                      fontWeight: "600",
-                      fontSize: "14px",
-                      color: "white",
-                    }}
-                  >
+                  <div style={{ fontWeight: "600", fontSize: "14px", color: "white" }}>
                     User {remoteUsers[1].uid}
                   </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "8px",
-                    }}
-                  >
+                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     {remoteUsers[1].hasVideo ? (
                       <Video size={18} color="#10b981" />
                     ) : (
@@ -725,9 +547,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                 }}
               >
                 <Users size={48} style={{ marginBottom: "12px" }} />
-                <div style={{ fontSize: "14px" }}>
-                  Waiting for participant 2...
-                </div>
+                <div style={{ fontSize: "14px" }}>Waiting for participant 2...</div>
               </div>
             )}
           </div>
@@ -736,45 +556,33 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
         // Before Connection State
         <div
           style={{
-            backgroundColor: "white",
+            backgroundColor: isDarkMode ? "#1e1e2e" : "white",
             padding: "60px 20px",
             borderRadius: "12px",
-            border: "2px dashed #e5e7eb",
+            border: `2px dashed ${isDarkMode ? "#3a3a5c" : "#e5e7eb"}`,
             textAlign: "center",
             marginBottom: "20px",
           }}
         >
-          <Radio size={64} color="#9ca3af" style={{ marginBottom: "16px" }} />
+          <Radio size={64} color={isDarkMode ? "#4b5563" : "#9ca3af"} style={{ marginBottom: "16px" }} />
           <h3
             style={{
               margin: "0 0 8px 0",
               fontSize: "20px",
               fontWeight: "600",
-              color: "#111827",
+              color: isDarkMode ? "#e0e0e0" : "#111827",
             }}
           >
             {calling ? "Connecting to Channel..." : "Ready to Join"}
           </h3>
-          <p
-            style={{
-              margin: "0",
-              fontSize: "14px",
-              color: "#6b7280",
-            }}
-          >
+          <p style={{ margin: "0", fontSize: "14px", color: isDarkMode ? "#9ca3af" : "#6b7280" }}>
             Click the button below to join as an audience member
           </p>
         </div>
       )}
 
       {/* ROW 3: Control Buttons */}
-      <div
-        style={{
-          display: "flex",
-          gap: "12px",
-          flexWrap: "wrap",
-        }}
-      >
+      <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
         {!isConnected ? (
           <button
             onClick={handleJoinChannel}

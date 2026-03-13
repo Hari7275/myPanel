@@ -22,12 +22,13 @@ import {
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useUpdateAgoraCredentialsToJoinCallMutation } from "../../../_store/api";
+import { useTheme } from "../../../_context/ThemeContext";
 
-const AGORA_APP_ID = "0bbb5db82c6b440f95944b3fda1f9bd1"; // production
-// const AGORA_APP_ID = "ae97c0fbc8694bfdaca062b4ec86b5f8"; // dev
+// const AGORA_APP_ID = "0bbb5db82c6b440f95944b3fda1f9bd1"; // production
+const AGORA_APP_ID = "ae97c0fbc8694bfdaca062b4ec86b5f8"; // dev
 
 // ─── Inner component (must be inside AgoraRTCProvider) ────────────────────────
-const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids }) => {
+const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids, isDarkMode }) => {
   const [calling, setCalling] = useState(false);
   const [error, setError] = useState(null);
 
@@ -143,10 +144,10 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
         style={{
           textAlign: "center",
           padding: "80px 20px",
-          backgroundColor: "white",
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
           borderRadius: "12px",
-          border: "2px dashed #e5e7eb",
-          color: "#9ca3af",
+          border: `2px dashed ${isDarkMode ? "#3a3a5c" : "#e5e7eb"}`,
+          color: isDarkMode ? "#6b7280" : "#9ca3af",
         }}
       >
         <Radio size={56} style={{ marginBottom: "16px" }} />
@@ -155,7 +156,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
             margin: "0 0 8px 0",
             fontSize: "18px",
             fontWeight: "600",
-            color: "#6b7280",
+            color: isDarkMode ? "#9ca3af" : "#6b7280",
           }}
         >
           No Channel Selected
@@ -170,14 +171,14 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
   if (calling && !isConnected) {
     return (
       <div>
-        {error && <ErrorBanner error={error} />}
+        {error && <ErrorBanner error={error} isDarkMode={isDarkMode} />}
         <div
           style={{
             textAlign: "center",
             padding: "80px 20px",
-            backgroundColor: "white",
+            backgroundColor: isDarkMode ? "#1e1e2e" : "white",
             borderRadius: "12px",
-            border: "2px dashed #bfdbfe",
+            border: `2px dashed ${isDarkMode ? "#1e3a5f" : "#bfdbfe"}`,
             color: "#3b82f6",
           }}
         >
@@ -187,11 +188,12 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
               margin: "0 0 8px 0",
               fontSize: "18px",
               fontWeight: "600",
+              color: isDarkMode ? "#e0e0e0" : undefined,
             }}
           >
             Connecting to &ldquo;{credentials.channel}&rdquo;...
           </h3>
-          <p style={{ margin: 0, fontSize: "14px", color: "#6b7280" }}>
+          <p style={{ margin: 0, fontSize: "14px", color: isDarkMode ? "#9ca3af" : "#6b7280" }}>
             Joining as observer — please wait
           </p>
         </div>
@@ -201,7 +203,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
 
   return (
     <div>
-      {error && <ErrorBanner error={error} />}
+      {error && <ErrorBanner error={error} isDarkMode={isDarkMode} />}
 
       {/* Connected status bar */}
       <div
@@ -211,8 +213,8 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
           justifyContent: "space-between",
           marginBottom: "20px",
           padding: "14px 20px",
-          backgroundColor: "#ecfdf5",
-          border: "1px solid #a7f3d0",
+          backgroundColor: isDarkMode ? "#064e3b" : "#ecfdf5",
+          border: `1px solid ${isDarkMode ? "#065f46" : "#a7f3d0"}`,
           borderRadius: "12px",
           flexWrap: "wrap",
           gap: "10px",
@@ -229,14 +231,14 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
               flexShrink: 0,
             }}
           />
-          <span style={{ fontWeight: "600", color: "#065f46", fontSize: "15px" }}>
+          <span style={{ fontWeight: "600", color: isDarkMode ? "#34d399" : "#065f46", fontSize: "15px" }}>
             Connected to: {credentials.channel}
           </span>
         </div>
         <span
           style={{
-            backgroundColor: "#d1fae5",
-            color: "#065f46",
+            backgroundColor: isDarkMode ? "#065f46" : "#d1fae5",
+            color: isDarkMode ? "#34d399" : "#065f46",
             padding: "4px 12px",
             borderRadius: "20px",
             fontSize: "13px",
@@ -264,11 +266,13 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
             <div
               key={user.uid}
               style={{
-                backgroundColor: "white",
-                border: "1px solid #e5e7eb",
+                backgroundColor: isDarkMode ? "#1e1e2e" : "white",
+                border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
                 borderRadius: "12px",
                 padding: "20px",
-                boxShadow: "0 1px 3px rgba(0,0,0,0.06)",
+                boxShadow: isDarkMode
+                  ? "0 1px 3px rgba(0,0,0,0.3)"
+                  : "0 1px 3px rgba(0,0,0,0.06)",
               }}
             >
               <div
@@ -276,7 +280,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
                   width: "52px",
                   height: "52px",
                   borderRadius: "50%",
-                  backgroundColor: "#eff6ff",
+                  backgroundColor: isDarkMode ? "#1a2a3a" : "#eff6ff",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
@@ -290,7 +294,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
                 style={{
                   fontWeight: "700",
                   fontSize: "16px",
-                  color: "#111827",
+                  color: isDarkMode ? "#e0e0e0" : "#111827",
                   marginBottom: "4px",
                 }}
               >
@@ -299,7 +303,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
               <div
                 style={{
                   fontSize: "12px",
-                  color: "#9ca3af",
+                  color: isDarkMode ? "#6b7280" : "#9ca3af",
                   marginBottom: "14px",
                   fontFamily: "monospace",
                 }}
@@ -311,16 +315,18 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
                 <StatusBadge
                   active={user.hasVideo}
                   iconOn={<Video size={13} color="#10b981" />}
-                  iconOff={<VideoOff size={13} color="#9ca3af" />}
+                  iconOff={<VideoOff size={13} color={isDarkMode ? "#4b5563" : "#9ca3af"} />}
                   labelOn="Video On"
                   labelOff="Video Off"
+                  isDarkMode={isDarkMode}
                 />
                 <StatusBadge
                   active={user.hasAudio}
                   iconOn={<Volume2 size={13} color="#10b981" />}
-                  iconOff={<VolumeX size={13} color="#9ca3af" />}
+                  iconOff={<VolumeX size={13} color={isDarkMode ? "#4b5563" : "#9ca3af"} />}
                   labelOn="Audio On"
                   labelOff="Audio Off"
+                  isDarkMode={isDarkMode}
                 />
               </div>
             </div>
@@ -331,10 +337,10 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
           style={{
             textAlign: "center",
             padding: "60px 20px",
-            backgroundColor: "white",
+            backgroundColor: isDarkMode ? "#1e1e2e" : "white",
             borderRadius: "12px",
-            border: "1px solid #e5e7eb",
-            color: "#9ca3af",
+            border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+            color: isDarkMode ? "#6b7280" : "#9ca3af",
           }}
         >
           <Users size={48} style={{ marginBottom: "12px" }} />
@@ -351,7 +357,7 @@ const ChannelMonitorContent = ({ credentials, onAutoLeave, hideEmpty, adminUids 
 };
 
 // ─── Small helpers ─────────────────────────────────────────────────────────────
-const StatusBadge = ({ active, iconOn, iconOff, labelOn, labelOff }) => (
+const StatusBadge = ({ active, iconOn, iconOff, labelOn, labelOff, isDarkMode }) => (
   <div
     style={{
       display: "flex",
@@ -359,8 +365,12 @@ const StatusBadge = ({ active, iconOn, iconOff, labelOn, labelOff }) => (
       gap: "5px",
       padding: "5px 12px",
       borderRadius: "20px",
-      backgroundColor: active ? "#ecfdf5" : "#f3f4f6",
-      border: `1px solid ${active ? "#a7f3d0" : "#e5e7eb"}`,
+      backgroundColor: active
+        ? isDarkMode ? "#064e3b" : "#ecfdf5"
+        : isDarkMode ? "#1a1a2e" : "#f3f4f6",
+      border: `1px solid ${active
+        ? isDarkMode ? "#065f46" : "#a7f3d0"
+        : isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
     }}
   >
     {active ? iconOn : iconOff}
@@ -368,7 +378,9 @@ const StatusBadge = ({ active, iconOn, iconOff, labelOn, labelOff }) => (
       style={{
         fontSize: "12px",
         fontWeight: "500",
-        color: active ? "#065f46" : "#6b7280",
+        color: active
+          ? isDarkMode ? "#34d399" : "#065f46"
+          : isDarkMode ? "#6b7280" : "#6b7280",
       }}
     >
       {active ? labelOn : labelOff}
@@ -376,48 +388,49 @@ const StatusBadge = ({ active, iconOn, iconOff, labelOn, labelOff }) => (
   </div>
 );
 
-const ErrorBanner = ({ error }) => (
+const ErrorBanner = ({ error, isDarkMode }) => (
   <div
     style={{
       marginBottom: "16px",
       padding: "12px 16px",
-      backgroundColor: "#fee2e2",
-      border: "1px solid #fca5a5",
+      backgroundColor: isDarkMode ? "#3b0f0f" : "#fee2e2",
+      border: `1px solid ${isDarkMode ? "#7f1d1d" : "#fca5a5"}`,
       borderRadius: "8px",
       display: "flex",
       alignItems: "center",
       gap: "10px",
     }}
   >
-    <AlertCircle size={18} color="#dc2626" style={{ flexShrink: 0 }} />
+    <AlertCircle size={18} color={isDarkMode ? "#f87171" : "#dc2626"} style={{ flexShrink: 0 }} />
     <div>
-      <div style={{ fontWeight: "600", color: "#dc2626", fontSize: "14px" }}>
+      <div style={{ fontWeight: "600", color: isDarkMode ? "#f87171" : "#dc2626", fontSize: "14px" }}>
         Connection Error
       </div>
-      <div style={{ color: "#991b1b", fontSize: "13px" }}>{error}</div>
+      <div style={{ color: isDarkMode ? "#fca5a5" : "#991b1b", fontSize: "13px" }}>{error}</div>
     </div>
   </div>
 );
 
 // Mapping from admin user.id → the user_id used to join the channel
 //for production
-const ADMIN_USER_ID_MAP = {
-  2: 1,
-  3: 2,
-  16: 152,
-  20: 104,
-}; 
-
-// for dev 
 // const ADMIN_USER_ID_MAP = {
-//   1: 1, 
+//   2: 1,
 //   3: 2,
-//   16:1552,
+//   16: 152,
+//   20: 104,
 // };
+
+// for dev
+const ADMIN_USER_ID_MAP = {
+  1: 1,
+  3: 2,
+  16:1552,
+};
 
 // ─── Outer page ────────────────────────────────────────────────────────────────
 const ChannelMonitorPage = () => {
   const { user } = useSelector((state) => state.auth);
+  const { isDarkMode } = useTheme();
   const [orderIdInput, setOrderIdInput] = useState("");
   const [credentials, setCredentials] = useState(null);
   const [fetchError, setFetchError] = useState(null);
@@ -522,7 +535,7 @@ const ChannelMonitorPage = () => {
       style={{
         height: "calc(100vh - 64px)",
         overflowY: "auto",
-        backgroundColor: "#f3f4f6",
+        backgroundColor: isDarkMode ? "#0f0f1a" : "#f3f4f6",
         padding: "24px",
         boxSizing: "border-box",
       }}
@@ -530,11 +543,11 @@ const ChannelMonitorPage = () => {
       {/* Page header */}
       <div
         style={{
-          backgroundColor: "white",
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
           borderRadius: "12px",
           padding: "20px 24px",
           marginBottom: "20px",
-          border: "1px solid #e5e7eb",
+          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
           display: "flex",
           alignItems: "center",
           gap: "10px",
@@ -542,10 +555,10 @@ const ChannelMonitorPage = () => {
       >
         <Radio size={22} color="#3b82f6" />
         <div>
-          <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "700", color: "#111827" }}>
+          <h2 style={{ margin: 0, fontSize: "20px", fontWeight: "700", color: isDarkMode ? "#e0e0e0" : "#111827" }}>
             Channel Info
           </h2>
-          {/* <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: "#6b7280" }}>
+          {/* <p style={{ margin: "4px 0 0 0", fontSize: "13px", color: isDarkMode ? "#9ca3af" : "#6b7280" }}>
             Enter an Order ID to fetch credentials and join as an observer
           </p> */}
         </div>
@@ -554,11 +567,11 @@ const ChannelMonitorPage = () => {
       {/* Input section */}
       <div
         style={{
-          backgroundColor: "white",
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
           borderRadius: "12px",
           padding: "20px 24px",
           marginBottom: "20px",
-          border: "1px solid #e5e7eb",
+          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
         }}
       >
         <div
@@ -574,7 +587,7 @@ const ChannelMonitorPage = () => {
               style={{
                 display: "block",
                 fontSize: "13px",
-                color: "#6b7280",
+                color: isDarkMode ? "#9ca3af" : "#6b7280",
                 marginBottom: "6px",
                 fontWeight: "500",
               }}
@@ -594,11 +607,13 @@ const ChannelMonitorPage = () => {
                 width: "100%",
                 padding: "10px 14px",
                 borderRadius: "8px",
-                border: "1px solid #d1d5db",
+                border: `1px solid ${isDarkMode ? "#3a3a5c" : "#d1d5db"}`,
                 fontSize: "14px",
                 outline: "none",
-                backgroundColor: isJoined || isFetching ? "#f9fafb" : "white",
-                color: "#111827",
+                backgroundColor: isJoined || isFetching
+                  ? isDarkMode ? "#13131f" : "#f9fafb"
+                  : isDarkMode ? "#1e1e2e" : "white",
+                color: isDarkMode ? "#e0e0e0" : "#111827",
                 boxSizing: "border-box",
               }}
             />
@@ -611,7 +626,7 @@ const ChannelMonitorPage = () => {
                 style={{
                   display: "block",
                   fontSize: "13px",
-                  color: "#6b7280",
+                  color: isDarkMode ? "#9ca3af" : "#6b7280",
                   marginBottom: "6px",
                   fontWeight: "500",
                 }}
@@ -622,10 +637,10 @@ const ChannelMonitorPage = () => {
                 style={{
                   padding: "10px 14px",
                   borderRadius: "8px",
-                  border: "1px solid #a7f3d0",
-                  backgroundColor: "#ecfdf5",
+                  border: `1px solid ${isDarkMode ? "#065f46" : "#a7f3d0"}`,
+                  backgroundColor: isDarkMode ? "#064e3b" : "#ecfdf5",
                   fontSize: "14px",
-                  color: "#065f46",
+                  color: isDarkMode ? "#34d399" : "#065f46",
                   fontWeight: "500",
                   fontFamily: "monospace",
                 }}
@@ -700,16 +715,16 @@ const ChannelMonitorPage = () => {
             style={{
               marginTop: "12px",
               padding: "10px 14px",
-              backgroundColor: "#fee2e2",
-              border: "1px solid #fca5a5",
+              backgroundColor: isDarkMode ? "#3b0f0f" : "#fee2e2",
+              border: `1px solid ${isDarkMode ? "#7f1d1d" : "#fca5a5"}`,
               borderRadius: "8px",
               display: "flex",
               alignItems: "center",
               gap: "8px",
             }}
           >
-            <AlertCircle size={16} color="#dc2626" style={{ flexShrink: 0 }} />
-            <span style={{ color: "#991b1b", fontSize: "13px" }}>{fetchError}</span>
+            <AlertCircle size={16} color={isDarkMode ? "#f87171" : "#dc2626"} style={{ flexShrink: 0 }} />
+            <span style={{ color: isDarkMode ? "#fca5a5" : "#991b1b", fontSize: "13px" }}>{fetchError}</span>
           </div>
         )}
       </div>
@@ -721,26 +736,32 @@ const ChannelMonitorPage = () => {
           style={{
             marginBottom: "16px",
             padding: "16px 20px",
-            backgroundColor: "#fffbeb",
-            border: "1px solid #fcd34d",
+            backgroundColor: isDarkMode ? "#1a1500" : "#fffbeb",
+            border: `1px solid ${isDarkMode ? "#78350f" : "#fcd34d"}`,
             borderRadius: "12px",
             display: "flex",
             alignItems: "center",
             gap: "12px",
           }}
         >
-          <Users size={20} color="#d97706" style={{ flexShrink: 0 }} />
+          <Users size={20} color={isDarkMode ? "#fbbf24" : "#d97706"} style={{ flexShrink: 0 }} />
           <div>
-            <div style={{ fontWeight: "600", color: "#92400e", fontSize: "14px" }}>
+            <div style={{ fontWeight: "600", color: isDarkMode ? "#fcd34d" : "#92400e", fontSize: "14px" }}>
               No Active Users
             </div>
-            <div style={{ color: "#b45309", fontSize: "13px" }}>{noUsersMsg}</div>
+            <div style={{ color: isDarkMode ? "#f59e0b" : "#b45309", fontSize: "13px" }}>{noUsersMsg}</div>
           </div>
         </div>
       )}
 
       <AgoraRTCProvider client={client}>
-        <ChannelMonitorContent credentials={credentials} onAutoLeave={handleAutoLeave} hideEmpty={!!fetchError || !!noUsersMsg} adminUids={adminUids} />
+        <ChannelMonitorContent
+          credentials={credentials}
+          onAutoLeave={handleAutoLeave}
+          hideEmpty={!!fetchError || !!noUsersMsg}
+          adminUids={adminUids}
+          isDarkMode={isDarkMode}
+        />
       </AgoraRTCProvider>
     </div>
   );
