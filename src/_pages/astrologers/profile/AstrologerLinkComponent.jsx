@@ -47,6 +47,11 @@ const AstrologerLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "view_astrologer_profile_gift",
     },
     {
+      component: "PayoutHistory",
+      label: "Payout History",
+      permission: "view_astrologer_profile_wallet",
+    },
+    {
       component: "session-slot",
       label: "Appointment Session",
       permission: "view_astrologer_profile_appointment_session",

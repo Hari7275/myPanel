@@ -20,6 +20,7 @@ import Price from "../pricing/Price";
 import ConsultantDeviceInfo from "../../../_components/reuseComponents/ConsultantDeviceInfo";
 import OfflineOrder from "../../listeners/orders/OfflineOrder";
 import ConsultantBlockedUser from "../../../_components/reuseComponents/ConsultantBlockedUser";
+import PayoutHistory from "../../../_components/reuseComponents/PayoutHistory";
 
 const CoachRightComponent = ({ activeComponent }) => {
   return (
@@ -48,6 +49,7 @@ const CoachRightComponent = ({ activeComponent }) => {
           {activeComponent === "session-slot" && <SessionSlot />}
           {activeComponent === "CoachStatus" && <CoachStatus />}
           {activeComponent === "consultant-commission" && <CommissionList />}
+          {activeComponent === "PayoutHistory" && <PayoutHistory />}
           {activeComponent === "ConsultantBlockedUser" && (
             <ConsultantBlockedUser/>
           )}

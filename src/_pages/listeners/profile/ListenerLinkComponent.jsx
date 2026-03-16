@@ -41,6 +41,11 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "view_listener_profile_orders",
     },
     {
+      component: "PayoutHistory",
+      label: "Payout History",
+      permission: "view_listener_profile_wallet",
+    },
+    {
       component: "OfflineOrder",
       label: "Offline Order",
       permission: "view_listener_profile_orders",
@@ -102,9 +107,8 @@ const ListenerLinkComponent = ({ onComponentChange, activeComponent }) => {
           return (
             <div
               key={item.component}
-              className={`nav-link ${
-                activeComponent === item.component ? "active" : ""
-              }`}
+              className={`nav-link ${activeComponent === item.component ? "active" : ""
+                }`}
               onClick={() => onComponentChange(item.component)}
             >
               <span>{item.label}</span>

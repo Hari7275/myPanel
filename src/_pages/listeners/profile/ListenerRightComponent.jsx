@@ -20,6 +20,7 @@ import ConsultantDeviceInfo from "../../../_components/reuseComponents/Consultan
 import OfflineOrder from "../orders/OfflineOrder";
 import ConsultantBlockedUser from "../../../_components/reuseComponents/ConsultantBlockedUser";
 import CoachGifts from "../../coaches/Gifts/CoachGifts";
+import PayoutHistory from "../../../_components/reuseComponents/PayoutHistory";
 
 const ListenerRightComponent = ({ activeComponent }) => {
   const [listenerType, setListenerType] = useState("listenerstatus");
@@ -57,6 +58,7 @@ const ListenerRightComponent = ({ activeComponent }) => {
             <CoachStatus listenerType={listenerType} />
           )}
 
+          {activeComponent === "PayoutHistory" && <PayoutHistory />}
           {activeComponent === "ConsultantBlockedUser" && (
             <ConsultantBlockedUser />
           )}

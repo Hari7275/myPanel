@@ -15,7 +15,7 @@ export const coachApiSlice = apiSlice.injectEndpoints({
       }),
     }),
 
-    createCoachAccount: builder.mutation({    
+    createCoachAccount: builder.mutation({
       query: ({ body }) => ({
         url: `/api/products`,
         method: "POST",
@@ -42,6 +42,16 @@ export const coachApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["Product"],
     }),
+
+    getPayoutHistory: builder.query({
+      query: ({ consultant_id }) => ({
+        url: `/api/v1/consultant/payment/payout/admin-requests?consultant_id=${consultant_id}`,
+        method: "GET",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+      }),
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetCoachesListQuery,
   useGetCoachProfileDataQuery,
   useCreateCoachAccountMutation,
+  useGetPayoutHistoryQuery,
 } = coachApiSlice;
