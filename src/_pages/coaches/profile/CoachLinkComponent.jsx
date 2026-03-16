@@ -47,6 +47,11 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
       permission: "view_coach_profile_gift",
     },
     {
+      component: "PayoutHistory",
+      label: "Payout History",
+      permission: "view_coach_profile_wallet",
+    },
+    {
       component: "session-slot",
       label: "Appointment Session",
       permission: "view_coach_profile_appointment_session",
@@ -112,9 +117,8 @@ const CoachLinkComponent = ({ onComponentChange, activeComponent }) => {
           return (
             <div
               key={item.component}
-              className={`nav-link ${
-                activeComponent === item.component ? "active" : ""
-              }`}
+              className={`nav-link ${activeComponent === item.component ? "active" : ""
+                }`}
               onClick={() => onComponentChange(item.component)}
             >
               <span>{item.label}</span>
