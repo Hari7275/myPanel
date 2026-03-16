@@ -178,13 +178,13 @@ const GiftOrderHistory = () => {
       />
       <span style={{ color: "#9ca3af" }}>|</span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Revenue: <span style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</span>
+        Total Revenue: <span style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Flute: <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
+        Flute Earning: <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Consultant: <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
+        Consultant Earning: <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
       </span>
     </div>
   );
