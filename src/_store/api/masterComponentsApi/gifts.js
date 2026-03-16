@@ -111,13 +111,19 @@ export const giftsApiSlice = apiSlice.injectEndpoints({
     }),
 
     getFluteEarning: builder.query({
-      query: () => ({
-        url: `/api/v1/consultant/management/gift/admin/flute-earning`,
-        method: "GET",
-        headers: {
-          Authorization: "Bearer admin_token",
-        },
-      }),
+      query: ({ start_date, end_date } = {}) => {
+        const params = new URLSearchParams();
+        if (start_date) params.append("start_date", start_date);
+        if (end_date) params.append("end_date", end_date);
+        const queryString = params.toString();
+        return {
+          url: `/api/v1/consultant/management/gift/admin/flute-earning${queryString ? `?${queryString}` : ""}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
       providesTags: ["gift"],
     }),
   }),
