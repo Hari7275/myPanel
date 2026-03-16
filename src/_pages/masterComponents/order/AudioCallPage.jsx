@@ -8,10 +8,12 @@ import Button from "@mui/material/Button";
 import { useUpdateqRunningOrderMutation } from "../../../_store/api";
 import toast from "react-hot-toast";
 import { useUpdateStatusMutation } from "../../../_store/api";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const AudioCallPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isDarkMode } = useTheme();
   const credentials = location.state?.credentials;
   const [updateRunningStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateqRunningOrderMutation();
@@ -38,14 +40,15 @@ const AudioCallPage = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: isDarkMode ? "#0f0f1a" : undefined,
         }}
       >
         <h2
-          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}
+          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600", color: isDarkMode ? "#e0e0e0" : undefined }}
         >
           No call credentials found
         </h2>
-        <p style={{ margin: "0 0 24px 0", color: "#6b7280" }}>
+        <p style={{ margin: "0 0 24px 0", color: isDarkMode ? "#9ca3af" : "#6b7280" }}>
           Please navigate to this page from a valid call session.
         </p>
         <button
@@ -84,10 +87,11 @@ const AudioCallPage = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          backgroundColor: isDarkMode ? "#0f0f1a" : undefined,
         }}
       >
         <h2
-          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600" }}
+          style={{ margin: "0 0 16px 0", fontSize: "24px", fontWeight: "600", color: isDarkMode ? "#e0e0e0" : undefined }}
         >
           Invalid credentials
         </h2>
@@ -167,6 +171,7 @@ const AudioCallPage = () => {
       }
     }
   };
+
   return (
     <div
       style={{
@@ -175,7 +180,7 @@ const AudioCallPage = () => {
         padding: "24px",
         maxWidth: "1600px",
         margin: "0 auto",
-        backgroundColor: "#f3f4f6",
+        backgroundColor: isDarkMode ? "#0f0f1a" : "#f3f4f6",
         boxSizing: "border-box",
       }}
     >
@@ -186,9 +191,8 @@ const AudioCallPage = () => {
           alignItems: "center",
           gap: "16px",
           marginBottom: "24px",
-          paddingBottom: "20px",
-          borderBottom: "2px solid #e5e7eb",
-          backgroundColor: "white",
+          borderBottom: `2px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
           padding: "20px",
           borderRadius: "12px",
         }}
@@ -197,19 +201,20 @@ const AudioCallPage = () => {
           onClick={() => navigate(-1)}
           style={{
             padding: "10px",
-            border: "1px solid #d1d5db",
-            backgroundColor: "white",
+            border: `1px solid ${isDarkMode ? "#3a3a5c" : "#d1d5db"}`,
+            backgroundColor: isDarkMode ? "#2a2a3e" : "white",
             borderRadius: "8px",
             cursor: "pointer",
             display: "flex",
             alignItems: "center",
+            color: isDarkMode ? "#e0e0e0" : undefined,
             transition: "all 0.2s",
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = "#f9fafb";
+            e.currentTarget.style.backgroundColor = isDarkMode ? "#3a3a5c" : "#f9fafb";
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = "white";
+            e.currentTarget.style.backgroundColor = isDarkMode ? "#2a2a3e" : "white";
           }}
         >
           <ArrowLeft size={20} />
@@ -220,7 +225,7 @@ const AudioCallPage = () => {
               margin: 0,
               fontSize: "28px",
               fontWeight: "700",
-              color: "#111827",
+              color: isDarkMode ? "#e0e0e0" : "#111827",
             }}
           >
             Call Monitor
@@ -230,22 +235,22 @@ const AudioCallPage = () => {
               style={{
                 margin: "8px 0 0 0",
                 fontSize: "14px",
-                color: "#6b7280",
+                color: isDarkMode ? "#9ca3af" : "#6b7280",
               }}
             >
               Order ID:{" "}
-              <span style={{ fontWeight: "500", color: "#374151" }}>
+              <span style={{ fontWeight: "500", color: isDarkMode ? "#e0e0e0" : "#374151" }}>
                 {orderData.id || orderData.order_id}
               </span>{" "}
               | User ID:{" "}
-              <span style={{ fontWeight: "500", color: "#374151" }}>
+              <span style={{ fontWeight: "500", color: isDarkMode ? "#e0e0e0" : "#374151" }}>
                 {orderData.user_id}
               </span>
               {assignedUserId && (
                 <>
                   {" "}
                   | Assigned User:{" "}
-                  <span style={{ fontWeight: "500", color: "#374151" }}>
+                  <span style={{ fontWeight: "500", color: isDarkMode ? "#e0e0e0" : "#374151" }}>
                     {assignedUserId}
                   </span>
                 </>

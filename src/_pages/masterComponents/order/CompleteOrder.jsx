@@ -4,9 +4,11 @@ import ReactModal from "react-modal";
 import { useUpdateqRunningOrderMutation } from "../../../_store/api";
 
 import toast from "react-hot-toast";
+import { useTheme } from "../../../_context/ThemeContext";
 
 const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
   const [formData, setFormData] = useState("");
+  const { isDarkMode } = useTheme();
 
   const [updateRunningStatus, { isLoading: isUpdating, error: updateError }] =
     useUpdateqRunningOrderMutation();
@@ -57,6 +59,16 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
       isOpen={isOpen}
       onRequestClose={onClose}
       ariaHideApp={false}
+      style={{
+        content: {
+          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
+          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+          color: isDarkMode ? "#e0e0e0" : undefined,
+        },
+        overlay: {
+          backgroundColor: isDarkMode ? "rgba(0,0,0,0.7)" : "rgba(0,0,0,0.5)",
+        },
+      }}
     >
       <div style={{ width: "350px", height: "400px" }}>
         <h2
@@ -64,7 +76,8 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
           style={{
             marginBottom: "20px",
             display: "flex",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: isDarkMode ? "#13131f" : "#f0f0f0",
+            color: isDarkMode ? "#e0e0e0" : undefined,
             justifyContent: "center",
           }}
         >
@@ -78,7 +91,9 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
           style={{ display: "flex", alignItems: "center" }}
         >
           <div className="input-container">
-            <label htmlFor="status">Status</label>
+            <label htmlFor="status" style={{ color: isDarkMode ? "#9ca3af" : undefined }}>
+              Status
+            </label>
             <select
               id="status"
               name="status"
@@ -86,10 +101,15 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
               onChange={handleChange}
               className="userProfile-input-field"
               aria-describedby="status-desc"
+              style={{
+                backgroundColor: isDarkMode ? "#13131f" : undefined,
+                color: isDarkMode ? "#e0e0e0" : undefined,
+                borderColor: isDarkMode ? "#3a3a5c" : undefined,
+              }}
             >
               <option value={4}>Completed</option>
             </select>
-            <p style={{ margin: "20px 10px" }}>
+            <p style={{ margin: "20px 10px", color: isDarkMode ? "#9ca3af" : undefined }}>
               Do you want to complete the order.
             </p>
           </div>
@@ -117,7 +137,7 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
           </div>
         </form>
         {updateError && (
-          <p style={{ color: "red" }}>
+          <p style={{ color: isDarkMode ? "#f87171" : "red" }}>
             {updateError.data?.message || "Failed to update status."}
           </p>
         )}
