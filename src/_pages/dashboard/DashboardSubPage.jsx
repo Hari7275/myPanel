@@ -112,8 +112,9 @@ const DashboardSubPage = () => {
         <div
           style={{
             display: "flex",
-            justifyContent: "flex-end",
+            alignItems: "center",
             padding: "10px 40px",
+            gap: "12px",
           }}
         >
           <Button
@@ -122,6 +123,13 @@ const DashboardSubPage = () => {
           >
             <BarChart3 style={{ marginRight: "6px" }} />
             Transaction Graph
+          </Button>
+          <Button
+            variant="contained"
+            onClick={handleClickBarChart}
+          >
+            <BarChart3 style={{ marginRight: "6px" }} />
+            Bar Chart
           </Button>
         </div>
 
@@ -143,21 +151,12 @@ const DashboardSubPage = () => {
               padding: "5px 10px",
             }}
           >
-            <Button
-              variant="contained"
-              onClick={handleClickBarChart}
-            >
-              <BarChart3 style={{ marginRight: "6px" }} />
-              Bar Chart
-            </Button>
-
             <span
               style={{
                 fontSize: "25px",
                 cursor: "pointer",
                 fontWeight: "600",
                 color: "var(--dashboard-heading-color)",
-                marginLeft: "2%",
               }}
               onClick={handleClick}
             >
