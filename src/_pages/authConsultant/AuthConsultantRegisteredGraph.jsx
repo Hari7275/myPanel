@@ -6,8 +6,9 @@ import Button from "@mui/material/Button";
 import { X } from "lucide-react";
 import { Atom } from "react-loading-indicators";
 import { useLazyGetConsultantRegisteredGraphQuery } from "../../_store/api";
+import { useTheme } from "../../_context/ThemeContext";
 
-const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
+const CustomAxisTooltip = ({ series, axisValue, dataIndex, isDarkMode }) => {
   if (dataIndex == null) return null;
   const android = series.find((s) => s.label === "Android");
   const ios = series.find((s) => s.label === "iOS");
@@ -23,15 +24,16 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
   return (
     <div
       style={{
-        background: "#fff",
-        border: "1px solid #e0e0e0",
+        background: isDarkMode ? "#1e1e2e" : "#fff",
+        border: `1px solid ${isDarkMode ? "#333350" : "#e0e0e0"}`,
         borderRadius: 8,
         padding: "10px 14px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        boxShadow: isDarkMode ? "0 2px 8px rgba(0,0,0,0.4)" : "0 2px 8px rgba(0,0,0,0.15)",
         fontSize: 13,
+        color: isDarkMode ? "#e0e0e0" : "#333",
       }}
     >
-      <div style={{ fontWeight: 600, marginBottom: 6, color: "#333" }}>
+      <div style={{ fontWeight: 600, marginBottom: 6 }}>
         {axisValue}
       </div>
       {rows.map((row) => (
@@ -55,7 +57,7 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
                 display: "inline-block",
               }}
             />
-            <span style={{ color: "#555" }}>{row.label}</span>
+            <span style={{ color: isDarkMode ? "#a0a0b0" : "#555" }}>{row.label}</span>
           </div>
           <span style={{ fontWeight: 500 }}>{row.value}</span>
         </div>
@@ -64,11 +66,10 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          borderTop: "1px solid #e0e0e0",
+          borderTop: `1px solid ${isDarkMode ? "#333350" : "#e0e0e0"}`,
           marginTop: 4,
           paddingTop: 6,
           fontWeight: 600,
-          color: "#333",
         }}
       >
         <span>Total</span>
@@ -89,6 +90,7 @@ const getDefaultDates = (t) => {
 };
 
 const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
+  const { isDarkMode } = useTheme();
   const [type, setType] = useState("daily");
   const [defaultDates] = useState(() => getDefaultDates("daily"));
   const [startDate, setStartDate] = useState(defaultDates.start);
@@ -157,9 +159,10 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
           maxHeight: "90vh",
           padding: "24px",
           borderRadius: "12px",
-          backgroundColor: "#fff",
-          border: "none",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+          backgroundColor: isDarkMode ? "#1e1e2e" : "#fff",
+          color: isDarkMode ? "#e0e0e0" : "inherit",
+          border: isDarkMode ? "1px solid #333350" : "none",
+          boxShadow: isDarkMode ? "0 20px 60px rgba(0,0,0,0.5)" : "0 20px 60px rgba(0,0,0,0.15)",
           overflow: "auto",
           position: "absolute",
           top: "50%",
@@ -187,7 +190,7 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
           alignItems: "center",
           mb: 2,
           pb: 2,
-          borderBottom: "1px solid #E5E7EB",
+          borderBottom: isDarkMode ? "1px solid #333350" : "1px solid #E5E7EB",
         }}
       >
         <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>
@@ -204,7 +207,7 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
             justifyContent: "center",
           }}
         >
-          <X size={22} color="#666" />
+          <X size={22} color={isDarkMode ? "#a0a0b0" : "#666"} />
         </span>
       </Box>
 
@@ -233,15 +236,16 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
                 px: 2,
                 ...(type === t
                   ? {
-                    backgroundColor: "#1c2434",
-                    "&:hover": { backgroundColor: "#2d3748" },
+                    backgroundColor: isDarkMode ? "#4a4a6a" : "#1c2434",
+                    color: "#fff",
+                    "&:hover": { backgroundColor: isDarkMode ? "#5a5a7a" : "#2d3748" },
                   }
                   : {
-                    color: "#1c2434",
-                    borderColor: "#cbd5e0",
+                    color: isDarkMode ? "#a0a0b0" : "#1c2434",
+                    borderColor: isDarkMode ? "#333350" : "#cbd5e0",
                     "&:hover": {
-                      borderColor: "#1c2434",
-                      backgroundColor: "#f7fafc",
+                      borderColor: isDarkMode ? "#a0a0b0" : "#1c2434",
+                      backgroundColor: isDarkMode ? "rgba(255,255,255,0.05)" : "#f7fafc",
                     },
                   }),
               }}
@@ -260,12 +264,14 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid #cbd5e0",
+              border: `1px solid ${isDarkMode ? "#333350" : "#cbd5e0"}`,
+              backgroundColor: isDarkMode ? "#16162d" : "#fff",
+              color: isDarkMode ? "#e0e0e0" : "inherit",
               fontSize: "13px",
               outline: "none",
             }}
           />
-          <span style={{ color: "#666", fontSize: "13px" }}>to</span>
+          <span style={{ color: isDarkMode ? "#a0a0b0" : "#666", fontSize: "13px" }}>to</span>
           <input
             type="date"
             value={endDate}
@@ -273,7 +279,9 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid #cbd5e0",
+              border: `1px solid ${isDarkMode ? "#333350" : "#cbd5e0"}`,
+              backgroundColor: isDarkMode ? "#16162d" : "#fff",
+              color: isDarkMode ? "#e0e0e0" : "inherit",
               fontSize: "13px",
               outline: "none",
             }}
@@ -305,11 +313,11 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f9fafb",
+            backgroundColor: isDarkMode ? "#16162d" : "#f9fafb",
             borderRadius: "8px",
           }}
         >
-          <Atom color="#1c2434" size="medium" text="" textColor="" />
+          <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
         </Box>
       ) : graphData.length === 0 ? (
         <Box
@@ -318,9 +326,9 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#f9fafb",
+            backgroundColor: isDarkMode ? "#16162d" : "#f9fafb",
             borderRadius: "8px",
-            color: "#999",
+            color: isDarkMode ? "#a0a0b0" : "#999",
             fontSize: "15px",
           }}
         >
@@ -385,6 +393,7 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
                     axisValue={axisValue}
                     dataIndex={dataIndex}
                     series={Object.values(series)}
+                    isDarkMode={isDarkMode}
                   />
                 ),
               }}
@@ -399,7 +408,7 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
                   itemGap: 10,
                   labelStyle: {
                     fontSize: 13,
-                    fill: "#333",
+                    fill: isDarkMode ? "#e0e0e0" : "#333",
                     fontWeight: 500,
                   },
                 },
@@ -407,14 +416,14 @@ const AuthConsultantRegisteredGraph = ({ isOpen, onClose }) => {
               sx={{
                 ".MuiChartsAxis-tickLabel": {
                   strokeWidth: "0.4",
-                  fill: "#666",
+                  fill: isDarkMode ? "#a0a0b0" : "#666",
                 },
                 ".MuiChartsAxis-line": {
-                  stroke: "#666",
+                  stroke: isDarkMode ? "#555570" : "#666",
                   strokeWidth: 1,
                 },
                 ".MuiChartsAxis-tick": {
-                  stroke: "#666",
+                  stroke: isDarkMode ? "#555570" : "#666",
                   strokeWidth: 1,
                 },
               }}

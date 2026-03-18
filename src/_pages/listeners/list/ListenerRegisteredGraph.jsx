@@ -8,7 +8,7 @@ import { Atom } from "react-loading-indicators";
 import { useLazyGetConsultantRegisteredGraphQuery } from "../../../_store/api";
 import { useTheme } from "../../../_context/ThemeContext";
 
-const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
+const CustomAxisTooltip = ({ series, axisValue, dataIndex, isDarkMode }) => {
   if (dataIndex == null) return null;
   const android = series.find((s) => s.label === "Android");
   const ios = series.find((s) => s.label === "iOS");
@@ -24,13 +24,13 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
   return (
     <div
       style={{
-        background: "var(--dashboard-card-bg)",
-        border: "1px solid var(--dashboard-card-border)",
+        background: isDarkMode ? "#1e1e2e" : "#fff",
+        border: `1px solid ${isDarkMode ? "#333350" : "#e0e0e0"}`,
         borderRadius: 8,
         padding: "10px 14px",
-        boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+        boxShadow: isDarkMode ? "0 2px 8px rgba(0,0,0,0.4)" : "0 2px 8px rgba(0,0,0,0.15)",
         fontSize: 13,
-        color: "var(--text-primary)",
+        color: isDarkMode ? "#e0e0e0" : "#333",
       }}
     >
       <div style={{ fontWeight: 600, marginBottom: 6 }}>
@@ -57,7 +57,7 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
                 display: "inline-block",
               }}
             />
-            <span style={{ color: "var(--text-secondary)" }}>{row.label}</span>
+            <span style={{ color: isDarkMode ? "#a0a0b0" : "#555" }}>{row.label}</span>
           </div>
           <span style={{ fontWeight: 500 }}>{row.value}</span>
         </div>
@@ -66,7 +66,7 @@ const CustomAxisTooltip = ({ series, axisValue, dataIndex }) => {
         style={{
           display: "flex",
           justifyContent: "space-between",
-          borderTop: "1px solid var(--dashboard-card-border)",
+          borderTop: `1px solid ${isDarkMode ? "#333350" : "#e0e0e0"}`,
           marginTop: 4,
           paddingTop: 6,
           fontWeight: 600,
@@ -91,9 +91,6 @@ const getDefaultDates = (t) => {
 
 const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
   const { isDarkMode } = useTheme();
-  const axisColor = isDarkMode ? "#a0a0b0" : "#666";
-  const axisLineColor = isDarkMode ? "#3a3a5c" : "#E5E7EB";
-  const emptyStateBg = isDarkMode ? "#1a1a2e" : "#f9fafb";
   const [type, setType] = useState("daily");
   const [defaultDates] = useState(() => getDefaultDates("daily"));
   const [startDate, setStartDate] = useState(defaultDates.start);
@@ -162,9 +159,10 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
           maxHeight: "90vh",
           padding: "24px",
           borderRadius: "12px",
-          backgroundColor: "var(--card-bg)",
-          border: "1px solid var(--border-color)",
-          boxShadow: "0 20px 60px rgba(0,0,0,0.15)",
+          backgroundColor: isDarkMode ? "#1e1e2e" : "#fff",
+          color: isDarkMode ? "#e0e0e0" : "inherit",
+          border: isDarkMode ? "1px solid #333350" : "none",
+          boxShadow: isDarkMode ? "0 20px 60px rgba(0,0,0,0.5)" : "0 20px 60px rgba(0,0,0,0.15)",
           overflow: "auto",
           position: "absolute",
           top: "50%",
@@ -192,10 +190,10 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
           alignItems: "center",
           mb: 2,
           pb: 2,
-          borderBottom: "1px solid var(--border-color)",
+          borderBottom: isDarkMode ? "1px solid #333350" : "1px solid #E5E7EB",
         }}
       >
-        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600, color: "var(--text-primary)" }}>
+        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>
           Listener Registered Graph
         </h2>
         <span
@@ -209,7 +207,7 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             justifyContent: "center",
           }}
         >
-          <X size={22} color="#666" />
+          <X size={22} color={isDarkMode ? "#a0a0b0" : "#666"} />
         </span>
       </Box>
 
@@ -238,15 +236,16 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
                 px: 2,
                 ...(type === t
                   ? {
-                    backgroundColor: isDarkMode ? "#4f52d1" : "#1c2434",
-                    "&:hover": { backgroundColor: isDarkMode ? "#6366f1" : "#2d3748" },
+                    backgroundColor: isDarkMode ? "#4a4a6a" : "#1c2434",
+                    color: "#fff",
+                    "&:hover": { backgroundColor: isDarkMode ? "#5a5a7a" : "#2d3748" },
                   }
                   : {
-                    color: "var(--text-primary)",
-                    borderColor: "var(--border-color)",
+                    color: isDarkMode ? "#a0a0b0" : "#1c2434",
+                    borderColor: isDarkMode ? "#333350" : "#cbd5e0",
                     "&:hover": {
-                      borderColor: "var(--text-secondary)",
-                      backgroundColor: "var(--card-bg)",
+                      borderColor: isDarkMode ? "#a0a0b0" : "#1c2434",
+                      backgroundColor: isDarkMode ? "rgba(255,255,255,0.05)" : "#f7fafc",
                     },
                   }),
               }}
@@ -265,14 +264,14 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid var(--input-border)",
-              backgroundColor: "var(--input-bg)",
-              color: "var(--input-text)",
+              border: `1px solid ${isDarkMode ? "#333350" : "#cbd5e0"}`,
+              backgroundColor: isDarkMode ? "#16162d" : "#fff",
+              color: isDarkMode ? "#e0e0e0" : "inherit",
               fontSize: "13px",
               outline: "none",
             }}
           />
-          <span style={{ color: "var(--text-secondary)", fontSize: "13px" }}>to</span>
+          <span style={{ color: isDarkMode ? "#a0a0b0" : "#666", fontSize: "13px" }}>to</span>
           <input
             type="date"
             value={endDate}
@@ -280,9 +279,9 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             style={{
               padding: "6px 10px",
               borderRadius: "8px",
-              border: "1px solid var(--input-border)",
-              backgroundColor: "var(--input-bg)",
-              color: "var(--input-text)",
+              border: `1px solid ${isDarkMode ? "#333350" : "#cbd5e0"}`,
+              backgroundColor: isDarkMode ? "#16162d" : "#fff",
+              color: isDarkMode ? "#e0e0e0" : "inherit",
               fontSize: "13px",
               outline: "none",
             }}
@@ -314,7 +313,7 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: emptyStateBg,
+            backgroundColor: isDarkMode ? "#16162d" : "#f9fafb",
             borderRadius: "8px",
           }}
         >
@@ -327,9 +326,9 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: emptyStateBg,
+            backgroundColor: isDarkMode ? "#16162d" : "#f9fafb",
             borderRadius: "8px",
-            color: "var(--text-secondary)",
+            color: isDarkMode ? "#a0a0b0" : "#999",
             fontSize: "15px",
           }}
         >
@@ -394,6 +393,7 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
                     axisValue={axisValue}
                     dataIndex={dataIndex}
                     series={Object.values(series)}
+                    isDarkMode={isDarkMode}
                   />
                 ),
               }}
@@ -408,7 +408,7 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
                   itemGap: 10,
                   labelStyle: {
                     fontSize: 13,
-                    fill: axisColor,
+                    fill: isDarkMode ? "#e0e0e0" : "#333",
                     fontWeight: 500,
                   },
                 },
@@ -416,14 +416,14 @@ const ListenerRegisteredGraph = ({ isOpen, onClose }) => {
               sx={{
                 ".MuiChartsAxis-tickLabel": {
                   strokeWidth: "0.4",
-                  fill: axisColor,
+                  fill: isDarkMode ? "#a0a0b0" : "#666",
                 },
                 ".MuiChartsAxis-line": {
-                  stroke: axisLineColor,
+                  stroke: isDarkMode ? "#555570" : "#666",
                   strokeWidth: 1,
                 },
                 ".MuiChartsAxis-tick": {
-                  stroke: axisLineColor,
+                  stroke: isDarkMode ? "#555570" : "#666",
                   strokeWidth: 1,
                 },
               }}

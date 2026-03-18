@@ -61,6 +61,25 @@ export const graphApiSlice = apiSlice.injectEndpoints({
       providesTags: ["graph"],
     }),
 
+    getTransactionGraph: builder.query({
+      query: ({ type, startDate, endDate }) => {
+        const params = new URLSearchParams();
+
+        if (type) params.append("type", type);
+        if (startDate) params.append("start_date", startDate);
+        if (endDate) params.append("end_date", endDate);
+
+        return {
+          url: `/user/profile/admin/transaction-graph-data?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["graph"],
+    }),
+
     getConsultantRegisteredGraph: builder.query({
       query: ({ type, startDate, endDate, consultant_type }) => {
         const params = new URLSearchParams();
@@ -87,5 +106,6 @@ export const {
   useGetRechargeGraphListQuery,
   useGetCouponGraphListQuery,
   useLazyGetUserRegisteredGraphQuery,
+  useLazyGetTransactionGraphQuery,
   useLazyGetConsultantRegisteredGraphQuery,
 } = graphApiSlice;

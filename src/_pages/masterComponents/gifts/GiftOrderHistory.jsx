@@ -124,17 +124,17 @@ const GiftOrderHistory = () => {
   };
 
   const customFilterComponent = () => (
-    <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "10px", flexWrap: "wrap", height: "35px" }}>
+    <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", minHeight: "35px" }}>
       <input
         className="inputBox"
-        placeholder="Search by consultant id"
-        style={{ height: "-webkit-fill-available", width: "13%" }}
+        placeholder="consultant id"
+        style={{ height: "-webkit-fill-available", width: "8%" }}
         onChange={handleConsultantIdSearch}
       />
       <input
         className="inputBox"
-        placeholder="Search by user id"
-        style={{ height: "-webkit-fill-available", width: "13%" }}
+        placeholder="user id"
+        style={{ height: "-webkit-fill-available", width: "6%" }}
         onChange={handleUserIdSearch}
       />
       <span style={{ color: "#9ca3af" }}>|</span>
@@ -144,7 +144,7 @@ const GiftOrderHistory = () => {
         onChange={(e) => handleFilterType(e.target.value)}
         style={{
           height: "-webkit-fill-available",
-          width: "100px",
+          width: "80px",
           padding: "0 8px",
           cursor: "pointer",
           fontWeight: "600",
@@ -181,10 +181,10 @@ const GiftOrderHistory = () => {
         Total Revenue: <span style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Flute Earning: <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
+        Earning (F): <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Consultant Earning: <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
+        Earning (C): <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
       </span>
     </div>
   );
