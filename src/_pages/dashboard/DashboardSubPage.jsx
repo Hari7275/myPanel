@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { BarChart3 } from "lucide-react";
+import Button from "@mui/material/Button";
+import TransactionGraph from "./TransactionGraph";
 import { useTheme } from "../../_context/ThemeContext";
 import {
   // useGetConsultantIncomeQuery,
@@ -27,8 +30,8 @@ export const CategoryCard = ({ link, label, price, bgcolor }) => (
       className="card dashboard-card"
       style={{ backgroundColor: bgcolor, boxShadow: "none", margin: "20px" }}
     >
-      <span style={{ fontSize: "20px", fontWeight: "600" }}>{label}</span>
-      <span style={{ fontSize: "24px", fontWeight: "700" }}>₹ {price}</span>
+      <span style={{ fontSize: "20px", fontWeight: "600", color: "#5a5a72" }}>{label}</span>
+      <span style={{ fontSize: "24px", fontWeight: "700", color: "#1a1a2e" }}>₹ {price}</span>
     </div>
   </div>
 );
@@ -36,6 +39,7 @@ export const CategoryCard = ({ link, label, price, bgcolor }) => (
 const DashboardSubPage = () => {
   const { isDarkMode } = useTheme();
   const [fluteEarning, setFluteEarning] = useState([]);
+  const [showTransactionGraph, setShowTransactionGraph] = useState(false);
   // const [consultantEarning, setConsultantEarning] = useState([]);
   // const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
   // const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
@@ -105,6 +109,22 @@ const DashboardSubPage = () => {
   return (
     <>
       <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "flex-end",
+            padding: "10px 40px",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={() => setShowTransactionGraph(true)}
+          >
+            <BarChart3 style={{ marginRight: "6px" }} />
+            Transaction Graph
+          </Button>
+        </div>
+
         <div className="dashboard-main-card">
           <div className="dashboard-grid">
             {fluteEarning.map((item) => (
@@ -123,29 +143,25 @@ const DashboardSubPage = () => {
               padding: "5px 10px",
             }}
           >
+            <Button
+              variant="contained"
+              onClick={handleClickBarChart}
+            >
+              <BarChart3 style={{ marginRight: "6px" }} />
+              Bar Chart
+            </Button>
+
             <span
               style={{
                 fontSize: "25px",
                 cursor: "pointer",
                 fontWeight: "600",
                 color: "var(--dashboard-heading-color)",
+                marginLeft: "2%",
               }}
               onClick={handleClick}
             >
               View All
-            </span>
-
-            <span
-              style={{
-                fontSize: "12px",
-                cursor: "pointer",
-                fontWeight: "400",
-                background: "#ab9a9aff",
-                marginLeft: "2%",
-              }}
-              onClick={handleClickBarChart}
-            >
-              for bar chart don't use it
             </span>
           </div>
         </div>
@@ -256,6 +272,13 @@ const DashboardSubPage = () => {
           </div> */}
         </div>
       </div>
+
+      {showTransactionGraph && (
+        <TransactionGraph
+          isOpen={showTransactionGraph}
+          onClose={() => setShowTransactionGraph(false)}
+        />
+      )}
     </>
   );
 };

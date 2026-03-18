@@ -45,7 +45,7 @@ const MetaDataList = () => {
       permissions: "view_dashboard_banner_list",
     },
     {
-      name: "coach skillls",
+      name: "Coach Skills",
       link: "/coach-skills-metadata",
       permissions: "view_coach_skills_list",
     },
