@@ -61,8 +61,8 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
       ariaHideApp={false}
       style={{
         content: {
-          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
-          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+          backgroundColor: isDarkMode ? "#1e1e1e" : "white",
+          border: `1px solid ${isDarkMode ? "#2a2a2a" : "#e5e7eb"}`,
           color: isDarkMode ? "#e0e0e0" : undefined,
         },
         overlay: {
@@ -76,7 +76,7 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
           style={{
             marginBottom: "20px",
             display: "flex",
-            backgroundColor: isDarkMode ? "#13131f" : "#f0f0f0",
+            backgroundColor: isDarkMode ? "#141414" : "#f0f0f0",
             color: isDarkMode ? "#e0e0e0" : undefined,
             justifyContent: "center",
           }}
@@ -102,9 +102,9 @@ const CompleteOrder = ({ isOpen, onClose, selectedRow }) => {
               className="userProfile-input-field"
               aria-describedby="status-desc"
               style={{
-                backgroundColor: isDarkMode ? "#13131f" : undefined,
+                backgroundColor: isDarkMode ? "#141414" : undefined,
                 color: isDarkMode ? "#e0e0e0" : undefined,
-                borderColor: isDarkMode ? "#3a3a5c" : undefined,
+                borderColor: isDarkMode ? "#3a3a3a" : undefined,
               }}
             >
               <option value={4}>Completed</option>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
 import CoachStatus from "../../coaches/status/CoachStatus";
-import { CirclePlus, KeyRound, Pencil } from "lucide-react";
+import { CirclePlus, KeyRound, Pencil, ArrowLeft } from "lucide-react";
 import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
 import Modal from "../../../_components/modals/Modal";
 import {
@@ -235,13 +235,7 @@ const ListenerLeftComponent = () => {
     //MAIN ROW OF LISTNER CONTAINER
     <div className="user-details-container" style={{ position: "relative" }}>
       <div className="backButton" onClick={handleProfileClose}>
-        <img
-          src="/backbutton.png"
-          style={{
-            width: "16px",
-            objectFit: "cover",
-          }}
-        />
+        <ArrowLeft style={{ width: "16px", height: "16px" }} />
         Go Back
       </div>
       {/* FIRST COLUMN OF MAIN CONTAINER AS ROW */}

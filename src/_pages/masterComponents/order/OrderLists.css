@@ -1,0 +1,406 @@
+/* ===== Order Lists - Styled to match NoOrderConsultantListNew ===== */
+
+.ol-page {
+  padding: 16px 20px;
+  background: #f1f5f9;
+  font-family: "Poppins", sans-serif;
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+/* --- Filter Bar --- */
+.ol-filters {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.ol-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Search inputs */
+.ol-search-input {
+  height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  padding: 0 14px;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  color: #1e293b;
+  background: #f8fafc;
+  outline: none;
+  transition: all 0.2s ease;
+  width: 160px;
+  box-sizing: border-box;
+}
+
+.ol-search-input::placeholder {
+  color: #94a3b8;
+}
+
+.ol-search-input:focus {
+  border-color: #1c2434;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(28, 36, 52, 0.08);
+}
+
+/* Base button */
+.ol-btn {
+  height: 38px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: none;
+  font-size: 13px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.ol-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* Filter button */
+.ol-btn-filter {
+  background: #1c2434;
+  color: #ffffff;
+}
+
+.ol-btn-filter:hover:not(:disabled) {
+  background: #2d3a4f;
+}
+
+.ol-btn-filter.ol-btn-active {
+  background: #3b4fd8;
+}
+
+.ol-btn-filter.ol-btn-active:hover {
+  background: #4a5ee8;
+}
+
+/* Running Call button - default (inactive) */
+.ol-btn-running {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.ol-btn-running:hover:not(:disabled) {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+}
+
+/* Running Call button - active (filter applied) */
+.ol-btn-running.ol-btn-running-active {
+  background: #6165d0;
+  color: #ffffff;
+  border-color: #6165d0;
+}
+
+.ol-btn-running.ol-btn-running-active:hover:not(:disabled) {
+  background: #7277dc;
+  border-color: #7277dc;
+}
+
+/* Clear Filters button */
+.ol-btn-clear {
+  background: transparent;
+  color: #64748b;
+  border: 1.5px solid #e2e8f0;
+}
+
+.ol-btn-clear:hover:not(:disabled) {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+/* Badge on buttons */
+.ol-btn-badge {
+  background: #dcfe01;
+  color: #1c2434;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 20px;
+  padding: 1px 7px;
+  line-height: 1.6;
+}
+
+/* ===== Dark Mode filter bar ===== */
+body.dark-mode .ol-search-input {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+body.dark-mode .ol-search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .ol-search-input:focus {
+  border-color: #555555;
+  background: var(--bg-secondary);
+  box-shadow: 0 0 0 3px rgba(150, 150, 150, 0.1);
+}
+
+body.dark-mode .ol-btn-filter {
+  background: #2d3a4f;
+  color: #e2e8f0;
+  border: 1.5px solid #3d4f6b;
+}
+
+body.dark-mode .ol-btn-filter:hover:not(:disabled) {
+  background: #3d4f6b;
+}
+
+body.dark-mode .ol-btn-filter.ol-btn-active {
+  background: #3b4fd8;
+  border-color: #3b4fd8;
+  color: #ffffff;
+}
+
+body.dark-mode .ol-btn-running {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .ol-btn-running:hover:not(:disabled) {
+  background: #2a2a2a;
+  border-color: #555555;
+}
+
+body.dark-mode .ol-btn-running.ol-btn-running-active {
+  background: #5558c8;
+  color: #ffffff;
+  border-color: #6165d0;
+}
+
+body.dark-mode .ol-btn-running.ol-btn-running-active:hover:not(:disabled) {
+  background: #6165d0;
+  border-color: #7277dc;
+}
+
+body.dark-mode .ol-btn-clear {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .ol-btn-clear:hover:not(:disabled) {
+  background: rgba(220, 38, 38, 0.15);
+  color: #f87171;
+  border-color: #f87171;
+}
+
+/* --- Table Card --- */
+.ol-table-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
+}
+
+/* Hide only the title heading, keep filters visible */
+.ol-table-card .tableHeaderDiv .tableHeadingDiv {
+  display: none !important;
+}
+
+.ol-table-card .container {
+  padding: 0 !important;
+}
+
+.ol-table-card .tableDiv {
+  max-height: calc(100vh - 200px) !important;
+  border: none !important;
+  border-radius: 0 !important;
+  overflow-x: auto !important;
+  overflow-y: auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.ol-table-card .tableDiv::-webkit-scrollbar {
+  display: block !important;
+  width: 5px;
+  height: 5px;
+}
+
+.ol-table-card .tableDiv::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ol-table-card .tableDiv::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.ol-table-card .tableDiv::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+.ol-table-card .tableContainer {
+  width: 100% !important;
+  max-height: none !important;
+  overflow-y: visible !important;
+  border: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.ol-table-card .pagination {
+  padding: 14px 20px !important;
+  margin: 0 !important;
+  border-top: 1px solid #e9ecf0;
+}
+
+/* Sticky header */
+.ol-table-card table thead {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
+}
+
+.ol-table-card table thead tr th {
+  background: #e8ecf1 !important;
+  color: #3d4f6b !important;
+  font-weight: 700 !important;
+  font-size: 11.5px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.6px !important;
+  padding: 13px 18px !important;
+  border-bottom: 2px solid #d5dce6 !important;
+  border-right: 1px solid #dde2ea !important;
+  white-space: nowrap !important;
+}
+
+.ol-table-card table thead tr th:last-child {
+  border-right: none !important;
+}
+
+/* Alternating rows */
+.ol-table-card table tbody tr {
+  transition: background 0.12s ease;
+}
+
+.ol-table-card table tbody tr:nth-child(even) {
+  background: #f8fafc !important;
+}
+
+.ol-table-card table tbody tr:hover {
+  background: #eef3fa !important;
+}
+
+.ol-table-card table tbody tr td {
+  padding: 13px 18px !important;
+  border-bottom: 1px solid #edf0f4 !important;
+  border-right: 1px solid #f1f4f8 !important;
+  vertical-align: middle !important;
+  font-size: 13px !important;
+  color: #334155 !important;
+}
+
+.ol-table-card table tbody tr td:last-child {
+  border-right: none !important;
+}
+
+/* Last row no bottom border */
+.ol-table-card table tbody tr:last-child td {
+  border-bottom: none !important;
+}
+
+/* --- Empty State --- */
+.ol-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 12px;
+}
+
+.ol-empty-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ol-empty-text {
+  color: #475569;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ===== Dark Mode ===== */
+body.dark-mode .ol-page {
+  background: var(--bg-primary);
+}
+
+body.dark-mode .ol-table-card {
+  background: var(--bg-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .ol-table-card .pagination {
+  border-top-color: var(--border-color);
+}
+
+body.dark-mode .ol-table-card table thead tr th {
+  background: #222222 !important;
+  color: #aaaaaa !important;
+  border-bottom-color: #3a3a3a !important;
+  border-right-color: #2e2e2e !important;
+}
+
+body.dark-mode .ol-table-card table tbody tr:nth-child(even) {
+  background: #1a1a1a !important;
+}
+
+body.dark-mode .ol-table-card table tbody tr:hover {
+  background: #2a2a2a !important;
+}
+
+body.dark-mode .ol-table-card table tbody tr td {
+  border-bottom-color: #2a2a2a !important;
+  border-right-color: #242424 !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .ol-table-card .tableDiv::-webkit-scrollbar-thumb {
+  background: #444444;
+}
+
+body.dark-mode .ol-table-card .tableDiv::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+}
+
+body.dark-mode .ol-empty-icon {
+  background: #2a2a2a;
+  color: #888888;
+}
+
+body.dark-mode .ol-empty-text {
+  color: var(--text-primary);
+}

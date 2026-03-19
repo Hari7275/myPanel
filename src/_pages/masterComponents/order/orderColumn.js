@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
-import { setCurrentConsultant } from "../../../_store/slices/consultantSlice";
 import {
   getStatusColor,
   COMPLETED_BY_MAP,
@@ -20,16 +19,6 @@ const calculateEndTime = (startTime, durationInMinutes) => {
   const endDate = new Date(startDate.getTime() + durationInMinutes * 60000); // 60000 ms = 1 minute
 
   return endDate;
-};
-
-// Helper function to format end time
-const formatEndTime = (endDate) => {
-  if (!endDate) return "N/A";
-
-  return endDate.toLocaleString("en-US", {
-    dateStyle: "medium",
-    timeStyle: "short",
-  });
 };
 
 // Helper function to check if time is overdue (with 1 minute buffer)
@@ -54,15 +43,22 @@ const CustomIdCell = ({ value, row }) => {
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >
-      <span
-        className="clickable-id-link"
-        style={{ color: "var(--table-link-user)", cursor: "pointer" }}
-      >
-        {userName} ({value})
-      </span>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <span
+          className="clickable-id-link"
+          style={{ color: "var(--table-text)", cursor: "pointer", whiteSpace: "nowrap" }}
+        >
+          {userName}
+        </span>
+        <span style={{ fontSize: "13px", color: "var(--table-link-user)", fontWeight: 500 }}>
+          ID: {value}
+        </span>
+      </div>
     </Link>
   );
 };
+
+const consultantTypeLabel = { 1: "Astrologer", 2: "Coach", 3: "Listener" };
 
 const ConsultantNavigationCell = ({ value, row }) => {
   const consultantName = row?.original?.description?.consultant_first_name;
@@ -89,21 +85,23 @@ const ConsultantNavigationCell = ({ value, row }) => {
       rel="noopener noreferrer"
       style={{ textDecoration: "none" }}
     >
-      <span
-        className="clickable-id-link"
-        style={{
-          cursor: "pointer",
-          color: foreigner
-            ? "var(--table-link-consultant-foreign)"
-            : "var(--table-link-consultant-local)",
-          fontStyle: foreigner ? "italic" : "normal",
-        }}
-      >
-        {consultantName} ({value})
-        <span style={{ color: "var(--table-link-consultant-foreign)", opacity: 0.85 }}>
-          {" "}({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
+      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+        <span
+          className="clickable-id-link"
+          style={{
+            cursor: "pointer",
+            color: "var(--table-text)",
+            fontStyle: foreigner ? "italic" : "normal",
+            whiteSpace: "nowrap",
+          }}
+        >
+          {consultantName}
         </span>
-      </span>
+        <span style={{ fontSize: "13px", fontWeight: 500 }}>
+          <span style={{ color: foreigner ? "var(--table-link-consultant-foreign)" : "var(--table-link-consultant-local)" }}>ID: {value}</span>
+          <span style={{ color: "var(--table-text)" }}> · {consultantTypeLabel[consultantType] || ""}</span>
+        </span>
+      </div>
     </Link>
   );
 };
@@ -125,13 +123,13 @@ export const COLUMNORDER = [
     Cell: OrderIdCell,
   },
   {
-    Header: "Consultant Id",
+    Header: "Consultant",
     accessor: "consultant_id",
     Cell: ConsultantNavigationCell,
   },
 
   {
-    Header: "User Id ",
+    Header: "User",
     accessor: "user_id",
     Cell: CustomIdCell,
   },
@@ -147,13 +145,20 @@ export const COLUMNORDER = [
   },
 
   {
-    Header: "Revenue/Flute Earning",
+    Header: "Earnings",
     accessor: "order_revenue",
-    Cell: ({ row }) => (
-      <span>
-        {row.original.order_revenue}/{row.original.flute_earning}
-      </span>
-    ),
+    Cell: ({ row }) => {
+      const revenue = row.original.order_revenue;
+      const flute = row.original.flute_earning;
+      const consultant = row.original.consultant_earning;
+      return (
+        <div style={{ display: "flex", flexDirection: "column", gap: "3px", fontSize: "12px" }}>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Revenue</span> {revenue ?? "-"}</span>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Flute</span> {flute ?? "-"}</span>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Consultant</span> {consultant ?? "-"}</span>
+        </div>
+      );
+    },
   },
 
   {
@@ -162,10 +167,16 @@ export const COLUMNORDER = [
     Cell: ({ value }) => {
       if (!value) return "null";
       const date = new Date(value);
-      return date.toLocaleString("en-US", {
-        dateStyle: "medium",
-        timeStyle: "short",
-      });
+      return (
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <span style={{ fontSize: "13px", fontWeight: 500, color: "inherit" }}>
+            {date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
+          </span>
+          <span style={{ fontSize: "12px", color: "#64748b" }}>
+            {date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+          </span>
+        </div>
+      );
     },
   },
 
@@ -183,22 +194,25 @@ export const COLUMNORDER = [
       // Check if order is ongoing (status === 3) and overdue
       const isOverdueOrder = status === 3 && isOverdue(endTime, currentTime);
 
+      if (!endTime) return "N/A";
       return (
-        <span
-          style={{
-            color: isOverdueOrder ? "red" : "inherit",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {formatEndTime(endTime)} ({value})
-        </span>
+        <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <span style={{ fontSize: "13px", fontWeight: 500, color: isOverdueOrder ? "red" : "inherit", whiteSpace: "nowrap" }}>
+            {endTime.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
+          </span>
+          <span style={{ fontSize: "12px", color: isOverdueOrder ? "red" : "#64748b", whiteSpace: "nowrap" }}>
+            {endTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })} <span style={{ color: isOverdueOrder ? "red" : "var(--table-link-consultant-local)", fontWeight: 600 }}>({value})</span>
+          </span>
+        </div>
       );
     },
   },
 
   {
-    Header: "Duration(min)",
+    Header: "Duration",
     accessor: "actual_duration",
+    width: 60,
+    maxWidth: 60,
   },
 
   // {
@@ -244,7 +258,7 @@ export const COLUMNORDER = [
   },
 
   {
-    Header: "Dv Type",
+    Header: "Device",
     accessor: "description", // accessor should be a direct key
     Cell: ({ row }) => {
       const platform = row?.original?.description?.userData?.platform;

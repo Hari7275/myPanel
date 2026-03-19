@@ -40,7 +40,7 @@ const AudioCallPage = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: isDarkMode ? "#0f0f1a" : undefined,
+          backgroundColor: isDarkMode ? "#111111" : undefined,
         }}
       >
         <h2
@@ -87,7 +87,7 @@ const AudioCallPage = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: isDarkMode ? "#0f0f1a" : undefined,
+          backgroundColor: isDarkMode ? "#111111" : undefined,
         }}
       >
         <h2
@@ -180,7 +180,7 @@ const AudioCallPage = () => {
         padding: "24px",
         maxWidth: "1600px",
         margin: "0 auto",
-        backgroundColor: isDarkMode ? "#0f0f1a" : "#f3f4f6",
+        backgroundColor: isDarkMode ? "#111111" : "#f3f4f6",
         boxSizing: "border-box",
       }}
     >
@@ -191,8 +191,8 @@ const AudioCallPage = () => {
           alignItems: "center",
           gap: "16px",
           marginBottom: "24px",
-          borderBottom: `2px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
-          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
+          borderBottom: `2px solid ${isDarkMode ? "#2a2a2a" : "#e5e7eb"}`,
+          backgroundColor: isDarkMode ? "#1e1e1e" : "white",
           padding: "20px",
           borderRadius: "12px",
         }}
@@ -201,8 +201,8 @@ const AudioCallPage = () => {
           onClick={() => navigate(-1)}
           style={{
             padding: "10px",
-            border: `1px solid ${isDarkMode ? "#3a3a5c" : "#d1d5db"}`,
-            backgroundColor: isDarkMode ? "#2a2a3e" : "white",
+            border: `1px solid ${isDarkMode ? "#3a3a3a" : "#d1d5db"}`,
+            backgroundColor: isDarkMode ? "#2a2a2a" : "white",
             borderRadius: "8px",
             cursor: "pointer",
             display: "flex",
@@ -211,10 +211,10 @@ const AudioCallPage = () => {
             transition: "all 0.2s",
           }}
           onMouseOver={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? "#3a3a5c" : "#f9fafb";
+            e.currentTarget.style.backgroundColor = isDarkMode ? "#3a3a3a" : "#f9fafb";
           }}
           onMouseOut={(e) => {
-            e.currentTarget.style.backgroundColor = isDarkMode ? "#2a2a3e" : "white";
+            e.currentTarget.style.backgroundColor = isDarkMode ? "#2a2a2a" : "white";
           }}
         >
           <ArrowLeft size={20} />

@@ -565,7 +565,7 @@ const Sidebar = () => {
             </Link>
 
             <Link to="/refund-list">
-              <div className="item">
+              <div className={`item ${isActive("/refund-list") ? "active" : ""}`}>
                 <CardGiftcardOutlinedIcon />
                 <span>Refund List</span>
               </div>

@@ -13,10 +13,10 @@ import { ArrowRight, Pencil, Phone, Plus, ArrowLeft } from "lucide-react";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
-import Button from "@mui/material/Button";
 import FilterPopover from "../../../_components/reuseComponents/PopoverComponent";
 import { toast } from "react-toastify";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import "./OrderLists.css";
 
 const OrderLists = () => {
   const location = useLocation();
@@ -298,61 +298,33 @@ const OrderLists = () => {
   };
 
   const customFilterComponent = () => (
-    <div
-      style={{
-        width: "100%",
-        height: "35px",
-        display: "flex",
-        alignItems: "center",
-      }}
-    >
+    <div className="ol-filter-bar">
       <input
-        className="inputBox"
+        className="ol-search-input"
         placeholder="Search by order id"
-        style={{
-          // marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "15%",
-        }}
         onChange={handleOrdrIdSearch}
       />
-
       <input
-        className="inputBox"
+        className="ol-search-input"
         placeholder="Search by consultant id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "15%",
-          marginLeft: "25px",
-        }}
         onChange={handleConsultantIdSearch}
       />
       <input
-        className="inputBox"
+        className="ol-search-input"
         placeholder="Search by user id"
-        style={{
-          marginLeft: "25px",
-          height: "-webkit-fill-available",
-          width: "15%",
-        }}
         onChange={handleUserIdSearch}
       />
 
-      <div
-        style={{ marginLeft: "20px", position: "relative" }}
-        className="filter-button-wrapper"
-      >
-        <Button
-          variant="contained"
+      <div style={{ position: "relative" }} className="filter-button-wrapper">
+        <button
+          className={`ol-btn ol-btn-filter${appliedFilterCount > 0 ? " ol-btn-active" : ""}`}
           onClick={() => setShowFilterPopover(!showFilterPopover)}
         >
           Filter
-          <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
-            {appliedFilterCount == 0 ? null : appliedFilterCount}
-          </span>
-        </Button>
-
+          {appliedFilterCount > 0 && (
+            <span className="ol-btn-badge">{appliedFilterCount}</span>
+          )}
+        </button>
         <FilterPopover
           isOpen={showFilterPopover}
           onClose={() => setShowFilterPopover(false)}
@@ -361,47 +333,20 @@ const OrderLists = () => {
         />
       </div>
 
-      <div
-        style={{ marginLeft: "20px", position: "relative" }}
-        className="filter-button-wrapper"
-      >
-        <Button
-          variant="contained"
-          style={{
-            backgroundColor: "#6165d0ff",
-            color: "white",
-          }}
-          onClick={handleRunningFilter}
-        >
-          Running Call
-          {runningCallCount > 0 && (
-            <span style={{ marginLeft: "10px", color: "#dcfe01ff" }}>
-              {runningCallCount}
-            </span>
-          )}
-        </Button>
-      </div>
+      <button className={`ol-btn ol-btn-running${appliedFilters.status === 3 ? " ol-btn-running-active" : ""}`} onClick={handleRunningFilter}>
+        Running Call
+        {runningCallCount > 0 && (
+          <span className="ol-btn-badge">{runningCallCount}</span>
+        )}
+      </button>
 
-      {/* 🆕 Clear All Filters Button */}
-      <div
-        style={{ marginLeft: "20px", position: "relative" }}
-        className="filter-button-wrapper"
+      <button
+        className="ol-btn ol-btn-clear"
+        onClick={handleClearAllFilters}
+        disabled={appliedFilterCount === 0 && !orderId && !userId && !consultantId}
       >
-        <Button
-          variant="outlined"
-          style={{
-            backgroundColor: appliedFilterCount > 0 ? "#ef4444" : "#6b7280",
-            color: "white",
-            borderColor: appliedFilterCount > 0 ? "#ef4444" : "#6b7280",
-          }}
-          onClick={handleClearAllFilters}
-          disabled={
-            appliedFilterCount === 0 && !orderId && !userId && !consultantId
-          }
-        >
-          Clear All Filters
-        </Button>
-      </div>
+        Clear Filters
+      </button>
     </div>
   );
 
@@ -416,7 +361,8 @@ const OrderLists = () => {
   }
 
   return (
-    <div>
+    <div className="ol-page">
+      <div className="ol-table-card">
       <DyCommonTable
         columns={columns}
         data={data}
@@ -434,6 +380,8 @@ const OrderLists = () => {
         showGlobalSearch={false}
         isLoading={isFetching}
       />
+
+      </div>
 
       {/* Complete Order Modal */}
       {addOrder && (

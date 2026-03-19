@@ -141,8 +141,8 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
       onRequestClose={onClose}
       style={{
         content: {
-          backgroundColor: isDarkMode ? "#1e1e2e" : "white",
-          border: `1px solid ${isDarkMode ? "#2a2a3e" : "#e5e7eb"}`,
+          backgroundColor: isDarkMode ? "#1e1e1e" : "white",
+          border: `1px solid ${isDarkMode ? "#2a2a2a" : "#e5e7eb"}`,
           color: isDarkMode ? "#e0e0e0" : undefined,
         },
         overlay: {
@@ -156,7 +156,7 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
           style={{
             marginBottom: "20px",
             display: "block",
-            backgroundColor: isDarkMode ? "#13131f" : "#f0f0f0",
+            backgroundColor: isDarkMode ? "#141414" : "#f0f0f0",
             color: isDarkMode ? "#e0e0e0" : undefined,
             textAlign: "center",
           }}
@@ -185,9 +185,9 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             max={selectedRow?.actual_duration || 0}
             step="0.01"
             style={{
-              backgroundColor: isDarkMode ? "#13131f" : undefined,
+              backgroundColor: isDarkMode ? "#141414" : undefined,
               color: isDarkMode ? "#e0e0e0" : undefined,
-              borderColor: isDarkMode ? "#3a3a5c" : undefined,
+              borderColor: isDarkMode ? "#3a3a3a" : undefined,
             }}
           />
         </div>
@@ -207,9 +207,9 @@ const RefundBalance = ({ isOpen, onClose, selectedRow }) => {
             className="userProfile-input-field"
             required
             style={{
-              backgroundColor: isDarkMode ? "#13131f" : undefined,
+              backgroundColor: isDarkMode ? "#141414" : undefined,
               color: isDarkMode ? "#e0e0e0" : undefined,
-              borderColor: isDarkMode ? "#3a3a5c" : undefined,
+              borderColor: isDarkMode ? "#3a3a3a" : undefined,
             }}
           >
             {descriptionOptions.map((option) => (
