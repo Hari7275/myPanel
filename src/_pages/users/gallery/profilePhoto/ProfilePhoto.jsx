@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Settings, Trash } from "lucide-react";
+import { Settings, Trash, Crop } from "lucide-react";
 import {
   useDeleteUserGalleryMutation,
   useGetUserListQuery,
@@ -206,7 +206,7 @@ const UserProfilePhoto = () => {
                   </div>
                   <div className="galleryIcons">
                     <span onClick={() => toggleImageCropper(photo)}>
-                      <img src="/cropAdmin.png" className="galleryIcon" />
+                      <Crop className="galleryIcon" />
                     </span>
 
                     <span onClick={() => toggleSettingModal(photo)}>

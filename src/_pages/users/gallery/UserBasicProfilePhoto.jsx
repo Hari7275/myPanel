@@ -3,7 +3,7 @@ import "../../../cssfolder/GalleryComponent.css";
 
 import ImageCropper from "./ImageCropper";
 import DeleteComponent from "../../payments/DeleteComponent";
-import { Trash } from "lucide-react";
+import { Trash, Crop } from "lucide-react";
 
 import {
   useGetUserListQuery,
@@ -195,9 +195,9 @@ const UserBasicProfilePhoto = () => {
                   />
 
                   <div className="galleryIcons">
-                    {/* <span onClick={() => toggleImageCropper(photo)}>
-                      <img src="/cropAdmin.png" alt="Crop" className="galleryIcon" />
-                    </span> */}
+                    <span onClick={() => toggleImageCropper(photo)}>
+                      <Crop className="galleryIcon" />
+                    </span>
                     <span onClick={() => toggleDeleteComponent(photo)}>
                       <Trash />
                     </span>

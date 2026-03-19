@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../../cssfolder/GalleryComponent.css";
-import { Trash, Settings, UserRound, CirclePlus, Download } from "lucide-react";
+import { Trash, Settings, UserRound, CirclePlus, Download, Crop } from "lucide-react";
 import ImageCropper from "./ImageCropper";
 import DeleteComponent from "../../payments/DeleteComponent";
 import {
@@ -248,7 +248,7 @@ const UserGallery = () => {
                   <div className="galleryIcons">
                     <span onClick={() => toggleImageCropper(photo)}>
                       {/* <UserRound /> */}
-                      <img src="/cropAdmin.png" className="galleryIcon" />
+                      <Crop className="galleryIcon" />
                     </span>
                     <span onClick={() => downloadImage(photo.url)} download>
                       <Download />

@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import "../../../cssfolder/GalleryComponent.css";
-import { Trash, UserRound, Download, Settings, CirclePlus } from "lucide-react";
+import { Trash, UserRound, Download, Settings, CirclePlus, Crop } from "lucide-react";
 import { saveAs } from "file-saver";
 import { useSelector } from "react-redux";
 
@@ -283,7 +283,7 @@ const AstrologerGallery = () => {
                       ) && (
                         <div className="galleryIcons">
                           <span onClick={() => toggleImageCropper(image)}>
-                            <img src="/cropAdmin.png" className="galleryIcon" />
+                            <Crop className="galleryIcon" />
                           </span>
                           <span>
                             <Download

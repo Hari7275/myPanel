@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { Settings } from "lucide-react";
+import { Settings, Crop } from "lucide-react";
 
 import { useSelector } from "react-redux";
 
@@ -100,7 +100,7 @@ const CoachProfilePhoto = () => {
                           <Settings />
                         </span>
                         <span onClick={() => toggleImageCropper(imageUrls)}>
-                          <img src="/cropAdmin.png" className="galleryIcon" />
+                          <Crop className="galleryIcon" />
                         </span>
                       </div>
                     )}

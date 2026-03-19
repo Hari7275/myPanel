@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from "react";
 import { PieChart } from "react-minimal-pie-chart";
 import { useGetFluteConsultantTrafficQuery } from "../../_store/api";
+import { useTheme } from "../../_context/ThemeContext";
+
+const isDarkColor = (hex) => {
+  const color = hex.replace("#", "");
+  const r = parseInt(color.substring(0, 2), 16);
+  const g = parseInt(color.substring(2, 4), 16);
+  const b = parseInt(color.substring(4, 6), 16);
+  return (r * 299 + g * 587 + b * 114) / 1000 < 60;
+};
 
 const TrafficConsultant = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const { data: fetchData, isLoading } = useGetFluteConsultantTrafficQuery();
 
   useEffect(() => {
     if (fetchData && fetchData.data) {
-      // Transform API data to match PieChart format
       const transformedData = fetchData.data.map((item) => ({
         title: item.name,
         value: parseFloat(item.value),
-        color: item.color,
+        color: isDarkMode && isDarkColor(item.color) ? "#f5a623" : item.color,
       }));
       setData(transformedData);
     }
-  }, [fetchData]);
+  }, [fetchData, isDarkMode]);
 
   return (
     <div

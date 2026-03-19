@@ -30,13 +30,13 @@ const TopActiveConsultants = () => {
   }, [fetchData]);
 
   return (
-    <div style={{ width: "100%", height: "auto" }}>
-      <div className="top-active-consultant">
+    <div className="dashboard-card-style" style={{ padding: "20px" }}>
+      <div className="top-active-consultant" style={{ marginBottom: "16px" }}>
         <h2>Top Active Consultants</h2>
       </div>
 
       {/* Image Section...................................... */}
-      <div className="top-active-image-container">
+      <div className="top-active-image-container" style={{ maxHeight: "280px", overflowY: "auto", overflowX: "hidden", paddingBottom: "8px" }}>
         {activeConsultant?.map((item) => {
           const consultantType = item?.consultant?.consultant_type;
           const consultantId = item?.consultant_id;
