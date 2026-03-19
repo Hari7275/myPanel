@@ -1,26 +1,42 @@
 import { Link } from "react-router-dom";
 import { ExternalLink } from "lucide-react";
 
-const consultantTypeMap = {
-  1: { label: "Astrologer", color: "#7c3aed", bg: "#f3e8ff" },
-  2: { label: "Coach", color: "#2563eb", bg: "#dbeafe" },
-  3: { label: "Listener", color: "#059669", bg: "#d1fae5" },
+const consultantTypeClassMap = {
+  1: "noc-badge-astrologer",
+  2: "noc-badge-coach",
+  3: "noc-badge-listener",
+};
+
+const consultantTypeLabelMap = {
+  1: "Astrologer",
+  2: "Coach",
+  3: "Listener",
+};
+
+const statusClassMap = {
+  1: "noc-badge-inactive",
+  2: "noc-badge-pending",
+  3: "noc-badge-active",
+  5: "noc-badge-blocked",
+  6: "noc-badge-rejected",
+  7: "noc-badge-deleted",
+  8: "noc-badge-inactive",
+};
+
+const statusLabelMap = {
+  1: "Inactive",
+  2: "Verification Pending",
+  3: "Active",
+  5: "Blocked",
+  6: "Verification Rejected",
+  7: "Account Deleted",
+  8: "Inactive",
 };
 
 const genderMap = {
   1: "Male",
   2: "Female",
   3: "Other",
-};
-
-const statusMap = {
-  1: { label: "Inactive", color: "#6b7280", bg: "#f3f4f6" },
-  2: { label: "Verification Pending", color: "#d97706", bg: "#fef3c7" },
-  3: { label: "Active", color: "#059669", bg: "#d1fae5" },
-  5: { label: "Blocked", color: "#dc2626", bg: "#fee2e2" },
-  6: { label: "Verification Rejected", color: "#dc2626", bg: "#fee2e2" },
-  7: { label: "Account Deleted", color: "#6b7280", bg: "#f3f4f6" },
-  8: { label: "Inactive", color: "#6b7280", bg: "#f3f4f6" },
 };
 
 export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
@@ -41,31 +57,24 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
 
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-            {route ? (
-              <Link
-                to={`${route}?status=3`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="noc-consultant-link"
-              >
-                <span
-                  style={{
-                    fontWeight: 600,
-                    color: "#2563eb",
-                    fontSize: "13.5px",
-                    cursor: "pointer",
-                  }}
-                >
-                  {value || `${firstName} ${lastName}`}
-                </span>
-                <ExternalLink size={13} color="#2563eb" style={{ flexShrink: 0 }} />
-              </Link>
-            ) : (
-              <span style={{ fontWeight: 600, color: "#1e293b", fontSize: "13.5px" }}>
+          {route ? (
+            <Link
+              to={`${route}?status=3`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="noc-consultant-link"
+            >
+              <span className="noc-name-link-text">
                 {value || `${firstName} ${lastName}`}
               </span>
-            )}
-            <span style={{ fontSize: "12px", color: "#64748b" }}>ID: {id}</span>
+              <ExternalLink size={13} style={{ flexShrink: 0 }} />
+            </Link>
+          ) : (
+            <span className="noc-name-link-text">
+              {value || `${firstName} ${lastName}`}
+            </span>
+          )}
+          <span className="noc-id-text">ID: {id}</span>
         </div>
       );
     },
@@ -74,21 +83,12 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
     Header: "Type",
     accessor: "consultant_type",
     Cell: ({ value }) => {
-      const info = consultantTypeMap[value];
-      if (!info) return value;
+      const cls = consultantTypeClassMap[value];
+      const label = consultantTypeLabelMap[value];
+      if (!cls) return value;
       return (
-        <span
-          style={{
-            padding: "4px 12px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: info.color,
-            backgroundColor: info.bg,
-            whiteSpace: "nowrap",
-          }}
-        >
-          {info.label}
+        <span className={`noc-badge ${cls}`}>
+          {label}
         </span>
       );
     },
@@ -97,9 +97,7 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
     Header: "Gender",
     accessor: "gender",
     Cell: ({ value }) => (
-      <span style={{ color: "#475569", fontSize: "13px" }}>
-        {genderMap[value] || "-"}
-      </span>
+      <span className="noc-secondary-text">{genderMap[value] || "-"}</span>
     ),
   },
   {
@@ -111,21 +109,8 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
       const email = row.original.email_address || "";
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span style={{ fontSize: "13px", color: "#1e293b", fontWeight: 500 }}>
-            {code} {phone}
-          </span>
-          <span
-            style={{
-              fontSize: "12px",
-              color: "#64748b",
-              maxWidth: "180px",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-          >
-            {email || "-"}
-          </span>
+          <span className="noc-phone-text">{code} {phone}</span>
+          <span className="noc-email-text">{email || "-"}</span>
         </div>
       );
     },
@@ -134,40 +119,20 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
     Header: "Country",
     accessor: "country",
     Cell: ({ value }) => (
-      <span style={{ color: "#475569", fontSize: "13px" }}>{value || "-"}</span>
+      <span className="noc-secondary-text">{value || "-"}</span>
     ),
   },
   {
     Header: "Status",
     accessor: "status",
     Cell: ({ value }) => {
-      const info = statusMap[value];
-      if (!info) return value;
+      const cls = statusClassMap[value];
+      const label = statusLabelMap[value];
+      if (!cls) return value;
       return (
-        <span
-          style={{
-            padding: "4px 12px",
-            borderRadius: "20px",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: info.color,
-            backgroundColor: info.bg,
-            display: "inline-flex",
-            alignItems: "center",
-            gap: "5px",
-            whiteSpace: "nowrap",
-          }}
-        >
-          <span
-            style={{
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              backgroundColor: info.color,
-              display: "inline-block",
-            }}
-          />
-          {info.label}
+        <span className={`noc-badge ${cls}`}>
+          <span className="noc-badge-dot" />
+          {label}
         </span>
       );
     },
@@ -180,10 +145,10 @@ export const NO_ORDER_CONSULTANT_COLUMNS_NEW = [
       const date = new Date(value);
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span style={{ fontSize: "13px", color: "#1e293b", fontWeight: 500 }}>
+          <span className="noc-date-primary">
             {date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
           </span>
-          <span style={{ fontSize: "12px", color: "#64748b" }}>
+          <span className="noc-date-secondary">
             {date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
           </span>
         </div>

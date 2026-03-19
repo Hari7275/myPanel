@@ -328,6 +328,312 @@
   font-size: 13px;
 }
 
+/* --- Cell text helpers --- */
+.noc-name-link-text {
+  font-weight: 600;
+  font-size: 13.5px;
+  cursor: pointer;
+  color: #2563eb;
+}
+
+.noc-id-text {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.noc-phone-text {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1e293b;
+}
+
+.noc-email-text {
+  font-size: 12px;
+  color: #64748b;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.noc-secondary-text {
+  color: #475569;
+  font-size: 13px;
+}
+
+.noc-date-primary {
+  font-size: 13px;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+.noc-date-secondary {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* --- Badges --- */
+.noc-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.noc-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+
+.noc-badge-astrologer { color: #7c3aed; background: #f3e8ff; }
+.noc-badge-astrologer .noc-badge-dot { background-color: #7c3aed; }
+
+.noc-badge-coach { color: #2563eb; background: #dbeafe; }
+.noc-badge-coach .noc-badge-dot { background-color: #2563eb; }
+
+.noc-badge-listener { color: #059669; background: #d1fae5; }
+.noc-badge-listener .noc-badge-dot { background-color: #059669; }
+
+.noc-badge-inactive { color: #6b7280; background: #f3f4f6; }
+.noc-badge-inactive .noc-badge-dot { background-color: #6b7280; }
+
+.noc-badge-pending { color: #d97706; background: #fef3c7; }
+.noc-badge-pending .noc-badge-dot { background-color: #d97706; }
+
+.noc-badge-active { color: #059669; background: #d1fae5; }
+.noc-badge-active .noc-badge-dot { background-color: #059669; }
+
+.noc-badge-blocked { color: #dc2626; background: #fee2e2; }
+.noc-badge-blocked .noc-badge-dot { background-color: #dc2626; }
+
+.noc-badge-rejected { color: #dc2626; background: #fee2e2; }
+.noc-badge-rejected .noc-badge-dot { background-color: #dc2626; }
+
+.noc-badge-deleted { color: #6b7280; background: #f3f4f6; }
+.noc-badge-deleted .noc-badge-dot { background-color: #6b7280; }
+
+/* ===== Dark Mode ===== */
+body.dark-mode .noc-page {
+  background: var(--bg-primary);
+}
+
+body.dark-mode .noc-back-btn {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-back-btn:hover {
+  background: #3a3a3a;
+  border-color: #3a3a3a;
+  color: #ffffff;
+}
+
+body.dark-mode .noc-stat-inline {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .noc-stat-value {
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-stat-label-inline {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-search-box .noc-search-icon {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-search-input {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-search-input::placeholder {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-search-input:focus {
+  border-color: #666666;
+  box-shadow: 0 0 0 3px rgba(150, 150, 150, 0.12);
+}
+
+body.dark-mode .noc-select {
+  background-color: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23777777' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+}
+
+body.dark-mode .noc-select:focus {
+  border-color: #666666;
+  box-shadow: 0 0 0 3px rgba(150, 150, 150, 0.12);
+}
+
+body.dark-mode .noc-select:hover {
+  border-color: #555555;
+}
+
+body.dark-mode .noc-select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-table-card {
+  background: var(--bg-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .noc-table-card .pagination {
+  border-top-color: var(--border-color);
+}
+
+body.dark-mode .noc-table-card table thead tr th {
+  background: #252525 !important;
+  color: #aaaaaa !important;
+  border-bottom-color: var(--border-color) !important;
+}
+
+body.dark-mode .noc-table-card table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+body.dark-mode .noc-table-card table tbody tr td {
+  border-bottom-color: var(--border-color) !important;
+}
+
+body.dark-mode .noc-table-card .tableDiv::-webkit-scrollbar-thumb {
+  background: #444444;
+}
+
+body.dark-mode .noc-table-card .tableDiv::-webkit-scrollbar-thumb:hover {
+  background: #666666;
+}
+
+body.dark-mode .noc-loading-text {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-error {
+  background: var(--bg-secondary);
+}
+
+body.dark-mode .noc-error-icon {
+  background: rgba(220, 38, 38, 0.15);
+}
+
+body.dark-mode .noc-empty-icon {
+  background: #2a2a2a;
+  color: #888888;
+}
+
+body.dark-mode .noc-empty-text {
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-empty-sub {
+  color: var(--text-secondary);
+}
+
+/* Dark mode cell text */
+body.dark-mode .noc-name-link-text {
+  color: #60a5fa;
+}
+
+body.dark-mode .noc-consultant-link:hover .noc-name-link-text,
+body.dark-mode .noc-consultant-link:hover svg {
+  color: #93c5fd !important;
+}
+
+body.dark-mode .noc-id-text {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-phone-text {
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-email-text {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-secondary-text {
+  color: var(--text-secondary);
+}
+
+body.dark-mode .noc-date-primary {
+  color: var(--text-primary);
+}
+
+body.dark-mode .noc-date-secondary {
+  color: var(--text-secondary);
+}
+
+/* Dark mode badges */
+body.dark-mode .noc-badge-astrologer {
+  color: #c084fc;
+  background: rgba(124, 58, 237, 0.18);
+}
+body.dark-mode .noc-badge-astrologer .noc-badge-dot { background-color: #c084fc; }
+
+body.dark-mode .noc-badge-coach {
+  color: #60a5fa;
+  background: rgba(37, 99, 235, 0.18);
+}
+body.dark-mode .noc-badge-coach .noc-badge-dot { background-color: #60a5fa; }
+
+body.dark-mode .noc-badge-listener {
+  color: #34d399;
+  background: rgba(5, 150, 105, 0.18);
+}
+body.dark-mode .noc-badge-listener .noc-badge-dot { background-color: #34d399; }
+
+body.dark-mode .noc-badge-inactive {
+  color: #9ca3af;
+  background: rgba(107, 114, 128, 0.18);
+}
+body.dark-mode .noc-badge-inactive .noc-badge-dot { background-color: #9ca3af; }
+
+body.dark-mode .noc-badge-pending {
+  color: #fbbf24;
+  background: rgba(217, 119, 6, 0.18);
+}
+body.dark-mode .noc-badge-pending .noc-badge-dot { background-color: #fbbf24; }
+
+body.dark-mode .noc-badge-active {
+  color: #34d399;
+  background: rgba(5, 150, 105, 0.18);
+}
+body.dark-mode .noc-badge-active .noc-badge-dot { background-color: #34d399; }
+
+body.dark-mode .noc-badge-blocked {
+  color: #f87171;
+  background: rgba(220, 38, 38, 0.18);
+}
+body.dark-mode .noc-badge-blocked .noc-badge-dot { background-color: #f87171; }
+
+body.dark-mode .noc-badge-rejected {
+  color: #f87171;
+  background: rgba(220, 38, 38, 0.18);
+}
+body.dark-mode .noc-badge-rejected .noc-badge-dot { background-color: #f87171; }
+
+body.dark-mode .noc-badge-deleted {
+  color: #9ca3af;
+  background: rgba(107, 114, 128, 0.18);
+}
+body.dark-mode .noc-badge-deleted .noc-badge-dot { background-color: #9ca3af; }
+
 /* --- Responsive --- */
 @media (max-width: 1024px) {
   .noc-stats {

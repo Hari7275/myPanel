@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { debounce } from "lodash";
 import "./NoOrderConsultantListNew.css";
+import { useTheme } from "../../_context/ThemeContext";
 
 const lastDaysOptions = [
   { label: "Last 3 Days", value: "3" },
@@ -29,6 +30,7 @@ const consultantTypeOptions = [
 ];
 
 const NoOrderConsultantListNew = () => {
+  const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(15);
@@ -89,7 +91,7 @@ const NoOrderConsultantListNew = () => {
     return (
       <div className="noc-page">
         <div className="noc-loading">
-          <Atom color="#1c2434" size="medium" text="" textColor="" />
+          <Atom color={isDarkMode ? "#aaaaaa" : "#1c2434"} size="medium" text="" textColor="" />
           <span className="noc-loading-text">Loading consultants...</span>
         </div>
       </div>
