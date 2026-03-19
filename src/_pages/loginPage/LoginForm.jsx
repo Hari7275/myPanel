@@ -5,14 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../_store/slices/authSlice";
 import { useCreateAdminLoginMutation } from "../../_store/api";
 import toast from "react-hot-toast";
-
+import { Eye, EyeOff, Mail, Lock, Shield } from "lucide-react";
 const LoginForm = () => {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
-
-  const [prod, setProd] = useState(false);
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [prod, setProd] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,9 +17,7 @@ const LoginForm = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/user", { replace: true });
-    }
+    if (isAuthenticated) navigate("/user", { replace: true });
   }, [isAuthenticated, navigate]);
 
   const handleLogin = async () => {
@@ -31,44 +25,25 @@ const LoginForm = () => {
       toast.error("Please enter email and password");
       return;
     }
-
     try {
       const response = await createLogin({ body: formData, prod }).unwrap();
-
-      console.log("login response....", response);
-
       if (response?.status) {
         const user = response?.data;
-
         const permissionsByGroup = {};
-
-        if (user?.results && user?.results?.length > 0) {
-          user?.results?.forEach((result) => {
+        if (user?.results?.length > 0) {
+          user.results.forEach((result) => {
             const groupName = result?.PermissionGroup?.name;
-            const permissions = result?.PermissionGroup?.permissions?.map(
-              (p) => p?.name || []
-            );
-            if (groupName) {
-              permissionsByGroup[groupName] = permissions;
-            }
+            const permissions = result?.PermissionGroup?.permissions?.map((p) => p?.name || []);
+            if (groupName) permissionsByGroup[groupName] = permissions;
           });
         }
-
-        dispatch(
-          login({
-            user: {
-              id: user.id,
-              name: user.name,
-              email: user.email,
-            },
-            role: user.role,
-            token: user.auth_token,
-            permissions: permissionsByGroup,
-            prod: prod, // for  radio button at the time of login.
-          })
-        );
-
-        // toast.success("Login successful");
+        dispatch(login({
+          user: { id: user.id, name: user.name, email: user.email },
+          role: user.role,
+          token: user.auth_token,
+          permissions: permissionsByGroup,
+          prod,
+        }));
         navigate("/dashboard");
       } else {
         toast.error(response?.message || "Login failed");
@@ -79,153 +54,114 @@ const LoginForm = () => {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
-      handleLogin();
-    }
+    if (event.key === "Enter") handleLogin();
   };
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [formData]);
 
   return (
     <div className="login-body">
-      <div className="login-container">
-        <div className="login-header">
-          <h4>Login</h4>
-          <p>Enter your email below to login to your account</p>
-        </div>
+      <div className="login-card">
 
-        {/* Radio Button Group */}
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-around",
-            margin: "20px",
-          }}
-        >
-          <div>
-            <label htmlFor="production">Production</label>
-            <input
-              type="radio"
-              id="production"
-              name="env"
-              value="production"
-              checked={prod === true}
-              onChange={() => setProd(true)}
-              style={{ marginLeft: "10px" }}
-            />
+        {/* Brand */}
+        <div className="login-brand">
+          <div className="login-brand-icon">
+            <Shield size={28} strokeWidth={1.8} />
           </div>
           <div>
-            <label htmlFor="testing">Testing</label>
-            <input
-              type="radio"
-              id="testing"
-              name="env"
-              value="testing"
-              checked={prod === false}
-              onChange={() => setProd(false)}
-              style={{ marginLeft: "10px" }}
-            />
+            <h1 className="login-brand-name">Flute Admin</h1>
+            <p className="login-brand-sub">Management Console</p>
           </div>
         </div>
 
-        <div className="login-form">
-          <div>
-            <label htmlFor="email">Enter Email</label>
-            <input
-              type="email"
-              placeholder="Email"
-              id="email"
-              value={formData.email}
-              onChange={(e) =>
-                setFormData({ ...formData, email: e.target.value })
-              }
-              autoComplete="off"
-            />
-          </div>
+        {/* Heading */}
+        <div className="login-heading">
+          <h2 className="login-title">Welcome back</h2>
+          <p className="login-subtitle">Sign in to your admin account</p>
+        </div>
 
-          <div style={{ position: "relative" }}>
-            <label htmlFor="password">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              placeholder="Password"
-              id="password"
-              value={formData.password}
-              onChange={(e) =>
-                setFormData({ ...formData, password: e.target.value })
-              }
-              autoComplete="off"
-              style={{ paddingRight: "40px" }}
-            />
-            <button
-              type="button"
-              onClick={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: "10px",
-                top: "38px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                padding: "5px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              aria-label={showPassword ? "Hide password" : "Show password"}
-            >
-              {showPassword ? (
-                // Eye slash icon (hidden)
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24" />
-                  <line x1="1" y1="1" x2="23" y2="23" />
-                </svg>
-              ) : (
-                // Eye icon (visible)
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
-              )}
-            </button>
-          </div>
-
-          <label className="forgotPassword" htmlFor="forgotPassword">
-            Forgot Password
-          </label>
-
-          <button className="button" onClick={handleLogin} disabled={isLoading}>
-            {isLoading ? "Logging in..." : "Login"}
+        {/* Env Toggle */}
+        <div className="login-env-toggle">
+          <button
+            type="button"
+            className={`login-env-btn ${prod === true ? "active" : ""}`}
+            onClick={() => setProd(true)}
+          >
+            Production
+          </button>
+          <button
+            type="button"
+            className={`login-env-btn ${prod === false ? "active" : ""}`}
+            onClick={() => setProd(false)}
+          >
+            Testing
           </button>
         </div>
 
-        <div className="signup-text">
-          <p>
-            Don't have an account? <span>Sign up</span>
-          </p>
+        {/* Form */}
+        <div className="login-form">
+
+          <div className="login-field">
+            <label className="login-label" htmlFor="email">Email</label>
+            <div className="login-input-wrap">
+              <Mail size={17} className="login-input-icon" />
+              <input
+                className="login-input"
+                type="email"
+                id="email"
+                placeholder="admin@example.com"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                autoComplete="off"
+              />
+            </div>
+          </div>
+
+          <div className="login-field">
+            <div className="login-label-row">
+              <label className="login-label" htmlFor="password">Password</label>
+              <span className="login-forgot">Forgot password?</span>
+            </div>
+            <div className="login-input-wrap">
+              <Lock size={17} className="login-input-icon" />
+              <input
+                className="login-input"
+                type={showPassword ? "text" : "password"}
+                id="password"
+                placeholder="••••••••"
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                autoComplete="off"
+              />
+              <button
+                type="button"
+                className="login-eye-btn"
+                onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
+          </div>
+
+          <button
+            className="login-submit-btn"
+            onClick={handleLogin}
+            disabled={isLoading || !formData.email || !formData.password}
+          >
+            {isLoading ? (
+              <span className="login-spinner" />
+            ) : null}
+            {isLoading ? "Signing in..." : "Sign in"}
+          </button>
         </div>
+
+        <p className="login-footer">
+          Flute Admin Panel &mdash; Authorized access only
+        </p>
       </div>
     </div>
   );
