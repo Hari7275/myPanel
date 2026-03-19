@@ -1,47 +1,82 @@
 .consultant-stats-page {
-  padding: 20px 30px;
+  padding: 16px 20px;
   height: 100%;
   overflow-y: auto;
+  box-sizing: border-box;
+  background: #f1f5f9;
 }
 
+/* --- Back Button --- */
+.cs-back-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1.5px solid #e2e8f0;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #475569;
+  flex-shrink: 0;
+}
+
+.cs-back-btn:hover {
+  background: #1c2434;
+  color: white;
+  border-color: #1c2434;
+}
+
+/* --- Header --- */
 .consultant-stats-header {
   display: flex;
   align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
+  gap: 14px;
+  margin-bottom: 20px;
 }
 
-.consultant-stats-header h2 {
+.cs-page-title {
   margin: 0;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
+  color: #1e293b;
 }
 
+/* --- Content --- */
 .consultant-stats-content {
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 20px;
 }
 
+/* --- Section Card --- */
 .consultant-stats-section {
-  border-radius: 12px;
+  border-radius: 16px;
   padding: 20px;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(0, 0, 0, 0.03);
 }
 
 .consultant-stats-section-title {
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   margin: 0 0 16px 0;
   padding-left: 12px;
   border-left: 4px solid;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
 }
 
+/* --- Stats Grid --- */
 .consultant-stats-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 16px;
+  gap: 14px;
 }
 
+/* --- Stat Card --- */
 .consultant-stat-card {
   min-height: 90px;
   display: flex;
@@ -50,6 +85,7 @@
   gap: 6px;
   padding: 16px;
   border-radius: 10px;
+  box-shadow: none;
   transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
 
@@ -62,6 +98,86 @@
 .consultant-stat-card[style*="cursor: pointer"]:active {
   transform: translateY(-1px) scale(1.0);
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12) !important;
+}
+
+/* --- Stat card text --- */
+.cs-stat-label {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.cs-stat-value {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1;
+}
+
+/* --- Stat card colors (light mode) --- */
+.cs-stat-card-total               { background-color: #A3BFFA; }
+.cs-stat-card-active              { background-color: #BAEDBD; }
+.cs-stat-card-inactive            { background-color: #FDE68A; }
+.cs-stat-card-verification_pending { background-color: #FED7AA; }
+.cs-stat-card-blocked             { background-color: #FCA5A5; }
+.cs-stat-card-verification_rejected { background-color: #E9D5FF; }
+.cs-stat-card-account_deleted     { background-color: #D1D5DB; }
+
+/* --- Error --- */
+.cs-error-text {
+  color: #dc2626;
+  padding: 20px;
+}
+
+/* ===== Dark Mode ===== */
+body.dark-mode .consultant-stats-page {
+  background: var(--bg-primary);
+}
+
+body.dark-mode .cs-back-btn {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+body.dark-mode .cs-back-btn:hover {
+  background: #3a3a3a;
+  border-color: #3a3a3a;
+  color: #ffffff;
+}
+
+body.dark-mode .cs-page-title {
+  color: var(--text-primary);
+}
+
+body.dark-mode .consultant-stats-section {
+  background: var(--bg-secondary);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+body.dark-mode .consultant-stats-section-title {
+  color: var(--text-primary);
+}
+
+body.dark-mode .cs-stat-label {
+  color: #d1d5db;
+}
+
+body.dark-mode .cs-stat-value {
+  color: #f0f0f0;
+}
+
+/* Dark mode stat card colors */
+body.dark-mode .cs-stat-card-total               { background-color: #3b4f7a; }
+body.dark-mode .cs-stat-card-active              { background-color: #2d5a3e; }
+body.dark-mode .cs-stat-card-inactive            { background-color: #5a4d2a; }
+body.dark-mode .cs-stat-card-verification_pending { background-color: #5a3f2a; }
+body.dark-mode .cs-stat-card-blocked             { background-color: #5a2d2d; }
+body.dark-mode .cs-stat-card-verification_rejected { background-color: #4a3566; }
+body.dark-mode .cs-stat-card-account_deleted     { background-color: #3a3d42; }
+
+body.dark-mode .cs-error-text {
+  color: #f87171;
 }
 
 @media (max-width: 1400px) {

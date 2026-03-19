@@ -42,6 +42,7 @@ const NoOrderConsultantListNew = () => {
   const {
     data: fetchData,
     isLoading,
+    isFetching,
     error,
   } = useGetNoOrderConsultantsListQuery({
     page,
@@ -183,6 +184,7 @@ const NoOrderConsultantListNew = () => {
           showTableHeading={false}
           showGlobalSearch={false}
           includeCheckbox={false}
+          isLoading={isFetching}
         />
 
         {data?.length === 0 && (

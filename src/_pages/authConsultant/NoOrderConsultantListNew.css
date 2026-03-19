@@ -156,8 +156,11 @@
 }
 
 /* Scoped overrides — only inside .noc-table-card */
-.noc-table-card .tableHeaderDiv {
-  padding: 0 !important;
+
+/* Hide the empty tableHeaderDiv (showTableHeading=false, showGlobalSearch=false) */
+.noc-table-card .tableHeaderDiv,
+.noc-table-card .filterDiv {
+  display: none !important;
 }
 
 .noc-table-card .container {
@@ -165,9 +168,9 @@
 }
 
 .noc-table-card .tableDiv {
-  max-height: calc(100vh - 380px) !important;
+  max-height: calc(100vh - 200px) !important;
   border: none !important;
-  border-radius: 0 !important;
+  border-radius: 16px 16px 0 0 !important;
   overflow-x: auto !important;
   overflow-y: auto !important;
   scrollbar-width: thin;
@@ -176,8 +179,8 @@
 
 .noc-table-card .tableDiv::-webkit-scrollbar {
   display: block !important;
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 .noc-table-card .tableDiv::-webkit-scrollbar-track {
@@ -194,42 +197,75 @@
 }
 
 .noc-table-card .tableContainer {
+  width: 100% !important;
   max-height: none !important;
   overflow-y: visible !important;
   border: none !important;
   box-shadow: none !important;
   border-radius: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
 }
 
 .noc-table-card .pagination {
-  padding: 12px 20px !important;
+  padding: 14px 20px !important;
   margin: 0 !important;
-  border-top: 1px solid #f1f5f9;
+  border-top: 1px solid #e9ecf0;
+}
+
+/* Sticky header */
+.noc-table-card table thead {
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 10 !important;
 }
 
 .noc-table-card table thead tr th {
-  background: #edf0f4 !important;
-  color: #475569 !important;
+  background: #e8ecf1 !important;
+  color: #3d4f6b !important;
   font-weight: 700 !important;
-  font-size: 13px !important;
+  font-size: 11.5px !important;
   text-transform: uppercase !important;
-  letter-spacing: 0.4px !important;
-  padding: 14px 16px !important;
-  border-bottom: 1.5px solid #e2e8f0 !important;
+  letter-spacing: 0.6px !important;
+  padding: 13px 18px !important;
+  border-bottom: 2px solid #d5dce6 !important;
+  border-right: 1px solid #dde2ea !important;
+  white-space: nowrap !important;
 }
 
+.noc-table-card table thead tr th:last-child {
+  border-right: none !important;
+}
+
+/* Alternating rows */
 .noc-table-card table tbody tr {
-  transition: background 0.15s ease;
+  transition: background 0.12s ease;
 }
 
-.noc-table-card table tbody tr:hover {
+.noc-table-card table tbody tr:nth-child(even) {
   background: #f8fafc !important;
 }
 
+.noc-table-card table tbody tr:hover {
+  background: #eef3fa !important;
+}
+
 .noc-table-card table tbody tr td {
-  padding: 14px 16px !important;
-  border-bottom: 1px solid #f1f5f9 !important;
+  padding: 13px 18px !important;
+  border-bottom: 1px solid #edf0f4 !important;
+  border-right: 1px solid #f1f4f8 !important;
   vertical-align: middle !important;
+  font-size: 13px !important;
+  color: #334155 !important;
+}
+
+.noc-table-card table tbody tr td:last-child {
+  border-right: none !important;
+}
+
+/* Last row no bottom border */
+.noc-table-card table tbody tr:last-child td {
+  border-bottom: none !important;
 }
 
 /* --- Consultant Name Link --- */
@@ -499,17 +535,24 @@ body.dark-mode .noc-table-card .pagination {
 }
 
 body.dark-mode .noc-table-card table thead tr th {
-  background: #252525 !important;
+  background: #222222 !important;
   color: #aaaaaa !important;
-  border-bottom-color: var(--border-color) !important;
+  border-bottom-color: #3a3a3a !important;
+  border-right-color: #2e2e2e !important;
+}
+
+body.dark-mode .noc-table-card table tbody tr:nth-child(even) {
+  background: #1a1a1a !important;
 }
 
 body.dark-mode .noc-table-card table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.04) !important;
+  background: #2a2a2a !important;
 }
 
 body.dark-mode .noc-table-card table tbody tr td {
-  border-bottom-color: var(--border-color) !important;
+  border-bottom-color: #2a2a2a !important;
+  border-right-color: #242424 !important;
+  color: var(--text-primary) !important;
 }
 
 body.dark-mode .noc-table-card .tableDiv::-webkit-scrollbar-thumb {

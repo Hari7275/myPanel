@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useGetConsultantStatsQuery } from "../../_store/api";
 import { Atom } from "react-loading-indicators";
 import { ArrowLeft } from "lucide-react";
-import Button from "@mui/material/Button";
 import { useTheme } from "../../_context/ThemeContext";
 import "./ConsultantStats.css";
 
@@ -17,17 +16,6 @@ const statLabels = {
   account_deleted: "Account Deleted",
 };
 
-const statColors = {
-  total: { light: "#A3BFFA", dark: "#3b4f7a" },
-  active: { light: "#BAEDBD", dark: "#2d5a3e" },
-  inactive: { light: "#FDE68A", dark: "#5a4d2a" },
-  verification_pending: { light: "#FED7AA", dark: "#5a3f2a" },
-  blocked: { light: "#FCA5A5", dark: "#5a2d2d" },
-  verification_rejected: { light: "#E9D5FF", dark: "#4a3566" },
-  account_deleted: { light: "#D1D5DB", dark: "#3a3d42" },
-};
-
-// Maps stat key to auth_status query param value
 const statToAuthStatus = {
   total: "",
   active: "3",
@@ -45,36 +33,22 @@ const sectionConfig = {
   coach: { title: "Coach", color: "#10B981", route: "/coaches" },
 };
 
-const StatCard = ({ label, value, bgcolor, onClick, isDarkMode }) => (
+const StatCard = ({ label, value, statKey, onClick }) => (
   <div
-    className="dashboard-sub-card consultant-stat-card"
-    style={{
-      backgroundColor: bgcolor,
-      boxShadow: "none",
-      cursor: onClick ? "pointer" : "default",
-    }}
+    className={`consultant-stat-card cs-stat-card-${statKey}`}
+    style={{ cursor: onClick ? "pointer" : "default" }}
     onClick={onClick}
   >
-    <span style={{ fontSize: "14px", fontWeight: "600", color: isDarkMode ? "#d1d5db" : "#374151" }}>
-      {label}
-    </span>
-    <span style={{ fontSize: "28px", fontWeight: "700", color: isDarkMode ? "#f0f0f0" : "#111827" }}>
-      {value}
-    </span>
+    <span className="cs-stat-label">{label}</span>
+    <span className="cs-stat-value">{value}</span>
   </div>
 );
 
-const StatsSection = ({ title, color, stats, route, navigate, isDarkMode }) => (
-  <div
-    className="consultant-stats-section"
-    style={{
-      background: isDarkMode ? "rgba(30, 30, 46, 0.65)" : "rgba(255, 255, 255, 0.65)",
-      boxShadow: isDarkMode ? "2px 4px 10px rgba(0, 0, 0, 0.25)" : "2px 4px 10px rgba(0, 0, 0, 0.08)",
-    }}
-  >
+const StatsSection = ({ title, color, stats, route, navigate }) => (
+  <div className="consultant-stats-section">
     <h3
       className="consultant-stats-section-title"
-      style={{ borderLeftColor: color, color: isDarkMode ? "#e0e0e0" : "inherit" }}
+      style={{ borderLeftColor: color }}
     >
       {title}
     </h3>
@@ -84,13 +58,12 @@ const StatsSection = ({ title, color, stats, route, navigate, isDarkMode }) => (
           key={key}
           label={label}
           value={stats?.[key] ?? 0}
-          bgcolor={isDarkMode ? statColors[key].dark : statColors[key].light}
+          statKey={key}
           onClick={
             route
               ? () => navigate(`${route}?status=${statToAuthStatus[key]}`)
               : undefined
           }
-          isDarkMode={isDarkMode}
         />
       ))}
     </div>
@@ -105,13 +78,13 @@ const ConsultantStats = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#aaaaaa" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }
 
   if (error) {
-    return <div style={{ color: isDarkMode ? "#e0e0e0" : "inherit" }}>Error: {error.message}</div>;
+    return <div className="cs-error-text">Error: {error.message}</div>;
   }
 
   const statsData = fetchData?.data;
@@ -119,23 +92,10 @@ const ConsultantStats = () => {
   return (
     <div className="consultant-stats-page">
       <div className="consultant-stats-header">
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => navigate(-1)}
-          startIcon={<ArrowLeft size={18} />}
-          sx={{
-            color: isDarkMode ? "#a0a0b0" : undefined,
-            borderColor: isDarkMode ? "#333350" : undefined,
-            "&:hover": isDarkMode ? {
-              borderColor: "#a0a0b0",
-              backgroundColor: "rgba(255,255,255,0.05)",
-            } : undefined,
-          }}
-        >
-          Back
-        </Button>
-        <h2 style={{ color: isDarkMode ? "#e0e0e0" : "inherit" }}>Consultant Stats</h2>
+        <button className="cs-back-btn" onClick={() => navigate(-1)} title="Back">
+          <ArrowLeft size={18} />
+        </button>
+        <h2 className="cs-page-title">Consultant Stats</h2>
       </div>
 
       <div className="consultant-stats-content">
@@ -147,7 +107,6 @@ const ConsultantStats = () => {
             stats={statsData?.[key]}
             route={config.route}
             navigate={navigate}
-            isDarkMode={isDarkMode}
           />
         ))}
       </div>
