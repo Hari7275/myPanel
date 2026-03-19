@@ -53,4 +53,22 @@
   font-size: 20px;
 }
 
+/* Dark mode */
+body.dark-mode .setting-modal-content {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .close-button {
+  color: var(--text-primary);
+}
+
+body.dark-mode .profile-link h2 {
+  color: var(--text-primary);
+}
+
+body.dark-mode .radio-item label {
+  color: var(--text-primary);
+}
+
  

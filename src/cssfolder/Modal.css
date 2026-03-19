@@ -76,3 +76,18 @@
   justify-content: center;
   margin: 1.25em auto 0;
 }
+
+/* Dark mode */
+body.dark-mode .modal-container,
+body.dark-mode .delete-modal-container {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .deleteHeaderText {
+  color: var(--text-primary);
+}
+
+body.dark-mode .deleteText {
+  color: var(--text-secondary);
+}

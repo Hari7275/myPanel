@@ -57,9 +57,25 @@
 
 .reactCropper_input {
   width: 500px;
-  padding: 0.5rem; 
+  padding: 0.5rem;
   border-radius: 0.5rem;
- 
+
   font-size: 0.875rem;
   text-align: center;
+}
+
+/* Dark mode */
+body.dark-mode .reactCropper_container {
+  color: var(--text-primary);
+}
+
+body.dark-mode .reactCropper_image-box {
+  border-color: var(--border-color);
+  background-color: var(--bg-primary);
+}
+
+body.dark-mode .reactCropper_input {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
 }
