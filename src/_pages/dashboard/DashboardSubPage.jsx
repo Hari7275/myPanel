@@ -252,23 +252,25 @@ const DashboardSubPage = () => {
         </div> ..*/}
         <div className="second-sub-div" style={{ margin: "0px 40px" }}>
           {permissions?.["Dashboard"]?.includes("view_recharge") && (
-            <div className="dashboard-sub-grid">
+            <div className="dashboard-sub-grid dashboard-sub-grid-gap">
               <BasicArea />
-              {/* <UserOverview /> */}
-              <UserOverview />
+              <TrafficConsultant />
             </div>
           )}
-          <div className="dashboard-sub-grid">
-            <TrafficConsultant />
-            <ConsltantOverview />
+          <div className="dashboard-sub-grid dashboard-sub-grid-gap">
+            <div className="dashboard-card-style">
+              <UserOverview />
+            </div>
+            <div className="dashboard-card-style">
+              <ConsltantOverview />
+            </div>
           </div>
-          <div className="dashboard-sub-grid" style={{ marginBottom: "40px" }}>
+          <div className="dashboard-sub-grid dashboard-sub-grid-gap" style={{ marginBottom: "40px" }}>
             <TopActiveConsultants />
-            <RevenueByLocation />
+            <div className="dashboard-card-style">
+              <RevenueByLocation />
+            </div>
           </div>
-          {/* <div className="dashboard-referal-card">
-            <ReferralTracking />
-          </div> */}
         </div>
       </div>
 

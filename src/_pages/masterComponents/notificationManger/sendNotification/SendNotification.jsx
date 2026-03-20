@@ -32,7 +32,7 @@ const NotificationForm = () => {
     title: "",
     notification_type_id: 9,
     message: "",
-    image_url: "",
+    image_url: "https://user-profile-dating.s3.eu-north-1.amazonaws.com/user-promotional/7ab134ff-1b0a-41c8-8e4a-862efb6df2f9-5bed5784-ea16-4a7b-ad3f-cf19a9a82eaa-Dyna.png",
     target_type: "RECHARGED_ATLEAST_ONCE",
     target_filter: {
       user_ids: [],
