@@ -26,7 +26,9 @@
   flex-direction: column;
   align-items: center;
   gap: 16px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
+  transition: opacity 0.3s ease-in-out, background-color 0.3s ease, color 0.3s ease;
+
 }
 
 .menu-btn {
@@ -69,7 +71,27 @@
   font-size: 11px;
 }
 
+/* ─── Sidebar container: holds both panels stacked, clips overflow ─── */
+.sideContainer {
+  position: relative;
+  flex-shrink: 0;
+  height: 100%;
+  overflow: hidden;
+  transition: width 0.35s ease-in-out;
+}
+
+.sideContainer.menu-collapsed {
+  width: 120px;
+}
+
+.sideContainer.menu-expanded {
+  width: 260px;
+}
+
+/* ─── Expanded menu panel ─── */
 #menu {
+  position: absolute;
+  inset: 0;
   width: 260px;
   height: 100%;
   overflow: auto;
@@ -78,15 +100,21 @@
   padding: 16px 12px;
   display: flex;
   flex-direction: column;
-  transform: translateX(-100%);
-  z-index: 10;
   scrollbar-width: none;
-  transition: transform 0.5s ease-in-out, background-color 0.3s ease, color 0.3s ease !important;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out, background-color 0.3s ease, color 0.3s ease;
 }
 
 #menu.visible {
-  transform: translateX(0);
-  z-index: 999999;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Collapsed sidebar panel ─── */
+.sidebar.sidebar-hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 .menu-header {
   display: flex;
@@ -196,6 +224,31 @@ main h1 {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+/* ─── Smooth expand/collapse for dropdown sections ─── */
+.dropdown-collapse {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out;
+}
+
+.dropdown-collapse.dropdown-open {
+  grid-template-rows: 1fr;
+}
+
+.dropdown-collapse-inner {
+  overflow: hidden;
+}
+
+/* ─── Rotating arrow indicator ─── */
+.dropdown-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+}
+
+.dropdown-arrow.open {
+  transform: rotate(-90deg);
 }
 
 .menu-item-child-sub {

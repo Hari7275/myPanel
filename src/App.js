@@ -168,7 +168,7 @@ const Layout = () => {
     {isNavigating && <div className="route-loading-bar" />}
     <Sidebar />
 
-    <div style={{ width: "100%" }} id="main-container">
+    <div style={{ flex: 1, minWidth: 0 }} id="main-container">
       <Navbar className="MuiNavbar" />
 
       <section

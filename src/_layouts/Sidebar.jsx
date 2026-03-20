@@ -14,22 +14,71 @@ import { KeyRound } from "lucide-react";
 import "aos/dist/aos.css";
 import { Link, useLocation } from "react-router-dom";
 
+// ─── Helper: icon from path string or React element ───
+const Icon = ({ src }) => {
+  if (typeof src === "string") {
+    return <img src={src} width="24" height="24" />;
+  }
+  return src;
+};
+
+// ─── Reusable: single menu link (expanded sidebar) ───
+const MenuLink = ({ to, label, icon, isActive }) => (
+  <Link to={to}>
+    <div className={`menu-item ${isActive(to) ? "active" : ""}`}>
+      {icon && <Icon src={icon} />}
+      <span>{label}</span>
+    </div>
+  </Link>
+);
+
+// ─── Reusable: dropdown sub-link (expanded sidebar) ───
+const DropdownLink = ({ to, label, isActive }) => (
+  <Link to={to}>
+    <div className={`menu-item ${isActive(to) ? "active" : ""}`}>
+      <div className="dropdown-item">{label}</div>
+    </div>
+  </Link>
+);
+
+// ─── Reusable: collapsible dropdown section (expanded sidebar) ───
+const DropdownSection = ({ icon, label, isOpen, onToggle, children, isActive }) => (
+  <div className="menu-item-child">
+    <div className="child" onClick={onToggle}>
+      <Icon src={icon} />
+      <span>{label}</span>
+      <span className={`dropdown-arrow ${isOpen ? "open" : ""}`}>⬅️</span>
+    </div>
+    <div className={`dropdown-collapse ${isOpen ? "dropdown-open" : ""}`}>
+      <div className="dropdown-collapse-inner">
+        <div className="menu-item-sub">
+          {children.map(({ to, label: linkLabel }) => (
+            <DropdownLink key={to} to={to} label={linkLabel} isActive={isActive} />
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// ─── Reusable: collapsed sidebar item ───
+const SidebarItem = ({ to, icon, label, isActive }) => (
+  <Link to={to}>
+    <div className={`item ${isActive(to) ? "active" : ""}`}>
+      <Icon src={icon} />
+      <span>{label}</span>
+    </div>
+  </Link>
+);
+
+// ─── Main Component ───
 const Sidebar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState("");
-  const [isPayment, setIsPayment] = useState("");
-  const [isAdmin, setIsAdmin] = useState("");
-  const [isOnboarding, setIsOnboarding] = useState("");
-  const [isMarketingLeads, setIsMarketingLeads] = useState("");
-  const [isNotice, setIsNotice] = useState();
-  const [isNotification, setIsNotifications] = useState();
-  const [isQuickDate, setIsQuickDate] = useState();
-  const [isShowSupport, setIsShowSupport] = useState();
+  const [openDropdowns, setOpenDropdowns] = useState({});
   const menuRef = useRef(null);
   const permissions = usePermissions();
   const location = useLocation();
 
-  // Normalize path and check if it matches current location
   const isActive = (path) => {
     const normalized = path.startsWith("/") ? path : `/${path}`;
     return (
@@ -38,592 +87,254 @@ const Sidebar = () => {
     );
   };
 
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  const paymentDropdown = () => setIsPayment(!isPayment);
-  const adminDropdown = () => setIsAdmin(!isAdmin);
-  const onboardingDropdown = () => setIsOnboarding(!isOnboarding);
-  const marketingLeadsDropdown = () => setIsMarketingLeads(!isMarketingLeads);
-  const noticeDropdown = () => setIsNotice(!isNotice);
-  const notificationDropdown = () => setIsNotifications(!isNotification);
-  const quickDateDropdown = () => setIsQuickDate(!isQuickDate);
-  const supportDropdown = () => setIsShowSupport(!isShowSupport);
+  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
 
-  console.log("permissions by hooks", permissions);
+  const toggleDropdown = (key) =>
+    setOpenDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
+
+  // ─── Expanded menu: dropdown sections config ───
+  const dropdownSections = [
+    {
+      key: "admin",
+      label: "Admin Section",
+      icon: <SupervisorAccountIcon />,
+      visible: !!permissions?.["admin"],
+      links: [
+        { to: "/admin-roles", label: "Roles", perm: permissions?.["admin"]?.includes("view_admin_role") },
+        { to: "/admin-permission", label: "Permission Group", perm: permissions?.["admin"]?.includes("view_admin_permission_group_section") },
+        { to: "/admin-user", label: "Admin User", perm: permissions?.["admin"]?.includes("view_admin_users_section") },
+      ],
+    },
+    {
+      key: "onboarding",
+      label: "Onboarding",
+      icon: <SupervisorAccountIcon />,
+      links: [
+        { to: "/onboarding-assign", label: "Onboarding Assign" },
+        { to: "/action-log", label: "Action log" },
+      ],
+    },
+    {
+      key: "marketingLeads",
+      label: "Marketing Leads",
+      icon: <SupervisorAccountIcon />,
+      links: [
+        { to: "/leads-list", label: "Leads List" },
+        { to: "/marketing-assignee", label: "Assignee List" },
+      ],
+    },
+    {
+      key: "payment",
+      label: "Payments",
+      icon: "/adminPannel_icons/payment.png",
+      links: [
+        { to: "/dating-products", label: "Dating Products" },
+        { to: "/qd-products", label: "Qd Products" },
+        { to: "/feature-list", label: "Features" },
+        { to: "/payment-transactions", label: "Payment Transactions" },
+        { to: "/recharge-plans", label: "Recharge Plans" },
+        { to: "/subscriptions-plans", label: "Subscription Plans" },
+        { to: "/coupon", label: "Coupon" },
+      ],
+    },
+    {
+      key: "datingMeta",
+      label: "Dating Meta Data",
+      icon: <ManageHistoryOutlinedIcon />,
+      links: [
+        { to: "/user-profile-option", label: "Profile Options" },
+        { to: "/prompt-question", label: "Prompt Questions" },
+        { to: "/user-passion", label: "Passion Options" },
+        { to: "/user-desire", label: "User Desire" },
+      ],
+    },
+    {
+      key: "notice",
+      label: "Notice Manager",
+      icon: <ManageHistoryOutlinedIcon />,
+      links: [
+        { to: "/consultant-notice", label: "Notice List" },
+        { to: "/assign-notice", label: "Manage Notice" },
+      ],
+    },
+    {
+      key: "notification",
+      label: "Notification Manager",
+      icon: <ManageHistoryOutlinedIcon />,
+      links: [
+        { to: "/user-notification", label: "User Notification" },
+        { to: "/notification-template", label: "Notification Template" },
+        { to: "/send-notification", label: "Send Notification" },
+      ],
+    },
+    {
+      key: "quickDate",
+      label: "Quick Date",
+      icon: "/adminPannel_icons/QD trips.png",
+      links: [
+        { to: "/qd-trips", label: "QD Trips" },
+        { to: "/qd-location", label: "QD Location" },
+      ],
+    },
+    {
+      key: "support",
+      label: "Support",
+      icon: "/adminPannel_icons/support.png",
+      links: [
+        { to: "/user-support", label: "User Support" },
+        { to: "/consultant-support", label: "Consultant Support" },
+      ],
+    },
+  ];
+
+  // ─── Collapsed sidebar items config ───
+  const sidebarItems = [
+    { to: "/dashboard", label: "Dashboard", icon: <GridViewOutlinedIcon />, visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
+    { to: "/user", label: "Users", icon: <GroupOutlinedIcon />, visible: !!permissions?.["user"] },
+    { to: "/auth-consultant", label: "Consultant", icon: "/adminPannel_icons/Coach.png" },
+    { to: "/astrologer", label: "Astrologer", icon: "/adminPannel_icons/astrologers.png", visible: permissions?.["astrologer"]?.includes("view_astrologer_list") },
+    { to: "/coaches", label: "Coaches", icon: "/adminPannel_icons/Coach.png" },
+    { to: "/listeners", label: "Listeners", icon: <HeadphonesOutlinedIcon /> },
+    { to: "/meta-data", label: "Meta Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["meta_data_section"] },
+    { to: "/order", label: "Orders", icon: <CardGiftcardOutlinedIcon /> },
+    { to: "/gift-history", label: "Gifts", icon: <CardGiftcardOutlinedIcon /> },
+    { to: "/refund-list", label: "Refund List", icon: <CardGiftcardOutlinedIcon /> },
+    { to: "/user-recharge", label: "Recharge List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/razorpay-recharge", label: "Razorpay List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
+    { to: "/onboarding-assign", label: "Onboarding", icon: <KeyRound /> },
+    { to: "/marketing-assignee", label: "Assignee List", icon: <KeyRound /> },
+    { to: "/session", label: "Session", icon: <CardGiftcardOutlinedIcon /> },
+    { to: "/cms-data", label: "Cms Data", icon: <CategoryOutlinedIcon /> },
+    { to: "/message-template", label: "MessageTemplate", icon: <ManageHistoryOutlinedIcon /> },
+  ];
+
+  // ─── Expanded menu: flat links in the middle section ───
+  const expandedTopLinks = [
+    { to: "/dashboard", icon: <GridViewOutlinedIcon />, label: "Dashboard", visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
+    { to: "/user", icon: <GroupOutlinedIcon />, label: "Users", visible: !!permissions?.["user"] },
+    { to: "/untracked-user", icon: <GroupOutlinedIcon />, label: "Guest Device Info" },
+    { to: "/user-device-info", icon: <GroupOutlinedIcon />, label: "User Device Info" },
+    { to: "/consultant-device-info", icon: <DeviceUnknownIcon />, label: "Consultant device info" },
+  ];
+
+  const expandedConsultantLinks = [
+    { to: "/auth-consultant", icon: "/adminPannel_icons/Coach.png", label: "Consultant" },
+    { to: "/coaches", icon: "/adminPannel_icons/Coach.png", label: "Coaches", visible: !!permissions?.["coach"] },
+    { to: "/listeners", icon: <HeadphonesOutlinedIcon />, label: "Listeners", visible: !!permissions?.["listener"] },
+    { to: "/astrologer", icon: "/adminPannel_icons/astrologers.png", label: "Astrologer", visible: !!permissions?.["astrologer"] },
+    { to: "/profile-review", icon: "/adminPannel_icons/Coach.png", label: "Review Request" },
+  ];
+
+  const expandedRechargeLinks = [
+    { to: "/order", icon: <CardGiftcardOutlinedIcon />, label: "Orders" },
+    { to: "/user-recharge", icon: <CardGiftcardOutlinedIcon />, label: "User Recharge List", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/user-recharge-summary", icon: <CardGiftcardOutlinedIcon />, label: "Recharge Summary", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/razorpay-recharge", icon: <CardGiftcardOutlinedIcon />, label: "Razorpay List", visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
+    { to: "/user-subscription", icon: <CardGiftcardOutlinedIcon />, label: "User Subscription List" },
+    { to: "/payable-History", icon: <CardGiftcardOutlinedIcon />, label: "Payable Log", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/payout-History", icon: <CardGiftcardOutlinedIcon />, label: "Payout History", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/gift", icon: <CardGiftcardOutlinedIcon />, label: "Gifts" },
+    { to: "/gift-history", icon: <CardGiftcardOutlinedIcon />, label: "Gift History" },
+    { to: "/refund-list", icon: <CardGiftcardOutlinedIcon />, label: "Refund List" },
+    { to: "/session", icon: <CardGiftcardOutlinedIcon />, label: "Session" },
+  ];
+
+  const expandedBottomLinks = [
+    { to: "/meta-data", icon: <CategoryOutlinedIcon />, label: "Meta Data", visible: !!permissions?.["meta_data_section"] },
+    { to: "/cms-data", icon: <CategoryOutlinedIcon />, label: "Cms Data" },
+    { to: "/message-template", icon: <ManageHistoryOutlinedIcon />, label: "MessageTemplate" },
+    { to: "/blog-count", icon: "/adminPannel_icons/support.png", label: "Blog View Count" },
+    { to: "/action-log", icon: <ManageHistoryOutlinedIcon />, label: "Action log" },
+    { to: "/chat-message", icon: <ManageHistoryOutlinedIcon />, label: "Chat Message" },
+  ];
+
+  // ─── Helper: render a list of flat MenuLinks, filtering by visibility ───
+  const renderLinks = (links) =>
+    links
+      .filter(({ visible }) => visible === undefined || visible)
+      .map(({ to, icon, label }) => (
+        <MenuLink key={to} to={to} icon={icon} label={label} isActive={isActive} />
+      ));
 
   return (
-    <div className="sideContainer">
-      {isMenuOpen ? (
-        <div id="menu" className={isMenuOpen ? "visible" : ""} ref={menuRef}>
-          <div className="menu-header">
-            <div className="menu-btn" onClick={toggleMenu}>
-              <MenuOutlinedIcon />
-            </div>
-          </div>
-
-          <div className="menu-grou">
-            {/* Admin Section */}
-            {permissions?.["admin"] && (
-              <div className="menu-item-child">
-                <div className="child" onClick={adminDropdown}>
-                  <SupervisorAccountIcon />
-                  <span>Admin Section</span>
-                  <span>{isAdmin ? "⬇️" : "⬅️"}</span>
-                </div>
-
-                {isAdmin && (
-                  <div className="menu-item-sub">
-                    {permissions?.["admin"]?.includes("view_admin_role") && (
-                      <Link to="/admin-roles">
-                        <div className={`menu-item ${isActive("/admin-roles") ? "active" : ""}`}>
-                          <div className="dropdown-item">Roles</div>
-                        </div>
-                      </Link>
-                    )}
-                    {permissions?.["admin"]?.includes("view_admin_permission_group_section") && (
-                      <Link to="/admin-permission">
-                        <div className={`menu-item ${isActive("/admin-permission") ? "active" : ""}`}>
-                          <div className="dropdown-item">Permission Group</div>
-                        </div>
-                      </Link>
-                    )}
-                    {permissions?.["admin"]?.includes("view_admin_users_section") && (
-                      <Link to="/admin-user">
-                        <div className={`menu-item ${isActive("/admin-user") ? "active" : ""}`}>
-                          <div className="dropdown-item">Admin User</div>
-                        </div>
-                      </Link>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* Onboarding */}
-            <div className="menu-item-child">
-              <div className="child" onClick={onboardingDropdown}>
-                <SupervisorAccountIcon />
-                <span>Onboarding</span>
-                <span>{isOnboarding ? "⬇️" : "⬅️"}</span>
-              </div>
-
-              {isOnboarding && (
-                <div className="menu-item-sub">
-                  <Link to="/onboarding-assign">
-                    <div className={`menu-item ${isActive("/onboarding-assign") ? "active" : ""}`}>
-                      <div className="dropdown-item">Onboarding Assign</div>
-                    </div>
-                  </Link>
-                  <Link to="/action-log">
-                    <div className={`menu-item ${isActive("/action-log") ? "active" : ""}`}>
-                      <div className="dropdown-item">Action log</div>
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            {/* Marketing Leads */}
-            <div className="menu-item-child">
-              <div className="child" onClick={marketingLeadsDropdown}>
-                <SupervisorAccountIcon />
-                <span>Marketing Leads</span>
-                <span>{isMarketingLeads ? "⬇️" : "⬅️"}</span>
-              </div>
-
-              {isMarketingLeads && (
-                <div className="menu-item-sub">
-                  <Link to="/leads-list">
-                    <div className={`menu-item ${isActive("/leads-list") ? "active" : ""}`}>
-                      <div className="dropdown-item">Leads List</div>
-                    </div>
-                  </Link>
-                  <Link to="/marketing-assignee">
-                    <div className={`menu-item ${isActive("/marketing-assignee") ? "active" : ""}`}>
-                      <div className="dropdown-item">Assignee List</div>
-                    </div>
-                  </Link>
-                </div>
-              )}
-            </div>
-
-            <div>
-              {permissions?.["Dashboard"]?.includes("view_dashboard") && (
-                <Link to="/dashboard">
-                  <div className={`menu-item ${isActive("/dashboard") ? "active" : ""}`}>
-                    <GridViewOutlinedIcon />
-                    <span>Dashboard</span>
-                  </div>
-                </Link>
-              )}
-              {permissions?.["user"] && (
-                <Link to="/user">
-                  <div className={`menu-item ${isActive("/user") ? "active" : ""}`}>
-                    <GroupOutlinedIcon />
-                    <span>Users</span>
-                  </div>
-                </Link>
-              )}
-
-              <Link to="/untracked-user">
-                <div className={`menu-item ${isActive("/untracked-user") ? "active" : ""}`}>
-                  <GroupOutlinedIcon />
-                  <span>Guest Device Info</span>
-                </div>
-              </Link>
-
-              <Link to="/user-device-info">
-                <div className={`menu-item ${isActive("/user-device-info") ? "active" : ""}`}>
-                  <GroupOutlinedIcon />
-                  <span>User Device Info</span>
-                </div>
-              </Link>
-
-              <Link to="/consultant-device-info">
-                <div className={`menu-item ${isActive("/consultant-device-info") ? "active" : ""}`}>
-                  <DeviceUnknownIcon />
-                  <span>Consultant device info</span>
-                </div>
-              </Link>
-            </div>
-
-            {/* Coaches / Listeners / Astrologer */}
-            <div>
-              {permissions?.["coach"] && (
-                <Link to="/coaches">
-                  <div className={`menu-item ${isActive("/coaches") ? "active" : ""}`}>
-                    <img src="/adminPannel_icons/Coach.png" width="24" height="24" />
-                    <span>Coaches</span>
-                  </div>
-                </Link>
-              )}
-              {permissions?.["listener"] && (
-                <Link to="/listeners">
-                  <div className={`menu-item ${isActive("/listeners") ? "active" : ""}`}>
-                    <HeadphonesOutlinedIcon />
-                    <span>Listeners</span>
-                  </div>
-                </Link>
-              )}
-              {permissions?.["astrologer"] && (
-                <Link to="/astrologer">
-                  <div className={`menu-item ${isActive("/astrologer") ? "active" : ""}`}>
-                    <img src="/adminPannel_icons/astrologers.png" width="24" height="24" />
-                    <span>Astrologer</span>
-                  </div>
-                </Link>
-              )}
-              <Link to="/profile-review">
-                <div className={`menu-item ${isActive("/profile-review") ? "active" : ""}`}>
-                  <img src="/adminPannel_icons/Coach.png" width="24" height="24" />
-                  <span>Review Request</span>
-                </div>
-              </Link>
-            </div>
-          </div>
-
-          {/* Recharge / Subscription / Gifts */}
-          <div className="menu-group">
-            {permissions?.["user_recharge_list"]?.includes("view_recharge_list") && (
-              <Link to="/user-recharge">
-                <div className={`menu-item ${isActive("/user-recharge") ? "active" : ""}`}>
-                  <CardGiftcardOutlinedIcon />
-                  <span>User Recharge List</span>
-                </div>
-              </Link>
-            )}
-
-            {permissions?.["user_recharge_list"]?.includes("view_recharge_list") && (
-              <Link to="/user-recharge-summary">
-                <div className={`menu-item ${isActive("/user-recharge-summary") ? "active" : ""}`}>
-                  <CardGiftcardOutlinedIcon />
-                  <span>Recharge Summary</span>
-                </div>
-              </Link>
-            )}
-
-            <Link to="/user-subscription">
-              <div className={`menu-item ${isActive("/user-subscription") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>User Subscription List</span>
-              </div>
-            </Link>
-
-            {permissions?.["user_recharge_list"]?.includes("view_recharge_list") && (
-              <>
-                <Link to="/payable-History">
-                  <div className={`menu-item ${isActive("/payable-History") ? "active" : ""}`}>
-                    <CardGiftcardOutlinedIcon />
-                    <span>Payable Log</span>
-                  </div>
-                </Link>
-                <Link to="/payout-History">
-                  <div className={`menu-item ${isActive("/payout-History") ? "active" : ""}`}>
-                    <CardGiftcardOutlinedIcon />
-                    <span>Payout History</span>
-                  </div>
-                </Link>
-              </>
-            )}
-
-            <Link to="/gift">
-              <div className={`menu-item ${isActive("/gift") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Gifts</span>
-              </div>
-            </Link>
-
-            <Link to="/refund-list">
-              <div className={`menu-item ${isActive("/refund-list") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Refund List</span>
-              </div>
-            </Link>
-          </div>
-
-          {/* Payments */}
-          <div className="menu-item-child">
-            <div className="child" onClick={paymentDropdown}>
-              <img src="/adminPannel_icons/payment.png" width="24" height="24" />
-              <span>Payments</span>
-              <span>{isPayment ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isPayment && (
-              <div className="menu-item-sub">
-                <Link to="/dating-products">
-                  <div className={`menu-item ${isActive("/dating-products") ? "active" : ""}`}>
-                    <div className="dropdown-item">Dating Products</div>
-                  </div>
-                </Link>
-                <Link to="/qd-products">
-                  <div className={`menu-item ${isActive("/qd-products") ? "active" : ""}`}>
-                    <div className="dropdown-item">Qd Products</div>
-                  </div>
-                </Link>
-                <Link to="/feature-list">
-                  <div className={`menu-item ${isActive("/feature-list") ? "active" : ""}`}>
-                    <div className="dropdown-item">Features</div>
-                  </div>
-                </Link>
-                <Link to="/payment-transactions">
-                  <div className={`menu-item ${isActive("/payment-transactions") ? "active" : ""}`}>
-                    <div className="dropdown-item">Payment Transactions</div>
-                  </div>
-                </Link>
-                <Link to="/recharge-plans">
-                  <div className={`menu-item ${isActive("/recharge-plans") ? "active" : ""}`}>
-                    <div className="dropdown-item">Recharge Plans</div>
-                  </div>
-                </Link>
-                <Link to="/subscriptions-plans">
-                  <div className={`menu-item ${isActive("/subscriptions-plans") ? "active" : ""}`}>
-                    <div className="dropdown-item">Subscription Plans</div>
-                  </div>
-                </Link>
-                <Link to="/coupon">
-                  <div className={`menu-item ${isActive("/coupon") ? "active" : ""}`}>
-                    <div className="dropdown-item">Coupon</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Dating Meta Data */}
-          <div className="menu-item-child">
-            <div className="child" onClick={toggleDropdown}>
-              <ManageHistoryOutlinedIcon />
-              <span>Dating Meta Data</span>
-              <span>{isDropdownOpen ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isDropdownOpen && (
-              <div className="menu-item-sub">
-                <Link to="/user-profile-option">
-                  <div className={`menu-item ${isActive("/user-profile-option") ? "active" : ""}`}>
-                    <div className="dropdown-item">Profile Options</div>
-                  </div>
-                </Link>
-                <Link to="/prompt-question">
-                  <div className={`menu-item ${isActive("/prompt-question") ? "active" : ""}`}>
-                    <div className="dropdown-item">Prompt Questions</div>
-                  </div>
-                </Link>
-                <Link to="/user-passion">
-                  <div className={`menu-item ${isActive("/user-passion") ? "active" : ""}`}>
-                    <div className="dropdown-item">Passion Options</div>
-                  </div>
-                </Link>
-                <Link to="/user-desire">
-                  <div className={`menu-item ${isActive("/user-desire") ? "active" : ""}`}>
-                    <div className="dropdown-item">User Desire</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Notice Manager */}
-          <div className="menu-item-child">
-            <div className="child" onClick={noticeDropdown}>
-              <ManageHistoryOutlinedIcon />
-              <span>Notice Manager</span>
-              <span>{isNotice ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isNotice && (
-              <div className="menu-item-sub">
-                <Link to="/consultant-notice">
-                  <div className={`menu-item ${isActive("/consultant-notice") ? "active" : ""}`}>
-                    <div className="dropdown-item">Notice List</div>
-                  </div>
-                </Link>
-                <Link to="/assign-notice">
-                  <div className={`menu-item ${isActive("/assign-notice") ? "active" : ""}`}>
-                    <div className="dropdown-item">Manage Notice</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Notification Manager */}
-          <div className="menu-item-child">
-            <div className="child" onClick={notificationDropdown}>
-              <ManageHistoryOutlinedIcon />
-              <span>Notification Manager</span>
-              <span>{isNotification ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isNotification && (
-              <div className="menu-item-sub">
-                <Link to="/user-notification">
-                  <div className={`menu-item ${isActive("/user-notification") ? "active" : ""}`}>
-                    <div className="dropdown-item">User Notification</div>
-                  </div>
-                </Link>
-                <Link to="/notification-template">
-                  <div className={`menu-item ${isActive("/notification-template") ? "active" : ""}`}>
-                    <div className="dropdown-item">Notification Template</div>
-                  </div>
-                </Link>
-                <Link to="/send-notification">
-                  <div className={`menu-item ${isActive("/send-notification") ? "active" : ""}`}>
-                    <div className="dropdown-item">Send Notification</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Quick Date */}
-          <div className="menu-item-child">
-            <div className="child" onClick={quickDateDropdown}>
-              <img src="/adminPannel_icons/QD trips.png" width="24" height="24" />
-              <span>Quick Date</span>
-              <span>{isQuickDate ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isQuickDate && (
-              <div className="menu-item-sub">
-                <Link to="/qd-trips">
-                  <div className={`menu-item ${isActive("/qd-trips") ? "active" : ""}`}>
-                    <img src="/adminPannel_icons/QD trips.png" width="24" height="24" />
-                    <div className="dropdown-item">QD Trips</div>
-                  </div>
-                </Link>
-                <Link to="/qd-location">
-                  <div className={`menu-item ${isActive("/qd-location") ? "active" : ""}`}>
-                    <img src="/adminPannel_icons/QD_location.png" width="24" height="24" />
-                    <div className="dropdown-item">QD Location</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Support */}
-          <div className="menu-item-child">
-            <div className="child" onClick={supportDropdown}>
-              <img src="/adminPannel_icons/support.png" width="24" height="24" />
-              <span>Support</span>
-              <span>{isShowSupport ? "⬇️" : "⬅️"}</span>
-            </div>
-
-            {isShowSupport && (
-              <div className="menu-item-sub">
-                <Link to="/user-support">
-                  <div className={`menu-item ${isActive("/user-support") ? "active" : ""}`}>
-                    <div className="dropdown-item">User Support</div>
-                  </div>
-                </Link>
-                <Link to="/consultant-support">
-                  <div className={`menu-item ${isActive("/consultant-support") ? "active" : ""}`}>
-                    <div className="dropdown-item">Consultant Support</div>
-                  </div>
-                </Link>
-              </div>
-            )}
-          </div>
-
-          <div className="menu-group">
-            <Link to="/blog-count">
-              <div className={`menu-item ${isActive("/blog-count") ? "active" : ""}`}>
-                <img src="/adminPannel_icons/support.png" width="24" height="24" />
-                <span>Blog View Count</span>
-              </div>
-            </Link>
-
-            <Link to="/action-log">
-              <div className={`menu-item ${isActive("/action-log") ? "active" : ""}`}>
-                <ManageHistoryOutlinedIcon />
-                <span>Action log</span>
-              </div>
-            </Link>
-
-            <Link to="/chat-message">
-              <div className={`menu-item ${isActive("/chat-message") ? "active" : ""}`}>
-                <ManageHistoryOutlinedIcon />
-                <span>Chat Message</span>
-              </div>
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <aside className="sidebar">
+    <div className={`sideContainer ${isMenuOpen ? "menu-expanded" : "menu-collapsed"}`}>
+      {/* Expanded menu — always in DOM, slides in/out via CSS */}
+      <div id="menu" className={isMenuOpen ? "visible" : ""} ref={menuRef}>
+        <div className="menu-header">
           <div className="menu-btn" onClick={toggleMenu}>
             <MenuOutlinedIcon />
           </div>
+        </div>
 
-          <div className="sidebar-items">
-            {permissions?.["Dashboard"]?.includes("view_dashboard") && (
-              <Link to="/dashboard">
-                <div className={`item ${isActive("/dashboard") ? "active" : ""}`}>
-                  <span className="icon"><GridViewOutlinedIcon /></span>
-                  <span>Dashboard</span>
-                </div>
-              </Link>
-            )}
-            {permissions?.["user"] && (
-              <Link to="/user">
-                <div className={`item ${isActive("/user") ? "active" : ""}`}>
-                  <GroupOutlinedIcon />
-                  <span>Users</span>
-                </div>
-              </Link>
-            )}
-            <Link to="/auth-consultant">
-              <div className={`item ${isActive("/auth-consultant") ? "active" : ""}`}>
-                <img src="/adminPannel_icons/Coach.png" width="24" height="24" />
-                <span>Consultant</span>
-              </div>
-            </Link>
-            {permissions?.["astrologer"]?.includes("view_astrologer_list") && (
-              <Link to="/astrologer">
-                <div className={`item ${isActive("/astrologer") ? "active" : ""}`}>
-                  <img src="/adminPannel_icons/astrologers.png" width="24" height="24" />
-                  <span>Astrologer</span>
-                </div>
-              </Link>
-            )}
-            <Link to="/coaches">
-              <div className={`item ${isActive("/coaches") ? "active" : ""}`}>
-                <img src="/adminPannel_icons/Coach.png" width="24" height="24" />
-                <span>Coaches</span>
-              </div>
-            </Link>
+        <div className="menu-grou">
+          {/* Dropdown sections: Admin, Onboarding, Marketing Leads */}
+          {dropdownSections.slice(0, 3).map((section) => {
+            if (section.visible === false) return null;
+            const visibleLinks = section.links.filter(
+              ({ perm }) => perm === undefined || perm
+            );
+            if (visibleLinks.length === 0) return null;
+            return (
+              <DropdownSection
+                key={section.key}
+                icon={section.icon}
+                label={section.label}
+                isOpen={!!openDropdowns[section.key]}
+                onToggle={() => toggleDropdown(section.key)}
+                isActive={isActive}
+                children={visibleLinks}
+              />
+            );
+          })}
 
-            <Link to="/listeners">
-              <div className={`item ${isActive("/listeners") ? "active" : ""}`}>
-                <HeadphonesOutlinedIcon />
-                <span>Listeners</span>
-              </div>
-            </Link>
+          {/* Dashboard, Users, Device Info */}
+          <div>{renderLinks(expandedTopLinks)}</div>
 
-            {permissions?.["meta_data_section"] && (
-              <Link to="/meta-data">
-                <div className={`item ${isActive("/meta-data") ? "active" : ""}`}>
-                  <CategoryOutlinedIcon />
-                  <span>Meta Data</span>
-                </div>
-              </Link>
-            )}
+          {/* Coaches, Listeners, Astrologer */}
+          <div>{renderLinks(expandedConsultantLinks)}</div>
+        </div>
 
-            <Link to="/order">
-              <div className={`item ${isActive("/order") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Orders</span>
-              </div>
-            </Link>
+        {/* Recharge / Subscription / Gifts */}
+        <div className="menu-group">{renderLinks(expandedRechargeLinks)}</div>
 
-            <Link to="/gift-history">
-              <div className={`item ${isActive("/gift-history") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Gifts</span>
-              </div>
-            </Link>
+        {/* Remaining dropdown sections: Payments, Dating Meta, Notice, Notification, Quick Date, Support */}
+        {dropdownSections.slice(3).map((section) => {
+          if (section.visible === false) return null;
+          const visibleLinks = section.links.filter(
+            ({ perm }) => perm === undefined || perm
+          );
+          if (visibleLinks.length === 0) return null;
+          return (
+            <DropdownSection
+              key={section.key}
+              icon={section.icon}
+              label={section.label}
+              isOpen={!!openDropdowns[section.key]}
+              onToggle={() => toggleDropdown(section.key)}
+              isActive={isActive}
+              children={visibleLinks}
+            />
+          );
+        })}
 
-            <Link to="/refund-list">
-              <div className={`item ${isActive("/refund-list") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Refund List</span>
-              </div>
-            </Link>
+        {/* Bottom links */}
+        <div className="menu-group">{renderLinks(expandedBottomLinks)}</div>
+      </div>
 
-            {permissions?.["user_recharge_list"]?.includes("view_recharge_list") && (
-              <Link to="/user-recharge">
-                <div className={`item ${isActive("/user-recharge") ? "active" : ""}`}>
-                  <CardGiftcardOutlinedIcon />
-                  <span>Recharge List</span>
-                </div>
-              </Link>
-            )}
-            {permissions?.["razorpay_list"]?.includes("view_razorpay_list") && (
-              <Link to="/razorpay-recharge">
-                <div className={`item ${isActive("/razorpay-recharge") ? "active" : ""}`}>
-                  <CardGiftcardOutlinedIcon />
-                  <span>Razorpay List</span>
-                </div>
-              </Link>
-            )}
+      {/* Collapsed sidebar — hidden when menu is open */}
+      <aside className={`sidebar ${isMenuOpen ? "sidebar-hidden" : ""}`}>
+        <div className="menu-btn" onClick={toggleMenu}>
+          <MenuOutlinedIcon />
+        </div>
 
-            <Link to="/onboarding-assign">
-              <div className={`item ${isActive("/onboarding-assign") ? "active" : ""}`}>
-                <KeyRound />
-                <span>Onboarding</span>
-              </div>
-            </Link>
-            <Link to="/marketing-assignee">
-              <div className={`item ${isActive("/marketing-assignee") ? "active" : ""}`}>
-                <KeyRound />
-                <span>Assignee List</span>
-              </div>
-            </Link>
-
-            <Link to="/session">
-              <div className={`item ${isActive("/session") ? "active" : ""}`}>
-                <CardGiftcardOutlinedIcon />
-                <span>Session</span>
-              </div>
-            </Link>
-
-            <Link to="/cms-data">
-              <div className={`item ${isActive("/cms-data") ? "active" : ""}`}>
-                <CategoryOutlinedIcon />
-                <span>Cms Data</span>
-              </div>
-            </Link>
-
-            <Link to="/message-template">
-              <div className={`item ${isActive("/message-template") ? "active" : ""}`}>
-                <ManageHistoryOutlinedIcon />
-                <span>MessageTemplate</span>
-              </div>
-            </Link>
-          </div>
-        </aside>
-      )}
+        <div className="sidebar-items">
+          {sidebarItems
+            .filter(({ visible }) => visible === undefined || visible)
+            .map(({ to, icon, label }) => (
+              <SidebarItem key={to} to={to} icon={icon} label={label} isActive={isActive} />
+            ))}
+        </div>
+      </aside>
     </div>
   );
 };
