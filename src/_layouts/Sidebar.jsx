@@ -79,6 +79,8 @@ const Sidebar = () => {
   const permissions = usePermissions();
   const location = useLocation();
 
+  console.log("Admin Permissions:", permissions);
+
   const isActive = (path) => {
     const normalized = path.startsWith("/") ? path : `/${path}`;
     return (
@@ -109,8 +111,9 @@ const Sidebar = () => {
       key: "onboarding",
       label: "Onboarding",
       icon: <SupervisorAccountIcon />,
+      visible: !!permissions?.["onboarding"],
       links: [
-        { to: "/onboarding-assign", label: "Onboarding Assign" },
+        { to: "/onboarding-assign", label: "Onboarding Assign", perm: permissions?.["onboarding"]?.includes("onboarding_assign") },
         { to: "/action-log", label: "Action log" },
       ],
     },
@@ -118,6 +121,7 @@ const Sidebar = () => {
       key: "marketingLeads",
       label: "Marketing Leads",
       icon: <SupervisorAccountIcon />,
+      visible: !!permissions?.["marketing_leads"],
       links: [
         { to: "/leads-list", label: "Leads List" },
         { to: "/marketing-assignee", label: "Assignee List" },
@@ -127,6 +131,7 @@ const Sidebar = () => {
       key: "payment",
       label: "Payments",
       icon: "/adminPannel_icons/payment.png",
+      visible: !!permissions?.["payment"],
       links: [
         { to: "/dating-products", label: "Dating Products" },
         { to: "/qd-products", label: "Qd Products" },
@@ -141,6 +146,7 @@ const Sidebar = () => {
       key: "datingMeta",
       label: "Dating Meta Data",
       icon: <ManageHistoryOutlinedIcon />,
+      visible: !!permissions?.["dating_meta"],
       links: [
         { to: "/user-profile-option", label: "Profile Options" },
         { to: "/prompt-question", label: "Prompt Questions" },
@@ -152,6 +158,7 @@ const Sidebar = () => {
       key: "notice",
       label: "Notice Manager",
       icon: <ManageHistoryOutlinedIcon />,
+      visible: !!permissions?.["notice"],
       links: [
         { to: "/consultant-notice", label: "Notice List" },
         { to: "/assign-notice", label: "Manage Notice" },
@@ -161,6 +168,7 @@ const Sidebar = () => {
       key: "notification",
       label: "Notification Manager",
       icon: <ManageHistoryOutlinedIcon />,
+      visible: !!permissions?.["notification"],
       links: [
         { to: "/user-notification", label: "User Notification" },
         { to: "/notification-template", label: "Notification Template" },
@@ -171,6 +179,7 @@ const Sidebar = () => {
       key: "quickDate",
       label: "Quick Date",
       icon: "/adminPannel_icons/QD trips.png",
+      visible: !!permissions?.["quick_date"],
       links: [
         { to: "/qd-trips", label: "QD Trips" },
         { to: "/qd-location", label: "QD Location" },
@@ -180,6 +189,7 @@ const Sidebar = () => {
       key: "support",
       label: "Support",
       icon: "/adminPannel_icons/support.png",
+      visible: !!permissions?.["support"],
       links: [
         { to: "/user-support", label: "User Support" },
         { to: "/consultant-support", label: "Consultant Support" },
@@ -191,67 +201,67 @@ const Sidebar = () => {
   const sidebarItems = [
     { to: "/dashboard", label: "Dashboard", icon: <GridViewOutlinedIcon />, visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
     { to: "/user", label: "Users", icon: <GroupOutlinedIcon />, visible: !!permissions?.["user"] },
-    { to: "/auth-consultant", label: "Consultant", icon: "/adminPannel_icons/Coach.png" },
+    { to: "/auth-consultant", label: "Consultant", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"] },
     { to: "/astrologer", label: "Astrologer", icon: "/adminPannel_icons/astrologers.png", visible: permissions?.["astrologer"]?.includes("view_astrologer_list") },
-    { to: "/coaches", label: "Coaches", icon: "/adminPannel_icons/Coach.png" },
-    { to: "/listeners", label: "Listeners", icon: <HeadphonesOutlinedIcon /> },
+    { to: "/coaches", label: "Coaches", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"] },
+    { to: "/listeners", label: "Listeners", icon: <HeadphonesOutlinedIcon />, visible: !!permissions?.["listener"] },
     { to: "/meta-data", label: "Meta Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["meta_data_section"] },
-    { to: "/order", label: "Orders", icon: <CardGiftcardOutlinedIcon /> },
-    { to: "/gift-history", label: "Gifts", icon: <CardGiftcardOutlinedIcon /> },
-    { to: "/refund-list", label: "Refund List", icon: <CardGiftcardOutlinedIcon /> },
+    { to: "/order", label: "Orders", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
+    { to: "/gift-history", label: "Gifts", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
+    { to: "/refund-list", label: "Refund List", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["payment"] },
     { to: "/user-recharge", label: "Recharge List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
     { to: "/razorpay-recharge", label: "Razorpay List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
-    { to: "/onboarding-assign", label: "Onboarding", icon: <KeyRound /> },
-    { to: "/marketing-assignee", label: "Assignee List", icon: <KeyRound /> },
-    { to: "/session", label: "Session", icon: <CardGiftcardOutlinedIcon /> },
-    { to: "/cms-data", label: "Cms Data", icon: <CategoryOutlinedIcon /> },
-    { to: "/message-template", label: "MessageTemplate", icon: <ManageHistoryOutlinedIcon /> },
+    { to: "/onboarding-assign", label: "Onboarding", icon: <KeyRound />, visible: !!permissions?.["onboarding"] },
+    { to: "/marketing-assignee", label: "Assignee List", icon: <KeyRound />, visible: !!permissions?.["marketing_leads"] },
+    { to: "/session", label: "Session", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
+    { to: "/cms-data", label: "Cms Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["cms_data"] },
+    { to: "/message-template", label: "MessageTemplate", icon: <ManageHistoryOutlinedIcon />, visible: !!permissions?.["notification"] },
   ];
 
   // ─── Expanded menu: flat links in the middle section ───
   const expandedTopLinks = [
     { to: "/dashboard", icon: <GridViewOutlinedIcon />, label: "Dashboard", visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
     { to: "/user", icon: <GroupOutlinedIcon />, label: "Users", visible: !!permissions?.["user"] },
-    { to: "/untracked-user", icon: <GroupOutlinedIcon />, label: "Guest Device Info" },
-    { to: "/user-device-info", icon: <GroupOutlinedIcon />, label: "User Device Info" },
-    { to: "/consultant-device-info", icon: <DeviceUnknownIcon />, label: "Consultant device info" },
+    { to: "/untracked-user", icon: <GroupOutlinedIcon />, label: "Guest Device Info", visible: !!permissions?.["user"] },
+    { to: "/user-device-info", icon: <GroupOutlinedIcon />, label: "User Device Info", visible: !!permissions?.["user"] },
+    { to: "/consultant-device-info", icon: <DeviceUnknownIcon />, label: "Consultant device info", visible: !!permissions?.["coach"] },
   ];
 
   const expandedConsultantLinks = [
-    { to: "/auth-consultant", icon: "/adminPannel_icons/Coach.png", label: "Consultant" },
+    { to: "/auth-consultant", icon: "/adminPannel_icons/Coach.png", label: "Consultant", visible: !!permissions?.["coach"] },
     { to: "/coaches", icon: "/adminPannel_icons/Coach.png", label: "Coaches", visible: !!permissions?.["coach"] },
     { to: "/listeners", icon: <HeadphonesOutlinedIcon />, label: "Listeners", visible: !!permissions?.["listener"] },
     { to: "/astrologer", icon: "/adminPannel_icons/astrologers.png", label: "Astrologer", visible: !!permissions?.["astrologer"] },
-    { to: "/profile-review", icon: "/adminPannel_icons/Coach.png", label: "Review Request" },
+    { to: "/profile-review", icon: "/adminPannel_icons/Coach.png", label: "Review Request", visible: !!permissions?.["coach"] || !!permissions?.["listener"] || !!permissions?.["astrologer"] },
   ];
 
   const expandedRechargeLinks = [
-    { to: "/order", icon: <CardGiftcardOutlinedIcon />, label: "Orders" },
+    { to: "/order", icon: <CardGiftcardOutlinedIcon />, label: "Orders", visible: !!permissions?.["orders"] },
     { to: "/user-recharge", icon: <CardGiftcardOutlinedIcon />, label: "User Recharge List", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
     { to: "/user-recharge-summary", icon: <CardGiftcardOutlinedIcon />, label: "Recharge Summary", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
     { to: "/razorpay-recharge", icon: <CardGiftcardOutlinedIcon />, label: "Razorpay List", visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
-    { to: "/user-subscription", icon: <CardGiftcardOutlinedIcon />, label: "User Subscription List" },
+    { to: "/user-subscription", icon: <CardGiftcardOutlinedIcon />, label: "User Subscription List", visible: !!permissions?.["payment"] },
     { to: "/payable-History", icon: <CardGiftcardOutlinedIcon />, label: "Payable Log", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
     { to: "/payout-History", icon: <CardGiftcardOutlinedIcon />, label: "Payout History", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
-    { to: "/gift", icon: <CardGiftcardOutlinedIcon />, label: "Gifts" },
-    { to: "/gift-history", icon: <CardGiftcardOutlinedIcon />, label: "Gift History" },
-    { to: "/refund-list", icon: <CardGiftcardOutlinedIcon />, label: "Refund List" },
-    { to: "/session", icon: <CardGiftcardOutlinedIcon />, label: "Session" },
+    { to: "/gift", icon: <CardGiftcardOutlinedIcon />, label: "Gifts", visible: !!permissions?.["orders"] },
+    { to: "/gift-history", icon: <CardGiftcardOutlinedIcon />, label: "Gift History", visible: !!permissions?.["orders"] },
+    { to: "/refund-list", icon: <CardGiftcardOutlinedIcon />, label: "Refund List", visible: !!permissions?.["payment"] },
+    { to: "/session", icon: <CardGiftcardOutlinedIcon />, label: "Session", visible: !!permissions?.["orders"] },
   ];
 
   const expandedBottomLinks = [
     { to: "/meta-data", icon: <CategoryOutlinedIcon />, label: "Meta Data", visible: !!permissions?.["meta_data_section"] },
-    { to: "/cms-data", icon: <CategoryOutlinedIcon />, label: "Cms Data" },
-    { to: "/message-template", icon: <ManageHistoryOutlinedIcon />, label: "MessageTemplate" },
-    { to: "/blog-count", icon: "/adminPannel_icons/support.png", label: "Blog View Count" },
-    { to: "/action-log", icon: <ManageHistoryOutlinedIcon />, label: "Action log" },
-    { to: "/chat-message", icon: <ManageHistoryOutlinedIcon />, label: "Chat Message" },
+    { to: "/cms-data", icon: <CategoryOutlinedIcon />, label: "Cms Data", visible: !!permissions?.["cms_data"] },
+    { to: "/message-template", icon: <ManageHistoryOutlinedIcon />, label: "MessageTemplate", visible: !!permissions?.["notification"] },
+    { to: "/blog-count", icon: "/adminPannel_icons/support.png", label: "Blog View Count", visible: !!permissions?.["cms_data"] },
+    { to: "/action-log", icon: <ManageHistoryOutlinedIcon />, label: "Action log", visible: !!permissions?.["admin"] },
+    { to: "/chat-message", icon: <ManageHistoryOutlinedIcon />, label: "Chat Message", visible: !!permissions?.["notification"] },
   ];
 
   // ─── Helper: render a list of flat MenuLinks, filtering by visibility ───
   const renderLinks = (links) =>
     links
-      .filter(({ visible }) => visible === undefined || visible)
+      .filter(({ visible }) => visible)
       .map(({ to, icon, label }) => (
         <MenuLink key={to} to={to} icon={icon} label={label} isActive={isActive} />
       ));
@@ -329,7 +339,7 @@ const Sidebar = () => {
 
         <div className="sidebar-items">
           {sidebarItems
-            .filter(({ visible }) => visible === undefined || visible)
+            .filter(({ visible }) => visible)
             .map(({ to, icon, label }) => (
               <SidebarItem key={to} to={to} icon={icon} label={label} isActive={isActive} />
             ))}
