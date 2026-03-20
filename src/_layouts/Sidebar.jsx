@@ -10,7 +10,7 @@ import CardGiftcardOutlinedIcon from "@mui/icons-material/CardGiftcardOutlined";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import DeviceUnknownIcon from "@mui/icons-material/DeviceUnknown";
 import usePermissions from "../_components/reuseComponents/permission/EmpPermission";
-import { KeyRound } from "lucide-react";
+import { KeyRound, ChevronDown } from "lucide-react";
 import "aos/dist/aos.css";
 import { Link, useLocation } from "react-router-dom";
 
@@ -47,7 +47,7 @@ const DropdownSection = ({ icon, label, isOpen, onToggle, children, isActive }) 
     <div className="child" onClick={onToggle}>
       <Icon src={icon} />
       <span>{label}</span>
-      <span className={`dropdown-arrow ${isOpen ? "open" : ""}`}>⬅️</span>
+      <ChevronDown size={18} className={`dropdown-arrow ${isOpen ? "open" : ""}`} />
     </div>
     <div className={`dropdown-collapse ${isOpen ? "dropdown-open" : ""}`}>
       <div className="dropdown-collapse-inner">

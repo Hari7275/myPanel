@@ -243,12 +243,13 @@ main h1 {
 
 /* ─── Rotating arrow indicator ─── */
 .dropdown-arrow {
-  display: inline-block;
+  flex-shrink: 0;
+  transform: rotate(-90deg);
   transition: transform 0.3s ease-in-out;
 }
 
 .dropdown-arrow.open {
-  transform: rotate(-90deg);
+  transform: rotate(0deg);
 }
 
 .menu-item-child-sub {
