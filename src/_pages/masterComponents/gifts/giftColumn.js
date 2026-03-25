@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 
 export const GIFTCOLUMN = [
@@ -81,21 +81,30 @@ export const PARTICULARGIFTPRICECOLUMN = [
 const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.gift_meta_data?.userData.name;
   const dispatch = useDispatch();
+  const role = useSelector((state) => state?.auth?.role);
+  const canNavigate = role === "superadmin" || role === "admin";
+
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
   };
+
+  const content = (
+    <span className={canNavigate ? "orderId-color" : ""} style={{ cursor: canNavigate ? "pointer" : "default" }}>
+      {userName} ({value})
+    </span>
+  );
+
+  if (!canNavigate) return content;
+
   return (
     <Link
-      // to="/users_Profile"
       to={`/user/${value}`}
       target="_blank"
       rel="noopener noreferrer"
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >
-      <span className="orderId-color" style={{ cursor: "pointer" }}>
-        {userName} ({value})
-      </span>
+      {content}
     </Link>
   );
 };
@@ -105,6 +114,8 @@ const ConsultantNavigationCell = ({ value, row }) => {
     row?.original?.consultant_details?.consultant_first_name;
   const consultantType = row?.original?.gift?.consultant_type;
   const foreigner = row?.original?.description?.is_consultant_foreigner;
+  const role = useSelector((state) => state?.auth?.role);
+  const canNavigate = role === "superadmin" || role === "admin";
 
   const navigationRoute = {
     1: `/astrologer/${value}`,
@@ -113,9 +124,24 @@ const ConsultantNavigationCell = ({ value, row }) => {
   };
 
   const baseRoute = navigationRoute[consultantType] || "";
-
-  // Add ?type=91 only if NOT foreigner
   const route = !foreigner ? `${baseRoute}?type=91` : baseRoute;
+
+  const content = (
+    <span
+      style={{
+        cursor: canNavigate ? "pointer" : "default",
+        color: foreigner ? "#1889beff" : "#be5b18ff",
+        fontStyle: foreigner ? "italic" : "normal",
+      }}
+    >
+      {consultantName} ({value})
+      <span style={{ color: "#187cbeff" }}>
+        ({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
+      </span>
+    </span>
+  );
+
+  if (!canNavigate) return content;
 
   return (
     <Link
@@ -124,18 +150,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
       rel="noopener noreferrer"
       style={{ textDecoration: "none" }}
     >
-      <span
-        style={{
-          cursor: "pointer",
-          color: foreigner ? "#1889beff" : "#be5b18ff",
-          fontStyle: foreigner ? "italic" : "normal",
-        }}
-      >
-        {consultantName} ({value})
-        <span style={{ color: "#187cbeff" }}>
-          ({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
-        </span>
-      </span>
+      {content}
     </Link>
   );
 };

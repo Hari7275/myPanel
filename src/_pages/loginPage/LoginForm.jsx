@@ -4,6 +4,7 @@ import "./loginFrom.css";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../_store/slices/authSlice";
 import { useCreateAdminLoginMutation } from "../../_store/api";
+import { getDefaultRoute } from "./permissions";
 import toast from "react-hot-toast";
 import { Eye, EyeOff, Mail, Lock, Shield } from "lucide-react";
 const LoginForm = () => {
@@ -14,11 +15,11 @@ const LoginForm = () => {
   const dispatch = useDispatch();
 
   const [createLogin, { isLoading }] = useCreateAdminLoginMutation();
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const { isAuthenticated, permissions: storedPermissions } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (isAuthenticated) navigate("/user", { replace: true });
-  }, [isAuthenticated, navigate]);
+    if (isAuthenticated) navigate(getDefaultRoute(storedPermissions), { replace: true });
+  }, [isAuthenticated, navigate, storedPermissions]);
 
   const handleLogin = async () => {
     if (!formData.email || !formData.password) {
@@ -44,7 +45,7 @@ const LoginForm = () => {
           permissions: permissionsByGroup,
           prod,
         }));
-        navigate("/dashboard");
+        navigate(getDefaultRoute(permissionsByGroup));
       } else {
         toast.error(response?.message || "Login failed");
       }

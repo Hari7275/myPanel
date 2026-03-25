@@ -187,69 +187,80 @@ const OrderLists = () => {
     toast.success("All filters cleared");
   };
 
+  const hasAnyOrderAction =
+    permissions?.["orders"]?.includes("monitor_order") ||
+    permissions?.["orders"]?.includes("complete_order") ||
+    permissions?.["orders"]?.includes("refund_order");
+
   const columns = useMemo(
     () => [
       ...COLUMNORDER,
-      {
-        Header: () => <div className="actions-header">Actions</div>,
-        id: "actions",
-        Cell: ({ row }) => (
-          <>
-            <div className="actions-cell">
-              {/* Join Call Button - Show for running calls (status == 3) */}
-              {row.original.status == 3 &&
-                permissions?.["orders"]?.includes("monitor_order") &&
-                row.original.consultant_id !== 1 && (
-                  <span
-                    // title="Join Call"
-                    className="joinIcon secondIcon"
-                    style={{
-                      height: "35px",
-                      width: "35px",
-                      marginRight: "8px",
-                      cursor: isJoining ? "not-azllowed" : "pointer",
-                      opacity: isJoining ? 0.5 : 1,
-                    }}
-                  >
-                    <ArrowLeft
-                      className="iconSmall"
-                      style={{ color: "#e9eeedff" }}
-                      onClick={() => !isJoining && joinChannel(row.original)}
-                    />
-                  </span>
-                )}
+      ...(hasAnyOrderAction
+        ? [
+            {
+              Header: () => <div className="actions-header">Actions</div>,
+              id: "actions",
+              Cell: ({ row }) => (
+                <>
+                  <div className="actions-cell">
+                    {/* Join Call Button - Show for running calls (status == 3) */}
+                    {row.original.status == 3 &&
+                      permissions?.["orders"]?.includes("monitor_order") &&
+                      row.original.consultant_id !== 1 && (
+                        <span
+                          // title="Join Call"
+                          className="joinIcon secondIcon"
+                          style={{
+                            height: "35px",
+                            width: "35px",
+                            marginRight: "8px",
+                            cursor: isJoining ? "not-azllowed" : "pointer",
+                            opacity: isJoining ? 0.5 : 1,
+                          }}
+                        >
+                          <ArrowLeft
+                            className="iconSmall"
+                            style={{ color: "#e9eeedff" }}
+                            onClick={() => !isJoining && joinChannel(row.original)}
+                          />
+                        </span>
+                      )}
 
-              {/* Edit Button */}
-              {row.original.status == 3 && (
-                <span
-                  title="view details"
-                  className="secondIcon"
-                  style={{ height: "35px", width: "35px" }}
-                >
-                  <Pencil
-                    className="iconSmall"
-                    onClick={() => toggleCompleteOrder(row.original)}
-                  />
-                </span>
-              )}
+                    {/* Complete Order Button */}
+                    {row.original.status == 3 &&
+                      permissions?.["orders"]?.includes("complete_order") && (
+                      <span
+                        title="view details"
+                        className="secondIcon"
+                        style={{ height: "35px", width: "35px" }}
+                      >
+                        <Pencil
+                          className="iconSmall"
+                          onClick={() => toggleCompleteOrder(row.original)}
+                        />
+                      </span>
+                    )}
 
-              {/* Refund Button */}
-              {row.original.status == 4 &&
-                row.original.order_type !== 6 &&
-                !row.original.is_refunded && (
-                  <span className="editIcon">
-                    <ArrowRight
-                      className="iconSmall"
-                      onClick={() => toggleRefundBalance(row.original)}
-                    />
-                  </span>
-                )}
-            </div>
-          </>
-        ),
-      },
+                    {/* Refund Button */}
+                    {row.original.status == 4 &&
+                      row.original.order_type !== 6 &&
+                      !row.original.is_refunded &&
+                      permissions?.["orders"]?.includes("refund_order") && (
+                        <span className="editIcon">
+                          <ArrowRight
+                            className="iconSmall"
+                            onClick={() => toggleRefundBalance(row.original)}
+                          />
+                        </span>
+                      )}
+                  </div>
+                </>
+              ),
+            },
+          ]
+        : []),
     ],
-    [isJoining, navigate],
+    [isJoining, navigate, hasAnyOrderAction],
   );
 
   useEffect(() => {

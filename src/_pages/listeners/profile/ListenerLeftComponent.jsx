@@ -341,7 +341,8 @@ const ListenerLeftComponent = () => {
             </span>
           )}
 
-        {profileStatus == 3 && (
+        {profileStatus == 3 &&
+          permissions?.["listener"]?.includes("update_listener_profile_status") && (
           <Button
             variant="contained"
             style={{

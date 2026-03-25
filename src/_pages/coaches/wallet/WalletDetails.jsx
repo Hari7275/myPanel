@@ -93,7 +93,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
-import { CategoryCard } from "../../dashboard/DashboardSubPage";
+import { CategoryCard } from "../../dashboard/SuperadminDashboard";
 
 import { useSelector } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";

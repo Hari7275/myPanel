@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
 
@@ -14,6 +14,8 @@ const OrderIdCell = ({ value }) => {
 // Custom cell component for User ID with navigation
 const CustomIdCell = ({ value, row }) => {
   const dispatch = useDispatch();
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const hasViewUserProfile = permissions?.["user"]?.includes("view_user_profile");
 
   const userName = row?.original?.first_name;
 
@@ -22,9 +24,16 @@ const CustomIdCell = ({ value, row }) => {
     dispatch(setCurrentUser(value));
   };
 
+  if (!hasViewUserProfile) {
+    return (
+      <span className="orderId-color">
+        {userName}( {value})
+      </span>
+    );
+  }
+
   return (
     <Link
-      // to="/users_Profile"
       to={`/user/${value}`}
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}

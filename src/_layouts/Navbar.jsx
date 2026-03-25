@@ -3,11 +3,8 @@ import LogoutPopup from "../_pages/loginPage/LogoutPopup";
 import NotificationBell from "./NotificationBell";
 import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
-import { AppBar, IconButton, Toolbar, Typography, Stack, Tooltip } from "@mui/material";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import SensorsIcon from "@mui/icons-material/Sensors";
-import DarkModeIcon from "@mui/icons-material/DarkMode";
-import LightModeIcon from "@mui/icons-material/LightMode";
+import { AppBar, Toolbar, Typography, Stack, Tooltip } from "@mui/material";
+import { Sun, Moon, Radio, Eye, Bell } from "lucide-react";
 import { useTheme } from "../_context/ThemeContext";
 
 import { Link, useLocation } from "react-router-dom";
@@ -211,12 +208,6 @@ const Navbar = () => {
     <>
       <AppBar>
         <Toolbar className="radhe navbar-header">
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="logo"
-          ></IconButton>
           <Typography
             variant="h6"
             component={"div"}
@@ -228,75 +219,42 @@ const Navbar = () => {
             {/* {currentTitle} */}
           </Typography>
 
-          <Stack direction={"row"} spacing={2} alignItems="center">
-            <Tooltip title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}>
-              <IconButton onClick={toggleTheme} color="inherit">
-                {isDarkMode ? <LightModeIcon /> : <DarkModeIcon />}
-              </IconButton>
+          <Stack direction={"row"} spacing={1} alignItems="center">
+            {permissions?.["Dashboard"]?.includes("view_recharge") && (
+              <span className="nav-revenue">₹ {revenueData?.total}</span>
+            )}
+
+            <Tooltip title={isDarkMode ? "Light Mode" : "Dark Mode"}>
+              <button className="nav-icon-btn" onClick={toggleTheme}>
+                {isDarkMode ? <Sun size={22} /> : <Moon size={22} />}
+              </button>
             </Tooltip>
 
-            {permissions?.["Dashboard"]?.includes("view_recharge") && (
-              <div
-                style={{
-                  marginTop: "2px",
-                  padding: "8px",
-                  color: "#4cb237",
-                  fontWeight: "bold",
-                }}
-              >
-                ₹ {revenueData?.total}
-              </div>
-            )}
             {permissions?.["channel-info"]?.includes("view_channel_info") && (
               <Tooltip title="Channel Monitor">
-                <Link to="/channel-monitor">
-                  <div
-                    className="navbar-img"
-                    style={{
-                      marginTop: "2px",
-                      padding: "8px",
-                      background: "#3b82f620",
-                    }}
-                  >
-                    <SensorsIcon />
-                  </div>
+                <Link to="/channel-monitor" className="nav-icon-btn">
+                  <Radio size={22} />
                 </Link>
               </Tooltip>
             )}
 
             {permissions?.["orders"]?.includes("order_notifications") && (
-              <Link to="/consultant-user-notification">
-                <div
-                  className="navbar-img"
-                  style={{
-                    marginTop: "2px",
-                    padding: "8px",
-                    background: "#7d798c57",
-                  }}
-                >
-                  <RemoveRedEyeIcon />
-                </div>
-              </Link>
+              <Tooltip title="Observing List">
+                <Link to="/consultant-user-notification" className="nav-icon-btn">
+                  <Eye size={22} />
+                </Link>
+              </Tooltip>
             )}
 
-            <div
-              className="navbar-img"
-              style={{
-                marginTop: "2px",
-                padding: "6px",
-                background: "#d1e72357",
-              }}
-            >
-              <Link to="notification">
-                {" "}
-                <img src="/bell.png" />
+            <Tooltip title="Notifications">
+              <Link to="notification" className="nav-icon-btn nav-bell-btn">
+                <Bell size={22} />
+                {count > 0 && <span className="nav-badge">{count}</span>}
               </Link>
-            </div>
+            </Tooltip>
 
-            {count}
-
-            <div className="navbar-img" onClick={handleAvatarClick}>
-              <img src="/girl-avtar.png" />
+            <div className="nav-avatar" onClick={handleAvatarClick}>
+              <img src="/girl-avtar.png" alt="avatar" />
             </div>
           </Stack>
         </Toolbar>

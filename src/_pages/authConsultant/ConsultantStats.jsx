@@ -4,6 +4,7 @@ import { useGetConsultantStatsQuery } from "../../_store/api";
 import { Atom } from "react-loading-indicators";
 import { ArrowLeft } from "lucide-react";
 import { useTheme } from "../../_context/ThemeContext";
+import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
 import "./ConsultantStats.css";
 
 const statLabels = {
@@ -44,7 +45,7 @@ const StatCard = ({ label, value, statKey, onClick }) => (
   </div>
 );
 
-const StatsSection = ({ title, color, stats, route, navigate }) => (
+const StatsSection = ({ title, color, stats, route, navigate, canNavigate }) => (
   <div className="consultant-stats-section">
     <h3
       className="consultant-stats-section-title"
@@ -60,7 +61,7 @@ const StatsSection = ({ title, color, stats, route, navigate }) => (
           value={stats?.[key] ?? 0}
           statKey={key}
           onClick={
-            route
+            route && canNavigate
               ? () => navigate(`${route}?status=${statToAuthStatus[key]}`)
               : undefined
           }
@@ -70,9 +71,11 @@ const StatsSection = ({ title, color, stats, route, navigate }) => (
   </div>
 );
 
-const ConsultantStats = () => {
+const ConsultantStats = ({ hideBackButton = false }) => {
   const navigate = useNavigate();
   const { isDarkMode } = useTheme();
+  const permissions = usePermissions();
+  const canNavigate = permissions?.["consultant"]?.includes("view_consultant_profile");
   const { data: fetchData, isLoading, error } = useGetConsultantStatsQuery();
 
   if (isLoading) {
@@ -92,9 +95,11 @@ const ConsultantStats = () => {
   return (
     <div className="consultant-stats-page">
       <div className="consultant-stats-header">
-        <button className="cs-back-btn" onClick={() => navigate(-1)} title="Back">
-          <ArrowLeft size={18} />
-        </button>
+        {!hideBackButton && (
+          <button className="cs-back-btn" onClick={() => navigate(-1)} title="Back">
+            <ArrowLeft size={18} />
+          </button>
+        )}
         <h2 className="cs-page-title">Consultant Stats</h2>
       </div>
 
@@ -107,6 +112,7 @@ const ConsultantStats = () => {
             stats={statsData?.[key]}
             route={config.route}
             navigate={navigate}
+            canNavigate={canNavigate}
           />
         ))}
       </div>

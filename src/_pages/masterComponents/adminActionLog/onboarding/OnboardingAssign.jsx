@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetAdminOnboardingSpecialistListQuery } from "../../../../_store/api";
 import "./OnboardingAssign.css";
-import { useSelector } from "react-redux"; // Added
+import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
+import { useSelector } from "react-redux";
 
 const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
   return (
@@ -57,7 +58,7 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
               <div className="onboarding-timeline-item">
                 <span className="onboarding-timeline-icon">📊</span>
                 <div className="onboarding-timeline-content">
-                  <span className="onboarding-timeline-label">This Week</span>
+                  <span className="onboarding-timeline-label">Week</span>
                   <span className="onboarding-timeline-value">
                     {item.week_verified}
                   </span>
@@ -67,7 +68,7 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
               <div className="onboarding-timeline-item">
                 <span className="onboarding-timeline-icon">📈</span>
                 <div className="onboarding-timeline-content">
-                  <span className="onboarding-timeline-label">This Month</span>
+                  <span className="onboarding-timeline-label">Month</span>
                   <span className="onboarding-timeline-value">
                     {item.month_verified}
                   </span>
@@ -99,8 +100,9 @@ const CategoryCard = ({ registeredLink, unregisteredLink, item }) => {
 
 const OnboardingAssign = () => {
   const { user } = useSelector((state) => state.auth);
+  const permissions = usePermissions();
+  const canViewAll = permissions?.["onboarding"]?.includes("view_onboarding_stats");
 
-  console.log("user....", user?.id);
   const [metadataItems, setMetadataItems] = useState([]);
   const { data: fetchData } = useGetAdminOnboardingSpecialistListQuery({});
 
@@ -110,18 +112,14 @@ const OnboardingAssign = () => {
       return;
     }
 
-    const allAdmins = [2, 4, 20, 29];
-
-    if (allAdmins.includes(user?.id)) {
+    if (canViewAll) {
       setMetadataItems(fetchData.data);
     } else {
       setMetadataItems(
         fetchData.data.filter((item) => item.admin_id == user?.id),
       );
     }
-  }, [fetchData, user?.id]);
-
-  console.log("metadataItems", metadataItems);
+  }, [fetchData, canViewAll]);
 
   return (
     <div className="onboarding-main-container">

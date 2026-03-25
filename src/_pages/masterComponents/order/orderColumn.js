@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import {
   getStatusColor,
@@ -32,9 +32,29 @@ const isOverdue = (endTime, currentTime) => {
 const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.description?.userData.name;
   const dispatch = useDispatch();
+  const role = useSelector((state) => state?.auth?.role);
+  const canNavigate = role === "superadmin" || role === "admin";
+
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
   };
+
+  const content = (
+    <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+      <span
+        className={canNavigate ? "clickable-id-link" : ""}
+        style={{ color: "var(--table-text)", cursor: canNavigate ? "pointer" : "default", whiteSpace: "nowrap" }}
+      >
+        {userName}
+      </span>
+      <span style={{ fontSize: "13px", color: "var(--table-link-user)", fontWeight: 500 }}>
+        ID: {value}
+      </span>
+    </div>
+  );
+
+  if (!canNavigate) return content;
+
   return (
     <Link
       to={`/user/${value}`}
@@ -43,17 +63,7 @@ const CustomIdCell = ({ value, row }) => {
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-        <span
-          className="clickable-id-link"
-          style={{ color: "var(--table-text)", cursor: "pointer", whiteSpace: "nowrap" }}
-        >
-          {userName}
-        </span>
-        <span style={{ fontSize: "13px", color: "var(--table-link-user)", fontWeight: 500 }}>
-          ID: {value}
-        </span>
-      </div>
+      {content}
     </Link>
   );
 };
@@ -64,6 +74,8 @@ const ConsultantNavigationCell = ({ value, row }) => {
   const consultantName = row?.original?.description?.consultant_first_name;
   const consultantType = row?.original?.description?.consultant_type;
   const foreigner = row?.original?.description?.is_consultant_foreigner;
+  const role = useSelector((state) => state?.auth?.role);
+  const canNavigate = role === "superadmin" || role === "admin";
 
   const navigationRoute = {
     1: `/astrologer/${value}`,
@@ -72,11 +84,31 @@ const ConsultantNavigationCell = ({ value, row }) => {
   };
 
   const baseRoute = navigationRoute[consultantType] || "";
-
-  // Add ?type=91 only if NOT foreigner
   const route = !foreigner
     ? `${baseRoute}?status=3&type=91`
     : `${baseRoute}?status=3`;
+
+  const content = (
+    <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+      <span
+        className={canNavigate ? "clickable-id-link" : ""}
+        style={{
+          cursor: canNavigate ? "pointer" : "default",
+          color: "var(--table-text)",
+          fontStyle: foreigner ? "italic" : "normal",
+          whiteSpace: "nowrap",
+        }}
+      >
+        {consultantName}
+      </span>
+      <span style={{ fontSize: "13px", fontWeight: 500 }}>
+        <span style={{ color: foreigner ? "var(--table-link-consultant-foreign)" : "var(--table-link-consultant-local)" }}>ID: {value}</span>
+        <span style={{ color: "var(--table-text)" }}> · {consultantTypeLabel[consultantType] || ""}</span>
+      </span>
+    </div>
+  );
+
+  if (!canNavigate) return content;
 
   return (
     <Link
@@ -85,23 +117,7 @@ const ConsultantNavigationCell = ({ value, row }) => {
       rel="noopener noreferrer"
       style={{ textDecoration: "none" }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-        <span
-          className="clickable-id-link"
-          style={{
-            cursor: "pointer",
-            color: "var(--table-text)",
-            fontStyle: foreigner ? "italic" : "normal",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {consultantName}
-        </span>
-        <span style={{ fontSize: "13px", fontWeight: 500 }}>
-          <span style={{ color: foreigner ? "var(--table-link-consultant-foreign)" : "var(--table-link-consultant-local)" }}>ID: {value}</span>
-          <span style={{ color: "var(--table-text)" }}> · {consultantTypeLabel[consultantType] || ""}</span>
-        </span>
-      </div>
+      {content}
     </Link>
   );
 };

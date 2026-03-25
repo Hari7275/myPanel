@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { CategoryCard } from "../DashboardSubPage";
+import { CategoryCard } from "../SuperadminDashboard";
 import {
   useGetConsultantIncomeQuery,
   useGetConsultantIncomeBySessionQuery,

@@ -357,7 +357,8 @@ const AstrologerDetailsComponent = () => {
               />
             </span>
           )}
-        {profileStatus == 3 && (
+        {profileStatus == 3 &&
+          permissions?.["astrologer"]?.includes("update_astrologer_profile_status") && (
           <Button
             variant="contained"
             style={{

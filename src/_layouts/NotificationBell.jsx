@@ -14,8 +14,10 @@ import {
   useGetNotificationGroupQuery,
 } from "../_store/api/user/userDetails";
 import { Atom } from "react-loading-indicators";
+import { useTheme } from "../_context/ThemeContext";
 
 const NotificationBell = () => {
+  const { isDarkMode } = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [page, setPage] = useState(1);
@@ -191,7 +193,9 @@ const NotificationBell = () => {
     const isSeen = row.original.is_seen;
     return {
       style: {
-        backgroundColor: isSeen ? "#FFFFFF" : "#d5f4ffff",
+        backgroundColor: isSeen
+          ? (isDarkMode ? "transparent" : "#FFFFFF")
+          : (isDarkMode ? "rgba(59, 130, 246, 0.08)" : "#d5f4ffff"),
       },
     };
   };
@@ -250,7 +254,7 @@ const NotificationBell = () => {
   if (isLoading) {
     return (
       <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
+        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
       </span>
     );
   }

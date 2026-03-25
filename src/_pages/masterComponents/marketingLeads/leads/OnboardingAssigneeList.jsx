@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useGetMarketingLeadsLOnboardingAssigneeQuery } from "../../../../_store/api";
-import { useSelector } from "react-redux"; // Added
+import usePermissions from "../../../../_components/reuseComponents/permission/EmpPermission";
+import { useSelector } from "react-redux";
 
 const CategoryCard = ({ registeredLink, item }) => {
   return (
@@ -84,8 +85,9 @@ const CategoryCard = ({ registeredLink, item }) => {
 
 const OnboardingAssigneeList = () => {
   const { user } = useSelector((state) => state.auth);
+  const permissions = usePermissions();
+  const canViewAll = permissions?.["onboarding"]?.includes("view_onboarding_stats");
 
-  console.log("user....", user?.id);
   const [metadataItems, setMetadataItems] = useState([]);
   const {
     data: fetchData,
@@ -99,20 +101,14 @@ const OnboardingAssigneeList = () => {
       return;
     }
 
-    setMetadataItems(fetchData.data);
-
-    const allAdmins = [2, 4, 20, 29];
-
-    if (allAdmins.includes(user?.id)) {
+    if (canViewAll) {
       setMetadataItems(fetchData.data);
     } else {
       setMetadataItems(
         fetchData.data.filter((item) => item.id == user?.id),
       );
     }
-  }, [fetchData, user?.id]);
-
-  console.log("metadataItems", metadataItems);
+  }, [fetchData, canViewAll]);
 
   return (
     <div className="onboarding-main-container">

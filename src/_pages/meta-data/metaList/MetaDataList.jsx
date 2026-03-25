@@ -20,7 +20,7 @@ const MetaDataList = () => {
   const permissions = usePermissions();
   // Permission check function
   const hasPermission = (metadataName) => {
-    return permissions?.["meta_data_section"]?.includes(metadataName);
+    return permissions?.["meta-data"]?.includes(metadataName);
   };
   // List of all possible metadata items with their routes
   const metadataItems = [

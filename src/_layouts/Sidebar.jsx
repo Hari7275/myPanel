@@ -113,8 +113,8 @@ const Sidebar = () => {
       icon: <SupervisorAccountIcon />,
       visible: !!permissions?.["onboarding"],
       links: [
-        { to: "/onboarding-assign", label: "Onboarding Assign", perm: permissions?.["onboarding"]?.includes("onboarding_assign") },
-        { to: "/action-log", label: "Action log" },
+        { to: "/onboarding-assign", label: "Onboarding Assign", perm: permissions?.["onboarding"]?.includes("view_onboarding_stats") },
+        { to: "/action-log", label: "Action log", perm: permissions?.["onboarding"]?.includes("view_onboarding_assign_logs") },
       ],
     },
     {
@@ -189,7 +189,7 @@ const Sidebar = () => {
       key: "support",
       label: "Support",
       icon: "/adminPannel_icons/support.png",
-      visible: !!permissions?.["support"],
+      visible: !!permissions?.["support"]?.includes("view_support_section"),
       links: [
         { to: "/user-support", label: "User Support" },
         { to: "/consultant-support", label: "Consultant Support" },
@@ -199,58 +199,61 @@ const Sidebar = () => {
 
   // ─── Collapsed sidebar items config ───
   const sidebarItems = [
-    { to: "/dashboard", label: "Dashboard", icon: <GridViewOutlinedIcon />, visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
-    { to: "/user", label: "Users", icon: <GroupOutlinedIcon />, visible: !!permissions?.["user"] },
-    { to: "/auth-consultant", label: "Consultant", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"] },
-    { to: "/astrologer", label: "Astrologer", icon: "/adminPannel_icons/astrologers.png", visible: permissions?.["astrologer"]?.includes("view_astrologer_list") },
-    { to: "/coaches", label: "Coaches", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"] },
-    { to: "/listeners", label: "Listeners", icon: <HeadphonesOutlinedIcon />, visible: !!permissions?.["listener"] },
-    { to: "/meta-data", label: "Meta Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["meta_data_section"] },
-    { to: "/order", label: "Orders", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
-    { to: "/gift-history", label: "Gifts", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
-    { to: "/refund-list", label: "Refund List", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["payment"] },
+    { to: "/dashboard", label: "Dashboard", icon: <GridViewOutlinedIcon />, visible: !!permissions?.["Dashboard"]?.length },
+    { to: "/user", label: "Users", icon: <GroupOutlinedIcon />, visible: !!permissions?.["user"]?.includes("view_user_list") },
+    { to: "/auth-consultant", label: "Leads", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"]?.includes("view_coach_list") },
+    { to: "/astrologer", label: "Astrologers", icon: "/adminPannel_icons/astrologers.png", visible: permissions?.["astrologer"]?.includes("view_astrologer_list") },
+    { to: "/coaches", label: "Coaches", icon: "/adminPannel_icons/Coach.png", visible: !!permissions?.["coach"]?.includes("view_coach_list") },
+    { to: "/listeners", label: "Listeners", icon: <HeadphonesOutlinedIcon />, visible: !!permissions?.["listener"]?.includes("view_listener_list") },
+    { to: "/meta-data", label: "Meta Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["meta-data"]?.includes("view_meta_data") },
+    { to: "/order", label: "Orders", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"]?.includes("view_order_list") },
+    { to: "/gift-history", label: "Gifts", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["gifts"]?.includes("view_gift_list") },
+    { to: "/refund-list", label: "Refund List", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["refunds"]?.includes("view_refund_list") },
     { to: "/user-recharge", label: "Recharge List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
     { to: "/razorpay-recharge", label: "Razorpay List", icon: <CardGiftcardOutlinedIcon />, visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
-    { to: "/onboarding-assign", label: "Onboarding", icon: <KeyRound />, visible: !!permissions?.["onboarding"] },
+    { to: "/onboarding-assign", label: "Onboarding", icon: <KeyRound />, visible: !!permissions?.["onboarding"]?.includes("view_onboarding_stats") },
     { to: "/marketing-assignee", label: "Assignee List", icon: <KeyRound />, visible: !!permissions?.["marketing_leads"] },
-    { to: "/session", label: "Session", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["orders"] },
+    { to: "/session", label: "Session", icon: <CardGiftcardOutlinedIcon />, visible: !!permissions?.["sessions"] },
     { to: "/cms-data", label: "Cms Data", icon: <CategoryOutlinedIcon />, visible: !!permissions?.["cms_data"] },
     { to: "/message-template", label: "MessageTemplate", icon: <ManageHistoryOutlinedIcon />, visible: !!permissions?.["notification"] },
   ];
 
   // ─── Expanded menu: flat links in the middle section ───
   const expandedTopLinks = [
-    { to: "/dashboard", icon: <GridViewOutlinedIcon />, label: "Dashboard", visible: permissions?.["Dashboard"]?.includes("view_dashboard") },
-    { to: "/user", icon: <GroupOutlinedIcon />, label: "Users", visible: !!permissions?.["user"] },
-    { to: "/untracked-user", icon: <GroupOutlinedIcon />, label: "Guest Device Info", visible: !!permissions?.["user"] },
-    { to: "/user-device-info", icon: <GroupOutlinedIcon />, label: "User Device Info", visible: !!permissions?.["user"] },
-    { to: "/consultant-device-info", icon: <DeviceUnknownIcon />, label: "Consultant device info", visible: !!permissions?.["coach"] },
+    { to: "/dashboard", icon: <GridViewOutlinedIcon />, label: "Dashboard", visible: !!permissions?.["Dashboard"]?.length },
+    { to: "/user", icon: <GroupOutlinedIcon />, label: "Users", visible: !!permissions?.["user"]?.includes("view_user_list") },
+    { to: "/untracked-user", icon: <GroupOutlinedIcon />, label: "Guest Device Info", visible: !!permissions?.["user"]?.includes("view_user_device_info") },
+    { to: "/user-device-info", icon: <GroupOutlinedIcon />, label: "User Device Info", visible: !!permissions?.["user"]?.includes("view_user_device_info") },
+    // { to: "/consultant-device-info", icon: <DeviceUnknownIcon />, label: "Consultant device info", visible: !!permissions?.["coach"] },
   ];
 
   const expandedConsultantLinks = [
-    { to: "/auth-consultant", icon: "/adminPannel_icons/Coach.png", label: "Consultant", visible: !!permissions?.["coach"] },
-    { to: "/coaches", icon: "/adminPannel_icons/Coach.png", label: "Coaches", visible: !!permissions?.["coach"] },
-    { to: "/listeners", icon: <HeadphonesOutlinedIcon />, label: "Listeners", visible: !!permissions?.["listener"] },
-    { to: "/astrologer", icon: "/adminPannel_icons/astrologers.png", label: "Astrologer", visible: !!permissions?.["astrologer"] },
-    { to: "/profile-review", icon: "/adminPannel_icons/Coach.png", label: "Review Request", visible: !!permissions?.["coach"] || !!permissions?.["listener"] || !!permissions?.["astrologer"] },
+    { to: "/auth-consultant", icon: "/adminPannel_icons/Coach.png", label: "Leads", visible: !!permissions?.["coach"]?.includes("view_coach_list") },
+    { to: "/astrologer", icon: "/adminPannel_icons/astrologers.png", label: "Astrologers", visible: !!permissions?.["astrologer"]?.includes("view_astrologer_list") },
+    { to: "/coaches", icon: "/adminPannel_icons/Coach.png", label: "Coaches", visible: !!permissions?.["coach"]?.includes("view_coach_list") },
+    { to: "/listeners", icon: <HeadphonesOutlinedIcon />, label: "Listeners", visible: !!permissions?.["listener"]?.includes("view_listener_list") },
+  ];
+
+  const expandedBottomConsultantLinks = [
+    { to: "/profile-review", icon: "/adminPannel_icons/Coach.png", label: "Review Request", visible: !!permissions?.["consultant"]?.includes("review_consultant_profile") },
   ];
 
   const expandedRechargeLinks = [
-    { to: "/order", icon: <CardGiftcardOutlinedIcon />, label: "Orders", visible: !!permissions?.["orders"] },
+    { to: "/order", icon: <CardGiftcardOutlinedIcon />, label: "Orders", visible: !!permissions?.["orders"]?.includes("view_order_list") },
     { to: "/user-recharge", icon: <CardGiftcardOutlinedIcon />, label: "User Recharge List", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
-    { to: "/user-recharge-summary", icon: <CardGiftcardOutlinedIcon />, label: "Recharge Summary", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
+    { to: "/user-recharge-summary", icon: <CardGiftcardOutlinedIcon />, label: "Recharge Summary", visible: permissions?.["user_recharge_list"]?.includes("view_top_rechargers") },
     { to: "/razorpay-recharge", icon: <CardGiftcardOutlinedIcon />, label: "Razorpay List", visible: permissions?.["razorpay_list"]?.includes("view_razorpay_list") },
     { to: "/user-subscription", icon: <CardGiftcardOutlinedIcon />, label: "User Subscription List", visible: !!permissions?.["payment"] },
-    { to: "/payable-History", icon: <CardGiftcardOutlinedIcon />, label: "Payable Log", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
-    { to: "/payout-History", icon: <CardGiftcardOutlinedIcon />, label: "Payout History", visible: permissions?.["user_recharge_list"]?.includes("view_recharge_list") },
-    { to: "/gift", icon: <CardGiftcardOutlinedIcon />, label: "Gifts", visible: !!permissions?.["orders"] },
-    { to: "/gift-history", icon: <CardGiftcardOutlinedIcon />, label: "Gift History", visible: !!permissions?.["orders"] },
-    { to: "/refund-list", icon: <CardGiftcardOutlinedIcon />, label: "Refund List", visible: !!permissions?.["payment"] },
-    { to: "/session", icon: <CardGiftcardOutlinedIcon />, label: "Session", visible: !!permissions?.["orders"] },
+    { to: "/payable-History", icon: <CardGiftcardOutlinedIcon />, label: "Payable Log", visible: permissions?.["consultant-payouts"]?.includes("view_payable_logs") },
+    { to: "/payout-History", icon: <CardGiftcardOutlinedIcon />, label: "Payout History", visible: permissions?.["consultant-payouts"]?.includes("view_payout_list") },
+    { to: "/gift", icon: <CardGiftcardOutlinedIcon />, label: "Gifts", visible: !!permissions?.["gifts"]?.includes("view_gift_list") },
+    { to: "/gift-history", icon: <CardGiftcardOutlinedIcon />, label: "Gift History", visible: !!permissions?.["gifts"]?.includes("view_gift_list") },
+    { to: "/refund-list", icon: <CardGiftcardOutlinedIcon />, label: "Refund List", visible: !!permissions?.["refunds"]?.includes("view_refund_list") },
+    { to: "/session", icon: <CardGiftcardOutlinedIcon />, label: "Session", visible: !!permissions?.["sessions"] },
   ];
 
   const expandedBottomLinks = [
-    { to: "/meta-data", icon: <CategoryOutlinedIcon />, label: "Meta Data", visible: !!permissions?.["meta_data_section"] },
+    { to: "/meta-data", icon: <CategoryOutlinedIcon />, label: "Meta Data", visible: !!permissions?.["meta-data"]?.includes("view_meta_data") },
     { to: "/cms-data", icon: <CategoryOutlinedIcon />, label: "Cms Data", visible: !!permissions?.["cms_data"] },
     { to: "/message-template", icon: <ManageHistoryOutlinedIcon />, label: "MessageTemplate", visible: !!permissions?.["notification"] },
     { to: "/blog-count", icon: "/adminPannel_icons/support.png", label: "Blog View Count", visible: !!permissions?.["cms_data"] },
@@ -277,6 +280,12 @@ const Sidebar = () => {
         </div>
 
         <div className="menu-grou">
+          {/* Dashboard, Users, Device Info */}
+          <div>{renderLinks(expandedTopLinks)}</div>
+
+          {/* Leads, Astrologer, Coaches, Listeners */}
+          <div>{renderLinks(expandedConsultantLinks)}</div>
+
           {/* Dropdown sections: Admin, Onboarding, Marketing Leads */}
           {dropdownSections.slice(0, 3).map((section) => {
             if (section.visible === false) return null;
@@ -297,11 +306,8 @@ const Sidebar = () => {
             );
           })}
 
-          {/* Dashboard, Users, Device Info */}
-          <div>{renderLinks(expandedTopLinks)}</div>
-
-          {/* Coaches, Listeners, Astrologer */}
-          <div>{renderLinks(expandedConsultantLinks)}</div>
+          {/* Review Request */}
+          <div>{renderLinks(expandedBottomConsultantLinks)}</div>
         </div>
 
         {/* Recharge / Subscription / Gifts */}

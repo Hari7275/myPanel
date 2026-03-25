@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "../CategoriesList.css";
 import { useGetFluteMostActiveConsultantQuery } from "../../../_store/api";
 import { Link } from "react-router-dom";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 export const CategoryCard = ({ src, count, text }) => (
   <div>
@@ -18,6 +19,8 @@ export const CategoryCard = ({ src, count, text }) => (
 );
 
 const TopActiveConsultants = () => {
+  const permissions = usePermissions();
+  const canNavigate = permissions?.["consultant"]?.includes("view_consultant_profile");
   const [activeConsultant, setActiveConsultant] = useState([]);
   const { data: fetchData } = useGetFluteMostActiveConsultantQuery();
 
@@ -36,12 +39,11 @@ const TopActiveConsultants = () => {
       </div>
 
       {/* Image Section...................................... */}
-      <div className="top-active-image-container" style={{ maxHeight: "280px", overflowY: "auto", overflowX: "hidden", paddingBottom: "8px" }}>
+      <div className="tac-grid">
         {activeConsultant?.map((item) => {
           const consultantType = item?.consultant?.consultant_type;
           const consultantId = item?.consultant_id;
 
-          // ✅ Build dynamic route based on type
           const navigationRoute = {
             1: `/astrologer/${consultantId}`,
             2: `/coaches/${consultantId}`,
@@ -50,33 +52,36 @@ const TopActiveConsultants = () => {
 
           const route = consultantType && navigationRoute[consultantType];
 
+          const cardContent = (
+            <>
+              <img
+                src={item?.consultant?.profile_pic || "/avatar11.png"}
+                alt={item?.consultant?.consultant_type}
+                className="tac-avatar"
+              />
+              <span className="tac-name">{item?.consultant?.first_name}</span>
+              <div className="tac-info">
+                <span className="tac-meta">ID: {consultantId}</span>
+                <span className="tac-meta">Orders: {item?.total_count}</span>
+              </div>
+            </>
+          );
+
+          if (!canNavigate) {
+            return (
+              <div key={item?.id} className="tac-card">
+                {cardContent}
+              </div>
+            );
+          }
+
           return (
             <Link
               key={item?.id}
               to={route}
-              style={{
-                textDecoration: "none",
-                color: "inherit",
-              }}
+              className="tac-card"
             >
-              <div className="image-wrapper">
-                <img
-                  src={item?.consultant?.profile_pic || "/avatar11.png"}
-                  alt={item?.consultant?.consultant_type}
-                  className="consultant-image"
-                />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                  }}
-                >
-                  <h3>{item?.consultant?.first_name}</h3>
-                  <h3>Id: {consultantId}</h3>
-                  <h3>Order: {item?.total_count}</h3>
-                </div>
-              </div>
+              {cardContent}
             </Link>
           );
         })}

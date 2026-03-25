@@ -3,17 +3,17 @@ import DyCommonTable from "../../_components/table/DyCommonTable";
 import { CONSULTANT_COLUMNS } from "./AuthConsultantListColumn";
 import { useGetUnregisteredConsultantsListQuery } from "../../_store/api";
 import { useDispatch } from "react-redux";
-import { ArrowRight, Pencil, KeyRound, BarChart3, PieChart, UserX } from "lucide-react";
-import Button from "@mui/material/Button";
-import AuthConsultantRegisteredGraph from "./AuthConsultantRegisteredGraph";
+import { ArrowRight, Pencil, KeyRound } from "lucide-react";
 import AssignOnboardingToAdmin from "../../_components/reuseComponents/AssignOnboardingToAdmin";
 import { resetActiveTab } from "../../_store/slices/activeSlice";
 import { debounce } from "lodash";
 import { Atom } from "react-loading-indicators";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
 
 const AuthConsultantList = () => {
+  const permissions = usePermissions();
   const [data, setData] = useState([]);
   const dispatch = useDispatch();
   const [email_address, setEmailAddress] = useState("");
@@ -27,8 +27,6 @@ const AuthConsultantList = () => {
   const [showOnboardingAssignTask, setShowOnboardingAssignTask] =
     useState(false);
   const { user } = useSelector((state) => state.auth);
-  const [showGraph, setShowGraph] = useState(false);
-  const navigate = useNavigate();
 
   const location = useLocation();
   const [count, setCount] = useState(0);
@@ -85,7 +83,8 @@ const AuthConsultantList = () => {
         id: "actions",
         Cell: ({ row }) => (
           <div className="actions-cell">
-            {row.original.is_assign == 0 && (
+            {row.original.is_assign == 0 &&
+              permissions?.["onboarding"]?.includes("onboarding_assign") && (
               <span className="editIcon" style={{ background: "#c65252ff" }}>
                 <KeyRound
                   className="iconSmall"
@@ -160,28 +159,6 @@ const AuthConsultantList = () => {
         onChange={handleConsultantPhoneSearch}
       />
 
-      <div style={{ marginLeft: "20px", display: "flex", gap: "10px" }}>
-        <Button
-          variant="contained"
-          onClick={() => setShowGraph(true)}
-        >
-          <BarChart3 style={{ marginRight: "6px" }} />
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/consultant-stats")}
-        >
-          <PieChart style={{ marginRight: "6px" }} />
-          Stats
-        </Button>
-        <Button
-          variant="contained"
-          onClick={() => navigate("/no-order-consultants")}
-        >
-          <UserX style={{ marginRight: "6px" }} />
-          No Orders
-        </Button>
-      </div>
     </div>
   );
 
@@ -227,12 +204,6 @@ const AuthConsultantList = () => {
           selectedRow={selectedRow?.id}
           created={false}
           adminId={user.id}
-        />
-      )}
-      {showGraph && (
-        <AuthConsultantRegisteredGraph
-          isOpen={showGraph}
-          onClose={() => setShowGraph(false)}
         />
       )}
     </div>

@@ -12,8 +12,12 @@ import {
   useDeleteGiftMutation,
 } from "../../../_store/api";
 import toast from "react-hot-toast";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 
 const GiftLists = () => {
+  const permissions = usePermissions();
+  const hasUpdateGift = permissions?.["gifts"]?.includes("update_gift");
+
   const [showGiftPrice, setshowGiftPrice] = useState(false);
   const [addData, setAddData] = useState(false);
   const [updateData, setUpdteData] = useState(false);
@@ -111,38 +115,42 @@ const GiftLists = () => {
   const columns = useMemo(
     () => [
       ...GIFTCOLUMN,
-      {
-        Header: () => <div className="actions-header">Actions</div>,
-        id: "actions",
-        Cell: ({ row }) => (
-          <div className="actions-cell">
-            <span
-              title="view details"
-              className="secondIcon"
-              style={{ height: "35px", width: "35px" }}
-            >
-              <ArrowRight
-                className="iconSmall"
-                onClick={() => toggleGiftPrice(row)}
-              />
-            </span>
-            <span className="editIcon">
-              <Pencil
-                className="iconSmall"
-                onClick={() => toggleUpdateData(row.original)}
-              />
-            </span>
-            <span className="deleteIcon">
-              <Trash
-                className="iconSmall"
-                onClick={() => toggleDeleteComponent(row.original)}
-              />
-            </span>
-          </div>
-        ),
-      },
+      ...(hasUpdateGift
+        ? [
+            {
+              Header: () => <div className="actions-header">Actions</div>,
+              id: "actions",
+              Cell: ({ row }) => (
+                <div className="actions-cell">
+                  <span
+                    title="view details"
+                    className="secondIcon"
+                    style={{ height: "35px", width: "35px" }}
+                  >
+                    <ArrowRight
+                      className="iconSmall"
+                      onClick={() => toggleGiftPrice(row)}
+                    />
+                  </span>
+                  <span className="editIcon">
+                    <Pencil
+                      className="iconSmall"
+                      onClick={() => toggleUpdateData(row.original)}
+                    />
+                  </span>
+                  <span className="deleteIcon">
+                    <Trash
+                      className="iconSmall"
+                      onClick={() => toggleDeleteComponent(row.original)}
+                    />
+                  </span>
+                </div>
+              ),
+            },
+          ]
+        : []),
     ],
-    []
+    [hasUpdateGift]
   );
 
   return (

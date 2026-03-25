@@ -1,0 +1,94 @@
+/* ===== Onboarding Associate Dashboard ===== */
+
+.oa-dashboard {
+  padding: 20px 40px 40px;
+}
+
+.oa-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+/* Themed MUI Button overrides */
+.oa-actions .MuiButton-root {
+  padding: 8px 20px !important;
+  font-size: 14px !important;
+}
+
+.oa-actions .MuiButton-contained {
+  background-color: var(--text-primary, #1a1a2e) !important;
+  color: var(--section-bg, #f1f1f9) !important;
+  border: 1px solid transparent !important;
+  box-shadow: none !important;
+}
+
+.oa-actions .MuiButton-contained:hover {
+  opacity: 0.9;
+}
+
+.oa-actions .MuiButton-outlined {
+  background-color: transparent !important;
+  color: var(--text-primary, #1a1a2e) !important;
+  border: 1px solid var(--dashboard-card-border, rgba(200, 200, 200, 0.3)) !important;
+  box-shadow: none !important;
+}
+
+.oa-actions .MuiButton-outlined:hover {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.dark-mode .oa-actions .MuiButton-outlined:hover {
+  background-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.oa-overview-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.oa-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.oa-full-section {
+  margin-top: 0;
+}
+
+/* ===== Responsive ===== */
+
+@media (max-width: 1024px) {
+  .oa-dashboard {
+    padding: 16px 20px 32px;
+  }
+
+  .oa-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .oa-dashboard {
+    padding: 12px 16px 24px;
+  }
+
+  .oa-actions {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .oa-dashboard {
+    padding: 10px 12px 20px;
+  }
+
+  .oa-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

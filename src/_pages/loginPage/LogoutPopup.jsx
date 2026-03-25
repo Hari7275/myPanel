@@ -1,17 +1,23 @@
-import React, { useState, useEffect } from "react";
+import { useEffect, useRef } from "react";
 import "../../cssfolder/LogoutPopup.css";
-import { useNavigate } from "react-router-dom";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
-
-import { Link } from "react-router-dom";
 import { logout } from "../../_store/slices/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { LogOut, Mail, Shield } from "lucide-react";
 
-const LogoutPopup = () => {
- 
+const LogoutPopup = ({ onClose }) => {
   const dispatch = useDispatch();
+  const { user, role } = useSelector((state) => state.auth);
+  const popupRef = useRef(null);
 
-  // const [showLoginForm, setShowLoginForm] = useState(false);
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (popupRef.current && !popupRef.current.contains(e.target)) {
+        onClose?.();
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [onClose]);
 
   const handleLogoutClick = () => {
     dispatch(logout());
@@ -19,16 +25,37 @@ const LogoutPopup = () => {
   };
 
   return (
-    <section className="main">
-      <div className="logout-container">
-        <Link to="/">
-          <div className="logout-content" onClick={handleLogoutClick}>
-            <span className="logout-firstSpan">
-              <AcUnitIcon />
-            </span>
-            <span className="logout-secondSpan"> Logout</span>
+    <section className="logout-popup" ref={popupRef}>
+      <div className="logout-popup-card">
+        {/* User Info */}
+        <div className="logout-user-info">
+          <div className="logout-avatar">
+            {user?.name?.charAt(0)?.toUpperCase() || "A"}
           </div>
-        </Link>
+          <div className="logout-details">
+            <span className="logout-name">{user?.name || "Admin User"}</span>
+            {user?.email && (
+              <span className="logout-email">
+                <Mail size={12} />
+                {user.email}
+              </span>
+            )}
+            {role && (
+              <span className="logout-role">
+                <Shield size={12} />
+                {role}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="logout-divider" />
+
+        {/* Logout Button */}
+        <button className="logout-btn" onClick={handleLogoutClick}>
+          <LogOut size={16} />
+          Logout
+        </button>
       </div>
     </section>
   );

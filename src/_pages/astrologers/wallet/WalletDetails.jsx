@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useGetConsultantsDetailsQuery } from "../../../_store/api";
 
-import { CategoryCard } from "../../dashboard/DashboardSubPage";
+import { CategoryCard } from "../../dashboard/SuperadminDashboard";
 import { CategoryCardWallet } from "../../listeners/wallet/WalletDetails";
 
 import { useSelector } from "react-redux";

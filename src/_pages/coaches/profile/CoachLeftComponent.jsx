@@ -345,7 +345,8 @@ const CoachLeftComponent = () => {
             </span>
           )}
 
-        {profileStatus == 3 && (
+        {profileStatus == 3 &&
+          permissions?.["coach"]?.includes("update_coach_profile_status") && (
           <Button
             variant="contained"
             style={{

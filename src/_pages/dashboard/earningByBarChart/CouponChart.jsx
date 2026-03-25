@@ -89,18 +89,9 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 export default function CouponChart() {
   const { isDarkMode } = useTheme();
-  const axisColor = isDarkMode ? "#a0a0b0" : "#666";
-  const axisStroke = isDarkMode ? "#4a4a6a" : "#333";
-  const gridColor = isDarkMode ? "#2e2e50" : "#f0f0f0";
-  const selectStyle = {
-    padding: "8px 12px",
-    borderRadius: "4px",
-    border: `1px solid ${isDarkMode ? "var(--input-border)" : "#ccc"}`,
-    backgroundColor: isDarkMode ? "var(--input-bg)" : "white",
-    color: isDarkMode ? "var(--input-text)" : "inherit",
-    fontSize: "14px",
-    cursor: "pointer",
-  };
+  const axisColor = isDarkMode ? "#a0a0a0" : "#666";
+  const axisStroke = isDarkMode ? "#555555" : "#333";
+  const gridColor = isDarkMode ? "#2a2a2a" : "#f0f0f0";
 
   const [data, setData] = useState([]);
 
@@ -169,132 +160,84 @@ export default function CouponChart() {
     );
   }
 
+  const inputStyle = {
+    padding: "6px 10px",
+    borderRadius: "8px",
+    border: `1px solid ${isDarkMode ? "#333333" : "#cbd5e0"}`,
+    backgroundColor: isDarkMode ? "#1a1a1a" : "#fff",
+    color: isDarkMode ? "#e0e0e0" : "inherit",
+    fontSize: "13px",
+    outline: "none",
+  };
+
   return (
-    <Box sx={{ padding: 2 }}>
+    <Box
+      sx={{
+        width: "100%",
+        padding: "24px",
+        borderRadius: "12px",
+        backgroundColor: isDarkMode ? "#1e1e1e" : "#fff",
+        color: isDarkMode ? "#e0e0e0" : "inherit",
+        border: `1px solid ${isDarkMode ? "#333333" : "var(--dashboard-card-border, #e0e0e0)"}`,
+        boxShadow: isDarkMode ? "0 2px 8px rgba(0,0,0,0.3)" : "var(--dashboard-card-shadow, 0 2px 8px rgba(0,0,0,0.08))",
+      }}
+    >
+      {/* Header */}
       <Box
         sx={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          mb: 3,
+          mb: 2,
+          pb: 2,
+          borderBottom: isDarkMode ? "1px solid #333333" : "1px solid #E5E7EB",
         }}
       >
-        <h2 style={{ margin: 0, color: "var(--dashboard-heading-color)", fontWeight: 700 }}>Coupon</h2>
+        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>Coupon</h2>
       </Box>
 
-      <Box
-        sx={{
-          width: "100%",
-          display: "flex",
-          justifyContent: "space-between",
-          gap: 2,
-        }}
-      >
-        {/* ✅ Chart Section */}
-        <div style={{ width: "75%", overflowX: "auto" }}>
-          <ResponsiveContainer width="100%" height={400}>
-            <BarChart
-              data={data}
-              margin={{ left: 20, right: 20, top: 40, bottom: 80 }}
-            >
-              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-              <XAxis
-                dataKey="label"
-                tick={{ fill: axisColor, fontSize: 12 }}
-                stroke={axisStroke}
-              />
-              <YAxis tick={{ fill: axisColor, fontSize: 12 }} stroke={axisStroke} />
-              <Tooltip content={<CustomTooltip />} />
-              <Legend
-                wrapperStyle={{ paddingTop: "10px" }}
-                iconType="rect"
-                iconSize={20}
-              />
-              <Bar
-                dataKey="Coupon"
-                stackId="stack"
-                fill="#5174c0ff"
-                barSize={25}
-              />
-              <Bar
-                dataKey="Referral"
-                stackId="stack"
-                fill="#ff9040ff"
-                barSize={25}
-              />
-              <Bar
-                dataKey="Reference"
-                stackId="stack"
-                fill="#EC4899"
-                barSize={25}
-              />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
+      {/* Filter Controls */}
+      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3, flexWrap: "wrap" }}>
+        <select value={filters.granularity} onChange={handleGranularityChange} style={inputStyle}>
+          <option value="">Current Month (Daily)</option>
+          <option value="weekly">Weekly</option>
+          <option value="monthly">Monthly</option>
+          <option value="yearly">Yearly</option>
+        </select>
 
-        {/* ✅ Filters Section */}
-        <div className="filter-section" style={{ width: "auto" }}>
-          <div className="filter-section-title">Date Range</div>
-          <div className="date-inputs">
-            <div className="date-input-group">
-              <label htmlFor="startDate">Start Date</label>
-              <input
-                type="date"
-                id="startDate"
-                className="date-input"
-                value={filters.startDate}
-                onChange={(e) => handleDateChange("startDate", e.target.value)}
-              />
-            </div>
-            <div className="date-input-group">
-              <label htmlFor="endDate">End Date</label>
-              <input
-                type="date"
-                id="endDate"
-                className="date-input"
-                value={filters.endDate}
-                onChange={(e) => handleDateChange("endDate", e.target.value)}
-                min={filters.startDate}
-              />
-            </div>
-          </div>
+        <select value={filters.platform} onChange={handlePlatformChange} style={inputStyle}>
+          <option value="">All Platforms</option>
+          <option value={0}>User</option>
+          <option value={1}>Admin</option>
+        </select>
 
-          <div className="filter-section">
-            <div className="filter-section-title">Granularity</div>
-            <select
-              value={filters.granularity}
-              onChange={handleGranularityChange}
-              className="filter-dropdown"
-            >
-              <option value="">Current Month (Daily)</option>
-              <option value="weekly">Weekly</option>
-              <option value="monthly">Monthly</option>
-              <option value="yearly">Yearly</option>
-            </select>
-          </div>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+          <input type="date" value={filters.startDate} onChange={(e) => handleDateChange("startDate", e.target.value)} style={inputStyle} />
+          <span style={{ color: isDarkMode ? "#a0a0a0" : "#666", fontSize: "13px" }}>to</span>
+          <input type="date" value={filters.endDate} onChange={(e) => handleDateChange("endDate", e.target.value)} min={filters.startDate} style={inputStyle} />
+        </Box>
 
-          <div className="filter-section">
-            <div className="filter-section-title">Group By</div>
-            <select
-              value={filters.platform}
-              onChange={handlePlatformChange}
-              className="filter-dropdown"
-            >
-              <option value="">Select Type</option>
-              <option value={0}>User</option>
-              <option value={1}>Admin</option>
-            </select>
-          </div>
+        <button className="apply-button" onClick={handleApply} style={{ borderRadius: "8px" }}>Apply</button>
 
-          <div className="filter-actions" style={{ width: "max-content" }}>
-            <button className="apply-button" onClick={handleApply}>
-              Apply Filters
-            </button>
-            <button className="reset-button" onClick={handleReset}>
-              Reset
-            </button>
-          </div>
-        </div>
+        {(filters.startDate || filters.endDate || filters.granularity || filters.platform) && (
+          <button className="reset-button" onClick={handleReset} style={{ borderRadius: "8px" }}>Reset</button>
+        )}
+      </Box>
+
+      {/* Chart */}
+      <Box sx={{ width: "100%", overflowX: "auto" }}>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart data={data} margin={{ left: 20, right: 20, top: 10, bottom: 60 }}>
+            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+            <XAxis dataKey="label" tick={{ fill: axisColor, fontSize: 12 }} stroke={axisStroke} />
+            <YAxis tick={{ fill: axisColor, fontSize: 12 }} stroke={axisStroke} />
+            <Tooltip content={<CustomTooltip />} />
+            <Legend verticalAlign="top" align="center" wrapperStyle={{ paddingBottom: "10px" }} iconType="rect" iconSize={16} />
+            <Bar dataKey="Coupon" stackId="stack" fill="#5174c0ff" barSize={25} />
+            <Bar dataKey="Referral" stackId="stack" fill="#ff9040ff" barSize={25} />
+            <Bar dataKey="Reference" stackId="stack" fill="#EC4899" barSize={25} />
+          </BarChart>
+        </ResponsiveContainer>
       </Box>
     </Box>
   );

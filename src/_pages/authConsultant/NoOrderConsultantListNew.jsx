@@ -29,7 +29,7 @@ const consultantTypeOptions = [
   { label: "Listener", value: "3" },
 ];
 
-const NoOrderConsultantListNew = () => {
+const NoOrderConsultantListNew = ({ hideBackButton = false }) => {
   const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
@@ -118,13 +118,15 @@ const NoOrderConsultantListNew = () => {
     <div className="noc-page">
       {/* Filters + Stats */}
       <div className="noc-filters">
-        <button
-          className="noc-back-btn"
-          onClick={() => navigate("/auth-consultant")}
-          title="Back"
-        >
-          <ArrowLeft size={18} />
-        </button>
+        {!hideBackButton && (
+          <button
+            className="noc-back-btn"
+            onClick={() => navigate("/auth-consultant")}
+            title="Back"
+          >
+            <ArrowLeft size={18} />
+          </button>
+        )}
 
         <div className="noc-search-box">
           <Search size={18} className="noc-search-icon" />

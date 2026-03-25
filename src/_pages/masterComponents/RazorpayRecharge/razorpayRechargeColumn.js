@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../../_store/slices/userSlice";
 import { formatNumber } from "../../users/transactionlist/userTransactionsColumn";
 import AndroidIcon from "@mui/icons-material/Android";
@@ -15,15 +15,24 @@ const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.user_name;
 
   const dispatch = useDispatch();
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const hasViewUserProfile = permissions?.["user"]?.includes("view_user_profile");
 
   const handleUserClick = () => {
     // Dispatch the user ID to Redux store
     dispatch(setCurrentUser(value));
   };
 
+  if (!hasViewUserProfile) {
+    return (
+      <span className="orderId-color">
+        {userName}( {value})
+      </span>
+    );
+  }
+
   return (
     <Link
-      // to="/users_Profile"
       to={`/user/${value}`}
       onClick={handleUserClick}
       style={{ textDecoration: "none" }}

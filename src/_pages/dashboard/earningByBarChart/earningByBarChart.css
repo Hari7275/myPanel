@@ -86,14 +86,18 @@
 }
 
 .apply-button {
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 8px;
   border: none;
   background-color: #6366f1;
   color: #ffffff;
   font-size: 13px;
   font-weight: 600;
   cursor: pointer;
+  width: auto !important;
+  max-width: fit-content;
+  flex: 0 0 auto;
+  white-space: nowrap;
   transition: background-color 0.2s ease;
 }
 
@@ -102,9 +106,13 @@
 }
 
 .reset-button {
-  padding: 8px 16px;
-  border-radius: 4px;
+  padding: 6px 14px;
+  border-radius: 8px;
   border: 1px solid var(--input-border);
+  width: auto !important;
+  max-width: fit-content;
+  flex: 0 0 auto;
+  white-space: nowrap;
   background-color: transparent;
   color: var(--text-secondary);
   font-size: 13px;

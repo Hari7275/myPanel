@@ -186,7 +186,7 @@ const Layout = () => {
             element={
               <PrivateRoute
                 element={<DashboardMainPage />}
-                requiredPermissions={["view_dashboard"]} // Just the essential permission
+                requiredPermissions={["view_dashboard_superadmin", "view_dashboard_admin", "view_dashboard_onboarding_associate", "view_dashboard_developer", "view_dashboard_onboarding_manager", "view_dashboard_onboarding_executive"]}
               />
             }
           />
