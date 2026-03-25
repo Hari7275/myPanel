@@ -47,6 +47,23 @@ export const CategoryCard = ({ link, label, price, bgcolor }) => (
   </div>
 );
 
+const EarningsSection = ({ title, data }) => {
+  if (!data || data.length === 0) return null;
+  return (
+    <div className="earnings-section">
+      <h3 className="earnings-section-title">{title}</h3>
+      <div className="earnings-cards-grid">
+        {data.map((item) => (
+          <div key={item.title || item.name} className="earnings-card">
+            <span className="earnings-card-label">{item.name}</span>
+            <span className="earnings-card-value">₹ {item.value || 0}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const TabLoader = ({ isDarkMode }) => (
   <span className="loadPage">
     <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
@@ -60,7 +77,7 @@ const SuperadminDashboard = () => {
 
   // Only fetch earnings data when earnings tab is active
   const skipEarnings = activeView !== "earnings";
-  const { data: fluteIncome } = useGetFluteIncomeQuery(undefined, { skip: skipEarnings });
+  const { data: fluteIncome, isFetching: isEarningsLoading } = useGetFluteIncomeQuery(undefined, { skip: skipEarnings });
   const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery(undefined, { skip: skipEarnings });
   const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery(undefined, { skip: skipEarnings });
   const { data: consultantIncome } = useGetConsultantIncomeQuery(undefined, { skip: skipEarnings });
@@ -164,78 +181,29 @@ const SuperadminDashboard = () => {
       {/* Earnings Tab - APIs fetched only when active */}
       {activeView === "earnings" && (
         <div className="oa-overview-content">
-          <div className="dashboard-main-card">
-            <div className="dashboard-grid">
-              {fluteEarning.map((item) => (
-                <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
+          {isEarningsLoading ? (
+            <div className="earnings-skeleton">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="skeleton-section">
+                  <div className="skeleton-title skeleton-pulse" />
+                  <div className="skeleton-grid">
+                    {[1, 2, 3, 4, 5].map((j) => (
+                      <div key={j} className="skeleton-card skeleton-pulse" />
+                    ))}
+                  </div>
+                </div>
               ))}
             </div>
-          </div>
-
-          {fluteIncByConslt.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Flute Income by Consultants</h2>
-              <div className="dashboard-grid">
-                {fluteIncByConslt.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {fluteIncByUsers.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Flute Income by Users</h2>
-              <div className="dashboard-grid">
-                {fluteIncByUsers.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {consultantEarning.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Consultant Income by Order</h2>
-              <div className="dashboard-grid">
-                {consultantEarning.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {fluteRefToUser.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Refund Amount to Users</h2>
-              <div className="dashboard-grid">
-                {fluteRefToUser.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {consultantEarningSession.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Consultant Income by Session</h2>
-              <div className="dashboard-grid">
-                {consultantEarningSession.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
-          )}
-
-          {consltPayoutIncome.length > 0 && (
-            <div className="dashboard-main-card">
-              <h2 className="dashboard-heading">Consultants Payout Amount</h2>
-              <div className="dashboard-grid">
-                {consltPayoutIncome.map((item) => (
-                  <CategoryCard key={item.title} label={item.name} price={item.value || 0} bgcolor={item.color} />
-                ))}
-              </div>
-            </div>
+          ) : (
+            <>
+              <EarningsSection title="Flute Earnings" data={fluteEarning} />
+              <EarningsSection title="Flute Income by Consultants" data={fluteIncByConslt} />
+              <EarningsSection title="Flute Income by Users" data={fluteIncByUsers} />
+              <EarningsSection title="Consultant Income by Order" data={consultantEarning} />
+              <EarningsSection title="Refund Amount to Users" data={fluteRefToUser} />
+              <EarningsSection title="Consultant Income by Session" data={consultantEarningSession} />
+              <EarningsSection title="Consultants Payout Amount" data={consltPayoutIncome} />
+            </>
           )}
         </div>
       )}

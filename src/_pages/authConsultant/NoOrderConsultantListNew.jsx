@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { debounce } from "lodash";
 import "./NoOrderConsultantListNew.css";
+import "../dashboard/OnboardingAssociateDashboard.css";
 import { useTheme } from "../../_context/ThemeContext";
 
 const lastDaysOptions = [
@@ -90,10 +91,10 @@ const NoOrderConsultantListNew = ({ hideBackButton = false }) => {
 
   if (isLoading) {
     return (
-      <div className="noc-page">
-        <div className="noc-loading">
-          <Atom color={isDarkMode ? "#aaaaaa" : "#1c2434"} size="medium" text="" textColor="" />
-          <span className="noc-loading-text">Loading consultants...</span>
+      <div className="noc-page" style={{ padding: "20px" }}>
+        <div className="skeleton-section">
+          <div className="skeleton-title skeleton-pulse" />
+          <div className="skeleton-card skeleton-pulse" style={{ height: "400px", borderRadius: "8px" }} />
         </div>
       </div>
     );

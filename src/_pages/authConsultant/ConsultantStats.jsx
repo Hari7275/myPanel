@@ -6,6 +6,7 @@ import { ArrowLeft } from "lucide-react";
 import { useTheme } from "../../_context/ThemeContext";
 import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
 import "./ConsultantStats.css";
+import "../dashboard/OnboardingAssociateDashboard.css";
 
 const statLabels = {
   total: "Total",
@@ -80,9 +81,18 @@ const ConsultantStats = ({ hideBackButton = false }) => {
 
   if (isLoading) {
     return (
-      <span className="loadPage">
-        <Atom color={isDarkMode ? "#aaaaaa" : "#1c2434"} size="medium" text="" textColor="" />
-      </span>
+      <div className="earnings-skeleton" style={{ padding: "20px" }}>
+        {[1, 2, 3, 4].map((i) => (
+          <div key={i} className="skeleton-section">
+            <div className="skeleton-title skeleton-pulse" />
+            <div className="skeleton-grid">
+              {[1, 2, 3, 4, 5, 6, 7].map((j) => (
+                <div key={j} className="skeleton-card skeleton-pulse" />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     );
   }
 

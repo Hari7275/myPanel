@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useCallback } from "react";
-import { ArrowRight, Loader, Pencil, BarChart3 } from "lucide-react";
+import { ArrowRight, Pencil } from "lucide-react";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { COLUMNS } from "./userListingColumns";
 import {
@@ -18,7 +18,6 @@ import { debounce } from "lodash";
 import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
 import UserFilter from "./UserFilter";
 import Button from "@mui/material/Button";
-import UserRegisteredGraph from "./UserRegisteredGraph";
 Modal.setAppElement("#root");
 const UserListingTable = () => {
   const dispatch = useDispatch();
@@ -46,7 +45,6 @@ const UserListingTable = () => {
   const [dynamicPagination] = useState(true); // Enable or disable dynamic pagination
   const permissions = usePermissions();
   // Graph modal state
-  const [showGraph, setShowGraph] = useState(false);
 
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
@@ -278,15 +276,6 @@ const UserListingTable = () => {
           </span>
         </div>
 
-        <div style={{ marginLeft: "20px" }}>
-          <Button
-            variant="contained"
-            onClick={() => setShowGraph(true)}
-          >
-            <BarChart3 style={{ marginRight: "6px" }} />
-            {/* User Registered Graph */}
-          </Button>
-        </div>
       </div>
     </div>
   );
@@ -351,12 +340,6 @@ const UserListingTable = () => {
           />
         )}
 
-        {showGraph && (
-          <UserRegisteredGraph
-            isOpen={showGraph}
-            onClose={() => setShowGraph(false)}
-          />
-        )}
       </>
     )
   );

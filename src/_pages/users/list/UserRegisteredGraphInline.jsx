@@ -198,18 +198,7 @@ const UserRegisteredGraphInline = () => {
 
       {/* Chart Area */}
       {loading ? (
-        <Box
-          sx={{
-            height: 400,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: isDarkMode ? "#1a1a1a" : "#f9fafb",
-            borderRadius: "8px",
-          }}
-        >
-          <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
-        </Box>
+        <div className="skeleton-card skeleton-pulse" style={{ height: "400px", borderRadius: "8px" }} />
       ) : graphData.length === 0 ? (
         <Box
           sx={{

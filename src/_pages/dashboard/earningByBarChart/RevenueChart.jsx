@@ -483,9 +483,10 @@ export default function RevenueChart() {
 
   if (isLoading) {
     return (
-      <span className="loadPage">
-        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
-      </span>
+      <div className="skeleton-section">
+        <div className="skeleton-title skeleton-pulse" />
+        <div className="skeleton-card skeleton-pulse" style={{ height: "400px", borderRadius: "8px" }} />
+      </div>
     );
   }
 

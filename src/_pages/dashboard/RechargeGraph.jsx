@@ -3,12 +3,13 @@ import { LineChart, lineElementClasses } from "@mui/x-charts/LineChart";
 import Box from "@mui/material/Box";
 import { useGetFluteRevenueOnGraphQuery } from "../../_store/api";
 import { useTheme } from "../../_context/ThemeContext";
+import "./OnboardingAssociateDashboard.css";
 
 export default function RechargeGraph() {
   const { isDarkMode } = useTheme();
   const [data, setData] = useState([]);
   const [dateFilter, setDateFilter] = useState("weekly");
-  const { data: fetchData } = useGetFluteRevenueOnGraphQuery({ dateFilter });
+  const { data: fetchData, isFetching } = useGetFluteRevenueOnGraphQuery({ dateFilter });
 
   useEffect(() => {
     if (fetchData?.data) {
@@ -71,53 +72,59 @@ export default function RechargeGraph() {
       </Box>
 
       {/* Chart */}
-      <Box sx={{ width: "100%", overflowX: "auto" }}>
-        <LineChart
-          height={300}
-          series={[
-            {
-              data: totals,
-              label: "Flute Revenue",
-              area: true,
-              showMark: true,
-              color: "rgba(76, 178, 55, 0.55)",
-            },
-          ]}
-          xAxis={[
-            {
-              scaleType: "point",
-              data: labels,
-            },
-          ]}
-          sx={{
-            [`& .${lineElementClasses.root}`]: {
-              display: "none",
-            },
-            ".MuiChartsAxis-tickLabel": {
-              strokeWidth: "0.4",
-              fill: isDarkMode ? "#a0a0a0" : "#666",
-            },
-            ".MuiChartsAxis-line": {
-              stroke: isDarkMode ? "#555555" : "#666",
-              strokeWidth: 1,
-            },
-            ".MuiChartsAxis-tick": {
-              stroke: isDarkMode ? "#555555" : "#666",
-              strokeWidth: 1,
-            },
-            width: "100%",
-          }}
-          slotProps={{
-            legend: {
-              labelStyle: {
-                fontSize: 13,
-                fill: isDarkMode ? "#e0e0e0" : "#333",
-                fontWeight: 500,
+      {isFetching && data.length === 0 ? (
+        <div className="skeleton-section" style={{ border: "none", padding: 0 }}>
+          <div className="skeleton-card skeleton-pulse" style={{ height: "300px", borderRadius: "8px" }} />
+        </div>
+      ) : (
+        <Box sx={{ width: "100%", overflowX: "auto" }}>
+          <LineChart
+            height={300}
+            series={[
+              {
+                data: totals,
+                label: "Flute Revenue",
+                area: true,
+                showMark: true,
+                color: "rgba(76, 178, 55, 0.55)",
               },
-            },
-          }}
-        />
-      </Box>
+            ]}
+            xAxis={[
+              {
+                scaleType: "point",
+                data: labels,
+              },
+            ]}
+            sx={{
+              [`& .${lineElementClasses.root}`]: {
+                display: "none",
+              },
+              ".MuiChartsAxis-tickLabel": {
+                strokeWidth: "0.4",
+                fill: isDarkMode ? "#a0a0a0" : "#666",
+              },
+              ".MuiChartsAxis-line": {
+                stroke: isDarkMode ? "#555555" : "#666",
+                strokeWidth: 1,
+              },
+              ".MuiChartsAxis-tick": {
+                stroke: isDarkMode ? "#555555" : "#666",
+                strokeWidth: 1,
+              },
+              width: "100%",
+            }}
+            slotProps={{
+              legend: {
+                labelStyle: {
+                  fontSize: 13,
+                  fill: isDarkMode ? "#e0e0e0" : "#333",
+                  fontWeight: 500,
+                },
+              },
+            }}
+          />
+        </Box>
+      )}
     </Box>
   );
 }
