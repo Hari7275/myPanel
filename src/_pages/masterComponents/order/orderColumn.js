@@ -4,7 +4,6 @@ import { setCurrentUser } from "../../../_store/slices/userSlice";
 import {
   getStatusColor,
   COMPLETED_BY_MAP,
-  COMPLETED_BY_COLOR_MAP,
 } from "../../../_constants/consultantConstant";
 
 import { OrderType, OrderStatus } from "../../../_constants/consultantConstant";
@@ -99,6 +98,8 @@ const ConsultantNavigationCell = ({ value, row }) => {
           color: "var(--table-text)",
           fontStyle: foreigner ? "italic" : "normal",
           whiteSpace: "nowrap",
+          fontSize: "15px",
+          fontWeight: 600,
         }}
       >
         {consultantName}
@@ -171,9 +172,9 @@ export const COLUMNORDER = [
       const consultant = row.original.consultant_earning;
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "3px", fontSize: "12px" }}>
-          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Revenue</span> {revenue ?? "-"}</span>
-          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Flute</span> {flute ?? "-"}</span>
-          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>Consultant</span> {consultant ?? "-"}</span>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>R</span> {revenue ?? "-"}</span>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>F</span> {flute ?? "-"}</span>
+          <span style={{ whiteSpace: "nowrap" }}><span style={{ color: "#64748b" }}>C</span> {consultant ?? "-"}</span>
         </div>
       );
     },
@@ -187,11 +188,11 @@ export const COLUMNORDER = [
       const date = new Date(value);
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span style={{ fontSize: "13px", fontWeight: 500, color: "inherit" }}>
-            {date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
-          </span>
-          <span style={{ fontSize: "12px", color: "#64748b" }}>
+          <span style={{ fontSize: "13px", fontWeight: 600, color: "inherit" }}>
             {date.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
+          </span>
+          <span style={{ fontSize: "11px", color: "#64748b" }}>
+            {date.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
           </span>
         </div>
       );
@@ -215,11 +216,11 @@ export const COLUMNORDER = [
       if (!endTime) return "N/A";
       return (
         <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
-          <span style={{ fontSize: "13px", fontWeight: 500, color: isOverdueOrder ? "red" : "inherit", whiteSpace: "nowrap" }}>
-            {endTime.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
-          </span>
-          <span style={{ fontSize: "12px", color: isOverdueOrder ? "red" : "#64748b", whiteSpace: "nowrap" }}>
+          <span style={{ fontSize: "13px", fontWeight: 600, color: isOverdueOrder ? "red" : "inherit", whiteSpace: "nowrap" }}>
             {endTime.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })} <span style={{ color: isOverdueOrder ? "red" : "var(--table-link-consultant-local)", fontWeight: 600 }}>({value})</span>
+          </span>
+          <span style={{ fontSize: "11px", color: isOverdueOrder ? "red" : "#64748b", whiteSpace: "nowrap" }}>
+            {endTime.toLocaleDateString("en-US", { day: "numeric", month: "short", year: "numeric" })}
           </span>
         </div>
       );
@@ -246,14 +247,7 @@ export const COLUMNORDER = [
 
       if (rejectedCall) {
         return (
-          <span
-            className="order-status-badge"
-            style={{
-              color: "#F87171",
-              backgroundColor: "#F871711a",
-              border: "1px solid #F8717133",
-            }}
-          >
+          <span style={{ color: "#F87171", fontWeight: 600, fontSize: "13px" }}>
             Consultant Cancelled
           </span>
         );
@@ -261,14 +255,7 @@ export const COLUMNORDER = [
 
       const color = getStatusColor(value);
       return (
-        <span
-          className="order-status-badge"
-          style={{
-            color,
-            backgroundColor: `${color}1a`,
-            border: `1px solid ${color}33`,
-          }}
-        >
+        <span style={{ color, fontWeight: 600, fontSize: "13px" }}>
           {OrderStatus(value)}
         </span>
       );
@@ -296,10 +283,9 @@ export const COLUMNORDER = [
     Header: "Comp By",
     accessor: "completed_by",
     Cell: ({ value }) => (
-      // <span className={COMPLETED_BY_COLOR_MAP[value] || "text-gray-700"}>
       <span
         style={{
-          color: COMPLETED_BY_COLOR_MAP[value] || "var(--table-text)",
+          color: "var(--table-text)",
           fontWeight: 500,
         }}
       >
