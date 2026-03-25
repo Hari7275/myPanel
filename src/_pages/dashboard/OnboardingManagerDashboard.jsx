@@ -1,21 +1,30 @@
-import React, { useState } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { Users, AlertTriangle } from "lucide-react";
 import Button from "@mui/material/Button";
-import ConsultantRegisteredGraphInline from "../authConsultant/ConsultantRegisteredGraphInline";
-import ConsultantStats from "../authConsultant/ConsultantStats";
-import NoOrderConsultantListNew from "../authConsultant/NoOrderConsultantListNew";
+import { Atom } from "react-loading-indicators";
+import { useTheme } from "../../_context/ThemeContext";
 import UserOverview from "./UserOverview";
 import ConsltantOverview from "./consultantOverview/ConsultantOverview";
 import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 import "./OnboardingAssociateDashboard.css";
 
+const ConsultantRegisteredGraphInline = lazy(() => import("../authConsultant/ConsultantRegisteredGraphInline"));
+const ConsultantStats = lazy(() => import("../authConsultant/ConsultantStats"));
+const NoOrderConsultantListNew = lazy(() => import("../authConsultant/NoOrderConsultantListNew"));
+
+const TabLoader = ({ isDarkMode }) => (
+  <span className="loadPage">
+    <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
+  </span>
+);
+
 const OnboardingManagerDashboard = () => {
+  const { isDarkMode } = useTheme();
   const [activeView, setActiveView] = useState("overview");
 
   return (
     <div className="oa-dashboard">
-      {/* Action Buttons */}
       <div className="oa-actions">
         <Button
           variant={activeView === "overview" ? "contained" : "outlined"}
@@ -41,15 +50,12 @@ const OnboardingManagerDashboard = () => {
           size="small"
           sx={{ textTransform: "none", borderRadius: "8px", fontWeight: 600 }}
         >
-          {/* No Order Consultants */}
           Idle Consultants
         </Button>
       </div>
 
-      {/* Main Content */}
       {activeView === "overview" && (
         <div className="oa-overview-content">
-          {/* User & Consultant Overview */}
           <div className="oa-grid-2">
             <div className="dashboard-card-style">
               <UserOverview />
@@ -58,11 +64,7 @@ const OnboardingManagerDashboard = () => {
               <ConsltantOverview />
             </div>
           </div>
-
-          {/* Top Active Consultants - Full Width */}
           <TopActiveConsultants />
-
-          {/* Traffic */}
           <div className="oa-grid-2">
             <TrafficConsultant />
           </div>
@@ -70,16 +72,20 @@ const OnboardingManagerDashboard = () => {
       )}
 
       {activeView === "consultants" && (
-        <div className="oa-overview-content">
-          <ConsultantRegisteredGraphInline />
-          <ConsultantStats hideBackButton />
-        </div>
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-overview-content">
+            <ConsultantRegisteredGraphInline />
+            <ConsultantStats hideBackButton />
+          </div>
+        </Suspense>
       )}
 
       {activeView === "no-order" && (
-        <div className="oa-full-section">
-          <NoOrderConsultantListNew hideBackButton />
-        </div>
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-full-section">
+            <NoOrderConsultantListNew hideBackButton />
+          </div>
+        </Suspense>
       )}
     </div>
   );

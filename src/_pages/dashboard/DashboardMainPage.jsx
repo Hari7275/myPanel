@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../_store/slices/pageTitleSlice";
 import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
 import SuperadminDashboard from "./SuperadminDashboard";
-import AdminDashboard from "./AdminDashboard";
 import OnboardingAssociateDashboard from "./OnboardingAssociateDashboard";
 import DeveloperDashboard from "./DeveloperDashboard";
 import OnboardingManagerDashboard from "./OnboardingManagerDashboard";
@@ -11,7 +10,7 @@ import OnboardingExecutiveDashboard from "./OnboardingExecutiveDashboard";
 
 const DASHBOARD_COMPONENTS = [
   { permission: "view_dashboard_superadmin", component: SuperadminDashboard },
-  { permission: "view_dashboard_admin", component: AdminDashboard },
+  { permission: "view_dashboard_admin", component: SuperadminDashboard },
   { permission: "view_dashboard_onboarding_associate", component: OnboardingAssociateDashboard },
   { permission: "view_dashboard_developer", component: DeveloperDashboard },
   { permission: "view_dashboard_onboarding_manager", component: OnboardingManagerDashboard },

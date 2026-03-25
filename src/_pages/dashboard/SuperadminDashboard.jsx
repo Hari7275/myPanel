@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { lazy, Suspense, useState, useEffect } from "react";
 import {
   BarChart3,
   AlertTriangle,
@@ -26,12 +26,14 @@ import TrafficConsultant from "./TrafficConsultant";
 import TopActiveConsultants from "./topActiveConsultants/TopActiveConsultants";
 import RevenueByLocation from "./revenueByLocation/RevenueByLocation";
 import usePermissions from "../../_components/reuseComponents/permission/EmpPermission";
-import ConsultantRegisteredGraphInline from "../authConsultant/ConsultantRegisteredGraphInline";
-import ConsultantStats from "../authConsultant/ConsultantStats";
-import NoOrderConsultantListNew from "../authConsultant/NoOrderConsultantListNew";
-import UserRegisteredGraphInline from "../users/list/UserRegisteredGraphInline";
-import EarningByBarChart from "./earningByBarChart/EarningByBarChart";
 import "./OnboardingAssociateDashboard.css";
+
+// Lazy load heavy tab components
+const ConsultantRegisteredGraphInline = lazy(() => import("../authConsultant/ConsultantRegisteredGraphInline"));
+const ConsultantStats = lazy(() => import("../authConsultant/ConsultantStats"));
+const NoOrderConsultantListNew = lazy(() => import("../authConsultant/NoOrderConsultantListNew"));
+const UserRegisteredGraphInline = lazy(() => import("../users/list/UserRegisteredGraphInline"));
+const EarningByBarChart = lazy(() => import("./earningByBarChart/EarningByBarChart"));
 
 export const CategoryCard = ({ link, label, price, bgcolor }) => (
   <div>
@@ -45,48 +47,34 @@ export const CategoryCard = ({ link, label, price, bgcolor }) => (
   </div>
 );
 
+const TabLoader = ({ isDarkMode }) => (
+  <span className="loadPage">
+    <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
+  </span>
+);
+
 const SuperadminDashboard = () => {
   const { isDarkMode } = useTheme();
-  const [fluteEarning, setFluteEarning] = useState([]);
   const [activeView, setActiveView] = useState("overview");
-
-  const { data: fluteIncome, isLoading } = useGetFluteIncomeQuery();
-  const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery();
-  const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery();
-  const { data: consultantIncome } = useGetConsultantIncomeQuery();
-  const { data: consultantIncomeSession } = useGetConsultantIncomeBySessionQuery();
-  const { data: fluteRefToUsers } = useGetFluteRefundToUserQuery();
-  const { data: consltPayoutInc } = useGetConsultantPayoutAmountQuery();
-
   const permissions = usePermissions();
 
-  const [fluteIncByConslt, setFluteIncByConslt] = useState([]);
-  const [fluteIncByUsers, setFluteIncByUsers] = useState([]);
-  const [consultantEarning, setConsultantEarning] = useState([]);
-  const [consultantEarningSession, setConsultantEarningSession] = useState([]);
-  const [fluteRefToUser, setFluteRefToUser] = useState([]);
-  const [consltPayoutIncome, setConsltPayoutIncome] = useState([]);
+  // Only fetch earnings data when earnings tab is active
+  const skipEarnings = activeView !== "earnings";
+  const { data: fluteIncome } = useGetFluteIncomeQuery(undefined, { skip: skipEarnings });
+  const { data: fluteIncomeByConslt } = useGetFluteIncomeByConsultantsQuery(undefined, { skip: skipEarnings });
+  const { data: fluteIncomeByUsers } = useGetFluteIncomeByUsersQuery(undefined, { skip: skipEarnings });
+  const { data: consultantIncome } = useGetConsultantIncomeQuery(undefined, { skip: skipEarnings });
+  const { data: consultantIncomeSession } = useGetConsultantIncomeBySessionQuery(undefined, { skip: skipEarnings });
+  const { data: fluteRefToUsers } = useGetFluteRefundToUserQuery(undefined, { skip: skipEarnings });
+  const { data: consltPayoutInc } = useGetConsultantPayoutAmountQuery(undefined, { skip: skipEarnings });
 
-  useEffect(() => {
-    if (fluteIncome?.data) setFluteEarning(fluteIncome.data);
-    if (fluteIncomeByConslt?.data) setFluteIncByConslt(fluteIncomeByConslt.data);
-    if (fluteIncomeByUsers?.data) setFluteIncByUsers(fluteIncomeByUsers.data);
-    if (consultantIncome?.data) setConsultantEarning(consultantIncome.data);
-    if (consultantIncomeSession?.data) setConsultantEarningSession(consultantIncomeSession.data);
-    if (fluteRefToUsers?.data) setFluteRefToUser(fluteRefToUsers.data);
-    if (consltPayoutInc?.data) setConsltPayoutIncome(consltPayoutInc.data);
-  }, [fluteIncome, fluteIncomeByConslt, fluteIncomeByUsers, consultantIncome, consultantIncomeSession, fluteRefToUsers, consltPayoutInc]);
-
-  if (isLoading) {
-    return (
-      <span className="loadPage">
-        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
-      </span>
-    );
-  }
-
-
-
+  const fluteEarning = fluteIncome?.data || [];
+  const fluteIncByConslt = fluteIncomeByConslt?.data || [];
+  const fluteIncByUsers = fluteIncomeByUsers?.data || [];
+  const consultantEarning = consultantIncome?.data || [];
+  const consultantEarningSession = consultantIncomeSession?.data || [];
+  const fluteRefToUser = fluteRefToUsers?.data || [];
+  const consltPayoutIncome = consltPayoutInc?.data || [];
 
   return (
     <div className="oa-dashboard">
@@ -148,15 +136,13 @@ const SuperadminDashboard = () => {
         </Button>
       </div>
 
-      {/* Overview Tab */}
+      {/* Overview Tab - loaded eagerly */}
       {activeView === "overview" && (
         <div className="oa-overview-content">
-          {/* Recharge Graph - Full Width First Line */}
           {permissions?.["Dashboard"]?.includes("view_recharge") && (
             <RechargeGraph />
           )}
 
-          {/* User & Consultant Overview */}
           <div className="oa-grid-2">
             <div className="dashboard-card-style">
               <UserOverview />
@@ -166,10 +152,8 @@ const SuperadminDashboard = () => {
             </div>
           </div>
 
-          {/* Top Active Consultants - Full Width */}
           <TopActiveConsultants />
 
-          {/* Traffic & Referral */}
           <div className="oa-grid-2">
             <TrafficConsultant />
             <RevenueByLocation />
@@ -177,24 +161,17 @@ const SuperadminDashboard = () => {
         </div>
       )}
 
-      {/* Earnings Tab */}
+      {/* Earnings Tab - APIs fetched only when active */}
       {activeView === "earnings" && (
         <div className="oa-overview-content">
-          {/* Flute Earnings */}
           <div className="dashboard-main-card">
             <div className="dashboard-grid">
               {fluteEarning.map((item) => (
-                <CategoryCard
-                  key={item.title}
-                  label={item.name}
-                  price={item.value}
-                  bgcolor={item.color}
-                />
+                <CategoryCard key={item.title} label={item.name} price={item.value} bgcolor={item.color} />
               ))}
             </div>
           </div>
 
-          {/* Flute Income by Consultants */}
           {fluteIncByConslt.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Flute Income by Consultants</h2>
@@ -206,7 +183,6 @@ const SuperadminDashboard = () => {
             </div>
           )}
 
-          {/* Flute Income by Users */}
           {fluteIncByUsers.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Flute Income by Users</h2>
@@ -218,7 +194,6 @@ const SuperadminDashboard = () => {
             </div>
           )}
 
-          {/* Consultant Income by Order */}
           {consultantEarning.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Consultant Income by Order</h2>
@@ -230,7 +205,6 @@ const SuperadminDashboard = () => {
             </div>
           )}
 
-          {/* Refund Amount to Users */}
           {fluteRefToUser.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Refund Amount to Users</h2>
@@ -242,7 +216,6 @@ const SuperadminDashboard = () => {
             </div>
           )}
 
-          {/* Consultant Income by Session */}
           {consultantEarningSession.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Consultant Income by Session</h2>
@@ -254,7 +227,6 @@ const SuperadminDashboard = () => {
             </div>
           )}
 
-          {/* Consultants Payout Amount */}
           {consltPayoutIncome.length > 0 && (
             <div className="dashboard-main-card">
               <h2 className="dashboard-heading">Consultants Payout Amount</h2>
@@ -265,44 +237,47 @@ const SuperadminDashboard = () => {
               </div>
             </div>
           )}
-
         </div>
       )}
 
-      {/* Consultants Tab */}
+      {/* Lazy-loaded tabs */}
       {activeView === "consultants" && (
-        <div className="oa-overview-content">
-          <ConsultantRegisteredGraphInline />
-          <ConsultantStats hideBackButton />
-        </div>
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-overview-content">
+            <ConsultantRegisteredGraphInline />
+            <ConsultantStats hideBackButton />
+          </div>
+        </Suspense>
       )}
 
-      {/* Users Tab */}
       {activeView === "users" && (
-        <div className="oa-overview-content">
-          <UserRegisteredGraphInline />
-          <div className="oa-grid-2">
-            <div className="dashboard-card-style">
-              <UserOverview />
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-overview-content">
+            <UserRegisteredGraphInline />
+            <div className="oa-grid-2">
+              <div className="dashboard-card-style">
+                <UserOverview />
+              </div>
             </div>
           </div>
-        </div>
+        </Suspense>
       )}
 
-      {/* Idle Consultants Tab */}
       {activeView === "no-order" && (
-        <div className="oa-full-section">
-          <NoOrderConsultantListNew hideBackButton />
-        </div>
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-full-section">
+            <NoOrderConsultantListNew hideBackButton />
+          </div>
+        </Suspense>
       )}
 
-      {/* Bar Chart Tab */}
       {activeView === "bar-chart" && (
-        <div className="oa-full-section">
-          <EarningByBarChart />
-        </div>
+        <Suspense fallback={<TabLoader isDarkMode={isDarkMode} />}>
+          <div className="oa-full-section">
+            <EarningByBarChart />
+          </div>
+        </Suspense>
       )}
-
     </div>
   );
 };

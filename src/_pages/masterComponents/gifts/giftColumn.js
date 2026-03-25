@@ -81,8 +81,9 @@ export const PARTICULARGIFTPRICECOLUMN = [
 const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.gift_meta_data?.userData.name;
   const dispatch = useDispatch();
-  const role = useSelector((state) => state?.auth?.role);
-  const canNavigate = role === "superadmin" || role === "admin";
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const dashboardPerms = permissions?.["Dashboard"] || [];
+  const canNavigate = dashboardPerms.includes("view_dashboard_superadmin") || dashboardPerms.includes("view_dashboard_admin");
 
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
@@ -114,8 +115,9 @@ const ConsultantNavigationCell = ({ value, row }) => {
     row?.original?.consultant_details?.consultant_first_name;
   const consultantType = row?.original?.gift?.consultant_type;
   const foreigner = row?.original?.description?.is_consultant_foreigner;
-  const role = useSelector((state) => state?.auth?.role);
-  const canNavigate = role === "superadmin" || role === "admin";
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const dashboardPerms = permissions?.["Dashboard"] || [];
+  const canNavigate = dashboardPerms.includes("view_dashboard_superadmin") || dashboardPerms.includes("view_dashboard_admin");
 
   const navigationRoute = {
     1: `/astrologer/${value}`,

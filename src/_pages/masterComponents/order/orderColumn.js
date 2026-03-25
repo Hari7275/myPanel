@@ -32,8 +32,9 @@ const isOverdue = (endTime, currentTime) => {
 const CustomIdCell = ({ value, row }) => {
   const userName = row?.original?.description?.userData.name;
   const dispatch = useDispatch();
-  const role = useSelector((state) => state?.auth?.role);
-  const canNavigate = role === "superadmin" || role === "admin";
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const dashboardPerms = permissions?.["Dashboard"] || [];
+  const canNavigate = dashboardPerms.includes("view_dashboard_superadmin") || dashboardPerms.includes("view_dashboard_admin");
 
   const handleUserClick = () => {
     dispatch(setCurrentUser(value));
@@ -74,8 +75,9 @@ const ConsultantNavigationCell = ({ value, row }) => {
   const consultantName = row?.original?.description?.consultant_first_name;
   const consultantType = row?.original?.description?.consultant_type;
   const foreigner = row?.original?.description?.is_consultant_foreigner;
-  const role = useSelector((state) => state?.auth?.role);
-  const canNavigate = role === "superadmin" || role === "admin";
+  const permissions = useSelector((state) => state?.auth?.permissions || {});
+  const dashboardPerms = permissions?.["Dashboard"] || [];
+  const canNavigate = dashboardPerms.includes("view_dashboard_superadmin") || dashboardPerms.includes("view_dashboard_admin");
 
   const navigationRoute = {
     1: `/astrologer/${value}`,
