@@ -176,7 +176,8 @@ const AudioCallPage = () => {
     <div
       className="acpage-wrapper"
       style={{
-        minHeight: "100vh",
+        height: "100%",
+        overflowY: "auto",
         padding: "24px",
         maxWidth: "1600px",
         margin: "0 auto",

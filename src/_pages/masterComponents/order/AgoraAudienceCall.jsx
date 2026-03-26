@@ -29,9 +29,16 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
   const [primaryUserIndex, setPrimaryUserIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [pipPos, setPipPos] = useState({ x: 12, y: 12 });
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const dragRef = useRef(null);
   const dragState = useRef({ dragging: false, startX: 0, startY: 0, startPosX: 0, startPosY: 0, moved: false });
   const { isDarkMode } = useTheme();
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 480);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleTouchStart = useCallback((e) => {
     const touch = e.touches[0];
@@ -272,7 +279,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
       {/* ROW 2: Three Column Layout */}
       {isConnected ? (
         <>
-        <div
+        {!isMobile && <div
           style={{
             display: "grid",
             gridTemplateColumns: "300px 1fr 1fr",
@@ -453,17 +460,19 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
               border: "2px solid #374151",
               position: "relative",
               aspectRatio: "9/16",
-              maxHeight: "calc(100vh - 400px)",
+              maxHeight: "60vh",
             }}
           >
             {remoteUsers[0] ? (
               <>
-                <RemoteUser
-                  user={remoteUsers[0]}
-                  playVideo={true}
-                  playAudio={true}
-                  style={{ width: "100%", height: "100%" }}
-                />
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}>
+                  <RemoteUser
+                    user={remoteUsers[0]}
+                    playVideo={true}
+                    playAudio={true}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </div>
                 <div
                   style={{
                     position: "absolute",
@@ -536,17 +545,19 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
               border: "2px solid #374151",
               position: "relative",
               aspectRatio: "9/16",
-              maxHeight: "calc(100vh - 400px)",
+              maxHeight: "60vh",
             }}
           >
             {remoteUsers[1] ? (
               <>
-                <RemoteUser
-                  user={remoteUsers[1]}
-                  playVideo={true}
-                  playAudio={true}
-                  style={{ width: "100%", height: "100%" }}
-                />
+                <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0 }}>
+                  <RemoteUser
+                    user={remoteUsers[1]}
+                    playVideo={true}
+                    playAudio={true}
+                    style={{ width: "100%", height: "100%" }}
+                  />
+                </div>
                 <div
                   style={{
                     position: "absolute",
@@ -608,11 +619,11 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
               </div>
             )}
           </div>
-        </div>
+        </div>}
 
         {/* Mobile PiP Layout - WhatsApp style */}
-        <div className="agora-pip-container" style={{
-          display: "none",
+        {isMobile && <div className="agora-pip-container" style={{
+          display: "block",
           position: isFullscreen ? "fixed" : "relative",
           width: "100%",
           marginBottom: isFullscreen ? "0" : "10px",
@@ -771,7 +782,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
               ) : null}
             </div>
           )}
-        </div>
+        </div>}
         </>
       ) : (
         // Before Connection State
@@ -859,8 +870,8 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
       </div>
 
       {/* Mobile-only info section (hidden on desktop, shown on mobile below controls) */}
-      {isConnected && (
-        <div className="agora-info-mobile" style={{ display: "none", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
+      {isConnected && isMobile && (
+        <div className="agora-info-mobile" style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "10px" }}>
           <div style={{
             backgroundColor: isDarkMode ? "#1e1e2e" : "white",
             padding: "16px",
