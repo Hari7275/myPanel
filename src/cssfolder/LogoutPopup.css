@@ -1,5 +1,5 @@
 .logout-popup {
-  position: absolute;
+  position: fixed;
   right: 12px;
   top: 60px;
   z-index: 9999;
@@ -112,4 +112,55 @@ body.dark-mode .logout-divider {
 
 body.dark-mode .logout-btn:hover {
   background: rgba(239, 68, 68, 0.12);
+}
+
+/* ===== Mobile: Center Modal ===== */
+@media (max-width: 768px) {
+  .logout-popup {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+  }
+
+  .logout-popup-card {
+    min-width: 260px;
+    max-width: 300px;
+    width: 80%;
+    border-radius: 14px;
+  }
+
+  .logout-user-info {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .logout-avatar {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .logout-name {
+    font-size: 15px;
+  }
+
+  .logout-email {
+    font-size: 12px;
+  }
+
+  .logout-role {
+    font-size: 11px;
+  }
+
+  .logout-btn {
+    padding: 14px 16px;
+    font-size: 15px;
+  }
 }

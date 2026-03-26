@@ -9,7 +9,8 @@ import {
   useUpdateAgoraCredentialsToJoinCallMutation,
 } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
-import { ArrowRight, Pencil, Phone, Plus, ArrowLeft } from "lucide-react";
+import { ArrowRight, Pencil, Phone, Plus, ArrowLeft, Search, X, Clock, PhoneCall, MessageSquare, Video } from "lucide-react";
+import { OrderType, OrderStatus, getStatusColor } from "../../../_constants/consultantConstant";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
@@ -363,6 +364,60 @@ const OrderLists = () => {
 
   const totalPage = fetchData?.meta?.total_page || 1;
 
+  // Mobile search type toggle
+  const [searchType, setSearchType] = useState("order");
+  const [mobileSearchValue, setMobileSearchValue] = useState("");
+
+  const handleMobileSearch = (e) => {
+    const value = e.target.value;
+    setMobileSearchValue(value);
+    setPage(1);
+    if (searchType === "order") {
+      debouncedSearchOrderId(value);
+      setUserId("");
+      setConsultantId("");
+    } else if (searchType === "user") {
+      debouncedSearchUserId(value);
+      setOrderId("");
+      setConsultantId("");
+    } else if (searchType === "consultant") {
+      debouncedSearchConsultantId(value);
+      setOrderId("");
+      setUserId("");
+    }
+  };
+
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+    setMobileSearchValue("");
+    setOrderId("");
+    setUserId("");
+    setConsultantId("");
+    setPage(1);
+  };
+
+  const statusFilters = [
+    { label: "All", value: "" },
+    { label: "Running", value: 3 },
+    { label: "Completed", value: 4 },
+    { label: "Pending", value: 1 },
+    { label: "Confirmed", value: 2 },
+    { label: "Cancelled", value: 6 },
+    { label: "Rejected", value: 5 },
+    { label: "Waiting", value: 7 },
+    { label: "User No Response", value: 8 },
+    { label: "Consultant No Response", value: 9 },
+  ];
+
+  const getOrderTypeIcon = (type) => {
+    switch (Number(type)) {
+      case 1: return <MessageSquare size={14} />;
+      case 2: return <PhoneCall size={14} />;
+      case 3: return <Video size={14} />;
+      default: return <Phone size={14} />;
+    }
+  };
+
   if (isLoading) {
     return (
       <span className="loadPage">
@@ -373,28 +428,205 @@ const OrderLists = () => {
 
   return (
     <div className="ol-page">
-      <div className="ol-table-card">
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle="Order List"
-        dynamicPagination={dynamicPagination}
-        customFilterComponent={customFilterComponent}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        includeCheckbox={false}
-        showTableHeading={false}
-        showGlobalSearch={false}
-        isLoading={isFetching}
-      />
+      {/* ===== MOBILE CARD VIEW ===== */}
+      <div className="ol-mobile-view">
+        {/* Search */}
+        <div className="olm-search-bar">
+          <Search size={16} className="olm-search-icon" />
+          <input
+            className="olm-search-input"
+            placeholder={`Search by ${searchType} ID...`}
+            value={mobileSearchValue}
+            onChange={handleMobileSearch}
+          />
+          {mobileSearchValue && (
+            <button
+              className="olm-clear-btn"
+              onClick={() => {
+                setMobileSearchValue("");
+                setOrderId("");
+                setUserId("");
+                setConsultantId("");
+                setPage(1);
+              }}
+            >
+              <X size={16} />
+            </button>
+          )}
+        </div>
 
+        {/* Search type pills */}
+        <div className="olm-search-type">
+          <span className="olm-search-label">Search by:</span>
+          {[
+            { key: "order", label: "Order ID" },
+            { key: "user", label: "User ID" },
+            { key: "consultant", label: "Consultant ID" },
+          ].map((t) => (
+            <button
+              key={t.key}
+              className={`olm-pill ${searchType === t.key ? "olm-pill-active" : ""}`}
+              onClick={() => handleSearchTypeChange(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Filter popover */}
+        <div style={{ position: "relative" }}>
+          <FilterPopover
+            isOpen={showFilterPopover}
+            onClose={() => setShowFilterPopover(false)}
+            onApplyFilter={handleApplyFilter}
+            initialFilters={appliedFilters}
+          />
+        </div>
+
+        {/* Status tabs */}
+        <div className="olm-status-tabs">
+          {statusFilters.map((sf) => (
+            <button
+              key={sf.value}
+              className={`olm-tab ${appliedFilters.status === sf.value ? "olm-tab-active" : ""}`}
+              onClick={() => {
+                setAppliedFilters({ ...appliedFilters, status: sf.value });
+                setPage(1);
+              }}
+            >
+              {sf.label}
+              {sf.value === 3 && runningCallCount > 0 && (
+                <span className="olm-tab-badge">{runningCallCount}</span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        {/* Order Cards */}
+        <div className="olm-cards">
+          {isFetching ? (
+            Array.from({ length: 5 }).map((_, i) => (
+              <div className="olm-card olm-card-skeleton" key={`skeleton-${i}`}>
+                <div className="olm-skeleton-row">
+                  <div className="olm-skeleton-line" style={{ width: "45%" }} />
+                  <div className="olm-skeleton-line" style={{ width: "25%" }} />
+                </div>
+                <div className="olm-skeleton-line" style={{ width: "60%", marginTop: 6 }} />
+                <div className="olm-skeleton-line" style={{ width: "40%", marginTop: 4 }} />
+                <div className="olm-skeleton-row" style={{ marginTop: 8 }}>
+                  <div className="olm-skeleton-badge" />
+                  <div className="olm-skeleton-badge" />
+                  <div className="olm-skeleton-badge" />
+                </div>
+              </div>
+            ))
+          ) : data.length === 0 ? (
+            <div className="olm-empty">No orders found</div>
+          ) : (
+            data.map((order) => {
+              const status = OrderStatus(order.status);
+              const statusColor = getStatusColor(order.status);
+              const startDate = order.createdAt ? new Date(order.createdAt) : null;
+              const timeStr = startDate
+                ? startDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
+                : "";
+              const consultantName = order.description?.consultant_first_name || "—";
+              const userName = order.description?.userData?.name || "USER";
+
+              return (
+                <div className="olm-card" key={order.id}>
+                  {/* Card Header */}
+                  <div className="olm-card-header">
+                    <div className="olm-card-id">
+                      {getOrderTypeIcon(order.order_type)}
+                      <span className="olm-order-id">#{order.id}</span>
+                      <span className="olm-order-time">({timeStr})</span>
+                    </div>
+                    <span className="olm-status" style={{ color: statusColor }}>
+                      <span className="olm-status-dot" style={{ background: statusColor }} />
+                      {status}
+                    </span>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="olm-card-body">
+                    <div className="olm-card-info">
+                      <span className="olm-label">Consultant:</span>
+                      <span className="olm-value">{consultantName}</span>
+                    </div>
+                    <div className="olm-card-info">
+                      <span className="olm-label">User:</span>
+                      <span className="olm-value">{userName}</span>
+                    </div>
+                    {order.actual_duration != null && (
+                      <div className="olm-duration">
+                        <Clock size={13} />
+                        <span>{order.actual_duration} min</span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Card Footer */}
+                  <div className="olm-card-footer">
+                    <span className="olm-badge">cID <strong>{order.consultant_id}</strong></span>
+                    <span className="olm-badge">uID <strong>{order.user_id}</strong></span>
+                    <span className="olm-badge-type">{OrderType(order.order_type)}</span>
+
+                    <div className="olm-card-actions">
+                      {order.status === 3 && permissions?.["orders"]?.includes("monitor_order") && order.consultant_id !== 1 && (
+                        <button className="olm-action-btn olm-action-join" onClick={() => !isJoining && joinChannel(order)}>
+                          <ArrowLeft size={14} />
+                        </button>
+                      )}
+                      {order.status === 3 && permissions?.["orders"]?.includes("complete_order") && (
+                        <button className="olm-action-btn olm-action-edit" onClick={() => toggleCompleteOrder(order)}>
+                          <Pencil size={14} />
+                        </button>
+                      )}
+                      {order.status === 4 && order.order_type !== 6 && !order.is_refunded && permissions?.["orders"]?.includes("refund_order") && (
+                        <button className="olm-action-btn olm-action-refund" onClick={() => toggleRefundBalance(order)}>
+                          <ArrowRight size={14} />
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="olm-pagination">
+          <button className="olm-page-btn" disabled={page <= 1} onClick={() => { setPage(page - 1); document.querySelector('.ol-page')?.scrollTo(0, 0); }}>Prev</button>
+          <span className="olm-page-info">{page} / {totalPage}</span>
+          <button className="olm-page-btn" disabled={page >= totalPage} onClick={() => { setPage(page + 1); document.querySelector('.ol-page')?.scrollTo(0, 0); }}>Next</button>
+        </div>
       </div>
 
-      {/* Complete Order Modal */}
+      {/* ===== DESKTOP TABLE VIEW ===== */}
+      <div className="ol-desktop-view">
+        <div className="ol-table-card">
+          <DyCommonTable
+            columns={columns}
+            data={data}
+            includeActions={false}
+            tableTitle="Order List"
+            dynamicPagination={dynamicPagination}
+            customFilterComponent={customFilterComponent}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            includeCheckbox={false}
+            showTableHeading={false}
+            showGlobalSearch={false}
+            isLoading={isFetching}
+          />
+        </div>
+      </div>
+
       {addOrder && (
         <CompleteOrder
           isOpen={addOrder}
@@ -403,7 +635,6 @@ const OrderLists = () => {
         />
       )}
 
-      {/* Refund Balance Modal */}
       {refundBalance && (
         <RefundBalance
           isOpen={refundBalance}

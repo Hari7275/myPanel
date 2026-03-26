@@ -25,8 +25,8 @@ const LogoutPopup = ({ onClose }) => {
   };
 
   return (
-    <section className="logout-popup" ref={popupRef}>
-      <div className="logout-popup-card">
+    <section className="logout-popup" onClick={(e) => { if (e.target === e.currentTarget) onClose?.(); }}>
+      <div className="logout-popup-card" ref={popupRef}>
         {/* User Info */}
         <div className="logout-user-info">
           <div className="logout-avatar">

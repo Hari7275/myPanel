@@ -261,10 +261,6 @@ body.dark-mode .nav-icon-btn:hover {
     padding: 0 !important;
   }
 
-  .nav-icon-btn {
-    width: 34px;
-    height: 34px;
-  }
 }
 
 @media (max-width: 480px) {
@@ -274,11 +270,39 @@ body.dark-mode .nav-icon-btn:hover {
 
   .navbar-header .MuiStack-root {
     margin-left: auto;
+    gap: 6px !important;
   }
 
   .navbar-header .MuiToolbar-root {
     padding-left: 4px !important;
     padding-right: 4px !important;
+  }
+
+  .nav-icon-btn {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-icon-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .nav-avatar {
+    width: 42px;
+    height: 42px;
+  }
+
+  .nav-revenue {
+    font-size: 14px;
+    padding: 6px 12px;
+    font-weight: 700;
+  }
+
+  .nav-badge {
+    min-width: 20px;
+    height: 20px;
+    font-size: 11px;
   }
 
   .oa-dashboard,

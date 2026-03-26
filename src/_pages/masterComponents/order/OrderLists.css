@@ -404,3 +404,431 @@ body.dark-mode .ol-empty-icon {
 body.dark-mode .ol-empty-text {
   color: var(--text-primary);
 }
+
+/* ===== Mobile / Desktop Toggle ===== */
+.ol-mobile-view {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .ol-mobile-view {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ol-desktop-view {
+    display: none;
+  }
+
+  .ol-page {
+    padding: 8px 6px;
+    height: 100%;
+    overflow-y: auto;
+  }
+}
+
+/* ===== Mobile Search Bar ===== */
+.olm-search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary, #fff);
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  padding: 0 12px;
+  height: 44px;
+  gap: 8px;
+}
+
+.olm-search-icon {
+  color: var(--text-secondary, #94a3b8);
+  flex-shrink: 0;
+}
+
+.olm-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text-primary, #1e293b);
+  font-family: "Poppins", sans-serif;
+}
+
+.olm-search-input::placeholder {
+  color: var(--text-secondary, #94a3b8);
+}
+
+.olm-clear-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--border-color, #e2e8f0);
+  color: var(--text-secondary, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.olm-clear-btn:active {
+  background: var(--text-secondary, #94a3b8);
+  color: #fff;
+}
+
+.olm-filter-icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: var(--section-bg, #f1f5f9);
+  color: var(--text-primary, #1e293b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.olm-filter-dot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+}
+
+/* ===== Search Type Pills ===== */
+.olm-search-type {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.olm-search-type::-webkit-scrollbar {
+  display: none;
+}
+
+.olm-search-label {
+  font-size: 14px;
+  color: var(--text-secondary, #64748b);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.olm-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: transparent;
+  color: var(--text-secondary, #64748b);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+}
+
+.olm-pill-active {
+  background: var(--text-primary, #1e293b);
+  color: var(--section-bg, #fff);
+  border-color: var(--text-primary, #1e293b);
+}
+
+/* ===== Stats ===== */
+.olm-stats {
+  font-size: 12px;
+  color: var(--text-secondary, #64748b);
+  padding: 0 2px;
+}
+
+/* ===== Status Tabs ===== */
+.olm-status-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.olm-status-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.olm-tab {
+  padding: 8px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: transparent;
+  color: var(--text-secondary, #64748b);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.olm-tab-active {
+  background: var(--text-primary, #1e293b);
+  color: var(--section-bg, #fff);
+  border-color: var(--text-primary, #1e293b);
+}
+
+.olm-tab-badge {
+  background: #ef4444;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  border-radius: 10px;
+  line-height: 1.4;
+}
+
+/* ===== Order Cards ===== */
+.olm-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.olm-card {
+  background: var(--bg-secondary, #fff);
+  border: 1px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.olm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.olm-card-id {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary, #1e293b);
+}
+
+.olm-order-id {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.olm-order-time {
+  font-size: 12px;
+  color: var(--text-secondary, #64748b);
+}
+
+.olm-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.olm-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Card Body */
+.olm-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.olm-card-info {
+  font-size: 13px;
+  color: var(--text-primary, #334155);
+}
+
+.olm-label {
+  color: var(--text-secondary, #64748b);
+  font-size: 12px;
+}
+
+.olm-value {
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.olm-duration {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--text-secondary, #64748b);
+  margin-top: 2px;
+}
+
+/* Card Footer */
+.olm-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color, #f1f5f9);
+}
+
+.olm-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: var(--section-bg, #f1f5f9);
+  color: var(--text-secondary, #64748b);
+}
+
+.olm-badge strong {
+  color: var(--text-primary, #1e293b);
+  font-weight: 600;
+}
+
+.olm-badge-type {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-weight: 600;
+}
+
+body.dark-mode .olm-badge-type {
+  background: #312e81;
+  color: #a5b4fc;
+}
+
+.olm-card-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+}
+
+.olm-action-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.olm-action-join {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.olm-action-edit {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.olm-action-refund {
+  background: #fce7f3;
+  color: #db2777;
+}
+
+body.dark-mode .olm-action-join { background: #1e3a5f; color: #60a5fa; }
+body.dark-mode .olm-action-edit { background: #422006; color: #fbbf24; }
+body.dark-mode .olm-action-refund { background: #4a1942; color: #f472b6; }
+
+/* ===== Skeleton Shimmer ===== */
+.olm-card-skeleton {
+  pointer-events: none;
+}
+
+.olm-skeleton-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.olm-skeleton-line {
+  height: 14px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--border-color, #e2e8f0) 25%, transparent 50%, var(--border-color, #e2e8f0) 75%);
+  background-size: 200% 100%;
+  animation: olm-shimmer 1.4s infinite ease-in-out;
+}
+
+.olm-skeleton-badge {
+  width: 60px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--border-color, #e2e8f0) 25%, transparent 50%, var(--border-color, #e2e8f0) 75%);
+  background-size: 200% 100%;
+  animation: olm-shimmer 1.4s infinite ease-in-out;
+}
+
+@keyframes olm-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Loading & Empty */
+.olm-loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.olm-empty {
+  text-align: center;
+  padding: 40px 0;
+  color: var(--text-secondary, #64748b);
+  font-size: 14px;
+}
+
+/* ===== Pagination ===== */
+.olm-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.olm-page-btn {
+  padding: 6px 16px;
+  border-radius: 8px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: var(--bg-secondary, #fff);
+  color: var(--text-primary, #1e293b);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.olm-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.olm-page-info {
+  font-size: 13px;
+  color: var(--text-secondary, #64748b);
+  font-weight: 500;
+}
