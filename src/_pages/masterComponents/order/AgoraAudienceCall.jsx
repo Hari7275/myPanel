@@ -124,6 +124,13 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
     toast.success("Left the channel");
   };
 
+  // Exit fullscreen when all remote users leave
+  useEffect(() => {
+    if (isFullscreen && remoteUsers.length === 0) {
+      setIsFullscreen(false);
+    }
+  }, [remoteUsers.length, isFullscreen]);
+
   // Lock body scroll in fullscreen
   useEffect(() => {
     if (isFullscreen) {
