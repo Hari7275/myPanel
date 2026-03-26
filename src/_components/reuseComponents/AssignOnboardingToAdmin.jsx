@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import ReactModal from "react-modal";
-import { useGetAdminUserListQuery } from "../../_store/api";
 import {
+  useGetAdminUserListQuery,
+  useGetAdminRoleListQuery,
   useAssignOnboardingToAdminMutation,
   useReAssignOnboardingToAdminMutation,
 } from "../../_store/api";
 import toast from "react-hot-toast";
+import { useTheme } from "../../_context/ThemeContext";
 
 const AssignOnboardingToAdmin = ({
   isOpen,
@@ -15,6 +17,8 @@ const AssignOnboardingToAdmin = ({
   adminId,
   isReassign,
 }) => {
+  const { isDarkMode } = useTheme();
+
   const [formData, setFormData] = useState({
     admin_id: "",
     description: "",
@@ -33,6 +37,8 @@ const AssignOnboardingToAdmin = ({
     isLoading: isFetching,
   } = useGetAdminUserListQuery();
 
+  const { data: fetchAdminRole } = useGetAdminRoleListQuery();
+
   const [assignOnboarding, { isLoading: isAssigning, error: assignError }] =
     useAssignOnboardingToAdminMutation();
 
@@ -41,12 +47,22 @@ const AssignOnboardingToAdmin = ({
 
   // Fetch Admin List + Error Handling
   useEffect(() => {
-    if (fetchData?.data?.records) {
+    if (fetchData?.data?.records && fetchAdminRole?.data?.records) {
+      const onboardingRoleNames = [
+        "onboarding associate",
+        "onboarding manager",
+        "onboarding executive",
+      ];
+      const onboardingRoleIds = fetchAdminRole.data.records
+        .filter((role) =>
+          onboardingRoleNames.includes(role.name?.toLowerCase()),
+        )
+        .map((role) => role.id);
+
       const filteredData = fetchData.data.records.filter(
         (admin) =>
           admin.status === "active" &&
-          // admin.role_id === 6
-          (admin.role_id === 6 || admin.role_id === 8),
+          onboardingRoleIds.includes(admin.role_id),
       );
       setAdminList(filteredData);
     }
@@ -59,7 +75,7 @@ const AssignOnboardingToAdmin = ({
         }. Please log in again.`,
       );
     }
-  }, [fetchData, fetchError]);
+  }, [fetchData, fetchError, fetchAdminRole]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -130,7 +146,8 @@ const AssignOnboardingToAdmin = ({
           style={{
             marginBottom: "20px",
             display: "flex",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: isDarkMode ? "var(--bg-primary)" : "#f0f0f0",
+            color: isDarkMode ? "var(--text-primary)" : undefined,
             justifyContent: "center",
             padding: "10px",
             borderRadius: "4px",
@@ -144,7 +161,11 @@ const AssignOnboardingToAdmin = ({
           <div className="input-container" style={{ marginBottom: "20px" }}>
             <label
               htmlFor="admin_id"
-              style={{ display: "block", marginBottom: "8px" }}
+              style={{
+                display: "block",
+                marginBottom: "8px",
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+              }}
             >
               Select Admin <span style={{ color: "red" }}>*</span>
             </label>
@@ -155,7 +176,13 @@ const AssignOnboardingToAdmin = ({
               value={formData.admin_id}
               onChange={handleChange}
               className="userProfile-input-field"
-              style={{ width: "100%", padding: "8px" }}
+              style={{
+                width: "100%",
+                padding: "8px",
+                backgroundColor: isDarkMode ? "var(--bg-primary)" : undefined,
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+                borderColor: isDarkMode ? "var(--border-color)" : undefined,
+              }}
               disabled={isFetching}
               required
             >
@@ -181,7 +208,11 @@ const AssignOnboardingToAdmin = ({
           <div className="input-container" style={{ marginBottom: "20px" }}>
             <label
               htmlFor="description"
-              style={{ display: "block", marginBottom: "8px" }}
+              style={{
+                display: "block",
+                marginBottom: "8px",
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+              }}
             >
               Description
             </label>
@@ -198,6 +229,9 @@ const AssignOnboardingToAdmin = ({
                 minHeight: "100px",
                 resize: "vertical",
                 fontFamily: "inherit",
+                backgroundColor: isDarkMode ? "var(--bg-primary)" : undefined,
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+                borderColor: isDarkMode ? "var(--border-color)" : undefined,
               }}
               placeholder="Enter assignment description (optional)..."
             />
@@ -207,10 +241,10 @@ const AssignOnboardingToAdmin = ({
           {assignError && (
             <div
               style={{
-                color: "red",
+                color: "#ff6b6b",
                 marginBottom: "15px",
                 padding: "10px",
-                backgroundColor: "#fee",
+                backgroundColor: isDarkMode ? "#3a1a1a" : "#fee",
                 borderRadius: "4px",
               }}
             >
@@ -232,7 +266,7 @@ const AssignOnboardingToAdmin = ({
               type="button"
               className="fifthButton"
               style={{
-                background: "#6c757d",
+                background: isDarkMode ? "#4a4a4a" : "#6c757d",
                 padding: "10px 20px",
                 cursor: "pointer",
               }}
