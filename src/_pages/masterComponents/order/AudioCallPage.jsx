@@ -174,6 +174,7 @@ const AudioCallPage = () => {
 
   return (
     <div
+      className="acpage-wrapper"
       style={{
         height: "100vh",
         overflowY: "auto",
@@ -186,6 +187,7 @@ const AudioCallPage = () => {
     >
       {/* Header */}
       <div
+        className="acpage-header"
         style={{
           display: "flex",
           alignItems: "center",
@@ -198,6 +200,7 @@ const AudioCallPage = () => {
         }}
       >
         <button
+          className="acpage-back-btn"
           onClick={() => navigate(-1)}
           style={{
             padding: "10px",
@@ -261,7 +264,7 @@ const AudioCallPage = () => {
 
         <div
           style={{ marginLeft: "20px", position: "relative" }}
-          className="filter-button-wrapper"
+          className="acpage-actions"
         >
           <Button
             variant="contained"
@@ -300,9 +303,36 @@ const AudioCallPage = () => {
 
       {/* Responsive Styles */}
       <style>{`
-        @media (max-width: 768px) {
-          body {
-            font-size: 14px;
+        @media (max-width: 480px) {
+          .acpage-wrapper {
+            padding: 10px 6px !important;
+          }
+          .acpage-header {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            padding: 12px !important;
+            gap: 10px !important;
+          }
+          .acpage-header h1 {
+            font-size: 20px !important;
+          }
+          .acpage-header p {
+            font-size: 12px !important;
+          }
+          .acpage-header .acpage-actions {
+            margin-left: 0 !important;
+            display: flex;
+            gap: 8px !important;
+            width: 100%;
+          }
+          .acpage-header .acpage-actions .MuiButton-root {
+            flex: 1;
+            margin-left: 0 !important;
+            font-size: 11px !important;
+            padding: 6px 10px !important;
+          }
+          .acpage-back-btn {
+            padding: 6px !important;
           }
         }
       `}</style>
