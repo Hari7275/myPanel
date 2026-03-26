@@ -176,8 +176,7 @@ const AudioCallPage = () => {
     <div
       className="acpage-wrapper"
       style={{
-        height: "100vh",
-        overflowY: "auto",
+        minHeight: "100vh",
         padding: "24px",
         maxWidth: "1600px",
         margin: "0 auto",
@@ -298,6 +297,7 @@ const AudioCallPage = () => {
           channel={channel}
           token={token}
           uid={uid}
+          onCompleteOrder={handleSaveCompleteOrder}
         />
       </AgoraRTCProvider>
 

@@ -603,12 +603,18 @@ body.dark-mode .ol-empty-text {
 
 .olm-card {
   background: var(--bg-secondary, #fff);
-  border: 1px solid var(--border-color, #e2e8f0);
+  border: 1.5px solid var(--border-color, #cbd5e1);
   border-radius: 12px;
   padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode .olm-card {
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
 .olm-card-header {
@@ -684,16 +690,19 @@ body.dark-mode .ol-empty-text {
 .olm-card-footer {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 14px;
   flex-wrap: wrap;
   padding-top: 6px;
   border-top: 1px solid var(--border-color, #f1f5f9);
 }
 
 .olm-badge {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 6px;
+  font-size: 14px;
+  padding: 0 12px;
+  height: 38px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 8px;
   background: var(--section-bg, #f1f5f9);
   color: var(--text-secondary, #64748b);
 }
@@ -712,6 +721,42 @@ body.dark-mode .ol-empty-text {
   font-weight: 600;
 }
 
+.olm-value-consultant {
+  color: #d97706;
+}
+
+body.dark-mode .olm-value-consultant {
+  color: #fcd34d;
+}
+
+.olm-badge-cid strong {
+  color: #d97706;
+}
+
+body.dark-mode .olm-badge-cid strong {
+  color: #fcd34d;
+}
+
+.olm-consultant-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  color: #4338ca;
+  font-size: 11px;
+  font-weight: 700;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+body.dark-mode .olm-consultant-type {
+  background: #312e81;
+  color: #a5b4fc;
+}
+
 body.dark-mode .olm-badge-type {
   background: #312e81;
   color: #a5b4fc;
@@ -720,12 +765,12 @@ body.dark-mode .olm-badge-type {
 .olm-card-actions {
   margin-left: auto;
   display: flex;
-  gap: 6px;
+  gap: 16px;
 }
 
 .olm-action-btn {
-  width: 30px;
-  height: 30px;
+  width: 38px;
+  height: 38px;
   border-radius: 8px;
   border: none;
   display: flex;
@@ -749,9 +794,9 @@ body.dark-mode .olm-badge-type {
   color: #db2777;
 }
 
-body.dark-mode .olm-action-join { background: #1e3a5f; color: #60a5fa; }
-body.dark-mode .olm-action-edit { background: #422006; color: #fbbf24; }
-body.dark-mode .olm-action-refund { background: #4a1942; color: #f472b6; }
+body.dark-mode .olm-action-join { background: #374151; color: #ffffff; }
+body.dark-mode .olm-action-edit { background: #374151; color: #ffffff; }
+body.dark-mode .olm-action-refund { background: #374151; color: #ffffff; }
 
 /* ===== Skeleton Shimmer ===== */
 .olm-card-skeleton {

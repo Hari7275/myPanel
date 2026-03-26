@@ -17,14 +17,17 @@ import {
   VideoOff,
   Users,
   Radio,
+  Maximize,
+  X,
 } from "lucide-react";
 import { toast } from "react-toastify";
 import { useTheme } from "../../../_context/ThemeContext";
 
-const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
+const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
   const [calling, setCalling] = useState(false);
   const [error, setError] = useState(null);
   const [primaryUserIndex, setPrimaryUserIndex] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [pipPos, setPipPos] = useState({ x: 12, y: 12 });
   const dragRef = useRef(null);
   const dragState = useRef({ dragging: false, startX: 0, startY: 0, startPosX: 0, startPosY: 0, moved: false });
@@ -114,6 +117,16 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
     toast.success("Left the channel");
   };
 
+  // Lock body scroll in fullscreen
+  useEffect(() => {
+    if (isFullscreen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [isFullscreen]);
+
   // Monitor connection status
   useEffect(() => {
     if (isConnected) {
@@ -161,8 +174,6 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
       style={{
         width: "100%",
         padding: "0",
-        height: "100vh",
-        overflowY: "auto",
         boxSizing: "border-box",
       }}
     >
@@ -467,7 +478,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   }}
                 >
                   <div style={{ fontWeight: "600", fontSize: "14px", color: "white" }}>
-                    User {remoteUsers[0].uid}
+                    {remoteUsers[0].uid}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     {remoteUsers[0].hasVideo ? (
@@ -550,7 +561,7 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   }}
                 >
                   <div style={{ fontWeight: "600", fontSize: "14px", color: "white" }}>
-                    User {remoteUsers[1].uid}
+                    {remoteUsers[1].uid}
                   </div>
                   <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                     {remoteUsers[1].hasVideo ? (
@@ -600,16 +611,22 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
         </div>
 
         {/* Mobile PiP Layout - WhatsApp style */}
-        <div className="agora-pip-container" style={{ display: "none", position: "relative", width: "100%", marginBottom: "10px" }}>
+        <div className="agora-pip-container" style={{
+          display: "none",
+          position: isFullscreen ? "fixed" : "relative",
+          width: "100%",
+          marginBottom: isFullscreen ? "0" : "10px",
+          ...(isFullscreen ? { top: 0, left: 0, right: 0, bottom: 0, zIndex: 9999, backgroundColor: "#000" } : {}),
+        }}>
           {/* Primary (Full) View */}
           <div
             style={{
               width: "100%",
-              height: "calc(100vh - 140px)",
+              ...(isFullscreen ? { height: "100dvh" } : { aspectRatio: "9/16" }),
               backgroundColor: "#1f2937",
-              borderRadius: "12px",
+              borderRadius: isFullscreen ? "0" : "12px",
               overflow: "hidden",
-              border: "1px solid #374151",
+              border: isFullscreen ? "none" : "1px solid #374151",
               position: "relative",
             }}
           >
@@ -621,18 +638,69 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                   playAudio={true}
                   style={{ width: "100%", height: "100%" }}
                 />
+                {/* Fullscreen toggle button */}
+                <button
+                  onClick={() => setIsFullscreen(!isFullscreen)}
+                  style={{
+                    position: "absolute",
+                    top: "12px",
+                    right: "12px",
+                    width: "36px",
+                    height: "36px",
+                    borderRadius: "50%",
+                    border: "none",
+                    backgroundColor: "rgba(0,0,0,0.5)",
+                    color: "white",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                    zIndex: 10,
+                  }}
+                >
+                  {isFullscreen ? <X size={20} /> : <Maximize size={20} />}
+                </button>
+                {/* Complete Order button in fullscreen */}
+                {isFullscreen && onCompleteOrder && (
+                  <button
+                    onClick={(e) => { onCompleteOrder(e); setIsFullscreen(false); }}
+                    style={{
+                      position: "absolute",
+                      top: "12px",
+                      left: "12px",
+                      height: "36px",
+                      paddingLeft: "10px",
+                      paddingRight: "14px",
+                      borderRadius: "18px",
+                      border: "none",
+                      backgroundColor: "#dc2626",
+                      color: "white",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "6px",
+                      fontSize: "13px",
+                      fontWeight: "600",
+                      cursor: "pointer",
+                      zIndex: 10,
+                    }}
+                  >
+                    <PhoneOff size={16} />
+                    Complete
+                  </button>
+                )}
                 <div style={{
                   position: "absolute", bottom: 0, left: 0, right: 0,
-                  padding: "10px 14px",
+                  padding: isFullscreen ? "16px 20px" : "10px 14px",
+                  paddingBottom: isFullscreen ? "calc(16px + env(safe-area-inset-bottom, 0px))" : undefined,
                   background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
                   display: "flex", alignItems: "center", justifyContent: "space-between",
                 }}>
-                  <div style={{ fontWeight: "600", fontSize: "14px", color: "white" }}>
-                    User {remoteUsers[primaryUserIndex].uid}
+                  <div style={{ fontWeight: "600", fontSize: isFullscreen ? "18px" : "14px", color: "white" }}>
+                    {remoteUsers[primaryUserIndex].uid}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-                    {remoteUsers[primaryUserIndex].hasVideo ? <Video size={16} color="#10b981" /> : <VideoOff size={16} color="#6b7280" />}
-                    {remoteUsers[primaryUserIndex].hasAudio ? <Volume2 size={16} color="#10b981" /> : <VolumeX size={16} color="#6b7280" />}
+                  <div style={{ display: "flex", alignItems: "center", gap: isFullscreen ? "12px" : "8px" }}>
+                    {remoteUsers[primaryUserIndex].hasVideo ? <Video size={isFullscreen ? 22 : 16} color="#10b981" /> : <VideoOff size={isFullscreen ? 22 : 16} color="#6b7280" />}
+                    {remoteUsers[primaryUserIndex].hasAudio ? <Volume2 size={isFullscreen ? 22 : 16} color="#10b981" /> : <VolumeX size={isFullscreen ? 22 : 16} color="#6b7280" />}
                   </div>
                 </div>
                 {!remoteUsers[primaryUserIndex].hasVideo && (
@@ -685,9 +753,14 @@ const AgoraAudienceCall = ({ appId, channel, token, uid }) => {
                     position: "absolute", bottom: 0, left: 0, right: 0,
                     padding: "4px 8px",
                     background: "linear-gradient(to top, rgba(0,0,0,0.8), transparent)",
+                    display: "flex", alignItems: "center", justifyContent: "space-between",
                     fontSize: "10px", color: "white", fontWeight: "600",
                   }}>
-                    User {remoteUsers[primaryUserIndex === 0 ? 1 : 0].uid}
+                    <div>{remoteUsers[primaryUserIndex === 0 ? 1 : 0].uid}</div>
+                    <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
+                      {remoteUsers[primaryUserIndex === 0 ? 1 : 0].hasVideo ? <Video size={12} color="#10b981" /> : <VideoOff size={12} color="#6b7280" />}
+                      {remoteUsers[primaryUserIndex === 0 ? 1 : 0].hasAudio ? <Volume2 size={12} color="#10b981" /> : <VolumeX size={12} color="#6b7280" />}
+                    </div>
                   </div>
                   {!remoteUsers[primaryUserIndex === 0 ? 1 : 0].hasVideo && (
                     <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", textAlign: "center", color: "#9ca3af" }}>

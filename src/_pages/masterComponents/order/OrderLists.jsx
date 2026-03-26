@@ -10,7 +10,7 @@ import {
 } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 import { ArrowRight, Pencil, Phone, Plus, ArrowLeft, Search, X, Clock, PhoneCall, MessageSquare, Video } from "lucide-react";
-import { OrderType, OrderStatus, getStatusColor } from "../../../_constants/consultantConstant";
+import { OrderStatus, getStatusColor } from "../../../_constants/consultantConstant";
 import CompleteOrder from "./CompleteOrder";
 import RefundBalance from "./RefundBalance";
 import { debounce } from "lodash";
@@ -27,7 +27,11 @@ const OrderLists = () => {
   const queryParam = new URLSearchParams(location.search);
   const initialPage = Number(queryParam.get("page")) || 1;
   const initialPageSize = Number(queryParam.get("pageSize")) || 50;
-  const initialStatus = queryParam.get("status") || "";
+  const initialStatus = queryParam.get("status") ? Number(queryParam.get("status")) : "";
+  const initialStartDate = queryParam.get("startDate") || "";
+  const initialEndDate = queryParam.get("endDate") || "";
+  const initialOrderType = queryParam.get("orderType") || "";
+  const initialUserMode = queryParam.get("userMode") || "";
 
   // Added: Get user from Redux auth slice,
   const { user } = useSelector((state) => state.auth);
@@ -48,26 +52,26 @@ const OrderLists = () => {
   // Filter states
   const [showFilterPopover, setShowFilterPopover] = useState(false);
   const [appliedFilters, setAppliedFilters] = useState({
-    startDate: "",
-    endDate: "",
-    orderType: "",
+    startDate: initialStartDate,
+    endDate: initialEndDate,
+    orderType: initialOrderType,
     status: initialStatus,
-    userMode: "",
+    userMode: initialUserMode,
   });
 
-  // 🧭 Keep URL params synced when page or pageSize changes
+  // 🧭 Keep URL params synced when page, pageSize, or filters change
   useEffect(() => {
-    const params = new URLSearchParams(location.search);
+    const params = new URLSearchParams();
     params.set("page", page);
     params.set("pageSize", pageSize);
-    // Only sync status to URL
-    if (appliedFilters.status) {
-      params.set("status", appliedFilters.status);
-    } else {
-      params.delete("status"); // Remove status param if empty
-    }
+    const filterKeys = ["status", "startDate", "endDate", "orderType", "userMode"];
+    filterKeys.forEach((key) => {
+      if (appliedFilters[key]) {
+        params.set(key, appliedFilters[key]);
+      }
+    });
     navigate(`?${params.toString()}`, { replace: true });
-  }, [page, pageSize, appliedFilters.status, navigate]);
+  }, [page, pageSize, appliedFilters, navigate]);
 
   // Build query params including filters
   const queryParams = {
@@ -411,10 +415,10 @@ const OrderLists = () => {
 
   const getOrderTypeIcon = (type) => {
     switch (Number(type)) {
-      case 1: return <MessageSquare size={14} />;
-      case 2: return <PhoneCall size={14} />;
-      case 3: return <Video size={14} />;
-      default: return <Phone size={14} />;
+      case 1: return <MessageSquare size={20} />;
+      case 2: return <PhoneCall size={20} />;
+      case 3: return <Video size={20} color="#38bdf8" />;
+      default: return <Phone size={20} />;
     }
   };
 
@@ -531,6 +535,8 @@ const OrderLists = () => {
                 ? startDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })
                 : "";
               const consultantName = order.description?.consultant_first_name || "—";
+              const consultantTypeFull = { 1: "Astrologer", 2: "Coach", 3: "Listener" };
+              const consultantTypeLabel = consultantTypeFull[order.description?.consultant_type] || "Consultant";
               const userName = order.description?.userData?.name || "USER";
 
               return (
@@ -550,42 +556,44 @@ const OrderLists = () => {
 
                   {/* Card Body */}
                   <div className="olm-card-body">
-                    <div className="olm-card-info">
-                      <span className="olm-label">Consultant:</span>
-                      <span className="olm-value">{consultantName}</span>
+                    <div className="olm-card-info" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <div>
+                        <span className="olm-label">{consultantTypeLabel}:</span>
+                        <span className="olm-value olm-value-consultant">{consultantName}</span>
+                      </div>
+                      {order.actual_duration != null && (
+                        <div className="olm-duration" style={{ margin: 0 }}>
+                          <Clock size={18} />
+                          <span>{order.actual_duration} min</span>
+                        </div>
+                      )}
                     </div>
                     <div className="olm-card-info">
                       <span className="olm-label">User:</span>
                       <span className="olm-value">{userName}</span>
                     </div>
-                    {order.actual_duration != null && (
-                      <div className="olm-duration">
-                        <Clock size={13} />
-                        <span>{order.actual_duration} min</span>
-                      </div>
-                    )}
                   </div>
 
                   {/* Card Footer */}
                   <div className="olm-card-footer">
-                    <span className="olm-badge">cID <strong>{order.consultant_id}</strong></span>
-                    <span className="olm-badge">uID <strong>{order.user_id}</strong></span>
-                    <span className="olm-badge-type">{OrderType(order.order_type)}</span>
+                    <span className="olm-badge olm-badge-cid">C <strong>{order.consultant_id}</strong></span>
+                    <span className="olm-badge">U <strong>{order.user_id}</strong></span>
+
 
                     <div className="olm-card-actions">
                       {order.status === 3 && permissions?.["orders"]?.includes("monitor_order") && order.consultant_id !== 1 && (
                         <button className="olm-action-btn olm-action-join" onClick={() => !isJoining && joinChannel(order)}>
-                          <ArrowLeft size={14} />
+                          <ArrowLeft size={20} />
                         </button>
                       )}
                       {order.status === 3 && permissions?.["orders"]?.includes("complete_order") && (
                         <button className="olm-action-btn olm-action-edit" onClick={() => toggleCompleteOrder(order)}>
-                          <Pencil size={14} />
+                          <Pencil size={20} />
                         </button>
                       )}
                       {order.status === 4 && order.order_type !== 6 && !order.is_refunded && permissions?.["orders"]?.includes("refund_order") && (
                         <button className="olm-action-btn olm-action-refund" onClick={() => toggleRefundBalance(order)}>
-                          <ArrowRight size={14} />
+                          <ArrowRight size={20} />
                         </button>
                       )}
                     </div>
