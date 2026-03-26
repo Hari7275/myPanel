@@ -988,9 +988,14 @@ const AgoraAudienceCall = ({ appId, channel, token, uid, onCompleteOrder }) => {
           }
           .agora-pip-container {
             display: block !important;
+            order: 1 !important;
+          }
+          .agora-controls-row {
+            order: 2 !important;
           }
           .agora-info-mobile {
             display: flex !important;
+            order: 3 !important;
           }
           .agora-join-btn {
             min-width: unset !important;
