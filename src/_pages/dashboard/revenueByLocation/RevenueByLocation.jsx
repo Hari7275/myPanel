@@ -25,16 +25,11 @@ const RevenueByLocation = () => {
   }, [fetchData, FluteReferralAmt]);
 
   return (
-    <div className="dashboard-card-style" style={{ padding: "20px" }}>
-      <h2 style={{ color: "var(--dashboard-heading-color)", fontWeight: 700, marginBottom: "12px" }}>
+    <div className="dashboard-card-style revenue-location-card" style={{ padding: "20px" }}>
+      <h2 className="revenue-location-heading" style={{ color: "var(--dashboard-heading-color)", fontWeight: 700, marginBottom: "12px" }}>
         Flute Referral/Reference/Coupon Amount
       </h2>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-        }}
-      >
+      <div className="referral-grid">
         {fluteRefAmt.map((item) => (
           <CategoryCard
             key={item.title}
@@ -45,10 +40,10 @@ const RevenueByLocation = () => {
         ))}
       </div>
 
-      <h2 style={{ color: "var(--dashboard-heading-color)", fontWeight: 700, margin: "20px 0 12px" }}>
+      <h2 className="revenue-location-heading" style={{ color: "var(--dashboard-heading-color)", fontWeight: 700, margin: "20px 0 12px" }}>
         Total Blog and Total Buzz
       </h2>
-      <div style={{ display: "flex", gap: "16px" }}>
+      <div className="blog-buzz-row">
         <div
           className="active-consultant-card"
           style={{ backgroundColor: "var(--dashboard-blog-bg)", color: "var(--text-primary)" }}

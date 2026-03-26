@@ -197,3 +197,95 @@ body.dark-mode .cs-error-text {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ===== Mobile Responsive ===== */
+@media (max-width: 480px) {
+  .consultant-stats-page {
+    padding: 10px 8px;
+  }
+
+  .consultant-stats-header {
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .cs-page-title {
+    font-size: 16px;
+  }
+
+  .cs-back-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .consultant-stats-content {
+    gap: 12px;
+  }
+
+  .consultant-stats-section {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .consultant-stats-section-title {
+    font-size: 13px;
+    margin: 0 0 10px 0;
+    padding-left: 8px;
+  }
+
+  .consultant-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+  }
+
+  .consultant-stat-card {
+    min-height: auto;
+    padding: 10px;
+    border-radius: 8px;
+    gap: 4px;
+  }
+
+  .cs-stat-label {
+    font-size: 11px;
+  }
+
+  .cs-stat-value {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .consultant-stats-grid {
+    gap: 6px;
+  }
+
+  .consultant-stat-card {
+    padding: 8px;
+  }
+
+  .cs-stat-label {
+    font-size: 10px;
+  }
+
+  .cs-stat-value {
+    font-size: 18px;
+  }
+
+  .consultant-stats-section-title {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 320px) {
+  .consultant-stats-page {
+    padding: 6px 4px;
+  }
+
+  .cs-stat-value {
+    font-size: 16px;
+  }
+
+  .cs-stat-label {
+    font-size: 9px;
+  }
+}

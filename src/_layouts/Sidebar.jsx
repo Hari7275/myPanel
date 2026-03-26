@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import "../cssfolder/sidebar.css";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
@@ -89,7 +89,18 @@ const Sidebar = () => {
     );
   };
 
-  const toggleMenu = () => setIsMenuOpen((prev) => !prev);
+  const toggleMenu = useCallback(() => setIsMenuOpen((prev) => !prev), []);
+
+  // Listen for mobile hamburger toggle from Navbar
+  useEffect(() => {
+    window.addEventListener("toggle-sidebar", toggleMenu);
+    return () => window.removeEventListener("toggle-sidebar", toggleMenu);
+  }, [toggleMenu]);
+
+  // Close sidebar on route change (mobile)
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
   const toggleDropdown = (key) =>
     setOpenDropdowns((prev) => ({ ...prev, [key]: !prev[key] }));
@@ -271,6 +282,11 @@ const Sidebar = () => {
 
   return (
     <div className={`sideContainer ${isMenuOpen ? "menu-expanded" : "menu-collapsed"}`}>
+      {/* Backdrop for mobile — closes sidebar on tap */}
+      {isMenuOpen && (
+        <div className="sidebar-backdrop" onClick={toggleMenu} />
+      )}
+
       {/* Expanded menu — always in DOM, slides in/out via CSS */}
       <div id="menu" className={isMenuOpen ? "visible" : ""} ref={menuRef}>
         <div className="menu-header">

@@ -177,6 +177,18 @@
 .color-psychic     { background-color: #95a4fc; }
 .color-other       { background-color: #95a4fc; }
 
+/* ===== Revenue Location / Referral Section ===== */
+
+.referral-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.blog-buzz-row {
+  display: flex;
+  gap: 16px;
+}
+
 /* ===== Top Active Consultants ===== */
 
 .top-active-consultant {
@@ -412,6 +424,15 @@
     min-height: 10vh;
     padding: 10px;
   }
+  .useroverview {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+  .dashboard-card-style {
+    max-width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+  }
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -442,6 +463,125 @@
     grid-template-columns: repeat(2, 1fr);
   }
   .useroverview {
-    padding-left: 10px !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+  .useroverview h2,
+  .top-active-consultant h2 {
+    font-size: 16px !important;
+    padding: 6px 4px 0 !important;
+  }
+  .dashboard-card-container-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    height: auto !important;
+    margin: 6px 0 10px !important;
+  }
+  .dashboard-sub-card {
+    min-height: auto;
+    padding: 8px 10px;
+    border-radius: 8px;
+  }
+  .dashboard-sub-card span:first-child {
+    font-size: 11px !important;
+  }
+  .dashboard-sub-card span:last-child {
+    font-size: 16px !important;
+  }
+  .list-container {
+    width: auto;
+    min-width: 0;
+    margin: 5px 0;
+  }
+  .list-item {
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+  .traffic-chart-layout {
+    flex-direction: row !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+  .traffic-chart-layout > div:first-child {
+    width: 100px !important;
+    height: 100px !important;
+  }
+  .traffic-header span {
+    font-size: 16px !important;
+  }
+  .tac-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 6px;
+  }
+  .revenue-location-card {
+    padding: 10px !important;
+  }
+  .revenue-location-heading {
+    font-size: 14px !important;
+    margin-bottom: 8px !important;
+  }
+  .referral-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px;
+  }
+  .referral-grid > div {
+    margin: 0 !important;
+  }
+  .referral-grid .dashboard-card {
+    margin: 0 !important;
+    padding: 10px !important;
+  }
+  .referral-grid .dashboard-card span:first-child {
+    font-size: 11px !important;
+  }
+  .referral-grid .dashboard-card span:last-child {
+    font-size: 14px !important;
+  }
+  .blog-buzz-row {
+    gap: 8px;
+  }
+  .blog-buzz-row .active-consultant-card {
+    min-height: auto;
+    padding: 8px;
+    gap: 4px;
+  }
+  .blog-buzz-row .active-consultant-card span {
+    font-size: 13px !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .dashboard-card-container-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+  .dashboard-sub-card {
+    padding: 6px 8px;
+  }
+  .dashboard-sub-card span:first-child {
+    font-size: 10px !important;
+  }
+  .dashboard-sub-card span:last-child {
+    font-size: 14px !important;
+  }
+  .useroverview h2,
+  .top-active-consultant h2 {
+    font-size: 14px !important;
+  }
+}
+
+@media (max-width: 320px) {
+  .dashboard-card-container-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .dashboard-sub-card {
+    padding: 5px;
+  }
+  .dashboard-sub-card span:first-child {
+    font-size: 9px !important;
+  }
+  .dashboard-sub-card span:last-child {
+    font-size: 14px !important;
   }
 }

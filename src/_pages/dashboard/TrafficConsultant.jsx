@@ -32,22 +32,24 @@ const TrafficConsultant = () => {
       className="dashboard-card-style"
       style={{ height: "100%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "center" }}
     >
-      <div style={{ marginBottom: "20px" }}>
+      <div className="traffic-header" style={{ marginBottom: "10px" }}>
         <span style={{ fontSize: "20px", fontWeight: "600" }}>
           Traffic - Consultants
         </span>
       </div>
 
       <div
+        className="traffic-chart-layout"
         style={{
           display: "flex",
-          flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-evenly",
+          flexWrap: "wrap",
+          gap: "10px",
         }}
       >
         {/* Pie Chart */}
-        <div style={{ width: 200, height: 200 }}>
+        <div style={{ width: 150, height: 150, flexShrink: 0 }}>
           <PieChart
             data={data}
             lineWidth={30} // Equivalent to strokeWidth

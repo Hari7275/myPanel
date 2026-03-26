@@ -4,7 +4,7 @@ import NotificationBell from "./NotificationBell";
 import { useGetNotificationUnreadCountQuery } from "../_store/api";
 
 import { AppBar, Toolbar, Typography, Stack, Tooltip } from "@mui/material";
-import { Sun, Moon, Radio, Eye, Bell } from "lucide-react";
+import { Sun, Moon, Radio, Eye, Bell, Menu } from "lucide-react";
 import { useTheme } from "../_context/ThemeContext";
 
 import { Link, useLocation } from "react-router-dom";
@@ -208,6 +208,13 @@ const Navbar = () => {
     <>
       <AppBar>
         <Toolbar className="radhe navbar-header">
+          <button
+            className="nav-icon-btn mobile-menu-btn"
+            onClick={() => window.dispatchEvent(new Event("toggle-sidebar"))}
+          >
+            <Menu size={22} />
+          </button>
+
           <Typography
             variant="h6"
             component={"div"}

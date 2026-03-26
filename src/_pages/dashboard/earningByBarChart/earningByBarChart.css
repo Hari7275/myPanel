@@ -125,3 +125,73 @@
   background-color: var(--dashboard-card-bg);
   color: var(--text-primary);
 }
+
+/* ===== Mobile: Graph containers ===== */
+@media (max-width: 480px) {
+  .crg-container {
+    padding: 10px !important;
+    border-radius: 8px !important;
+  }
+
+  .crg-title {
+    font-size: 14px !important;
+  }
+
+  .crg-filters {
+    gap: 6px !important;
+    margin-bottom: 10px !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+  }
+
+  .crg-filters select,
+  .crg-filters input[type="date"] {
+    font-size: 11px !important;
+    padding: 4px 6px !important;
+    border-radius: 6px !important;
+    height: 30px;
+  }
+
+  .crg-date-range {
+    flex-wrap: nowrap !important;
+    gap: 4px !important;
+    align-items: center !important;
+  }
+
+  .crg-date-range span {
+    font-size: 11px !important;
+  }
+
+  .crg-filters .apply-button,
+  .crg-filters .reset-button {
+    font-size: 11px;
+    padding: 4px 10px;
+    height: 30px;
+    border-radius: 6px;
+  }
+}
+
+@media (max-width: 375px) {
+  .crg-container {
+    padding: 8px !important;
+  }
+
+  .crg-title {
+    font-size: 13px !important;
+  }
+
+  .crg-filters select,
+  .crg-filters input[type="date"] {
+    font-size: 10px !important;
+    padding: 3px 4px !important;
+    height: 28px;
+  }
+
+  .crg-filters .apply-button,
+  .crg-filters .reset-button {
+    font-size: 10px;
+    padding: 3px 8px;
+    height: 28px;
+  }
+}

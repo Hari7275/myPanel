@@ -132,6 +132,7 @@ const UserRegisteredGraphInline = () => {
   };
 
   const loading = isLoading || isFetching;
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 480;
 
   const inputStyle = {
     padding: "6px 10px",
@@ -145,6 +146,7 @@ const UserRegisteredGraphInline = () => {
 
   return (
     <Box
+      className="crg-container"
       sx={{
         width: "100%",
         padding: "24px",
@@ -166,13 +168,13 @@ const UserRegisteredGraphInline = () => {
           borderBottom: isDarkMode ? "1px solid #333333" : "1px solid #E5E7EB",
         }}
       >
-        <h2 style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>
+        <h2 className="crg-title" style={{ margin: 0, fontSize: "20px", fontWeight: 600 }}>
           User Registered Graph
         </h2>
       </Box>
 
       {/* Filter Controls */}
-      <Box sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3, flexWrap: "wrap" }}>
+      <Box className="crg-filters" sx={{ display: "flex", alignItems: "center", gap: 2, mb: 3, flexWrap: "wrap" }}>
         <select
           value={type}
           onChange={(e) => handleTypeChange(e.target.value)}
@@ -183,7 +185,7 @@ const UserRegisteredGraphInline = () => {
           <option value="yearly">Yearly</option>
         </select>
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+        <Box className="crg-date-range" sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={inputStyle} />
           <span style={{ color: isDarkMode ? "#a0a0a0" : "#666", fontSize: "13px" }}>to</span>
           <input type="date" value={endDate} onChange={(e) => setEndDate(e.target.value)} style={inputStyle} />
@@ -198,18 +200,18 @@ const UserRegisteredGraphInline = () => {
 
       {/* Chart Area */}
       {loading ? (
-        <div className="skeleton-card skeleton-pulse" style={{ height: "400px", borderRadius: "8px" }} />
+        <div className="skeleton-card skeleton-pulse" style={{ height: isMobile ? "250px" : "400px", borderRadius: "8px" }} />
       ) : graphData.length === 0 ? (
         <Box
           sx={{
-            height: 400,
+            height: isMobile ? 250 : 400,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             backgroundColor: isDarkMode ? "#1a1a1a" : "#f9fafb",
             borderRadius: "8px",
             color: isDarkMode ? "#a0a0a0" : "#999",
-            fontSize: "15px",
+            fontSize: isMobile ? "13px" : "15px",
           }}
         >
           No data available
@@ -218,21 +220,17 @@ const UserRegisteredGraphInline = () => {
         <Box sx={{ width: "100%", overflowX: "auto", overflowY: "hidden" }}>
           <Box
             sx={{
-              minWidth: 500,
+              minWidth: isMobile ? 300 : 500,
               maxWidth:
-                graphData.length <= 4
+                graphData.length <= 15
                   ? "100%"
-                  : graphData.length <= 8
-                    ? "100%"
-                    : graphData.length <= 15
-                      ? "100%"
-                      : graphData.length * 45,
+                  : graphData.length * (isMobile ? 30 : 45),
               width: "100%",
               margin: "0 auto",
             }}
           >
             <BarChart
-              height={400}
+              height={isMobile ? 250 : 400}
               series={[
                 { data: iosCounts, label: "iOS", color: "#5174c0ff", stack: "total" },
                 { data: androidCounts, label: "Android", color: "#ff9040ff", stack: "total" },
@@ -242,15 +240,19 @@ const UserRegisteredGraphInline = () => {
                   data: xAxisLabels,
                   scaleType: "band",
                   tickLabelStyle: {
-                    angle: graphData.length > 10 ? 45 : 0,
-                    textAnchor: graphData.length > 10 ? "start" : "middle",
-                    fontSize: 12,
+                    angle: isMobile || graphData.length > 10 ? 45 : 0,
+                    textAnchor: isMobile || graphData.length > 10 ? "start" : "middle",
+                    fontSize: isMobile ? 9 : 12,
                   },
                   barGapRatio: 0.3,
                   barCategoryGapRatio: 0.5,
                 },
               ]}
-              yAxis={[{}]}
+              yAxis={[{
+                tickLabelStyle: {
+                  fontSize: isMobile ? 10 : 12,
+                },
+              }]}
               slots={{
                 axisContent: ({ axisValue, dataIndex, series }) => (
                   <CustomAxisTooltip
@@ -266,23 +268,26 @@ const UserRegisteredGraphInline = () => {
                   direction: "row",
                   position: { vertical: "top", horizontal: "middle" },
                   padding: 0,
-                  itemMarkWidth: 16,
-                  itemMarkHeight: 10,
-                  markGap: 8,
-                  itemGap: 10,
+                  itemMarkWidth: isMobile ? 10 : 16,
+                  itemMarkHeight: isMobile ? 8 : 10,
+                  markGap: isMobile ? 4 : 8,
+                  itemGap: isMobile ? 6 : 10,
                   labelStyle: {
-                    fontSize: 13,
+                    fontSize: isMobile ? 10 : 13,
                     fill: isDarkMode ? "#e0e0e0" : "#333",
                     fontWeight: 500,
                   },
                 },
               }}
               sx={{
-                ".MuiChartsAxis-tickLabel": { strokeWidth: "0.4", fill: isDarkMode ? "#a0a0a0" : "#666" },
+                ".MuiChartsAxis-tickLabel": { strokeWidth: "0.4", fill: isDarkMode ? "#a0a0b0" : "#666" },
                 ".MuiChartsAxis-line": { stroke: isDarkMode ? "#555555" : "#666", strokeWidth: 1 },
                 ".MuiChartsAxis-tick": { stroke: isDarkMode ? "#555555" : "#666", strokeWidth: 1 },
               }}
-              margin={{ left: 70, right: 30, top: 40, bottom: graphData.length > 10 ? 80 : 40 }}
+              margin={isMobile
+                ? { left: 40, right: 10, top: 30, bottom: 50 }
+                : { left: 70, right: 30, top: 40, bottom: graphData.length > 10 ? 80 : 40 }
+              }
             />
           </Box>
         </Box>
