@@ -1,0 +1,420 @@
+/* ===== Recharge List Mobile Card View ===== */
+
+.url-page {
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.url-mobile-view {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .url-mobile-view {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 8px 6px;
+  }
+
+  .url-desktop-view {
+    display: none;
+  }
+}
+
+/* Search Bar */
+.urlm-search-bar {
+  display: flex;
+  align-items: center;
+  background: var(--bg-secondary, #fff);
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  padding: 0 12px;
+  height: 44px;
+  gap: 8px;
+}
+
+.urlm-search-icon {
+  color: var(--text-secondary, #94a3b8);
+  flex-shrink: 0;
+}
+
+.urlm-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 14px;
+  color: var(--text-primary, #1e293b);
+  font-family: "Poppins", sans-serif;
+}
+
+.urlm-search-input::placeholder {
+  color: var(--text-secondary, #94a3b8);
+}
+
+.urlm-clear-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: var(--border-color, #e2e8f0);
+  color: var(--text-secondary, #64748b);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Search Type Pills */
+.urlm-search-type {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.urlm-search-type::-webkit-scrollbar {
+  display: none;
+}
+
+.urlm-search-label {
+  font-size: 14px;
+  color: var(--text-secondary, #64748b);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.urlm-pill {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: transparent;
+  color: var(--text-secondary, #64748b);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+}
+
+.urlm-pill-active {
+  background: #1c2434;
+  color: #fff;
+  border-color: #1c2434;
+}
+
+body.dark-mode .urlm-pill-active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+/* Filter Tabs */
+.urlm-filter-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+
+.urlm-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.urlm-tab {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: var(--bg-secondary, #fff);
+  color: var(--text-secondary, #64748b);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: "Poppins", sans-serif;
+}
+
+.urlm-tab-active {
+  background: #1c2434;
+  color: #fff;
+  border-color: #1c2434;
+}
+
+body.dark-mode .urlm-tab-active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+}
+
+/* Device Stats */
+.urlm-device-stats {
+  display: flex;
+  gap: 10px;
+}
+
+.urlm-stat-card {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: var(--bg-secondary, #fff);
+}
+
+.urlm-stat-label {
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 2px;
+}
+
+.urlm-stat-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary, #1e293b);
+}
+
+/* Cards */
+.urlm-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.urlm-card {
+  background: var(--bg-secondary, #fff);
+  border: 1.5px solid var(--border-color, #cbd5e1);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+body.dark-mode .urlm-card {
+  border-color: #374151;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Card Header */
+.urlm-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.urlm-card-id {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-primary, #1e293b);
+}
+
+.urlm-order-id {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.urlm-user-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #d97706;
+}
+
+body.dark-mode .urlm-user-name {
+  color: #fcd34d;
+}
+
+.urlm-status {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.urlm-status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* Card Body */
+.urlm-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.urlm-card-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+}
+
+.urlm-label {
+  color: var(--text-secondary, #64748b);
+  font-size: 12px;
+}
+
+.urlm-value {
+  font-weight: 500;
+  color: var(--text-primary, #1e293b);
+}
+
+.urlm-amount {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Card Footer */
+.urlm-card-footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-top: 6px;
+  border-top: 1px solid var(--border-color, #f1f5f9);
+}
+
+.urlm-badge {
+  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.urlm-badge-recharge {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.urlm-badge-refund {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.urlm-badge-activity {
+  background: #e0e7ff;
+  color: #4338ca;
+}
+
+.urlm-badge-admin {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.urlm-badge-user {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+body.dark-mode .urlm-badge-recharge {
+  background: #1e3a5f;
+  color: #93c5fd;
+}
+
+body.dark-mode .urlm-badge-refund {
+  background: #422006;
+  color: #fcd34d;
+}
+
+body.dark-mode .urlm-badge-activity {
+  background: #312e81;
+  color: #a5b4fc;
+}
+
+body.dark-mode .urlm-badge-admin {
+  background: #422006;
+  color: #fcd34d;
+}
+
+body.dark-mode .urlm-badge-user {
+  background: #2e1065;
+  color: #c4b5fd;
+}
+
+.urlm-time {
+  font-size: 13px;
+  color: var(--text-secondary, #64748b);
+  margin-left: auto;
+}
+
+/* Pagination */
+.urlm-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.urlm-page-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  background: var(--bg-secondary, #fff);
+  color: var(--text-primary, #1e293b);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: "Poppins", sans-serif;
+}
+
+.urlm-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.urlm-page-info {
+  font-size: 13px;
+  color: var(--text-secondary, #64748b);
+  font-weight: 500;
+}
+
+/* Skeleton */
+.urlm-card-skeleton {
+  pointer-events: none;
+}
+
+.urlm-skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  background: linear-gradient(90deg, var(--border-color, #e2e8f0) 25%, var(--bg-secondary, #f1f5f9) 50%, var(--border-color, #e2e8f0) 75%);
+  background-size: 200% 100%;
+  animation: urlm-shimmer 1.5s infinite;
+}
+
+.urlm-skeleton-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.urlm-skeleton-badge {
+  height: 22px;
+  width: 60px;
+  border-radius: 14px;
+  background: linear-gradient(90deg, var(--border-color, #e2e8f0) 25%, var(--bg-secondary, #f1f5f9) 50%, var(--border-color, #e2e8f0) 75%);
+  background-size: 200% 100%;
+  animation: urlm-shimmer 1.5s infinite;
+}
+
+@keyframes urlm-shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Empty state */
+.urlm-empty {
+  text-align: center;
+  padding: 40px 16px;
+  color: var(--text-secondary, #94a3b8);
+  font-size: 14px;
+}

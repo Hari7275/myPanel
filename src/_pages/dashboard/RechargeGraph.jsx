@@ -1,9 +1,107 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
 import Box from "@mui/material/Box";
 import { useGetFluteRevenueOnGraphQuery } from "../../_store/api";
 import { useTheme } from "../../_context/ThemeContext";
 import "./OnboardingAssociateDashboard.css";
+
+const AnimatedCounter = ({ targetValue, isDarkMode, isMobile }) => {
+  const [displayValue, setDisplayValue] = useState(0);
+  const [phase, setPhase] = useState("scramble"); // scramble -> count -> done
+  const animRef = useRef(null);
+  const startTimeRef = useRef(null);
+
+  useEffect(() => {
+    if (!targetValue) return;
+
+    // Phase 1: Scramble random numbers for excitement
+    setPhase("scramble");
+    let scrambleCount = 0;
+    const scrambleInterval = setInterval(() => {
+      const randomMultiplier = Math.random() * 2;
+      setDisplayValue(Math.floor(targetValue * randomMultiplier));
+      scrambleCount++;
+      if (scrambleCount >= 8) {
+        clearInterval(scrambleInterval);
+        setPhase("count");
+        startTimeRef.current = performance.now();
+        const duration = 1000;
+        const easeOutExpo = (t) => t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+
+        const animate = (now) => {
+          const elapsed = now - startTimeRef.current;
+          const progress = Math.min(elapsed / duration, 1);
+          const easedProgress = easeOutExpo(progress);
+          setDisplayValue(Math.floor(easedProgress * targetValue));
+
+          if (progress < 1) {
+            animRef.current = requestAnimationFrame(animate);
+          } else {
+            setDisplayValue(targetValue);
+            setPhase("done");
+          }
+        };
+        animRef.current = requestAnimationFrame(animate);
+      }
+    }, 60);
+
+    return () => {
+      clearInterval(scrambleInterval);
+      if (animRef.current) cancelAnimationFrame(animRef.current);
+    };
+  }, [targetValue]);
+
+  const formattedValue = `₹ ${displayValue.toLocaleString("en-IN")}`;
+
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: isMobile ? "200px" : "300px",
+        gap: 1,
+        animation: "fadeIn 0.3s ease-in",
+        "@keyframes fadeIn": {
+          from: { opacity: 0, transform: "scale(0.95)" },
+          to: { opacity: 1, transform: "scale(1)" },
+        },
+      }}
+    >
+      <span style={{
+        fontSize: isMobile ? "12px" : "14px",
+        color: isDarkMode ? "#a0a0a0" : "#6b7280",
+        fontWeight: 500,
+        textTransform: "uppercase",
+        letterSpacing: "2px",
+      }}>
+        Total Recharge
+      </span>
+      <span style={{
+        fontSize: isMobile ? "36px" : "56px",
+        fontWeight: 800,
+        color: phase === "done" ? "#4cb237" : "#888",
+        lineHeight: 1.2,
+        textAlign: "center",
+        fontVariantNumeric: "tabular-nums",
+        transition: "color 0.5s ease, filter 0.3s ease",
+        filter: phase === "scramble" ? "blur(1px)" : "none",
+      }}>
+        {formattedValue}
+      </span>
+      <span style={{
+        fontSize: isMobile ? "11px" : "13px",
+        color: isDarkMode ? "#666" : "#9ca3af",
+        marginTop: "4px",
+        opacity: phase === "done" ? 1 : 0,
+        transition: "opacity 0.5s ease",
+      }}>
+        Lifetime Earnings
+      </span>
+    </Box>
+  );
+};
 
 export default function RechargeGraph() {
   const { isDarkMode } = useTheme();
@@ -73,11 +171,17 @@ export default function RechargeGraph() {
         </select>
       </Box>
 
-      {/* Chart */}
-      {isFetching && data.length === 0 ? (
+      {/* Chart or Total Display */}
+      {isFetching && dateFilter !== "total" ? (
         <div className="skeleton-section" style={{ border: "none", padding: 0 }}>
           <div className="skeleton-card skeleton-pulse" style={{ height: isMobile ? "200px" : "300px", borderRadius: "8px" }} />
         </div>
+      ) : dateFilter === "total" ? (
+        <AnimatedCounter
+          targetValue={totals.reduce((sum, v) => sum + (v || 0), 0)}
+          isDarkMode={isDarkMode}
+          isMobile={isMobile}
+        />
       ) : (
         <Box sx={{ width: "100%", overflowX: "auto" }}>
           <LineChart
