@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 
-import { COLUMNRECHARGE } from "./rechargeColumn";
+import { getRechargeColumns } from "./rechargeColumn";
 import { useGetUserRechargeListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 
@@ -10,6 +11,9 @@ import { debounce } from "lodash";
 import UserRechargeListFilter from "./UserRechargeListFilter";
 import Button from "@mui/material/Button";
 const UserRechargeLists = () => {
+  const role = useSelector((state) => state.auth.role);
+  const showPhoneNumber = role === "admin" || role === "superadmin";
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50); // Adjusted default page size
@@ -44,7 +48,7 @@ const UserRechargeLists = () => {
     start_date: appliedFilters.startDate,
   });
 
-  const columns = useMemo(() => COLUMNRECHARGE, []);
+  const columns = useMemo(() => getRechargeColumns(showPhoneNumber), [showPhoneNumber]);
 
   useEffect(() => {
     if (fetchData) {

@@ -185,7 +185,19 @@ body.dark-mode .oa-actions .MuiButton-outlined:hover {
   }
 
   .oa-actions {
-    flex-direction: column;
-    align-items: stretch;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+
+  .oa-actions::-webkit-scrollbar {
+    display: none;
+  }
+
+  .oa-actions .MuiButton-root {
+    flex-shrink: 0;
+    font-size: 12px !important;
+    padding: 6px 14px !important;
   }
 }

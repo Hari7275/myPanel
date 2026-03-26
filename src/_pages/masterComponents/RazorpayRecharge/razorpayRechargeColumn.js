@@ -45,7 +45,7 @@ const CustomIdCell = ({ value, row }) => {
 };
 
 // Column configuration
-export const RAZORPAYRECHARGECOLUMN = [
+export const getRazorpayRechargeColumns = (showPhoneNumber = false) => [
   {
     Header: "Id",
     accessor: "id",
@@ -66,15 +66,19 @@ export const RAZORPAYRECHARGECOLUMN = [
         <AppleIcon sx={{ color: "#7b7878ff" }} />
       ),
   },
-  {
-    Header: "Phone Number",
-    accessor: "phone_number",
-    Cell: ({ value, row }) => (
-      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
-        {row?.original?.country_code}-{value}
-      </span>
-    ),
-  },
+  ...(showPhoneNumber
+    ? [
+        {
+          Header: "Phone Number",
+          accessor: "phone_number",
+          Cell: ({ value, row }) => (
+            <span style={{ color: "var(--table-text)", fontSize: "13px" }}>
+              {row?.original?.country_code}-{value}
+            </span>
+          ),
+        },
+      ]
+    : []),
 
   {
     Header: "Transaction Type",

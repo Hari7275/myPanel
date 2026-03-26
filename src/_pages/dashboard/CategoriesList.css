@@ -404,8 +404,13 @@
 
 @media (max-width: 768px) {
   .dashboard-card-container-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     height: auto;
+    gap: 10px;
+  }
+  .dashboard-sub-card {
+    min-height: 10vh;
+    padding: 10px;
   }
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -435,5 +440,8 @@
   }
   .top-active-image-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+  .useroverview {
+    padding-left: 10px !important;
   }
 }

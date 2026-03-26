@@ -156,25 +156,25 @@ const SuperadminDashboard = () => {
       {/* Overview Tab - loaded eagerly */}
       {activeView === "overview" && (
         <div className="oa-overview-content">
-          {permissions?.["Dashboard"]?.includes("view_recharge") && (
-            <RechargeGraph />
-          )}
-
           <div className="oa-grid-2">
+            {permissions?.["Dashboard"]?.includes("view_recharge") && (
+              <RechargeGraph />
+            )}
             <div className="dashboard-card-style">
               <UserOverview />
             </div>
+          </div>
+
+          <div className="oa-grid-2">
             <div className="dashboard-card-style">
               <ConsltantOverview />
             </div>
+            <TrafficConsultant />
           </div>
 
           <TopActiveConsultants />
 
-          <div className="oa-grid-2">
-            <TrafficConsultant />
-            <RevenueByLocation />
-          </div>
+          <RevenueByLocation />
         </div>
       )}
 

@@ -46,7 +46,7 @@ const CustomIdCell = ({ value, row }) => {
 };
 
 // Column configuration
-export const COLUMNRECHARGE = [
+export const getRechargeColumns = (showPhoneNumber = false) => [
   {
     Header: "Id",
     accessor: "id",
@@ -81,13 +81,17 @@ export const COLUMNRECHARGE = [
   //   accessor: "first_name",
   //   Cell: ({ value }) => <span style={{ color: "#1f2937" }}>{value}</span>,
   // },
-  {
-    Header: "Phone Number",
-    accessor: "phone_number",
-    Cell: ({ value }) => (
-      <span style={{ color: "var(--table-text)", fontSize: "13px" }}>{value}</span>
-    ),
-  },
+  ...(showPhoneNumber
+    ? [
+        {
+          Header: "Phone Number",
+          accessor: "phone_number",
+          Cell: ({ value }) => (
+            <span style={{ color: "var(--table-text)", fontSize: "13px" }}>{value}</span>
+          ),
+        },
+      ]
+    : []),
   {
     Header: "Amount",
     accessor: "amount",

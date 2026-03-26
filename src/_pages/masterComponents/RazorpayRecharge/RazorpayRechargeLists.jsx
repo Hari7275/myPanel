@@ -1,7 +1,8 @@
 import React, { useMemo, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 
-import { RAZORPAYRECHARGECOLUMN } from "./razorpayRechargeColumn";
+import { getRazorpayRechargeColumns } from "./razorpayRechargeColumn";
 import { useGetRazorpayRechargeListQuery } from "../../../_store/api";
 import { Atom } from "react-loading-indicators";
 
@@ -11,6 +12,9 @@ import UserRechargeListFilter from "./RazorpayRechargeFilter";
 import Button from "@mui/material/Button";
 
 const RazorpayRechargeLists = () => {
+  const role = useSelector((state) => state.auth.role);
+  const showPhoneNumber = role === "admin" || role === "superadmin";
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50); // Adjusted default page size
@@ -40,7 +44,7 @@ const RazorpayRechargeLists = () => {
     start_date: appliedFilters.startDate,
   });
 
-  const columns = useMemo(() => RAZORPAYRECHARGECOLUMN, []);
+  const columns = useMemo(() => getRazorpayRechargeColumns(showPhoneNumber), [showPhoneNumber]);
 
   useEffect(() => {
     if (fetchData) {

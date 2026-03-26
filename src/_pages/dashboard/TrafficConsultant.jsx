@@ -30,7 +30,7 @@ const TrafficConsultant = () => {
   return (
     <div
       className="dashboard-card-style"
-      style={{ height: "320px", padding: "20px" }}
+      style={{ height: "100%", padding: "20px", display: "flex", flexDirection: "column", justifyContent: "center" }}
     >
       <div style={{ marginBottom: "20px" }}>
         <span style={{ fontSize: "20px", fontWeight: "600" }}>
