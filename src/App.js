@@ -149,7 +149,7 @@ import CmsListenerBanner from "./_pages/cms-data/cms-listener-banner/CmsListener
 // chat message
 import ChatCategory from "./_pages/masterComponents/chatMessage/ChatCategory";
 
-import ConsultantUserNotification from "./_pages/masterComponents/consultantUserNotification/ConsultantUserNotification";
+import ObservingList from "./_pages/masterComponents/ObservingList/ObservingList";
 import MessageTemplatePage from "./_pages/masterComponents/messageTemplate/MessageTemplatePage";
 import ChatSubcategoryList from "./_pages/masterComponents/chatMessage/chatSubCategory/ChatSubcategoryList";
 
@@ -403,10 +403,10 @@ const Layout = () => {
 
           <Route
             path="consultant-user-notification"
-            element={<ConsultantUserNotification />}
+            element={<ObservingList />}
           />
 
-          <Route path="consultant-user-notification" element={<ConsultantUserNotification />} />
+          <Route path="consultant-user-notification" element={<ObservingList />} />
           <Route path="message-template" element={<MessageTemplatePage />} />
           {/* chat message template */}
           <Route path="chat-message" element={<ChatCategory />} />

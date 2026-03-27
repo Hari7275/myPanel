@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../../cssfolder/profileLeftComponent.css";
-import { Facebook, Instagram, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Facebook, Instagram, Linkedin, Twitter, Youtube, CirclePlus } from "lucide-react";
 import { useGetUserListQuery } from "../../../_store/api/user/userDetails";
+import { useAddUserToObservingListMutation } from "../../../_store/api";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import UseImageModal from "../../../_constants/UseImageModal";
@@ -9,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import { Atom } from "react-loading-indicators";
 import { useParams } from "react-router-dom";
+import { getObserverId } from "../../../_constants/observerMapping";
+import usePermissions from "../../../_components/reuseComponents/permission/EmpPermission";
+import toast from "react-hot-toast";
 
 const InfoItem = ({ label, value }) => (
   <div className="">
@@ -54,6 +58,29 @@ const UserDetailsComponent = () => {
   const { openImageModal, ImageModal } = UseImageModal();
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, prod } = useSelector((state) => state.auth);
+  const assignedObserverId = getObserverId(user?.id, prod);
+  const [addUserToObserving] = useAddUserToObservingListMutation();
+  const permissions = usePermissions();
+
+  const addToObservingList = async () => {
+    try {
+      const response = await addUserToObserving({
+        body: {
+          user_id: Number(userId),
+          observer_id: assignedObserverId,
+        },
+      });
+      if (response?.data?.status) {
+        toast.success(response?.data?.message || "User added to observing list");
+      } else {
+        toast.error(response?.data?.message || "Failed to add user");
+      }
+    } catch (error) {
+      console.log("Failed to add to observing list", error);
+      toast.error("Failed to add user to observing list");
+    }
+  };
 
   useEffect(() => {
     if (fetchData) {
@@ -119,6 +146,11 @@ const UserDetailsComponent = () => {
           </div> */}
           <div className="userName">
             {userData?.profileDetails?.name} ({age})
+            {permissions?.["orders"]?.includes("order_notifications") && (
+              <span onClick={addToObservingList} style={{ cursor: "pointer" }}>
+                <CirclePlus />
+              </span>
+            )}
           </div>
           <InfoItem label="User ID " value={userData?.id || "N/A"} />
           <div className="active-status">

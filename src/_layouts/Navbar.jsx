@@ -151,7 +151,7 @@ const Navbar = () => {
     "/support-question": "Support Question",
     "/consultant-support": "Consultant Support",
 
-    "/consultant-user-notification": "Consultant Observing List",
+    "/consultant-user-notification": "Observing List",
 
     // chat message
     "/chat-message": "Chat Category List",

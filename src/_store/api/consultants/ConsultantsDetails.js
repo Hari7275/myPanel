@@ -81,6 +81,50 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["consultants"],
     }),
+
+    // User Observing List APIs
+    getUserObservingList: builder.query({
+      query: ({ user_id, observer_id, status, page, limit }) => {
+        const params = new URLSearchParams({});
+        if (page) params.append("page", page);
+        if (limit) params.append("size", limit);
+        if (user_id) params.append("user_id", user_id);
+        if (observer_id) params.append("observer_id", observer_id);
+        if (status !== null && status !== undefined) params.append("status", status);
+        return {
+          url: `/api/v1/consultant/management/order/admin/observing-user?${params.toString()}`,
+          method: "GET",
+          headers: {
+            Authorization: "Bearer admin_token",
+          },
+        };
+      },
+      providesTags: ["userObserving"],
+    }),
+
+    addUserToObservingList: builder.mutation({
+      query: ({ body }) => ({
+        url: `api/v1/consultant/management/order/admin/observing-user`,
+        method: "POST",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["userObserving"],
+    }),
+
+    updateUserObservingStatus: builder.mutation({
+      query: ({ id, body }) => ({
+        url: `api/v1/consultant/management/order/admin/observing-user/${id}`,
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer admin_token",
+        },
+        body,
+      }),
+      invalidatesTags: ["userObserving"],
+    }),
   }),
 });
 
@@ -90,4 +134,7 @@ export const {
   useCreateConsultantOrderNotificationMutation,
   useGetConsultantOrderNotificationQuery,
   useUpdateConsultantOrderNotificationMutation,
+  useGetUserObservingListQuery,
+  useAddUserToObservingListMutation,
+  useUpdateUserObservingStatusMutation,
 } = consultantsDetailsApiSlice;

@@ -182,8 +182,8 @@ const Sidebar = () => {
       visible: !!permissions?.["notification"],
       links: [
         { to: "/user-notification", label: "User Notification" },
-        { to: "/notification-template", label: "Notification Template" },
-        { to: "/send-notification", label: "Send Notification" },
+        { to: "/notification-template", label: "Notification Template", perm: permissions?.["notification"]?.includes("create_notification_template") },
+        { to: "/send-notification", label: "Send Notification", perm: permissions?.["notification"]?.includes("send_notification") },
       ],
     },
     {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Switch } from "@mui/material";
-import { useUpdateConsultantOrderNotificationMutation } from "../../../_store/api";
-import { formatDateTime } from "../../../_constants/formatedDate";
+import { useUpdateConsultantOrderNotificationMutation } from "../../../../_store/api";
+import { formatDateTime } from "../../../../_constants/formatedDate";
 import { Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
@@ -60,6 +60,8 @@ const ConsultantNavigationCell = ({ value, row }) => {
     ? `${baseRoute}?status=3&type=91`
     : `${baseRoute}?status=3`;
 
+  const typeLabel = { 1: "Astrologer", 2: "Coach", 3: "Listener" }[consultantType] || "";
+
   return (
     <Link
       to={route}
@@ -68,16 +70,13 @@ const ConsultantNavigationCell = ({ value, row }) => {
       style={{ textDecoration: "none" }}
     >
       <span
-        style={{
-          cursor: "pointer",
-          color: foreigner ? "#1889beff" : "#be5b18ff",
-          fontStyle: foreigner ? "italic" : "normal",
-        }}
+        className={foreigner ? "obs-cell-name-foreign" : "obs-cell-name"}
+        style={{ fontStyle: foreigner ? "italic" : "normal" }}
       >
         {consultantName} ({value})
-        <span style={{ color: "#187cbeff" }}>
-          ({{ 1: "A", 2: "C", 3: "L" }[consultantType] || ""})
-        </span>
+        {typeLabel && (
+          <span className="obs-cell-type">({typeLabel})</span>
+        )}
       </span>
     </Link>
   );
