@@ -58,7 +58,7 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
         if (limit) params.append("size", limit);
         if (consultant_id) params.append("consultant_id", consultant_id);
         if (user_id) params.append("user_id", user_id);
-        if (status) params.append("status", status);
+        if (status !== null && status !== undefined) params.append("status", status);
         return {
           url: `/api/v1/consultant/management/order/admin/observing-consultant?${params.toString()}`,
           method: "GET",

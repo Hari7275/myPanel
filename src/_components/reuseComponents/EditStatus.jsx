@@ -4,8 +4,10 @@ import {
   useGetConsultantStatusQuery,
   useUpdateStatusMutation,
 } from "../../_store/api";
+import { useTheme } from "../../_context/ThemeContext";
 
 const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
+  const { isDarkMode } = useTheme();
   console.log("selectedRow........", selectedRow);
   console.log("profileStatus........", profileStatus);
   const [formData, setFormData] = useState("");
@@ -82,14 +84,17 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
       onRequestClose={onClose}
       ariaHideApp={false}
     >
-      <div style={{ width: "350px", height: "400px" }}>
+      <div style={{ width: "350px", height: "400px", padding: "20px" }}>
         <h2
           className="sub-heading"
           style={{
             marginBottom: "20px",
             display: "flex",
-            backgroundColor: "#f0f0f0",
+            backgroundColor: isDarkMode ? "var(--bg-primary)" : "#f0f0f0",
+            color: isDarkMode ? "var(--text-primary)" : undefined,
             justifyContent: "center",
+            padding: "10px",
+            borderRadius: "4px",
           }}
         >
           Edit Status
@@ -102,7 +107,16 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
           style={{ display: "flex", alignItems: "center" }}
         >
           <div className="input-container">
-            <label htmlFor="status">Status</label>
+            <label
+              htmlFor="status"
+              style={{
+                display: "block",
+                marginBottom: "8px",
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+              }}
+            >
+              Status
+            </label>
             <select
               id="status"
               name="status"
@@ -110,6 +124,13 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
               onChange={handleChange}
               className="userProfile-input-field"
               aria-describedby="status-desc"
+              style={{
+                width: "100%",
+                padding: "8px",
+                backgroundColor: isDarkMode ? "var(--bg-primary)" : undefined,
+                color: isDarkMode ? "var(--text-primary)" : undefined,
+                borderColor: isDarkMode ? "var(--border-color)" : undefined,
+              }}
             >
               <option value="">Select Status</option>
               {data.map((status) => (
@@ -118,16 +139,28 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
                 </option>
               ))}
             </select>
-            <p style={{ margin: "20px 10px" }}>
+            <p
+              style={{
+                margin: "20px 10px",
+                color: isDarkMode ? "var(--text-secondary, #94a3b8)" : undefined,
+              }}
+            >
               Select a status for the consultant.
             </p>
           </div>
 
-          <div style={{ margin: "120px 0 0 0px" }}>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: "10px",
+              marginTop: "120px",
+            }}
+          >
             <button
               type="submit"
               className="fifthButton"
-              style={{ marginRight: "10px" }}
+              style={{ padding: "10px 20px", cursor: "pointer" }}
               disabled={isUpdating}
               aria-label="Save changes"
             >
@@ -136,7 +169,11 @@ const EditStatus = ({ isOpen, onClose, selectedRow, profileStatus }) => {
             <button
               type="button"
               className="fifthButton"
-              style={{ background: "red", marginLeft: "10px" }}
+              style={{
+                background: isDarkMode ? "#b91c1c" : "red",
+                padding: "10px 20px",
+                cursor: "pointer",
+              }}
               onClick={onClose}
               disabled={isUpdating}
               aria-label="Cancel changes"

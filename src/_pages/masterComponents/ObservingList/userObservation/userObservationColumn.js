@@ -42,7 +42,7 @@ const StatusSwitch = ({ row }) => {
 };
 
 const UserNavigationCell = ({ value, row }) => {
-  const userName = row?.original?.user_details?.display_name || row?.original?.user_details?.name;
+  const userName = row?.original?.user_name || row?.original?.user_details?.display_name || row?.original?.user_details?.name;
 
   return (
     <Link

@@ -90,6 +90,31 @@ body.dark-mode .modalx {
   color: var(--text-primary);
 }
 
+body.dark-mode .modal select,
+body.dark-mode .modal input,
+body.dark-mode .modal textarea {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-mode .modal select option {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+body.dark-mode .modal label {
+  color: var(--text-primary);
+}
+
+body.dark-mode .modal p {
+  color: var(--text-secondary, #94a3b8);
+}
+
+body.dark-mode .overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
 /* ===== Mobile Modal ===== */
 @media (max-width: 480px) {
   .modal {
@@ -127,6 +152,18 @@ body.dark-mode .modalx {
   .modal .fifthButton {
     padding: 10px 20px !important;
     font-size: 14px !important;
+  }
+
+  .modal .simple-form {
+    flex-direction: column !important;
+  }
+
+  .modal .input-container {
+    width: 100% !important;
+  }
+
+  .modal p {
+    font-size: 13px !important;
   }
 }
 
