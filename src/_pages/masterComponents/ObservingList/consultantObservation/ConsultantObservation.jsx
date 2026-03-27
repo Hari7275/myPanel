@@ -147,13 +147,6 @@ const ConsultantObservation = () => {
 
   const getTypeLabel = (type) => ({ 1: "Astrologer", 2: "Coach", 3: "Listener" }[type] || "");
 
-  if (isLoading) {
-    return (
-      <span className="loadPage">
-        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
-      </span>
-    );
-  }
 
   return (
     <div style={{ height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}>

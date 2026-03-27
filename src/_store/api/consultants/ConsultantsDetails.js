@@ -84,12 +84,14 @@ export const consultantsDetailsApiSlice = apiSlice.injectEndpoints({
 
     // User Observing List APIs
     getUserObservingList: builder.query({
-      query: ({ user_id, observer_id, status, page, limit }) => {
+      query: ({ user_id, observer_id, status, page, limit, name, phone_number }) => {
         const params = new URLSearchParams({});
         if (page) params.append("page", page);
         if (limit) params.append("size", limit);
         if (user_id) params.append("user_id", user_id);
         if (observer_id) params.append("observer_id", observer_id);
+        if (name) params.append("name", name);
+        if (phone_number) params.append("phone_number", phone_number);
         if (status !== null && status !== undefined) params.append("status", status);
         return {
           url: `/api/v1/consultant/management/order/admin/observing-user?${params.toString()}`,

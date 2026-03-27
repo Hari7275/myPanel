@@ -61,8 +61,11 @@ const UserObservation = () => {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(50);
   const [userId, setUserId] = useState("");
+  const [userName, setUserName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [status, setStatus] = useState(null);
   const [searchInput, setSearchInput] = useState("");
+  const [searchType, setSearchType] = useState("id");
 
   // Add user modal state
   const [showAddModal, setShowAddModal] = useState(false);
@@ -75,6 +78,8 @@ const UserObservation = () => {
 
   const { data: fetchData, isLoading, isFetching } = useGetUserObservingListQuery({
     user_id: userId,
+    name: userName,
+    phone_number: phoneNumber,
     observer_id: assignedObserverId,
     status: status,
     page: page,
@@ -95,19 +100,48 @@ const UserObservation = () => {
     () => debounce((value) => setUserId(value), 1500),
     [],
   );
+  const debouncedSearchName = useMemo(
+    () => debounce((value) => setUserName(value), 1500),
+    [],
+  );
+  const debouncedSearchPhone = useMemo(
+    () => debounce((value) => setPhoneNumber(value), 1500),
+    [],
+  );
 
   const handleUserSearch = (e) => {
     const value = e?.target?.value || "";
     setSearchInput(value);
     setPage(1);
-    debouncedSearchUser(value);
+    if (searchType === "id") debouncedSearchUser(value);
+    else if (searchType === "name") debouncedSearchName(value);
+    else if (searchType === "phone") debouncedSearchPhone(value);
   };
 
   const handleMobileSearch = (e) => {
     const value = e.target.value;
     setSearchInput(value);
     setPage(1);
-    debouncedSearchUser(value);
+    if (searchType === "id") debouncedSearchUser(value);
+    else if (searchType === "name") debouncedSearchName(value);
+    else if (searchType === "phone") debouncedSearchPhone(value);
+  };
+
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+    setSearchInput("");
+    setUserId("");
+    setUserName("");
+    setPhoneNumber("");
+    setPage(1);
+  };
+
+  const clearSearch = () => {
+    setSearchInput("");
+    setUserId("");
+    setUserName("");
+    setPhoneNumber("");
+    setPage(1);
   };
 
   const handleAddUser = async () => {
@@ -139,13 +173,6 @@ const UserObservation = () => {
 
   const totalPage = fetchData?.meta?.total_page || 1;
 
-  if (isLoading) {
-    return (
-      <span className="loadPage">
-        <Atom color={isDarkMode ? "#a8b8d0" : "#1c2434"} size="medium" text="" textColor="" />
-      </span>
-    );
-  }
 
   return (
     <div style={{ height: "100%", overflow: "hidden", display: "flex", flexDirection: "column" }}>
@@ -185,10 +212,27 @@ const UserObservation = () => {
           <Search size={18} className="obs-search-icon" />
           <input
             className="obs-search-input"
-            placeholder="Search by User ID..."
+            placeholder={`Search by ${searchType === "id" ? "User ID" : searchType === "name" ? "Name" : "Phone"}...`}
             value={searchInput}
             onChange={handleUserSearch}
           />
+        </div>
+
+        <div className="obs-status-pills">
+          <span className="obs-status-label">Search:</span>
+          {[
+            { key: "id", label: "User ID" },
+            { key: "name", label: "Name" },
+            { key: "phone", label: "Phone" },
+          ].map((t) => (
+            <button
+              key={t.key}
+              className={`obs-pill ${searchType === t.key ? "obs-pill-active" : ""}`}
+              onClick={() => handleSearchTypeChange(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
         </div>
 
         <div className="obs-status-pills">
@@ -220,22 +264,33 @@ const UserObservation = () => {
           <Search size={16} className="obs-m-search-icon" />
           <input
             className="obs-m-search-input"
-            placeholder="Search by User ID..."
+            placeholder={`Search by ${searchType === "id" ? "User ID" : searchType === "name" ? "Name" : "Phone"}...`}
             value={searchInput}
             onChange={handleMobileSearch}
           />
           {searchInput && (
-            <button
-              className="obs-m-clear-btn"
-              onClick={() => {
-                setSearchInput("");
-                setUserId("");
-                setPage(1);
-              }}
-            >
+            <button className="obs-m-clear-btn" onClick={clearSearch}>
               <X size={16} />
             </button>
           )}
+        </div>
+
+        {/* Search type pills */}
+        <div className="obs-m-pills" style={{ paddingBottom: "2px" }}>
+          <span className="obs-status-label">Search:</span>
+          {[
+            { key: "id", label: "User ID" },
+            { key: "name", label: "Name" },
+            { key: "phone", label: "Phone" },
+          ].map((t) => (
+            <button
+              key={t.key}
+              className={`obs-pill ${searchType === t.key ? "obs-pill-active" : ""}`}
+              onClick={() => handleSearchTypeChange(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
         </div>
 
         {/* Add button + Status filter */}

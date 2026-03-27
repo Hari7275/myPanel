@@ -422,13 +422,6 @@ const OrderLists = () => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
-      </span>
-    );
-  }
 
   return (
     <div className="ol-page">

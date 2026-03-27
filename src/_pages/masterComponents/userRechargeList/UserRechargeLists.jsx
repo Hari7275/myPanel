@@ -243,13 +243,6 @@ const UserRechargeLists = () => {
     ? Math.ceil(fetchData.data.totalRecords / pageSize)
     : 1;
 
-  if (isLoading) {
-    return (
-      <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
-      </span>
-    );
-  }
   if (error) return <p>Error fetching data: {error?.data?.message}</p>;
 
   return (
