@@ -2,6 +2,7 @@ import React,{useEffect} from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setPageTitle } from "../../../_store/slices/pageTitleSlice";
+import "./support.css";
 
 const CategoryCard = ({ link, label }) => (
   <div className="card-container">

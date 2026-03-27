@@ -1,19 +1,16 @@
-// OrderLists.js - Updated to navigate instead of modal.
 import React, { useMemo, useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-
 import DyCommonTable from "../../../_components/table/DyCommonTable";
 import { GIFTORDERHISTORYCOLUMN } from "./giftColumn";
 import { useGetGiftOrderHistoryListQuery, useGetFluteEarningQuery } from "../../../_store/api";
-import { Atom } from "react-loading-indicators";
-
 import { debounce } from "lodash";
+import { Search, X, ChevronLeft, ChevronRight } from "lucide-react";
+import "../order/OrderLists.css";
 
 const GiftOrderHistory = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🧠 Read URL Params
   const queryParam = new URLSearchParams(location.search);
   const initialPage = Number(queryParam.get("page")) || 1;
   const initialPageSize = Number(queryParam.get("pageSize")) || 50;
@@ -21,15 +18,18 @@ const GiftOrderHistory = () => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(initialPage);
   const [pageSize, setPageSize] = useState(initialPageSize);
-  const [dynamicPagination, setDynamicPagination] = useState(true);
+  const [dynamicPagination] = useState(true);
 
   const [userId, setUserId] = useState(null);
-
   const [consultantId, setConsultantId] = useState(null);
 
   const [filterType, setFilterType] = useState("all");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  // Mobile search
+  const [searchType, setSearchType] = useState("consultant");
+  const [mobileSearchValue, setMobileSearchValue] = useState("");
 
   const getDateRange = (type) => {
     const today = new Date();
@@ -69,16 +69,13 @@ const GiftOrderHistory = () => {
 
   const { data: earningData } = useGetFluteEarningQuery(earningParams);
 
-  // 🧭 Keep URL params synced when page or pageSize changes
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     params.set("page", page);
     params.set("pageSize", pageSize);
-
     navigate(`?${params.toString()}`, { replace: true });
   }, [page, pageSize, navigate]);
 
-  // Build query params including filters
   const queryParams = {
     page,
     size: pageSize,
@@ -91,10 +88,9 @@ const GiftOrderHistory = () => {
   const {
     data: fetchData,
     isLoading,
-    error,
-    refetch,
+    isFetching,
   } = useGetGiftOrderHistoryListQuery(queryParams, {
-    refetchOnMountOrArgChange: true, //
+    refetchOnMountOrArgChange: true,
   });
 
   const columns = useMemo(() => [...GIFTORDERHISTORYCOLUMN], []);
@@ -123,68 +119,83 @@ const GiftOrderHistory = () => {
     debouncedSearchConsultantId(e?.target?.value);
   };
 
+  // Mobile search handlers
+  const handleMobileSearch = (e) => {
+    const value = e.target.value;
+    setMobileSearchValue(value);
+    setPage(1);
+    if (searchType === "consultant") {
+      debouncedSearchConsultantId(value);
+      setUserId("");
+    } else {
+      debouncedSearchUserId(value);
+      setConsultantId("");
+    }
+  };
+
+  const handleSearchTypeChange = (type) => {
+    setSearchType(type);
+    setMobileSearchValue("");
+    setUserId("");
+    setConsultantId("");
+    setPage(1);
+  };
+
+  const clearMobileSearch = () => {
+    setMobileSearchValue("");
+    setUserId("");
+    setConsultantId("");
+    setPage(1);
+  };
+
   const customFilterComponent = () => (
-    <div style={{ width: "100%", display: "flex", alignItems: "center", gap: "8px", flexWrap: "wrap", minHeight: "35px" }}>
+    <div className="ol-filter-bar">
       <input
-        className="inputBox"
-        placeholder="consultant id"
-        style={{ height: "-webkit-fill-available", width: "8%" }}
+        className="ol-search-input"
+        placeholder="Consultant ID"
         onChange={handleConsultantIdSearch}
       />
       <input
-        className="inputBox"
-        placeholder="user id"
-        style={{ height: "-webkit-fill-available", width: "6%" }}
+        className="ol-search-input"
+        placeholder="User ID"
         onChange={handleUserIdSearch}
       />
-      <span style={{ color: "#9ca3af" }}>|</span>
+
       <select
-        className="inputBox"
+        className="ol-search-input"
         value={filterType}
         onChange={(e) => handleFilterType(e.target.value)}
-        style={{
-          height: "-webkit-fill-available",
-          width: "80px",
-          padding: "0 8px",
-          cursor: "pointer",
-          fontWeight: "600",
-          fontSize: "12px",
-          borderRadius: "6px",
-          border: "1px solid #3b82f6",
-          backgroundColor: "#eef4ff",
-          color: "#1e40af",
-          outline: "none",
-        }}
+        style={{ cursor: "pointer", width: "100px" }}
       >
         <option value="all">All</option>
         <option value="weekly">Weekly</option>
         <option value="monthly">Monthly</option>
         <option value="yearly">Yearly</option>
       </select>
-      <span style={{ color: "#9ca3af" }}>|</span>
+
       <input
         type="date"
-        className="inputBox"
+        className="ol-search-input"
         value={startDate}
         onChange={(e) => { setStartDate(e.target.value); setFilterType("custom"); }}
-        style={{ height: "-webkit-fill-available", padding: "0 8px", width: "130px" }}
+        style={{ width: "140px" }}
       />
       <input
         type="date"
-        className="inputBox"
+        className="ol-search-input"
         value={endDate}
         onChange={(e) => { setEndDate(e.target.value); setFilterType("custom"); }}
-        style={{ height: "-webkit-fill-available", padding: "0 8px", width: "130px" }}
+        style={{ width: "140px" }}
       />
-      <span style={{ color: "#9ca3af" }}>|</span>
+
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Total Revenue: <span style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</span>
+        Revenue: <span style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Earning (F): <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
+        Flute: <span style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</span>
       </span>
       <span style={{ fontSize: "13px", fontWeight: "600" }}>
-        Earning (C): <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
+        Consultant: <span style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</span>
       </span>
     </div>
   );
@@ -193,30 +204,194 @@ const GiftOrderHistory = () => {
 
   if (isLoading) {
     return (
-      <span className="loadPage">
-        <Atom color="#1c2434" size="medium" text="" textColor="" />
-      </span>
+      <div className="ol-page">
+        <div className="ol-mobile-view">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div className="olm-card olm-card-skeleton" key={`skeleton-${i}`}>
+              <div className="olm-skeleton-row">
+                <div className="olm-skeleton-line" style={{ width: "45%" }} />
+                <div className="olm-skeleton-line" style={{ width: "25%" }} />
+              </div>
+              <div className="olm-skeleton-line" style={{ width: "60%", marginTop: 6 }} />
+              <div className="olm-skeleton-row" style={{ marginTop: 8 }}>
+                <div className="olm-skeleton-badge" />
+                <div className="olm-skeleton-badge" />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="ol-desktop-view">
+          <div className="ol-table-card" style={{ padding: 20, textAlign: "center", color: "#94a3b8" }}>Loading...</div>
+        </div>
+      </div>
     );
   }
 
   return (
-    <div>
-      <DyCommonTable
-        columns={columns}
-        data={data}
-        includeActions={false}
-        tableTitle=" Gist Order History"
-        dynamicPagination={dynamicPagination}
-        customFilterComponent={customFilterComponent}
-        totalPage={totalPage}
-        currentPage={page}
-        pageSize={pageSize}
-        setPage={setPage}
-        setPageSize={setPageSize}
-        includeCheckbox={false}
-        showTableHeading={false}
-        showGlobalSearch={false}
-      />
+    <div className="ol-page">
+      {/* ===== MOBILE CARD VIEW ===== */}
+      <div className="ol-mobile-view">
+        {/* Search */}
+        <div className="olm-search-bar">
+          <Search size={16} className="olm-search-icon" />
+          <input
+            className="olm-search-input"
+            placeholder={`Search by ${searchType === "consultant" ? "Consultant" : "User"} ID...`}
+            value={mobileSearchValue}
+            onChange={handleMobileSearch}
+          />
+          {mobileSearchValue && (
+            <button className="olm-clear-btn" onClick={clearMobileSearch}>
+              <X size={16} />
+            </button>
+          )}
+        </div>
+
+        {/* Search type pills */}
+        <div className="olm-search-type">
+          {[
+            { key: "consultant", label: "Consultant ID" },
+            { key: "user", label: "User ID" },
+          ].map((t) => (
+            <button
+              key={t.key}
+              className={`olm-pill ${searchType === t.key ? "olm-pill-active" : ""}`}
+              onClick={() => handleSearchTypeChange(t.key)}
+            >
+              {t.label}
+            </button>
+          ))}
+
+          {/* Date filter */}
+          <select
+            className="olm-pill"
+            value={filterType}
+            onChange={(e) => handleFilterType(e.target.value)}
+            style={{ cursor: "pointer", marginLeft: "auto" }}
+          >
+            <option value="all">All Time</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly">Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+
+        {/* Earnings Summary */}
+        <div className="olm-earning-bar">
+          <span className="olm-earning-item">
+            Rev: <strong style={{ color: "#3b82f6" }}>₹{earningData?.data?.total_order_revenue || "0"}</strong>
+          </span>
+          <span className="olm-earning-item">
+            Flute: <strong style={{ color: "#10b981" }}>₹{earningData?.data?.total_flute_earning || "0"}</strong>
+          </span>
+          <span className="olm-earning-item">
+            Cons: <strong style={{ color: "#f59e0b" }}>₹{earningData?.data?.total_consultant_earning || "0"}</strong>
+          </span>
+        </div>
+
+        {/* Gift Cards */}
+        <div className="olm-cards">
+          {isFetching ? (
+            Array.from({ length: 6 }).map((_, i) => (
+              <div className="olm-card olm-card-skeleton" key={`skeleton-${i}`}>
+                <div className="olm-skeleton-row">
+                  <div className="olm-skeleton-line" style={{ width: "45%" }} />
+                  <div className="olm-skeleton-line" style={{ width: "25%" }} />
+                </div>
+                <div className="olm-skeleton-line" style={{ width: "60%", marginTop: 6 }} />
+                <div className="olm-skeleton-row" style={{ marginTop: 8 }}>
+                  <div className="olm-skeleton-badge" />
+                  <div className="olm-skeleton-badge" />
+                </div>
+              </div>
+            ))
+          ) : data.length === 0 ? (
+            <div className="olm-empty">No gift orders found</div>
+          ) : (
+            data.map((order) => {
+              const consultantName = order.consultant_details?.consultant_first_name || "—";
+              const consultantType = order.gift?.consultant_type;
+              const typeLabel = { 1: "A", 2: "C", 3: "L" }[consultantType] || "";
+              const userName = order.gift_meta_data?.userData?.name || "User";
+              const createdDate = order.createdAt
+                ? new Date(order.createdAt).toLocaleString("en-US", { dateStyle: "medium", timeStyle: "short" })
+                : "";
+
+              return (
+                <div className="olm-card" key={order.id}>
+                  {/* Row 1: Consultant + Gift Name */}
+                  <div className="olm-card-header">
+                    <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+                      <span style={{ fontSize: 16, fontWeight: 700, color: "var(--text-primary, #1e293b)" }}>
+                        {consultantName}
+                      </span>
+                      <span style={{ fontSize: 13, color: "var(--text-secondary, #64748b)" }}>({order.consultant_id})</span>
+                      {typeLabel && <span style={{ color: "#187cbe", fontSize: 12, fontWeight: 600 }}>({typeLabel})</span>}
+                    </div>
+                    <span className="olm-badge olm-badge-cid" style={{ fontSize: 13, fontWeight: 700 }}>
+                      {order.gift?.name || "Gift"} — ₹{order.order_revenue}
+                    </span>
+                  </div>
+
+                  {/* Row 2: User + Order ID */}
+                  <div className="olm-card-body">
+                    <div className="olm-card-info" style={{ display: "flex", justifyContent: "space-between" }}>
+                      <span>
+                        <span className="olm-label" style={{ fontSize: 14 }}>User: </span>
+                        <span className="olm-value" style={{ fontSize: 15 }}>{userName}({order.user_id})</span>
+                      </span>
+                      <span style={{ fontSize: 13, color: "var(--text-secondary, #64748b)", fontWeight: 400 }}>#{order.id}</span>
+                    </div>
+                  </div>
+
+                  {/* Row 3: Revenue + Date */}
+                  <div className="olm-card-footer">
+                    <div style={{ display: "flex", gap: 12 }}>
+                      <span style={{ fontSize: 14, color: "#10b981", fontWeight: 700 }}>Flute: ₹{order.flute_earning}</span>
+                      <span style={{ fontSize: 14, color: "var(--text-primary, #1e293b)", fontWeight: 700 }}>Consultant: ₹{order.order_revenue - order.flute_earning}</span>
+                    </div>
+                    <span style={{ fontSize: 13, color: "var(--text-secondary, #64748b)" }}>{createdDate}</span>
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </div>
+
+        {/* Pagination */}
+        <div className="olm-pagination">
+          <button className="olm-page-btn" disabled={page <= 1} onClick={() => setPage(page - 1)}>
+            <ChevronLeft size={16} />
+          </button>
+          <span className="olm-page-info">Page {page} of {totalPage}</span>
+          <button className="olm-page-btn" disabled={page >= totalPage} onClick={() => setPage(page + 1)}>
+            <ChevronRight size={16} />
+          </button>
+        </div>
+      </div>
+
+      {/* ===== DESKTOP TABLE VIEW ===== */}
+      <div className="ol-desktop-view">
+        <div className="ol-table-card">
+          <DyCommonTable
+            columns={columns}
+            data={data}
+            includeActions={false}
+            tableTitle="Gift Order History"
+            dynamicPagination={dynamicPagination}
+            customFilterComponent={customFilterComponent}
+            totalPage={totalPage}
+            currentPage={page}
+            pageSize={pageSize}
+            setPage={setPage}
+            setPageSize={setPageSize}
+            includeCheckbox={false}
+            showTableHeading={false}
+            showGlobalSearch={false}
+            isLoading={isFetching}
+          />
+        </div>
+      </div>
     </div>
   );
 };

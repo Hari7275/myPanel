@@ -877,3 +877,26 @@ body.dark-mode .olm-action-refund { background: #374151; color: #ffffff; }
   color: var(--text-secondary, #64748b);
   font-weight: 500;
 }
+
+/* ===== Earning Bar (Gift History) ===== */
+.olm-earning-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: var(--bg-secondary, #fff);
+  border: 1.5px solid var(--border-color, #e2e8f0);
+  border-radius: 12px;
+  flex-wrap: wrap;
+}
+
+.olm-earning-item {
+  font-size: 14px;
+  color: var(--text-secondary, #64748b);
+  font-weight: 600;
+}
+
+body.dark-mode .olm-earning-bar {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}

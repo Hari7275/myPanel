@@ -46,7 +46,74 @@
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.75);
+}
 
+/* ===== Dark Mode: Modal ===== */
+body.dark-mode .modal {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+body.dark-mode .modal .sub-heading {
+  background-color: #2a2a2a !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .modal .info-input,
+body.dark-mode .modal .userProfile-input-field,
+body.dark-mode .modal input[type="text"],
+body.dark-mode .modal input[type="number"],
+body.dark-mode .modal textarea,
+body.dark-mode .modal select {
+  background: var(--bg-primary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-mode .modal label {
+  color: var(--text-secondary) !important;
+}
+
+body.dark-mode .deleteModal-container {
+  color: var(--text-primary);
+}
+
+body.dark-mode .deleteHeaderText {
+  color: var(--text-primary);
+}
+
+body.dark-mode .deleteText {
+  color: var(--text-secondary);
+}
+
+/* ===== Mobile: Modal ===== */
+@media (max-width: 480px) {
+  .modal {
+    max-width: 95% !important;
+    padding: 16px !important;
+    max-height: 85vh !important;
+  }
+
+  .modal > div {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .deleteModal-container {
+    min-width: unset !important;
+    width: 100%;
+  }
+
+  .modal .sub-heading {
+    font-size: 16px !important;
+    padding: 10px !important;
+  }
+
+  .modal .fifthButton {
+    padding: 8px 20px !important;
+    font-size: 14px !important;
+  }
 }
 
 /* this modal and overlay is set for drag and drop behaviour  */
