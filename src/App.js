@@ -442,7 +442,7 @@ function App() {
       {/* <Route path="*" element={<Layout />} /> */}
       <Route path="/unauthorized" element={<UnauthorizedPage />} />
 
-      <Route
+      {/* <Route
         path="*"
         element={
           <PrivateRoute
@@ -451,6 +451,10 @@ function App() {
             // requiredPermissions={["access_admin_panel"]}
           />
         }
+      /> */}
+        <Route
+        path="*"
+       element={<Layout />}
       />
     </Routes>
 

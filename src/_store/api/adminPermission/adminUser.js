@@ -64,24 +64,35 @@ export const adminUserSlice = apiSlice.injectEndpoints({
     //   }),
     //   invalidatesTags: ["admin"],
     // }),
-
     createAdminLogin: builder.mutation({
-      query: ({ body, prod }) => {
-        const baseUrl = prod
-          ? "https://api.fluteconnect.com"
-          : "https://dev-api.fluteconnect.com";
-
-        return {
-          url: `${baseUrl}/api/v1/admin-service/admin/admin-user/login`,
-          method: "PUT",
-          body,
-          // headers: {
-          //   Authorization: ADMIN_TOKEN,
-          // },
-        };
-      },
+      query: ({ body}) => ({
+        url: `https://dev-api.fluteconnect.com/api/v1/admin-service/admin/admin-user/login`,
+        method: "PUT",
+        body,
+        // headers: {
+        //   Authorization: ADMIN_TOKEN,
+        // },
+      }),
       invalidatesTags: ["admin"],
     }),
+
+    // createAdminLogin: builder.mutation({
+    //   query: ({ body, prod }) => {
+    //     const baseUrl = prod
+    //       ? "https://api.fluteconnect.com"
+    //       : "https://dev-api.fluteconnect.com";
+
+    //     return {
+    //       url: `${baseUrl}/api/v1/admin-service/admin/admin-user/login`,
+    //       method: "PUT",
+    //       body,
+    //       // headers: {
+    //       //   Authorization: ADMIN_TOKEN,
+    //       // },
+    //     };
+    //   },
+    //   invalidatesTags: ["admin"],
+    // }),
   }),
 });
 

@@ -24,13 +24,7 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
     }
   }, [imageUrl]);
 
-  // const getCropData = () => {
-  //   if (cropperRef?.current && cropperRef?.current?.cropper) {
-  //     const canvas = cropperRef?.current?.cropper?.getCroppedCanvas();
-  //     setCropData(canvas?.toDataURL());
-  //     setIsCropped(true);
-  //   }
-  // };
+  
 
   const getCropData = () => {
     if (cropperRef?.current && cropperRef?.current?.cropper) {
@@ -180,27 +174,6 @@ const ImageCropper = ({ isOpen, onClose, selectedImage, caller }) => {
       >
         <div className="reactCropper_container">
           {imageUrl && (
-            // <Cropper
-            //   className="reactCropper_cropper"
-            //   style={{ height: `${height}px`, width: `${width}px` }}
-            //   initialAspectRatio={1 / 1}
-            //   src={imageUrl}
-            //   ref={cropperRef}
-            //   viewMode={1}
-            //   guides={true}
-            //   minCropBoxHeight={10}
-            //   minCropBoxWidth={10}
-            //   background={false}
-            //   responsive={true}
-            //   checkOrientation={true}
-            //   rotate={rotate}
-            //   dragMode="move"
-            //   cropBoxMovable={true}
-            //   cropBoxResizable={true}
-            //   minContainerWidth={100}
-            //   minContainerHeight={100}
-            // />
-
             <Cropper
               className="reactCropper_cropper"
               style={{ height: `${height}px`, width: `${width}px` }}
